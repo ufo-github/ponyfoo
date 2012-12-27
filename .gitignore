@@ -1,7 +1,4 @@
-.idea/*.iws
-.idea/workspace.xml
-.idea/tasks.xml
-
+.idea
 node_modules
 lib-cov
 *.seed
