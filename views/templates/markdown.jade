@@ -1,4 +1,17 @@
-div.markdown-editor
-    input(type='text').entry-title
-    input(type='text').entry-brief
-    input(type='text').entry-text
+extends ../layout
+
+block content
+    form#markdown-editor(method='POST',action='/entry')
+        p
+            label(for='entry-title')='Title'
+            input(type='text',name='entry-title')
+
+        div#wmd-button-bar-brief.wmd-button-bar
+        div
+            textarea#wmd-input-brief.wmd-input.entry-brief
+
+        div#wmd-button-bar-text.wmd-button-bar
+        div
+            textarea#wmd-input-text.wmd-input.entry-text
+
+        div#wmd-preview-brief.blog-entry
