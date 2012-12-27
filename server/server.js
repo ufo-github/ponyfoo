@@ -58,14 +58,15 @@ io.sockets.on('connection', function(socket){
 /////// ADD ALL YOUR ROUTES HERE  /////////
 
 server.get('/', function(req,res){
-  res.render('index.jade', {
-    locals : { 
-              title : 'Your Page Title'
-             ,description: 'Your Page Description'
-             ,author: 'Your Name'
-             ,analyticssiteid: 'XXXXXXX' 
-            }
-  });
+    res.render('templates/markdown.jade');
+//  res.render('index.jade', {
+//    locals : {
+//              title : 'Your Page Title'
+//             ,description: 'Your Page Description'
+//             ,author: 'Your Name'
+//             ,analyticssiteid: 'XXXXXXX'
+//            }
+//  });
 });
 
 
