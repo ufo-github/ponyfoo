@@ -1,0 +1,35 @@
+/* DEFAULTS
+----------------------------------------------------------*/
+body {
+  font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
+}
+/* WIREFRAME
+----------------------------------------------------------*/
+h1.layout-heading {
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 2.4em;
+}
+@media only screen and (min-width: 768px) {
+  h1.layout-heading {
+    font-size: 3.2em;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  h1.layout-heading {
+    font-size: 4.6em;
+  }
+}
+/* BUTTONS
+----------------------------------------------------------*/
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a,
+button,
+input[type=submit] {
+  cursor: pointer;
+}
