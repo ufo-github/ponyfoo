@@ -19,10 +19,14 @@ html(lang='en')
 
   body
     header.layout-header
-      h1.layout-heading='Code Rant'
+      h1.layout-heading
+        a(href='/')='Code Rant'
 
-    section.main
-      block content
+    aside#sidebar
+      nav
+        button#post-entry='Post Entry'
+
+    section#content
 
     block templates
       include templates/markdown

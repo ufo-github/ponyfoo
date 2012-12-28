@@ -37,7 +37,7 @@ q:before, q:after {
     content: none;
 }
 
-:focus { outline: 0; border-color: #008b00; }
+:focus { outline: 0; }
 
 table {
     border-collapse: collapse;

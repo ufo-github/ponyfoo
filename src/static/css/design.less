@@ -1,11 +1,34 @@
-﻿/* DEFAULTS
+﻿@import "/static/css/common.less";
+
+/* DEFAULTS
 ----------------------------------------------------------*/
 
 body {
   font-family: "Helvetica Neue","Lucida Grande","Segoe UI",Arial,Helvetica,Verdana,sans-serif;
+  background-color: @background;
 }
 
+input,textarea {
+  .box-radius(2px);
 
+  border: 1px solid @grayish;
+  border-top: 2px solid @light;
+  border-left: 2px solid @light;
+  background-color: @background;
+  color: @strong;
+}
+
+input:focus,textarea:focus {
+  border: 1px solid @grayish;
+  border-top: 2px solid @border;
+  border-left: 2px solid @border;
+}
+
+::selection {
+  background: @pink;
+  color: #fff;
+  text-shadow: 0 1px rgb(0, 0, 0, .2);
+}
 
 /* WIREFRAME
 ----------------------------------------------------------*/
@@ -14,6 +37,11 @@ h1.layout-heading {
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 2.4em;
+  color: @strong;
+}
+
+h1.layout-heading a {
+  text-decoration: none;
 }
 
 @media only screen and (min-width: 768px) {
@@ -28,7 +56,12 @@ h1.layout-heading {
   }
 }
 
-
+section#content {
+  border: 1px solid @light;
+  background-color: @moderate;
+  .box-radius(5px);
+  padding: 25px;
+}
 
 /* BUTTONS
 ----------------------------------------------------------*/
@@ -43,4 +76,25 @@ a:hover {
 
 a, button, input[type=submit] {
   cursor: pointer;
+}
+
+button {
+  font-weight: bold;
+  font-family: Interstate, Helvetica, Arial, sans-serif;
+  font-size: 1.1em;
+  padding: 10px 12px;
+
+  color: #fff;
+  text-shadow: 0 1px @secondary_strong;
+
+  .box-radius(3px);
+  .box-transition(all 0.2s ease-out);
+
+  border: 1px solid @secondary_light*0.95;
+  background-color: @secondary_moderate*1.05;
+}
+
+button:hover {
+  border: 1px solid @secondary_light;
+  background-color: @secondary_light*1.15;
 }
