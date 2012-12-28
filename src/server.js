@@ -2,8 +2,9 @@
 var connect = require('connect'),
     express = require('express'),
     io = require('socket.io'),
-    sass = require('node-sass'),
-    port = (process.env.PORT || 8081);
+    port = (process.env.PORT || 8081),
+    less = require('less'),
+    static = __dirname + '/static';
 
 // setup express
 var server = express.createServer();
@@ -15,7 +16,8 @@ server.configure(function(){
     server.use(express.cookieParser());
     server.use(express.session({ secret: "shhhhhhhhh!"}));
     server.use(express.favicon(__dirname + '/favicon.ico'));
-    server.use(connect.static(__dirname + '/static'));
+    server.use(express.compiler({ src: static, enable: ['less'] }))
+    server.use(connect.static(static));
     server.use(server.router);
 });
 
