@@ -1,5 +1,5 @@
-NBrut begins
-============
+Code Rant begins
+================
 
 As I start writing this post, I set out with a purpose. To write a micro-blogging engine. The language of choice is _Node.JS_. I chose this language because I want to see how I fare in light of new horizons...
 
@@ -30,6 +30,6 @@ The mere notion of having _Javascript_ on the server-side, _Javascript_ on the c
 
 ## Where do we go from here? ##
 
-Right now, I'm writing this post on _[**Notepad++**](http://notepad-plus-plus.org/)_ and I haven't even begun working on the blog application. Even though I've already allocated a public GitHub repository to the task, and I'm calling the project [**NBrut**](https://github.com/bevacqua/NBrut "GitHub repository").
+Right now, I'm writing this post on _[**Notepad++**](http://notepad-plus-plus.org/)_ and I haven't even begun working on the blog application. Even though I've already allocated a public GitHub repository to the task, and I'm code-naming the project [**NBrut**](https://github.com/bevacqua/NBrut "GitHub repository").
 
-Since I want _leanness_ to be a defining characteristic of how I face **NBrut**, I'm using this post as a way to _force myself_ into being able to go live as soon as I'm able to. In order to do that, I have to start by working on implementing _Markdown_, since it's probably the part of the application I'm most comfortable coding. I'll figure out how to solve the rest as I go along.
+Since I want _leanness_ to be a defining characteristic of how I face **Code Rant**, I'm using this post as a way to _force myself_ into being able to go live as soon as I'm able to. In order to do that, I have to start by working on implementing _Markdown_, since it's probably the part of the application I'm most comfortable coding. I'll figure out how to solve the rest as I go along.

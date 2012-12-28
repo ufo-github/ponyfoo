@@ -1,6 +1,4 @@
-extends ../layout
-
-block content
+section#markdown-template.template(data-class='markdown-entry')
     form#markdown-editor(method='POST',action='/entry')
         p
             label(for='entry-title')='Title'
@@ -14,4 +12,7 @@ block content
         div
             textarea#wmd-input-text.wmd-input.entry-text
 
-        div#wmd-preview-brief.blog-entry
+    article.blog-entry
+        header.blog-entry-title
+        section#wmd-preview-brief.blog-entry-brief
+        section#wmd-preview-text.blog-entry-text

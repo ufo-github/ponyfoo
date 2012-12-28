@@ -1,8 +1,9 @@
 //setup dependencies
-var connect = require('connect')
-    , express = require('express')
-    , io = require('socket.io')
-    , port = (process.env.PORT || 8081);
+var connect = require('connect'),
+    express = require('express'),
+    io = require('socket.io'),
+    sass = require('node-sass'),
+    port = (process.env.PORT || 8081);
 
 // setup express
 var server = express.createServer();
@@ -13,7 +14,7 @@ server.configure(function(){
     server.use(connect.bodyParser());
     server.use(express.cookieParser());
     server.use(express.session({ secret: "shhhhhhhhh!"}));
-    server.use(express.favicon(__dirname + '/static/images/favicon.ico'));
+    server.use(express.favicon(__dirname + '/favicon.ico'));
     server.use(connect.static(__dirname + '/static'));
     server.use(server.router);
 });
@@ -25,9 +26,9 @@ server.error(function(err, req, res, next){
                   title : '404 - Not Found'
                  ,description: ''
                  ,author: ''
-                },status: 404 });
+        },status: 404 });
     } else {
-        res.render('500.jade', { locals: { 
+        res.render('500.jade', { locals: {
                   title : 'The Server Encountered an Error'
                  ,description: ''
                  ,author: ''
@@ -40,13 +41,7 @@ server.listen(port);
 
 // routing
 server.get('/', function(req,res){
-    res.render('templates/markdown.jade', {
-        locals: {
-            title: 'NBrut',
-            description: 'Ramblings of a degenerate coder',
-            author: 'nicolasbevacqua@gmail.com'
-        }
-    });
+    res.render('index.jade');
 });
 
 server.get('/500', function(req, res){
