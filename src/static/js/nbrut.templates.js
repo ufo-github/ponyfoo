@@ -59,7 +59,7 @@
         function activate(key, soft) { // soft: don't push history state.
             var template = templates[key];
             if (template === undefined) {
-                throw new Error('template not registered.');
+                template = templates['404']; // fall back to 404.
             }
 
             if(!template.initialized){

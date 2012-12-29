@@ -87,6 +87,7 @@ a:hover {
 }
 a,
 button,
+input[type=button],
 input[type=submit] {
   cursor: pointer;
 }
@@ -97,7 +98,8 @@ a.button {
 }
 button,
 a.button,
-input[type=button] {
+input[type=button],
+input[type=submit] {
   font-weight: bold;
   font-family: Interstate, Helvetica, Arial, sans-serif;
   font-size: 1.1em;
@@ -131,7 +133,8 @@ input[type=button] {
 }
 button,
 a.button,
-input[type=button] {
+input[type=button],
+input[type=submit] {
   padding: 10px 12px;
   text-shadow: 0 1px #429334;
   border: 1px solid #54a644;
@@ -139,10 +142,20 @@ input[type=button] {
 }
 button:hover,
 a.button:hover,
-input[type=button]:hover {
+input[type=button]:hover,
+input[type=submit]:hover {
   border: 1px solid #58af48;
   background-color: #65c953;
 }
-input[type=button] {
+input[type=button],
+input[type=submit] {
   padding: 5px 6px;
+}
+#content h1 {
+  margin-bottom: 15px;
+  padding-bottom: 6px;
+  color: #412917;
+  font-weight: bold;
+  font-size: 1.2em;
+  border-bottom: 1px solid #cbc5c0;
 }

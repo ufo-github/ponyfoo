@@ -8,3 +8,6 @@
 .entry-brief {
   height: 120px;
 }
+#entry-editor-buttons {
+  text-align: right;
+}

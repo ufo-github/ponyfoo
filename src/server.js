@@ -50,6 +50,10 @@ server.get('/*', function(req,res){
     res.render('index.jade');
 });
 
+server.post('/write-entry', function(req,res){
+    console.log(req);
+});
+
 server.get('/500', function(req, res){
     throw new Error('This is a 500 Error');
 });
