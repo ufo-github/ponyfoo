@@ -32,7 +32,7 @@
         runEditors();
 
         var input = $('#entry-title'),
-            title = $('.blog-entry-title', $('#entry-editor'));
+            title = $('.blog-entry-title', $('.entry-writing'));
 
         input.on('keydown keypress paste', function(){
             setTimeout(function() {
