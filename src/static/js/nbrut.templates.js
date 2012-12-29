@@ -20,7 +20,8 @@
             };
 
         function add(template) {
-            var settings = {};
+            var settings = {},
+                trigger;
 
             $.extend(settings, defaults, template);
 
@@ -32,8 +33,12 @@
             templates[settings.key] = settings;
             keys[settings.alias] = settings.key;
 
-            $(settings.trigger).on('click', function(){
-                activate(settings.key);
+            trigger = $(settings.trigger);
+            trigger.on('mousedown', function(e){
+                if(e.which === 1){
+                    activate(settings.key);
+                    e.preventDefault();
+                }
             });
         }
 

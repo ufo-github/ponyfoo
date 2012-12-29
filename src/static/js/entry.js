@@ -40,6 +40,8 @@
                 title.text(value);
             }, 0);
         });
+
+        input.focus();
     }
 
     nbrut.tt.add({
