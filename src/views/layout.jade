@@ -16,6 +16,7 @@ html(lang='en')
     link(rel='stylesheet', href='/css/design.css')
     link(rel='stylesheet', href='/css/markdown.css')
     link(rel='stylesheet', href='/css/prettify.css')
+    link(rel='stylesheet', href='/css/entry.css')
 
   body
     header.layout-header
@@ -24,12 +25,12 @@ html(lang='en')
 
     aside#sidebar
       nav
-        a.button#post-entry='Post Entry'
+        a.button#write-entry='Write Entry'
 
     section#content
 
     block templates
-      include templates/markdown
+      include templates/entry
 
     block footer
       footer
@@ -45,4 +46,4 @@ html(lang='en')
         script(src='/js/nbrut.extensions.js')
         script(src='/js/nbrut.core.js')
         script(src='/js/nbrut.templates.js')
-        script(src='/js/markdown.js')
+        script(src='/js/entry.js')

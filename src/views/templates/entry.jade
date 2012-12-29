@@ -1,8 +1,8 @@
-section#markdown-template.template(data-class='markdown-entry')
-    form#markdown-editor(method='POST',action='/entry')
-        p
+section#entry-template.template
+    form#entry-editor(method='POST',action='/entry')
+        div#entry-title-editor
             label(for='entry-title')='Title'
-            input(type='text',name='entry-title')
+            input#entry-title(type='text',name='entry-title')
 
         div#wmd-button-bar-brief.wmd-button-bar
         div

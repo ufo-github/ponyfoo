@@ -28,10 +28,24 @@
         text.run();
     }
 
+    function onAfterActivate(){
+        runEditors();
+
+        var input = $('#entry-title'),
+            title = $('.blog-entry-title', $('#entry-editor'));
+
+        input.on('keydown keypress paste', function(){
+            setTimeout(function() {
+                var value = input.val();
+                title.text(value);
+            }, 0);
+        });
+    }
+
     nbrut.tt.add({
-        key: 'markdown-input',
-        trigger: '#post-entry',
-        source: '#markdown-template',
-        onAfterActivate: runEditors
+        key: 'entry-editor',
+        trigger: '#write-entry',
+        source: '#entry-template',
+        onAfterActivate: onAfterActivate
     });
 }(window,Markdown,nbrut);

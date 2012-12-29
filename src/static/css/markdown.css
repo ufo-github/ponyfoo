@@ -6,7 +6,7 @@
 .wmd-button-bar {
   height: 25px;
   width: 660px;
-  margin: 10px 0px 1px 0px;
+  margin: 10px 0px 2px 0px;
 }
 .wmd-button {
   width: 20px;
@@ -63,7 +63,4 @@
 }
 .wmd-prompt-dialog form {
   text-align: center;
-}
-#markdown-editor {
-  margin: 0 auto;
 }
