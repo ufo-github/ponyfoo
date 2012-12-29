@@ -4,7 +4,6 @@
             keys = {},
             active = [],
             defaults = {
-                key: 'home',
                 container: '#content',
                 initialized: false,
                 initialize: $.noop,
@@ -69,9 +68,9 @@
             }
 
             if(template.container in active) {
-                if(active[template.container] === template) {
+                if(active[template.container] === template) { // already active.
                     if(!template.selfCleanup){
-                        return; // already active.
+                        return;
                     }
                     soft = true; // don't push history state.
                 } else {
@@ -124,6 +123,8 @@
         function init(){
             $(function(){
                 $(window).on('popstate', function(e){
+                    ready = true;
+
                     if (e.originalEvent === undefined || e.originalEvent.state === null){
                         key = keys[document.location.pathname];
                     } else {
@@ -132,7 +133,9 @@
                     activate(key, true);
                 });
 
-                $(window).trigger("popstate"); // manual trigger fixes an issue with Firefox.
+                if ($.browser.mozilla) { // manual trigger fixes an inconsistency in Firefox.
+                    $(window).trigger('popstate');
+                }
             });
         };
 

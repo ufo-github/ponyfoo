@@ -10,3 +10,8 @@ div.grippie {
 div.grippie:active {
   border-color: #cbc5c0;
 }
+textarea.resizing {
+  color: #fff;
+  background-color: #412917;
+  opacity: 0.5;
+}

@@ -12,7 +12,7 @@
     function getEditor(converter, postfix) {
         var editor = new Markdown.Editor(converter, postfix);
 
-        editor.hooks.chain('onPreviewRefresh', function () {
+        editor.hooks.chain('onPreviewRefresh', function (e) {
             prettyPrint();
         });
 
@@ -34,7 +34,7 @@
         $('textarea:not(.processed)').TextAreaResizer();
 
         var input = $('#entry-title'),
-            title = $('.blog-entry-title', $('.entry-writing'));
+            title = $('.blog-entry-title h1', $('.entry-writing'));
 
         input.on('keydown keypress paste', function(){
             setTimeout(function() {

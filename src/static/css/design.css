@@ -41,7 +41,6 @@ textarea:focus {
 ----------------------------------------------------------*/
 h1.layout-heading {
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
-  font-weight: bold;
   font-size: 2.4em;
   color: #412917;
 }
@@ -150,12 +149,4 @@ input[type=submit]:hover {
 input[type=button],
 input[type=submit] {
   padding: 5px 6px;
-}
-#content h1 {
-  margin-bottom: 15px;
-  padding-bottom: 6px;
-  color: #412917;
-  font-weight: bold;
-  font-size: 1.2em;
-  border-bottom: 1px solid #cbc5c0;
 }
