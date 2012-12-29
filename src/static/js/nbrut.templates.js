@@ -1,27 +1,39 @@
-!function (nbrut, $, undefined) {
+!function (nbrut, window, $, undefined) {
     var templating = function () {
-        var templates = {};
-        var active = [];
-
-        var defaults = {
-            container: '#content',
-            initializeTemplate: $.noop,
-            onAfterActivate: $.noop
-        };
-
-        function add(template) {
-            templates[template.key] = {
-                key: template.key,
-                trigger: template.trigger,
-                dom: read(template),
-                container: template.container || defaults.container,
+        var templates = {},
+            keys = {},
+            active = [],
+            defaults = {
+                key: 'home',
+                container: '#content',
                 initialized: false,
-                initialize: template.initialize || defaults.initializeTemplate,
-                onAfterActivate: template.onAfterActivate || defaults.onAfterActivate
+                initialize: $.noop,
+                onAfterActivate: $.noop,
+                title: {
+                    value: 'Code Rant',
+                    formatted: false
+                }
+            },
+            titleSettings = {
+                tag: $('title'),
+                format: '{0} - Code Rant'
             };
 
-            $(template.trigger).on('click', function(){
-                activate(template.key);
+        function add(template) {
+            var settings = {};
+
+            $.extend(settings, defaults, template);
+
+            if(settings.key in templates){
+                throw new Error('template key not unique.');
+            }
+            read(settings);
+
+            templates[settings.key] = settings;
+            keys[settings.alias] = settings.key;
+
+            $(settings.trigger).on('click', function(){
+                activate(settings.key);
             });
         }
 
@@ -33,13 +45,13 @@
             var css = s.data('class');
             var html = s.remove().html();
 
-            return {
+            template.dom = {
                 html: html,
                 css: css
             };
         }
 
-        function activate(key) {
+        function activate(key, soft) { // soft: don't push history state.
             var template = templates[key];
             if (template === undefined) {
                 throw new Error('template not registered.');
@@ -58,7 +70,7 @@
                 }
             }
 
-            activateTemplate(template); // set-up.
+            activateTemplate(template, soft); // set-up.
 
             template.onAfterActivate();
         }
@@ -70,7 +82,7 @@
             }
         }
 
-        function activateTemplate(template){
+        function activateTemplate(template, soft){
             var c = $(template.container);
             if (c.length !== 1){
                 throw new Error('template container not unique.');
@@ -78,7 +90,40 @@
             c.html(template.dom.html);
             c.attr('class',template.dom.css);
             active[template.container] = template;
+
+            if (template.container === defaults.container){
+                var title = setTitle(template.title);
+
+                if(!soft){
+                    history.pushState(template.key, title, template.alias);
+                }
+            }
         }
+
+        function setTitle(title){
+            var use;
+
+            if(title.formatted){
+                use = titleSettings.format.format(title.value);
+            } else {
+                use = title.value;
+            }
+            titleSettings.tag.text(use);
+            return use;
+        }
+
+        $(function(){
+            $(window).on('popstate', function(e){
+                if (e.originalEvent === undefined || e.originalEvent.state === null){
+                    key = keys[document.location.pathname];
+                } else {
+                    key = e.originalEvent.state;
+                }
+                activate(key, true);
+            });
+
+            $(window).trigger("popstate"); // manual trigger fixes an issue with Firefox.
+        });
 
         return {
             add: add,
@@ -88,4 +133,4 @@
     }();
 
     nbrut.tt = templating;
-}(nbrut, jQuery);
+}(nbrut, window, jQuery);

@@ -24,25 +24,29 @@ server.configure(function(){
 // setup error handler
 server.error(function(err, req, res, next){
     if (err instanceof NotFound) {
-        res.render('404.jade', { locals: { 
-                  title : '404 - Not Found'
-                 ,description: ''
-                 ,author: ''
-        },status: 404 });
+        res.render('404.jade', {
+            locals: {
+                title : '404 - Not Found',
+                description: '',
+                author: ''
+            }, status: 404
+        });
     } else {
-        res.render('500.jade', { locals: {
-                  title : 'The Server Encountered an Error'
-                 ,description: ''
-                 ,author: ''
-                 ,error: err
-                },status: 500 });
+        res.render('500.jade', {
+            locals: {
+              title : 'The Server Encountered an Error',
+                description: '',
+                author: '',
+                error: err
+            }, status: 500
+        });
     }
 });
 
 server.listen(port);
 
 // routing
-server.get('/', function(req,res){
+server.get('/*', function(req,res){
     res.render('index.jade');
 });
 
@@ -60,4 +64,4 @@ function NotFound(msg){
     Error.captureStackTrace(this, arguments.callee);
 }
 
-console.log('Listening on http://localhost:' + port );
+console.log('Listening on port ' + port );

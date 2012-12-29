@@ -44,8 +44,10 @@
 
     nbrut.tt.add({
         key: 'entry-editor',
+        alias: '/write-entry',
         trigger: '#write-entry',
         source: '#entry-template',
+        title: { value: 'New Post', formatted: true },
         onAfterActivate: onAfterActivate
     });
 }(window,Markdown,nbrut);
