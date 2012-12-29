@@ -78,23 +78,37 @@ a, button, input[type=submit] {
   cursor: pointer;
 }
 
-button {
+a.button {
+  display: inline-block;
+  text-decoration: none;
+  line-height: normal;
+}
+
+button, a.button, input[type=button] {
   font-weight: bold;
   font-family: Interstate, Helvetica, Arial, sans-serif;
   font-size: 1.1em;
-  padding: 10px 12px;
 
   color: #fff;
-  text-shadow: 0 1px @secondary_strong;
 
   .box-radius(3px);
   .box-transition(all 0.2s ease-out);
+}
+
+button, a.button, input[type=button] {
+  padding: 10px 12px;
+
+  text-shadow: 0 1px @secondary_strong;
 
   border: 1px solid @secondary_light*0.95;
   background-color: @secondary_moderate*1.05;
 }
 
-button:hover {
+button:hover, a.button:hover, input[type=button]:hover {
   border: 1px solid @secondary_light;
   background-color: @secondary_light*1.15;
+}
+
+input[type=button] {
+  padding: 5px 6px;
 }

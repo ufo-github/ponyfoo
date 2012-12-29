@@ -26,7 +26,7 @@
 
         link: "Hyperlink <a> Ctrl+L",
         linkdescription: "enter link description here",
-        linkdialog: "<p><b>Insert Hyperlink</b></p><p>http://example.com/ \"optional title\"</p>",
+        linkdialog: '<p class="wmd-prompt-title">Insert Hyperlink</p><p>http://example.com/ "optional title"</p>',
 
         quote: "Blockquote <blockquote> Ctrl+Q",
         quoteexample: "Blockquote",
@@ -36,7 +36,7 @@
 
         image: "Image <img> Ctrl+G",
         imagedescription: "enter image description here",
-        imagedialog: "<p><b>Insert Image</b></p><p>http://example.com/images/diagram.jpg \"optional title\"<br><br>Need <a href='http://www.google.com/search?q=free+image+hosting' target='_blank'>free image hosting?</a></p>",
+        imagedialog: '<p class="wmd-prompt-title">Insert Image</p><p>http://example.com/images/diagram.jpg "optional title"</p>',
 
         olist: "Numbered List <ol> Ctrl+O",
         ulist: "Bulleted List <ul> Ctrl+U",
@@ -90,7 +90,7 @@
     // - run() actually starts the editor; should be called after all necessary plugins are registered. Calling this more than once is a no-op.
     // - refreshPreview() forces the preview to be updated. This method is only available after run() was called.
     Markdown.Editor = function (markdownConverter, idPostfix, options) {
-        
+
         options = options || {};
 
         if (typeof options.handler === "function") { //backwards compatible behavior
@@ -1023,9 +1023,9 @@
 
         var background = doc.createElement("div"),
             style = background.style;
-        
+
         background.className = "wmd-prompt-background";
-        
+
         style.position = "absolute";
         style.top = "0";
 
@@ -1122,19 +1122,12 @@
             // The dialog text.
             var question = doc.createElement("div");
             question.innerHTML = text;
-            question.style.padding = "5px";
             dialog.appendChild(question);
 
             // The web form container for the text box and buttons.
             var form = doc.createElement("form"),
                 style = form.style;
             form.onsubmit = function () { return close(false); };
-            style.padding = "0";
-            style.margin = "0";
-            style.cssFloat = "left";
-            style.width = "100%";
-            style.textAlign = "center";
-            style.position = "relative";
             dialog.appendChild(form);
 
             // The input text box
@@ -1155,7 +1148,6 @@
             style = okButton.style;
             style.margin = "10px";
             style.display = "inline";
-            style.width = "7em";
 
 
             // The cancel button
@@ -1166,7 +1158,6 @@
             style = cancelButton.style;
             style.margin = "10px";
             style.display = "inline";
-            style.width = "7em";
 
             form.appendChild(okButton);
             form.appendChild(cancelButton);
@@ -1716,7 +1707,7 @@
 
         }
         else {
-            
+
             // We're moving start and end tag back into the selection, since (as we're in the else block) we're not
             // *removing* a link, but *adding* one, so whatever findTags() found is now back to being part of the
             // link text. linkEnteredCallback takes care of escaping any brackets.
@@ -1754,7 +1745,7 @@
                     // would mean a zero-width match at the start. Since zero-width matches advance the string position,
                     // the first bracket could then not act as the "not a backslash" for the second.
                     chunk.selection = (" " + chunk.selection).replace(/([^\\](?:\\\\)*)(?=[[\]])/g, "$1\\").substr(1);
-                    
+
                     var linkDef = " [999]: " + properlyEncoded(link);
 
                     var num = that.addLinkDef(chunk, linkDef);
@@ -1796,7 +1787,7 @@
         chunk.before = chunk.before.replace(/(\n|^)[ ]{0,3}([*+-]|\d+[.])[ \t]*\n$/, "\n\n");
         chunk.before = chunk.before.replace(/(\n|^)[ ]{0,3}>[ \t]*\n$/, "\n\n");
         chunk.before = chunk.before.replace(/(\n|^)[ \t]+\n$/, "\n\n");
-        
+
         // There's no selection, end the cursor wasn't at the end of the line:
         // The user wants to split the current list item / code line / blockquote line
         // (for the latter it doesn't really matter) in two. Temporarily select the
@@ -1824,7 +1815,7 @@
                 commandMgr.doCode(chunk);
             }
         }
-        
+
         if (fakeSelection) {
             chunk.after = chunk.selection + chunk.after;
             chunk.selection = "";

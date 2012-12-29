@@ -1,90 +1,69 @@
 .wmd-button-row {
-    position: relative;
-    padding: 0px;
-    height: 20px;
-    margin: 0;
+  padding: 0px;
+  height: 20px;
+  margin: 0;
 }
-
 .wmd-button-bar {
-    height: 25px;
-    width: 660px;
-    background-color: #fff;
-    margin: 10px 0px 1px 0px;
+  height: 25px;
+  width: 660px;
+  margin: 10px 0px 1px 0px;
 }
-
 .wmd-button {
-    width: 20px;
-    height: 20px;
-    padding-left: 2px;
-    padding-right: 3px;
-    position: absolute;
-    display: inline-block;
-    list-style: none;
-    cursor: pointer;
+  width: 20px;
+  height: 20px;
+  padding-left: 2px;
+  padding-right: 3px;
+  display: inline-block;
+  list-style: none;
+  cursor: pointer;
+  border: 2px solid transparent;
 }
-
+.wmd-button:hover {
+  border-top: 2px solid #cbc5c0;
+  border-left: 2px solid #cbc5c0;
+}
 .wmd-button > span {
-    background-image: url('/images/wmd-buttons.png');
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
+  background-image: url('/images/wmd-buttons.png');
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
 }
-
-.wmd-button-bar .wmd-spacer1 {
-  left: 50px;
-}
-.wmd-button-bar .wmd-spacer2 {
-  left: 175px;
-}
-.wmd-button-bar .wmd-spacer3 {
-  left: 300px;
-}
-
 .wmd-spacer {
-    width: 1px;
-    height: 20px;
-    margin-left: 14px;
-    position: absolute;
-    background-color: silver;
-    display: inline-block;
-    list-style: none;
+  width: 1px;
+  height: 20px;
+  margin: 0 6px;
+  background-color: silver;
+  display: inline-block;
+  list-style: none;
 }
-
 .wmd-input {
-     width: 660px;
-     min-height: 200px;
-     line-height: 1.2;
- }
-
-/* TODO: improve prompt styles */
+  width: 660px;
+  min-height: 200px;
+  line-height: 1.2;
+}
 .wmd-prompt-background {
-    background-color: Black;
+  background-color: #000;
 }
-
 .wmd-prompt-dialog {
-    border: 1px solid #999999;
-    background-color: #F5F5F5;
+  border: 1px solid #cbc5c0;
+  background-color: #eaeadf;
+  padding: 12px;
 }
-
-.wmd-prompt-dialog > div {
-    font-size: 0.8em;
-    font-family: arial, helvetica, sans-serif;
+.wmd-prompt-dialog p {
+  margin-bottom: 15px;
 }
-
-.wmd-prompt-dialog > form > input[type="text"] {
-    border: 1px solid #999999;
-    color: black;
+.wmd-prompt-title {
+  padding-bottom: 6px;
+  color: #412917;
+  font-weight: bold;
+  font-size: 1.2em;
+  border-bottom: 1px solid #cbc5c0;
 }
-
-.wmd-prompt-dialog > form > input[type="button"]{
-    border: 1px solid #888888;
-    font-family: trebuchet MS, helvetica, sans-serif;
-    font-size: 0.8em;
-    font-weight: bold;
+.wmd-prompt-dialog form {
+  text-align: center;
 }
-
 #markdown-editor {
-    margin: 0 auto;
+  margin: 0 auto;
 }
