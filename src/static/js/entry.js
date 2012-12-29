@@ -31,6 +31,8 @@
     function onAfterActivate(){
         runEditors();
 
+        $('textarea:not(.processed)').TextAreaResizer();
+
         var input = $('#entry-title'),
             title = $('.blog-entry-title', $('.entry-writing'));
 

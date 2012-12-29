@@ -1,4 +1,4 @@
-Code Rant begins
+Code Rant begins (25/12/2012)
 ================
 
 As I start writing this post, I set out with a purpose. To write a micro-blogging engine. The language of choice is _Node.JS_. I chose this language because I want to see how I fare in light of new horizons...
@@ -15,10 +15,10 @@ This time instead, I'm eager to launch a minimal version of the site online _as 
 
 I come from a strong _C#_ background, although I consider myself to have a pretty decent front-end skillset as well; I figure this will help immensely as I delve into _Node.JS_. I already took care of a few fundamental decisions, which I expect to be able to fulfill:
 
-- [_Node.JS_](http://www.youtube.com/watch?v=jo_B4LTHi3I "Introduction to Node.JS") on the server-side.
-- [_MongoDB_](http://www.youtube.com/watch?v=tFp9pZ6U0PE "Introduction to MongoDB") as the database of choice.
+- [**Node.JS**](http://www.youtube.com/watch?v=jo_B4LTHi3I "Introduction to Node.JS") on the server-side.
+- [**MongoDB**](http://www.youtube.com/watch?v=tFp9pZ6U0PE "Introduction to MongoDB") as the database of choice.
 - _Javascript_ on the client-side.
-- [_Markdown_](http://daringfireball.net/projects/markdown/ "Introduction to Markdown") will be used to _write_ and _display_ blog posts.
+- [**Markdown**](http://daringfireball.net/projects/markdown/ "Introduction to Markdown") will be used to _write_ and _display_ blog posts.
 
 I decided on _Node.JS_ in the back-end because even though it's an entirely _new_ language to me, I sense it will feel familiar working with it, given my past _front-end inclination_. _MongoDB_ felt natural to me, as I find the idea of using _JSON_ across every single layer **very** appealing.
 
