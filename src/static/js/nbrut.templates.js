@@ -12,7 +12,8 @@
                 title: {
                     value: 'Code Rant',
                     formatted: false
-                }
+                },
+                selfCleanup: true
             },
             titleSettings = {
                 tag: $('title'),
@@ -34,10 +35,10 @@
             keys[settings.alias] = settings.key;
 
             trigger = $(settings.trigger);
-            trigger.on('mousedown', function(e){
-                if(e.which === 1){
+            trigger.on('click', function(e){
+                if (e.which === 1){ // left-click
                     activate(settings.key);
-                    e.preventDefault();
+                    return false;
                 }
             });
         }
@@ -69,7 +70,10 @@
 
             if(template.container in active) {
                 if(active[template.container] === template) {
-                    return; // already active.
+                    if(!template.selfCleanup){
+                        return; // already active.
+                    }
+                    soft = true; // don't push history state.
                 } else {
                     deactivateContainer(template.container); // clean-up.
                 }
@@ -82,7 +86,7 @@
 
         function deactivateContainer(container) {
             if(container in active){
-                $(container).empty();
+                $(container).empty().off();
                 active.splice(active.indexOf(container), 1);
             }
         }
@@ -117,20 +121,23 @@
             return use;
         }
 
-        $(function(){
-            $(window).on('popstate', function(e){
-                if (e.originalEvent === undefined || e.originalEvent.state === null){
-                    key = keys[document.location.pathname];
-                } else {
-                    key = e.originalEvent.state;
-                }
-                activate(key, true);
-            });
+        function init(){
+            $(function(){
+                $(window).on('popstate', function(e){
+                    if (e.originalEvent === undefined || e.originalEvent.state === null){
+                        key = keys[document.location.pathname];
+                    } else {
+                        key = e.originalEvent.state;
+                    }
+                    activate(key, true);
+                });
 
-            $(window).trigger("popstate"); // manual trigger fixes an issue with Firefox.
-        });
+                $(window).trigger("popstate"); // manual trigger fixes an issue with Firefox.
+            });
+        };
 
         return {
+            init: init,
             add: add,
             activate: activate,
             deactivate: deactivateContainer

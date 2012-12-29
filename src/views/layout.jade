@@ -31,27 +31,26 @@ html(lang='en')
 
     section#content
 
-    block templates
-      include templates/404
-      include templates/blog
-      include templates/entry
+    include templates/404
+    include templates/blog
+    include templates/entry
 
-    block footer
-      footer
-        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
-        script
-          window.jQuery || document.write('<script src="/js/libs/jquery-1.8.3.min.js"><\\/script>')
+    footer
+      script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
+      script
+        window.jQuery || document.write('<script src="/js/libs/jquery-1.8.3.min.js"><\\/script>')
 
-        script(src='/js/libs/jquery.textarearesizer.min.js')
-        script(src='/js/libs/Markdown.Converter.js')
-        script(src='/js/libs/Markdown.Sanitizer.js')
-        script(src='/js/libs/Markdown.Editor.js')
-        script(src='/js/libs/prettify.js')
+      script(src='/js/libs/jquery.textarearesizer.min.js')
+      script(src='/js/libs/Markdown.Converter.js')
+      script(src='/js/libs/Markdown.Sanitizer.js')
+      script(src='/js/libs/Markdown.Editor.js')
+      script(src='/js/libs/prettify.js')
 
-        script(src='/js/nbrut.extensions.js')
-        script(src='/js/nbrut.core.js')
-        script(src='/js/nbrut.templates.js')
+      script(src='/js/nbrut.extensions.js')
+      script(src='/js/nbrut.core.js')
+      script(src='/js/nbrut.templates.js')
+      script(src='/js/nbrut.init.js')
 
-        script(src='/js/404.js')
-        script(src='/js/blog.js')
-        script(src='/js/entry.js')
+      script(src='/js/404.js')
+      script(src='/js/blog.js')
+      script(src='/js/entry.js')
