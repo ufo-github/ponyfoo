@@ -1,0 +1,59 @@
+pre.prettyprint {
+  /* code blocks */
+
+  background-color: #2a211c;
+  color: #bdae9d;
+  -webkit-border-radius: 4px;
+  /* Saf3-4, iOS 1-3.2, Android ≤1.6 */
+
+  -moz-border-radius: 4px;
+  /* FF1-3.6 */
+
+  border-radius: 4px;
+  /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
+
+  /* useful if you don't want a bg color from leaking outside the border: */
+
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid #cbc5c0;
+}
+pre.prettyprint .highlight {
+  background-color: #4b3c34;
+}
+.str {
+  color: #fff;
+}
+/* string literals */
+.com {
+  color: #408080;
+}
+/* comments */
+.lit {
+  color: #80ff80;
+}
+/* literals, such as numbers */
+.pun {
+  color: #aa9680;
+}
+/* punctuation */
+.tag {
+  color: #ff8080;
+}
+/* html tags */
+.typ {
+  color: #e5c138;
+}
+/* keywords */
+code.prettyprint {
+  /* snippets */
+
+  background-color: #cbc5c0;
+  padding: 1px 4px;
+}
+code.prettyprint .str {
+  color: #408080;
+  /* deal with contrast issues */
+
+}
