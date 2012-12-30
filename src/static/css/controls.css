@@ -15,3 +15,285 @@ textarea.resizing {
   background-color: #412917;
   opacity: 0.5;
 }
+/* SPINNER
+ ************/
+.spinner {
+  font-size: 100px;
+  width: 1em;
+  height: 1em;
+  position: relative;
+  margin: 100px auto;
+  border-radius: 50%;
+  border: .01em solid #969696;
+  list-style: none;
+}
+.spinner li {
+  position: absolute;
+  width: .2em;
+  height: .2em;
+  border-radius: 50%;
+}
+.spinner li:nth-child(1) {
+  background: #412917;
+  left: 50%;
+  top: 0;
+  margin: 0 0 0 -0.1em;
+  -webkit-transform-origin: 50% 250%;
+  -moz-transform-origin: 50% 250%;
+  -ms-transform-origin: 50% 250%;
+  -o-transform-origin: 50% 250%;
+  transform-origin: 50% 250%;
+  -webkit-animation: spinner-rot 1.13s linear infinite, spinner-opc 3.67s ease-in-out infinite alternate;
+  -moz-animation: spinner-rot 1.13s linear infinite, spinner-opc 3.67s ease-in-out infinite alternate;
+  -ms-animation: spinner-rot 1.13s linear infinite, spinner-opc 3.67s ease-in-out infinite alternate;
+  -o-animation: spinner-rot 1.13s linear infinite, spinner-opc 3.67s ease-in-out infinite alternate;
+  animation: spinner-rot 1.13s linear infinite, spinner-opc 3.67s ease-in-out infinite alternate;
+}
+.spinner li:nth-child(2) {
+  background: #e92c6c;
+  top: 50%;
+  right: 0;
+  margin: -0.1em 0 0 0;
+  -webkit-transform-origin: -150% 50%;
+  -moz-transform-origin: -150% 50%;
+  -ms-transform-origin: -150% 50%;
+  -o-transform-origin: -150% 50%;
+  transform-origin: -150% 50%;
+  -webkit-animation: spinner-rot 1.86s linear infinite, spinner-opc 4.29s ease-in-out infinite alternate;
+  -moz-animation: spinner-rot 1.86s linear infinite, spinner-opc 4.29s ease-in-out infinite alternate;
+  -ms-animation: spinner-rot 1.86s linear infinite, spinner-opc 4.29s ease-in-out infinite alternate;
+  -o-animation: spinner-rot 1.86s linear infinite, spinner-opc 4.29s ease-in-out infinite alternate;
+  animation: spinner-rot 1.86s linear infinite, spinner-opc 4.29s ease-in-out infinite alternate;
+}
+.spinner li:nth-child(3) {
+  background: #fabe28;
+  left: 50%;
+  bottom: 0;
+  margin: 0 0 0 -0.1em;
+  -webkit-transform-origin: 50% -150%;
+  -moz-transform-origin: 50% -150%;
+  -ms-transform-origin: 50% -150%;
+  -o-transform-origin: 50% -150%;
+  transform-origin: 50% -150%;
+  -webkit-animation: spinner-rot 1.45s linear infinite, spinner-opc 5.12s ease-in-out infinite alternate;
+  -moz-animation: spinner-rot 1.45s linear infinite, spinner-opc 5.12s ease-in-out infinite alternate;
+  -ms-animation: spinner-rot 1.45s linear infinite, spinner-opc 5.12s ease-in-out infinite alternate;
+  -o-animation: spinner-rot 1.45s linear infinite, spinner-opc 5.12s ease-in-out infinite alternate;
+  animation: spinner-rot 1.45s linear infinite, spinner-opc 5.12s ease-in-out infinite alternate;
+}
+.spinner li:nth-child(4) {
+  background: #58af48;
+  top: 50%;
+  left: 0;
+  margin: -0.1em 0 0 0;
+  -webkit-transform-origin: 250% 50%;
+  -moz-transform-origin: 250% 50%;
+  -ms-transform-origin: 250% 50%;
+  -o-transform-origin: 250% 50%;
+  transform-origin: 250% 50%;
+  -webkit-animation: spinner-rot 1.72s linear infinite, spinner-opc 5.25s ease-in-out infinite alternate;
+  -moz-animation: spinner-rot 1.72s linear infinite, spinner-opc 5.25s ease-in-out infinite alternate;
+  -ms-animation: spinner-rot 1.72s linear infinite, spinner-opc 5.25s ease-in-out infinite alternate;
+  -o-animation: spinner-rot 1.72s linear infinite, spinner-opc 5.25s ease-in-out infinite alternate;
+  animation: spinner-rot 1.72s linear infinite, spinner-opc 5.25s ease-in-out infinite alternate;
+}
+@-webkit-keyframes spinner-rot {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner-rot {
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-ms-keyframes spinner-rot {
+  to {
+    -ms-transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner-rot {
+  to {
+    -o-transform: rotate(360deg);
+  }
+}
+@keyframes spinner-rot {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinner-opc {
+  12.0% {
+    opacity: 0.80;
+  }
+  19.5% {
+    opacity: 0.88;
+  }
+  37.2% {
+    opacity: 0.64;
+  }
+  40.5% {
+    opacity: 0.52;
+  }
+  52.7% {
+    opacity: 0.69;
+  }
+  60.2% {
+    opacity: 0.60;
+  }
+  66.6% {
+    opacity: 0.52;
+  }
+  70.0% {
+    opacity: 0.63;
+  }
+  79.9% {
+    opacity: 0.60;
+  }
+  84.2% {
+    opacity: 0.75;
+  }
+  91.0% {
+    opacity: 0.87;
+  }
+}
+@-moz-keyframes spinner-opc {
+  12.0% {
+    opacity: 0.80;
+  }
+  19.5% {
+    opacity: 0.88;
+  }
+  37.2% {
+    opacity: 0.64;
+  }
+  40.5% {
+    opacity: 0.52;
+  }
+  52.7% {
+    opacity: 0.69;
+  }
+  60.2% {
+    opacity: 0.60;
+  }
+  66.6% {
+    opacity: 0.52;
+  }
+  70.0% {
+    opacity: 0.63;
+  }
+  79.9% {
+    opacity: 0.60;
+  }
+  84.2% {
+    opacity: 0.75;
+  }
+  91.0% {
+    opacity: 0.87;
+  }
+}
+@-ms-keyframes spinner-opc {
+  12.0% {
+    opacity: 0.80;
+  }
+  19.5% {
+    opacity: 0.88;
+  }
+  37.2% {
+    opacity: 0.64;
+  }
+  40.5% {
+    opacity: 0.52;
+  }
+  52.7% {
+    opacity: 0.69;
+  }
+  60.2% {
+    opacity: 0.60;
+  }
+  66.6% {
+    opacity: 0.52;
+  }
+  70.0% {
+    opacity: 0.63;
+  }
+  79.9% {
+    opacity: 0.60;
+  }
+  84.2% {
+    opacity: 0.75;
+  }
+  91.0% {
+    opacity: 0.87;
+  }
+}
+@-o-keyframes spinner-opc {
+  12.0% {
+    opacity: 0.80;
+  }
+  19.5% {
+    opacity: 0.88;
+  }
+  37.2% {
+    opacity: 0.64;
+  }
+  40.5% {
+    opacity: 0.52;
+  }
+  52.7% {
+    opacity: 0.69;
+  }
+  60.2% {
+    opacity: 0.60;
+  }
+  66.6% {
+    opacity: 0.52;
+  }
+  70.0% {
+    opacity: 0.63;
+  }
+  79.9% {
+    opacity: 0.60;
+  }
+  84.2% {
+    opacity: 0.75;
+  }
+  91.0% {
+    opacity: 0.87;
+  }
+}
+@keyframes spinner-opc {
+  12.0% {
+    opacity: 0.80;
+  }
+  19.5% {
+    opacity: 0.88;
+  }
+  37.2% {
+    opacity: 0.64;
+  }
+  40.5% {
+    opacity: 0.52;
+  }
+  52.7% {
+    opacity: 0.69;
+  }
+  60.2% {
+    opacity: 0.60;
+  }
+  66.6% {
+    opacity: 0.52;
+  }
+  70.0% {
+    opacity: 0.63;
+  }
+  79.9% {
+    opacity: 0.60;
+  }
+  84.2% {
+    opacity: 0.75;
+  }
+  91.0% {
+    opacity: 0.87;
+  }
+}

@@ -7,16 +7,20 @@
         return new Markdown.Editor(converter, postfix);
     }
 
+    function reformatMarkdown(container){
+        container.find('a').anchorSEO();
+        container.find('pre, code:not(pre code)').addClass('prettyprint');
+        prettyPrint();
+    }
+
     function runEditor(converter, postfix) {
         var editor = getEditor(converter, postfix),
             selector = '#wmd-preview' + postfix,
             preview = $(selector);
 
         editor.run();
-        editor.hooks.chain('onPreviewRefresh', function () {
-            preview.find('a').anchorSEO();
-            preview.find('pre, code:not(pre code)').addClass('prettyprint');
-            prettyPrint();
+        editor.hooks.chain('onPreviewRefresh', function(){
+            reformatMarkdown(preview);
         });
     }
 
@@ -33,7 +37,7 @@
         $('entry-writing textarea:not(.processed)').textareaResizer();
 
         var input = $('#entry-title'),
-            title = $('entry-writing .blog-entry-title h1');
+            title = $('.entry-writing .blog-entry-title h1');
 
         input.on('keydown keypress paste', function(){
             setTimeout(function() {

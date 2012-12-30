@@ -85,7 +85,7 @@
 
         function deactivateContainer(container) {
             if(container in active){
-                $(container).empty().off();
+                $(container).removeClass().empty().off();
                 active.splice(active.indexOf(container), 1);
             }
         }
@@ -96,7 +96,7 @@
                 throw new Error('template container not unique.');
             }
             c.html(template.dom.html);
-            c.attr('class',template.dom.css);
+            c.addClass(template.dom.css);
             active[template.container] = template;
 
             if (template.container === defaults.container){
@@ -137,7 +137,7 @@
                     $(window).trigger('popstate');
                 }
             });
-        };
+        }
 
         return {
             init: init,

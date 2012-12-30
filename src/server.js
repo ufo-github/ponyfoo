@@ -38,7 +38,12 @@ server.get('/*', function(req,res){
 });
 
 server.post('/write-entry', function(req,res){
-    console.log(req);
+    var entry = {
+        title: req.body['entry.title'],
+        brief: req.body['entry.brief'],
+        text: req.body['entry.text']
+    };
+    console.log(entry);
 });
 
 console.log('Listening on port ' + port );

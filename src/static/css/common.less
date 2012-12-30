@@ -7,6 +7,7 @@
 @secondary_light: #58af48;
 @secondary_moderate: #67b053;
 @secondary_strong: #429334;
+@auxiliary: #fabe28;
 @pink: #e92c6c;
 
 .box-gradient(@top, @bottom) {
@@ -41,4 +42,28 @@
   -moz-transition: @rule;  /* Firefox 4-15 */
   -o-transition: @rule;  /* Opera 10.5–12.00 */
   transition: @rule;  /* Firefox 16+, Opera 12.50+ */
+}
+
+.transform-origin(@x, @y){
+  -webkit-transform-origin: @x @y;
+  -moz-transform-origin: @x @y;
+  -ms-transform-origin: @x @y;
+  -o-transform-origin: @x @y;
+  transform-origin: @x @y;
+}
+
+.transform-to(@target){
+  -webkit-transform: rotate(@target);
+  -moz-transform: rotate(@target);
+  -ms-transform: rotate(@target);
+  -o-transform: rotate(@target);
+  transform: rotate(@target);
+}
+
+.animation(@first,@second){
+  -webkit-animation: @first, @second;
+  -moz-animation: @first, @second;
+  -ms-animation: @first, @second;
+  -o-animation: @first, @second;
+  animation: @first, @second;
 }
