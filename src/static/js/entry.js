@@ -1,40 +1,39 @@
 !function (window,Markdown,nbrut) {
     function getConverter() {
-        var converter = Markdown.getSanitizingConverter();
-
-        converter.hooks.chain('postConversion', function (text) {
-            return text.replace(/<pre>/gi, '<pre class="prettyprint">');
-        });
-
-        return converter;
+        return Markdown.getSanitizingConverter();
     }
 
-    function getEditor(converter, postfix) {
-        var editor = new Markdown.Editor(converter, postfix);
+    function getEditor(converter, postfix){
+        return new Markdown.Editor(converter, postfix);
+    }
 
-        editor.hooks.chain('onPreviewRefresh', function (e) {
+    function runEditor(converter, postfix) {
+        var editor = getEditor(converter, postfix),
+            selector = '#wmd-preview' + postfix,
+            preview = $(selector);
+
+        editor.run();
+        editor.hooks.chain('onPreviewRefresh', function () {
+            preview.find('a').anchorSEO();
+            preview.find('pre, code:not(pre code)').addClass('prettyprint');
             prettyPrint();
         });
-
-        return editor;
     }
 
     function runEditors(){
         var converter = getConverter();
-        var brief = getEditor(converter, '-brief');
-        var text = getEditor(converter, '-text');
 
-        brief.run();
-        text.run();
+        runEditor(converter, '-brief');
+        runEditor(converter, '-text');
     }
 
     function onAfterActivate(){
         runEditors();
 
-        $('textarea:not(.processed)').TextAreaResizer();
+        $('entry-writing textarea:not(.processed)').textareaResizer();
 
         var input = $('#entry-title'),
-            title = $('.blog-entry-title h1', $('.entry-writing'));
+            title = $('entry-writing .blog-entry-title h1');
 
         input.on('keydown keypress paste', function(){
             setTimeout(function() {

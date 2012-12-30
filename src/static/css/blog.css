@@ -35,6 +35,7 @@
 .blog-entry ul li {
   line-height: 1.6em;
   list-style-position: inside;
+  list-style-type: disc;
   list-style-type: hiragana-iroha;
 }
 .blog-entry ul li:before {
@@ -93,6 +94,10 @@
   left: 0;
   margin-bottom: 12px;
   margin-right: 12px;
+}
+.blog-entry a {
+  color: #e92c6c;
+  font-weight: bold;
 }
 .blog-entry {
   width: 1200px;
