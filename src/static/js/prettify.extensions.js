@@ -1,4 +1,4 @@
-!function (window, jQuery, prettyPrint) {
+!function (window, $) {
     function preProcessHighlights() {
         $('pre.prettyprint:not(.prettyprinted)').each(function () {
             var self = $(this).addClass('linenums'),
@@ -52,5 +52,5 @@
         var result = oldPrint.apply(this, arguments);
         postProcessHighlights(); // highlight lines.
         return result;
-    }
-}(window, jQuery, prettyPrint);
+    };
+}(window, jQuery);
