@@ -11,12 +11,16 @@ pre.prettyprint .highlight {
   background-color: #4b3c34;
 }
 
+pre.prettyprint ol.linenums li {
+  height: 1em; /* prevent empty lines from collapsing */
+}
+
 .str { color: #fff; } /* string literals */
-.com { color: #408080; } /* comments */
+.com { color: #e5c138; } /* comments */
 .lit { color: #80ff80; } /* literals, such as numbers */
 .pun { color: #aa9680; } /* punctuation */
 .tag { color: #ff8080; } /* html tags */
-.typ { color: #e5c138; } /* keywords */
+.typ { color: #408080; } /* keywords */
 
 code.prettyprint { /* snippets */
   background-color: @border;

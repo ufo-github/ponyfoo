@@ -38,6 +38,7 @@ server.get('/*', function(req,res){
 });
 
 server.post('/write-entry', function(req,res){
+    // todo ajax way !
     var entry = {
         title: req.body['entry.title'],
         brief: req.body['entry.brief'],

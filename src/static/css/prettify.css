@@ -27,7 +27,7 @@ pre.prettyprint .highlight {
 }
 /* string literals */
 .com {
-  color: #408080;
+  color: #e5c138;
 }
 /* comments */
 .lit {
@@ -43,7 +43,7 @@ pre.prettyprint .highlight {
 }
 /* html tags */
 .typ {
-  color: #e5c138;
+  color: #408080;
 }
 /* keywords */
 code.prettyprint {
