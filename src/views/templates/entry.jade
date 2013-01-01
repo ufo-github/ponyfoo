@@ -2,7 +2,7 @@ section#entry-template.template(data-class='entry-writing')
   section#entry-editor
     div#entry-title-editor
       label(for='entry-title')='Title'
-      input#entry-title(type='text',name='entry.title')
+      input#entry-title(type='text')
 
     div#wmd-button-bar-brief.wmd-button-bar
     div
@@ -20,6 +20,6 @@ section#entry-template.template(data-class='entry-writing')
     section#wmd-preview-text.blog-entry-text.blog-entry-body
 
   div#entry-editor-buttons
-    button
+    button#submit-entry
       include ../partials/spinner.jade
-      span='Post'
+      span(data-text='Post', data-text-disabled='Posting...')

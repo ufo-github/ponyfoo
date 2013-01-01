@@ -13,8 +13,6 @@ server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
     server.use(connect.bodyParser());
-    server.use(express.cookieParser());
-    server.use(express.session({ secret: "shhhhhhhhh!"}));
     server.use(express.favicon(__dirname + '/favicon.ico'));
     server.use(express.compiler({ src: _static, enable: ['less'] }))
     server.use(connect.static(_static));
@@ -38,13 +36,8 @@ server.get('/*', function(req,res){
 });
 
 server.post('/write-entry', function(req,res){
-    // todo ajax way !
-    var entry = {
-        title: req.body['entry.title'],
-        brief: req.body['entry.brief'],
-        text: req.body['entry.text']
-    };
-    console.log(entry);
+    console.log(req.body.entry);
+    res.end();
 });
 
 console.log('Listening on port ' + port );

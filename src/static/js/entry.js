@@ -39,7 +39,7 @@
         }
     }
 
-    function onAfterActivate(){
+    function prepareEditor() {
         runEditors();
 
         $('.entry-writing textarea:not(.processed)').textareaResizer();
@@ -56,6 +56,29 @@
         });
         input.focus();
         updateTitleClass(title, '');
+    }
+
+    function onAfterActivate(){
+        prepareEditor();
+
+        var submit = $('#submit-entry'),
+            title = $('#entry-title'),
+            brief = $('#wmd-input-brief'),
+            text = $('#wmd-input-text');
+
+        nbrut.ui.stateButton(submit, function(restore){
+            $.ajax({
+                data: {
+                    entry: {
+                        title: title.val(),
+                        brief: brief.val(),
+                        text: text.val()
+                    }
+                }
+            }).done(function(res){
+                restore(1000);
+            });
+        });
     }
 
     nbrut.tt.add({
