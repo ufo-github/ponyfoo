@@ -31,8 +31,10 @@ html(lang='en')
         a.button#write-entry(href='/write-entry')='Write Entry'
 
     section#content
+      include partials/spinner
 
     include templates/404
+    include templates/loader
     include templates/blog
     include templates/entry
 
