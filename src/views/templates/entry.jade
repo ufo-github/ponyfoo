@@ -1,23 +1,23 @@
 section#entry-template.template(data-class='entry-writing')
-    form#entry-editor(method='POST',action='/write-entry')
-      div#entry-title-editor
-        label(for='entry-title')='Title'
-        input#entry-title(type='text',name='entry.title')
+  section#entry-editor
+    div#entry-title-editor
+      label(for='entry-title')='Title'
+      input#entry-title(type='text',name='entry.title')
 
-      div#wmd-button-bar-brief.wmd-button-bar
-      div
-        textarea#wmd-input-brief.wmd-input.entry-brief(name='entry.brief')
+    div#wmd-button-bar-brief.wmd-button-bar
+    div
+      textarea#wmd-input-brief.wmd-input.entry-brief(name='entry.brief')
 
-      div#wmd-button-bar-text.wmd-button-bar
-      div
-        textarea#wmd-input-text.wmd-input.entry-text(name='entry.text')
+    div#wmd-button-bar-text.wmd-button-bar
+    div
+      textarea#wmd-input-text.wmd-input.entry-text(name='entry.text')
 
-      article.blog-entry
-        header.blog-entry-title
-          h1
+  article#entry-preview.blog-entry
+    header.blog-entry-title
+      h1
 
-        section#wmd-preview-brief.blog-entry-brief.blog-entry-body
-        section#wmd-preview-text.blog-entry-text.blog-entry-body
+    section#wmd-preview-brief.blog-entry-brief.blog-entry-body
+    section#wmd-preview-text.blog-entry-text.blog-entry-body
 
-      div#entry-editor-buttons
-        input(type='submit',value='Post')
+  div#entry-editor-buttons
+    input(type='submit',value='Post')

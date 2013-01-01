@@ -31,10 +31,18 @@
         runEditor(converter, '-text');
     }
 
+    function updateTitleClass(title, value){
+        if(value.length === 0){
+            title.addClass('empty');
+        }else{
+            title.removeClass('empty');
+        }
+    }
+
     function onAfterActivate(){
         runEditors();
 
-        $('entry-writing textarea:not(.processed)').textareaResizer();
+        $('.entry-writing textarea:not(.processed)').textareaResizer();
 
         var input = $('#entry-title'),
             title = $('.entry-writing .blog-entry-title h1');
@@ -43,10 +51,11 @@
             setTimeout(function() {
                 var value = input.val();
                 title.text(value);
+                updateTitleClass(title, value);
             }, 0);
         });
-
         input.focus();
+        updateTitleClass(title, '');
     }
 
     nbrut.tt.add({

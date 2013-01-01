@@ -1,4 +1,3 @@
-
 function read(template) {
     var s = $(template.source).remove();
 

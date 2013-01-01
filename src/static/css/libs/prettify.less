@@ -1,0 +1,44 @@
+@import "/static/css/defaults/common.less";
+
+@brownish: #2a211c;
+@plaintext: #bdae9d;
+@highlights: #4b3c34;
+@golden: #e5c138;
+@brown: #aa9680;
+@pinkish: #ff8080;
+@lightgreen: #80ff80;
+@darkgreen: #408080;
+
+pre.prettyprint { /* code blocks */
+  background-color: @brownish;
+  color: @plaintext;
+  .box-radius(4px);
+  border-top: 3px solid @border * 0.8;
+  border-left: 3px solid @border * 0.8;
+  border-bottom: 3px solid @border;
+  border-right: 3px solid @border;
+}
+
+pre.prettyprint ol.linenums li {
+  height: 1.2em; /* prevent empty lines from collapsing */
+}
+
+pre.prettyprint ol.linenums li.highlight {
+  background-color: @highlights;
+}
+
+.str { color: #fff; } /* string literals */
+.com { color: @golden; } /* comments */
+.lit { color: @lightgreen; } /* literals, such as numbers */
+.pun { color: @brown; } /* punctuation */
+.tag { color: @pinkish; } /* html tags */
+.typ { color: @darkgreen; } /* keywords */
+
+code.prettyprint { /* snippets */
+  background-color: @border;
+  padding: 1px 4px;
+}
+
+code.prettyprint .str {
+  color: @darkgreen; /* deal with contrast issues */
+}

@@ -17,9 +17,17 @@ pre.prettyprint {
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  border: 1px solid #cbc5c0;
+  border-top: 3px solid #a29e9a;
+  border-left: 3px solid #a29e9a;
+  border-bottom: 3px solid #cbc5c0;
+  border-right: 3px solid #cbc5c0;
 }
-pre.prettyprint .highlight {
+pre.prettyprint ol.linenums li {
+  height: 1.2em;
+  /* prevent empty lines from collapsing */
+
+}
+pre.prettyprint ol.linenums li.highlight {
   background-color: #4b3c34;
 }
 .str {
