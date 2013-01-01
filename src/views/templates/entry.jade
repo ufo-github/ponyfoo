@@ -20,4 +20,6 @@ section#entry-template.template(data-class='entry-writing')
     section#wmd-preview-text.blog-entry-text.blog-entry-body
 
   div#entry-editor-buttons
-    input(type='submit',value='Post')
+    button
+      include ../partials/spinner.jade
+      span='Post'
