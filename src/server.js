@@ -2,7 +2,7 @@
 var config = require('./config.json'),
     express = require('express'),
     mongoose = require('mongoose'),
-    port = process.env.PORT || 8081,
+    port = process.env.PORT || config.server.port,
     _static = __dirname + '/static';
 
 // setup express
