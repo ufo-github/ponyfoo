@@ -1,5 +1,3 @@
-npm install
-
 TESTS = src/test/*.js
 
 test:
@@ -10,4 +8,6 @@ test:
 			--growl \
 			$(TESTS)
 			
-.PHONY: test
+.PHONY: 
+	npm install
+	test
