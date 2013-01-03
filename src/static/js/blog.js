@@ -1,7 +1,8 @@
 !function (window,nbrut) {
 	function beforeActivate(next){
 		$.ajax({
-			url: '/entry/latest'
+			url: '/api/1.0/entry',
+			type: 'GET'
 		}).done(function(res){
 			console.log(res);
 			next();

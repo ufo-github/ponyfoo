@@ -68,7 +68,8 @@
 
         nbrut.ui.stateButton(submit, function(restore){
             $.ajax({
-                type: 'PUT',
+				url: '/api/1.0/entry',
+                type: 'PUT',				
                 data: {
                     entry: {
                         title: title.val(),
