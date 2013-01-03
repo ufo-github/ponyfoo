@@ -1,9 +1,7 @@
-TESTS = src/test/*.js
+TESTS = test/*.js
 
 test:
-	npm install
-	
-	@NODE_ENV=test .src/node_modules/.bin/mocha \
+	@NODE_ENV=test ./node_modules/.bin/mocha \
 			--require should \
 			--reporter list \
 			--slow 20 \
