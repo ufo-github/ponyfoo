@@ -18,7 +18,7 @@ module.exports = {
         var collection = models.entry;
 		var latest = collection.find({}).sort('-date').limit(8).exec(function(err,documents){
 			var json = JSON.stringify({
-				documents: documents
+				entries: documents
 			});
 			res.end(json);
 		});
