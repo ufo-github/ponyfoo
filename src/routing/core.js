@@ -5,15 +5,15 @@ function registerApiRoutes(server){
 	var api = '/api/1.0';
 	
 	function put(endpoint, action) {
-		server.put(endpoint,action);
+		server.put(api+endpoint,action);
 	}
 	
 	function get(endpoint, action) {
-		server.get(endpoint,action);
+		server.get(api+endpoint,action);
 	}
 	
     put('/entry', entry.put);	
-	get('/entry/latest', entry.get);
+	get('/entry', entry.get);
 }
 
 module.exports = function(server){	
