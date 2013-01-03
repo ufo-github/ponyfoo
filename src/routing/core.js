@@ -1,7 +1,7 @@
 var main = require('../controllers/main.js');
 var entry = require('../controllers/entry.js');
 
-function registerApiRoutes(){
+function registerApiRoutes(server){
 	var api = '/api/1.0';
 	
 	function register(verb, endpoint, action) {
@@ -21,7 +21,7 @@ function registerApiRoutes(){
 };
 
 module.exports = function(server){	
-	registerApiRoutes();
+	registerApiRoutes(server);
 	
 	server.get('/*', main.get);
 };
