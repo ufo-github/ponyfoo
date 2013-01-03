@@ -17,7 +17,10 @@ module.exports = {
 	latest: function(req,res){
         var collection = models.entry;
 		var latest = collection.find({}, function(err,documents){
-			res.end(documents);
+			var json = JSON.stringify({
+				documents: documents
+			});
+			res.end(json);
 		});
 	}
 };
