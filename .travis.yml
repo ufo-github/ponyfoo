@@ -1,4 +1,7 @@
-makefile: src/Makefile
 language: node_js
+
 node_js:
   - 0.6
+
+script: 
+    - "make src/Makefile test"
