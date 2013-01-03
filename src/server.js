@@ -1,9 +1,10 @@
 //setup dependencies
 var config = require('./config.js'),
     express = require('express'),
+    port = config.server.port,
+    assets = __dirname + '/static'
     mongoose = require('mongoose'),
-    port = process.env.PORT || config.server.port,
-    _static = __dirname + '/static';
+	mongoUri = config.db.uri,;
 
 // setup express
 var server = express.createServer();
@@ -11,9 +12,9 @@ var server = express.createServer();
 server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
-    server.use(express.favicon(_static + '/images/favicon.ico'));
-    server.use(express.compiler({ src: _static, enable: ['less'] }));
-    server.use(express.static(_static));
+    server.use(express.favicon(assets + '/images/favicon.ico'));
+    server.use(express.compiler({ src: assets, enable: ['less'] }));
+    server.use(express.static(assets));
 
     server.use(express.logger({ format: 'dev' }));
 
@@ -35,7 +36,7 @@ server.error(function(err, req, res, next){
     });
 });
 
-mongoose.connect(config.db.uri);
+mongoose.connect(mongoUri);
 mongoose.connection.on('open', function() {
     console.log('Connected to Mongoose');
 });

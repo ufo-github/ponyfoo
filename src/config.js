@@ -1,8 +1,8 @@
 module.exports = {
 	server: {
-		port: 8081
+		port: process.env.PORT || 8081
 	},
     db: {
-        uri: "mongodb://localhost/nbrut"
+        uri: process.env.MONGOLAB_URI || "mongodb://localhost/nbrut"
     }
 };
