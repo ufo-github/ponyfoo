@@ -1,6 +1,8 @@
 TESTS = src/test/*.js
 
 test:
+	npm install
+	
 	@NODE_ENV=test .src/node_modules/.bin/mocha \
 			--require should \
 			--reporter list \
@@ -9,5 +11,4 @@ test:
 			$(TESTS)
 			
 .PHONY: 
-	npm install
 	test
