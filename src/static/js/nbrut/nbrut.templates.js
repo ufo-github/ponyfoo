@@ -9,14 +9,14 @@
                 initialize: $.noop,
                 onAfterActivate: $.noop,
                 title: {
-                    value: 'Code Rant',
+                    value: 'Pony Foo',
                     formatted: false
                 },
                 selfCleanup: true
             },
             titleSettings = {
                 tag: $('title'),
-                format: '{0} - Code Rant'
+                format: '{0} - Pony Foo'
             };
 
         function add(template) {
