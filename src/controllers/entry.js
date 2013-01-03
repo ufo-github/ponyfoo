@@ -12,5 +12,6 @@ module.exports = {
             };
 
         collection.findOneAndUpdate(query, document, opts, done);
+		collection.save();
     }
 };
