@@ -7,7 +7,10 @@
                 container: '#content',
                 initialized: false,
                 initialize: $.noop,
-                onAfterActivate: $.noop,
+				beforeActivate: function(next){
+					next();
+				},
+                afterActivate: $.noop,
                 title: {
                     value: 'Pony Foo',
                     formatted: false
@@ -62,11 +65,6 @@
                 template = templates['404']; // fall back to 404.
             }
 
-            if(!template.initialized){
-                template.initialized = true;
-                template.initialize();
-            }
-
             if(template.container in active) {
                 if(active[template.container] === template) { // already active.
                     if(!template.selfCleanup){
@@ -77,10 +75,19 @@
                     deactivateContainer(template.container); // clean-up.
                 }
             }
+			
+            if(!template.initialized){
+                template.initialized = true;
+                template.initialize();
+            }			
 
-            activateTemplate(template, soft); // set-up.
+			var next = function(){
+				activateTemplate(template, soft); // set-up.
 
-            template.onAfterActivate();
+				template.afterActivate();
+			};
+			
+			template.beforeActivate(next);			
         }
 
         function deactivateContainer(container) {

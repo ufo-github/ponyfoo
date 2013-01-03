@@ -12,5 +12,12 @@ module.exports = {
             };
 
         collection.findOneAndUpdate(query, document, opts, done);
-    }
+    },
+	
+	latest: function(req,res){
+        var collection = models.entry;
+		var latest = collection.find({}, function(err,documents){
+			res.end(documents);
+		});
+	}
 };

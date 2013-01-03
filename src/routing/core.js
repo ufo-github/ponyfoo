@@ -5,4 +5,5 @@ module.exports = function(server){
     server.get('/*', main.get);
 
     server.put('/entry', entry.put);
+	server.post('/entry/latest', entry.latest);
 };

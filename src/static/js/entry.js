@@ -58,7 +58,7 @@
         updateTitleClass(title, '');
     }
 
-    function onAfterActivate(){
+    function afterActivate(){
         prepareEditor();
 
         var submit = $('#submit-entry'),
@@ -88,6 +88,6 @@
         trigger: '#write-entry',
         source: '#entry-template',
         title: { value: 'New Post', formatted: true },
-        onAfterActivate: onAfterActivate
+        afterActivate: afterActivate
     });
 }(window,Markdown,nbrut);
