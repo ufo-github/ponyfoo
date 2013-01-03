@@ -68,6 +68,7 @@
 
         nbrut.ui.stateButton(submit, function(restore){
             $.ajax({
+                type: 'PUT',
                 data: {
                     entry: {
                         title: title.val(),
@@ -83,7 +84,7 @@
 
     nbrut.tt.add({
         key: 'entry-editor',
-        alias: '/write-entry',
+        alias: '/entry',
         trigger: '#write-entry',
         source: '#entry-template',
         title: { value: 'New Post', formatted: true },

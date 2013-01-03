@@ -1,6 +1,5 @@
 //setup dependencies
-var connect = require('connect'),
-    express = require('express'),
+var express = require('express'),
     io = require('socket.io'),
     port = (process.env.PORT || 8081),
     less = require('less'),
@@ -12,10 +11,13 @@ var server = express.createServer();
 server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
-    server.use(connect.bodyParser());
-    server.use(express.favicon(__dirname + '/favicon.ico'));
+    server.use(express.favicon(_static + '/images/favicon.ico'));
     server.use(express.compiler({ src: _static, enable: ['less'] }))
-    server.use(connect.static(_static));
+    server.use(express.static(_static));
+    server.use(express.logger({
+        format: 'dev'
+    }));
+    server.use(express.bodyParser());
     server.use(server.router);
 });
 
@@ -28,16 +30,7 @@ server.error(function(err, req, res, next){
     });
 });
 
+require('./routing/core.js')(server);
+
 server.listen(port);
-
-// routing
-server.get('/*', function(req,res){
-    res.render('index.jade');
-});
-
-server.post('/write-entry', function(req,res){
-    console.log(req.body.entry);
-    res.end();
-});
-
 console.log('Listening on port ' + port );

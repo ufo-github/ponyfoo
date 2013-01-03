@@ -133,7 +133,8 @@
                     activate(key, true);
                 });
 
-                if ($.browser.mozilla) { // manual trigger fixes an inconsistency in Firefox.
+                // manual trigger loads template by URL in FF/IE.
+                if ($.browser.mozilla || $.browser.msie) {
                     $(window).trigger('popstate');
                 }
             });
