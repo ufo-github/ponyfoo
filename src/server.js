@@ -1,5 +1,5 @@
 //setup dependencies
-var config = require('./config.json'),
+var config = require('./config.js'),
     express = require('express'),
     mongoose = require('mongoose'),
     port = process.env.PORT || config.server.port,
