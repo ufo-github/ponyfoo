@@ -39,9 +39,8 @@ server.error(function(err, req, res, next){
 mongoose.connect(mongoUri);
 mongoose.connection.on('open', function() {
     console.log('Connected to Mongoose');
+	server.listen(port);
+	console.log('Listening on port ' + port );
 });
 
 require('./routing/core.js')(server);
-
-server.listen(port);
-console.log('Listening on port ' + port );
