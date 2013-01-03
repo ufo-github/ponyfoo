@@ -1,3 +1,5 @@
+npm install
+
 TESTS = src/test/*.js
 
 test:
@@ -7,4 +9,5 @@ test:
 			--slow 20 \
 			--growl \
 			$(TESTS)
+			
 .PHONY: test
