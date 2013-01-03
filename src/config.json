@@ -1,9 +1,8 @@
-{
-    "version": "v0.6.6",
-	"server": {
-		"port": 8081
+module.exports = {
+	server: {
+		port: 8081
 	},
-    "db": {
-        "uri": "mongodb://localhost/nbrut"
+    db: {
+        uri: "mongodb://localhost/nbrut"
     }
-}
+};
