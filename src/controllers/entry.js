@@ -1,6 +1,16 @@
+var mongoose = require('mongoose'),
+    models = require('../models/all.js');
+
 module.exports = {
     put: function(req,res){
-        console.log(req.body.entry);
-        res.end();
+        var collection = models.entry,
+            document = req.body.entry,
+            query = { date: document.date },
+            opts = { upsert: true },
+            done = function(err){
+                res.end();
+            };
+
+        collection.findOneAndUpdate(query, document, opts, done);
     }
 };

@@ -59,9 +59,15 @@ code.prettyprint {
 
   background-color: #cbc5c0;
   padding: 1px 4px;
+  color: #412917;
 }
 code.prettyprint .str {
   color: #408080;
   /* deal with contrast issues */
+
+}
+code.prettyprint .com {
+  color: #412917;
+  /* 'comments' in inline code are most likely a uri */
 
 }
