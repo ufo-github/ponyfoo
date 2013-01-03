@@ -6,6 +6,10 @@ var config = require('./config.js'),
     mongoose = require('mongoose'),
 	mongoUri = config.db.uri,;
 
+	console.log(config.server.port);
+	console.log(config.db.uri);
+	console.log(process.env);
+	
 // setup express
 var server = express.createServer();
 
