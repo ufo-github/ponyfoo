@@ -4,7 +4,7 @@ var config = require('./config.js'),
     port = config.server.port,
     assets = __dirname + '/static'
     mongoose = require('mongoose'),
-	mongoUri = config.db.uri,;
+	mongoUri = config.db.uri;
 
 	console.log(config.server.port);
 	console.log(config.db.uri);
