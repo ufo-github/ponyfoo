@@ -1,5 +1,8 @@
 ﻿@import "/static/css/defaults/common.less";
 
+/* TEXTAREA GRIP
+ ****************/
+
 div.grippie {
   background: @background url('/images/grippie.png') no-repeat scroll center 2px;
   border-color: @grayish;
@@ -20,8 +23,10 @@ textarea.resizing {
   opacity: 0.5;
 }
 
+
+
 /* SPINNER
- ************/
+ ****************/
 
 .spinner {
   font-size: 100px;
@@ -121,3 +126,22 @@ textarea.resizing {
 @-ms-keyframes spinner-opc { .spinner-opc; }
 @-o-keyframes spinner-opc { .spinner-opc; }
 @keyframes spinner-opc { .spinner-opc; }
+
+
+
+/* REMOVE ICON
+ ****************/
+
+a.remove:before {
+  content: 'x';
+}
+
+a.remove {
+  font-weight: bold;
+  text-shadow: 0 1px @red_shadow;
+  color: @red;
+}
+
+a.remove:hover {
+  text-underline: none;
+}
