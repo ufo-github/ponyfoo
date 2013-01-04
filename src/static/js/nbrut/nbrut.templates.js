@@ -1,7 +1,7 @@
 !function (nbrut, window, $, undefined) {
     var templating = function () {
         var templates = {},
-            keys = {},
+            templateKeys = {},
             active = [],
             defaults = {
                 container: '#content',
@@ -35,7 +35,7 @@
             read(template);
 
             templates[template.key] = template;
-            keys[template.alias] = template.key;
+            templateKeys[template.alias] = template.key;
 
             if(typeof template.trigger === 'string'){
                 trigger = $(template.trigger);
@@ -149,7 +149,7 @@
                     ready = true;
 
                     if (e.originalEvent === undefined || e.originalEvent.state === null){
-                        key = keys[document.location.pathname];
+                        key = templateKeys[document.location.pathname];
                     } else {
                         key = e.originalEvent.state;
                     }

@@ -8,6 +8,25 @@
         });
     }
 
+	function afterActivate(){
+		var rows = $("tr.entry-row");
+		
+		rows.find('a.edit').on('click', function(){
+			var id = $(this).parentsUntil(rows).data('id');
+			nbrut.tt.activate('entry-editor'); // TODO pass route params [id] somehow.
+		});
+		
+		rows.find('a.remove').on('click', function(){
+			$.ajax({
+				url: '/api/1.0/entry',
+				type: 'DELETE'
+			}).done(function(res){
+				console.log(res);
+				// TODO: remove row
+			});
+		});
+	}
+	
     nbrut.tt.add({
         key: 'entry-review',
         alias: '/author/entry/list',
@@ -15,6 +34,7 @@
         source: '#entry-review-template',
         mustache: true,
         title: { value: 'All Posts', formatted: true },
-        prepare: prepare
+        prepare: prepare,
+		afterActivate: afterActivate
     });
 }(window,Markdown,nbrut);

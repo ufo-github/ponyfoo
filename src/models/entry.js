@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
         title: { type: String, require: true, trim: true },
         brief: { type: String, require: true },
         text: { type: String, require: true },
-        date: { type: Date, require: true, default: Date.now }
+        date: { type: Date, index: { unique: true }, require: true },
+		updated: { type: Date, require: true }
     });
 
 module.exports.model = mongoose.model('entry', schema);

@@ -9,9 +9,9 @@ section#entry-review-template.template(data-class='entry-review')
         th='Title'
         th
     tbody
-      tr
+      tr.entry-row
         td='{{date}}'
         td='{{title}}'
-        td
+        td(data-id='{{_id}}')
 		  a.edit='Edit'
           a.remove

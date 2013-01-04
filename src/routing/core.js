@@ -12,8 +12,13 @@ function registerApiRoutes(server){
 		server.get(api+endpoint,action);
 	}
 	
-    put('/entry', entry.put);	
+	function del(endpoint, action) {
+		server.del(api+endpoint,action);
+	}
+	
+    put('/entry', entry.put);
 	get('/entry', entry.get);
+	del('/entry', entry.del);
 }
 
 module.exports = function(server){	

@@ -24,5 +24,9 @@ module.exports = {
             };
 
         collection.find({}).sort('-date').limit(8).exec(callback);
+	},
+	
+	del: function(req,res){
+		console.log(req.body.id);
 	}
 };
