@@ -85,7 +85,7 @@
 
     nbrut.tt.add({
         key: 'entry-editor',
-        alias: '/entry',
+        alias: '/author/entry',
         trigger: '#write-entry',
         source: '#entry-template',
         title: { value: 'New Post', formatted: true },

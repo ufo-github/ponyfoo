@@ -22,27 +22,29 @@
                 format: '{0} - Pony Foo'
             };
 
-        function add(template) {
-            var settings = {},
+        function add(settings) {
+            var template = {},
                 trigger;
 
-            $.extend(settings, defaults, template);
+            $.extend(template, defaults, settings);
 
-            if(settings.key in templates){
+            if(template.key in templates){
                 throw new Error('template key not unique.');
             }
-            read(settings);
+            read(template);
 
-            templates[settings.key] = settings;
-            keys[settings.alias] = settings.key;
+            templates[template.key] = template;
+            keys[template.alias] = template.key;
 
-            trigger = $(settings.trigger);
-            trigger.on('click', function(e){
-                if (e.which === 1){ // left-click
-                    activate(settings.key);
-                    return false;
-                }
-            });
+            if(typeof template.trigger === 'string'){
+                trigger = $(template.trigger);
+                trigger.on('click', function(e){
+                    if (e.which === 1){ // left-click
+                        activate(template.key);
+                        return false;
+                    }
+                });
+            }
         }
 
         function read(template) {
