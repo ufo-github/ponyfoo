@@ -15,12 +15,14 @@ module.exports = {
     },
 	
 	get: function(req,res){
-        var collection = models.entry;
-		var latest = collection.find({}).sort('-date').limit(8).exec(function(err,documents){
-			var json = JSON.stringify({
-				entries: documents
-			});
-			res.end(json);
-		});
+        var collection = models.entry,
+            callback = function(err,documents){
+                var json = JSON.stringify({
+                    entries: documents
+                });
+                res.end(json);
+            };
+
+        collection.find({}).sort('-date').limit(8).exec(callback);
 	}
 };

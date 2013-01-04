@@ -1,4 +1,4 @@
-var main = require('../controllers/main.js');
+var site = require('../controllers/site.js');
 var entry = require('../controllers/entry.js');
 
 function registerApiRoutes(server){
@@ -19,5 +19,5 @@ function registerApiRoutes(server){
 module.exports = function(server){	
 	registerApiRoutes(server);
 	
-	server.get('/*', main.get);
+	server.get('/*', site.get);
 };

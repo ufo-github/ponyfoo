@@ -3,7 +3,7 @@ language: node_js
 node_js:
   - 0.6
 
-script: 
-  - "cd src"
+script:
   - "npm install"
+  - "cd src"
   - "make test"
