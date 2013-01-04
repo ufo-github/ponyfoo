@@ -1,5 +1,5 @@
 !function (window,nbrut) {
-	function beforeActivate(next){
+	function prepare(next){
 		$.ajax({
 			url: '/api/1.0/entry',
 			type: 'GET'
@@ -14,6 +14,6 @@
         alias: '/',
         trigger: '#home',
         source: '#blog-template',
-		beforeActivate: beforeActivate
+        prepare: prepare
     });
 }(window,nbrut);

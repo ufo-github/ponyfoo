@@ -7,7 +7,7 @@
                 container: '#content',
                 initialized: false,
                 initialize: $.noop,
-				beforeActivate: function(next){
+                prepare: function(next){
 					next();
 				},
                 afterActivate: $.noop,
@@ -15,7 +15,8 @@
                     value: 'Pony Foo',
                     formatted: false
                 },
-                selfCleanup: true
+                selfCleanup: true,
+                mustache: false
             },
             titleSettings = {
                 tag: $('title'),
@@ -59,6 +60,10 @@
                 html: html,
                 css: css
             };
+
+            if(template.mustache){
+                template.dom.view = Mustache.compile(html);
+            }
         }
 
         function activate(key, soft) { // soft: don't push history state.
@@ -83,13 +88,13 @@
                 template.initialize();
             }			
 
-			var next = function(){
-				activateTemplate(template, soft); // set-up.
+			var render = function(model){
+				activateTemplate(template, model, soft); // set-up.
 
 				template.afterActivate();
 			};
 			
-			template.beforeActivate(next);			
+			template.prepare(render);
         }
 
         function deactivateContainer(container) {
@@ -99,12 +104,21 @@
             }
         }
 
-        function activateTemplate(template, soft){
+        function activateTemplate(template, model, soft){
             var c = $(template.container);
             if (c.length !== 1){
                 throw new Error('template container not unique.');
             }
-            c.html(template.dom.html);
+
+            var view;
+
+            if(template.mustache){
+                view = template.dom.view(model);
+            } else {
+                view = template.dom.html;
+            }
+
+            c.html(view);
             c.addClass(template.dom.css);
             active[template.container] = template;
 
