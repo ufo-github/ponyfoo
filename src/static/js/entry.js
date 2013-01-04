@@ -58,7 +58,7 @@
         updateTitleClass(title, '');
     }
 
-    function onAfterActivate(){
+    function afterActivate(){
         prepareEditor();
 
         var submit = $('#submit-entry'),
@@ -68,7 +68,8 @@
 
         nbrut.ui.stateButton(submit, function(restore){
             $.ajax({
-                type: 'PUT',
+				url: '/api/1.0/entry',
+                type: 'PUT',				
                 data: {
                     entry: {
                         title: title.val(),
@@ -88,6 +89,6 @@
         trigger: '#write-entry',
         source: '#entry-template',
         title: { value: 'New Post', formatted: true },
-        onAfterActivate: onAfterActivate
+        afterActivate: afterActivate
     });
 }(window,Markdown,nbrut);

@@ -1,35 +1,8 @@
-Code Rant begins
-================
+NBrut [![Build Status](https://travis-ci.org/bevacqua/NBrut.png?branch=master)](https://travis-ci.org/bevacqua/NBrut)
+========================================================================================================================
 
-As I start writing this post, I set out with a purpose. To write a micro-blogging engine. The language of choice is _Node.JS_. I chose this language because I want to see how I fare in light of new horizons...
+**NBrut** is the open-source blog engine underlying technology in [**Pony Foo**](http://ponyfoo.com "Pony Foo"), my technical blog site.
 
-## Past Lives ##
+**NBrut** is built entirely upon _Node.JS_, _MongoDB_, and a rich client-side application layer, so it's **Javascript everywhere**.
 
-Keep in mind this idea springed in my mind just yesterday, but I'll try to keep my development cycles as _lean_ as possible, in order to entertain myself. In the past most of my self-driven projects lead to nowhere because I kept focusing on _non-functional aspects_ like performance, fine-tuning, including but not limited to implementing wild and new sparkly technologies.
-
-That approach often lead to projects where I would spend a whole year implementing and fine-tuning an _MVC_ application in _ASP.NET 3_, which did all the error handling, real-time logging, corner-case handling that you could imagine, but barely consisted of a couple of forms.
-
-This time instead, I'm eager to launch a minimal version of the site online _as soon as humanly possible_, and then build on it, adding features on the go. This will also give me the feel of how working with _Node.JS_ on a production environment is like.
-
-## Expectations ##
-
-I come from a strong _C#_ background, although I consider myself to have a pretty decent front-end skillset as well; I figure this will help immensely as I delve into _Node.JS_. I already took care of a few fundamental decisions, which I expect to be able to fulfill:
-
-- [**Node.JS**](http://www.youtube.com/watch?v=jo_B4LTHi3I "Introduction to Node.JS") on the server-side.
-- [**MongoDB**](http://www.youtube.com/watch?v=tFp9pZ6U0PE "Introduction to MongoDB") as the database of choice.
-- _Javascript_ on the client-side.
-- [**Markdown**](http://daringfireball.net/projects/markdown/ "Introduction to Markdown") will be used to _write_ and _display_ blog posts.
-
-I decided on _Node.JS_ in the back-end because even though it's an entirely _new_ language to me, I sense it will feel familiar working with it, given my past _front-end inclination_. _MongoDB_ felt natural to me, as I find the idea of using _JSON_ across every single layer **very** appealing.
-
-_Javascript_ on the client-side is therefore a no-brainer, and I'll drift away from _development-crippling_ practices I leant towards in the past, like progressive enhancement where I'd support even **noscript**, making development twice as complicated. I'm shifting away from that, in order to be able to maintain the level of _leanness_ I want to achieve here.
-
-_Markdown_ is a simple yet powerful presentation language, and one I feel really comfortable with. Besides there are [**open-source distributions**](http://code.google.com/p/pagedown/ "pagedown by StackOverflow") that make developing around _Markdown_ a breeze.
-
-The mere notion of having _Javascript_ on the server-side, _Javascript_ on the client-side, and _Javascript_ on the database, make me extremely enthusiastic about this project going forward. Time will tell how _wondrous_ it actually is, if _at all_.
-
-## Where do we go from here? ##
-
-Right now, I'm writing this post on _[**Notepad++**](http://notepad-plus-plus.org/)_ and I haven't even begun working on the blog application. Even though I've already allocated a public GitHub repository to the task, and I'm code-naming the project [**NBrut**](https://github.com/bevacqua/NBrut "GitHub repository").
-
-Since I want _leanness_ to be a defining characteristic of how I face **Code Rant**, I'm using this post as a way to _force myself_ into being able to go live as soon as I'm able to. In order to do that, I have to start by working on implementing _Markdown_, since it's probably the part of the application I'm most comfortable coding. I'll figure out how to solve the rest as I go along.
+You can read all about how I work on **NBrut** directly on my blog, also feel free to fork this repository and fiddle with it. I'd also be delighted to hear from you, so feel free to contact me, as well.

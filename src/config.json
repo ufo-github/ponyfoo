@@ -1,6 +1,0 @@
-{
-    "version": "v0.6.6",
-    "db": {
-        "uri": "mongodb://localhost/nbrut"
-    }
-}

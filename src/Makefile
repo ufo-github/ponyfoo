@@ -7,4 +7,6 @@ test:
 			--slow 20 \
 			--growl \
 			$(TESTS)
-.PHONY: test
+			
+.PHONY: 
+	test

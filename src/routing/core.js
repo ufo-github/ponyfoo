@@ -1,8 +1,23 @@
 var main = require('../controllers/main.js');
 var entry = require('../controllers/entry.js');
 
-module.exports = function(server){
-    server.get('/*', main.get);
+function registerApiRoutes(server){
+	var api = '/api/1.0';
+	
+	function put(endpoint, action) {
+		server.put(api+endpoint,action);
+	}
+	
+	function get(endpoint, action) {
+		server.get(api+endpoint,action);
+	}
+	
+    put('/entry', entry.put);	
+	get('/entry', entry.get);
+}
 
-    server.put('/entry', entry.put);
+module.exports = function(server){	
+	registerApiRoutes(server);
+	
+	server.get('/*', main.get);
 };
