@@ -1,8 +1,6 @@
 section#entry-review-template.template(data-class='entry-review')
-  -#|{{^entries}}
   h1='No Posts'
   div='There are no blog posts to review.'
-  -#|{{/entries}}
 
   table
     thead
@@ -11,10 +9,8 @@ section#entry-review-template.template(data-class='entry-review')
         th='Title'
         th
     tbody
-      -#| {{#entries}}
       tr
         td='{{date}}'
         td='{{title}}'
         td
           a.remove-entry
-      -#| {{/entries}}
