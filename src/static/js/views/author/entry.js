@@ -58,13 +58,37 @@
         updateTitleClass(title, '');
     }
 
-    function afterActivate(){
+    var values;
+
+    function prepare(next, data){
+        if(!data){
+            values = {};
+            next();
+        }else{
+            $.ajax({
+                url: '/api/1.0/entry',
+                type: 'GET'
+            }).done(function(res){
+                values = res.entries[0];
+                next();
+            });
+        }
+    }
+
+    function afterActivate(data){
         prepareEditor();
 
         var submit = $('#submit-entry'),
             title = $('#entry-title'),
             brief = $('#wmd-input-brief'),
             text = $('#wmd-input-text');
+
+        if(!!data){
+            title.val(values.title);
+            title.trigger('keypress');
+            brief.val(values.brief);
+            text.val(values.text);
+        }
 
         nbrut.ui.stateButton(submit, function(restore){
             $.ajax({
@@ -83,12 +107,9 @@
         });
     }
 
-    nbrut.tt.add({
+    nbrut.tt.configure({
         key: 'entry-editor',
-        alias: '/author/entry',
-        trigger: '#write-entry',
-        source: '#entry-template',
-        title: { value: 'New Post', formatted: true },
+        prepare: prepare,
         afterActivate: afterActivate
     });
 }(window,Markdown,nbrut);

@@ -9,11 +9,8 @@
 		});
 	}
 	
-    nbrut.tt.add({
+    nbrut.tt.configure({
         key: 'home',
-        alias: '/',
-        trigger: '#home',
-        source: '#blog-template',
         prepare: prepare
     });
 }(window,nbrut);

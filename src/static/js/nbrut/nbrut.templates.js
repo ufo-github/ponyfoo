@@ -1,29 +1,26 @@
 !function (nbrut, window, $, undefined) {
     var templating = function () {
         var templates = {},
-            templateKeys = {},
+            stringKeys = {},
+            regexKeys = [],
             active = [],
             defaults = {
                 container: '#content',
+                mustache: false,
                 initialized: false,
                 initialize: $.noop,
                 prepare: function(next){
 					next();
 				},
                 afterActivate: $.noop,
-                title: {
-                    value: 'Pony Foo',
-                    formatted: false
-                },
-                selfCleanup: true,
-                mustache: false
+                selfCleanup: true
             },
             titleSettings = {
                 tag: $('title'),
                 format: '{0} - Pony Foo'
             };
 
-        function add(settings) {
+        function register(settings) {
             var template = {},
                 trigger;
 
@@ -35,17 +32,43 @@
             read(template);
 
             templates[template.key] = template;
-            templateKeys[template.alias] = template.key;
 
-            if(typeof template.trigger === 'string'){
-                trigger = $(template.trigger);
-                trigger.on('click', function(e){
-                    if (e.which === 1){ // left-click
-                        activate(template.key);
-                        return false;
-                    }
-                });
+            $.each(template.aliases || [], function(){
+                var alias = this;
+
+                alias.route = fixRouteObject(alias.route);
+
+                if(!alias.route.regex){
+                    stringKeys[alias.route.get()] = template.key;
+                }else{
+                    regexKeys.push({
+                        key: template.key,
+                        alias: alias,
+                        regex: alias.route.regex
+                    });
+                }
+
+                if(typeof alias.trigger === 'string'){
+                    trigger = $(alias.trigger);
+                    trigger.on('click', function(e){
+                        if (e.which === 1){ // left-click
+                            activate(template.key);
+                            return false;
+                        }
+                    });
+                }
+            });
+        }
+
+        function configure(settings) {
+            if(!(settings.key in templates)){
+                throw new Error('template not registered.');
             }
+            var configured = {},
+                template = templates[settings.key];
+
+            $.extend(configured, template, settings);
+            templates[settings.key] = configured;
         }
 
         function read(template) {
@@ -61,12 +84,26 @@
                 css: css
             };
 
-            if(template.mustache){
+            if (template.mustache){
                 template.dom.view = Mustache.compile(html);
             }
         }
 
-        function activate(key, soft) { // soft: don't push history state.
+        function fixRouteObject(source){
+            if(typeof source === 'string'){
+                return {
+                    get: function(){
+                        return source;
+                    },
+                    map: function(){
+                        return null;
+                    }
+                };
+            }
+            return source;
+        }
+
+        function activate(key, settings, soft) { // soft: don't push history state.
             var template = templates[key];
             if (template === undefined) {
                 template = templates['404']; // fall back to 404.
@@ -88,13 +125,16 @@
                 template.initialize();
             }			
 
-			var render = function(model){
-				activateTemplate(template, model, soft); // set-up.
+            if (settings === undefined){
+                settings = {};
+            }
+			var render = function(viewModel){
+				activateTemplate(template, settings, viewModel, soft); // set-up.
 
-				template.afterActivate();
+				template.afterActivate(settings.data);
 			};
 			
-			template.prepare(render);
+			template.prepare(render, settings.data);
         }
 
         function deactivateContainer(container) {
@@ -104,7 +144,7 @@
             }
         }
 
-        function activateTemplate(template, model, soft){
+        function activateTemplate(template, settings, viewModel, soft){
             var c = $(template.container);
             if (c.length !== 1){
                 throw new Error('template container not unique.');
@@ -113,7 +153,7 @@
             var view;
 
             if(template.mustache){
-                view = template.dom.view(model);
+                view = template.dom.view(viewModel);
             } else {
                 view = template.dom.html;
             }
@@ -123,12 +163,37 @@
             active[template.container] = template;
 
             if (template.container === defaults.container){
-                var title = setTitle(template.title);
+                var alias = getTemplateAlias(template, settings);
+                if (alias !== undefined){
+                    var title = setTitle(alias.title),
+                        url = alias.route.get(settings.data);
 
-                if(!soft){
-                    history.pushState(template.key, title, template.alias);
+                    if(!soft){
+                        history.pushState({
+                            key: template.key,
+                            settings: settings
+                        }, title, url);
+                    }
                 }
             }
+        }
+
+        function getTemplateAlias(template, settings){
+            var key,
+                alias;
+
+            if(settings !== undefined){
+                key = settings.key;
+            }
+
+            $.each(template.aliases, function(){
+                if(this.key === key){
+                    alias = this;
+                    return false;
+                }
+            });
+
+            return alias;
         }
 
         function setTitle(title){
@@ -146,14 +211,35 @@
         function init(){
             $(function(){
                 $(window).on('popstate', function(e){
-                    ready = true;
+                    var url,
+                        key,
+                        settings;
 
                     if (e.originalEvent === undefined || e.originalEvent.state === null){
-                        key = templateKeys[document.location.pathname];
+                        url = document.location.pathname;
+                        key = stringKeys[url];
+
+                        if (key === undefined){
+                            $.each(regexKeys, function() {
+                                var self = this,
+                                    captures = url.match(self.regex);
+                                if (captures !== null){
+                                    key = self.key;
+
+                                    settings = {
+                                        key: self.alias.key,
+                                        data: self.alias.route.map(captures)
+                                    };
+                                    return false;
+                                }
+                            })
+                        }
                     } else {
-                        key = e.originalEvent.state;
+                        var state =  e.originalEvent.state;
+                        key = state.key;
+                        settings = state.settings;
                     }
-                    activate(key, true);
+                    activate(key, settings, true);
                 });
 
                 // manual trigger loads template by URL in FF/IE.
@@ -165,7 +251,8 @@
 
         return {
             init: init,
-            add: add,
+            register: register,
+            configure: configure,
             activate: activate,
             deactivate: deactivateContainer
         };
