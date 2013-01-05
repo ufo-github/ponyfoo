@@ -1,3 +1,5 @@
+/* TEXTAREA GRIP
+ ****************/
 div.grippie {
   background: #f3f4eb url('/images/grippie.png') no-repeat scroll center 2px;
   border-color: #dedede;
@@ -16,7 +18,7 @@ textarea.resizing {
   opacity: 0.5;
 }
 /* SPINNER
- ************/
+ ****************/
 .spinner {
   font-size: 100px;
   width: 1em;
@@ -296,4 +298,17 @@ textarea.resizing {
   91.0% {
     opacity: 0.87;
   }
+}
+/* REMOVE ICON
+ ****************/
+a.remove:before {
+  content: 'x';
+}
+a.remove {
+  font-weight: bold;
+  text-shadow: 0 1px #7a0000;
+  color: #d11911;
+}
+a.remove:hover {
+  text-underline: none;
 }

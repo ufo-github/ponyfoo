@@ -4,20 +4,20 @@ var entry = require('../controllers/entry.js');
 function registerApiRoutes(server){
 	var api = '/api/1.0';
 	
-	function put(endpoint, action) {
-		server.put(api+endpoint,action);
-	}
-	
 	function get(endpoint, action) {
 		server.get(api+endpoint,action);
 	}
+
+    function put(endpoint, action) {
+        server.put(api+endpoint,action);
+    }
 	
 	function del(endpoint, action) {
 		server.del(api+endpoint,action);
 	}
-	
+
+    get('/entry', entry.get);
     put('/entry', entry.put);
-	get('/entry', entry.get);
 	del('/entry', entry.del);
 }
 
