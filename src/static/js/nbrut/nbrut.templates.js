@@ -34,53 +34,60 @@
 
             templates[template.key] = template;
 
-			bind(template);
+			setup(template);
         }
 		
-		function bind(template){
+		function setup(template){
 			var backTrigger;
 			
             $.each(template.aliases || [], function(){
-                var alias = this,
-					trigger;
+                var alias = this;
 
-                alias.route = fixRouteObject(alias.route);
-
-                if(!alias.route.regex){
-                    stringKeys[alias.route.get()] = template.key;
-                }else{
-                    regexKeys.push({
-                        key: template.key,
-                        alias: alias,
-                        regex: alias.route.regex
-                    });
-                }
-
-                if(typeof alias.trigger === 'string'){
-                    trigger = $(alias.trigger);
-                    trigger.on('click', function(e){
-                        if (e.which === 1){ // left-click
-                            activate(template.key);
-                            return false;
-                        }
-                    });
-                }				
+				setupAlias(template, alias)
+				bindTrigger(template, alias);
             });
 		
-			if(typeof template.back === 'string'){
-				backTrigger = $(template.back);
-				backTrigger.on('click', function(e){
-					back();
+			bindBack(template);
+		}
+		
+		function setupAlias(template, alias){
+			alias.route = fixRouteObject(alias.route);
+
+			if(!alias.route.regex){
+				stringKeys[alias.route.get()] = template.key;
+			}else{
+				regexKeys.push({
+					key: template.key,
+					alias: alias,
+					regex: alias.route.regex
+				});
+			}
+		}
+		function bindTrigger(template, alias){
+			if(typeof alias.trigger === 'string'){
+				trigger = $(alias.trigger);
+				trigger.on('click', function(e){
+					if (e.which === 1){ // left-click
+						activate(template.key);
+						return false;
+					}
 				});
 			}
 		}
 
 		function back(){
+			console.log(stateless);
 			if (stateless){
 				activate(defaultTemplate);
 			}else{
-				depth--;
 				history.back();
+			}
+		}
+		
+		function bindBack(){
+			if(typeof template.back === 'string'){
+				var backTrigger = $(template.back);
+				backTrigger.on('click', back);
 			}
 		}
 		
