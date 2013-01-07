@@ -26,7 +26,7 @@
             });
         }
 
-        function sanitize(md){
+        function getHtml(md){
             var converter = getConverter();
             var html = converter.makeHtml(md);
             return html;
@@ -34,7 +34,8 @@
 
         return {
             runEditor: runEditor,
-            sanitize: sanitize
+            getHtml: getHtml,
+			prettify: reformatMarkdown
         };
     }();
 

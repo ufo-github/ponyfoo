@@ -17,10 +17,10 @@
 		var rows = $("tr.entry-row");
 		
 		rows.each(function(){
-			var self = $(this),
-				id = self.closest(rows).data('id');
+			var row = $(this),
+				id = row.data('id');
 			
-			self.find('a.edit').on('click', function(){
+			row.find('a.edit').on('click', function(){
 				nbrut.tt.activate('entry-editor', {
 					key: 'edit',
 					data: {
@@ -29,13 +29,12 @@
 				});
 			});
 			
-			self.find('a.remove').on('click', function(){
+			row.find('a.remove').on('click', function(){
 				$.ajax({
 					url: '/api/1.0/entry/{0}'.format(id),
 					type: 'DELETE'
 				}).done(function(res){
-					var row = $(this).closest(rows);
-					row.slideUp();
+					row.fadeOutAndRemove();
 				});
 			});
 		});

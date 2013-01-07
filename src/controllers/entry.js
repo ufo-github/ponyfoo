@@ -37,7 +37,9 @@ module.exports = {
         var id = req.params.id,
 			callback = function(err,document){
                 resHandler(res, err, function(){
-					var json = JSON.stringify(document);
+					var json = JSON.stringify({
+						entry: document
+					});
 					res.end(json);
 				});
 			};

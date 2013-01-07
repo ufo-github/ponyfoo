@@ -22,4 +22,13 @@
             }
         });
     }
+	
+	$.fn.fadeOutAndRemove = function() {
+		return this.each(function() {
+			var self = $(this);
+			self.fadeOut("fast", function() {
+				self.remove();
+			});
+		});
+	};
 }(jQuery);

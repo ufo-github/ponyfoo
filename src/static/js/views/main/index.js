@@ -5,8 +5,8 @@
 			type: 'GET'
 		}).done(function(res){
             var fixed = $.map(res.entries, function(i){
-                i.brief = nbrut.md.sanitize(i.brief);
-                i.text = nbrut.md.sanitize(i.text);
+                i.brief = nbrut.md.getHtml(i.brief);
+                i.text = nbrut.md.getHtml(i.text);
                 return i;
             });
 
@@ -16,8 +16,14 @@
 		});
 	}
 	
+	function afterActivate(){
+		var container = $('.blog-entries');
+		nbrut.md.prettify(container);
+	}
+	
     nbrut.tt.configure({
         key: 'home',
-        prepare: prepare
+        prepare: prepare,
+		afterActivate: afterActivate
     });
 }(window,nbrut);

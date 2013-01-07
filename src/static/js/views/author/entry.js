@@ -42,7 +42,7 @@
                 url: '/api/1.0/entry/{0}'.format(data.id),
                 type: 'GET'
             }).done(function(res){
-                render(res);
+                render(res.entry);
             });
         }
     }
