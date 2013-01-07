@@ -39,11 +39,10 @@
             render({});
         }else{
             $.ajax({
-                url: '/api/1.0/entry',
+                url: '/api/1.0/entry/{0}'.format(data.id),
                 type: 'GET'
             }).done(function(res){
-                var entry = res.entries[0]; // TODO get single entry at '/api/1.0/entry/budbudbud'
-                render(entry);
+                render(res);
             });
         }
     }
@@ -63,12 +62,18 @@
         }
 
         nbrut.ui.stateButton(submit, function(restore){
+			var id = submit.data('id'),
+				uri = '/api/1.0/entry';
+				
+			if(!!id){
+				uri += '/' + id;
+			}
+			
             $.ajax({
-                url: '/api/1.0/entry',
+                url: uri,
                 type: 'PUT',
                 data: {
                     entry: {
-                        _id: submit.data('id'),
                         title: title.val(),
                         brief: brief.val(),
                         text: text.val(),

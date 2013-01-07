@@ -14,28 +14,44 @@ module.exports = {
 
         collection.find({}).sort('-date').limit(8).exec(callback);
     },
+	
+	getOne: function(req,res){
+        var collection = models.entry,
+            callback = function(err,document){
+                var json = JSON.stringify(document);
+				
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(json);
+            },
+			id = req.params.id;
+
+        collection.findOne({ _id: id }).exec(callback);
+	},
 
     put: function(req,res){
-        var collection = models.entry,
+        var model = models.entry,
             document = req.body.entry,
-            query = { _id: document._id },
-            opts = { upsert: true },
+			instance;
+
+        instance = new model(document);
+		instance.save(function(err){
+			res.end();
+		});
+    },
+	
+	upd: function(req,res){
+		var id = req.params.id,
+			collection = models.entry,
+            document = req.body.entry,
             done = function(err){
                 res.end();
             };
-
-        if(!!document._id){
-            query = { _id: document._id }
-        }else{
-            query = { _id: new mongoose.Types.ObjectId() }
-        }
-        delete document._id;
+		
         document.updated = new Date();
-
-        collection.findOneAndUpdate(query, document, opts, done);
-    },
+        collection.findOneAndUpdate({ _id: id }, document, {}, done);
+	},
 
 	del: function(req,res){
-		console.log(req.body.id);
+		var id = req.params.id;
 	}
 };

@@ -17,8 +17,10 @@ function registerApiRoutes(server){
 	}
 
     get('/entry', entry.get);
+    get('/entry/:id([0-9a-f]+)', entry.getOne);
     put('/entry', entry.put);
-	del('/entry', entry.del);
+	put('/entry/:id([0-9a-f]+)', entry.upd);
+	del('/entry/:id([0-9a-f]+)', entry.del);
 }
 
 module.exports = function(server){	
