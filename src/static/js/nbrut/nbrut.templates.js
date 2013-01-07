@@ -4,6 +4,9 @@
             stringKeys = {},
             regexKeys = [],
             active = [],
+			activity = {
+				history: []
+			},
 			defaultTemplate = 'home',
             defaults = {
                 container: '#content',
@@ -16,7 +19,6 @@
                 afterActivate: $.noop,
                 selfCleanup: true
             },
-			stateless,
             titleSettings = {
                 tag: $('title'),
                 format: '{0} - Pony Foo'
@@ -72,11 +74,14 @@
 		}
 
 		function back(){
-			console.log(stateless);
-			if (stateless){
+			var h = activity.history,
+				to = h[h.length-1];
+				
+			console.log(h);
+			if(!to){
 				activate(defaultTemplate);
 			}else{
-				history.back();
+				activate(to.key, to.settings);
 			}
 		}
 		
@@ -207,6 +212,14 @@
                         }, title, url);
                     }
                 }
+				
+				if (activity.current !== undefined){
+					activity.history.push(activity.current);
+				}
+				activity.current = {
+					key: template.key,
+					settings: settings
+				};
             }
         }
 
@@ -245,9 +258,7 @@
 				key,
 				settings;
 
-			stateless = e.originalEvent === undefined || e.originalEvent.state === null;
-			
-			if (stateless){
+			if (e.originalEvent === undefined || e.originalEvent.state === null){
 				url = document.location.pathname;
 				key = stringKeys[url];
 
