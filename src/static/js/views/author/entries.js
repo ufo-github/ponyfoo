@@ -28,6 +28,7 @@
 							id: id
 						}
 					});
+					return false;
 				}
 			});
 			

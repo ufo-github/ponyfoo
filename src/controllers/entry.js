@@ -2,7 +2,10 @@ var mongoose = require('mongoose'),
     models = require('../models/all.js'),
 	model = models.entry,
 	resHandler = function(res, err, success){
-		res.writeHead(200, { 'Content-Type': 'application/json' });
+		res.writeHead(200, {
+			'Content-Type': 'application/json',
+			'Cache-Control': 'no-cache'
+		});
 		
 		var test = !!err;		
 		if (test){
