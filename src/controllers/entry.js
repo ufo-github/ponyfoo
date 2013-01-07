@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     models = require('../models/all.js'),
 	model = models.entry,
-	resHandler = function(err, success){
+	resHandler = function(res, err, success){
 		res.writeHead(200, { 'Content-Type': 'application/json' });
 		
 		var test = !!err;		
@@ -15,14 +15,14 @@ var mongoose = require('mongoose'),
 			(success || res.end)();
 		}
 	},
-	done = function(err){
-		resHandler(err);
+	done = function(res, err){
+		resHandler(res, err);
 	};
 	
 module.exports = {
     get: function(req,res){
         var callback = function(err,documents){
-			resHandler(err, function(){
+			resHandler(res, err, function(){
                 var json = JSON.stringify({
                     entries: documents
                 });
@@ -36,7 +36,7 @@ module.exports = {
 	getOne: function(req,res){
         var id = req.params.id,
 			callback = function(err,document){
-                resHandler(err, function(){
+                resHandler(res, err, function(){
 					var json = JSON.stringify(document);
 					res.end(json);
 				});
@@ -47,23 +47,32 @@ module.exports = {
 
     put: function(req,res){
         var document = req.body.entry,
-			instance;
+			instance,
+			callback = function(err){
+				done(res,err);
+			};
 
         instance = new model(document);
-		instance.save(done);
+		instance.save(callback);
     },
 	
 	upd: function(req,res){
 		var id = req.params.id,
-            document = req.body.entry;
+            document = req.body.entry,
+			callback = function(err){
+				done(res,err);
+			};
 		
         document.updated = new Date();
-        model.findOneAndUpdate({ _id: id }, document, {}, done);
+        model.findOneAndUpdate({ _id: id }, document, {}, callback);
 	},
 
 	del: function(req,res){
-		var id = req.params.id;
+		var id = req.params.id,
+			callback = function(err){
+				done(res,err);
+			};
 			
-		model.remove({ _id: id }, done);
+		model.remove({ _id: id }, callback);
 	}
 };
