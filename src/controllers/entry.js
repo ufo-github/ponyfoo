@@ -1,10 +1,10 @@
 var mongoose = require('mongoose'),
-    models = require('../models/all.js');
-
+    models = require('../models/all.js'),
+	model = models.entry;
+	
 module.exports = {
     get: function(req,res){
-        var collection = models.entry,
-            callback = function(err,documents){
+        var callback = function(err,documents){
                 var json = JSON.stringify({
                     entries: documents
                 });
@@ -12,12 +12,11 @@ module.exports = {
                 res.end(json);
             };
 
-        collection.find({}).sort('-date').limit(8).exec(callback);
+        model.find({}).sort('-date').limit(8).exec(callback);
     },
 	
 	getOne: function(req,res){
-        var collection = models.entry,
-            callback = function(err,document){
+        var callback = function(err,document){
                 var json = JSON.stringify(document);
 				
                 res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -25,12 +24,11 @@ module.exports = {
             },
 			id = req.params.id;
 
-        collection.findOne({ _id: id }).exec(callback);
+        model.findOne({ _id: id }).exec(callback);
 	},
 
     put: function(req,res){
-        var model = models.entry,
-            document = req.body.entry,
+        var document = req.body.entry,
 			instance;
 
         instance = new model(document);
@@ -41,17 +39,20 @@ module.exports = {
 	
 	upd: function(req,res){
 		var id = req.params.id,
-			collection = models.entry,
             document = req.body.entry,
             done = function(err){
                 res.end();
             };
 		
         document.updated = new Date();
-        collection.findOneAndUpdate({ _id: id }, document, {}, done);
+        model.findOneAndUpdate({ _id: id }, document, {}, done);
 	},
 
 	del: function(req,res){
 		var id = req.params.id;
+			
+		model.remove({ _id: id }, function(err){
+			res.end();
+		});
 	}
 };
