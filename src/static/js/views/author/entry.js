@@ -32,6 +32,9 @@
         $('.entry-writing textarea:not(.processed)').textareaResizer();
 
         bindTitle();
+		
+		var previewContainer = $('#entry-preview');
+		nbrut.md.prettify(previewContainer);
     }
 
     function prepare(render, data){
