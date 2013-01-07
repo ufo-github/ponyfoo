@@ -76,8 +76,8 @@
             if (s.length !== 1){
                 throw new Error('template source not unique.');
             }
-            var css = s.data('class');
-            var html = s.remove().html();
+            var css = s.data('class'),
+				html = s.remove().html();
 
             template.dom = {
                 html: html,
@@ -85,7 +85,12 @@
             };
 
             if (template.mustache){
-                template.dom.view = Mustache.compile(html);
+				var m = {
+					regex: /<!--[ ]*({{[^}]+}})[ ]*-->/g,
+					replace: '$1'
+				};
+				var sanitized = html.replace(m.regex, m.replace);
+                template.dom.view = Mustache.compile(sanitized);
             }
         }
 
