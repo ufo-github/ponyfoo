@@ -4,24 +4,26 @@ section#entry-template.template(data-class='entry-writing')
   section#entry-editor
     div#entry-title-editor
       label(for='entry-title')='Title'
-      input#entry-title(type='text')
+      input#entry-title(type='text', value='{{title}}')
 
     div#wmd-button-bar-brief.wmd-button-bar
     div
       textarea#wmd-input-brief.wmd-input.entry-brief(name='entry.brief')
+        {{brief}}
 
     div#wmd-button-bar-text.wmd-button-bar
     div
       textarea#wmd-input-text.wmd-input.entry-text(name='entry.text')
+        {{text}}
 
   article#entry-preview.blog-entry
     header.blog-entry-title
       h1
 
-    section#wmd-preview-brief.blog-entry-brief.blog-entry-body
-    section#wmd-preview-text.blog-entry-text.blog-entry-body
+    section#wmd-preview-brief.blog-entry-brief
+    section#wmd-preview-text.blog-entry-text
 
   div#entry-editor-buttons
-    button#submit-entry
+    button#submit-entry(data-id='{{_id}}')
       include ../shared/spinner
       span(data-text='Post', data-text-disabled='Posting...')

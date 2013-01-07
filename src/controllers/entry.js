@@ -18,7 +18,7 @@ module.exports = {
     put: function(req,res){
         var collection = models.entry,
             document = req.body.entry,
-            query = { date: document.date },
+            query = { _id: document._id },
             opts = { upsert: true },
             done = function(err){
                 res.end();

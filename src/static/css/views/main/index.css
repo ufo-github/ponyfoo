@@ -1,13 +1,14 @@
-.blog-entry .blog-entry-title {
+.blog-entry-title {
   font-size: 2em;
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin-bottom: 35px;
 }
-.blog-entry .blog-entry-brief {
+.blog-entry-brief {
   margin-bottom: 45px;
 }
-.blog-entry .blog-entry-body h1,
+.blog-entry-brief h1,
+.blog-entry-text h1,
 .blog-entry h2,
 .blog-entry h3,
 .blog-entry h4 {

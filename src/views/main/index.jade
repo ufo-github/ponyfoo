@@ -1,1 +1,9 @@
 section#blog-template.template
+  // {{#entries}}
+  article.blog-entry
+    header.blog-entry-title
+      h1='{{title}}'
+
+    section.blog-entry-brief='{{{brief}}}'
+    section.blog-entry-text='{{{text}}}'
+  // {{/entries}}

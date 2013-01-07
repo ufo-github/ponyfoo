@@ -12,6 +12,7 @@
     nbrut.tt.register({
         key: 'home',
         source: '#blog-template',
+        mustache: true,
         aliases: [{
             title: { value: 'Pony Foo', formatted: false },
             route: '/',
@@ -22,6 +23,7 @@
     nbrut.tt.register({
         key: 'entry-editor',
         source: '#entry-template',
+        mustache: true,
         aliases: [{
             title: { value: 'New Post' },
             route: '/author/entry',
