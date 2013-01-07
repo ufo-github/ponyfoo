@@ -1,11 +1,12 @@
 var config = require('./config.js'),
+	connect = require('connect'),
     express = require('express'),
     port = config.server.port,
     assets = __dirname + '/static',
     mongoose = require('mongoose'),
 	mongoUri = config.db.uri;
 
-var server = express.createServer();
+var server = express();
 
 server.configure('production', function(){
 	server.use(connect.compress());
