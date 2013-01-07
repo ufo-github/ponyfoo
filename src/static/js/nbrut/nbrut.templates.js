@@ -38,8 +38,6 @@
         }
 		
 		function setup(template){
-			var backTrigger;
-			
             $.each(template.aliases || [], function(){
                 var alias = this;
 
@@ -84,7 +82,7 @@
 			}
 		}
 		
-		function bindBack(){
+		function bindBack(template){
 			if(typeof template.back === 'string'){
 				var backTrigger = $(template.back);
 				backTrigger.on('click', back);
