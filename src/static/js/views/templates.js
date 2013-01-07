@@ -24,6 +24,7 @@
         key: 'entry-editor',
         source: '#entry-template',
         mustache: true,
+		back: '#cancel-entry',
         aliases: [{
             title: { value: 'New Post' },
             route: '/author/entry',

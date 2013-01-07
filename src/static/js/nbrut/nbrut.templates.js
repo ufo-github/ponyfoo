@@ -4,6 +4,7 @@
             stringKeys = {},
             regexKeys = [],
             active = [],
+			defaultTemplate = 'home',
             defaults = {
                 container: '#content',
                 mustache: false,
@@ -15,14 +16,14 @@
                 afterActivate: $.noop,
                 selfCleanup: true
             },
+			stateless,
             titleSettings = {
                 tag: $('title'),
                 format: '{0} - Pony Foo'
             };
 
         function register(settings) {
-            var template = {},
-                trigger;
+            var template = {};
 
             $.extend(template, defaults, settings);
 
@@ -33,8 +34,15 @@
 
             templates[template.key] = template;
 
+			bind(template);
+        }
+		
+		function bind(template){
+			var backTrigger;
+			
             $.each(template.aliases || [], function(){
-                var alias = this;
+                var alias = this,
+					trigger;
 
                 alias.route = fixRouteObject(alias.route);
 
@@ -56,10 +64,26 @@
                             return false;
                         }
                     });
-                }
+                }				
             });
-        }
+		
+			if(typeof template.back === 'string'){
+				backTrigger = $(template.back);
+				backTrigger.on('click', function(e){
+					back();
+				});
+			}
+		}
 
+		function back(){
+			if (stateless){
+				activate(defaultTemplate);
+			}else{
+				depth--;
+				history.back();
+			}
+		}
+		
         function configure(settings) {
             if(!(settings.key in templates)){
                 throw new Error('template not registered.');
@@ -213,39 +237,43 @@
             return use;
         }
 
+		function popState(e){
+			var url,
+				key,
+				settings;
+
+			stateless = e.originalEvent === undefined || e.originalEvent.state === null;
+			
+			if (stateless){
+				url = document.location.pathname;
+				key = stringKeys[url];
+
+				if (key === undefined){
+					$.each(regexKeys, function() {
+						var self = this,
+							captures = url.match(self.regex);
+						if (captures !== null){
+							key = self.key;
+
+							settings = {
+								key: self.alias.key,
+								data: self.alias.route.map(captures)
+							};
+							return false;
+						}
+					})
+				}
+			} else {
+				var state =  e.originalEvent.state;
+				key = state.key;
+				settings = state.settings;
+			}
+			activate(key, settings, true);
+		}
+		
         function init(){
             $(function(){
-                $(window).on('popstate', function(e){
-                    var url,
-                        key,
-                        settings;
-
-                    if (e.originalEvent === undefined || e.originalEvent.state === null){
-                        url = document.location.pathname;
-                        key = stringKeys[url];
-
-                        if (key === undefined){
-                            $.each(regexKeys, function() {
-                                var self = this,
-                                    captures = url.match(self.regex);
-                                if (captures !== null){
-                                    key = self.key;
-
-                                    settings = {
-                                        key: self.alias.key,
-                                        data: self.alias.route.map(captures)
-                                    };
-                                    return false;
-                                }
-                            })
-                        }
-                    } else {
-                        var state =  e.originalEvent.state;
-                        key = state.key;
-                        settings = state.settings;
-                    }
-                    activate(key, settings, true);
-                });
+                $(window).on('popstate', popState);
 
                 // manual trigger loads template by URL in FF/IE.
                 if ($.browser.mozilla || $.browser.msie) {
