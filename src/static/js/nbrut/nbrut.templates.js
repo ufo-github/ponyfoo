@@ -77,7 +77,6 @@
 			var h = activity.history,
 				to = h[h.length-1];
 				
-			console.log(h);
 			if(!to){
 				activate(defaultTemplate);
 			}else{
