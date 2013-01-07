@@ -13,6 +13,6 @@ section#entry-review-template.template(data-class='entry-review')
         td='{{date}}'
         td.title='{{title}}'
         td
-          a.edit(title='Edit')='Edit'
+          a.edit(title='Edit', href='/author/entry/{{_id}}')='Edit'
           a.remove(title='Delete')
       // {{/entries}}

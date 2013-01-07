@@ -20,13 +20,15 @@
 			var row = $(this),
 				id = row.data('id');
 			
-			row.find('a.edit').on('click', function(){
-				nbrut.tt.activate('entry-editor', {
-					key: 'edit',
-					data: {
-						id: id
-					}
-				});
+			row.find('a.edit').on('click', function(e){
+				if (e.which === 1){ // left-click
+					nbrut.tt.activate('entry-editor', {
+						key: 'edit',
+						data: {
+							id: id
+						}
+					});
+				}
 			});
 			
 			row.find('a.remove').on('click', function(){
