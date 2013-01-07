@@ -5,8 +5,8 @@
 			type: 'GET'
 		}).done(function(res){
             var fixed = $.map(res.entries, function(i){
-                i.brief = nbrut.md.getHtml(i.brief);
-                i.text = nbrut.md.getHtml(i.text);
+                i.brief = nbrut.md.html(i.brief);
+                i.text = nbrut.md.html(i.text);
                 return i;
             });
 
