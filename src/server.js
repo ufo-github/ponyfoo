@@ -7,6 +7,10 @@ var config = require('./config.js'),
 
 var server = express.createServer();
 
+server.configure('release', function(){
+	server.use(connect.compress());
+});
+
 server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
