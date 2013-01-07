@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
         title: { type: String, require: true, trim: true },
         brief: { type: String, require: true },
         text: { type: String, require: true },
-        date: { type: Date, index: { unique: true }, require: true },
+        date: { type: Date, require: true },
 		updated: { type: Date, require: true, default: Date.now }
     });
 
