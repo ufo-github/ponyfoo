@@ -44,8 +44,6 @@
 				setupAlias(template, alias)
 				bindTrigger(template, alias);
             });
-		
-			bindBack(template);
 		}
 		
 		function setupAlias(template, alias){
@@ -164,7 +162,7 @@
             }
 			var render = function(viewModel){
 				activateTemplate(template, settings, viewModel, soft); // set-up.
-
+				bindBack(template);
 				template.afterActivate(settings.data);
 			};
 			
