@@ -7,7 +7,7 @@ var config = require('./config.js'),
 
 var server = express.createServer();
 
-server.configure('release', function(){
+server.configure('production', function(){
 	server.use(connect.compress());
 });
 
