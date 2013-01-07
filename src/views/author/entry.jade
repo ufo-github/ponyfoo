@@ -2,9 +2,14 @@ section#entry-template.template(data-class='entry-writing')
   h1='Entry Editor'
 
   section#entry-editor
-    div#entry-title-editor
-      label(for='entry-title')='Title'
-      input#entry-title(type='text', value='{{title}}')
+    fieldset
+      p
+        label(for='entry-title')='Title'
+        input#entry-title(type='text', value='{{title}}')
+
+      p
+        label(for='entry-date')='Date'
+        input#entry-date(type='text', value='{{date}}')
 
     div#wmd-button-bar-brief.wmd-button-bar
     div

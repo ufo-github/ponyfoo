@@ -4,7 +4,14 @@
             url: '/api/1.0/entry',
             type: 'GET'
         }).done(function(res){
-            render(res);
+            var fixed = $.map(res.entries, function(i){
+                i.date = new Date(i.date).toDateString();
+                return i;
+            });
+
+            render({
+                entries: fixed
+            });
         });
     }
 

@@ -42,36 +42,50 @@
                 url: '/api/1.0/entry',
                 type: 'GET'
             }).done(function(res){
-                var entry = res.entries[0];
+                var entry = res.entries[0]; // TODO get single entry at '/api/1.0/entry/budbudbud'
                 render(entry);
             });
         }
     }
 
-    function afterActivate(){
-        prepareEditor();
-
+    function bindSubmit(){
         var submit = $('#submit-entry'),
             title = $('#entry-title'),
             brief = $('#wmd-input-brief'),
-            text = $('#wmd-input-text');
+            text = $('#wmd-input-text'),
+            date = $('#entry-date');
+
+        function getDateJson(){
+            var dateString = date.val(),
+                d = new Date(dateString);
+
+            return d.toJSON();
+        }
 
         nbrut.ui.stateButton(submit, function(restore){
             $.ajax({
-				url: '/api/1.0/entry',
-                type: 'PUT',				
+                url: '/api/1.0/entry',
+                type: 'PUT',
                 data: {
                     entry: {
                         _id: submit.data('id'),
                         title: title.val(),
                         brief: brief.val(),
-                        text: text.val()
+                        text: text.val(),
+                        date: getDateJson()
                     }
                 }
             }).done(function(res){
-                restore(500);
+                // TODO: if error restore(500);
+                nbrut.tt.activate('entry-review');
             });
         });
+    }
+
+    function afterActivate(){
+        prepareEditor();
+        $('#entry-date').pikaday();
+        bindSubmit();
     }
 
     nbrut.tt.configure({

@@ -24,6 +24,14 @@ module.exports = {
                 res.end();
             };
 
+        if(!!document._id){
+            query = { _id: document._id }
+        }else{
+            query = { _id: new mongoose.Types.ObjectId() }
+        }
+        delete document._id;
+        document.updated = new Date();
+
         collection.findOneAndUpdate(query, document, opts, done);
     },
 
