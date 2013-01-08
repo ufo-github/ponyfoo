@@ -10,7 +10,7 @@ function api(server){
 		server[verb](base + endpoint, cb);
 	}
 	
-	verbs.foreach(function(v){
+	verbs.forEach(function(v){
 		methods[v] = function(endpoint, cb){
 			register(endpoint, cb, v);
 		};
