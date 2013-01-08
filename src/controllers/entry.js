@@ -11,10 +11,11 @@ var mongoose = require('mongoose'),
 		if (test){
 			var json = JSON.stringify({
 				error: {
+					code: 500,
 					message: 'internal server error'
 				}
 			});
-			res.status(500);
+			res.status(json.error.code);
 			res.write(json);
 			res.end();
 		}else{
