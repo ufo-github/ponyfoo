@@ -11,7 +11,7 @@
   width: 620px;
   margin-left: 6px;
 }
-.entry-brief {
+#wmd-input-brief {
   height: 120px;
 }
 #entry-preview {
@@ -23,4 +23,7 @@
 #entry-editor-buttons {
   margin-top: 10px;
   text-align: right;
+}
+#submit-entry {
+  margin-left: 10px;
 }

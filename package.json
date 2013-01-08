@@ -7,7 +7,8 @@
     "connect": "2.7.2",
     "express": "3.0.0",
     "jade": "0.27.6",
-	"mongoose": "3.5.3"
+	"mongoose": "3.5.3",
+    "asset-manager": "0.3.8"
   },
   "devDependencies": {
     "vows": "0.5.x",

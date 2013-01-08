@@ -35,7 +35,7 @@
         return {
             runEditor: runEditor,
             html: html,
-			prettify: reformatMarkdown
+            prettify: reformatMarkdown
         };
     }();
 
