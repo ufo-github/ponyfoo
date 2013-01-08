@@ -1,38 +1,32 @@
 var site = require('../controllers/site.js');
 var entry = require('../controllers/entry.js');
 
-function api(server){
-	var base = '/api/1.0',
-		verbs = ['get','post','put','del','all'],
-		exposed = {};
-	
-	function register(endpoint, cb, method) {
-		server[method](api + endpoint, cb);
-	}
-	
-	verbs.forEach(function(verb){
-		exposed[verb] = function(endpoint, cb){
-			register(endpoint, cb, verb);
-		}
-	});
-	
-	return exposed;
-}
-
 function registerApiRoutes(server){
-	var a = api(server);
 	
-    a.get('/entry', entry.get);
+	function get(endpoint, action) {
+		server.get(api+endpoint,action);
+	}
+    function put(endpoint, action) {
+        server.put(api+endpoint,action);
+    }	
+	function del(endpoint, action) {
+		server.del(api+endpoint,action);
+	}
+	function all(endpoint, action) {
+		server.all(api+endpoint,action);
+	}
+
+    get('/entry', entry.get);
     
-	a.get('/entry/:year/:month?/:day?', entry.getByDate);
-	a.get('/entry/:year/:month/:day/:slug', entry.getBySlug);
+	get('/entry/:year/:month?/:day?', entry.getByDate);
+	get('/entry/:year/:month/:day/:slug', entry.getBySlug);
 	
-    a.get('/entry/:id([0-9a-f]+)', entry.getOne);
-    a.put('/entry', entry.put);
-	a.put('/entry/:id([0-9a-f]+)', entry.upd);
-	a.del('/entry/:id([0-9a-f]+)', entry.del);
+    get('/entry/:id([0-9a-f]+)', entry.getOne);
+    put('/entry', entry.put);
+	put('/entry/:id([0-9a-f]+)', entry.upd);
+	del('/entry/:id([0-9a-f]+)', entry.del);
 	
-	a.all('/*', function(req, res){
+	all('/*', function(req, res){
 		var json = JSON.stringify({
 			error: true
 		});
