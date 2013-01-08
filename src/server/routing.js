@@ -1,36 +1,45 @@
 var site = require('../controllers/site.js');
 var entry = require('../controllers/entry.js');
 
-function registerApiRoutes(server){
+function api(server){
+	var base = '/api/1.0',
+		verbs = ['get','post','put','del','all'],
+		methods = {};
 	
-	function get(endpoint, action) {
-		server.get(api+endpoint,action);
+	function register(endpoint, cb, verb) {
+		server[verb](base + endpoint, cb);
 	}
-    function put(endpoint, action) {
-        server.put(api+endpoint,action);
-    }	
-	function del(endpoint, action) {
-		server.del(api+endpoint,action);
-	}
-	function all(endpoint, action) {
-		server.all(api+endpoint,action);
-	}
+	
+	verbs.foreach(function(v){
+		methods[v] = function(endpoint, cb){
+			register(endpoint, cb, v);
+		};
+	});
+	
+	return methods;
+}
 
-    get('/entry', entry.get);
+function registerApiRoutes(server){
+	var a = api(server);
+	
+    a.get('/entry', entry.get);
     
-	get('/entry/:year/:month?/:day?', entry.getByDate);
-	get('/entry/:year/:month/:day/:slug', entry.getBySlug);
+	a.get('/entry/:year/:month?/:day?', entry.getByDate);
+	a.get('/entry/:year/:month/:day/:slug', entry.getBySlug);
 	
-    get('/entry/:id([0-9a-f]+)', entry.getOne);
-    put('/entry', entry.put);
-	put('/entry/:id([0-9a-f]+)', entry.upd);
-	del('/entry/:id([0-9a-f]+)', entry.del);
+    a.get('/entry/:id([0-9a-f]+)', entry.getOne);
+    a.put('/entry', entry.put);
+	a.put('/entry/:id([0-9a-f]+)', entry.upd);
+	a.del('/entry/:id([0-9a-f]+)', entry.del);
 	
-	all('/*', function(req, res){
+	a.all('/*', function(req, res){
 		var json = JSON.stringify({
-			error: true
+			error: {
+				code: 404,
+				message: 'api endpoint not found'
+			}
 		});
-		res.writeHead(200, {
+		res.writeHead(404, {
 			'Content-Type': 'application/json',
 			'Cache-Control': 'no-cache'
 		});
