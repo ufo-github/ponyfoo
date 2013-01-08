@@ -36,6 +36,18 @@ module.exports = {
         model.find({}).sort('-date').limit(8).exec(callback);
     },
 	
+	getByDate: function(req,res){
+		resHandler(res, null, function(){
+			res.write('        year: ');
+			res.write(req.year);
+			res.write('        month: ');
+			res.write(req.month);
+			res.write('        day: ');
+			res.write(req.day);
+			res.end();
+		});
+	},
+	
 	getOne: function(req,res){
         var id = req.params.id,
 			callback = function(err,document){
