@@ -36,19 +36,39 @@ module.exports = {
         model.find({}).sort('-date').limit(8).exec(callback);
     },
 	
-	getByDate: function(req,res){
+	getByYear: function(req,res){
 		resHandler(res, null, function(){
-			res.write('year: ');
+			res.write('by year: ');
 			res.write(req.params.year);
-			res.write(' month: ');
-			res.write(req.params.month);
-			res.write(' day: ');
-			res.write(req.params.day);
 			res.end();
 		});
 	},
 	
-	getOne: function(req,res){
+	getByMonth: function(req,res){
+		resHandler(res, null, function(){
+			res.write('by month: ');
+			res.write(req.params.year + '/' + req.params.month);
+			res.end();
+		});
+	},
+		
+	getByDay: function(req,res){
+		resHandler(res, null, function(){
+			res.write('by day: ');
+			res.write(req.params.year + '/' + req.params.month + '/' + req.params.day);
+			res.end();
+		});
+	},
+		
+	getBySlug: function(req,res){
+		resHandler(res, null, function(){
+			res.write('by slug: ');
+			res.write(req.params.year + '/' + req.params.month + '/' + req.params.day + '/' + req.params.slug);
+			res.end();
+		});
+	},
+	
+	getById: function(req,res){
         var id = req.params.id,
 			callback = function(err,document){
                 resHandler(res, err, function(){

@@ -24,10 +24,17 @@ function registerApiRoutes(server){
 	
     a.get('/entry', entry.get);
     
-	a.get('/entry/:year/:month?/:day?', entry.getByDate);
-	a.get('/entry/:year/:month/:day/:slug', entry.getBySlug);
+	var routeYear = '/entry/:year(/d{4})',
+		routeMonth = routeYear + '/:month(/d{2})',
+		routeDay = routeMonth + '/:day(/d{2})',
+		routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
+		
+	a.get(routeYear, entry.getByYear);
+	a.get(routeMonth, entry.getByMonth);
+	a.get(routeDay, entry.getByDay);
+	a.get(routeSlug, entry.getBySlug);
 	
-    a.get('/entry/:id([0-9a-f]+)', entry.getOne);
+    a.get('/entry/:id([0-9a-f]+)', entry.getById);
     a.put('/entry', entry.put);
 	a.put('/entry/:id([0-9a-f]+)', entry.upd);
 	a.del('/entry/:id([0-9a-f]+)', entry.del);
