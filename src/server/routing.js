@@ -14,7 +14,7 @@ function api(server){
 		exposed[verb] = function(endpoint, cb){
 			register(endpoint, cb, verb);
 		}
-	}
+	});
 	
 	return exposed;
 }
