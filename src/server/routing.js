@@ -24,7 +24,7 @@ function registerApiRoutes(server){
 	
     a.get('/entry', entry.get);
     
-	var routeYear = '/entry/:year(\d{4})',
+	var routeYear = '/entry/:year([0-9]{4})',
 		routeMonth = routeYear + '/:month(0[1-9]|1[0-2])',
 		routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
 		routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
