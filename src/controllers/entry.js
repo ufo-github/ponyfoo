@@ -1,4 +1,5 @@
-var mongoose = require('mongoose'),
+var utils = require('../shared/services.js'),
+	mongoose = require('mongoose'),
     models = require('../models/all.js'),
 	model = models.entry;
 	
@@ -28,7 +29,7 @@ function done(res, err){
 	resHandler(res, err);
 }
 	
-function list(res, query){
+function list(res, query, filter){
 	var callback = function(err,documents){
 		resHandler(res, err, function(){
 			var json = JSON.stringify({
@@ -41,34 +42,41 @@ function list(res, query){
 	model.find(query).sort('-date').exec(callback);
 }
 
-function getByDateInternal(res,year,month,day){
+function dateQuery(year,month,day){
 	var range = {
-		start: new Date(year, (month||1)-1, day || 1),
-		end: new Date(year, (month||12)-1, day || 31)
+		start: new Date(year, (month||1)-1, day||1),
+		end: new Date(year, (month||12)-1, day||31)
 	};
-	list(res, {
+	return {
 		date: {
 			$gte: range.start,
 			$lte: range.end
 		}
-	});
+	};
 }
 
+function dateQueryRequest(params){
+	var year = params.year,
+		month = params.month,
+		day = params.day,
+		query = dateQuery(year, month, day);
+		
+	return query;
+}
 module.exports = {
     get: function(req,res){
 		list(res, {});
     },
 	
 	getByDate: function(req,res){
-		getByDateInternal(res, req.params.year, req.params.month, req.params.day);
+		var query = dateQueryRequest(req.params);			
+		list(res, query);
 	},
-		
+
 	getBySlug: function(req,res){
-		resHandler(res, null, function(){
-			res.write('by slug: ');
-			res.write(req.params.year + '/' + req.params.month + '/' + req.params.day + '/' + req.params.slug);
-			res.end();
-		});
+		var query = dateQueryRequest(req.params);
+		query.slug = req.params.slug;
+		list(res, query);
 	},
 	
 	getById: function(req,res){
@@ -93,6 +101,7 @@ module.exports = {
 			};
 
         instance = new model(document);
+		instance.slug = utils.slug(title);
 		instance.save(callback);
     },
 	
@@ -104,6 +113,7 @@ module.exports = {
 			};
 		
         document.updated = new Date();
+		document.slug = utils.slug(title);
         model.findOneAndUpdate({ _id: id }, document, {}, callback);
 	},
 
