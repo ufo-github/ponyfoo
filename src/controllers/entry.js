@@ -1,4 +1,4 @@
-var utils = require('../shared/services.js'),
+var utils = require('../services/utils.js'),
 	mongoose = require('mongoose'),
     models = require('../models/all.js'),
 	model = models.entry;
