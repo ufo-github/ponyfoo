@@ -4,7 +4,7 @@ var entry = require('../controllers/entry.js');
 function api(server){
 	var base = '/api/1.0',
 		verbs = ['get','post','put','del','all'],
-		exposed;
+		exposed = {};
 	
 	function register(endpoint, cb, method) {
 		server[method](api + endpoint, cb);
