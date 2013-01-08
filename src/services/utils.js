@@ -1,23 +1,20 @@
-!function(){
-	function slug(text) {
-	  text = text.replace(/^\s+|\s+$/g, ''); // trim
-	  text = text.toLowerCase();
+function slug(text) {
+  text = text.replace(/^\s+|\s+$/g, ''); // trim
+  text = text.toLowerCase();
 
-	  // remove accents, swap ρ for n, etc
-	  var from = "γΰαδβ?θιλκμνοξυςσφτωϊόϋρη·/_,:;";
-	  var to   = "aaaaaeeeeeiiiiooooouuuunc------";
-	  for (var i = 0, l = from.length; i < l; i++) {
-		text = text.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-	  }
+  var from = "Γ£Γ Γ΅Γ¤ΓΆαΊ½Γ¨Γ©Γ«ΓªΓ¬Γ­Γ―Γ®ΓµΓ²Γ³Γ¶Γ΄ΓΉΓΊΓΌΓ»Γ±Γ§Β·/_,:;";
+  var to   = "aaaaaeeeeeiiiiooooouuuunc------";
+  for (var i = 0, l = from.length; i < l; i++) {
+    text = text.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
 
-	  text = text.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-		.replace(/\s+/g, '-') // collapse whitespace and replace by -
-		.replace(/-+/g, '-'); // collapse dashes
+  text = text.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
 
-	  return text;
-	};
+  return text;
+}
 	
-	module.exports = {
-		slug: slug
-	};
-}();
+module.exports = {
+    slug: slug
+};

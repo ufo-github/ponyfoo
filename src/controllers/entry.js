@@ -1,5 +1,4 @@
 var utils = require('../services/utils.js'),
-	mongoose = require('mongoose'),
     models = require('../models/all.js'),
 	model = models.entry;
 	
@@ -28,7 +27,7 @@ function resHandler(res, err, success){
 function done(res, err){
 	resHandler(res, err);
 }
-	
+
 function list(res, query, filter){
 	var callback = function(err,documents){
 		resHandler(res, err, function(){
@@ -55,6 +54,19 @@ function dateQuery(year,month,day){
 	};
 }
 
+function single(res, query){
+    var callback = function(err,document){
+            resHandler(res, err, function(){
+                var json = JSON.stringify({
+                    entry: document
+                });
+                res.end(json);
+            });
+        };
+
+    model.findOne(query).exec(callback);
+}
+
 module.exports = {
     get: function(req,res){
 		list(res, {});
@@ -62,26 +74,15 @@ module.exports = {
 	
 	getByDate: function(req,res){
 		var query = dateQuery(req.params.year, req.params.month, req.params.day);
-		console.log(query);
 		list(res, query);
 	},
 
 	getBySlug: function(req,res){
-		list(res, { slug: req.params.slug });
+		single(res, { slug: req.params.slug });
 	},
-	
-	getById: function(req,res){
-        var id = req.params.id,
-			callback = function(err,document){
-                resHandler(res, err, function(){
-					var json = JSON.stringify({
-						entry: document
-					});
-					res.end(json);
-				});
-			};
 
-        model.findOne({ _id: id }).exec(callback);
+	getById: function(req,res){
+        single(res, { _id: req.params.id });
 	},
 
     put: function(req,res){
@@ -92,6 +93,7 @@ module.exports = {
 			};
 
         instance = new model(document);
+        instance.slug = utils.slug(instance.title);
 		instance.save(callback);
     },
 	
@@ -103,6 +105,7 @@ module.exports = {
 			};
 		
         document.updated = new Date();
+        document.slug = utils.slug(document.title);
         model.findOneAndUpdate({ _id: id }, document, {}, callback);
 	},
 
