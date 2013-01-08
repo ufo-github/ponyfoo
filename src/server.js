@@ -13,7 +13,7 @@ server.configure(function(){
     server.set('views', views);
     server.use(express.favicon(favicon));
 
-    server.use(less({ src: assets }));
+    server.use(less({ src: assets, paths: [__dirname] }));
     server.use(express.static(assets));
 
     server.use(express.logger({ format: 'dev' }));
