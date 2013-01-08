@@ -38,12 +38,12 @@ module.exports = {
 	
 	getByDate: function(req,res){
 		resHandler(res, null, function(){
-			res.write('        year: ');
-			res.write(req.year);
-			res.write('        month: ');
-			res.write(req.month);
-			res.write('        day: ');
-			res.write(req.day);
+			res.write('year: ');
+			res.write(req.params.year);
+			res.write(' month: ');
+			res.write(req.params.month);
+			res.write(' day: ');
+			res.write(req.params.day);
 			res.end();
 		});
 	},
