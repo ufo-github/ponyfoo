@@ -15,7 +15,7 @@ var mongoose = require('mongoose'),
 					message: 'internal server error'
 				}
 			});
-			res.status(json.error.code);
+			res.status(500);
 			res.write(json);
 			res.end();
 		}else{

@@ -46,7 +46,7 @@ function registerApiRoutes(server){
 				message: 'api endpoint not found'
 			}
 		});
-		res.writeHead(json.error.code, {
+		res.writeHead(404, {
 			'Content-Type': 'application/json',
 			'Cache-Control': 'no-cache'
 		});
