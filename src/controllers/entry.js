@@ -1,67 +1,66 @@
 var mongoose = require('mongoose'),
     models = require('../models/all.js'),
-	model = models.entry,
-	resHandler = function(res, err, success){
-		res.writeHead(200, {
-			'Content-Type': 'application/json',
-			'Cache-Control': 'no-cache'
-		});
-		
-		var test = !!err;		
-		if (test){
-			var json = JSON.stringify({
-				error: {
-					code: 500,
-					message: 'internal server error'
-				}
-			});
-			res.status(500);
-			res.write(json);
-			res.end();
-		}else{
-			(success || res.end)();
-		}
-	},
-	done = function(res, err){
-		resHandler(res, err);
-	};
+	model = models.entry;
 	
+function resHandler(res, err, success){
+	res.writeHead(200, {
+		'Content-Type': 'application/json',
+		'Cache-Control': 'no-cache'
+	});
+	
+	var test = !!err;		
+	if (test){
+		var json = JSON.stringify({
+			error: {
+				code: 500,
+				message: 'internal server error'
+			}
+		});
+		res.status(500);
+		res.write(json);
+		res.end();
+	}else{
+		(success || res.end)();
+	}
+}
+
+function done(res, err){
+	resHandler(res, err);
+}
+	
+function list(res, query){
+	var callback = function(err,documents){
+		resHandler(res, err, function(){
+			var json = JSON.stringify({
+				entries: documents
+			});
+			res.end(json);
+		});
+	};
+
+	model.find(query).sort('-date').exec(callback);
+}
+
+function getByDateInternal(res,year,month,day){
+	var range = {
+		start: new Date(year, (month||1)-1, day || 1),
+		end: new Date(year, (month||12)-1, day || 31)
+	};
+	list(res, {
+		date: {
+			$gte: range.start,
+			$lte: range.end
+		}
+	});
+}
+
 module.exports = {
     get: function(req,res){
-        var callback = function(err,documents){
-			resHandler(res, err, function(){
-                var json = JSON.stringify({
-                    entries: documents
-                });
-                res.end(json);
-            });
-		};
-
-        model.find({}).sort('-date').limit(8).exec(callback);
+		list(res, {});
     },
 	
-	getByYear: function(req,res){
-		resHandler(res, null, function(){
-			res.write('by year: ');
-			res.write(req.params.year);
-			res.end();
-		});
-	},
-	
-	getByMonth: function(req,res){
-		resHandler(res, null, function(){
-			res.write('by month: ');
-			res.write(req.params.year + '/' + req.params.month);
-			res.end();
-		});
-	},
-		
-	getByDay: function(req,res){
-		resHandler(res, null, function(){
-			res.write('by day: ');
-			res.write(req.params.year + '/' + req.params.month + '/' + req.params.day);
-			res.end();
-		});
+	getByDate: function(req,res){
+		getByDateInternal(res, req.params.year, req.params.month, req.params.day);
 	},
 		
 	getBySlug: function(req,res){
