@@ -55,28 +55,19 @@ function dateQuery(year,month,day){
 	};
 }
 
-function dateQueryRequest(params){
-	var year = params.year,
-		month = params.month,
-		day = params.day,
-		query = dateQuery(year, month, day);
-		
-	return query;
-}
 module.exports = {
     get: function(req,res){
 		list(res, {});
     },
 	
 	getByDate: function(req,res){
-		var query = dateQueryRequest(req.params);			
+		var query = dateQuery(req.params.year, req.params.month, req.params.day);
+		console.log(query);
 		list(res, query);
 	},
 
 	getBySlug: function(req,res){
-		var query = dateQueryRequest(req.params);
-		query.slug = req.params.slug;
-		list(res, query);
+		list(res, { slug: req.params.slug });
 	},
 	
 	getById: function(req,res){
