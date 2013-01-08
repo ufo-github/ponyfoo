@@ -92,7 +92,6 @@ module.exports = {
 			};
 
         instance = new model(document);
-		instance.slug = utils.slug(instance.title);
 		instance.save(callback);
     },
 	
@@ -104,7 +103,6 @@ module.exports = {
 			};
 		
         document.updated = new Date();
-		document.slug = utils.slug(document.title);
         model.findOneAndUpdate({ _id: id }, document, {}, callback);
 	},
 
