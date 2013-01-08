@@ -25,8 +25,8 @@ function registerApiRoutes(server){
     a.get('/entry', entry.get);
     
 	var routeYear = '/entry/:year(\d{4})',
-		routeMonth = routeYear + '/:month(\d{2})',
-		routeDay = routeMonth + '/:day(\d{2})',
+		routeMonth = routeYear + '/:month(0[1-9]|1[0-2])',
+		routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
 		routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
 		
 	a.get(routeYear, entry.getByYear);
@@ -41,12 +41,12 @@ function registerApiRoutes(server){
 	
 	a.all('/*', function(req, res){
 		var json = JSON.stringify({
+			code: 404,
 			error: {
-				code: 404,
 				message: 'api endpoint not found'
 			}
 		});
-		res.writeHead(404, {
+		res.writeHead(json.code, {
 			'Content-Type': 'application/json',
 			'Cache-Control': 'no-cache'
 		});
