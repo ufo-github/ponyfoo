@@ -41,12 +41,12 @@ function registerApiRoutes(server){
 	
 	a.all('/*', function(req, res){
 		var json = JSON.stringify({
-			code: 404,
 			error: {
+				code: 404,
 				message: 'api endpoint not found'
 			}
 		});
-		res.writeHead(json.code, {
+		res.writeHead(json.error.code, {
 			'Content-Type': 'application/json',
 			'Cache-Control': 'no-cache'
 		});
