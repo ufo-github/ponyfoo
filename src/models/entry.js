@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
         slug: { type: String, require: true, trim: true },
         brief: { type: String, require: true },
         text: { type: String, require: true },
-        date: { type: Date, require: true },
+        date: { type: Date, index: true, require: true },
 		updated: { type: Date, require: true, default: Date.now }
     });
 

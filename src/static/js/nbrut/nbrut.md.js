@@ -28,7 +28,7 @@
 
         function html(md){
             var converter = getConverter();
-            var html = converter.makeHtml(md);
+            var html = converter.makeHtml(md || '');
             return html;
         }
 

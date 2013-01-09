@@ -1,19 +1,11 @@
 !function (window,nbrut) {
 	function prepare(render){
-		$.ajax({
-			url: '/api/1.0/entry',
-			type: 'GET'
-		}).done(function(res){
-            var fixed = $.map(res.entries, function(i){
-                i.brief = nbrut.md.html(i.brief);
-                i.text = nbrut.md.html(i.text);
-                return i;
-            });
-
-            render({
-                entries: fixed
-            });
-		});
+        nbrut.thin.get({
+            what: 'entry',
+            then: function(it){
+                render(it);
+            }
+        });
 	}
 	
 	function afterActivate(){

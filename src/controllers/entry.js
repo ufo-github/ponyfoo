@@ -24,34 +24,35 @@ function resHandler(res, err, success){
 	}
 }
 
-function done(res, err){
-	resHandler(res, err);
-}
-
-function list(res, query, filter){
-	var callback = function(err,documents){
-		resHandler(res, err, function(){
-			var json = JSON.stringify({
-				entries: documents
-			});
-			res.end(json);
-		});
-	};
-
-	model.find(query).sort('-date').exec(callback);
-}
-
 function dateQuery(year,month,day){
-	var range = {
-		start: new Date(year, (month||1)-1, day||1),
-		end: new Date(year, (month||12)-1, day||31)
-	};
+    if(!!day){
+        return new Date(year,month-1,day);
+    }
 	return {
-		date: {
-			$gte: range.start,
-			$lte: range.end
-		}
+        $gte: new Date(year, (month||1)-1, day||1),
+        $lte: new Date(year, (month||12)-1, day||31)
 	};
+}
+
+function dateQueryRequest(req){
+    var date = dateQuery(req.params.year, req.params.month, req.params.day);
+
+    return {
+        date: date
+    };
+}
+
+function list(res, query){
+    var callback = function(err,documents){
+        resHandler(res, err, function(){
+            var json = JSON.stringify({
+                entries: documents
+            });
+            res.end(json);
+        });
+    };
+
+    model.find(query).sort('-date').exec(callback);
 }
 
 function single(res, query){
@@ -73,12 +74,14 @@ module.exports = {
     },
 	
 	getByDate: function(req,res){
-		var query = dateQuery(req.params.year, req.params.month, req.params.day);
+		var query = dateQueryRequest(req);
 		list(res, query);
 	},
 
 	getBySlug: function(req,res){
-		single(res, { slug: req.params.slug });
+        var query = dateQueryRequest(req);
+        query.slug = req.params.slug;
+		single(res, query);
 	},
 
 	getById: function(req,res){
@@ -86,10 +89,10 @@ module.exports = {
 	},
 
     put: function(req,res){
-        var document = req.body.entry,
+        var document = req.body,
 			instance,
 			callback = function(err){
-				done(res,err);
+                resHandler(res,err);
 			};
 
         instance = new model(document);
@@ -101,7 +104,7 @@ module.exports = {
 		var id = req.params.id,
             document = req.body.entry,
 			callback = function(err){
-				done(res,err);
+                resHandler(res,err);
 			};
 		
         document.updated = new Date();
@@ -112,7 +115,7 @@ module.exports = {
 	del: function(req,res){
 		var id = req.params.id,
 			callback = function(err){
-				done(res,err);
+                resHandler(res, err);
 			};
 			
 		model.remove({ _id: id }, callback);

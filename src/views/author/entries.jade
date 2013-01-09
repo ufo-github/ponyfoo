@@ -10,7 +10,7 @@ section#entry-review-template.template(data-class='entry-review')
     tbody
       // {{#entries}}
       tr.entry-row(data-id='{{_id}}')
-        td='{{date}}'
+        td='{{dateText}}'
         td.title='{{title}}'
         td
           a.edit(title='Edit', href='/author/entry/{{_id}}')='Edit'

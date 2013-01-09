@@ -2,8 +2,9 @@ section#blog-template.template(data-class='blog-entries')
   // {{#entries}}
   article.blog-entry
     header.blog-entry-title
-      h1='{{title}}'
+      h1
+        a(href='')='{{title}}'
 
-    section.blog-entry-brief='{{{brief}}}'
-    section.blog-entry-text='{{{text}}}'
+    section.blog-entry-brief='{{{html.brief}}}'
+    section.blog-entry-text='{{{html.text}}}'
   // {{/entries}}

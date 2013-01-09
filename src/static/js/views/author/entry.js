@@ -65,27 +65,18 @@
         }
 
         nbrut.ui.stateButton(submit, function(restore){
-			var id = submit.data('id'),
-				uri = '/api/1.0/entry';
-				
-			if(!!id){
-				uri += '/' + id;
-			}
-			
-            $.ajax({
-                url: uri,
-                type: 'PUT',
+            nbrut.thin.put({
+                id: submit.data('id'),
+                what: 'entry',
                 data: {
-                    entry: {
-                        title: title.val(),
-                        brief: brief.val(),
-                        text: text.val(),
-                        date: getDateJson()
-                    }
+                    title: title.val(),
+                    brief: brief.val(),
+                    text: text.val(),
+                    date: getDateJson()
+                },
+                then: function(){
+                    nbrut.tt.activate('entry-review');
                 }
-            }).done(function(res){
-                // TODO: if error restore(500);
-                nbrut.tt.activate('entry-review');
             });
         });
     }

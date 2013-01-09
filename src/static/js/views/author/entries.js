@@ -1,22 +1,16 @@
 !function (window,Markdown,nbrut) {
     function prepare(render){
-        $.ajax({
-            url: '/api/1.0/entry',
-            type: 'GET'
-        }).done(function(res){
-            res.entries = $.map(res.entries, function(i){
-                i.date = new Date(i.date).toDateString();
-                return i;
-            });
-
-            render(res);
+        nbrut.thin.get({
+            what: 'entry',
+            then: function(it){
+                console.log(it);
+                render(it);
+            }
         });
     }
 
 	function afterActivate(){
-		var rows = $("tr.entry-row");
-		
-		rows.each(function(){
+        $("tr.entry-row").each(function(){
 			var row = $(this),
 				id = row.data('id');
 			
@@ -33,12 +27,13 @@
 			});
 			
 			row.find('a.remove').on('click', function(){
-				$.ajax({
-					url: '/api/1.0/entry/{0}'.format(id),
-					type: 'DELETE'
-				}).done(function(res){
-					row.fadeOutAndRemove();
-				});
+                nbrut.thin.del({
+                    id: id,
+                    what: 'entry',
+                    then: function(){
+                        row.fadeOutAndRemove();
+                    }
+                });
 			});
 		});
 	}
