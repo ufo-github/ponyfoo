@@ -39,13 +39,15 @@
 
     function prepare(render, data){
         if(!data){
-            render({});
+            render({
+                date: new Date().toDateString()
+            });
         }else{
-            $.ajax({
-                url: '/api/1.0/entry/{0}'.format(data.id),
-                type: 'GET'
-            }).done(function(res){
-                render(res.entry);
+            nbrut.thin.get('entry', {
+                id: data.id,
+                then: function(it){
+                    render(it.entry);
+                }
             });
         }
     }
@@ -65,9 +67,8 @@
         }
 
         nbrut.ui.stateButton(submit, function(restore){
-            nbrut.thin.put({
+            nbrut.thin.put('entry', {
                 id: submit.data('id'),
-                what: 'entry',
                 data: {
                     title: title.val(),
                     brief: brief.val(),

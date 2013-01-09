@@ -1,9 +1,7 @@
 !function (window,Markdown,nbrut) {
     function prepare(render){
-        nbrut.thin.get({
-            what: 'entry',
+        nbrut.thin.get('entry', {
             then: function(it){
-                console.log(it);
                 render(it);
             }
         });
@@ -27,9 +25,8 @@
 			});
 			
 			row.find('a.remove').on('click', function(){
-                nbrut.thin.del({
+                nbrut.thin.del('entry', {
                     id: id,
-                    what: 'entry',
                     then: function(){
                         row.fadeOutAndRemove();
                     }

@@ -1,7 +1,6 @@
 !function (window,nbrut) {
 	function prepare(render){
-        nbrut.thin.get({
-            what: 'entry',
+        nbrut.thin.get('entry', {
             then: function(it){
                 render(it);
             }
