@@ -5,7 +5,11 @@
                 html = nbrut.md.html;
 
             self.date = new Date(self.date); // unwrap
-            self.dateText = self.date.toDateString();
+
+            var dateText = moment(self.date).format();
+
+            self.dateText = dateText;
+            self.url = '/{0}/{1}'.format(dateText,self.slug);
             self.html = {
                 brief: html(self.brief),
                 text: html(self.text)

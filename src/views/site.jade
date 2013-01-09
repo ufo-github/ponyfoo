@@ -19,9 +19,9 @@ html(lang='en')
     link(rel='stylesheet', href='/css/libs/prettify.css')
     link(rel='stylesheet', href='/css/libs/pikaday.css')
 
-    link(rel='stylesheet', href='/css/views/main/index.css')
-    link(rel='stylesheet', href='/css/views/author/entry.css')
-    link(rel='stylesheet', href='/css/views/author/entries.css')
+    link(rel='stylesheet', href='/css/views/main/entries.css')
+    link(rel='stylesheet', href='/css/views/author/editor.css')
+    link(rel='stylesheet', href='/css/views/author/review.css')
 
   body
     header.layout-header
@@ -38,15 +38,18 @@ html(lang='en')
 
     include shared/404
     include shared/loader
-    include main/index
-    include author/entry
-    include author/entries
+
+    include main/entries
+    include main/entry
+    include author/editor
+    include author/review
 
     footer
       script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
       script
         window.jQuery || document.write('<script src="/js/jquery-1.8.3.min.js"><\\/script>')
 
+      script(src='/js/libs/moment.min.js')
       script(src='/js/libs/mustache.js')
       script(src='/js/libs/jquery.textarearesizer.min.js')
       script(src='/js/libs/Markdown.Converter.js')
@@ -66,6 +69,8 @@ html(lang='en')
 
       script(src='/js/views/thin.hooks.js')
       script(src='/js/views/templates.js')
-      script(src='/js/views/main/index.js')
-      script(src='/js/views/author/entry.js')
-      script(src='/js/views/author/entries.js')
+
+      script(src='/js/views/main/entries.js')
+      script(src='/js/views/main/entry.js')
+      script(src='/js/views/author/editor.js')
+      script(src='/js/views/author/review.js')

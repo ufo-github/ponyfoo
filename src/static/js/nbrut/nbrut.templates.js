@@ -150,9 +150,9 @@
             }
 
             if(template.container in active) {
-                if(active[template.container] === template) { // already active template?
-                    if (activity.current !== undefined){ // is engine initialized?
-                        if(settings.key === activity.current.settings.key){ // same alias?
+                if(active[template.container] === template) { // already active template
+                    if (activity.current !== undefined){ // template engine initialized
+                        if(activity.current.settings.key === settings.key){ // same alias
                             if(!template.selfCleanup){
                                 return;
                             }

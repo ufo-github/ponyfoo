@@ -11,9 +11,22 @@
 
     var homeTitle = { value: 'Pony Foo', formatted: false };
 
+
+    function getEntryRoute(regex){
+        return {
+            regex: regex,
+            get: function(data){
+                return '/{0}'.format(data.query);
+            },
+            map: function(captures){
+                return { query: captures.slice(1).join('/') };
+            }
+        }
+    }
+
     nbrut.tt.register({
         key: 'home',
-        source: '#blog-template',
+        source: '#blog-entries-template',
         mustache: true,
         aliases: [{
             title: homeTitle,
@@ -22,57 +35,31 @@
         },{
             key: 'year',
             title: homeTitle,
-            route: {
-                regex: /^\/([0-9]{4})\/?$/i,
-                get: function(data){
-                    return '/{0}'.format(data.year);
-                },
-                map: function(captures){
-                    return {
-                        query: captures[1],
-                        year: captures[1]
-                    };
-                }
-            }
+            route: getEntryRoute(/^\/([0-9]{4})\/?$/i)
         },{
             key: 'month',
             title: homeTitle,
-            route: {
-                regex: /^\/([0-9]{4})\/(0[1-9]|1[0-2])\/?$/i,
-                get: function(data){
-                    return '/{0}/{1}'.format(data.year, data.month);
-                },
-                map: function(captures){
-                    return {
-                        query: '{0}/{1}'.format(captures[1], captures[2]),
-                        year: captures[1],
-                        month: captures[2]
-                    };
-                }
-            }
+            route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/?$/i)
         },{
             key: 'day',
             title: homeTitle,
-            route: {
-                regex: /^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/?$/i,
-                get: function(data){
-                    return '/{0}/{1}/{2}'.format(data.year, data.month, data.day);
-                },
-                map: function(captures){
-                    return {
-                        query: '{0}/{1}/{2}'.format(captures[1], captures[2], captures[3]),
-                        year: captures[1],
-                        month: captures[2],
-                        day: captures[3]
-                    };
-                }
-            }
+            route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/?$/i)
+        }]
+    });
+
+    nbrut.tt.register({
+        key: 'entry',
+        source: '#blog-entry-template',
+        mustache: true,
+        aliases: [{
+            title: homeTitle, // TODO: set title
+            route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([a-z0-9\-]+)$/i)
         }]
     });
 
     nbrut.tt.register({
         key: 'entry-editor',
-        source: '#entry-template',
+        source: '#entry-editor-template',
         mustache: true,
 		back: '#cancel-entry',
         aliases: [{

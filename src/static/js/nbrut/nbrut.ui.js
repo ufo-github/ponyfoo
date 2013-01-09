@@ -1,4 +1,4 @@
-!function (window, $, nbrut, undefined) {
+!function (window, $, nbrut, moment, undefined) {
     var ui = function(){
         function stateButton(button, action) {
             var buttonText = button.find('span'),
@@ -37,5 +37,6 @@
         };
     }();
 
+    moment.defaultFormat = 'YYYY/MM/DD';
     nbrut.ui = ui;
-}(window, jQuery, nbrut);
+}(window, jQuery, nbrut, moment);
