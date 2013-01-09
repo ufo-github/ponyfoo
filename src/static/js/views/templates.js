@@ -9,14 +9,64 @@
         source: '#loader-template'
     });
 
+    var homeTitle = { value: 'Pony Foo', formatted: false };
+
     nbrut.tt.register({
         key: 'home',
         source: '#blog-template',
         mustache: true,
         aliases: [{
-            title: { value: 'Pony Foo', formatted: false },
+            title: homeTitle,
             route: '/',
             trigger: '#home'
+        },{
+            key: 'year',
+            title: homeTitle,
+            route: {
+                regex: /^\/([0-9]{4})\/?$/i,
+                get: function(data){
+                    return '/{0}'.format(data.year);
+                },
+                map: function(captures){
+                    return {
+                        query: captures[1],
+                        year: captures[1]
+                    };
+                }
+            }
+        },{
+            key: 'month',
+            title: homeTitle,
+            route: {
+                regex: /^\/([0-9]{4})\/(0[1-9]|1[0-2])\/?$/i,
+                get: function(data){
+                    return '/{0}/{1}'.format(data.year, data.month);
+                },
+                map: function(captures){
+                    return {
+                        query: '{0}/{1}'.format(captures[1], captures[2]),
+                        year: captures[1],
+                        month: captures[2]
+                    };
+                }
+            }
+        },{
+            key: 'day',
+            title: homeTitle,
+            route: {
+                regex: /^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/?$/i,
+                get: function(data){
+                    return '/{0}/{1}/{2}'.format(data.year, data.month, data.day);
+                },
+                map: function(captures){
+                    return {
+                        query: '{0}/{1}/{2}'.format(captures[1], captures[2], captures[3]),
+                        year: captures[1],
+                        month: captures[2],
+                        day: captures[3]
+                    };
+                }
+            }
         }]
     });
 

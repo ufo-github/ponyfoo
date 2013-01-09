@@ -1,4 +1,4 @@
-!function (window,Markdown,nbrut) {
+!function (window,$,nbrut) {
     function runEditors(){
         nbrut.md.runEditor('-brief');
         nbrut.md.runEditor('-text');
@@ -38,7 +38,7 @@
     }
 
     function prepare(render, data){
-        if(!data){
+        if(!data.id){
             render({
                 date: new Date().toDateString()
             });
@@ -93,4 +93,4 @@
         prepare: prepare,
         afterActivate: afterActivate
     });
-}(window,Markdown,nbrut);
+}(window,jQuery,nbrut);

@@ -1,4 +1,4 @@
-!function (window,Markdown,nbrut) {
+!function (window,$,nbrut) {
     function prepare(render){
         nbrut.thin.get('entry', {
             then: function(it){
@@ -40,4 +40,4 @@
         prepare: prepare,
 		afterActivate: afterActivate
     });
-}(window,Markdown,nbrut);
+}(window,jQuery,nbrut);

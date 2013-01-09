@@ -145,15 +145,22 @@
                 template = templates['404']; // fall back to 404.
             }
 
+            if (settings === undefined){
+                settings = {};
+            }
+
             if(template.container in active) {
-                if(active[template.container] === template) { // already active.
-                    if(!template.selfCleanup){
-                        return;
+                if(active[template.container] === template) { // already active template?
+                    if (activity.current !== undefined){ // is engine initialized?
+                        if(settings.key === activity.current.settings.key){ // same alias?
+                            if(!template.selfCleanup){
+                                return;
+                            }
+                            soft = true; // don't push history state.
+                        }
                     }
-                    soft = true; // don't push history state.
-                } else {
-                    deactivateContainer(template.container); // clean-up.
                 }
+                deactivateContainer(template.container); // clean-up.
             }
 			
             if(!template.initialized){
@@ -161,16 +168,13 @@
                 template.initialize();
             }			
 
-            if (settings === undefined){
-                settings = {};
-            }
 			var render = function(viewModel){
 				activateTemplate(template, settings, viewModel, soft); // set-up.
 				bindBack(template);
-				template.afterActivate(settings.data);
+				template.afterActivate(settings.data || {});
 			};
 			
-			template.prepare(render, settings.data);
+			template.prepare(render, settings.data || {});
         }
 
         function deactivateContainer(container) {

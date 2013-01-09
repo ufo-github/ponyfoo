@@ -1,6 +1,7 @@
-!function (window,nbrut) {
-	function prepare(render){
+!function (window,$,nbrut) {
+	function prepare(render, data){
         nbrut.thin.get('entry', {
+            id: data.query,
             then: function(it){
                 render(it);
             }
@@ -17,4 +18,4 @@
         prepare: prepare,
 		afterActivate: afterActivate
     });
-}(window,nbrut);
+}(window,jQuery,nbrut);
