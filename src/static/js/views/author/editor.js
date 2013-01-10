@@ -70,10 +70,12 @@
             nbrut.thin.put('entry', {
                 id: submit.data('id'),
                 data: {
-                    title: title.val(),
-                    brief: brief.val(),
-                    text: text.val(),
-                    date: getDateJson()
+                    entry: {
+                        title: title.val(),
+                        brief: brief.val(),
+                        text: text.val(),
+                        date: getDateJson()
+                    }
                 },
                 then: function(){
                     nbrut.tt.activate('entry-review');
