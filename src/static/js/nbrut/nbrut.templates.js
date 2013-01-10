@@ -171,6 +171,7 @@
 			var render = function(viewModel){
 				activateTemplate(template, settings, viewModel, soft); // set-up.
 				bindBack(template);
+                fixLocalRoutes(template.container);
 				template.afterActivate(settings.data || {});
 			};
 			
@@ -256,36 +257,62 @@
             return use;
         }
 
+        function getRoute(url){
+            var result = {
+                key: stringKeys[url]
+            };
+
+            if(result.key !== undefined){
+                return result;
+            }
+
+            $.each(regexKeys, function() {
+                var self = this,
+                    captures = url.match(self.regex);
+                if (captures !== null){
+                    result = {
+                        key: self.key,
+                        settings: {
+                            key: self.alias.key,
+                            data: self.alias.route.map(captures)
+                        }
+                    };
+                    return false;
+                }
+            });
+            return result;
+        }
+
+        function fixLocalRoutes(container){
+            $(container).find('a').each(function(){
+               var self = $(this),
+                   url = self.attr('href'),
+                   route = getRoute(url);
+
+                if(!!route.key){
+                    self.on('click', function(e){
+                        if (e.which === 1){ // left-click
+                            activate(route.key, route.settings);
+                            return false;
+                        }
+                    });
+                }
+            });
+        }
+
 		function popState(e){
 			var url,
-				key,
-				settings;
+				route;
 
 			if (e.originalEvent === undefined || e.originalEvent.state === null){
 				url = document.location.pathname;
-				key = stringKeys[url];
-
-				if (key === undefined){
-					$.each(regexKeys, function() {
-						var self = this,
-							captures = url.match(self.regex);
-						if (captures !== null){
-							key = self.key;
-
-							settings = {
-								key: self.alias.key,
-								data: self.alias.route.map(captures)
-							};
-							return false;
-						}
-					})
-				}
+                route = getRoute(url);
 			} else {
 				var state =  e.originalEvent.state;
 				key = state.key;
 				settings = state.settings;
 			}
-			activate(key, settings, true);
+			activate(route.key, route.settings, true);
 		}
 		
         function init(){

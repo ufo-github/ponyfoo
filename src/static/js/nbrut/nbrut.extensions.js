@@ -13,7 +13,7 @@
 	};
 
     $.fn.anchorSEO = function(){
-        return this.attr('target','_blank').each(function(){
+        return this.each(function(){
             var a = $(this),
                 url = a.get(0).href;
 
@@ -21,7 +21,7 @@
                 a.attr('rel','nofollow');
             }
         });
-    }
+    };
 	
 	$.fn.fadeOutAndRemove = function() {
 		return this.each(function() {

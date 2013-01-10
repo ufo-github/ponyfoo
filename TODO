@@ -2,11 +2,9 @@ TODO:
 
 1
 -------
-authentication for posting (via passportjs)
+- page title in single post entry viewer
+- authentication for posting (via passportjs)
 
-page title in single post entry viewer
-anchor to single posts should not generate page load
-  (and it definitely shouldn't have target _blank)
 
 
 2
