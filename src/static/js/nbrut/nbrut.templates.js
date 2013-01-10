@@ -330,7 +330,8 @@
             register: register,
             configure: configure,
             activate: activate,
-            deactivate: deactivateContainer
+            deactivate: deactivateContainer,
+            a: activity
         };
     }();
 
