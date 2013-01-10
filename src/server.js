@@ -20,6 +20,7 @@ server.configure(function(){
 
     server.use(express.logger({ format: 'dev' }));
 
+    server.use(express.cookieParser());
     server.use(express.bodyParser());
 
     server.use(express.session({ secret: config.server.sessionSecret }));
