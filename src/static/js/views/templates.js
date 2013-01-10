@@ -9,7 +9,7 @@
         source: '#loader-template'
     });
 
-    var homeTitle = { value: 'Pony Foo', formatted: false };
+    var homeTitle = { value: 'Pony Foo', literal: true };
 
 
     function getEntryRoute(regex){
@@ -52,7 +52,11 @@
         source: '#blog-entry-template',
         mustache: true,
         aliases: [{
-            title: homeTitle, // TODO: set title
+            title: {
+                dynamic: function(viewModel){
+                    return viewModel.title;
+                }
+            },
             route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([a-z0-9\-]+)$/i)
         }]
     });
@@ -63,12 +67,12 @@
         mustache: true,
 		back: '#cancel-entry',
         aliases: [{
-            title: { value: 'New Post' },
+            title: { value: 'Entry Writer' },
             route: '/author/entry',
             trigger: '#write-entry'
         }, {
             key: 'edit',
-            title: { value: 'Edit Post' },
+            title: { value: 'Entry Editor' },
             route: {
                 regex: /^\/author\/entry\/([0-9a-f]+)$/i,
                 get: function(data){
@@ -86,8 +90,8 @@
         source: '#entry-review-template',
         mustache: true,
         aliases: [{
-            title: { value: 'All Posts' },
-            route: '/author/entry/list',
+            title: { value: 'Review' },
+            route: '/author/entry/review',
             trigger: '#review-entries'
         }]
     });
