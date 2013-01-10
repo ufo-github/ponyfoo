@@ -1,4 +1,6 @@
-var express = require('express'),
+var config = require('./config.js'),
+    express = require('express'),
+    passport = require('passport'),
     less = require('less-middleware'),
     views = __dirname + '/views',
     assets = __dirname + '/static',
@@ -19,6 +21,11 @@ server.configure(function(){
     server.use(express.logger({ format: 'dev' }));
 
     server.use(express.bodyParser());
+
+    server.use(express.session({ secret: config.server.sessionSecret }));
+    server.use(passport.initialize());
+    server.use(passport.session());
+
     server.use(server.router);
 });
 
