@@ -36,7 +36,7 @@
 
         function del(what, opts){
             $.ajax({
-                url: '{0}/ {1}/{2}'.format(ver, what, opts.id),
+                url: '{0}/{1}/{2}'.format(ver, what, opts.id),
                 type: 'DELETE'
             }).done(function(res){
                 // TODO: if res failed, dialog.

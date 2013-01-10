@@ -1,5 +1,7 @@
-var entry = require('./entry.js');
+var entry = require('./entry.js'),
+    user = require('./user.js');
 
 module.exports = {
-  entry: entry.model
+  entry: entry.model,
+  user: user.model
 };
