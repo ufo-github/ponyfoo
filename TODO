@@ -6,9 +6,7 @@ authentication for posting (via passportjs)
 
 page title in single post entry viewer
 anchor to single posts should not generate page load
-  (and it definitely shouldn't have target _blank
-
-date when editing entry is messed up on load
+  (and it definitely shouldn't have target _blank)
 
 
 2

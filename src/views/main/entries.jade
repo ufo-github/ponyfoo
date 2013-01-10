@@ -1,0 +1,10 @@
+section#blog-entries-template.template(data-class='blog-entries')
+  // {{#entries}}
+  article.blog-entry
+    header.blog-entry-title
+      h1
+        a(href='{{url}}')='{{title}}'
+
+    section.blog-entry-brief='{{{html.brief}}}'
+    section.blog-entry-text='{{{html.text}}}'
+  // {{/entries}}
