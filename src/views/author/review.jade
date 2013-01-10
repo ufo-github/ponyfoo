@@ -11,7 +11,8 @@ section#entry-review-template.template(data-class='entry-review')
       // {{#entries}}
       tr.entry-row(data-id='{{_id}}')
         td='{{dateText}}'
-        td.title='{{title}}'
+        td.title
+          a(href='{{url}}')='{{title}}'
         td
           a.edit(title='Edit', href='/author/entry/{{_id}}')='Edit'
           a.remove(title='Delete')

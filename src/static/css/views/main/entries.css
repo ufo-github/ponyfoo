@@ -96,12 +96,11 @@
   margin-bottom: 12px;
   margin-right: 12px;
 }
-.blog-entry a {
-  text-decoration: none;
-}
 .blog-entry section a {
   color: #e92c6c;
   font-weight: bold;
+}
+.blog-entry section a:hover {
   text-decoration: underline;
 }
 .blog-entries .blog-entry:first-child {

@@ -170,8 +170,8 @@
 
 			var render = function(viewModel){
 				activateTemplate(template, settings, viewModel, soft); // set-up.
-				bindBack(template);
                 fixLocalRoutes(template.container);
+                bindBack(template);
 				template.afterActivate(settings.data || {});
 			};
 			
@@ -258,6 +258,10 @@
         }
 
         function getRoute(url){
+            if(url === undefined){
+                return {};
+            }
+
             var result = {
                 key: stringKeys[url]
             };
@@ -289,7 +293,7 @@
                    url = self.attr('href'),
                    route = getRoute(url);
 
-                if(!!route.key){
+                if(route.key !== undefined){
                     self.on('click', function(e){
                         if (e.which === 1){ // left-click
                             activate(route.key, route.settings);
@@ -301,16 +305,15 @@
         }
 
 		function popState(e){
-			var url,
-				route;
+			var route;
 
 			if (e.originalEvent === undefined || e.originalEvent.state === null){
-				url = document.location.pathname;
-                route = getRoute(url);
+                route = getRoute(document.location.pathname);
 			} else {
-				var state =  e.originalEvent.state;
-				key = state.key;
-				settings = state.settings;
+                route = {
+                    key: e.originalEvent.state.key,
+				    settings: e.originalEvent.state.settings
+                };
 			}
 			activate(route.key, route.settings, true);
 		}
