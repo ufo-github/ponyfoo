@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
     schema = new mongoose.Schema({
         email: { type: String, require: true, index: { unique: true }, trim: true },
         password: { type: String, require: true },
-		created: { type: Date, require: true, default: Date.now }
+		created: { type: Date, require: true, default: Date.now },
+        author: { type: Boolean, require: true }
     });
 
 schema.pre('save', function(next) {

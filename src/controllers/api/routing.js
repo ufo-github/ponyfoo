@@ -20,7 +20,7 @@ function apiRouting(server){
 }
 
 function apiAuthentication(req,res,next){
-    var authorized = true; // TODO: through passportjs
+    var authorized = !!req.user && req.user.author;
     if(!authorized){
         apiUnauthorized(req,res);
     }else{
