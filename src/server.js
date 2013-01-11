@@ -7,35 +7,41 @@ var config = require('./config.js'),
     favicon = assets + '/img/favicon.ico',
     server = express();
 
-server.configure('production', function(){
-    server.use(express.compress());
-});
-
 server.configure(function(){
+    var development = config.env === 'development',
+        production = config.env === 'production';
+
+    if(production){
+        server.use(express.compress());
+    }
+
     server.set('views', views);
     server.use(express.favicon(favicon));
 
     server.use(less({ src: assets, paths: [__dirname] }));
     server.use(express.static(assets));
 
-    server.use(express.logger({ format: 'dev' }));
+    if(development){
+        server.use(express.logger({ format: 'dev' }));
+    }
 
     server.use(express.cookieParser());
     server.use(express.bodyParser());
+    server.use(express.session({ secret: config.security.sessionSecret }));
 
-    server.use(express.session({ secret: config.server.sessionSecret }));
     server.use(passport.initialize());
     server.use(passport.session());
 
     server.use(server.router);
+
+    if(development){
+        server.use(express.errorHandler({
+            showStack: true,
+            dumpExceptions: true
+        }));
+    }
 });
 
-server.configure('development', function(){
-    server.use(express.errorHandler({
-        showStack: true,
-        dumpExceptions: true
-    }));
-});
-
+require('./server/authentication.js')(server);
 require('./server/routing.js')(server);
 require('./server/listen.js')(server);
