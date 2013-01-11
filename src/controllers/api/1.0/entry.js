@@ -1,17 +1,8 @@
 var rest = require('../../../services/rest.js'),
     text = require('../../../services/text.js'),
     models = require('../../../models/all.js'),
+    crud = require('../../../services/crud.js'),
 	model = models.entry;
-	
-function resHandler(res, err, success){
-	var test = !!err;		
-	if (test){
-        rest.error(res,500,'internal server error');
-	}else{
-        rest.head(res,200);
-		(success || res.end)();
-	}
-}
 
 function dateQuery(year,month,day){
     if(!!day){
@@ -33,7 +24,7 @@ function dateQueryRequest(req){
 
 function list(res, query){
     var callback = function(err,documents){
-        resHandler(res, err, function(){
+        rest.resHandler(err, res, function(){
             rest.end(res,{
                 entries: documents
             });
@@ -45,12 +36,12 @@ function list(res, query){
 
 function single(res, query){
     var callback = function(err,document){
-            resHandler(res, err, function(){
-                rest.end(res,{
-                    entry: document
-                });
+        rest.resHandler(err, res, function(){
+            rest.end(res,{
+                entry: document
             });
-        };
+        });
+    };
 
     model.findOne(query).exec(callback);
 }
@@ -76,22 +67,18 @@ module.exports = {
 	},
 
     put: function(req,res){
-        var document = req.body,
-			instance,
-			callback = function(err){
-                resHandler(res,err);
-			};
-
-        instance = new model(document);
-        instance.slug = text.slug(instance.title);
-		instance.save(callback);
+        crud.create(req.body,model, {
+            before: function(instance){
+                instance.slug = text.slug(instance.title);
+            }
+        });
     },
-	
+
 	upd: function(req,res){
 		var id = req.params.id,
             document = req.body.entry,
 			callback = function(err){
-                resHandler(res,err);
+                rest.resHandler(err, res);
 			};
 		
         document.updated = new Date();
@@ -102,7 +89,7 @@ module.exports = {
 	del: function(req,res){
 		var id = req.params.id,
 			callback = function(err){
-                resHandler(res, err);
+                rest.resHandler(err, res);
 			};
 			
 		model.remove({ _id: id }, callback);
