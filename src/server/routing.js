@@ -1,18 +1,13 @@
 var site = require('../controllers/site.js'),
     apiRoutes = require('../controllers/api/routing.js'),
-    passport = require('passport');
+    user = require('../controllers/user.js');
 
 function routing(server){
     apiRoutes(server);
 
-    server.post('/user/login', passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/user/login'
-    }));
-    server.post('/user/logout', function(req,res){
-        req.logout();
-        req.redirect('/');
-    });
+    server.post('/user/register', user.register);
+    server.post('/user/login', user.login);
+    server.post('/user/logout', user.logout);
 
     server.get('/*', site.get);
 }

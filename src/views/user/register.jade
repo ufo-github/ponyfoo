@@ -1,0 +1,15 @@
+section#user-register-template.template(data-class='user-register')
+  h1='Register User'
+
+  form(method='post', action='/user/register')
+    fieldset
+      p
+        label(for='register-email')='Email'
+        input#register-email(type='text', name='email')
+
+      p
+        label(for='register-password')='Password'
+        input#register-password(type='password', name='password')
+
+    p.register-button
+      input(type='submit')='Register'
