@@ -1,0 +1,9 @@
+.user-login label {
+  width: 75px;
+  display: inline-block;
+  text-align: right;
+}
+.login-buttons {
+  text-align: right;
+  margin-top: 10px;
+}

@@ -1,14 +1,14 @@
-section#user-login-template.template
+section#user-login-template.template(data-class='user-login')
   h1='User Login'
 
-  section#login
-    fieldset
-      p
-        label(for='login-email')='Email'
-        input#login-email(type='text')
+  fieldset
+    p
+      label(for='login-email')='Email'
+      input#login-email(type='text')
 
-      p
-        label(for='login-password')='Password'
-        input#login-password(type='text')
+    p
+      label(for='login-password')='Password'
+      input#login-password(type='text')
 
-    button#login-button='Login'
+    p.login-buttons
+      button#login-button='Login'
