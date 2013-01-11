@@ -1,25 +1,14 @@
-var utils = require('../services/utils.js'),
-    models = require('../models/all.js'),
+var rest = require('../../../services/rest.js'),
+    text = require('../../../services/text.js'),
+    models = require('../../../models/all.js'),
 	model = models.entry;
 	
 function resHandler(res, err, success){
-	res.writeHead(200, {
-		'Content-Type': 'application/json',
-		'Cache-Control': 'no-cache'
-	});
-	
 	var test = !!err;		
 	if (test){
-		var json = JSON.stringify({
-			error: {
-				code: 500,
-				message: 'internal server error'
-			}
-		});
-		res.status(500);
-		res.write(json);
-		res.end();
+        rest.error(res,500,'internal server error');
 	}else{
+        rest.head(res,200);
 		(success || res.end)();
 	}
 }
@@ -45,10 +34,9 @@ function dateQueryRequest(req){
 function list(res, query){
     var callback = function(err,documents){
         resHandler(res, err, function(){
-            var json = JSON.stringify({
+            rest.end(res,{
                 entries: documents
             });
-            res.end(json);
         });
     };
 
@@ -58,10 +46,9 @@ function list(res, query){
 function single(res, query){
     var callback = function(err,document){
             resHandler(res, err, function(){
-                var json = JSON.stringify({
+                rest.end(res,{
                     entry: document
                 });
-                res.end(json);
             });
         };
 
@@ -96,7 +83,7 @@ module.exports = {
 			};
 
         instance = new model(document);
-        instance.slug = utils.slug(instance.title);
+        instance.slug = text.slug(instance.title);
 		instance.save(callback);
     },
 	
@@ -108,7 +95,7 @@ module.exports = {
 			};
 		
         document.updated = new Date();
-        document.slug = utils.slug(document.title);
+        document.slug = text.slug(document.title);
         model.findOneAndUpdate({ _id: id }, document, {}, callback);
 	},
 

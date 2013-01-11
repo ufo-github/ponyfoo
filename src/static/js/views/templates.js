@@ -11,7 +11,6 @@
 
     var homeTitle = { value: 'Pony Foo', literal: true };
 
-
     function getEntryRoute(regex){
         return {
             regex: regex,
@@ -93,6 +92,15 @@
             title: { value: 'Review' },
             route: '/author/entry/review',
             trigger: '#review-entries'
+        }]
+    });
+
+    nbrut.tt.register({
+        key: 'user-login',
+        source: '#user-login-template',
+        aliases: [{
+            title: { value: 'Login' },
+            route: '/user/login'
         }]
     });
 }(window,nbrut);
