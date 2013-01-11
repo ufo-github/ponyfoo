@@ -1,5 +1,6 @@
 var config = require('./config.js'),
     express = require('express'),
+    sessionStore = require("connect-mongoose")(express),
     passport = require('passport'),
     less = require('less-middleware'),
     views = __dirname + '/views',
@@ -27,7 +28,11 @@ server.configure(function(){
 
     server.use(express.cookieParser());
     server.use(express.bodyParser());
-    server.use(express.session({ secret: config.security.sessionSecret }));
+
+    server.use(express.session({
+        secret: config.security.sessionSecret,
+        store: new sessionStore()
+    }));
 
     server.use(passport.initialize());
     server.use(passport.session());
