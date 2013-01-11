@@ -42,6 +42,6 @@ server.configure(function(){
     }
 });
 
-require('./server/authentication.js')(server);
-require('./server/routing.js')(server);
-require('./server/listen.js')(server);
+require('./server/authentication.js').configure();
+require('./server/routing.js').map(server);
+require('./server/listen.js').listen(server);

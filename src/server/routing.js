@@ -17,4 +17,6 @@ function routing(server){
     server.get('/*', site.get);
 }
 
-module.exports = routing;
+module.exports = {
+    map: routing
+};

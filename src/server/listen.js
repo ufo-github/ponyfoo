@@ -12,4 +12,6 @@ function listen(server){
     });
 }
 
-module.exports = listen;
+module.exports = {
+    listen: listen
+};
