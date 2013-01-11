@@ -76,7 +76,8 @@ section#content {
 /* BUTTONS
 ----------------------------------------------------------*/
 a,
-button {
+button,
+input[type=submit] {
   cursor: pointer;
   text-decoration: none;
 }
@@ -85,7 +86,8 @@ a.button {
   line-height: normal;
 }
 button,
-a.button {
+a.button,
+input[type=submit] {
   font-weight: bold;
   font-family: Interstate, Helvetica, Arial, sans-serif;
   font-size: 1.1em;
@@ -118,14 +120,16 @@ a.button {
 
 }
 button,
-a.button {
+a.button,
+input[type=submit] {
   padding: 10px 12px;
   text-shadow: 0 1px #429334;
   border: 1px solid #54a644;
   background-color: #6cb957;
 }
 button:hover,
-a.button:hover {
+a.button:hover,
+input[type=submit]:hover {
   border: 1px solid #58af48;
   background-color: #65c953;
 }
