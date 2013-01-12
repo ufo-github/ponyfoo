@@ -69,8 +69,8 @@ module.exports = {
     put: function(req,res){
         crud.create(req.body.entry, {
             res: res,
-            always: function(document){
-                document.slug = text.slug(document.title);
+            always: function(entry){
+                entry.slug = text.slug(entry.title);
             }
         });
     },
@@ -78,9 +78,9 @@ module.exports = {
 	upd: function(req,res){
         crud.update({ _id: req.params.id }, req.body.entry, {
             res: res,
-            always: function(document){
-                document.updated = new Date();
-                document.slug = text.slug(document.title);
+            always: function(entry){
+                entry.updated = new Date();
+                entry.slug = text.slug(entry.title);
             }
         });
 	},

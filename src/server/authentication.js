@@ -14,10 +14,15 @@ function configure(){
                 if (!user) {
                     return done(null, false);
                 }
-                if (!user.validatePassword(password)) {
-                    return done(null, false);
-                }
-                return done(null, user);
+                user.validatePassword(password, function(err, isMatch) {
+                    if (err){
+                        return done(err);
+                    }
+                    if(!isMatch){
+                        return done(null, false);
+                    }
+                    return done(null, user);
+                });
             });
         }
     ));

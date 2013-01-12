@@ -7,7 +7,7 @@ function routing(server){
 
     server.post('/user/register', user.register);
     server.post('/user/login', user.login);
-    server.post('/user/logout', user.logout);
+    server.get('/user/logout', user.logout);
 
     server.get('/*', site.get);
 }

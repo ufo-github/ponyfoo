@@ -1,10 +1,11 @@
 var $ = require('./$.js'),
     rest = require('./rest.js');
 
-function defaultCallback(opts){
+function getCallback(opts){
     if(!!opts && !!opts.res){
         return function(err){
-            rest.resHandler(err, opts.res);
+            var args = $.args(arguments).slice(1);
+            rest.resHandler(err, opts.res, opts.then, args);
         }
     }
     return $.log.err;
@@ -13,7 +14,7 @@ function defaultCallback(opts){
 function crud(model){
     function create(source, opts){
         var document,
-            callback = opts.then ||  defaultCallback(opts);
+            callback = getCallback(opts);
 
         document = new model(source);
         (opts.always || $.noop)(document);
@@ -21,14 +22,14 @@ function crud(model){
     }
 
     function update(query, document, opts){
-        var callback = opts.then ||  defaultCallback(opts);
+        var callback = getCallback(opts);
 
         (opts.always || $.noop)(document);
         model.findOneAndUpdate(query, document, {}, callback);
     }
 
     function remove(query, opts){
-        var callback = opts.then || defaultCallback(opts);
+        var callback = getCallback(opts);
 
         model.remove(query, callback);
     }

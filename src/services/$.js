@@ -24,7 +24,12 @@ function logger(){
     };
 }
 
+function args(o){
+    return Array.prototype.slice.call(o);
+}
+
 module.exports = {
     noop: function(){},
-    log: logger()
+    log: logger(),
+    args: args
 };

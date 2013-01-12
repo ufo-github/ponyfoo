@@ -6,11 +6,14 @@ var passport = require('passport'),
     crud = require('../services/crud.js')(model);
 
 module.exports = {
-    register: function(req,res){
-        crud.create(req.body.user, {
+    register: function(req,res, next){
+        crud.create(req.body, {
             res: res,
-            always: function(document){
-                document.author = false; // prevents over-posting
+            always: function(user){
+                user.author = true; // prevents over-posting
+            },
+            then: function(user){
+                res.redirect('/'); // TODO: appropriate redirect
             }
         });
     },
@@ -20,6 +23,6 @@ module.exports = {
     }),
     logout: function(req,res){
         req.logout();
-        req.redirect('/');
+        res.redirect('/');
     }
 };

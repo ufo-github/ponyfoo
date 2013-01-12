@@ -35,13 +35,17 @@ function error(res,code,err){
     end(res,json);
 }
 
-function resHandler(err, res, success){
+function resHandler(err, res, success, args){
     var test = !!err;
     if (test){
         error(res,500,err);
     }else{
         head(res,200);
-        (success || res.end)();
+        if(!success){
+            res.end();
+        }else{
+            success.apply(null, args);
+        }
     }
 }
 
