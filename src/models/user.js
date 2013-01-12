@@ -15,6 +15,8 @@ schema.pre('save', function(next) {
         return next();
     }
 
+    console.log(user.password);
+
     bcrypt.genSalt(config.security.saltWorkFactor, function(err, salt) {
         if (err){
             return next(err);
@@ -27,12 +29,15 @@ schema.pre('save', function(next) {
             }
 
             user.password = hash;
+
+            console.log(user.password);
             return next();
         });
     });
 });
 
 schema.methods.validatePassword = function(input, cb) {
+    console.log(input);
     bcrypt.compare(input, this.password, function(err, isMatch) {
         if (err){
             return cb(err);

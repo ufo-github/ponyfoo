@@ -1,3 +1,5 @@
+var $ = require('./$.js');
+
 function head(res,code) {
     res.writeHead(code, {
         'Content-Type': 'application/json',
@@ -19,25 +21,26 @@ function end(res,value){
     res.end(encoded);
 }
 
-function error(res,code,message){
-    var error = {
+function error(res,code,err){
+    var json = {
         error: {
             code: code,
-                message: message
+            message: 'internal server error'
         }
     };
 
+    $.log.err(err);
+
     head(res,code);
-    write(res,error);
-    res.end();
+    end(res,json);
 }
 
 function resHandler(err, res, success){
     var test = !!err;
     if (test){
-        rest.error(res,500,'internal server error');
+        error(res,500,err);
     }else{
-        rest.head(res,200);
+        head(res,200);
         (success || res.end)();
     }
 }

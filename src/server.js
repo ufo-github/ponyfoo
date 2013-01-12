@@ -9,10 +9,10 @@ var config = require('./config.js'),
     server = express();
 
 server.configure(function(){
-    var development = config.env === 'development',
-        production = config.env === 'production';
+    var dev = config.env.development,
+        prod = config.env.production;
 
-    if(production){
+    if (prod){
         server.use(express.compress());
     }
 
@@ -22,7 +22,7 @@ server.configure(function(){
     server.use(less({ src: assets, paths: [__dirname] }));
     server.use(express.static(assets));
 
-    if(development){
+    if (dev){
         server.use(express.logger({ format: 'dev' }));
     }
 
@@ -39,7 +39,7 @@ server.configure(function(){
 
     server.use(server.router);
 
-    if(development){
+    if (dev){
         server.use(express.errorHandler({
             showStack: true,
             dumpExceptions: true

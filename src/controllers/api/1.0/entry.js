@@ -1,8 +1,8 @@
 var rest = require('../../../services/rest.js'),
     text = require('../../../services/text.js'),
     models = require('../../../models/all.js'),
-    crud = require('../../../services/crud.js'),
-	model = models.entry;
+    model = models.entry,
+    crud = require('../../../services/crud.js')(model);
 
 function dateQuery(year,month,day){
     if(!!day){
@@ -67,31 +67,27 @@ module.exports = {
 	},
 
     put: function(req,res){
-        crud.create(req.body,model, {
-            before: function(instance){
-                instance.slug = text.slug(instance.title);
+        crud.create(req.body.entry, {
+            res: res,
+            always: function(document){
+                document.slug = text.slug(document.title);
             }
         });
     },
 
 	upd: function(req,res){
-		var id = req.params.id,
-            document = req.body.entry,
-			callback = function(err){
-                rest.resHandler(err, res);
-			};
-		
-        document.updated = new Date();
-        document.slug = text.slug(document.title);
-        model.findOneAndUpdate({ _id: id }, document, {}, callback);
+        crud.update({ _id: req.params.id }, req.body.entry, {
+            res: res,
+            always: function(document){
+                document.updated = new Date();
+                document.slug = text.slug(document.title);
+            }
+        });
 	},
 
 	del: function(req,res){
-		var id = req.params.id,
-			callback = function(err){
-                rest.resHandler(err, res);
-			};
-			
-		model.remove({ _id: id }, callback);
+        crud.remove({ _id: req.params.id }, {
+            res: res
+        });
 	}
 };

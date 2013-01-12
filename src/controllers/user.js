@@ -1,8 +1,18 @@
-var passport = require('passport');
+var passport = require('passport'),
+    rest = require('../services/rest.js'),
+    text = require('../services/text.js'),
+    models = require('../models/all.js'),
+    model = models.user,
+    crud = require('../services/crud.js')(model);
 
 module.exports = {
     register: function(req,res){
-        // TODO: register user with mongoose.
+        crud.create(req.body.user, {
+            res: res,
+            always: function(document){
+                document.author = false; // prevents over-posting
+            }
+        });
     },
     login: passport.authenticate('local', {
         successRedirect: '/',

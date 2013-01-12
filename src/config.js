@@ -1,8 +1,10 @@
-module.exports = {
-    env: process.env.NODE_ENV || 'development',
-	server: {
-		port: process.env.PORT || 8081
-	},
+var config = {
+    env: {
+        current: process.env.NODE_ENV || 'development'
+    },
+    server: {
+        port: process.env.PORT || 8081
+    },
     db: {
         uri: process.env.MONGOLAB_URI || 'mongodb://localhost/nbrut'
     },
@@ -11,3 +13,8 @@ module.exports = {
         sessionSecret: process.env.SESSION_SECRET || 'local'
     }
 };
+
+config.env.development = config.env.current === 'development';
+config.env.production = config.env.current === 'production';
+
+module.exports = config;
