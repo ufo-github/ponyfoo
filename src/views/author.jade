@@ -20,6 +20,8 @@ html(lang='en')
     link(rel='stylesheet', href='/css/libs/pikaday.css')
 
     link(rel='stylesheet', href='/css/views/main/entries.css')
+    link(rel='stylesheet', href='/css/views/author/editor.css')
+    link(rel='stylesheet', href='/css/views/author/review.css')
     link(rel='stylesheet', href='/css/views/user/register.css')
     link(rel='stylesheet', href='/css/views/user/login.css')
 
@@ -27,6 +29,11 @@ html(lang='en')
     header.layout-header
       h1.layout-heading
         a#home(href='/')='Pony Foo'
+
+    aside#sidebar
+      nav
+        a.button#write-entry(href='/author/entry')='Write Entry'
+        a#review-entries(href='/author/entry/review')='Review Entries'
 
     section#content
       include shared/spinner
@@ -36,6 +43,8 @@ html(lang='en')
 
     include main/entries
     include main/entry
+    include author/editor
+    include author/review
     include user/register
     include user/login
 
@@ -64,6 +73,9 @@ html(lang='en')
 
       script(src='/js/views/thin.hooks.js')
       script(src='/js/views/templates.js')
+      script(src='/js/views/templates.author.js')
 
       script(src='/js/views/main/entries.js')
       script(src='/js/views/main/entry.js')
+      script(src='/js/views/author/editor.js')
+      script(src='/js/views/author/review.js')

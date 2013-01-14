@@ -20,16 +20,17 @@ function apiRouting(server){
 }
 
 function apiAuthentication(req,res,next){
-    var authorized = true; //!!req.user && !!req.user.author;
+    var connected = !!req.user,
+        authorized = connected && req.user.author === true;
     if (authorized !== true){
-        apiUnauthorized(req,res);
+        apiUnauthorized(req,res,connected?403:401);
     }else{
         next();
     }
 }
 
-function apiUnauthorized(req, res){
-    rest.error(res,401,'api endpoint unauthorized');
+function apiUnauthorized(req, res, code){
+    rest.error(res,code,'api endpoint unauthorized');
 }
 
 function apiNotFound(req, res){
@@ -43,6 +44,7 @@ module.exports = function (server){
         routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
         routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
 
+    api.post('/*', apiAuthentication);
     api.put('/*', apiAuthentication);
     api.del('/*', apiAuthentication);
 

@@ -4,10 +4,11 @@
 @plaintext: #bdae9d;
 @highlights: #4b3c34;
 @golden: #e5c138;
+@lightyellow: #a59c59;
 @brown: #aa9680;
 @pinkish: #ff8080;
-@lightgreen: #80ff80;
-@darkgreen: #408080;
+@orange: #ff7f50;
+@greenish: #4b918b;
 
 pre.prettyprint { /* code blocks */
   background-color: @brownish;
@@ -28,11 +29,11 @@ pre.prettyprint ol.linenums li.highlight {
 }
 
 .str { color: #fff; } /* string literals */
-.com { color: @golden; } /* comments */
-.lit { color: @lightgreen; } /* literals, such as numbers */
+.com { color: @lightyellow; } /* comments */
+.lit { color: @orange; } /* literals, such as numbers */
 .pun { color: @brown; } /* punctuation */
 .tag { color: @pinkish; } /* html tags */
-.typ { color: @darkgreen; } /* keywords */
+.typ { color: @golden; } /* keywords */
 
 code.prettyprint { /* snippets */
   background-color: @border;
@@ -41,7 +42,7 @@ code.prettyprint { /* snippets */
 }
 
 code.prettyprint .str {
-  color: @darkgreen; /* deal with contrast issues */
+  color: @greenish; /* deal with contrast issues */
 }
 
 code.prettyprint .com {

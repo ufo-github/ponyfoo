@@ -35,11 +35,11 @@ pre.prettyprint ol.linenums li.highlight {
 }
 /* string literals */
 .com {
-  color: #e5c138;
+  color: #a59c59;
 }
 /* comments */
 .lit {
-  color: #80ff80;
+  color: #ff7f50;
 }
 /* literals, such as numbers */
 .pun {
@@ -51,7 +51,7 @@ pre.prettyprint ol.linenums li.highlight {
 }
 /* html tags */
 .typ {
-  color: #408080;
+  color: #e5c138;
 }
 /* keywords */
 code.prettyprint {
@@ -62,7 +62,7 @@ code.prettyprint {
   color: #412917;
 }
 code.prettyprint .str {
-  color: #408080;
+  color: #4b918b;
   /* deal with contrast issues */
 
 }
