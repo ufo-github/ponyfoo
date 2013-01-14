@@ -35,16 +35,18 @@ function error(res,code,err){
     end(res,json);
 }
 
-function resHandler(err, res, success, args){
+function resHandler(err, opts){
     var test = !!err;
     if (test){
-        error(res,500,err);
+        error(opts.res,500,err);
     }else{
-        head(res,200);
-        if(!success){
-            res.end();
+        if(opts.writeHead !== false){
+            head(opts.res,200);
+        }
+        if(!opts.then){
+            opts.res.end();
         }else{
-            success.apply(null, args);
+            opts.then.apply(null, opts.args);
         }
     }
 }

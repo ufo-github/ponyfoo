@@ -10,10 +10,16 @@ module.exports = {
         crud.create(req.body, {
             res: res,
             always: function(user){
-                user.author = true; // prevents over-posting
+                user.author = false; // prevent over-posting.
             },
+            writeHead: false,
             then: function(user){
-                res.redirect('/'); // TODO: appropriate redirect
+                req.login(user, function(err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    return res.redirect('/');
+                });
             }
         });
     },

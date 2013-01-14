@@ -24,10 +24,13 @@ function dateQueryRequest(req){
 
 function list(res, query){
     var callback = function(err,documents){
-        rest.resHandler(err, res, function(){
-            rest.end(res,{
-                entries: documents
-            });
+        rest.resHandler(err, {
+            res: res,
+            then: function(){
+                rest.end(res,{
+                    entries: documents
+                });
+            }
         });
     };
 
@@ -36,10 +39,13 @@ function list(res, query){
 
 function single(res, query){
     var callback = function(err,document){
-        rest.resHandler(err, res, function(){
-            rest.end(res,{
-                entry: document
-            });
+        rest.resHandler(err, {
+            res: res,
+            then: function(){
+                rest.end(res,{
+                    entry: document
+                });
+            }
         });
     };
 

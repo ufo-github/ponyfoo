@@ -4,8 +4,8 @@ var $ = require('./$.js'),
 function getCallback(opts){
     if(!!opts && !!opts.res){
         return function(err){
-            var args = $.args(arguments).slice(1);
-            rest.resHandler(err, opts.res, opts.then, args);
+            opts.args = $.args(arguments).slice(1);
+            rest.resHandler(err, opts);
         }
     }
     return $.log.err;
