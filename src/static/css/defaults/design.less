@@ -55,12 +55,16 @@ h1.layout-heading a:hover {
   }
 }
 
-section#content {
-  border: 1px solid @light;
-  background-color: @moderate;
-  .box-radius(6px);
-  padding: 25px;
+section#content-wrapper, section#content {
+  .box-radius(4px);
 }
+
+section#content {
+  background-color: @moderate;
+  border: 1px solid @grayish;
+}
+
+
 
 /* BUTTONS
 ----------------------------------------------------------*/
@@ -112,4 +116,21 @@ button[disabled], button[disabled]:hover {
   background-color: #ddd;
   color: #999;
   text-shadow: 0 1px @border;
+}
+
+
+
+/* TABLES
+----------------------------------------------------------*/
+
+thead th {
+  border-bottom: 1px solid @moderate * 0.87;
+}
+
+tbody tr:nth-child(even) {
+  background-color: @moderate * 0.97;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: @moderate * 0.95;
 }

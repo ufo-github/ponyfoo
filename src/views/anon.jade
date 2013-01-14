@@ -28,8 +28,9 @@ html(lang='en')
       h1.layout-heading
         a#home(href='/')='Pony Foo'
 
-    section#content
-      include shared/spinner
+    section#content-wrapper
+      section#content
+        include shared/spinner
 
     include shared/404
     include shared/loader

@@ -57,16 +57,15 @@ h1.layout-heading a:hover {
     font-size: 4.6em;
   }
 }
+section#content-wrapper,
 section#content {
-  border: 1px solid #f3f4ec;
-  background-color: #eaeadf;
-  -webkit-border-radius: 6px;
+  -webkit-border-radius: 4px;
   /* Saf3-4, iOS 1-3.2, Android ≤1.6 */
 
-  -moz-border-radius: 6px;
+  -moz-border-radius: 4px;
   /* FF1-3.6 */
 
-  border-radius: 6px;
+  border-radius: 4px;
   /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
 
   /* useful if you don't want a bg color from leaking outside the border: */
@@ -74,7 +73,10 @@ section#content {
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  padding: 25px;
+}
+section#content {
+  background-color: #eaeadf;
+  border: 1px solid #dedede;
 }
 /* BUTTONS
 ----------------------------------------------------------*/
@@ -148,4 +150,15 @@ button[disabled]:hover {
   background-color: #ddd;
   color: #999;
   text-shadow: 0 1px #cbc5c0;
+}
+/* TABLES
+----------------------------------------------------------*/
+thead th {
+  border-bottom: 1px solid #ccccc2;
+}
+tbody tr:nth-child(even) {
+  background-color: #e3e3d8;
+}
+tbody tr:nth-child(odd) {
+  background-color: #deded4;
 }

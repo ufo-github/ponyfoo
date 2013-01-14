@@ -37,8 +37,9 @@ html(lang='en')
           a#review-entries(href='/author/entry/review')='Review Entries'
           a.button#write-entry(href='/author/entry')='Write Entry'
 
-    section#content
-      include shared/spinner
+    section#content-wrapper
+      section#content
+        include shared/spinner
 
     include shared/404
     include shared/loader
