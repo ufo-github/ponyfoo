@@ -12,9 +12,7 @@
 }
 .blog-entry-date {
   float: right;
-  display: block;
   font-size: 10px;
-  text-align: right;
   color: #7a0000;
 }
 .blog-entry-brief {

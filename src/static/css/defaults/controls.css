@@ -17,6 +17,14 @@ textarea.resizing {
   background-color: #412917;
   opacity: 0.5;
 }
+/* GITHUB RIBBON
+ ****************/
+.github-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
 /* SPINNER
  ****************/
 .spinner {
