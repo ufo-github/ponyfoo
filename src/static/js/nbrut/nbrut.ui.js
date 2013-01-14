@@ -38,5 +38,6 @@
     }();
 
     moment.defaultFormat = 'YYYY/MM/DD';
+    moment.fullFormat = 'YYYY/MM/DD HH:mm:ss';
     nbrut.ui = ui;
 }(window, jQuery, nbrut, moment);

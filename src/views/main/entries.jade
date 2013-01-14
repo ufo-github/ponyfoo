@@ -4,6 +4,7 @@ section#blog-entries-template.template(data-class='blog-entries')
     header.blog-entry-title
       h1
         a(href='{{url}}')='{{title}}'
+      span.blog-entry-date(title='{{updatedText}}')='{{updatedTimeAgo}}'
 
     section.blog-entry-brief='{{{html.brief}}}'
     section.blog-entry-text='{{{html.text}}}'

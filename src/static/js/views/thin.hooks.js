@@ -4,12 +4,14 @@
             var self = this,
                 html = nbrut.md.html;
 
-            self.date = new Date(self.date); // unwrap
+            self.date = new Date(self.date);
+            self.dateText = moment(self.date).format();
 
-            var dateText = moment(self.date).format();
+            self.updated = new Date(self.updated);
+            self.updatedText = moment(self.updated).format(moment.fullFormat);
+            self.updatedTimeAgo = moment(self.updated).fromNow();
 
-            self.dateText = dateText;
-            self.url = '/{0}/{1}'.format(dateText,self.slug);
+            self.url = '/{0}/{1}'.format(self.dateText, self.slug);
             self.html = {
                 brief: html(self.brief),
                 text: html(self.text)

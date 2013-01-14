@@ -29,6 +29,9 @@ h1.layout-heading {
   margin: 0 auto;
   display: inline-block;
 }
+section#content-wrapper {
+  margin-bottom: 30px;
+}
 section#content {
   display: inline-block;
   text-align: left;
