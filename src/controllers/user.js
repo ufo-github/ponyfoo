@@ -5,6 +5,13 @@ var passport = require('passport'),
     crud = require('../services/crud.js')(model);
 
 module.exports = {
+    guard: function(req,res,next){
+        if(!!req.user){
+            return res.redirect('/');
+        }
+        return next();
+    },
+
     register: function(req,res, next){
         crud.create(req.body, {
             res: res,
