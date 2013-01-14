@@ -133,50 +133,12 @@ input[type=submit]:hover {
   border: 1px solid #58af48;
   background-color: #65c953;
 }
-button .spinner {
-  margin: 0;
-  width: 0;
-  height: 0;
-  border: none;
-  display: none;
-  left: 50%;
-}
 button[disabled],
 button[disabled]:hover {
   cursor: wait;
   border: 3px solid #cbc5c0;
+  padding: 8px 10px;
   background-color: #ddd;
   color: #999;
   text-shadow: 0 1px #cbc5c0;
-}
-button[disabled] .spinner {
-  display: inline-block;
-}
-button .spinner li:nth-child(1) {
-  -webkit-transform-origin: 0% 50%;
-  -moz-transform-origin: 0% 50%;
-  -ms-transform-origin: 0% 50%;
-  -o-transform-origin: 0% 50%;
-  transform-origin: 0% 50%;
-}
-button .spinner li:nth-child(2) {
-  -webkit-transform-origin: -30% 0%;
-  -moz-transform-origin: -30% 0%;
-  -ms-transform-origin: -30% 0%;
-  -o-transform-origin: -30% 0%;
-  transform-origin: -30% 0%;
-}
-button .spinner li:nth-child(3) {
-  -webkit-transform-origin: 50% -75%;
-  -moz-transform-origin: 50% -75%;
-  -ms-transform-origin: 50% -75%;
-  -o-transform-origin: 50% -75%;
-  transform-origin: 50% -75%;
-}
-button .spinner li:nth-child(4) {
-  -webkit-transform-origin: 100% 0%;
-  -moz-transform-origin: 100% 0%;
-  -ms-transform-origin: 100% 0%;
-  -o-transform-origin: 100% 0%;
-  transform-origin: 100% 0%;
 }

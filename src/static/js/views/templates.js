@@ -59,22 +59,4 @@
             route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([a-z0-9\-]+)$/i)
         }]
     });
-
-    nbrut.tt.register({
-        key: 'user-register',
-        source: '#user-register-template',
-        aliases: [{
-            title: { value: 'Register' },
-            route: '/user/register'
-        }]
-    });
-
-    nbrut.tt.register({
-        key: 'user-login',
-        source: '#user-login-template',
-        aliases: [{
-            title: { value: 'Login' },
-            route: '/user/login'
-        }]
-    });
 }(window,nbrut);

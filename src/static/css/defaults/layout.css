@@ -28,17 +28,6 @@ h1.layout-heading {
   margin: 0 auto;
   display: inline-block;
 }
-aside#sidebar {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 40px;
-}
-aside#sidebar nav a {
-  margin-bottom: 8px;
-}
-aside#sidebar nav a.button {
-  margin-bottom: 15px;
-}
 section#content {
   display: inline-block;
 }

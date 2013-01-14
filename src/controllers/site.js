@@ -1,9 +1,9 @@
 module.exports = {
     get: function(req,res){
         if(!req.user){
-            res.render('site.jade');
+            res.render('anon.jade');
         }else if(req.user.author !== true){
-            res.render('site.jade');
+            res.render('anon.jade');
         }else{
             res.render('author.jade');
         }

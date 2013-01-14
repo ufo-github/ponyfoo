@@ -19,6 +19,8 @@ html(lang='en')
     link(rel='stylesheet', href='/css/libs/prettify.css')
     link(rel='stylesheet', href='/css/libs/pikaday.css')
 
+    link(rel='stylesheet', href='/css/layouts/author.css')
+
     link(rel='stylesheet', href='/css/views/main/entries.css')
     link(rel='stylesheet', href='/css/views/author/editor.css')
     link(rel='stylesheet', href='/css/views/author/review.css')
@@ -30,10 +32,10 @@ html(lang='en')
       h1.layout-heading
         a#home(href='/')='Pony Foo'
 
-    aside#sidebar
-      nav
-        a.button#write-entry(href='/author/entry')='Write Entry'
-        a#review-entries(href='/author/entry/review')='Review Entries'
+      aside#author-menu
+        nav
+          a#review-entries(href='/author/entry/review')='Review Entries'
+          a.button#write-entry(href='/author/entry')='Write Entry'
 
     section#content
       include shared/spinner
