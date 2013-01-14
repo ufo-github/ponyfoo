@@ -1,5 +1,4 @@
 var passport = require('passport'),
-    rest = require('../services/rest.js'),
     text = require('../services/text.js'),
     models = require('../models/all.js'),
     model = models.user,
@@ -23,10 +22,12 @@ module.exports = {
             }
         });
     },
+
     login: passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/user/login'
     }),
+
     logout: function(req,res){
         req.logout();
         res.redirect('/');
