@@ -7,9 +7,6 @@
 #review-entries {
   margin-right: 15px;
 }
-#review-entries:hover {
-  text-decoration: underline;
-}
 #write-entry {
   display: inline-block;
 }

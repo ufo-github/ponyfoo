@@ -100,8 +100,8 @@
   color: #e92c6c;
   font-weight: bold;
 }
-.blog-entry section a:hover {
-  text-decoration: underline;
+.blog-entry-title a:hover {
+  text-decoration: none;
 }
 .blog-entries .blog-entry:first-child {
   margin-top: inherit;

@@ -39,6 +39,10 @@ h1.layout-heading {
   color: @strong;
 }
 
+h1.layout-heading a:hover {
+  text-decoration: none;
+}
+
 @media only screen and (min-width: 768px) {
   h1.layout-heading {
     font-size: 3.2em;
@@ -66,9 +70,14 @@ a, button, input[type=submit] {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 a.button {
   display: block;
   line-height: normal;
+  text-decoration: none;
 }
 
 button, a.button, input[type=submit] {

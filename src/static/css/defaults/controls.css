@@ -310,5 +310,5 @@ a.remove {
   color: #d11911;
 }
 a.remove:hover {
-  text-underline: none;
+  text-decoration: none;
 }
