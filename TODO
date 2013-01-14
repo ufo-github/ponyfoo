@@ -3,20 +3,16 @@ TODO:
 1
 -------
 - improve layout design once and for all
+- static asset manager
 
 
 2
 -------
--static asset manager
+- client-side caching?
+- css styles for date picker
 
 
 3
--------
--client-side caching?
--css styles for date picker
-
-
-4
 -------
 - api authentication?
 - authentication failure message flash
