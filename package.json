@@ -12,7 +12,6 @@
 	"passport": "0.1.15",
 	"passport-local": "0.1.6",
 	"bcrypt": "0.7.3",
-    "less-middleware": "0.1.9",
     "node-assetify": "0.0.1"
   },
   "devDependencies": {
