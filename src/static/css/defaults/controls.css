@@ -21,9 +21,10 @@ textarea.resizing {
  ****************/
 .github-ribbon {
   position: absolute;
+  overflow: hidden;
+  padding: 2px 0;
   top: 42px;
   right: -43px;
-  padding: 2px 0;
   background-color: #027902;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)));
   /* Saf4+, Chrome */
@@ -55,7 +56,6 @@ textarea.resizing {
   -ms-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(45deg);
-  overflow: hidden;
 }
 .github-ribbon a {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -63,7 +63,7 @@ textarea.resizing {
   font-weight: 700;
   color: white;
   text-decoration: none;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 0px rgba(0, 0, 0, 0.5);
   text-align: center;
   width: 200px;
   line-height: 20px;

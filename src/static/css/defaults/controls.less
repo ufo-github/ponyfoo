@@ -30,16 +30,16 @@ textarea.resizing {
 
 .github-ribbon {
   position: absolute;
+  overflow: hidden;
+  padding: 2px 0;
   top: 42px;
   right: -43px;
-  padding: 2px 0;
 
   background-color: #027902;
   .box-gradient-image(rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.15));
   .box-shadow(0px 2px 3px 0px rgba(0, 0, 0, 0.5));
   .transform-to(45deg);
 
-  overflow: hidden;
 }
 
 .github-ribbon a {
@@ -49,7 +49,7 @@ textarea.resizing {
   color: white;
 
   text-decoration: none;
-  text-shadow: 0 -1px rgba(0,0,0,0.5);
+  text-shadow: 1px 0px rgba(0,0,0,0.5);
   text-align: center;
 
   width: 200px;
@@ -62,6 +62,7 @@ textarea.resizing {
   border-style: dotted;
   border-color: rgba(255,255,255,0.7);
 }
+
 
 
 /* SPINNER
