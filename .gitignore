@@ -9,6 +9,7 @@ lib-cov
 *.pid
 *.gz
 
+bin
 pids
 logs
 results

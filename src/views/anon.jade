@@ -43,31 +43,4 @@ html(lang='en')
     include shared/ribbon
 
     footer
-      script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
-      script
-        window.jQuery || document.write('<script src="/js/jquery-1.8.3.min.js"><\\/script>')
-
-      script(src='/js/libs/moment.min.js')
-      script(src='/js/libs/mustache.js')
-      script(src='/js/libs/jquery.textarearesizer.min.js')
-      script(src='/js/libs/Markdown.Converter.js')
-      script(src='/js/libs/Markdown.Sanitizer.js')
-      script(src='/js/libs/Markdown.Editor.js')
-      script(src='/js/libs/prettify.js')
-      script(src='/js/libs/jquery.pikaday.js')
-      script(src='/js/ext/prettify.extensions.js')
-
-      script(src='/js/nbrut/nbrut.extensions.js')
-      script(src='/js/nbrut/nbrut.core.js')
-      script(src='/js/nbrut/nbrut.md.js')
-      script(src='/js/nbrut/nbrut.ui.js')
-      script(src='/js/nbrut/nbrut.templates.js')
-      script(src='/js/nbrut/nbrut.thin.js')
-      script(src='/js/nbrut/nbrut.init.js')
-
-      script(src='/js/views/thin.hooks.js')
-      script(src='/js/views/templates.js')
-      script(src='/js/views/templates.anon.js')
-
-      script(src='/js/views/main/entries.js')
-      script(src='/js/views/main/entry.js')
+      !=js('anon')

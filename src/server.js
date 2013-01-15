@@ -2,16 +2,47 @@ var config = require('./config.js'),
     express = require('express'),
     sessionStore = require("connect-mongoose")(express),
     passport = require('passport'),
-    less = require('less-middleware'),
     assetify = require('node-assetify'),
     views = __dirname + '/views',
     assets = __dirname + '/static',
+    assetsBin = assets + '/bin',
     favicon = assets + '/img/favicon.ico',
     server = express();
 
+// TODO: remove less = require('less-middleware'),
+// TODO rm server.use(less({ src: assets, paths: [__dirname] }));
+
 assetify.publish({
-    base: __dirname,
-    js: ['/js/nbrut/nbrut.init.js']
+    in: assets,
+    out: assetsBin,
+    js: [
+        assetify.jQuery('1.8.3', '/js/jquery-1.8.3.min.js'),
+        '/js/libs/moment.min.js',
+        '/js/libs/mustache.js',
+        '/js/libs/jquery.textarearesizer.min.js',
+        '/js/libs/Markdown.Converter.js',
+        '/js/libs/Markdown.Sanitizer.js',
+        '/js/libs/Markdown.Editor.js',
+        '/js/libs/prettify.js',
+        '/js/libs/jquery.pikaday.js',
+        '/js/ext/prettify.extensions.js',
+        '/js/nbrut/nbrut.extensions.js',
+        '/js/nbrut/nbrut.core.js',
+        '/js/nbrut/nbrut.md.js',
+        '/js/nbrut/nbrut.ui.js',
+        '/js/nbrut/nbrut.templates.js',
+        '/js/nbrut/nbrut.thin.js',
+        '/js/nbrut/nbrut.init.js',
+        '/js/views/thin.hooks.js',
+        '/js/views/templates.js',
+        { profile: 'anon', local: '/js/views/templates.anon.js' },
+        { profile: 'author', local: '/js/views/templates.author.js'},
+        '/js/views/main/entries.js',
+        '/js/views/main/entry.js',
+        { profile: 'author', local: '/js/views/author/editor.js' },
+        { profile: 'author', local: '/js/views/author/review.js' }
+    ],
+    appendTo: server.locals
 });
 
 server.configure(function(){
@@ -25,8 +56,7 @@ server.configure(function(){
     server.set('views', views);
     server.use(express.favicon(favicon));
 
-    server.use(less({ src: assets, paths: [__dirname] }));
-    server.use(express.static(assets));
+    server.use(express.static(assetsBin));
 
     if (dev){
         server.use(express.logger({ format: 'dev' }));
