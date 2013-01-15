@@ -1,6 +1,7 @@
 var base = __dirname + '/static',
     assetify = require('node-assetify'),
     assets = {
+        production: true,
         source: base,
         bin: base + '/bin',
         css: [
@@ -15,7 +16,7 @@ var base = __dirname + '/static',
             { profile: 'author', local: '/css/layouts/author.css' },
             '/css/views/main/entries.css',
             { profile: 'anon', local: '/css/views/user/register.css' },
-            { profile: 'anon', local: '/js/views/user/login.css' },
+            { profile: 'anon', local: '/css/views/user/login.css' },
             { profile: 'author', local: '/css/views/author/editor.css' },
             { profile: 'author', local: '/css/views/author/review.css' }
         ],
