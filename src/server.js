@@ -9,6 +9,11 @@ var config = require('./config.js'),
     favicon = assets + '/img/favicon.ico',
     server = express();
 
+assetify.publish({
+    base: __dirname,
+    js: ['/js/nbrut/nbrut.init.js']
+});
+
 server.configure(function(){
     var dev = config.env.development,
         prod = config.env.production;
