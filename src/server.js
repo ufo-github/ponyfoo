@@ -15,6 +15,22 @@ var config = require('./config.js'),
 assetify.publish({
     in: assets,
     out: assetsBin,
+    css: [
+        '/css/defaults/reset.css',
+        '/css/defaults/elements.css',
+        '/css/defaults/controls.css',
+        '/css/defaults/layout.css',
+        '/css/defaults/design.css',
+        '/css/libs/markdown.css',
+        '/css/libs/prettify.css',
+        '/css/libs/pikaday.css',
+        { profile: 'author', local: '/css/layouts/author.css' },
+        '/css/views/main/entries.css',
+        { profile: 'anon', local: '/css/views/user/register.css' },
+        { profile: 'anon', local: '/js/views/user/login.css' },
+        { profile: 'author', local: '/css/views/author/editor.css' },
+        { profile: 'author', local: '/css/views/author/review.css' }
+    ],
     js: [
         assetify.jQuery('1.8.3', '/js/jquery-1.8.3.min.js'),
         '/js/libs/moment.min.js',
