@@ -21,9 +21,57 @@ textarea.resizing {
  ****************/
 .github-ribbon {
   position: absolute;
-  top: 0;
-  right: 0;
-  border: 0;
+  top: 42px;
+  right: -43px;
+  padding: 2px 0;
+  background-color: #027902;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)));
+  /* Saf4+, Chrome */
+
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+  /* Chrome 10+, Saf5.1+, iOS 5+ */
+
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+  /* FF3.6 */
+
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+  /* IE10 */
+
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+  /* Opera 11.10+ */
+
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+  /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+
+  -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+  /* FF3.5 - 3.6 */
+
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+  /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
+
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+.github-ribbon a {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 200px;
+  line-height: 20px;
+  display: inline-block;
+  padding: 2px 0;
+  border-width: 1px 0;
+  border-style: dotted;
+  border-color: rgba(255, 255, 255, 0.7);
 }
 /* SPINNER
  ****************/
