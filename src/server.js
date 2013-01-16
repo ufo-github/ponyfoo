@@ -34,6 +34,7 @@ function configureStatics(){
     }
     server.use(express.favicon(favicon));
     server.use(express.static(assets.bin));
+    server.use(express.static(assets.source + '/pub'));
 }
 
 function configureBody(){
