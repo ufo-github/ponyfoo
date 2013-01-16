@@ -59,4 +59,4 @@ function configureRouting(){
 }
 
 assets.appendTo = server.locals;
-assetify.publish(assets, configureServer);
+assetify.compile(assets, configureServer);

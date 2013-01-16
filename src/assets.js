@@ -1,7 +1,7 @@
 var base = __dirname + '/static',
     assetify = require('node-assetify'),
     assets = {
-        production: true,
+        production: false,
         source: base,
         bin: base + '/bin',
         css: [
