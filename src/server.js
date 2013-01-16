@@ -60,5 +60,10 @@ function configureRouting(){
 
 assets.appendTo = server.locals;
 assetify.use(assetify.plugins.less);
-assetify.use(assetify.plugins.minifyJs);
+
+if (config.env.development){
+    assetify.use(assetify.plugins.minifyCSS);
+    assetify.use(assetify.plugins.minifyJS);
+}
+
 assetify.compile(assets, configureServer);
