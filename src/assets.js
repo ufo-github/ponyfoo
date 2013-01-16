@@ -2,7 +2,7 @@ var config = require('./config.js'),
     base = __dirname + '/static',
     assetify = require('node-assetify'),
     assets = {
-        production: !config.env.production,
+        production: config.env.production,
         server: __dirname,
         source: base,
         bin: base + '/bin',
