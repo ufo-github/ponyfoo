@@ -59,4 +59,5 @@ function configureRouting(){
 }
 
 assets.appendTo = server.locals;
+assetify.use(assetify.plugins.less);
 assetify.compile(assets, configureServer);
