@@ -4,30 +4,39 @@ var config = require('./config.js'),
     passport = require('passport'),
     assetify = require('node-assetify'),
     assets = require('./assets.js'),
-    views = __dirname + '/views',
     favicon = assets.source + '/img/favicon.ico',
     server = express();
 
-assets.appendTo = server.locals;
-assetify.publish(assets);
+function configureServer(){
+    server.configure(function(){
+        configureStatics();
 
-server.configure(function(){
-    var dev = config.env.development,
-        prod = config.env.production;
+        if (config.env.development){
+            server.use(express.logger({ format: 'dev' }));
+        }
 
-    if (prod){
+        configureBody();
+
+        if (config.env.development){
+            server.use(express.errorHandler({
+                showStack: true,
+                dumpExceptions: true
+            }));
+        }
+    });
+
+    configureRouting();
+}
+
+function configureStatics(){
+    if (config.env.production){
         server.use(express.compress());
     }
-
-    server.set('views', views);
     server.use(express.favicon(favicon));
-
     server.use(express.static(assets.bin));
+}
 
-    if (dev){
-        server.use(express.logger({ format: 'dev' }));
-    }
-
+function configureBody(){
     server.use(express.cookieParser());
     server.use(express.bodyParser());
 
@@ -40,15 +49,13 @@ server.configure(function(){
     server.use(passport.session());
 
     server.use(server.router);
+}
 
-    if (dev){
-        server.use(express.errorHandler({
-            showStack: true,
-            dumpExceptions: true
-        }));
-    }
-});
+function configureRouting(){
+    require('./server/authentication.js').configure();
+    require('./server/routing.js').map(server);
+    require('./server/listen.js').listen(server);
+}
 
-require('./server/authentication.js').configure();
-require('./server/routing.js').map(server);
-require('./server/listen.js').listen(server);
+assets.appendTo = server.locals;
+assetify.publish(assets, configureServer);
