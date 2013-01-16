@@ -62,6 +62,7 @@ assets.appendTo = server.locals;
 assetify.use(assetify.plugins.less);
 
 if (config.env.production){
+    assetify.use(assetify.plugins.bundle);
     assetify.use(assetify.plugins.minifyCSS);
     assetify.use(assetify.plugins.minifyJS);
 }
