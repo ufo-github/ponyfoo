@@ -76,6 +76,7 @@ module.exports = {
         crud.create(req.body.entry, {
             res: res,
             always: function(entry){
+                entry.date = new Date(entry.date.toUTCString().substr(0, 25));
                 entry.slug = text.slug(entry.title);
             }
         });
