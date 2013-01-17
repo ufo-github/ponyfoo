@@ -5,12 +5,9 @@ var rest = require('../../../services/rest.js'),
     crud = require('../../../services/crud.js')(model);
 
 function dateQuery(year,month,day){
-    if(!!day){
-        return new Date(year,month-1,day);
-    }
 	return {
         $gte: new Date(year, (month||1)-1, day||1),
-        $lte: new Date(year, (month||12)-1, day||31)
+        $lt: new Date(year, (month||12)-1, day||31, 24)
 	};
 }
 
