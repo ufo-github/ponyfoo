@@ -231,7 +231,7 @@
         if (isSelected) {
             arr.push('is-selected');
         }
-        return '<td data-day="' + i + '" class="' + arr.join(' ') + '"><button class="pika-button" type="button">' + i + '</button>' + '</td>';
+        return '<td data-day="' + i + '" class="' + arr.join(' ') + '"><a class="pika-button" type="button">' + i + '</a>' + '</td>';
     },
 
     renderRow = function(days, isRTL)
@@ -296,8 +296,8 @@
             next = false;
         }
 
-        html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</button>';
-        html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</button>';
+        html += '<a class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">Previous Month</a>';
+        html += '<a class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">Next Month</a>';
 
         return html += '</div>';
     },
