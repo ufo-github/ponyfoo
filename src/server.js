@@ -4,7 +4,8 @@ var config = require('./config.js'),
     passport = require('passport'),
     assetify = require('node-assetify'),
     assets = require('./assets.js'),
-    favicon = assets.source + '/img/favicon.ico',
+    favicon = __dirname + '/static/img/favicon.ico',
+    views = __dirname + '/views',
     server = express();
 
 function configureServer(){
@@ -38,6 +39,8 @@ function configureStatics(){
 }
 
 function configureBody(){
+    server.set('views', views);
+
     server.use(express.cookieParser());
     server.use(express.bodyParser());
 
