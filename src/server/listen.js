@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     config = require('../config.js'),
-    port = config.server.port,
+    port = config.server.listener,
     mongoUri = config.db.uri;
 
 function listen(server){

@@ -4,7 +4,7 @@ var config = {
     },
     server: {
         host: process.env.HOST || 'http://localhost',
-        port: parseInt(process.env.PUBLIC_PORT || 8081)
+        listener: parseInt(process.env.PORT || 8081)
     },
     db: {
         uri: process.env.MONGOLAB_URI || 'mongodb://localhost/nbrut'
@@ -14,6 +14,8 @@ var config = {
         sessionSecret: process.env.SESSION_SECRET || 'local'
     }
 };
+
+config.server.port = parseInt(process.env.PUBLIC_PORT || config.server.listener);
 
 var host = config.server.host,
     portUrl = '';
