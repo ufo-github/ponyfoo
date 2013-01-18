@@ -12,7 +12,7 @@ html(lang='en')
     include shared/og
 
     link(rel='shortcut icon', href='/favicon.ico')
-    !=css('author')
+    !=css.emit('author')
 
   body
     header.layout-header
@@ -39,4 +39,4 @@ html(lang='en')
 
     footer
       include shared/analytics
-      !=js('author')
+      !=js.emit('author')
