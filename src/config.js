@@ -3,7 +3,7 @@ var config = {
         current: process.env.NODE_ENV || 'development'
     },
     server: {
-        host: process.env.HOST || 'http://localhost/',
+        host: process.env.HOST || 'http://localhost',
         port: parseInt(process.env.PORT || 8081)
     },
     db: {
