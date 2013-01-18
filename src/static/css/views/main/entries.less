@@ -80,8 +80,6 @@
   border-left: 2px solid @light;
 
   min-height: 24px;
-
-  .box-gradient(@light, @moderate);
 }
 
 .blog-entry blockquote:before {
@@ -105,18 +103,21 @@
   font-weight: bold;
 }
 
-.blog-entries .blog-entry:first-child {
-  margin-top: inherit;
+/* reset default #content styles to change how entries are visually separated */
+#content.blog-entries {
+  padding: 0;
+  background-color: @light;
+  border: none;
 }
 
 .blog-entries .blog-entry {
-  margin-top: 65px;
-  padding-bottom: 20px;
-  border-bottom: 4px double @border;
-  border-bottom-right-radius: 8px;
+  padding: 25px;
+  margin-top: 45px;
+  background-color: @moderate;
+  border: 1px solid @grayish;
 }
 
-.blog-entries .blog-entry:last-child {
-   border-bottom: none;
-   padding-bottom: 0;
- }
+.blog-entries .blog-entry:first-child {
+  padding: 25px;
+  margin-top: 0;
+}
