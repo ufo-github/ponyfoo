@@ -50,8 +50,4 @@ var config = require('./config.js'),
         ]
     };
 
-if(config.env.production){
-    assets.js.push('/js/libs/ga.js')
-}
-
 module.exports = assets;
