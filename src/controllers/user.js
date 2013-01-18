@@ -16,7 +16,7 @@ module.exports = {
         crud.create(req.body, {
             res: res,
             always: function(user){
-                user.author = false; // prevent over-posting.
+                user.author = true; // prevent over-posting.
             },
             writeHead: false,
             then: function(user){
