@@ -12,6 +12,9 @@ var config = {
     security: {
         saltWorkFactor: parseInt(process.env.SALT_WORK_FACTOR || 10),
         sessionSecret: process.env.SESSION_SECRET || 'local'
+    },
+    tracking: {
+        code: process.env.GA_CODE
     }
 };
 
