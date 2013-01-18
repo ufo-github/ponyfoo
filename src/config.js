@@ -15,6 +15,7 @@ var config = {
 };
 
 config.env.development = config.env.current === 'development';
-config.env.production = config.env.current === 'production';
+config.env.staging = config.env.current === 'staging';
+config.env.production = config.env.current === 'production' || config.env.staging;
 
 module.exports = config;
