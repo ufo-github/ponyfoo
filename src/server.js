@@ -40,6 +40,7 @@ function configureStatics(){
 }
 
 function configureBody(){
+    server.locals.config = config;
     server.set('views', views);
 
     server.use(express.cookieParser());

@@ -3,6 +3,7 @@ var config = {
         current: process.env.NODE_ENV || 'development'
     },
     server: {
+        host: process.env.HOST || 'http://localhost/',
         port: parseInt(process.env.PORT || 8081)
     },
     db: {
@@ -13,6 +14,19 @@ var config = {
         sessionSecret: process.env.SESSION_SECRET || 'local'
     }
 };
+
+var host = config.server.host,
+    portUrl = '';
+
+if (host[host.length-1] === '/'){
+    host = host.substr(0, host.length-1);
+}
+
+if(config.server.port !== 80){
+    portUrl = ':' + config.server.port;
+}
+
+config.server.authority = host + portUrl;
 
 config.env.development = config.env.current === 'development';
 config.env.staging = config.env.current === 'staging';
