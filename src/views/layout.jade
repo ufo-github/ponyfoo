@@ -12,7 +12,7 @@ html(lang='en')
     include shared/og
 
     link(rel='shortcut icon', href='/favicon.ico')
-    !=css.emit(assetProfile)
+    !=assetify.css.emit(assetProfile)
 
   body
     header.layout-header
@@ -35,4 +35,4 @@ html(lang='en')
 
     footer
       include shared/analytics
-      !=js.emit(assetProfile)
+      !=assetify.js.emit(assetProfile)

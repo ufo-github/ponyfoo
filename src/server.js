@@ -54,6 +54,7 @@ function configureBody(){
     server.use(passport.initialize());
     server.use(passport.session());
 
+    server.use(assetify.middleware());
     server.use(server.router);
 }
 
@@ -64,7 +65,6 @@ function configureRouting(){
 }
 
 function compileAssets(){
-    assets.appendTo = server.locals;
     assetify.use(assetify.plugins.less);
 
     if (config.env.production){
