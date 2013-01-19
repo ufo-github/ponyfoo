@@ -63,13 +63,17 @@ function configureRouting(){
     require('./server/listen.js').listen(server);
 }
 
-assets.appendTo = server.locals;
-assetify.use(assetify.plugins.less);
+function compileAssets(){
+    assets.appendTo = server.locals;
+    assetify.use(assetify.plugins.less);
 
-if (config.env.production){
-    assetify.use(assetify.plugins.bundle);
-    assetify.use(assetify.plugins.minifyCSS);
-    assetify.use(assetify.plugins.minifyJS);
+    if (config.env.production){
+        assetify.use(assetify.plugins.bundle);
+        assetify.use(assetify.plugins.minifyCSS);
+        assetify.use(assetify.plugins.minifyJS);
+    }
+
+    assetify.compile(assets, configureServer);
 }
 
-assetify.compile(assets, configureServer);
+compileAssets();

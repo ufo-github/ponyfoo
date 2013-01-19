@@ -8,7 +8,7 @@
     }
 
 	function afterActivate(){
-        $("tr.entry-row").each(function(){
+        $('tr.entry-row').each(function(){
 			var row = $(this),
 				id = row.data('id');
 

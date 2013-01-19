@@ -1,42 +1,12 @@
-!!! 5
+extends layout
 
-html(lang='en')
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
-    title='Pony Foo'
-    meta(name="description", content="Ramblings of a degenerate coder")
-    meta(name="author", content="nicolasbevacqua@gmail.com")
-    meta(name="viewport", content='width=device-width, initial-scale=1')
+block menu
+  aside#author-menu
+    nav
+      a#review-entries(href='/author/entry/review')='Review Entries'
+      a.button#write-entry(href='/author/entry')='Write Entry'
 
-    include shared/og
 
-    link(rel='shortcut icon', href='/favicon.ico')
-    !=css.emit('author')
-
-  body
-    header.layout-header
-      h1.layout-heading
-        a#home(href='/')='Pony Foo'
-
-      aside#author-menu
-        nav
-          a#review-entries(href='/author/entry/review')='Review Entries'
-          a.button#write-entry(href='/author/entry')='Write Entry'
-
-    section#content-wrapper
-      section#content
-        include shared/spinner
-
-    include shared/404
-    include shared/loader
-    include shared/ribbon
-
-    include main/entries
-    include main/entry
-    include author/editor
-    include author/review
-
-    footer
-      include shared/analytics
-      !=js.emit('author')
+block templates
+  include author/editor
+  include author/review
