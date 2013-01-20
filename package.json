@@ -4,20 +4,20 @@
   "author": "Nicolas Bevacqua <nicolasbevacqua@gmail.com>",
   "version": "0.0.1",
   "dependencies": {
+    "bcrypt": "0.7.3",
     "connect": "2.7.2",
+    "connect-mongoose": "0.0.2",
     "express": "3.0.0",
     "jade": "0.27.6",
 	"mongoose": "3.5.3",
-	"connect-mongoose": "0.0.2",
+    "node-assetify": "0.0.8",
 	"passport": "0.1.15",
-	"passport-local": "0.1.6",
-	"bcrypt": "0.7.3",
-    "node-assetify": "0.0.8"
+	"passport-local": "0.1.6"
   },
   "devDependencies": {
-    "vows": "0.5.x",
 	"mocha": "*",
-	"should": "*"
+    "should": "*",
+    "vows": "0.5.x"
   },
   "engines": {
     "node": ">= 0.8.x",
