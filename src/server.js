@@ -66,6 +66,7 @@ function configureRouting(){
 
 function compileAssets(){
     assetify.use(assetify.plugins.less);
+    assetify.use(assetify.plugins.jsn);
 
     if (config.env.production){
         assetify.use(assetify.plugins.bundle);

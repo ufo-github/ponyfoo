@@ -1,0 +1,3 @@
+!function(nbrut){
+    nbrut.site.title = '@config.site.title';
+}(nbrut);

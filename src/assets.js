@@ -34,7 +34,7 @@ var config = require('./config.js'),
             '/js/ext/prettify.extensions.js',
             '/js/nbrut/nbrut.extensions.js',
             '/js/nbrut/nbrut.core.js',
-            { src: 'nbrut.site.title = "' + config.site.title + '";' },
+            { local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
             '/js/nbrut/nbrut.md.js',
             '/js/nbrut/nbrut.ui.js',
             '/js/nbrut/nbrut.templates.js',
@@ -47,9 +47,12 @@ var config = require('./config.js'),
             '/js/views/main/entries.js',
             '/js/views/main/entry.js',
             { profile: 'author', local: '/js/views/author/editor.js' },
-            { profile: 'author', local: '/js/views/author/review.js' },
-            { local: '/js/ext/analytics.jsn', context: { config: config } }
+            { profile: 'author', local: '/js/views/author/review.js' }
         ]
     };
+
+if(config.tracking.code !== undefined){
+    assets.js.push({ local: '/js/ext/analytics.jsn', context: { config: config } });
+}
 
 module.exports = assets;
