@@ -15,23 +15,37 @@ var config = {
     },
     tracking: {
         code: process.env.GA_CODE
+    },
+    site: {
+        title: 'Pony Foo',
+        description: 'Ramblings of a degenerate coder',
+        relativeThumbnail: '/img/thumbnail.png'
+    },
+    author: {
+        email: 'nicolasbevacqua@gmail.com'
     }
 };
 
-config.server.port = parseInt(process.env.PUBLIC_PORT || config.server.listener);
+function buildAuthorityUrl(){
+    var host = config.server.host,
+        portUrl = '';
 
-var host = config.server.host,
-    portUrl = '';
+    config.server.port = parseInt(process.env.PUBLIC_PORT || config.server.listener);
 
-if (host[host.length-1] === '/'){
-    host = host.substr(0, host.length-1);
+    if (host[host.length-1] === '/'){
+        host = host.substr(0, host.length-1);
+    }
+
+    if(config.server.port !== 80){
+        portUrl = ':' + config.server.port;
+    }
+
+    config.server.authority = host + portUrl;
 }
 
-if(config.server.port !== 80){
-    portUrl = ':' + config.server.port;
-}
+buildAuthorityUrl();
 
-config.server.authority = host + portUrl;
+config.site.thumbnail = config.server.authority + config.site.relativeThumbnail;
 
 config.env.development = config.env.current === 'development';
 config.env.staging = config.env.current === 'staging';

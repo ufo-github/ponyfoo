@@ -4,20 +4,20 @@ html(lang='en')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
-    title='Pony Foo'
-    meta(name="description", content="Ramblings of a degenerate coder")
-    meta(name="author", content="nicolasbevacqua@gmail.com")
+    title=config.site.title
+    meta(name="description", content=config.site.description)
+    meta(name="author", content=config.author.email)
     meta(name="viewport", content='width=device-width, initial-scale=1')
 
     include shared/og
 
     link(rel='shortcut icon', href='/favicon.ico')
-    !=assetify.css.emit(assetProfile)
+    !=assetify.css.emit(profile)
 
   body
     header.layout-header
       h1.layout-heading
-        a#home(href='/')='Pony Foo'
+        a#home(href='/')=config.site.title
 
       block menu
 
@@ -35,4 +35,4 @@ html(lang='en')
 
     footer
       include shared/analytics
-      !=assetify.js.emit(assetProfile)
+      !=assetify.js.emit(profile)

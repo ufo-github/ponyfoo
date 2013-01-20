@@ -2,19 +2,19 @@
     var caching = function(){
         function setCookie(key, value, expires) {
             var defaults = {
-                path: "/",
+                path: '/',
                 expires: 1000 * 60 * 60 * 6 * 24 * 30 // 6 months
             };
             var date = new Date();
             var offset = expires || defaults.expires;
             date.setTime(date.getTime() + offset);
             var json = window.JSON.stringify(value);
-            var cookie = "{0}={1}; expires={2}; path={3}".format(key, json, date.toGMTString(), defaults.path);
+            var cookie = '{0}={1}; expires={2}; path={3}'.format(key, json, date.toGMTString(), defaults.path);
             document.cookie = cookie;
         }
 
         function getCookie(key, defaultValue) {
-            var identifier = "{0}=".format(key);
+            var identifier = '{0}='.format(key);
             var cookies = document.cookie.split(';');
             for (var i = 0; i < cookies.length; i++) {
                 var cookie = cookies[i];
@@ -60,8 +60,7 @@
         function getPreference(key, defaultValue) {
             var fromStorage = getStorageItem(key, defaultValue);
             if (fromStorage === defaultValue || fromStorage === undefined) {
-                var fromCookie = getCookie(key, defaultValue);
-                return fromCookie;
+                return getCookie(key, defaultValue);
             } else {
                 return fromStorage;
             }
@@ -85,11 +84,8 @@
         };
     }();
 
-    var nbrut = function () {
-        return {
-            local: caching
-        };
-    }();
-
-    window.nbrut = nbrut;
+    window.nbrut = {
+        site: {},
+        local: caching
+    };
 }(window, jQuery);

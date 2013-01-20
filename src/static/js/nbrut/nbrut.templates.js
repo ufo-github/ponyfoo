@@ -21,7 +21,7 @@
             },
             titleSettings = {
                 tag: $('title'),
-                format: '{0} - Pony Foo'
+                format: '{0} - ' + nbrut.site.title
             };
 
         function register(settings) {

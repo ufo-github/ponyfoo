@@ -9,7 +9,7 @@
         source: '#loader-template'
     });
 
-    var homeTitle = { value: 'Pony Foo', literal: true };
+    var homeTitle = { value: nbrut.site.title, literal: true };
 
     function getEntryRoute(regex){
         return {
