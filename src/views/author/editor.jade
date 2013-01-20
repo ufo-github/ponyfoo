@@ -5,19 +5,19 @@ section#entry-editor-template.template(data-class='entry-editor')
     fieldset
       p
         label(for='entry-title')='Title'
-        input#entry-title(type='text', value='{{title}}')
+        input#entry-title(type='text', value='{{entry.title}}')
 
       p
         label(for='entry-date')='Date'
-        input#entry-date(type='text', value='{{dateText}}')
+        input#entry-date(type='text', value='{{entry.dateText}}')
 
     div#wmd-button-bar-brief.wmd-button-bar
     div
-      textarea#wmd-input-brief.wmd-input(name='entry.brief')='{{brief}}'
+      textarea#wmd-input-brief.wmd-input(name='entry.brief')='{{entry.brief}}'
 
     div#wmd-button-bar-text.wmd-button-bar
     div
-      textarea#wmd-input-text.wmd-input(name='entry.text')='{{text}}'
+      textarea#wmd-input-text.wmd-input(name='entry.text')='{{entry.text}}'
 
   article#entry-preview.blog-entry
     header.blog-entry-title
@@ -28,5 +28,5 @@ section#entry-editor-template.template(data-class='entry-editor')
 
   div#entry-editor-buttons
     a#cancel-entry='Cancel'
-    button#submit-entry(data-id='{{_id}}')
-      span(data-text='Post', data-text-disabled='Posting...')
+    button#submit-entry(data-id='{{entry._id}}')
+      span(data-text='{{submit.text}}', data-text-disabled='{{submit.disabled}}')

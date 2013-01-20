@@ -40,13 +40,25 @@
     function prepare(render, data){
         if(!data.id){
             render({
-                dateText: moment(new Date()).format()
+                submit: {
+                    text: 'Post',
+                    disabled: 'Posting...'
+                },
+                entry: {
+                    dateText: moment(new Date()).format()
+                }
             });
         }else{
             nbrut.thin.get('entry', {
                 id: data.id,
                 then: function(it){
-                    render(it.entry);
+                    render({
+                        submit: {
+                            text: 'Update',
+                            disabled: 'Updating...'
+                        },
+                        entry: it.entry
+                    });
                 }
             });
         }
