@@ -47,7 +47,8 @@ var config = require('./config.js'),
             '/js/views/main/entries.js',
             '/js/views/main/entry.js',
             { profile: 'author', local: '/js/views/author/editor.js' },
-            { profile: 'author', local: '/js/views/author/review.js' }
+            { profile: 'author', local: '/js/views/author/review.js' },
+            { local: '/js/ext/analytics.jsn', context: { config: config } }
         ]
     };
 
