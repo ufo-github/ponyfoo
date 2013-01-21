@@ -8,14 +8,9 @@
         });
 	}
 	
-	function afterActivate(data, viewModel){
+	function afterActivate(){
 		var container = $('.blog-entry');
 		nbrut.md.prettify(container);
-        nbrut.disqus.load(container, {
-            identifier: viewModel.url,
-            url: viewModel.absoluteUrl,
-            title: viewModel.title
-        });
 	}
 	
     nbrut.tt.configure({
