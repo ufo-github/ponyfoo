@@ -23,6 +23,9 @@ var config = {
     },
     author: {
         email: 'nicolasbevacqua@gmail.com'
+    },
+    disqus: {
+        shortname: process.env.DISQUS_SHORTNAME || 'staging-ponyfoo'
     }
 };
 
@@ -50,5 +53,7 @@ config.site.thumbnail = config.server.authority + config.site.relativeThumbnail;
 config.env.development = config.env.current === 'development';
 config.env.staging = config.env.current === 'staging';
 config.env.production = config.env.current === 'production' || config.env.staging;
+
+config.disqus.developer = config.env.development ? 1 : 0;
 
 module.exports = config;

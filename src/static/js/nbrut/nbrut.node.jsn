@@ -1,3 +1,9 @@
 !function(nbrut){
-    nbrut.site.title = '@config.site.title';
+    nbrut.server = {
+        authority: '@config.server.authority'
+    };
+
+    nbrut.site = {
+        title: '@config.site.title'
+    };
 }(nbrut);

@@ -85,7 +85,6 @@
     }();
 
     window.nbrut = {
-        site: {},
         local: caching
     };
 }(window, jQuery);

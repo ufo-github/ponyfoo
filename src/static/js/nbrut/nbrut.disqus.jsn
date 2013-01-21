@@ -1,0 +1,33 @@
+!function($, nbrut, window, document, undefined) {
+    var thread = '<div id="disqus_thread"></div>';
+
+    window.disqus_shortname = '@config.disqus.shortname';
+    window.disqus_developer = @config.disqus.developer;
+
+    function request(){
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + window.disqus_shortname + '.disqus.com/embed.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(dsq, s);
+    }
+
+    nbrut.disqus = {
+        load: function(target, opts){
+            $(target).append(thread);
+
+            if (window.DISQUS){
+                window.DISQUS.reset({
+                    reload: true,
+                    config: function(){
+                        this.page = opts;
+                    }
+                });
+            }else{
+                window.disqus_identifier = opts.identifier;
+                window.disqus_url = opts.url;
+                window.disqus_title = opts.title;
+
+                request();
+            }
+        }
+    };
+}(jQuery, nbrut, window, document);

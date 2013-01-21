@@ -172,7 +172,7 @@
 				activateTemplate(template, settings, viewModel, soft); // set-up.
                 fixLocalRoutes(template.container);
                 bindBack(template);
-				template.afterActivate(settings.data || {});
+				template.afterActivate(settings.data || {}, viewModel);
 			};
 			
 			template.prepare(render, settings.data || {});
