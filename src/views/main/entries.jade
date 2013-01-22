@@ -1,11 +1,20 @@
-section#blog-entries-template.template(data-class='blog-entries')
-  // {{#entries}}
-  article.blog-entry
-    header.blog-entry-title
-      h1
-        a(href='{{url}}')='{{title}}'
-      span.blog-entry-date(title='{{updatedText}}')='updated {{updatedTimeAgo}}'
+section#blog-entries-template.template(data-class='blog-entries-wrapper')
+  section.blog-entries
+    // {{#entries}}
+    article.blog-entry
+      header.blog-entry-title
+        h1
+          a(href='{{url}}')='{{title}}'
+        span.blog-entry-date(title='{{updatedText}}')='updated {{updatedTimeAgo}}'
 
-    section.blog-entry-brief='{{{html.brief}}}'
-    section.blog-entry-text='{{{html.text}}}'
-  // {{/entries}}
+      section.blog-entry-brief='{{{html.brief}}}'
+      section.blog-entry-text='{{{html.text}}}'
+    // {{/entries}}
+
+  aside.blog-sidebar
+    div.author-info-button
+    header='Latest posts'
+    nav
+      a='latest'
+      a='earlier'
+      a='etc'
