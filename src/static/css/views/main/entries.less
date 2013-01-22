@@ -134,35 +134,57 @@
 
 .blog-sidebar {
   margin-left: 30px;
+  width: 250px;
+  height: 400px;
+  .box-perspective(700);
+  position: relative;
+}
+
+.blog-sidebar .flip-wrapper{
   padding: 25px;
   background-color: @moderate;
   border: 1px solid @grayish;
   .box-radius(4px);
 }
 
-.blog-sidebar header {
-  float: left;
+.flip-wrapper {
+  width: 100%;
+  height: 100%;
+  .box-transition(all 1.0s linear);
 }
 
-a.author-info-icon.button {
-  float: right;
+.flip-wrapper.flipped {
+  .box-rotate180();
+  .box-shadow(-1px 1px 1px @border);
+}
+
+section.flip {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  .box-hide-backface();
+}
+
+section.flip.back {
+  .box-rotate180();
+  .box-sizing();
+}
+
+a.flip-button.button {
   .box-radius(30px);
 
-  position: relative;
-  top: -40px;
-  right: -40px;
-
   line-height: 10px;
+  width: 50px;
 }
 
-a.author-info-icon:after {
+#latest .flip-button:after {
   content: 'about';
 }
 
-.blog-sidebar-latest {
-  clear: left;
+#about .flip-button:after {
+  content: 'posts';
 }
 
-.blog-sidebar-latest a {
+#latest nav a {
   display: block;
 }
