@@ -110,9 +110,18 @@
   border: none;
 }
 
+.blog-entries {
+  max-width: 870px;
+}
+
+.blog-entries, .blog-sidebar {
+  display: inline-block;
+  vertical-align: top;
+}
+
 .blog-entries .blog-entry {
-  padding: 25px;
   margin-top: 45px;
+  padding: 25px;
   background-color: @moderate;
   border: 1px solid @grayish;
   .box-radius(4px);
@@ -121,4 +130,16 @@
 .blog-entries .blog-entry:first-child {
   padding: 25px;
   margin-top: 0;
+}
+
+.blog-sidebar {
+  margin-left: 30px;
+  padding: 25px;
+  background-color: @moderate;
+  border: 1px solid @grayish;
+  .box-radius(4px);
+}
+
+.blog-sidebar-latest a {
+  display: block;
 }
