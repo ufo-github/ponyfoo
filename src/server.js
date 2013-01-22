@@ -4,8 +4,7 @@ var config = require('./config.js'),
     passport = require('passport'),
     assetify = require('node-assetify'),
     assets = require('./assets.js'),
-    publicStatic = __dirname + '/static/pub',
-    favicon = publicStatic + '/img/favicon.ico',
+    favicon = assets.bin + '/img/favicon.ico',
     views = __dirname + '/views',
     server = express();
 
@@ -36,7 +35,6 @@ function configureStatics(){
     }
     server.use(express.favicon(favicon));
     server.use(express.static(assets.bin));
-    server.use(express.static(publicStatic));
 }
 
 function configureBody(){
@@ -73,7 +71,7 @@ function compileAssets(){
         assetify.use(assetify.plugins.minifyCSS);
         assetify.use(assetify.plugins.minifyJS);
     }
-
+    assetify.use(assetify.plugins.forward);
     assetify.compile(assets, configureServer);
 }
 

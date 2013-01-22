@@ -10,7 +10,7 @@
     "express": "3.0.0",
     "jade": "0.27.6",
 	"mongoose": "3.5.3",
-    "node-assetify": "0.0.10",
+    "node-assetify": "0.0.11-pre",
 	"passport": "0.1.15",
 	"passport-local": "0.1.6"
   },
