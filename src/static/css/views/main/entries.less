@@ -135,56 +135,16 @@
 .blog-sidebar {
   margin-left: 30px;
   width: 250px;
-  height: 400px;
-  .box-perspective(700);
-  position: relative;
+  height: 280px;
 }
 
-.blog-sidebar .flip-wrapper{
-  padding: 25px;
-  background-color: @moderate;
-  border: 1px solid @grayish;
-  .box-radius(4px);
+.blog-sidebar .face {
+  background-color: #aaa;
 }
 
-.flip-wrapper {
-  width: 100%;
-  height: 100%;
-  .box-transition(all 1.0s linear);
-}
-
-.flip-wrapper.flipped {
-  .box-rotate180();
-  .box-shadow(-1px 1px 1px @border);
-}
-
-section.flip {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  .box-hide-backface();
-}
-
-section.flip.back {
-  .box-rotate180();
-  .box-sizing();
-}
-
-a.flip-button.button {
-  .box-radius(30px);
-
-  line-height: 10px;
-  width: 50px;
-}
-
-#latest .flip-button:after {
-  content: 'about';
-}
-
-#about .flip-button:after {
-  content: 'posts';
-}
-
-#latest nav a {
-  display: block;
+.blog-sidebar .face.back {
+  padding: 10px;
+  color: white;
+  text-align: center;
+  background-color: @red_shadow;
 }

@@ -12,8 +12,8 @@
 		var container = $('.blog-entries');
 		nbrut.md.prettify(container);
 
-        $('.blog-sidebar .flip-button').on('click.flip', function(){
-            $('.blog-sidebar .flip-wrapper').toggleClass('flipped');
+        $('.blog-sidebar.flip-wrapper').on('click.flip', function(){
+            $('.blog-sidebar .flip-card').toggleClass('flipped');
         })
 	}
 	

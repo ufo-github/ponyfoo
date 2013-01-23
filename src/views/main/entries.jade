@@ -11,25 +11,11 @@ section#blog-entries-template.template(data-class='blog-entries-wrapper')
       section.blog-entry-text='{{{html.text}}}'
     // {{/entries}}
 
-  aside.blog-sidebar
-    article.flip-wrapper
-      section#latest.flip.front
-        a.button.flip-button.about-button(title='About the author')
-        header
-          h5.underline='Latest'
+  aside.blog-sidebar.flip-wrapper
+    article.flip-card
+      section.face.front
+        p='Tududududu'
+      section.face.back
+        p='tadadada'
+        p='tudududum.'
 
-        section
-          nav
-            a='latest'
-            a='earlier'
-            a='etc'
-
-      section#about.flip.back
-          a.button.flip-button.latest-button(title='Latest posts')
-          header
-              h5.underline='About'
-          section='about me...'
-          footer
-            button.zocial.icon.stackoverflow
-            button.zocial.icon.linkedin
-            button.zocial.icon.twitter

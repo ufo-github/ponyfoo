@@ -87,11 +87,17 @@
           box-sizing: border-box; /* Chrome, IE8+, Opera, Safari 5.1*/
 }
 
+.box-3d(){
+  -webkit-transform-style: preserve-3d;
+     -moz-transform-style: preserve-3d;
+      -ms-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
 .box-rotate180(){
-  -webkit-transform: rotateY(180deg);  -webkit-transform-style: preserve-3d;
-     -moz-transform: rotateY(180deg);     -moz-transform-style: preserve-3d;
-      -ms-transform: rotateY(180deg);      -ms-transform-style: preserve-3d;
-          transform: rotateY(180deg);          transform-style: preserve-3d;
+  -webkit-transform: rotateY(180deg);
+     -moz-transform: rotateY(180deg);
+      -ms-transform: rotateY(180deg);
+          transform: rotateY(180deg);
 }
 
 .box-hide-backface(){
