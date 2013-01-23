@@ -12,7 +12,7 @@
 		var container = $('.blog-entries');
 		nbrut.md.prettify(container);
 
-        $('.blog-sidebar.flip-wrapper').on('click.flip', function(){
+        $('.sidebar-flipper').on('click.flip', function(){
             $('.blog-sidebar .flip-card').toggleClass('flipped');
         })
 	}

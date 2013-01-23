@@ -1,0 +1,33 @@
+@import "common.less";
+
+.social, .sidebar-flipper {
+  .box-transition(all 0.4s linear);
+  text-indent: -9999em;
+  overflow: hidden;
+}
+
+.social {
+  background-image: url('/img/social.png');
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+}
+
+.social:hover {
+  opacity: 0.6;
+}
+
+.social.stackoverflow { background-position: 0px 0px; }
+.social.github { background-position: -26px 0px; }
+.social.linkedin { background-position: -52px 0px; }
+.social.twitter { background-position: -78px 0px; }
+.social.email { background-position: -104px 0px; }
+
+.sidebar-flipper {
+  background-image: url('/img/sidebar-flip.png');
+  width: 32px;
+  height: 32px;
+}
+
+.sidebar-flipper.about-author { background-position: 0px 0px; }
+.sidebar-flipper.latest-posts { background-position: -32px 0px; }

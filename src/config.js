@@ -22,7 +22,11 @@ var config = {
         relativeThumbnail: '/img/thumbnail.png'
     },
     author: {
-        email: 'nicolasbevacqua@gmail.com'
+        email: 'nicolasbevacqua@gmail.com',
+        github: 'https://github.com/bevacqua',
+        stackoverflow: 'http://careers.stackoverflow.com/bevacqua',
+        linkedin: 'http://linkedin.com/in/nbevacqua/',
+        about: 'To learn more about me, feel free to visit my social accounts below:'
     }
 };
 
