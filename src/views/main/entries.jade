@@ -13,9 +13,21 @@ section#blog-entries-template.template(data-class='blog-entries-wrapper')
 
   aside.blog-sidebar.flip-wrapper
     article.flip-card
-      section.face.front
-        p='Tududududu'
-      section.face.back
-        p='tadadada'
-        p='tudududum.'
+      section#latest-posts.face.front
+        header
+          h5.underline='Latest'
 
+        section
+          nav
+            a='latest'
+            a='earlier'
+            a='etc'
+
+      section#about-author.face.back
+        header
+          h5.underline='About'
+        section='about me...'
+        footer
+          button.zocial.icon.stackoverflow
+          button.zocial.icon.linkedin
+          button.zocial.icon.twitter

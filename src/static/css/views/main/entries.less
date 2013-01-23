@@ -98,7 +98,7 @@
   margin-right: 12px;
 }
 
-.blog-entry section a {
+.blog-entry section a, #latest-posts a {
   color: @pink;
   font-weight: bold;
 }
@@ -139,12 +139,15 @@
 }
 
 .blog-sidebar .face {
-  background-color: #aaa;
+  padding: 15px;
+  background-color: @moderate;
+  border: 1px solid @grayish;
 }
 
-.blog-sidebar .face.back {
-  padding: 10px;
-  color: white;
-  text-align: center;
-  background-color: @red_shadow;
+#latest-posts nav {
+  font-size: 0.9em;
+}
+
+#latest-posts nav a {
+  display: block;
 }
