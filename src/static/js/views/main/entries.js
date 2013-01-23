@@ -9,10 +9,21 @@
 	}
 	
 	function afterActivate(){
-		var container = $('.blog-entries');
+		var container = $('.blog-entries'),
+            flipper = $('.sidebar-flipper'),
+            highlight = 'highlight',
+            highlightSidebar = 'sidebar-flip-highlight',
+            enabled = nbrut.local.get(highlightSidebar, true);
+
 		nbrut.md.prettify(container);
 
-        $('.sidebar-flipper').on('click.flip', function(){
+        if(enabled === true){ // only when the user doesn't know about it.
+            flipper.addClass(highlight);
+        }
+
+        flipper.on('click.flip', function(){
+            flipper.removeClass(highlight);
+            nbrut.local.set(highlightSidebar, false);
             $('.blog-sidebar .flip-card').toggleClass('flipped');
         })
 	}
