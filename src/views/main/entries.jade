@@ -20,15 +20,19 @@ section#blog-entries-template.template(data-class='blog-entries-wrapper')
 
         section
           nav
-            a='latest'
-            a='earlier'
-            a='etc'
+            // {{#latest}}
+            a(href='{{url}}')='{{title}}'
+            // {{/latest}}
 
       section#about-author.face.back
         header
           a.sidebar-flipper.latest-posts(title='Latest posts')
           h5.underline='About'
-        section.author-description=config.author.about
+
+        section.author-description
+          p=config.author.about
+          p=config.author.social
+
         footer.social-links
           a.social.github(title='Follow me on GitHub', target='_blank', href=config.author.github)='GitHub'
           a.social.stackoverflow(title='Follow me on Stack Overflow', target='_blank', href=config.author.stackoverflow)='Stack Overflow'

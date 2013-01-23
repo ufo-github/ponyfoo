@@ -1,12 +1,27 @@
 !function (window,$,nbrut) {
 	function prepare(render, data){
+        if (data.query === undefined){
+            complete(render, data);
+        }else{
+            nbrut.thin.get('entry', {
+                then: function(it){
+                    complete(render, data, it.entries)
+                }
+            });
+        }
+	}
+
+    function complete(render, data, latest){
         nbrut.thin.get('entry', {
             id: data.query,
             then: function(it){
-                render(it);
+                render({
+                    entries: it.entries,
+                    latest: latest || it.entries
+                });
             }
         });
-	}
+    }
 	
 	function afterActivate(){
 		var container = $('.blog-entries'),

@@ -227,8 +227,16 @@ a.remove:hover {
  *************/
 
 .opacity-shake(){
-    0% { opacity: 1; .box-shadow(0 0 7px @strong);   }
-  100% { opacity: 0.8;  .box-shadow(0 0 2px @light); }
+    0% {
+      opacity: 1;
+      .box-shadow(0 0 7px @strong);
+      background-color: inherit;
+  }
+  100% {
+      opacity: 0.8;
+      .box-shadow(0 0 2px @light);
+      background-color: @grayish;
+  }
 }
 
 @-webkit-keyframes opacity-shake { .opacity-shake; }
