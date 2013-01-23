@@ -15,7 +15,7 @@ section#blog-entries-template.template(data-class='blog-entries-wrapper')
     article.flip-card
       section#latest-posts.face.front
         header
-          a.sidebar-flipper.about-author
+          a.sidebar-flipper.about-author(title='About me')
           h5.underline='Latest'
 
         section
@@ -26,7 +26,7 @@ section#blog-entries-template.template(data-class='blog-entries-wrapper')
 
       section#about-author.face.back
         header
-          a.sidebar-flipper.latest-posts
+          a.sidebar-flipper.latest-posts(title='Latest posts')
           h5.underline='About'
         section.author-description=config.author.about
         footer.social-links
