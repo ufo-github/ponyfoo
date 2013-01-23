@@ -16,7 +16,7 @@
             id: data.query,
             then: function(it){
                 render({
-                    entries: it.entries,
+                    entries: it.entries || [it.entry],
                     latest: latest || it.entries
                 });
             }

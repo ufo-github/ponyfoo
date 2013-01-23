@@ -45,7 +45,6 @@ var config = require('./config.js'),
             { profile: 'anon', local: '/js/views/templates.anon.js' },
             { profile: 'author', local: '/js/views/templates.author.js'},
             '/js/views/main/entries.js',
-            '/js/views/main/entry.js',
             { profile: 'author', local: '/js/views/author/editor.js' },
             { profile: 'author', local: '/js/views/author/review.js' }
         ]
