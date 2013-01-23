@@ -98,21 +98,30 @@
   margin-right: 12px;
 }
 
-.blog-entry section a {
+.blog-entry section a, #latest-posts a {
   color: @pink;
   font-weight: bold;
 }
 
 /* reset default #content styles to change how entries are visually separated */
-#content.blog-entries {
+#content.blog-entries-wrapper {
   padding: 0;
-  background-color: @light;
+  background: inherit;
   border: none;
 }
 
+.blog-entries {
+  max-width: 870px;
+}
+
+.blog-entries, .blog-sidebar {
+  display: inline-block;
+  vertical-align: top;
+}
+
 .blog-entries .blog-entry {
-  padding: 25px;
   margin-top: 45px;
+  padding: 25px;
   background-color: @moderate;
   border: 1px solid @grayish;
   .box-radius(4px);
@@ -121,4 +130,50 @@
 .blog-entries .blog-entry:first-child {
   padding: 25px;
   margin-top: 0;
+}
+
+.blog-sidebar {
+  margin-left: 30px;
+  width: 250px;
+  height: 280px;
+}
+
+.blog-sidebar h5 {
+  margin-right: 50px;
+}
+
+.blog-sidebar .flipped {
+  padding-right: 30px;
+}
+
+.blog-sidebar .face {
+  padding: 15px;
+  background-color: @moderate;
+  border: 1px solid @grayish;
+}
+
+.blog-sidebar .sidebar-flipper {
+  float: right;
+}
+
+#latest-posts nav {
+  font-size: 0.9em;
+}
+
+#latest-posts nav a {
+  display: block;
+  line-height: 1.2em;
+}
+
+.author-description {
+  font-size: 0.9em;
+  line-height: 1.1em;
+}
+
+.author-description p {
+  margin-bottom: 25px;
+}
+
+#about-author .social-links a {
+  margin-right: 6px;
 }

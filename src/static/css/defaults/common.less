@@ -66,10 +66,51 @@
   transform: rotate(@target);
 }
 
-.animation(@first,@second){
+.animation(@rule){
+  -webkit-animation: @rule;
+  -moz-animation: @rule;
+  -ms-animation: @rule;
+  -o-animation: @rule;
+  animation: @rule;
+}
+
+.animation-dbl(@first,@second){
   -webkit-animation: @first, @second;
   -moz-animation: @first, @second;
   -ms-animation: @first, @second;
   -o-animation: @first, @second;
   animation: @first, @second;
+}
+
+.box-perspective(@amount){
+  -webkit-perspective: @amount;  /* Safari 4+ Chrome 12+ */
+     -moz-perspective: @amount;  /* Firefox 10+ */
+      -ms-perspective: @amount;  /* IE10+ */
+          perspective: @amount;
+}
+
+.box-sizing(){
+  -webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+     -moz-box-sizing: border-box; /* Firefox 1+ */
+          box-sizing: border-box; /* Chrome, IE8+, Opera, Safari 5.1*/
+}
+
+.box-3d(){
+  -webkit-transform-style: preserve-3d;
+     -moz-transform-style: preserve-3d;
+      -ms-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+.box-rotate180(){
+  -webkit-transform: rotateY(180deg);
+     -moz-transform: rotateY(180deg);
+      -ms-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
+.box-hide-backface(){
+  -webkit-backface-visibility: hidden;
+     -moz-backface-visibility: hidden;
+      -ms-backface-visibility: hidden;
+          backface-visibility: hidden;
 }

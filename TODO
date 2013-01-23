@@ -3,9 +3,8 @@ TODO:
 1
 -------
 - comments by hand
-- github, careers, linkedin, twtr links
 - brief post regarding npm
-- sidebar with latest few posts
+- post regarding the css flip (And the temporary highlight)
 - paging
 
 2
@@ -13,6 +12,7 @@ TODO:
 - loading something new should abort existing loads
 - loading baubles when loading something other than the landing page
 - client-side caching?
+- google crawler serve different views?
 
 
 3

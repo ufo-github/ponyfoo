@@ -1,11 +1,40 @@
-section#blog-entries-template.template(data-class='blog-entries')
-  // {{#entries}}
-  article.blog-entry
-    header.blog-entry-title
-      h1
-        a(href='{{url}}')='{{title}}'
-      span.blog-entry-date(title='{{updatedText}}')='updated {{updatedTimeAgo}}'
+section#blog-entries-template.template(data-class='blog-entries-wrapper')
+  section.blog-entries
+    // {{#entries}}
+    article.blog-entry
+      header.blog-entry-title
+        h1
+          a(href='{{url}}')='{{title}}'
+        span.blog-entry-date(title='{{updatedText}}')='updated {{updatedTimeAgo}}'
 
-    section.blog-entry-brief='{{{html.brief}}}'
-    section.blog-entry-text='{{{html.text}}}'
-  // {{/entries}}
+      section.blog-entry-brief='{{{html.brief}}}'
+      section.blog-entry-text='{{{html.text}}}'
+    // {{/entries}}
+
+  aside.blog-sidebar.flip-wrapper
+    article.flip-card
+      section#latest-posts.face.front
+        header
+          a.sidebar-flipper.about-author(title='About me')
+          h5.underline='Latest'
+
+        section
+          nav
+            // {{#latest}}
+            a(href='{{url}}')='{{title}}'
+            // {{/latest}}
+
+      section#about-author.face.back
+        header
+          a.sidebar-flipper.latest-posts(title='Latest posts')
+          h5.underline='About'
+
+        section.author-description
+          p=config.author.about
+          p=config.author.social
+
+        footer.social-links
+          a.social.github(title='Follow me on GitHub', target='_blank', href=config.author.github)='GitHub'
+          a.social.stackoverflow(title='Follow me on Stack Overflow', target='_blank', href=config.author.stackoverflow)='Stack Overflow'
+          a.social.linkedin(title='Follow me on LinkedIn', target='_blank', href=config.author.linkedin)='LinkedIn'
+          a.social.email(title='Contact me via email', target='_blank', href='mailto:' + config.author.email)='Email'
