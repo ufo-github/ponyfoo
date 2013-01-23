@@ -71,9 +71,7 @@ function compileAssets(){
         assetify.use(assetify.plugins.minifyCSS);
         assetify.use(assetify.plugins.minifyJS);
     }
-    assetify.use(assetify.plugins.forward({
-        extnames: ['.eot','.svg','.ttf']
-    }, true));
+    assetify.use(assetify.plugins.forward());
     assetify.compile(assets, configureServer);
 }
 
