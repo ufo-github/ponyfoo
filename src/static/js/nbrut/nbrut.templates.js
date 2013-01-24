@@ -253,6 +253,8 @@
                             settings: settings
                         }, title, url);
                     }
+                }else if(template.title){
+                    setTitle(template.title, viewModel, settings.data);
                 }
 				
 				if (activity.current !== undefined){

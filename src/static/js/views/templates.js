@@ -1,7 +1,8 @@
 !function (window,nbrut,moment) {
     nbrut.tt.register({
         key: '404',
-        source: '#not-found-template'
+        source: '#not-found-template',
+        title: { value: 'Not Found' }
     });
 
     nbrut.tt.register({
