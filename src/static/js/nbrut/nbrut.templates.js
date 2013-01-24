@@ -168,14 +168,23 @@
                 template.initialize();
             }			
 
-			var render = function(viewModel){
+            settings.identifier = getHash();
+
+			function render(viewModel){
+                if(settings.identifier !== getHash()){ // prevent mis-rendering when the user navigated away.
+                    return;
+                }
 				activateTemplate(template, settings, viewModel, soft); // set-up.
                 fixLocalRoutes(template.container);
                 bindBack(template);
 				template.afterActivate(settings.data || {}, viewModel);
-			};
+			}
 			
 			template.prepare(render, settings.data || {});
+        }
+
+        function getHash(){
+            return activity.history.length + (activity.current === undefined ? 0 : 1);
         }
 
         function deactivateContainer(container) {
