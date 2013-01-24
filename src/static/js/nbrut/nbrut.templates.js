@@ -195,12 +195,16 @@
             if(!template.initialized){
                 template.initialized = true;
                 template.initialize();
-            }			
+            }
 
             settings.identifier = getHash();
 
-			function render(viewModel){
+			function render(viewModel, err){
                 if(settings.identifier !== getHash()){ // prevent mis-rendering when the user navigated away.
+                    return;
+                }
+                if(err === true){
+                    activate();
                     return;
                 }
 				activateTemplate(template, settings, viewModel, soft); // set-up.
@@ -208,7 +212,7 @@
                 bindBack(template);
 				template.afterActivate(settings.data || {}, viewModel);
 			}
-			
+
 			template.prepare(render, settings.data || {});
         }
 
@@ -269,7 +273,7 @@
                 key = settings.key;
             }
 
-            $.each(template.aliases, function(){
+            $.each(template.aliases || [], function(){
                 if(this.key === key){
                     alias = this;
                     return false;

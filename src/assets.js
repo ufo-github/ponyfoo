@@ -22,7 +22,7 @@ var config = require('./config.js'),
             { profile: 'author', local: '/css/views/author/review.less' }
         ],
         js: [
-            assetify.jQuery('1.8.3', '/js/jquery-1.8.3.min.js'),
+            assetify.jQuery('1.8.3', '/js/jquery-1.8.3.min.js', undefined, config.env.development),
             '/js/libs/moment.min.js',
             '/js/libs/mustache.js',
             '/js/libs/jquery.textarearesizer.min.js',

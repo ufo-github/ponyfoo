@@ -18,7 +18,7 @@
                 render({
                     entries: it.entries || [it.entry],
                     latest: latest || it.entries
-                });
+                }, it.entry === null);
             }
         });
     }
