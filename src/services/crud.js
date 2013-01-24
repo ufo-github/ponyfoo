@@ -34,10 +34,19 @@ function crud(model){
         model.remove(query, callback);
     }
 
+    var http = {
+        remove: function(req,res){
+            remove({ _id: req.params.id }, {
+                res: res
+            });
+        }
+    };
+
     return {
         create: create,
         update: update,
-        remove: remove
+        remove: remove,
+        http: http
     }
 }
 

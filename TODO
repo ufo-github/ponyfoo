@@ -9,6 +9,7 @@ TODO:
 
 2
 -------
+- generalize api GET, PUT and updates.
 - client-side caching?
 - serve different views to google crawl bot
 

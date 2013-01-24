@@ -99,9 +99,5 @@ module.exports = {
         });
 	},
 
-	del: function(req,res){
-        crud.remove({ _id: req.params.id }, {
-            res: res
-        });
-	}
+	del: crud.http.remove
 };
