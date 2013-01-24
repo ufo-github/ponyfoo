@@ -12,7 +12,7 @@ function authRoutes(server){
 }
 
 function routing(server){
-    apiRoutes(server);
+    apiRoutes.configure(server);
     authRoutes(server);
     server.get('/*', site.get);
 }

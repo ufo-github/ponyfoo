@@ -21,11 +21,11 @@ function end(res,value){
     res.end(encoded);
 }
 
-function error(res,code,err){
+function error(res,code,message,err){
     var json = {
         error: {
             code: code,
-            message: 'internal server error'
+            message: message || 'internal server error'
         }
     };
 
@@ -38,7 +38,7 @@ function error(res,code,err){
 function resHandler(err, opts){
     var test = !!err;
     if (test){
-        error(opts.res,500,err);
+        error(opts.res,500,undefined,err);
     }else{
         if(opts.writeHead !== false){
             head(opts.res,200);

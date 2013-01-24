@@ -1,66 +1,77 @@
-var rest = require('../../../services/rest.js'),
+var async = require('async'),
+    apiConf = require('../config.js'),
+    rest = require('../../../services/rest.js'),
     text = require('../../../services/text.js'),
     models = require('../../../models/all.js'),
     model = models.entry,
     crud = require('../../../services/crud.js')(model);
 
-function dateQuery(year,month,day){
-	return {
-        $gte: new Date(year, (month||1)-1, day||1),
-        $lt: new Date(year, (month||12)-1, day||31, 24)
-	};
-}
-
-function dateQueryRequest(req){
-    var date = dateQuery(req.params.year, req.params.month, req.params.day);
+function mapRequestToQuery(req){
+    var year = req.params.year,
+        month = req.params.month,
+        day = req.params.day;
 
     return {
-        date: date
+        date: {
+            $gte: new Date(year, (month||1)-1, day||1),
+            $lt: new Date(year, (month||12)-1, day||31, 24)
+        }
     };
 }
 
-function list(res, query){
-    var callback = function(err,documents){
+function wrapCallback(res, map){
+    return function (err,response){
         rest.resHandler(err, {
             res: res,
             then: function(){
-                rest.end(res,{
-                    entries: documents
-                });
+                rest.end(res,map ? map(response) : response);
             }
         });
     };
+}
 
-    model.find(query).sort('-date').exec(callback);
+function list(req, res, query){
+    var page = parseInt(req.params.page || 1),
+        lim = apiConf.paging.limit,
+        index = (page-1) * lim,
+        where = model.find(query);
+
+    async.parallel({
+        entries: function(done){
+            where.sort('-date').skip(index).limit(lim).exec(done);
+        },
+        paging: function(done){
+            where.count().exec(function(err,count){
+                done(err, {
+                    page: page,
+                    index: index,
+                    limit: lim,
+                    total: count,
+                    next: count > index + lim ? page + 1 : false
+                });
+            });
+        }
+    },wrapCallback(res));
 }
 
 function single(res, query){
-    var callback = function(err,document){
-        rest.resHandler(err, {
-            res: res,
-            then: function(){
-                rest.end(res,{
-                    entry: document
-                });
-            }
-        });
-    };
-
-    model.findOne(query).exec(callback);
+    model.findOne(query).exec(wrapCallback(res, function(result){
+        return { entry: result };
+    }));
 }
 
 module.exports = {
     get: function(req,res){
-		list(res, {});
+		list(req, res, {});
     },
 	
 	getByDate: function(req,res){
-		var query = dateQueryRequest(req);
-		list(res, query);
+		var query = mapRequestToQuery(req);
+		list(req, res, query);
 	},
 
 	getBySlug: function(req,res){
-        var query = dateQueryRequest(req);
+        var query = mapRequestToQuery(req);
         query.slug = req.params.slug;
 		single(res, query);
 	},
@@ -69,7 +80,7 @@ module.exports = {
         single(res, { _id: req.params.id });
 	},
 
-    put: function(req,res){
+    ins: function(req,res){
         crud.create(req.body.entry, {
             res: res,
             always: function(entry){

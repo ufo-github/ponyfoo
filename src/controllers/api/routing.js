@@ -1,63 +1,70 @@
 var rest = require('../../services/rest.js'),
+    $ = require('../../services/$.js'),
     entry = require('./1.0/entry.js');
 
-function apiRouting(server){
+function routing(server){
 	var base = '/api/1.0',
 		verbs = ['get','post','put','del','all'],
 		methods = {};
-	
-	function register(endpoint, cb, verb) {
-		server[verb](base + endpoint, cb);
-	}
-	
+
 	verbs.forEach(function(v){
-		methods[v] = function(endpoint, cb){
-			register(endpoint, cb, v);
+		methods[v] = function(){
+            var args = $.args(arguments);
+            args[0] = base + args[0]; // resources are always api endpoints.
+            server[v].apply(server, args);
 		};
 	});
 	
 	return methods;
 }
 
-function apiAuthentication(req,res,next){
+function author(req,res,next){
     var connected = !!req.user,
         authorized = connected && req.user.author === true;
     if (authorized !== true){
-        apiUnauthorized(req,res,connected?403:401);
+        unauthorized(req,res,connected?403:401);
     }else{
         next();
     }
 }
 
-function apiUnauthorized(req, res, code){
+function unauthorized(req, res, code){
     rest.error(res,code,'api endpoint unauthorized');
 }
 
-function apiNotFound(req, res){
+function notFound(req, res){
     rest.error(res,404,'api endpoint not found');
 }
 
-module.exports = function (server){
-    var api = apiRouting(server),
+function paged(api, path, cb){
+    var paging = '/p/:page([2-9]|[1-9][0-9]+)';
+
+    api.get(path, cb);
+    api.get(path + paging, cb);
+}
+
+function configure(server){
+    var api = routing(server),
         routeYear = '/entry/:year([0-9]{4})',
         routeMonth = routeYear + '/:month(0[1-9]|1[0-2])',
         routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
         routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
 
-    api.post('/*', apiAuthentication);
-    api.put('/*', apiAuthentication);
-    api.del('/*', apiAuthentication);
+    paged(api, '/entry', entry.get);
+    paged(api, routeYear, entry.getByDate);
+    paged(api, routeMonth, entry.getByDate);
+    paged(api, routeDay, entry.getByDate);
 
-    api.get('/entry', entry.get);
-    api.get(routeYear, entry.getByDate);
-    api.get(routeMonth, entry.getByDate);
-    api.get(routeDay, entry.getByDate);
     api.get(routeSlug, entry.getBySlug);
-
     api.get('/entry/:id([0-9a-f]+)', entry.getById);
-    api.put('/entry', entry.put);
-    api.put('/entry/:id([0-9a-f]+)', entry.upd);
-    api.del('/entry/:id([0-9a-f]+)', entry.del);
 
-    api.all('/*', apiNotFound);
+    api.put('/entry', author, entry.ins);
+    api.put('/entry/:id([0-9a-f]+)', author, entry.upd);
+    api.del('/entry/:id([0-9a-f]+)', author, entry.del);
+
+    api.all('/*', notFound);
+}
+
+module.exports = {
+    configure: configure
 };
