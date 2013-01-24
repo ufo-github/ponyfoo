@@ -2,7 +2,7 @@ TODO:
 
 1
 -------
-- paging
+- paging: text, then when comes into visibility or clicked: flip (vertically) into uls, then slide down new post list.
 - post regarding the css flip (And the temporary highlight)
 - authentication failure message flash
 - comments by hand
