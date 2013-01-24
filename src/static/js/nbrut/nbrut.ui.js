@@ -10,16 +10,6 @@
                 buttonText.text(originalText);
             }
 
-            function restoreWithOptionalTimeout(timeout){
-                if(!!timeout){
-                    setTimeout(function(){ // graceful animation.
-                        restore();
-                    }, timeout);
-                }else{
-                    restore();
-                }
-            }
-
             function disable(){
                 button.prop('disabled', true);
                 buttonText.text(disabledText);
@@ -27,7 +17,7 @@
 
             button.on('click', function(){
                 disable();
-                action(restoreWithOptionalTimeout);
+                action(restore);
             });
             restore();
         }
@@ -38,8 +28,8 @@
     }();
 
     moment.defaultFormat = 'YYYY/MM/DD';
-    moment.fullFormat = 'YYYY/MM/DD HH:mm:ss';
-    moment.dayFormat = 'DD, MMMM YYYY';
+    moment.fullFormat = 'MMMM Do, YYYY [at] HH:mm:ss a';
+    moment.dayFormat = 'MMMM Do, YYYY';
     moment.monthFormat = 'MMMM YYYY';
     moment.yearFormat = 'YYYY';
     nbrut.ui = ui;

@@ -1,4 +1,4 @@
-!function (window,$,nbrut) {
+!function (window,$,nbrut,moment) {
     function entryHook(data){
         $.each(data.entries || [data.entry], function(){
             var self = this,
@@ -6,6 +6,7 @@
 
             self.date = new Date(self.date);
             self.dateText = moment(self.date).format();
+            self.published = moment(self.date).format(moment.dayFormat);
 
             self.updated = new Date(self.updated);
             self.updatedText = moment(self.updated).format(moment.fullFormat);
@@ -24,4 +25,4 @@
     nbrut.thin.hook('entry', {
         ajaxGet: entryHook
     });
-}(window,jQuery,nbrut);
+}(window,jQuery,nbrut,moment);
