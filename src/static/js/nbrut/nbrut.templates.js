@@ -146,7 +146,7 @@
 
         function equalSettings(x){
             var c = activity.current.settings,
-                sameKey = c.key === x.key; // same alias
+                sameKey = c.key === x.key; // same route alias
             if(!sameKey){
                 return false;
             }
