@@ -24,17 +24,16 @@
         });
     }
 	
-	function afterActivate(settings,viewModel){
+	function afterActivate(viewModel){
 		var container = $('.blog-entries');
-
-		nbrut.md.prettify(container);
 
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', { title: viewModel.title });
-            container.append(empty.html);
+            empty.appendTo(container);
         }
 
-        console.log(empty);
+        nbrut.md.prettify(container);
+
         sidebar();
 	}
 

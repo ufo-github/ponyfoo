@@ -207,10 +207,7 @@
                     activate();
                     return;
                 }
-				activateTemplate(template, settings, viewModel, soft); // set-up.
-                fixLocalRoutes(template.container);
-                bindBack(template);
-				template.afterActivate(settings.data || {}, viewModel);
+				activateTemplate(template, settings, viewModel || {}, soft); // set-up.
 			}
 
 			template.prepare(render, settings.data || {});
@@ -229,10 +226,6 @@
                 throw new Error('template container not unique.');
             }
 
-            var view = partial(template.key, viewModel);
-
-            c.html(view.html);
-            c.addClass(view.css);
             active[template.container] = template;
 
             if (template.container === defaults.container){
@@ -259,13 +252,17 @@
 					settings: settings
 				};
             }
+
+            var view = partial(template.key, viewModel);
+            view.appendTo(c);
         }
 
-        function partial(key, viewModel){
+        function partial(key, viewModel, data){
             var template = templates[key];
             if (template === undefined){
                 template = templates['404']; // fall back to 404.
             }
+
             var html;
 
             if(template.mustache){
@@ -276,7 +273,13 @@
 
             return {
                 html: html,
-                css: template.dom.css
+                css: template.dom.css,
+                appendTo: function(container){
+                    container.addClass(template.dom.css).html(html);
+                    fixLocalRoutes(container);
+                    bindBack(template);
+                    template.afterActivate(viewModel, data || {});
+                }
             };
         }
 
@@ -338,7 +341,7 @@
         }
 
         function fixLocalRoutes(container){
-            $(container).find('a').each(function(){
+            container.find('a').each(function(){
                var self = $(this),
                    url = self.attr('href'),
                    route = getRoute(url);
