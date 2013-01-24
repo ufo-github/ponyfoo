@@ -5,13 +5,6 @@
         title: { value: 'Not Found' }
     });
 
-    nbrut.tt.register({
-        key: 'loader',
-        source: '#loader-template'
-    });
-
-    var homeTitle = { value: nbrut.site.title, literal: true };
-
     function getEntryRoute(regex){
         return {
             regex: regex,
@@ -29,7 +22,7 @@
         source: '#blog-entries-template',
         mustache: true,
         aliases: [{
-            title: homeTitle,
+            title: { value: nbrut.site.title, literal: true },
             route: '/',
             trigger: '#home'
         },{
@@ -66,5 +59,11 @@
             },
             route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([a-z0-9\-]+)$/i)
         }]
+    });
+
+    nbrut.tt.register({
+        key: 'empty-entry',
+        source: '#empty-entry-template',
+        mustache: true
     });
 }(window,nbrut,moment);

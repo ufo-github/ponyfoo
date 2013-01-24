@@ -17,21 +17,33 @@
             then: function(it){
                 render({
                     entries: it.entries || [it.entry],
+                    paging: it.paging,
                     latest: latest || it.entries
                 }, it.entry === null);
             }
         });
     }
 	
-	function afterActivate(){
-		var container = $('.blog-entries'),
-            flipper = $('.sidebar-flipper'),
+	function afterActivate(settings,viewModel){
+		var container = $('.blog-entries');
+
+		nbrut.md.prettify(container);
+
+        if(viewModel.entries.length === 0){
+            var empty = nbrut.tt.partial('empty-entry', { title: viewModel.title });
+            container.append(empty.html);
+        }
+
+        console.log(empty);
+        sidebar();
+	}
+
+    function sidebar(){
+        var flipper = $('.sidebar-flipper'),
             card = $('.blog-sidebar .flip-card'),
             highlight = 'box-highlight',
             highlightSidebar = 'sidebar-flip-highlight',
             highlighted = nbrut.local.get(highlightSidebar, true);
-
-		nbrut.md.prettify(container);
 
         if(highlighted === true){ // only when the user doesn't know about it.
             flipper.addClass(highlight);
@@ -41,8 +53,8 @@
             card.toggleClass('flipped');
             flipper.removeClass(highlight);
             nbrut.local.set(highlightSidebar, false);
-        })
-	}
+        });
+    }
 	
     nbrut.tt.configure({
         key: 'home',

@@ -229,16 +229,10 @@
                 throw new Error('template container not unique.');
             }
 
-            var view;
+            var view = partial(template.key, viewModel);
 
-            if(template.mustache){
-                view = template.dom.view(viewModel);
-            } else {
-                view = template.dom.html;
-            }
-
-            c.html(view);
-            c.addClass(template.dom.css);
+            c.html(view.html);
+            c.addClass(view.css);
             active[template.container] = template;
 
             if (template.container === defaults.container){
@@ -267,6 +261,25 @@
             }
         }
 
+        function partial(key, viewModel){
+            var template = templates[key];
+            if (template === undefined){
+                template = templates['404']; // fall back to 404.
+            }
+            var html;
+
+            if(template.mustache){
+                html = template.dom.view(viewModel);
+            } else {
+                html = template.dom.html;
+            }
+
+            return {
+                html: html,
+                css: template.dom.css
+            };
+        }
+
         function getTemplateAlias(template, settings){
             var key,
                 alias;
@@ -290,6 +303,7 @@
                 title = opts.literal ? text : titleSettings.format.format(text);
 
             titleSettings.tag.text(title);
+            viewModel.title = text;
             return title;
         }
 
@@ -373,7 +387,7 @@
             configure: configure,
             activate: activate,
             deactivate: deactivateContainer,
-            a: activity
+            partial: partial
         };
     }();
 
