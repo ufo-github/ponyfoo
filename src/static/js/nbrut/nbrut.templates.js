@@ -22,7 +22,8 @@
             titleSettings = {
                 tag: $('title'),
                 format: '{0} - ' + nbrut.site.title
-            };
+            },
+            loading = '';
 
         function register(settings) {
             var template = {};
@@ -189,8 +190,7 @@
 
         function deactivateContainer(container) {
             if(container in active){
-                //$(container).removeClass().off().empty();
-                $(container).removeClass().off().html('<ul class="spinner"><li></li><li></li><li></li><li></li></ul>');
+                $(container).removeClass().off().html(loading);
                 active.splice(active.indexOf(container), 1);
             }
         }
@@ -325,6 +325,8 @@
 		}
 		
         function init(){
+            loading = $(defaults.container).html();
+
             $(function(){
                 $(window).on('popstate', popState);
 
