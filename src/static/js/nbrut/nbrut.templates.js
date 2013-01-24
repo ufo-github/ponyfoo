@@ -140,6 +140,34 @@
             return source;
         }
 
+        function getHash(){
+            return activity.history.length + (activity.current === undefined ? 0 : 1);
+        }
+
+        function equalSettings(x){
+            var c = activity.current.settings,
+                sameKey = c.key === x.key; // same alias
+            if(!sameKey){
+                return false;
+            }
+            if(c.data === null && x.data === null){ // both null
+                return true;
+            }
+            if(c.data === null || x.data === null){ // one null
+                return false;
+            }
+            return equalRouteData(c.data, x.data);
+        }
+
+        function equalRouteData(c, x){
+            for(var key in c){
+                if(c[key] !== x[key]){
+                    return false;
+                }
+            }
+            return true;
+        }
+
         function activate(key, settings, soft) { // soft: don't push history state.
             var template = templates[key];
             if (template === undefined) {
@@ -153,7 +181,7 @@
             if(template.container in active) {
                 if(active[template.container] === template) { // already active template
                     if (activity.current !== undefined){ // template engine initialized
-                        if(activity.current.settings.key === settings.key){ // same alias
+                        if(equalSettings(settings)){ // compare template settings
                             if(!template.selfCleanup){
                                 return;
                             }
@@ -182,10 +210,6 @@
 			}
 			
 			template.prepare(render, settings.data || {});
-        }
-
-        function getHash(){
-            return activity.history.length + (activity.current === undefined ? 0 : 1);
         }
 
         function deactivateContainer(container) {

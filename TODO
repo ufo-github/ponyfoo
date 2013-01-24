@@ -2,6 +2,7 @@ TODO:
 
 1
 -------
+- bug: when post redirects to another post, url doesn't update
 - post regarding the css flip (And the temporary highlight)
 - paging
 - authentication failure message flash
@@ -16,4 +17,10 @@ TODO:
 3
 -------
 - api authentication?
-- loading something before rendering something should cancel pending ajax requests from thin.
+
+
+4
+-------
+- loading something before rendering something else
+  should cancel pending ajax requests from nbrut.thin.
+  (just for consistency's sake)
