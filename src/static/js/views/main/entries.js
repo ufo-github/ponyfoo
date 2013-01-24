@@ -27,7 +27,7 @@
 		var container = $('.blog-entries'),
             flipper = $('.sidebar-flipper'),
             card = $('.blog-sidebar .flip-card'),
-            highlight = 'highlight',
+            highlight = 'box-highlight',
             highlightSidebar = 'sidebar-flip-highlight',
             highlighted = nbrut.local.get(highlightSidebar, true);
 

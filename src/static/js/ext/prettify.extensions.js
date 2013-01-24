@@ -37,7 +37,7 @@
                items = self.find('ol.linenums li');
 
                $.each(highlights.lines, function(){
-                   items.eq(this).addClass('highlight');
+                   items.eq(this).addClass('highlight-line');
                });
 
                self.data('highlights', { applied: true });
