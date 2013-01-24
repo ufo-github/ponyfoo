@@ -1,5 +1,8 @@
 @import "../../defaults/common.less";
 
+/* ENTRY ARTICLES
+ ************/
+
 .blog-entry-title {
   font-size: 2em;
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
@@ -103,6 +106,11 @@
   font-weight: bold;
 }
 
+
+
+/* ENTRY LIST
+ **************/
+
 /* reset default #content styles to change how entries are visually separated */
 #content.blog-entries-wrapper {
   padding: 0;
@@ -119,7 +127,7 @@
   vertical-align: top;
 }
 
-.blog-entries .blog-entry {
+.blog-entry(){
   margin-top: 45px;
   padding: 25px;
   background-color: @moderate;
@@ -127,10 +135,19 @@
   .box-radius(4px);
 }
 
+.blog-entries .blog-entry {
+  .blog-entry();
+}
+
 .blog-entries .blog-entry:first-child {
   padding: 25px;
   margin-top: 0;
 }
+
+
+
+/* SIDEBAR
+ ************/
 
 .blog-sidebar {
   margin-left: 30px;
@@ -177,4 +194,18 @@
 
 #about-author .social-links a {
   margin-right: 6px;
+}
+
+
+
+/* PAGER
+ ***********/
+
+.blog-pager {
+  .blog-entry();
+}
+
+.blog-pager .spinner {
+  margin: 0 auto;
+  width: 100%;
 }

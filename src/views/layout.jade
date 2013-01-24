@@ -26,12 +26,11 @@ html(lang='en')
 
     include shared/ribbon
     include shared/404
-    include shared/loader
 
     include main/entries
     include main/empty
+    include main/pager
 
     block templates
 
-    footer
-      !=assetify.js.emit(profile)
+    !=assetify.js.emit(profile)

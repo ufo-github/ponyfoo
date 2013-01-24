@@ -254,7 +254,7 @@
             }
 
             var view = partial(template.key, viewModel);
-            view.appendTo(c);
+            view.fill(c, settings.data || {});
         }
 
         function partial(key, viewModel, data){
@@ -274,11 +274,16 @@
             return {
                 html: html,
                 css: template.dom.css,
-                appendTo: function(container){
+                fill: function(container, data){
                     container.addClass(template.dom.css).html(html);
                     fixLocalRoutes(container);
                     bindBack(template);
                     template.afterActivate(viewModel, data || {});
+                },
+                appendTo: function(container, data){ /* NOTE: the data-class will be lost, same for event bindings. */
+                    var temp = $('<div/>');
+                    this.fill(temp, data);
+                    temp.children().appendTo(container);
                 }
             };
         }

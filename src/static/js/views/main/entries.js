@@ -24,12 +24,21 @@
         });
     }
 	
-	function afterActivate(viewModel){
+	function afterActivate(viewModel, data){
 		var container = $('.blog-entries');
 
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', { title: viewModel.title });
-            empty.appendTo(container);
+            empty.fill(container);
+        }
+
+        if(viewModel.paging.next !== false){
+            var query = data.query ? data.query + '/' : '',
+                page = '{0}p/{1}'.format(query, viewModel.paging.next),
+                wrapper = $('.blog-entries-wrapper'),
+                pager = nbrut.tt.partial('entry-pager', { next: page });
+
+            pager.appendTo(wrapper);
         }
 
         nbrut.md.prettify(container);

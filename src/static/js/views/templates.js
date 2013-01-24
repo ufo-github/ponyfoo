@@ -66,4 +66,10 @@
         source: '#empty-entry-template',
         mustache: true
     });
+
+    nbrut.tt.register({
+        key: 'entry-pager',
+        source: '#entry-pager-template',
+        mustache: true
+    });
 }(window,nbrut,moment);
