@@ -189,7 +189,8 @@
 
         function deactivateContainer(container) {
             if(container in active){
-                $(container).removeClass().empty().off();
+                //$(container).removeClass().off().empty();
+                $(container).removeClass().off().html('<ul class="spinner"><li></li><li></li><li></li><li></li></ul>');
                 active.splice(active.indexOf(container), 1);
             }
         }

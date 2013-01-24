@@ -4,11 +4,11 @@ TODO:
 -------
 - post regarding the css flip (And the temporary highlight)
 - paging
+- authentication failure message flash
 - comments by hand
 
 2
 -------
-- loading something new should abort existing loads
 - loading baubles when loading something other than the landing page
 - client-side caching?
 - google crawler serve different views?
@@ -17,4 +17,4 @@ TODO:
 3
 -------
 - api authentication?
-- authentication failure message flash
+- loading something before rendering something should cancel pending ajax requests from thin.
