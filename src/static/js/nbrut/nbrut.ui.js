@@ -39,5 +39,8 @@
 
     moment.defaultFormat = 'YYYY/MM/DD';
     moment.fullFormat = 'YYYY/MM/DD HH:mm:ss';
+    moment.dayFormat = 'DD, MMMM YYYY';
+    moment.monthFormat = 'MMMM YYYY';
+    moment.yearFormat = 'YYYY';
     nbrut.ui = ui;
 }(window, jQuery, nbrut, moment);

@@ -26,20 +26,21 @@
 	function afterActivate(){
 		var container = $('.blog-entries'),
             flipper = $('.sidebar-flipper'),
+            card = $('.blog-sidebar .flip-card'),
             highlight = 'highlight',
             highlightSidebar = 'sidebar-flip-highlight',
-            enabled = nbrut.local.get(highlightSidebar, true);
+            highlighted = nbrut.local.get(highlightSidebar, true);
 
 		nbrut.md.prettify(container);
 
-        if(enabled === true){ // only when the user doesn't know about it.
+        if(highlighted === true){ // only when the user doesn't know about it.
             flipper.addClass(highlight);
         }
 
         flipper.on('click.flip', function(){
+            card.toggleClass('flipped');
             flipper.removeClass(highlight);
             nbrut.local.set(highlightSidebar, false);
-            $('.blog-sidebar .flip-card').toggleClass('flipped');
         })
 	}
 	

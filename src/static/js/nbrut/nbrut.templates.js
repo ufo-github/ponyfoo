@@ -206,7 +206,7 @@
             if (template.container === defaults.container){
                 var alias = getTemplateAlias(template, settings);
                 if (alias !== undefined){
-                    var title = setTitle(alias.title, viewModel),
+                    var title = setTitle(alias.title, viewModel, settings.data),
                         url = alias.route.get(settings.data);
 
                     if(!soft){
@@ -245,9 +245,9 @@
             return alias;
         }
 
-        function setTitle(settings, viewModel){
-            var text = settings.value || settings.dynamic(viewModel),
-                title = settings.literal ? text : titleSettings.format.format(text);
+        function setTitle(opts, viewModel, data){
+            var text = opts.value || opts.dynamic(viewModel, data),
+                title = opts.literal ? text : titleSettings.format.format(text);
 
             titleSettings.tag.text(title);
             return title;
