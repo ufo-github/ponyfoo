@@ -23,7 +23,8 @@
                 tag: $('title'),
                 format: '{0} - ' + nbrut.site.title
             },
-            loading = '';
+            loading = '',
+            plugins = [];
 
         function register(settings) {
             var template = {};
@@ -189,7 +190,7 @@
                         }
                     }
                 }
-                deactivateContainer(template.container); // clean-up.
+                deactivateContainer(template); // clean-up.
             }
 			
             if(!template.initialized){
@@ -213,10 +214,11 @@
 			template.prepare(render, settings.data || {});
         }
 
-        function deactivateContainer(container) {
-            if(container in active){
-                $(container).removeClass().off().html(loading);
-                active.splice(active.indexOf(container), 1);
+        function deactivateContainer(template) {
+            if(template.container in active){
+                raise('deactivate', template);
+                $(template.container).removeClass().off().html(loading);
+                active.splice(active.indexOf(template.container), 1);
             }
         }
 
@@ -389,13 +391,29 @@
             });
         }
 
+        function raise(eventName){
+            var args = $.makeArray(arguments).splice(1);
+            $.each(plugins[eventName] || [],function(){
+                this.apply(null, args);
+            });
+        }
+
+        function hook(eventName, plugin){
+            if (plugins[eventName] === undefined){
+                plugins[eventName] = [];
+            }
+            plugins[eventName].push(plugin);
+        }
+
         return {
+            defaults: defaults,
             init: init,
             register: register,
             configure: configure,
             activate: activate,
             deactivate: deactivateContainer,
-            partial: partial
+            partial: partial,
+            hook: hook
         };
     }();
 

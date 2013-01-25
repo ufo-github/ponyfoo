@@ -1,4 +1,4 @@
-!function (window,$,nbrut) {
+!function (window,$,nbrut,undefined) {
 	function prepare(render, data){
         if (data.query === undefined){
             complete(render, data);
@@ -32,7 +32,7 @@
             empty.fill(container);
         }
 
-        if(viewModel.paging.next !== false){
+        if(viewModel.paging !== undefined && viewModel.paging.next !== false){
             var query = data.query ? data.query + '/' : '',
                 page = '{0}p/{1}'.format(query, viewModel.paging.next),
                 wrapper = $('.blog-entries-wrapper'),
