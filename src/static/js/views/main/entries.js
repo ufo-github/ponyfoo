@@ -30,16 +30,25 @@
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
+        }else{
+            addPager(viewModel, data.query || '');
         }
 
         nbrut.md.prettify(container);
 
-        addPager(viewModel, data.query || '');
         addSidebar();
 	}
 
+    function addExhausted(){
+        var container = $('.blog-entries'),
+            exhausted = nbrut.tt.partial('exhausted-entries');
+
+        exhausted.appendTo(container);
+    }
+
     function addPager(viewModel, query){
         if(viewModel.paging === undefined || viewModel.paging.next === false){
+            addExhausted();
             return;
         }
 

@@ -65,9 +65,13 @@
     });
 
     nbrut.tt.register({
+        key: 'exhausted-entries',
+        source: '#exhausted-entries-template'
+    });
+
+    nbrut.tt.register({
         key: 'entry-pager',
-        source: '#entry-pager-template',
-        mustache: true
+        source: '#entry-pager-template'
     });
 
     nbrut.tt.register({

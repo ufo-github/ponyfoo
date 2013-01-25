@@ -28,7 +28,7 @@
     }();
 
     moment.defaultFormat = 'YYYY/MM/DD';
-    moment.fullFormat = 'MMMM Do, YYYY [at] HH:mm:ss a';
+    moment.fullFormat = 'MMMM Do, YYYY [at] hh:mm a';
     moment.dayFormat = 'MMMM Do, YYYY';
     moment.monthFormat = 'MMMM YYYY';
     moment.yearFormat = 'YYYY';

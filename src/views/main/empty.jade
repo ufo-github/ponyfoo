@@ -1,5 +1,5 @@
 section#empty-entry-template.template
-  article.blog-entry.empty-blog-entry
+  article.blog-entry.blog-empty
     header.blog-entry-title
       h1='No posts'
 
@@ -8,8 +8,4 @@ section#empty-entry-template.template
         span='No posts found for '
         i='{{title}}'
 
-      p
-        span='Try one of the posts in the '
-        i='Latest'
-        span=' section, or go back to the '
-        a(href='/', title=config.site.title)='site home'
+      include _nav-options
