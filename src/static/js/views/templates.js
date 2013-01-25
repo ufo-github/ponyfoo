@@ -7,7 +7,7 @@
 
     function getEntryRoute(regex){
         return {
-            regex: regex,
+            regex: new RegExp(regex, 'i'),
             get: function(data){
                 return '/{0}'.format(data.query);
             },
@@ -16,6 +16,11 @@
             }
         }
     }
+
+    var year = '^\/([0-9]{4})\/',
+        month = year + '(0[1-9]|1[0-2])\/',
+        day = month + '(0[1-9]|[12][0-9]|3[01])\/',
+        slug = day + '([a-z0-9\-]+)';
 
     nbrut.tt.register({
         key: 'home',
@@ -33,7 +38,7 @@
                     return moment(year.toString()).format(moment.yearFormat);
                 }
             },
-            route: getEntryRoute(/^\/([0-9]{4})\/?$/i)
+            route: getEntryRoute(year + '?$')
         },{
             key: 'month',
             title: {
@@ -41,7 +46,7 @@
                     return moment(data.query).format(moment.monthFormat);
                 }
             },
-            route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/?$/i)
+            route: getEntryRoute(month + '?$')
         },{
             key: 'day',
             title: {
@@ -49,7 +54,7 @@
                     return moment(data.query).format(moment.dayFormat);
                 }
             },
-            route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/?$/i)
+            route: getEntryRoute(day + '?$')
         },{
             key: 'one',
             title: {
@@ -57,7 +62,7 @@
                     return viewModel.entries[0].title;
                 }
             },
-            route: getEntryRoute(/^\/([0-9]{4})\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/([a-z0-9\-]+)$/i)
+            route: getEntryRoute(slug + '$')
         }]
     });
 
