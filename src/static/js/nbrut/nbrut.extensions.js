@@ -26,7 +26,7 @@
     function doThisAndRemove(effect, then) {
         return this.each(function() {
             var self = $(this);
-            self[effect]("fast", function() {
+            self[effect]('fast', function() {
                 self.remove();
                 (then || $.noop)();
             });
