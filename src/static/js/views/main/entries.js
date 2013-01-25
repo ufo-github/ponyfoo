@@ -32,24 +32,55 @@
             empty.fill(container);
         }
 
-        if(viewModel.paging !== undefined && viewModel.paging.next !== false){
-            var query = data.query ? data.query + '/' : '',
-                page = '{0}p/{1}'.format(query, viewModel.paging.next),
-                wrapper = $('.blog-entries-wrapper'),
-                partial = nbrut.tt.partial('entry-pager', { next: page });
-
-            partial.appendTo(wrapper);
-
-            var pager = $('.blog-pager');
-            pager.on('click', function(){
-                pager.find('.flip-card').addClass('flipped');
-            })
-        }
-
         nbrut.md.prettify(container);
 
+        pager(viewModel, data);
         sidebar();
 	}
+
+    function pager(viewModel, data){
+        if(viewModel.paging === undefined || viewModel.paging.next === false){
+            return;
+        }
+
+        var query = data.query ? data.query + '/' : '',
+            page = '{0}p/{1}'.format(query, viewModel.paging.next),
+            wrapper = $('.blog-entries-wrapper'),
+            partial = nbrut.tt.partial('entry-pager', { next: page });
+
+        partial.appendTo(wrapper);
+
+        var win = $(window),
+            pager = $('.blog-pager'),
+            card = pager.find('.flip-card');
+
+        win.on('scroll.paging', function(){
+            var allowance = 80,
+                target = pager.position().top + pager.height() - allowance,
+                y = win.scrollTop() + win.height();
+
+            if (y > target){
+                more();
+            }
+        });
+
+        pager.on('click.paging', more);
+
+        function more(){
+            win.off('scroll.paging');
+            pager.off('click.paging');
+
+            if(!card.hasClass('flipped')){
+                card.addClass('flipped');
+
+                // TODO
+                // fetch/then:
+                // append posts
+                // remove pager
+                // add new pager where necessary
+            }
+        }
+    }
 
     function sidebar(){
         var flipper = $('.sidebar-flipper'),
