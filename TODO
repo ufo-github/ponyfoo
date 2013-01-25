@@ -9,6 +9,7 @@ TODO:
 
 2
 -------
+- prevent pager rebound effect
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - generalize api GET, PUT and updates.
 - client-side caching?
