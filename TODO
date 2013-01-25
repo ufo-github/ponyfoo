@@ -2,13 +2,14 @@ TODO:
 
 1
 -------
-- paging: scroll-enabled, slide down new post list.
-- post regarding the css flip (And the temporary highlight)
+- paging: slide down new post list.
+- post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 - authentication failure message flash
 - comments by hand
 
 2
 -------
+- try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - generalize api GET, PUT and updates.
 - client-side caching?
 - serve different views to google crawl bot
