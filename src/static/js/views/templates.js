@@ -2,7 +2,7 @@
     nbrut.tt.register({
         key: '404',
         source: '#not-found-template',
-        title: { value: 'Not Found' }
+        title: 'Not Found'
     });
 
     function getEntryRoute(regex){
@@ -27,40 +27,32 @@
         source: '#blog-entries-template',
         mustache: true,
         aliases: [{
-            title: { value: nbrut.site.title, literal: true },
+            title: { text: nbrut.site.title, literal: true },
             route: '/',
             trigger: '#home'
         },{
             key: 'year',
-            title: {
-                dynamic: function(viewModel, data){ // always exactly a single entry.
-                    var year = parseInt(data.query, 10) + 1; // raw years are zero-based in momentjs
-                    return moment(year.toString()).format(moment.yearFormat);
-                }
+            title: function(viewModel, data){ // always exactly a single entry.
+                var year = parseInt(data.query, 10) + 1; // raw years are zero-based in momentjs
+                return moment(year.toString()).format(moment.yearFormat);
             },
             route: getEntryRoute(year + '?$')
         },{
             key: 'month',
-            title: {
-                dynamic: function(viewModel, data){ // always exactly a single entry.
-                    return moment(data.query).format(moment.monthFormat);
-                }
+            title: function(viewModel, data){ // always exactly a single entry.
+                return moment(data.query).format(moment.monthFormat);
             },
             route: getEntryRoute(month + '?$')
         },{
             key: 'day',
-            title: {
-                dynamic: function(viewModel, data){ // always exactly a single entry.
-                    return moment(data.query).format(moment.dayFormat);
-                }
+            title: function(viewModel, data){ // always exactly a single entry.
+                return moment(data.query).format(moment.dayFormat);
             },
             route: getEntryRoute(day + '?$')
         },{
             key: 'one',
-            title: {
-                dynamic: function(viewModel){ // always exactly a single entry.
-                    return viewModel.entries[0].title;
-                }
+            title: function(viewModel){ // always exactly a single entry.
+                return viewModel.entries[0].title;
             },
             route: getEntryRoute(slug + '$')
         }]

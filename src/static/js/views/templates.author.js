@@ -5,12 +5,12 @@
         mustache: true,
 		back: '#cancel-entry',
         aliases: [{
-            title: { value: 'Entry Writer' },
+            title: 'Entry Writer',
             route: '/author/entry',
             trigger: '#write-entry'
         }, {
             key: 'edit',
-            title: { value: 'Entry Editor' },
+            title: 'Entry Editor',
             route: {
                 regex: /^\/author\/entry\/([0-9a-f]+)$/i,
                 get: function(data){
@@ -28,7 +28,7 @@
         source: '#entry-review-template',
         mustache: true,
         aliases: [{
-            title: { value: 'Review' },
+            title: 'Review',
             route: '/author/entry/review',
             trigger: '#review-entries'
         }]

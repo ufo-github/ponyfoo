@@ -28,7 +28,7 @@
 		var container = $('.blog-entries');
 
         if(viewModel.entries.length === 0){
-            var empty = nbrut.tt.partial('empty-entry', { title: viewModel.title });
+            var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
         }
 

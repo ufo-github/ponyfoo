@@ -309,8 +309,18 @@
         }
 
         function setTitle(opts, viewModel, data){
-            var text = opts.value || opts.dynamic(viewModel, data),
-                title = opts.literal ? text : titleSettings.format.format(text);
+            if(typeof opts === 'string'){
+                opts = {
+                    value: opts
+                };
+            }else if($.isFunction(opts)){
+                opts = {
+                    dynamic: opts
+                }
+            }
+
+            var text = opts.text || opts.dynamic(viewModel, data),
+                title = opts.literal === true ? text : titleSettings.format.format(text);
 
             titleSettings.tag.text(title);
             viewModel.title = text;

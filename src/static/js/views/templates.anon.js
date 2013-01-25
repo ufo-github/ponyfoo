@@ -3,7 +3,7 @@
         key: 'user-register',
         source: '#user-register-template',
         aliases: [{
-            title: { value: 'Register' },
+            title: 'Register',
             route: '/user/register'
         }]
     });
@@ -12,7 +12,7 @@
         key: 'user-login',
         source: '#user-login-template',
         aliases: [{
-            title: { value: 'Login' },
+            title: 'Login',
             route: '/user/login'
         }]
     });
