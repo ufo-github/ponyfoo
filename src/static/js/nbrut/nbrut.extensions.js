@@ -22,13 +22,22 @@
             }
         });
     };
-	
-	$.fn.fadeOutAndRemove = function() {
-		return this.each(function() {
-			var self = $(this);
-			self.fadeOut("fast", function() {
-				self.remove();
-			});
-		});
+
+    function doThisAndRemove(effect, then) {
+        return this.each(function() {
+            var self = $(this);
+            self[effect]("fast", function() {
+                self.remove();
+                (then || $.noop)();
+            });
+        });
+    }
+
+	$.fn.fadeOutAndRemove = function(then) {
+        doThisAndRemove.apply(this, ['fadeOut',then]);
 	};
+
+    $.fn.slideUpAndRemove = function(then) {
+        doThisAndRemove.apply(this, ['slideUp',then]);
+    };
 }(jQuery);

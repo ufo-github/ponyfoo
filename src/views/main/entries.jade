@@ -1,14 +1,5 @@
 section#blog-entries-template.template(data-class='blog-entries-wrapper')
   section.blog-entries
-    // {{#entries}}
-    article.blog-entry
-      header.blog-entry-title
-        h1
-          a(href='{{url}}')='{{title}}'
-        span.blog-entry-date(title='last updated {{updatedText}}')='updated {{updatedTimeAgo}}'
+    include _list
 
-      section.blog-entry-brief='{{{html.brief}}}'
-      section.blog-entry-text='{{{html.text}}}'
-    // {{/entries}}
-
-  include sidebar
+  include _sidebar

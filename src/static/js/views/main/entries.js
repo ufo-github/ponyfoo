@@ -34,25 +34,26 @@
 
         nbrut.md.prettify(container);
 
-        pager(viewModel, data);
-        sidebar();
+        addPager(viewModel, data.query || '');
+        addSidebar();
 	}
 
-    function pager(viewModel, data){
+    function addPager(viewModel, query){
         if(viewModel.paging === undefined || viewModel.paging.next === false){
             return;
         }
 
-        var query = data.query ? data.query + '/' : '',
-            page = '{0}p/{1}'.format(query, viewModel.paging.next),
+        var page = '{0}p/{1}'.format(query.length === 0 ? '' : '/', viewModel.paging.next),
             wrapper = $('.blog-entries-wrapper'),
-            partial = nbrut.tt.partial('entry-pager', { next: page });
+            paging = nbrut.tt.partial('entry-pager'),
+            win = $(window),
+            pager = paging.appendTo(wrapper);
 
-        partial.appendTo(wrapper);
-
-        var win = $(window),
-            pager = $('.blog-pager'),
-            card = pager.find('.flip-card');
+        function more(){
+            win.off('scroll.paging');
+            pager.off('click.paging');
+            pagingEvent(pager, query, page);
+        }
 
         win.on('scroll.paging', function(){
             var allowance = 80,
@@ -65,24 +66,29 @@
         });
 
         pager.on('click.paging', more);
+    }
 
-        function more(){
-            win.off('scroll.paging');
-            pager.off('click.paging');
+    function pagingEvent(pager,query,page){
+        var card = pager.find('.flip-card');
+        if(!card.hasClass('flipped')){
+            card.addClass('flipped');
 
-            if(!card.hasClass('flipped')){
-                card.addClass('flipped');
+            nbrut.thin.get('entry', {
+                id: query + page,
+                then: function(it){
+                    pager.slideUpAndRemove(function(){
+                        var container = $('.blog-entries'),
+                            articles = nbrut.tt.partial('more-entries', it);
 
-                // TODO
-                // fetch/then:
-                // append posts
-                // remove pager
-                // add new pager where necessary
-            }
+                        articles.appendTo(container);
+                        addPager(it, query);
+                    });
+                }
+            });
         }
     }
 
-    function sidebar(){
+    function addSidebar(){
         var flipper = $('.sidebar-flipper'),
             card = $('.blog-sidebar .flip-card'),
             highlight = 'box-highlight',

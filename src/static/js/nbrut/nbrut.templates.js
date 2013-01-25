@@ -285,7 +285,9 @@
                 appendTo: function(container, data){ /* NOTE: the data-class will be lost, same for event bindings. */
                     var temp = $('<div/>');
                     this.fill(temp, data);
-                    temp.children().appendTo(container);
+                    var elements = temp.children();
+                    elements.appendTo(container);
+                    return elements;
                 }
             };
         }

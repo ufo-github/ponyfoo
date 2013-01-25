@@ -1,6 +1,6 @@
 var config = {
     paging: {
-        limit: 8
+        limit: 6
     }
 };
 

@@ -1,0 +1,10 @@
+// {{#entries}}
+article.blog-entry
+  header.blog-entry-title
+    h1
+      a(href='{{url}}')='{{title}}'
+    span.blog-entry-date(title='last updated {{updatedText}}')='updated {{updatedTimeAgo}}'
+
+  section.blog-entry-brief='{{{html.brief}}}'
+  section.blog-entry-text='{{{html.text}}}'
+// {{/entries}}
