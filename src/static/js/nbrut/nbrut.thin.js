@@ -1,60 +1,66 @@
 !function (window, $, nbrut, undefined) {
-    var thin = function(){
-        var ver = '/api/1.0',
-            hooks = {};
+    var ver = '/api/1.0',
+        hooks = {},
+        pending = [];
 
-        function part(p){
-            if(!!p){
-                return '/{0}'.format(p);
-            }
-            return '';
+    function part(p){
+        if(!!p){
+            return '/{0}'.format(p);
         }
+        return '';
+    }
 
-        function get(what, opts){
-            var id = part(opts.id);
+    function get(what, opts){
+        var id = part(opts.id);
 
-            $.ajax({
-                url: '{0}/{1}{2}'.format(ver, what, id),
-                type: 'GET'
-            }).done(function(res){
-                (hooks[what].ajaxGet || $.noop)(res);
-                (opts.then || $.noop)(res);
-            });
-        }
+        fire('GET',what,id).done(function(res){
+            (hooks[what].ajaxGet || $.noop)(data);
+            (opts.then || $.noop)(data);
+        });
+    }
 
-        function put(what, opts){
-            var id = part(opts.id);
+    function put(what, opts){
+        var id = part(opts.id);
 
-            $.ajax({
-                url: '{0}/{1}{2}'.format(ver, what, id),
-                type: 'PUT',
-                data: opts.data
-            }).done(function(res){
-                (opts.then || $.noop)(res);
-            });
-        }
+        fire('PUT',what,id).done(function(data){
+            (opts.then || $.noop)(data);
+        });
+    }
 
-        function del(what, opts){
-            $.ajax({
-                url: '{0}/{1}/{2}'.format(ver, what, opts.id),
-                type: 'DELETE'
-            }).done(function(res){
-                // TODO: if res failed, dialog.
-                (opts.then || $.noop)(res);
-            });
-        }
+    function del(what, opts){
+        fire('DELETE',what,opts.id).done(function(data){
+            (opts.then || $.noop)(data);
+        });
+    }
 
-        function hook(what, opts){
-            hooks[what] = opts;
-        }
+    function fire(how,what,id){
+        var xhr = $.ajax({
+            url: '{0}/{1}{2}'.format(ver, what, id),
+            type: how
+        });
+        pending.push(xhr);
 
-        return {
-            get: get,
-            put: put,
-            del: del,
-            hook: hook
-        };
-    }();
+        return xhr.always(function(data,status,err){
+            var i = pending.indexOf(xhr);
+            pending.splice(i,1);
+        });
+    }
 
-    nbrut.thin = thin;
+    function hook(what, opts){
+        hooks[what] = opts;
+    }
+
+    function abort(){
+        $.each(pending, function(){
+            this.abort();
+        });
+    }
+
+    nbrut.thin = {
+        get: get,
+        put: put,
+        del: del,
+        hook: hook,
+        abort: abort
+    };
 }(window, jQuery, nbrut);

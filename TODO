@@ -17,10 +17,3 @@ TODO:
 3
 -------
 - proper api authentication?
-
-
-4
--------
-- loading something before rendering something else
-  should cancel pending ajax requests from nbrut.thin.
-  (just for consistency's sake)
