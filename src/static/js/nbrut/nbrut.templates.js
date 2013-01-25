@@ -311,7 +311,7 @@
         function setTitle(opts, viewModel, data){
             if(typeof opts === 'string'){
                 opts = {
-                    value: opts
+                    text: opts
                 };
             }else if($.isFunction(opts)){
                 opts = {
