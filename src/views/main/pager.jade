@@ -1,3 +1,7 @@
 section#entry-pager-template.template
-  footer.blog-pager(data-next='{{next}}')
-    include ../shared/spinner
+  footer.blog-pager.flip-wrapper(data-next='{{next}}')
+    article.flip-card.flip-x
+      section.face.front
+        p='Scroll to the bottom or click here to load more posts...'
+      section.face.back
+        include ../shared/spinner

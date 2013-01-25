@@ -206,10 +206,6 @@ a.remove:hover {
   .box-transition(all 0.4s linear);
 }
 
-.flip-card.flipped {
-  .box-rotate180();
-}
-
 .flip-card .face {
   position: absolute;
   width: 100%;
@@ -217,8 +213,17 @@ a.remove:hover {
 }
 
 .flip-card .face.back {
-  .box-rotate180();
   .box-sizing();
+}
+
+.flip-card.flipped,
+.flip-card .face.back{
+  .box-flip-y();
+}
+
+.flip-card.flip-x.flipped,
+.flip-card.flip-x .face.back{
+  .box-flip-x(-180deg);
 }
 
 

@@ -36,9 +36,14 @@
             var query = data.query ? data.query + '/' : '',
                 page = '{0}p/{1}'.format(query, viewModel.paging.next),
                 wrapper = $('.blog-entries-wrapper'),
-                pager = nbrut.tt.partial('entry-pager', { next: page });
+                partial = nbrut.tt.partial('entry-pager', { next: page });
 
-            pager.appendTo(wrapper);
+            partial.appendTo(wrapper);
+
+            var pager = $('.blog-pager');
+            pager.on('click', function(){
+                pager.find('.flip-card').addClass('flipped');
+            })
         }
 
         nbrut.md.prettify(container);
