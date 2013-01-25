@@ -30,7 +30,7 @@
         function put(what, opts){
             var id = part(opts.id);
 
-            fire('PUT',what,id).done(function(data){
+            fire('PUT',what,id,opts.data).done(function(data){
                 (opts.then || $.noop)(data);
             });
         }
@@ -41,10 +41,11 @@
             });
         }
 
-        function fire(how,what,id){
+        function fire(how,what,id,data){
             xhr = $.ajax({
                 url: '{0}/{1}{2}'.format(ver, what, id),
-                type: how
+                type: how,
+                data: data
             });
             local.push(xhr);
 
