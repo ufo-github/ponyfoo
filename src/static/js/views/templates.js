@@ -32,26 +32,26 @@
             trigger: '#home'
         },{
             key: 'year',
-            title: function(viewModel, data){ // always exactly a single entry.
+            title: function(viewModel, data){
                 var year = parseInt(data.query, 10) + 1; // raw years are zero-based in momentjs
                 return moment(year.toString()).format(moment.yearFormat);
             },
             route: getEntryRoute(year + '?$')
         },{
             key: 'month',
-            title: function(viewModel, data){ // always exactly a single entry.
+            title: function(viewModel, data){
                 return moment(data.query).format(moment.monthFormat);
             },
             route: getEntryRoute(month + '?$')
         },{
             key: 'day',
-            title: function(viewModel, data){ // always exactly a single entry.
+            title: function(viewModel, data){
                 return moment(data.query).format(moment.dayFormat);
             },
             route: getEntryRoute(day + '?$')
         },{
             key: 'one',
-            title: function(viewModel){ // always exactly a single entry.
+            title: function(viewModel){ // always exactly one single entry.
                 return viewModel.entries[0].title;
             },
             route: getEntryRoute(slug + '$')
