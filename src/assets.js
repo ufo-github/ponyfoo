@@ -1,6 +1,6 @@
 var config = require('./config.js'),
     base = __dirname + '/static',
-    assetify = require('node-assetify'),
+    assetify = require('assetify'),
     assets = {
         source: base,
         bin: base + '/bin',

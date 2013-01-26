@@ -8,6 +8,7 @@
   },
   "version": "0.0.1",
   "dependencies": {
+    "assetify": "0.1.0",
     "async": "0.1.22",
     "bcrypt": "0.7.3",
     "connect": "2.7.2",
@@ -15,7 +16,6 @@
     "express": "3.0.0",
     "jade": "0.27.6",
 	"mongoose": "3.5.3",
-    "node-assetify": "0.0.12",
 	"passport": "0.1.15",
 	"passport-local": "0.1.6",
     "walk": "2.2.1"
