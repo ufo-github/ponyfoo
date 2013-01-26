@@ -2,8 +2,7 @@ var async = require('async'),
     apiConf = require('../config.js'),
     rest = require('../../../services/rest.js'),
     text = require('../../../services/text.js'),
-    models = require('../../../models/all.js'),
-    model = models.entry,
+    model = require('../../../models/entry.js'),
     crud = require('../../../services/crud.js')(model);
 
 function mapRequestToQuery(req){

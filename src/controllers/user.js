@@ -1,7 +1,6 @@
 var passport = require('passport'),
     text = require('../services/text.js'),
-    models = require('../models/all.js'),
-    model = models.user,
+    model = require('../models/user.js'),
     crud = require('../services/crud.js')(model);
 
 module.exports = {

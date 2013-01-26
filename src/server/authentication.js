@@ -1,5 +1,5 @@
 var passport = require('passport'),
-    models = require('../models/all.js'),
+    user = require('../models/user.js'),
     LocalStrategy = require('passport-local').Strategy;
 
 function configure(done){
@@ -32,7 +32,7 @@ function configure(done){
     });
 
     passport.deserializeUser(function(id, done) {
-        models.user.findOne({ _id: id }, function (err, user) {
+        user.findOne({ _id: id }, function (err, user) {
             if(err){
                 return done(err);
             }

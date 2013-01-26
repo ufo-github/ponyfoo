@@ -78,20 +78,27 @@
     }
 
     function pagingEvent(pager,query,page){
-        var card = pager.find('.flip-card');
+        var start = new Date(),
+            minWait = 400,
+            card = pager.find('.flip-card');
+
         if(!card.hasClass('flipped')){
             card.addClass('flipped');
 
             nbrut.thin.get('entry', {
                 id: query + page,
                 then: function(it){
-                    pager.slideUpAndRemove(function(){
-                        var container = $('.blog-entries'),
-                            articles = nbrut.tt.partial('more-entries', it);
+                    var wait = new Date() - start;
 
-                        articles.appendTo(container);
-                        addPager(it, query);
-                    });
+                    setTimeout(function(){
+                        pager.slideUpAndRemove(function(){
+                            var container = $('.blog-entries'),
+                                articles = nbrut.tt.partial('more-entries', it);
+
+                            articles.appendTo(container);
+                            addPager(it, query);
+                        });
+                    }, Math.max(wait,minWait));
                 }
             });
         }

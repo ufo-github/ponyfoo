@@ -8,4 +8,4 @@ var mongoose = require('mongoose'),
 		updated: { type: Date, require: true, default: Date.now }
     });
 
-module.exports.model = mongoose.model('entry', schema);
+module.exports = mongoose.model('entry', schema);
