@@ -19,6 +19,7 @@
 	"mongoose": "3.5.3",
 	"passport": "0.1.15",
 	"passport-local": "0.1.6",
+    "rss": "0.0.4",
     "walk": "2.2.1"
   },
   "devDependencies": {
