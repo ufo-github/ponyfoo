@@ -10,7 +10,6 @@ TODO:
 
 2
 -------
-- opensearch
 - generalize api GET, PUT and updates.
 - client-side caching?
 - serve different views to google crawl bot
@@ -18,4 +17,5 @@ TODO:
 
 3
 -------
+- opensearch
 - proper api authentication?
