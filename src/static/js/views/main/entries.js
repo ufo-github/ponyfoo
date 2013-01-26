@@ -78,9 +78,7 @@
     }
 
     function pagingEvent(pager,query,page){
-        var start = new Date(),
-            minWait = 400,
-            card = pager.find('.flip-card');
+        var card = pager.find('.flip-card');
 
         if(!card.hasClass('flipped')){
             card.addClass('flipped');
@@ -88,17 +86,12 @@
             nbrut.thin.get('entry', {
                 id: query + page,
                 then: function(it){
-                    var wait = new Date() - start;
+                    var container = $('.blog-entries'),
+                        articles = nbrut.tt.partial('more-entries', it);
 
-                    setTimeout(function(){
-                        pager.slideUpAndRemove(function(){
-                            var container = $('.blog-entries'),
-                                articles = nbrut.tt.partial('more-entries', it);
-
-                            articles.appendTo(container);
-                            addPager(it, query);
-                        });
-                    }, Math.max(wait,minWait));
+                    articles.appendTo(container);
+                    pager.remove();
+                    addPager(it, query);
                 }
             });
         }

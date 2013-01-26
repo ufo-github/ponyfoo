@@ -9,6 +9,7 @@ function routing(server, done){
         modules.forEach(function(module){
             module.configure(server);
         });
+
         server.get('/*', site.get); // GET catch-all
 
         done();
