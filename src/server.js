@@ -22,15 +22,15 @@ function compileAssets(done){
     assetify.compile(assets, done);
 }
 
-function configureServer(){
+function configureServer(done){
     server.configure(function(){
-        configureStatics();
+        configureStatic();
 
         if (config.env.development){
             server.use(express.logger({ format: 'dev' }));
         }
 
-        configureBody();
+        configureMiddleware();
 
         if (config.env.development){
             server.use(express.errorHandler({
@@ -40,10 +40,10 @@ function configureServer(){
         }
     });
 
-    configureRouting();
+    process.nextTick(done);
 }
 
-function configureStatics(){
+function configureStatic(){
     if (config.env.production){
         server.use(express.compress());
     }
@@ -51,7 +51,7 @@ function configureStatics(){
     server.use(express.static(assets.bin));
 }
 
-function configureBody(){
+function configureMiddleware(){
     server.locals.config = config;
     server.set('views', views);
 
@@ -70,20 +70,36 @@ function configureBody(){
     server.use(server.router);
 }
 
-function configureRouting(){
+function configureServerRouting(done){
     var authentication = require('./server/authentication.js'),
-        routing = require('./server/routing.js'),
-        db = require('./server/db.js'),
+        routing = require('./server/routing.js');
+
+    async.series([
+        configureServer,
+        async.apply(authentication.configure),
+        async.apply(routing.map, server)
+    ],done);
+}
+
+function compileAndConfigure(done){
+    async.parallel([
+        compileAssets,
+        configureServerRouting
+    ],done);
+}
+
+
+function main(){
+    var db = require('./server/db.js'),
         feed = require('./logic/feed.js'),
         listener = require('./server/listen.js');
 
     async.series([
-        async.apply(authentication.configure),
-        async.apply(routing.map, server),
         async.apply(db.connect),
+        async.apply(compileAndConfigure),
         async.apply(feed.rebuild),
         async.apply(listener.listen, server)
     ]);
 }
 
-compileAssets(configureServer);
+main();
