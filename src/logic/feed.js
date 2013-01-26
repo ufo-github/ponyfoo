@@ -27,7 +27,7 @@ function rebuild(done){
         list.entries.forEach(function(document){
             feed.item({
                 title: document.title,
-                description: document.description,
+                description: document.brief,
                 url: document.getUrl(),
                 author: config.author.name,
                 date: document.date
