@@ -53,10 +53,10 @@
         }
 
         var page = '{0}p/{1}'.format(query.length === 0 ? '' : '/', viewModel.paging.next),
-            wrapper = $('.blog-entries-wrapper'),
+            container = $('.blog-entries'),
             paging = nbrut.tt.partial('entry-pager'),
             win = $(window),
-            pager = paging.appendTo(wrapper);
+            pager = paging.appendTo(container);
 
         function more(){
             win.off('scroll.paging');
