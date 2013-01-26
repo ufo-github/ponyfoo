@@ -2,6 +2,8 @@ TODO:
 
 1
 -------
+- rss
+- try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - post regarding unobtrusive paging
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 - authentication failure message flash
@@ -9,7 +11,7 @@ TODO:
 
 2
 -------
-- try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
+- opensearch
 - generalize api GET, PUT and updates.
 - client-side caching?
 - serve different views to google crawl bot

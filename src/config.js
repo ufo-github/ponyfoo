@@ -1,10 +1,30 @@
 var config = {
     env: {
-        current: process.env.NODE_ENV || 'development'
+        current: process.env.NODE_ENV || 'development',
+        get development(){ return this._d = this._d || this.current === 'development'; },
+        get staging(){ return this._s = this._s || this.current === 'staging'; },
+        get production(){ return this._p = this._p || this.current === 'production' || this.staging; }
     },
     server: {
         host: process.env.HOST || 'http://localhost',
-        listener: parseInt(process.env.PORT || 8081)
+        listener: parseInt(process.env.PORT || 8081),
+        get port(){ return this._p = this._p || parseInt(process.env.PUBLIC_PORT || this.listener); },
+        get authority(){
+            if(this._a === undefined){
+                var host = this.host,
+                    portUrl = '';
+
+                if (host[host.length-1] === '/'){
+                    host = host.substr(0, host.length-1);
+                }
+
+                if(this.port !== 80){
+                    portUrl = ':' + this.port;
+                }
+                this._a = host + portUrl;
+            }
+            return this._a;
+        }
     },
     db: {
         uri: process.env.MONGOLAB_URI || 'mongodb://localhost/nbrut'
@@ -16,13 +36,20 @@ var config = {
     tracking: {
         code: process.env.GA_CODE
     },
-    site: {
-        title: 'Pony Foo',
-        description: 'Ramblings of a degenerate coder',
-        relativeThumbnail: '/img/thumbnail.png',
-        relativeFeed: '/feed/latest.rss'
+    get site() {
+        return this._s = this._s || {
+            title: 'Pony Foo',
+            description: 'Ramblings of a degenerate coder',
+            thumbnail: this.server.authority + '/img/thumbnail.png'
+        };
+    },
+    get feed() {
+        return this._f = this._f || {
+            latest: this.server.authority + '/rss/latest.xml'
+        };
     },
     author: {
+        name: 'Nicolas Bevacqua',
         email: 'nicolasbevacqua@gmail.com',
         github: 'https://github.com/bevacqua',
         stackoverflow: 'http://careers.stackoverflow.com/bevacqua',
@@ -31,31 +58,5 @@ var config = {
         social: 'Feel free to visit my social accounts below:'
     }
 };
-
-function buildAuthorityUrl(){
-    var host = config.server.host,
-        portUrl = '';
-
-    config.server.port = parseInt(process.env.PUBLIC_PORT || config.server.listener);
-
-    if (host[host.length-1] === '/'){
-        host = host.substr(0, host.length-1);
-    }
-
-    if(config.server.port !== 80){
-        portUrl = ':' + config.server.port;
-    }
-
-    config.server.authority = host + portUrl;
-}
-
-buildAuthorityUrl();
-
-config.site.thumbnail = config.server.authority + config.site.relativeThumbnail;
-config.site.feed = config.server.authority + config.site.relativeFeed;
-
-config.env.development = config.env.current === 'development';
-config.env.staging = config.env.current === 'staging';
-config.env.production = config.env.current === 'production' || config.env.staging;
 
 module.exports = config;
