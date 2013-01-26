@@ -3,12 +3,13 @@ var mongoose = require('mongoose'),
     port = config.server.listener,
     mongoUri = config.db.uri;
 
-function listen(server){
+function listen(server, done){
     mongoose.connect(mongoUri);
     mongoose.connection.on('open', function() {
         console.log('Connected to Mongoose');
         server.listen(port);
         console.log('Listening on port ' + port );
+        done();
     });
 }
 

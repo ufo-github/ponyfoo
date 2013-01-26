@@ -17,7 +17,8 @@
 	"mongoose": "3.5.3",
     "node-assetify": "0.0.12",
 	"passport": "0.1.15",
-	"passport-local": "0.1.6"
+	"passport-local": "0.1.6",
+    "walk": "2.2.1"
   },
   "devDependencies": {
 	"mocha": "*",

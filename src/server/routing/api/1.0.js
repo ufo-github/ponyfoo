@@ -1,6 +1,6 @@
-var rest = require('../../services/rest.js'),
-    $ = require('../../services/$.js'),
-    entry = require('./1.0/entry.js');
+var rest = require('../../../services/rest.js'),
+    $ = require('../../../services/$.js'),
+    entry = require('./../../../controllers/api/1.0/entry.js');
 
 function routing(server){
 	var base = '/api/1.0',

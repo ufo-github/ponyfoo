@@ -2,7 +2,7 @@ var passport = require('passport'),
     models = require('../models/all.js'),
     LocalStrategy = require('passport-local').Strategy;
 
-function configure(){
+function configure(done){
     passport.use(new LocalStrategy({
             usernameField: 'email'
         },
@@ -39,6 +39,8 @@ function configure(){
             return done(null, user);
         });
     });
+
+    process.nextTick(done);
 }
 
 module.exports = {

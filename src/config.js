@@ -19,7 +19,8 @@ var config = {
     site: {
         title: 'Pony Foo',
         description: 'Ramblings of a degenerate coder',
-        relativeThumbnail: '/img/thumbnail.png'
+        relativeThumbnail: '/img/thumbnail.png',
+        relativeFeed: '/feed/latest.rss'
     },
     author: {
         email: 'nicolasbevacqua@gmail.com',
@@ -51,6 +52,7 @@ function buildAuthorityUrl(){
 buildAuthorityUrl();
 
 config.site.thumbnail = config.server.authority + config.site.relativeThumbnail;
+config.site.feed = config.server.authority + config.site.relativeFeed;
 
 config.env.development = config.env.current === 'development';
 config.env.staging = config.env.current === 'staging';

@@ -1,12 +1,26 @@
 var config = require('./config.js'),
     express = require('express'),
     sessionStore = require("connect-mongoose")(express),
+    async = require('async'),
     passport = require('passport'),
     assetify = require('node-assetify'),
     assets = require('./assets.js'),
     favicon = assets.bin + '/img/favicon.ico',
     views = __dirname + '/views',
     server = express();
+
+function compileAssets(){
+    assetify.use(assetify.plugins.less);
+    assetify.use(assetify.plugins.jsn);
+
+    if (config.env.production){
+        assetify.use(assetify.plugins.bundle);
+        assetify.use(assetify.plugins.minifyCSS);
+        assetify.use(assetify.plugins.minifyJS);
+    }
+    assetify.use(assetify.plugins.forward());
+    assetify.compile(assets, configureServer);
+}
 
 function configureServer(){
     server.configure(function(){
@@ -57,22 +71,15 @@ function configureBody(){
 }
 
 function configureRouting(){
-    require('./server/authentication.js').configure();
-    require('./server/routing.js').map(server);
-    require('./server/listen.js').listen(server);
-}
+    var authentication = require('./server/authentication.js'),
+        routing = require('./server/routing.js'),
+        listener = require('./server/listen.js');
 
-function compileAssets(){
-    assetify.use(assetify.plugins.less);
-    assetify.use(assetify.plugins.jsn);
-
-    if (config.env.production){
-        assetify.use(assetify.plugins.bundle);
-        assetify.use(assetify.plugins.minifyCSS);
-        assetify.use(assetify.plugins.minifyJS);
-    }
-    assetify.use(assetify.plugins.forward());
-    assetify.compile(assets, configureServer);
+    async.series([
+        async.apply(authentication.configure),
+        async.apply(routing.map, server),
+        async.apply(listener.listen, server)
+    ]);
 }
 
 compileAssets();
