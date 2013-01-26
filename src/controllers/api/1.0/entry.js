@@ -29,19 +29,19 @@ function wrapCallback(res, map){
     };
 }
 
-function list(req, res, query){
-    var page = parseInt(req.params.page || 1),
-        lim = apiConf.paging.limit,
+function list(opts,done){
+    var page = parseInt(opts.page || 1),
+        lim = opts.limit || apiConf.paging.limit,
         index = (page-1) * lim,
-        where = model.find(query);
+        where = model.find(opts.query || {});
 
     async.parallel({
-        entries: function(done){
-            where.sort('-date').skip(index).limit(lim).exec(done);
+        entries: function(cb){
+            where.sort('-date').skip(index).limit(lim).exec(cb);
         },
-        paging: function(done){
+        paging: function(cb){
             where.count().exec(function(err,count){
-                done(err, {
+                cb(err, {
                     page: page,
                     index: index,
                     limit: lim,
@@ -50,53 +50,70 @@ function list(req, res, query){
                 });
             });
         }
-    },wrapCallback(res));
+    },done);
 }
 
-function single(res, query){
-    model.findOne(query).exec(wrapCallback(res, function(result){
+function restList(req,res,query){
+    list({
+        query: query,
+        page: req.params.page
+    }, wrapCallback(res));
+}
+
+function restOne(res, query){
+    model.findOne(query, wrapCallback(res, function(result){
         return { entry: result };
     }));
 }
 
+function rebuildFeed(res){
+    return function(){
+        res.end();
+        var feed = require('../../../logic/feed.js');
+        process.nextTick(feed.rebuild);
+    };
+}
+
 module.exports = {
     get: function(req,res){
-		list(req, res, {});
+        restList(req,res);
     },
-	
 	getByDate: function(req,res){
 		var query = mapRequestToQuery(req);
-		list(req, res, query);
+        restList(req, res, query);
 	},
-
 	getBySlug: function(req,res){
         var query = mapRequestToQuery(req);
         query.slug = req.params.slug;
-		single(res, query);
+        restOne(res, query);
 	},
-
 	getById: function(req,res){
-        single(res, { _id: req.params.id });
+        restOne(res, { _id: req.params.id });
 	},
-
     ins: function(req,res){
         crud.create(req.body.entry, {
             res: res,
             always: function(entry){
                 entry.slug = text.slug(entry.title);
-            }
+            },
+            then: rebuildFeed(res)
         });
     },
-
 	upd: function(req,res){
         crud.update({ _id: req.params.id }, req.body.entry, {
             res: res,
             always: function(entry){
                 entry.updated = new Date();
                 entry.slug = text.slug(entry.title);
-            }
+            },
+            then: rebuildFeed(res)
         });
 	},
-
-	del: crud.http.remove
+	del: function(req,res){
+        crud.remove({ _id: req.params.id }, {
+            res: res,
+            then: rebuildFeed(res)
+        });
+    },
+    list: list // internal api DRY purposes
 };

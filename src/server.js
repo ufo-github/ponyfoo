@@ -9,7 +9,7 @@ var config = require('./config.js'),
     views = __dirname + '/views',
     server = express();
 
-function compileAssets(){
+function compileAssets(done){
     assetify.use(assetify.plugins.less);
     assetify.use(assetify.plugins.jsn);
 
@@ -19,7 +19,7 @@ function compileAssets(){
         assetify.use(assetify.plugins.minifyJS);
     }
     assetify.use(assetify.plugins.forward());
-    assetify.compile(assets, configureServer);
+    assetify.compile(assets, done);
 }
 
 function configureServer(){
@@ -73,13 +73,17 @@ function configureBody(){
 function configureRouting(){
     var authentication = require('./server/authentication.js'),
         routing = require('./server/routing.js'),
+        db = require('./server/db.js'),
+        feed = require('./logic/feed.js'),
         listener = require('./server/listen.js');
 
     async.series([
         async.apply(authentication.configure),
         async.apply(routing.map, server),
+        async.apply(db.connect),
+        async.apply(feed.rebuild),
         async.apply(listener.listen, server)
     ]);
 }
 
-compileAssets();
+compileAssets(configureServer);

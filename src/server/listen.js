@@ -1,16 +1,11 @@
-var mongoose = require('mongoose'),
-    config = require('../config.js'),
-    port = config.server.listener,
-    mongoUri = config.db.uri;
+var config = require('../config.js'),
+    port = config.server.listener;
 
 function listen(server, done){
-    mongoose.connect(mongoUri);
-    mongoose.connection.on('open', function() {
-        console.log('Connected to Mongoose');
-        server.listen(port);
-        console.log('Listening on port ' + port );
-        done();
-    });
+    server.listen(port);
+    console.log('Listening on port ' + port );
+
+    process.nextTick(done);
 }
 
 module.exports = {

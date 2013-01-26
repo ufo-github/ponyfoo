@@ -11,47 +11,34 @@
         }
         local = shared[container];
 
-        function part(p){
-            if(!!p){
-                return '/{0}'.format(p);
-            }
-            return '';
-        }
-
         function get(what, opts){
-            var id = part(opts.id);
-
-            fire('GET',what,id).done(function(data){
-                (hooks[what].ajaxGet || $.noop)(data);
-                (opts.then || $.noop)(data);
-            });
+            fire('GET',what,opts);
         }
 
         function put(what, opts){
-            var id = part(opts.id);
-
-            fire('PUT',what,id,opts.data).done(function(data){
-                (opts.then || $.noop)(data);
-            });
+            fire('PUT',what,opts);
         }
 
         function del(what, opts){
-            fire('DELETE',what,opts.id).done(function(data){
-                (opts.then || $.noop)(data);
-            });
+            fire('DELETE',what,opts);
         }
 
-        function fire(how,what,id,data){
+        function fire(how,what,opts){
+            var id = !!opts.id ? '/' + opts.id : '';
+
             xhr = $.ajax({
                 url: '{0}/{1}{2}'.format(ver, what, id),
                 type: how,
-                data: data
+                data: opts.data
             });
             local.push(xhr);
 
             return xhr.always(function(){
                 var i = local.indexOf(xhr);
                 local.splice(i,1);
+            }).done(function(data){
+                (hooks[what][how.toLowerCase()] || $.noop)(data);
+                (opts.then || $.noop)(data);
             });
         }
 

@@ -23,6 +23,6 @@
     }
 
     nbrut.thin.hook('entry', {
-        ajaxGet: entryHook
+        get: entryHook
     });
 }(window,jQuery,nbrut,moment);

@@ -5,6 +5,10 @@ var config = {
         get staging(){ return this._s = this._s || this.current === 'staging'; },
         get production(){ return this._p = this._p || this.current === 'production' || this.staging; }
     },
+    static: {
+        folder: __dirname + '/static',
+        bin: __dirname + '/static/bin'
+    },
     server: {
         host: process.env.HOST || 'http://localhost',
         listener: parseInt(process.env.PORT || 8081),
@@ -45,7 +49,8 @@ var config = {
     },
     get feed() {
         return this._f = this._f || {
-            latest: this.server.authority + '/rss/latest.xml'
+            latest: this.server.authority + '/rss/latest.xml',
+            limit: 12
         };
     },
     author: {
