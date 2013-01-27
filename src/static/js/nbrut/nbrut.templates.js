@@ -376,30 +376,28 @@
             });
         }
 
-		function popState(e){
-			var route;
+        function activateRoute(route){
+            activate(route.key, route.settings, true);
+        }
 
-			if (e.originalEvent === undefined || e.originalEvent.state === null){
-                route = getRoute(document.location.pathname);
-			} else {
-                route = {
+		function popState(e){
+            var initial = e.originalEvent === undefined || e.originalEvent.state === null;
+			if(!initial){
+                activateRoute({
                     key: e.originalEvent.state.key,
 				    settings: e.originalEvent.state.settings
-                };
+                });
 			}
-			activate(route.key, route.settings, true);
 		}
 		
         function init(){
             loading = $(defaults.container).html();
 
-            $(function(){
-                $(window).on('popstate', popState);
+            $(window).on('popstate', popState);
 
-                // manual trigger loads template by URL in FF/IE.
-                if ($.browser.mozilla || $.browser.msie) {
-                    $(window).trigger('popstate');
-                }
+            $(function(){
+                var route = getRoute(document.location.pathname);
+                activateRoute(route);
             });
         }
 
