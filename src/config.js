@@ -53,7 +53,7 @@ var config = {
     get feed() {
         return this._f = this._f || {
             local: this.server.authority + '/rss/latest.xml',
-            get public(){ return process.env.FEED_ADDR || this.local },
+            get proxy(){ return this._p = this._p || (process.env.FEED_ADDR || this.local); },
             limit: 12
         };
     },

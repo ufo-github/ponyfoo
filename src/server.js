@@ -2,11 +2,12 @@ var config = require('./config.js'),
     express = require('express'),
     sessionStore = require("connect-mongoose")(express),
     async = require('async'),
+    path = require('path'),
     passport = require('passport'),
     assetify = require('assetify'),
     assets = require('./assets.js'),
-    favicon = assets.bin + '/img/favicon.ico',
-    views = __dirname + '/views',
+    favicon = path.join(assets.bin, '/img/favicon.ico'),
+    views = path.join(__dirname, '/views'),
     server = express();
 
 function compileAssets(done){
@@ -53,6 +54,7 @@ function configureStatic(){
 }
 
 function configureMiddleware(){
+    server.locals.settings['x-powered-by'] = false;
     server.locals.config = config;
     server.set('views', views);
 
@@ -87,7 +89,6 @@ function compileAndConfigure(done){
         configureServerRouting
     ],done);
 }
-
 
 function main(){
     var db = require('./server/db.js'),
