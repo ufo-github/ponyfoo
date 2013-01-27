@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    moment = require('moment'),
     pagedown = require('pagedown'),
     jsdom = require('jsdom'),
     config = require('../config.js'),
@@ -12,12 +13,10 @@ var mongoose = require('mongoose'),
     });
 
 schema.methods.getUrl = function() {
-    var year = '/' + this.date.getFullYear(),
-        month = '/' + (this.date.getMonth() + 1), // 0-based,
-        day = '/' + this.date.getDay(),
-        slug = '/' + this.slug;
+    var date = moment(this.date).format('YYYY/MM/DD'),
+        slug = this.slug;
 
-    return config.server.authority + year + month + day + slug;
+    return config.server.authority + '/' + date + '/' + slug;
 };
 
 schema.methods.getPlainTextBrief = function(done) {
