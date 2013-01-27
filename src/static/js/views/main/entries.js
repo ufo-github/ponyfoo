@@ -87,9 +87,10 @@
                 id: query + page,
                 then: function(it){
                     var container = $('.blog-entries'),
-                        articles = nbrut.tt.partial('more-entries', it);
+                        articles = nbrut.tt.partial('more-entries', it),
+                        elements = articles.appendTo(container);
 
-                    articles.appendTo(container);
+                    nbrut.md.prettify(elements);
                     pager.remove();
                     addPager(it, query);
                 }
