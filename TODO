@@ -10,12 +10,17 @@ TODO:
 
 2
 -------
-- generalize api GET, PUT and updates.
-- client-side caching?
+- opensearch
 - serve different views to google crawl bot
+
+
+2.5
+-------
+- generalize api GET, PUT and updates.
+- move logic out of controllers
+- client-side caching?
 
 
 3
 -------
-- opensearch
 - proper api authentication?
