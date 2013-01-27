@@ -49,6 +49,7 @@ function configureStatic(){
     }
     server.use(express.favicon(favicon));
     server.use(express.static(assets.bin));
+    server.use(assetify.middleware());
 }
 
 function configureMiddleware(){
@@ -66,7 +67,6 @@ function configureMiddleware(){
     server.use(passport.initialize());
     server.use(passport.session());
 
-    server.use(assetify.middleware());
     server.use(server.router);
 }
 

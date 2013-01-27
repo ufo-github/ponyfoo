@@ -49,7 +49,8 @@ var config = {
     },
     get feed() {
         return this._f = this._f || {
-            latest: this.server.authority + '/rss/latest.xml',
+            local: this.server.authority + '/rss/latest.xml',
+            get public(){ return process.env.FEED_ADDR || this.local },
             limit: 12
         };
     },

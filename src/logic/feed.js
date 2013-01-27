@@ -14,7 +14,7 @@ function rebuild(done){
         author: config.author.name,
         site_url: config.server.authority,
         image_url: config.site.thumbnail,
-        feed_url: config.feed.latest
+        feed_url: config.feed.local
     };
 
     var feed = new rss(opts);
@@ -40,7 +40,7 @@ function rebuild(done){
 }
 
 function flush(xml, done){
-    var relative = path.relative(config.server.authority, config.feed.latest),
+    var relative = path.relative(config.server.authority, config.feed.local),
         physical = path.join(config.static.bin, relative),
         folder = path.dirname(physical);
 
