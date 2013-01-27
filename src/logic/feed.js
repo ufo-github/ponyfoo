@@ -24,18 +24,27 @@ function rebuild(done){
             throw err;
         }
 
-        list.entries.forEach(function(document){
-            feed.item({
-                title: document.title,
-                description: document.brief,
-                url: document.getUrl(),
-                author: config.author.name,
-                date: document.date
+        async.forEach(list.entries, function(entry,done){
+            entry.getPlainTextBrief(function(err,brief){
+                if(err){
+                    done(err);
+                }
+                feed.item({
+                    title: entry.title,
+                    description: brief,
+                    url: entry.getUrl(),
+                    author: config.author.name,
+                    date: entry.date
+                });
+                done();
             });
+        }, function(err){
+            if(err){
+                throw err;
+            }
+            var xml = feed.xml();
+            flush(xml,done);
         });
-
-        var xml = feed.xml();
-        flush(xml,done);
     });
 }
 

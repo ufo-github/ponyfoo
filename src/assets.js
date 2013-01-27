@@ -1,5 +1,4 @@
 var config = require('./config.js'),
-    assetify = require('assetify'),
     assets = {
         source: config.static.folder,
         bin: config.static.bin,
@@ -29,7 +28,7 @@ function getCss(){
 
 function getJs(){
     var js = [
-        assetify.jQuery('1.8.3', '/js/jquery-1.8.3.min.js', undefined, config.env.development),
+        config.jQuery.asset,
         '/js/libs/moment.min.js',
         '/js/libs/mustache.js',
         '/js/libs/jquery.textarearesizer.min.js',

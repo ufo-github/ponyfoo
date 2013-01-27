@@ -1,3 +1,6 @@
+var path = require('path'),
+    assetify = require('assetify');
+
 var config = {
     env: {
         current: process.env.NODE_ENV || 'development',
@@ -62,6 +65,17 @@ var config = {
         linkedin: 'http://linkedin.com/in/nbevacqua/',
         about: "I'm Nicolas Bevacqua. I live in Buenos Aires, Argentina. This is my technical blog.",
         social: 'Feel free to visit my social accounts below:'
+    },
+    get jQuery() {
+        if (this._$ === undefined){
+            var $ = assetify.jQuery('1.9.0', '/js/jquery-1.9.0.min.js', undefined, this.env.development);
+            this._$ = {
+                asset: $,
+                local: path.join(this.static.folder, $.local),
+                external: 'http:' + $.ext
+            };
+        }
+        return this._$;
     }
 };
 
