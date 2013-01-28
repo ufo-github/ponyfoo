@@ -55,7 +55,7 @@
 .blog-entry blockquote {
   .box-radius(8px);
 
-  padding: 12px;
+  padding: 12px 12px 12px 56px;
   margin: 25px 0 15px 0;
   background-color: @light;
 
@@ -64,6 +64,8 @@
   border-left: 2px solid @light;
 
   min-height: 24px;
+
+  position: relative;
 }
 
 .blog-entry blockquote:before {
@@ -75,11 +77,11 @@
 
   float: left;
 
-  position: relative;
-  top: -8px;
-  left: 0;
-  margin-bottom: 12px;
-  margin-right: 12px;
+  position: absolute;
+  top: 50%;
+  left: 12px;
+
+  margin-top: -20px;
 }
 
 
