@@ -137,7 +137,10 @@ function remove(req, res){
 
 function unwrapSiblings(entry,cb){
     if (entry == null){ // sanity.
-        process.nextTick(cb);
+        process.nextTick(function(){
+            cb(null, null);
+        });
+        return;
     }
 
     var prev = entry.previous,
