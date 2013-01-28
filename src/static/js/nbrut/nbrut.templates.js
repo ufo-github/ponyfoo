@@ -45,7 +45,7 @@
             $.each(template.aliases || [], function(){
                 var alias = this;
 
-				setupAlias(template, alias)
+				setupAlias(template, alias);
 				bindTrigger(template, alias);
             });
 		}
@@ -211,7 +211,7 @@
 				activateTemplate(template, settings, viewModel || {}, soft); // set-up.
 			}
 
-			template.prepare(render, settings.data || {});
+			template.prepare(render, settings.data || {}, settings.identifier);
         }
 
         function deactivateContainer(template) {
@@ -256,7 +256,7 @@
             }
 
             var view = partial(template.key, viewModel);
-            view.fill(c, settings.data || {});
+            view.fill(c, settings.data || {}, settings.identifier);
         }
 
         function partial(key, viewModel, data){
@@ -276,11 +276,11 @@
             return {
                 html: html,
                 css: template.dom.css,
-                fill: function(container, data){
+                fill: function(container, data, identifier){
                     container.addClass(template.dom.css).html(html);
                     fixLocalRoutes(container);
                     bindBack(template);
-                    template.afterActivate(viewModel, data || {});
+                    template.afterActivate(viewModel, data || {}, identifier);
                 },
                 appendTo: function(container, data){ /* NOTE: the data-class will be lost, same for event bindings. */
                     var temp = $('<div/>');
@@ -423,7 +423,8 @@
             activate: activate,
             deactivate: deactivateContainer,
             partial: partial,
-            hook: hook
+            hook: hook,
+            get active() { return getHash() - 1; } /* offset by one because 0 means nothing is active yet */
         };
     }();
 

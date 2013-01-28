@@ -1,5 +1,5 @@
 !function (window,$,nbrut,undefined) {
-	function prepare(render, data){
+	function prepare(render, data, identifier){
         if (data.query === undefined){
             complete(render, data);
         }else{
@@ -24,14 +24,14 @@
         });
     }
 	
-	function afterActivate(viewModel, data){
+	function afterActivate(viewModel, data, identifier){
 		var container = $('.blog-entries');
 
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
         }else if(viewModel.paging !== undefined){
-            addPager(viewModel, data.query || '');
+            addPager(viewModel, identifier, data.query || '');
         }
 
         if(viewModel.entries.length === 1){
@@ -39,7 +39,6 @@
                 siblings = nbrut.tt.partial('entry-siblings', model),
                 entry = container.find('.blog-entry');
 
-            console.log(model);
             siblings.appendTo(entry);
         }
 
@@ -55,7 +54,7 @@
         exhausted.appendTo(container);
     }
 
-    function addPager(viewModel, query){
+    function addPager(viewModel, identifier, query){
         if(viewModel.paging.next === false){
             addExhausted();
             return;
@@ -70,7 +69,7 @@
         function more(){
             win.off('scroll.paging');
             pager.off('click.paging');
-            pagingEvent(pager, query, page);
+            pagingEvent(identifier, pager, query, page);
         }
 
         win.on('scroll.paging', function(){
@@ -86,8 +85,15 @@
         pager.on('click.paging', more);
     }
 
-    function pagingEvent(pager,query,page){
+    function pagingEvent(identifier,pager,query,page){
         var card = pager.find('.flip-card');
+
+        console.log(identifier);
+        console.log(nbrut.tt.active);
+
+        if(nbrut.tt.active !== identifier){ // sanity
+            return;
+        }
 
         if(!card.hasClass('flipped')){
             card.addClass('flipped');
@@ -95,13 +101,17 @@
             nbrut.thin.get('entry', {
                 id: query + page,
                 then: function(it){
+                    if(nbrut.tt.active !== identifier){ // sanity
+                        return;
+                    }
+
                     var container = $('.blog-entries'),
                         articles = nbrut.tt.partial('more-entries', it),
                         elements = articles.appendTo(container);
 
                     nbrut.md.prettify(elements);
                     pager.remove();
-                    addPager(it, query);
+                    addPager(it, identifier, query);
                 }
             });
         }
