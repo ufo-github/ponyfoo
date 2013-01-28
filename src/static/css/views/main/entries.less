@@ -260,10 +260,14 @@
   float: right;
 }
 
-.blog-entry-siblings a[rel='prev']:not(:empty):before {
+.blog-entry-siblings a[rel='prev']:before {
   content: '« ';
 }
 
-.blog-entry-siblings a[rel='next']:not(:empty):after {
+.blog-entry-siblings a[rel='next']:after {
   content: ' »';
+}
+
+.blog-entry-siblings a:empty {
+  display: none;
 }

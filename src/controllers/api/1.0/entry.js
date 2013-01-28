@@ -137,19 +137,19 @@ function unwrapSiblings(entry,cb){
             throw err;
         }
 
-        entry = entry.toObject();
-        entry.related = {};
+        var unwrapped = entry.toObject();
+        unwrapped.related = {};
 
         siblings.forEach(function(sibling){
-            var key = sibling._id === entry.previous ? 'previous' : 'next';
+            var key = sibling._id.equals(entry.previous) ? 'previous' : 'next';
 
-            entry.related[key] = {
+            unwrapped.related[key] = {
                 url: sibling.getPermalink(),
                 title: sibling.title
             };
         });
 
-        cb(null, entry);
+        cb(null, unwrapped);
     });
 }
 
