@@ -44,7 +44,7 @@ function resHandler(err, opts){
             head(opts.res,200);
         }
         if(!opts.then){
-            opts.res.end();
+            end(opts.res,{});
         }else{
             opts.then.apply(null, opts.args);
         }

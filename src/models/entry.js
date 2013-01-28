@@ -3,20 +3,26 @@ var mongoose = require('mongoose'),
     pagedown = require('pagedown'),
     jsdom = require('jsdom'),
     config = require('../config.js'),
+    ObjectId = mongoose.Schema.Types.ObjectId,
     schema = new mongoose.Schema({
         title: { type: String, require: true, trim: true },
         slug: { type: String, require: true, trim: true },
         brief: { type: String, require: true },
         text: { type: String, require: true },
-        date: { type: Date, index: { unique: false }, require: true },
-		updated: { type: Date, require: true, default: Date.now }
+        date: { type: Date, index: { unique: false }, require: true, default: Date.now },
+		updated: { type: Date, require: true, default: Date.now },
+        previous: { type: ObjectId, index: { unique: false }, default: null },
+        next: { type: ObjectId, index: { unique: false }, default: null }
     });
 
-schema.methods.getUrl = function() {
+schema.methods.getPermalink = function(absolute) {
     var date = moment(this.date).format('YYYY/MM/DD'),
-        slug = this.slug;
+        permalink = '/' + date + '/' + this.slug;
 
-    return config.server.authority + '/' + date + '/' + slug;
+    if(absolute === true){
+        return config.server.authority + permalink;
+    }
+    return permalink;
 };
 
 schema.methods.getPlainTextBrief = function(done) {

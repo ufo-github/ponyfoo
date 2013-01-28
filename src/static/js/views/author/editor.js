@@ -11,12 +11,7 @@
         function updateTitlePreview() {
             var value = input.val();
             title.text(value);
-
-            if(value.length === 0){
-                title.addClass('empty');
-            }else{
-                title.removeClass('empty');
-            }
+            title.toggleClass('empty', value.length === 0);
         }
 
         input.on('keydown keypress paste', function(){
@@ -29,7 +24,7 @@
     function prepareEditor() {
         runEditors();
 
-        $('.entry-editor textarea:not(.processed)').textareaResizer();
+        $('.entry-editor textarea:not(.grippable)').textareaResizer();
 
         bindTitle();
 		
@@ -40,12 +35,10 @@
     function prepare(render, data){
         if(!data.id){
             render({
+                entry: {},
                 submit: {
                     text: 'Post',
                     disabled: 'Posting...'
-                },
-                entry: {
-                    dateText: moment(new Date()).format()
                 }
             });
         }else{
@@ -53,11 +46,11 @@
                 id: data.id,
                 then: function(it){
                     render({
+                        entry: it.entry,
                         submit: {
                             text: 'Update',
                             disabled: 'Updating...'
-                        },
-                        entry: it.entry
+                        }
                     });
                 }
             });
@@ -68,15 +61,7 @@
         var submit = $('#submit-entry'),
             title = $('#entry-title'),
             brief = $('#wmd-input-brief'),
-            text = $('#wmd-input-text'),
-            date = $('#entry-date');
-
-        function getDateJson(){
-            var dateString = date.val(),
-                d = new Date(dateString);
-
-            return d.toJSON();
-        }
+            text = $('#wmd-input-text');
 
         nbrut.ui.stateButton(submit, function(restore){
             nbrut.thin.put('entry', {
@@ -85,8 +70,7 @@
                     entry: {
                         title: title.val(),
                         brief: brief.val(),
-                        text: text.val(),
-                        date: getDateJson()
+                        text: text.val()
                     }
                 },
                 then: function(){
@@ -98,7 +82,6 @@
 
     function afterActivate(){
         prepareEditor();
-        $('#entry-date').pikaday({ format: moment.defaultFormat });
         bindSubmit();
     }
 

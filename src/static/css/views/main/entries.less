@@ -105,9 +105,17 @@
   margin-right: 12px;
 }
 
-.blog-entry section a, #latest-posts a {
+.blog-entry section a,
+.blog-entry footer a,
+.blog-sidebar a {
   color: @pink;
   font-weight: bold;
+}
+
+.blog-entry section a:visited,
+.blog-entry footer a:visited,
+.blog-sidebar a:visited {
+  color: @pink - #333;
 }
 
 
@@ -213,7 +221,6 @@
   .blog-entry();
 }
 
-
 .blog-pager .face.front {
   text-align: center;
   font-size: 0.8em;
@@ -238,4 +245,25 @@
 
 .blog-navigation-suggestions p {
   margin-top: 0;
+}
+
+
+
+/* SIBLINGS
+ ***********/
+
+.blog-entry-siblings a[rel='prev'] {
+  float: left;
+}
+
+.blog-entry-siblings a[rel='next'] {
+  float: right;
+}
+
+.blog-entry-siblings a[rel='prev']:not(:empty):before {
+  content: '« ';
+}
+
+.blog-entry-siblings a[rel='next']:not(:empty):after {
+  content: ' »';
 }

@@ -32,7 +32,7 @@ function rebuild(done){
                 feed.item({
                     title: entry.title,
                     description: brief,
-                    url: entry.getUrl(),
+                    url: entry.getPermalink(true),
                     author: config.author.name,
                     date: entry.date
                 });

@@ -61,17 +61,96 @@ function restList(req,res,query){
 }
 
 function restOne(res, query){
-    model.findOne(query, wrapCallback(res, function(result){
-        return { entry: result };
-    }));
+    model.findOne(query, function(err,entry){
+        unwrapSiblings(entry, wrapCallback(res, function(result){
+            return { entry: result };
+        }));
+    });
 }
 
 function rebuildFeed(res){
     return function(){
-        res.end();
+        rest.end(res,{});
         var feed = require('../../../logic/feed.js');
         process.nextTick(feed.rebuild);
     };
+}
+
+function insert(req,res){
+    model.findOne().sort('-date').exec(function(err,previous){
+        if(err){
+            throw err;
+        }
+
+        crud.create(req.body.entry, {
+            res: res,
+            always: function(entry){
+                entry.previous = previous._id;
+                entry.slug = text.slug(entry.title);
+            },
+            then: function(entry){
+                previous.next = entry._id;
+                previous.save(rebuildFeed(res));
+            }
+        });
+    });
+
+}
+
+function remove(req, res){
+    model.findOne({ _id: req.params.id }, function(err,entry){
+        if(err){
+            throw err;
+        }
+
+        var query = { _id: { $in: [entry.previous, entry.next] } };
+
+        model.find(query, function(err, siblings){
+            if(err){
+                throw err;
+            }
+
+            async.forEach(siblings, function(sibling, done){
+                if (sibling._id === entry.previous){
+                    sibling.next = entry.next;
+                }
+                if (sibling._id === entry.next){
+                    sibling.previous = entry.previous;
+                }
+                sibling.save(done);
+            },function(err){
+                if(err){
+                    throw err;
+                }
+
+                entry.remove(rebuildFeed(res));
+            });
+        });
+    });
+}
+
+function unwrapSiblings(entry,cb){
+    var query = { _id: { $in: [entry.previous, entry.next] } };
+
+    model.find(query, function(err, siblings){
+        if(err){
+            throw err;
+        }
+
+        entry = entry.toObject();
+        entry.related = {};
+
+        siblings.forEach(function(sibling){
+            var key = sibling._id === entry.previous ? 'previous' : 'next';
+
+            entry.related[key] = {
+                url: sibling.getPermalink(),
+                title: sibling.title
+            };
+        });
+
+        cb(null, entry);
+    });
 }
 
 module.exports = {
@@ -90,15 +169,7 @@ module.exports = {
 	getById: function(req,res){
         restOne(res, { _id: req.params.id });
 	},
-    ins: function(req,res){
-        crud.create(req.body.entry, {
-            res: res,
-            always: function(entry){
-                entry.slug = text.slug(entry.title);
-            },
-            then: rebuildFeed(res)
-        });
-    },
+    ins: insert,
 	upd: function(req,res){
         crud.update({ _id: req.params.id }, req.body.entry, {
             res: res,
@@ -109,11 +180,6 @@ module.exports = {
             then: rebuildFeed(res)
         });
 	},
-	del: function(req,res){
-        crud.remove({ _id: req.params.id }, {
-            res: res,
-            then: rebuildFeed(res)
-        });
-    },
+	del: remove,
     list: list // internal api DRY purposes
 };

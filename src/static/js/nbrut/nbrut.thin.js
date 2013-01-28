@@ -30,16 +30,16 @@
                 url: '{0}/{1}{2}'.format(ver, what, id),
                 type: how,
                 data: opts.data
-            });
-            local.push(xhr);
-
-            return xhr.always(function(){
-                var i = local.indexOf(xhr);
-                local.splice(i,1);
             }).done(function(data){
                 (hooks[what][how.toLowerCase()] || $.noop)(data);
                 (opts.then || $.noop)(data);
+            }).always(function(){
+                var i = local.indexOf(xhr);
+                local.splice(i,1);
             });
+
+            local.push(xhr);
+            return xhr;
         }
 
         function hook(what, opts){

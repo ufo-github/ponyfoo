@@ -79,4 +79,10 @@
         source: '#more-entries-template',
         mustache: true
     });
+
+    nbrut.tt.register({
+        key: 'entry-siblings',
+        source: '#entry-siblings-template',
+        mustache: true
+    });
 }(window,nbrut,moment);

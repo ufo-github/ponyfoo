@@ -34,6 +34,15 @@
             addPager(viewModel, data.query || '');
         }
 
+        if(viewModel.entries.length === 1){
+            var model = viewModel.entries[0].related,
+                siblings = nbrut.tt.partial('entry-siblings', model),
+                entry = container.find('.blog-entry');
+
+            console.log(model);
+            siblings.appendTo(entry);
+        }
+
         nbrut.md.prettify(container);
 
         addSidebar();

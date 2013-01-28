@@ -7,10 +7,6 @@ section#entry-editor-template.template(data-class='entry-editor')
         label(for='entry-title')='Title'
         input#entry-title(type='text', value='{{entry.title}}')
 
-      p
-        label(for='entry-date')='Date'
-        input#entry-date(type='text', value='{{entry.dateText}}')
-
     div#wmd-button-bar-brief.wmd-button-bar
     div
       textarea#wmd-input-brief.wmd-input(name='entry.brief')='{{entry.brief}}'
