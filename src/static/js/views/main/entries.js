@@ -88,9 +88,6 @@
     function pagingEvent(identifier,pager,query,page){
         var card = pager.find('.flip-card');
 
-        console.log(identifier);
-        console.log(nbrut.tt.active);
-
         if(nbrut.tt.active !== identifier){ // sanity
             return;
         }
