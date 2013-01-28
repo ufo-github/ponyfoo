@@ -155,6 +155,22 @@ function unwrapSiblings(entry,cb){
     });
 }
 
+function migrate(req,res){
+    model.find().sort('-date').exec(function(err,documents){
+        async.forEach(documents,function(document,done){
+            var i = documents.indexOf(document);
+            if (i !== 0){
+                document.next = documents[i-1]._id;
+            }
+            if (i !== documents.length - 1){
+                document.previous = documents[i+1]._id;
+            }
+            document.save(done);
+        },function(){
+            res.end();
+        });
+    });
+}
 module.exports = {
     get: function(req,res){
         restList(req,res);
@@ -183,5 +199,6 @@ module.exports = {
         });
 	},
 	del: remove,
-    list: list // internal api DRY purposes
+    list: list, // internal api DRY purposes
+    migrate: migrate
 };

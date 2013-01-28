@@ -50,6 +50,8 @@ function configure(server){
         routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
         routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
 
+    server.get('/migrate', entry.migrate);
+
     paged(api, '/entry', entry.get);
     paged(api, routeYear, entry.getByDate);
     paged(api, routeMonth, entry.getByDate);
