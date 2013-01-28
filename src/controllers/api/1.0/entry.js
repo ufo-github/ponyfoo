@@ -62,6 +62,10 @@ function restList(req,res,query){
 
 function restOne(res, query){
     model.findOne(query, function(err,entry){
+        if(err){
+            throw err;
+        }
+
         unwrapSiblings(entry, wrapCallback(res, function(result){
             return { entry: result };
         }));
@@ -132,6 +136,10 @@ function remove(req, res){
 }
 
 function unwrapSiblings(entry,cb){
+    if (entry == null){ // sanity.
+        process.nextTick(cb);
+    }
+
     var prev = entry.previous,
         next = entry.next,
         query = { _id: { $in: [entry.previous, entry.next] } };
@@ -154,23 +162,6 @@ function unwrapSiblings(entry,cb){
         });
 
         cb(null, unwrapped);
-    });
-}
-
-function migrate(req,res){
-    model.find().sort('-date').exec(function(err,documents){
-        async.forEach(documents,function(document,done){
-            var i = documents.indexOf(document);
-            if (i !== 0){
-                document.next = documents[i-1]._id;
-            }
-            if (i !== documents.length - 1){
-                document.previous = documents[i+1]._id;
-            }
-            document.save(done);
-        },function(){
-            res.end();
-        });
     });
 }
 
@@ -202,6 +193,5 @@ module.exports = {
         });
 	},
 	del: remove,
-    list: list, // internal api DRY purposes
-    migrate: migrate
+    list: list // internal api DRY purposes
 };
