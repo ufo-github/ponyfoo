@@ -1,5 +1,6 @@
 var config = require('./config.js'),
     express = require('express'),
+    flash = require('connect-flash'),
     sessionStore = require("connect-mongoose")(express),
     async = require('async'),
     path = require('path'),
@@ -65,6 +66,7 @@ function configureMiddleware(){
         secret: config.security.sessionSecret,
         store: new sessionStore()
     }));
+    server.use(flash());
 
     server.use(passport.initialize());
     server.use(passport.session());

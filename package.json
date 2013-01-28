@@ -12,6 +12,7 @@
     "async": "0.1.22",
     "bcrypt": "0.7.3",
     "connect": "2.7.2",
+    "connect-flash": "0.1.0",
     "connect-mongoose": "0.0.2",
     "express": "3.0.0",
     "fs-extra": "0.3.2",
