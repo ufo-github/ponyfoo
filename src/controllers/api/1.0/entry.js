@@ -103,7 +103,9 @@ function remove(req, res){
             throw err;
         }
 
-        var query = { _id: { $in: [entry.previous, entry.next] } };
+        var prev = entry.previous,
+            next = entry.next,
+            query = { _id: { $in: [prev, next] } };
 
         model.find(query, function(err, siblings){
             if(err){
@@ -111,11 +113,11 @@ function remove(req, res){
             }
 
             async.forEach(siblings, function(sibling, done){
-                if (sibling._id === entry.previous){
-                    sibling.next = entry.next;
+                if (prev !== null && sibling._id.equals(prev)){
+                    sibling.next = next;
                 }
-                if (sibling._id === entry.next){
-                    sibling.previous = entry.previous;
+                if (next !== null && sibling._id.equals(next)){
+                    sibling.previous = prev;
                 }
                 sibling.save(done);
             },function(err){
