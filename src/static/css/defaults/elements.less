@@ -28,9 +28,11 @@ h6 { font-size: 1.1em; font-weight: bold; }
 ----------------------------------------------------------*/
 
 hr {
-    border: 0 none;
-    height: 1px;
-    margin-bottom: 20px;
+  border: 0 none;
+  height: 1px;
+  margin-bottom: 20px;
+  display: block;
+  background-color: @strong;
 }
 
 blockquote {
@@ -58,6 +60,21 @@ del { text-decoration: line-through; }
 
 img { border: none; }
 
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  .box-shadow-dual(0 1px 0 #bbb, 0 0 0 2px #fff inset);
+  .box-radius(3px);
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
 
 
 /* FORM ELEMENTS

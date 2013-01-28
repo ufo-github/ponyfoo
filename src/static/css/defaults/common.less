@@ -43,6 +43,12 @@
   box-shadow: @rule; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
 }
 
+.box-shadow-dual(@first,@second) {
+  -webkit-box-shadow: @first,@second; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow: @first,@second; /* FF3.5 - 3.6 */
+  box-shadow: @first,@second; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
+}
+
 .box-transition(@rule) {
   -webkit-transition: @rule;  /* Safari 3.2+, Chrome */
   -moz-transition: @rule;  /* Firefox 4-15 */

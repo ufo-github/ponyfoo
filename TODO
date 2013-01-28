@@ -5,7 +5,6 @@ TODO:
 - authentication failure message flash
 - comments by hand
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
-- post regarding unobtrusive paging
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 
 

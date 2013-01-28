@@ -39,6 +39,7 @@
                 siblings = nbrut.tt.partial('entry-siblings', model),
                 entry = container.find('.blog-entry');
 
+            console.log(model);
             siblings.appendTo(entry);
         }
 

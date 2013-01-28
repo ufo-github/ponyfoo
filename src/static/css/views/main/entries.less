@@ -28,6 +28,9 @@
   margin-bottom: 45px;
 }
 
+/* COMMON ELEMENTS
+ *******************/
+
 .blog-entry-brief h1,
 .blog-entry-text h1,
 .blog-entry h2,
@@ -40,16 +43,6 @@
   color: @strong;
 }
 
-.blog-entry pre {
-  padding: 12px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.blog-entry pre code {
-  display: block;
-}
-
 .blog-entry p {
   line-height: 1.3em;
   margin-top: 15px;
@@ -57,22 +50,6 @@
 
 .blog-entry p:first-child {
   margin-top: 0;
-}
-
-.blog-entry ul {
-  margin: 20px 0;
-}
-
-.blog-entry ul li {
-  line-height: 1.6em;
-  list-style-position:inside;
-  list-style-type: disc;
-  list-style-type: hiragana-iroha;
-}
-
-.blog-entry ul li:before {
-  content: '';
-  padding-right: 3px;
 }
 
 .blog-entry blockquote {
@@ -105,6 +82,11 @@
   margin-right: 12px;
 }
 
+
+
+/* LINKS
+ ********/
+
 .blog-entry section a,
 .blog-entry footer a,
 .blog-sidebar a {
@@ -116,6 +98,68 @@
 .blog-entry footer a:visited,
 .blog-sidebar a:visited {
   color: @pink - #333;
+}
+
+
+
+/* CODE BLOCKS
+ ***************/
+
+.blog-entry pre {
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.blog-entry pre code {
+  display: block;
+}
+
+/* reset list items in code blocks */
+.blog-entry ol.linenums {
+  margin: 0;
+}
+
+.blog-entry ol.linenums li {
+  line-height: normal;
+  list-style-position: inherit;
+  list-style-type: none;
+}
+
+.blog-entry ol.linenums li:before {
+  content: none;
+  padding: 0;
+}
+
+
+
+/* ITEM LISTS
+ **************/
+
+.blog-entry ul,
+.blog-entry ol {
+  margin: 20px 0;
+}
+
+.blog-entry ul li,
+.blog-entry ol li {
+  line-height: 1.6em;
+  list-style-position:inside;
+}
+
+.blog-entry ul li {
+  list-style-type: disc;
+  list-style-type: hiragana-iroha;
+}
+
+.blog-entry ol li {
+  list-style-type: decimal;
+}
+
+.blog-entry ul li:before,
+.blog-entry ol li:before {
+  content: '';
+  padding-right: 3px;
 }
 
 
