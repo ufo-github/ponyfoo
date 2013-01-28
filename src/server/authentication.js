@@ -7,7 +7,7 @@ function configure(done){
             usernameField: 'email'
         },
         function(email, password, done) {
-            models.user.findOne({ email: email }, function (err, user) {
+            user.findOne({ email: email }, function (err, user) {
                 if (err) {
                     return done(err);
                 }
