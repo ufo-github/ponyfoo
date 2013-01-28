@@ -2,7 +2,6 @@ TODO:
 
 1
 -------
-- fix prev and next in posts
 - authentication failure message flash
 - comments by hand
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php

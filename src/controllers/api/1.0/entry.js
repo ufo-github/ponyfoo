@@ -132,7 +132,9 @@ function remove(req, res){
 }
 
 function unwrapSiblings(entry,cb){
-    var query = { _id: { $in: [entry.previous, entry.next] } };
+    var prev = entry.previous,
+        next = entry.next,
+        query = { _id: { $in: [entry.previous, entry.next] } };
 
     model.find(query, function(err, siblings){
         if(err){
@@ -143,7 +145,7 @@ function unwrapSiblings(entry,cb){
         unwrapped.related = {};
 
         siblings.forEach(function(sibling){
-            var key = sibling._id.equals(entry.previous) ? 'previous' : 'next';
+            var key = prev !== null && sibling._id.equals(prev) ? 'previous' : 'next';
 
             unwrapped.related[key] = {
                 url: sibling.getPermalink(),
@@ -171,6 +173,7 @@ function migrate(req,res){
         });
     });
 }
+
 module.exports = {
     get: function(req,res){
         restList(req,res);
