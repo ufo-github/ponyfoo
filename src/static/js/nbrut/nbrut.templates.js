@@ -75,11 +75,15 @@
 			}
 		}
 
-		function back(){
-			var h = activity.history,
-				to = h[h.length-1];
+		function back(strictly){
+            var h = activity.history, to;
+            if (h.length === 0){
+                return; // where do you think you're going?
+            }
+
+			to = h[h.length-1];
 				
-			if(!to){
+			if(to === undefined && strictly !== true){
 				activate(defaultTemplate);
 			}else{
 				activate(to.key, to.settings);
@@ -392,14 +396,8 @@
             activate(route.key, route.settings, true);
         }
 
-		function popState(e){
-            var initial = e.originalEvent === undefined || e.originalEvent.state === null;
-			if(!initial){
-                activateRoute({
-                    key: e.originalEvent.state.key,
-				    settings: e.originalEvent.state.settings
-                });
-			}
+		function popState(){ // drastic simplification over history navigation. way better.
+            back(true);
 		}
 		
         function init(){
