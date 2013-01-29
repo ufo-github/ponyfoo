@@ -25,7 +25,6 @@
 	"passport": "0.1.15",
 	"passport-local": "0.1.6",
     "rss": "0.0.4",
-    "tld": "0.0.1",
     "walk": "2.2.1"
   },
   "devDependencies": {
