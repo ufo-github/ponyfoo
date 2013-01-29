@@ -63,6 +63,7 @@
 				});
 			}
 		}
+
 		function bindTrigger(template, alias){
 			if(typeof alias.trigger === 'string'){
 				trigger = $(alias.trigger);
@@ -75,15 +76,11 @@
 			}
 		}
 
-		function back(strictly){
-            var h = activity.history, to;
-            if (h.length === 0){
-                return; // where do you think you're going?
-            }
-
-			to = h[h.length-1];
+		function back(){
+			var h = activity.history,
+				to = h[h.length-1];
 				
-			if(to === undefined && strictly !== true){
+			if(!to){
 				activate(defaultTemplate);
 			}else{
 				activate(to.key, to.settings);
@@ -194,7 +191,9 @@
                             if(!template.selfCleanup){
                                 return;
                             }
-                            soft = true; // don't push history state.
+                            if (soft !== 'replace'){
+                                soft = true; // don't push history state.
+                            }
                         }
                     }
                 }
@@ -244,7 +243,13 @@
                     var title = setTitle(alias.title, viewModel, settings.data),
                         url = alias.route.get(settings.data);
 
-                    if(!soft){
+                    if(soft === 'replace'){
+                        history.replaceState({
+                            key: template.key,
+                            settings: settings
+                        }, title, url);
+                    }
+                    else if(soft !== true){
                         history.pushState({
                             key: template.key,
                             settings: settings
@@ -263,7 +268,7 @@
 				};
             }
 
-            viewModel.flash = settings.flash;
+            viewModel.flash = settings.flash  || {};
             var view = partial(template.key, viewModel);
             view.fill(c, settings.data || {}, settings.identifier);
         }
@@ -393,11 +398,17 @@
         }
 
         function activateRoute(route){
-            activate(route.key, route.settings, true);
+            activate(route.key, route.settings, 'replace');
         }
 
-		function popState(){ // drastic simplification over history navigation. way better.
-            back(true);
+		function popState(e){
+            var initial = e.originalEvent === undefined || e.originalEvent.state === null;
+			if(!initial){
+                activateRoute({
+                    key: e.originalEvent.state.key,
+				    settings: e.originalEvent.state.settings
+                });
+			}
 		}
 		
         function init(){
