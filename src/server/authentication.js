@@ -12,14 +12,14 @@ function configure(done){
                     return done(err);
                 }
                 if (!user) {
-                    return done(null, false);
+                    return done(null, false, 'Invalid credentials');
                 }
                 user.validatePassword(password, function(err, isMatch) {
                     if (err){
                         return done(err);
                     }
                     if(!isMatch){
-                        return done(null, false);
+                        return done(null, false, 'Invalid credentials');
                     }
                     return done(null, user);
                 });

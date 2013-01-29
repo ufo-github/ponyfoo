@@ -1,6 +1,6 @@
 var rest = require('../../../services/rest.js'),
     $ = require('../../../services/$.js'),
-    entry = require('./../../../controllers/api/1.0/entry.js');
+    controller = require('./../../../controllers/api/1.0/entry.js');
 
 function routing(server){
 	var base = '/api/1.0',
@@ -50,17 +50,17 @@ function configure(server){
         routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
         routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
 
-    paged(api, '/entry', entry.get);
-    paged(api, routeYear, entry.getByDate);
-    paged(api, routeMonth, entry.getByDate);
-    paged(api, routeDay, entry.getByDate);
+    paged(api, '/entry', controller.get);
+    paged(api, routeYear, controller.getByDate);
+    paged(api, routeMonth, controller.getByDate);
+    paged(api, routeDay, controller.getByDate);
 
-    api.get(routeSlug, entry.getBySlug);
-    api.get('/entry/:id([0-9a-f]+)', entry.getById);
+    api.get(routeSlug, controller.getBySlug);
+    api.get('/entry/:id([0-9a-f]+)', controller.getById);
 
-    api.put('/entry', author, entry.ins);
-    api.put('/entry/:id([0-9a-f]+)', author, entry.upd);
-    api.del('/entry/:id([0-9a-f]+)', author, entry.del);
+    api.put('/entry', author, controller.ins);
+    api.put('/entry/:id([0-9a-f]+)', author, controller.upd);
+    api.del('/entry/:id([0-9a-f]+)', author, controller.del);
 
     api.all('/*', notFound);
 }

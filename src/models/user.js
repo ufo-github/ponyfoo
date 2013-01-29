@@ -27,7 +27,6 @@ schema.pre('save', function(next) {
             }
 
             user.password = hash;
-
             return next();
         });
     });
