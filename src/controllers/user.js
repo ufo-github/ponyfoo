@@ -29,7 +29,12 @@ module.exports = {
         });
     },
 
-    login: passport.authenticate('local', {
+    login: function(req,res,next){
+        res.locals.flash.error = req.flash('error');
+        next();
+    },
+
+    authenticate: passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/user/login',
         failureFlash: true

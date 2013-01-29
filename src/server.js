@@ -55,9 +55,9 @@ function configureStatic(){
 }
 
 function configureMiddleware(){
+    server.set('views', views);
     server.locals.settings['x-powered-by'] = false;
     server.locals.config = config;
-    server.set('views', views);
 
     server.use(express.cookieParser());
     server.use(express.bodyParser());
@@ -66,12 +66,27 @@ function configureMiddleware(){
         secret: config.security.sessionSecret,
         store: new sessionStore()
     }));
-    server.use(flash());
+    configureFlash();
 
     server.use(passport.initialize());
     server.use(passport.session());
 
     server.use(server.router);
+}
+
+function configureFlash(){
+    server.use(flash());
+    server.use(function(req,res,next){
+        res.locals.flash = {}; // initialize flash
+
+        var render = res.render;
+        res.render = function(view, locals, callback){
+            res.locals.flash.json = JSON.stringify(res.locals.flash);
+            res.render = render;
+            res.render(view, locals, callback);
+        };
+        next();
+    })
 }
 
 function configureServerRouting(done){
