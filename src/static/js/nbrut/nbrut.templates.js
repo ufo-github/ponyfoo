@@ -251,14 +251,9 @@
                     url = document.location.pathname;
                 }
 
-                if(soft === 'replace'){
-                    history.replaceState({
-                        key: template.key,
-                        settings: settings
-                    }, title, url);
-                }
-                else if(soft !== true){
-                    history.pushState({
+                var method = soft === 'replace' ? 'replaceState' : soft !== true ? 'pushState' : null;
+                if (method !== null){
+                    history[method]({
                         key: template.key,
                         settings: settings
                     }, title, url);
