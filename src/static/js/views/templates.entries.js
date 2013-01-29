@@ -21,7 +21,6 @@
         source: '#blog-entries-template',
         mustache: true,
         aliases: [{
-            title: { text: nbrut.site.title, literal: true },
             route: '/',
             trigger: '#home'
         },{

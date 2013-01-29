@@ -21,7 +21,11 @@
             },
             titleSettings = {
                 tag: $('title'),
-                format: '{0} - ' + nbrut.site.title
+                format: '{0} - ' + nbrut.site.title,
+                default: {
+                    text: nbrut.site.title,
+                    literal: true
+                }
             },
             loading = '',
             plugins = [];
@@ -238,12 +242,11 @@
             active[template.container] = template;
 
             if (template.container === defaults.container){
-                var title, url,
-                    alias = getTemplateAlias(template, settings);
+                var alias = getTemplateAlias(template, settings), title, url;
                 if (alias !== undefined){
                     title = setTitle(alias.title, viewModel, settings.data);
                     url = alias.route.get(settings.data);
-                }else if(template.title){
+                }else{
                     title = setTitle(template.title, viewModel, settings.data);
                     url = document.location.pathname;
                 }
@@ -334,14 +337,12 @@
         }
 
         function setTitle(opts, viewModel, data){
-            if(typeof opts === 'string'){
-                opts = {
-                    text: opts
-                };
+            if (opts === undefined){
+                opts = titleSettings.default;
+            }else if(typeof opts === 'string'){
+                opts = { text: opts };
             }else if($.isFunction(opts)){
-                opts = {
-                    dynamic: opts
-                }
+                opts = { dynamic: opts };
             }
 
             var text = opts.text || opts.dynamic(viewModel, data),
