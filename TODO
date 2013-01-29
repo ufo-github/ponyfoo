@@ -10,7 +10,7 @@ TODO:
 
 2
 -------
-- remove non-#container containers, since they won't ever be used. partials do that.
+- remove trails of the notion of non-#container containers, since they won't ever be used. partials do that.
 - main -> blog
 - blog post search
 - serve different views to google crawl bot
