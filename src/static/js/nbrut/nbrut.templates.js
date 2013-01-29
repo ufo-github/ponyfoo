@@ -186,7 +186,7 @@
 
             var container = $(template.container);
             settings.flash = container.data('flash');
-            container.removeAttr('data-flash');
+            container.removeAttr('data-flash').removeData('flash');
 
             if(template.container in active) {
                 if(active[template.container] === template) { // already active template
