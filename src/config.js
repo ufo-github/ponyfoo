@@ -17,7 +17,7 @@ var config = {
             source: path.join(this.static.folder, 'opensearch.xmln'),
             bin: path.join(this.static.bin, 'opensearch.xml'),
             href: '/opensearch.xml',
-            template: 'http://www.google.com/search?q=site:ponyfoo.com {searchTerms}'
+            template: this.server.authority + '/search/{searchTerms}'
         };
     },
     server: {
