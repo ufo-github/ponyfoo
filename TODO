@@ -12,7 +12,7 @@ TODO:
 -------
 - remove non-#container containers, since they won't ever be used. partials do that.
 - main -> blog
-- opensearch
+- blog post search
 - serve different views to google crawl bot
 
 

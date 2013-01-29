@@ -109,12 +109,14 @@ function compileAndConfigure(done){
 
 function main(){
     var db = require('./server/db.js'),
+        opensearch = require('./logic/opensearch.js'),
         feed = require('./logic/feed.js'),
         listener = require('./server/listen.js');
 
     async.series([
         async.apply(db.connect),
         async.apply(compileAndConfigure),
+        async.apply(opensearch.output),
         async.apply(feed.rebuild),
         async.apply(listener.listen, server)
     ]);

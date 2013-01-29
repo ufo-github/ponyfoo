@@ -12,6 +12,7 @@ html(lang='en')
     include shared/og
 
     link(rel='alternate', type='application/rss+xml', href=config.feed.proxy)
+    link(rel='search', type='application/opensearchdescription+xml', title=config.site.title, href=config.opensearch.href)
     link(rel='shortcut icon', href='/favicon.ico')
     !=assetify.css.emit(profile)
 

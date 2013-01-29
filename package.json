@@ -18,12 +18,14 @@
     "fs-extra": "0.3.2",
     "jade": "0.27.6",
     "jsdom": "0.3.4",
+    "jsn": "0.0.3",
     "moment": "1.7.2",
 	"mongoose": "3.5.3",
     "pagedown": "1.0.0",
 	"passport": "0.1.15",
 	"passport-local": "0.1.6",
     "rss": "0.0.4",
+    "tld": "0.0.1",
     "walk": "2.2.1"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
-var path = require('path'),
+var tld = require('tld'),
+    path = require('path'),
     assetify = require('assetify');
 
 var config = {
@@ -11,6 +12,14 @@ var config = {
     static: {
         folder: __dirname + '/static',
         bin: __dirname + '/static/bin'
+    },
+    get opensearch(){
+        return this._o = this._o || {
+            source: path.join(this.static.folder, 'opensearch.xmln'),
+            bin: path.join(this.static.bin, 'opensearch.xml'),
+            href: '/opensearch.xml',
+            template: 'http://www.google.com/search?q=site:ponyfoo.com {searchTerms}'
+        };
     },
     server: {
         host: process.env.HOST || 'http://localhost',
