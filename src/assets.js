@@ -47,9 +47,11 @@ function getJs(){
         '/js/views/thin.hooks.js',
         '/js/views/templates.hooks.js',
         '/js/views/templates.js',
+        '/js/views/templates.entries.js',
         { profile: 'anon', local: '/js/views/templates.anon.js' },
         { profile: 'author', local: '/js/views/templates.author.js'},
         '/js/views/main/entries.js',
+        { profile: 'anon', local: '/js/views/user/login.js' },
         { profile: 'author', local: '/js/views/author/editor.js' },
         { profile: 'author', local: '/js/views/author/review.js' }
     ];

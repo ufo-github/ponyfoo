@@ -179,6 +179,10 @@
                 settings = {};
             }
 
+            var container = $(template.container);
+            settings.flash = container.data('flash');
+            container.removeAttr('data-flash');
+
             if(template.container in active) {
                 if(active[template.container] === template) { // already active template
                     if (activity.current !== undefined){ // template engine initialized
@@ -255,6 +259,7 @@
 				};
             }
 
+            viewModel.flash = settings.flash;
             var view = partial(template.key, viewModel);
             view.fill(c, settings.data || {}, settings.identifier);
         }
@@ -273,22 +278,29 @@
                 html = template.dom.html;
             }
 
+            function fill(container, data, identifier){
+                container.addClass(template.dom.css).html(html);
+                fixLocalRoutes(container);
+                bindBack(template);
+                template.afterActivate(viewModel, data || {}, identifier);
+            }
+
+            function move(fn){
+                return function(container,data){ /* NOTE: the data-class will be lost, same for event bindings. */
+                    var temp = $('<div/>');
+                    fill(temp, data);
+                    var elements = temp.children();
+                    elements[fn](container);
+                    return elements;
+                };
+            }
+
             return {
                 html: html,
                 css: template.dom.css,
-                fill: function(container, data, identifier){
-                    container.addClass(template.dom.css).html(html);
-                    fixLocalRoutes(container);
-                    bindBack(template);
-                    template.afterActivate(viewModel, data || {}, identifier);
-                },
-                appendTo: function(container, data){ /* NOTE: the data-class will be lost, same for event bindings. */
-                    var temp = $('<div/>');
-                    this.fill(temp, data);
-                    var elements = temp.children();
-                    elements.appendTo(container);
-                    return elements;
-                }
+                fill: fill,
+                appendTo: move('appendTo'),
+                insertAfter: move('insertAfter')
             };
         }
 

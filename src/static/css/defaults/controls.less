@@ -280,5 +280,35 @@ a.remove:hover {
   height: 0;
 }
 
-* html .clearfix             { zoom: 1; } /* IE6 */
-*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
+
+/* VALIDATION ERRORS
+ ******************/
+
+ul.validation-errors:empty {
+  display: none;
+}
+
+ul.validation-errors {
+  font-family: "Bitstream Vera Sans Mono";
+  font-size: 0.8em;
+  background-color: @blue_light;
+  color: @strong;
+  padding: 12px;
+  margin: 15px 0 10px;
+  .box-radius(3px);
+}
+
+ul.validation-errors li{
+  margin-top: 8px;
+  list-style-position: inside;
+  list-style-type: disc;
+}
+
+ul.validation-errors li:first-child {
+  margin-top: 0;
+}
+
+ul.validation-errors li:only-child {
+  list-style-type: none;
+}
