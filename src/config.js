@@ -1,5 +1,4 @@
-var tld = require('tld'),
-    path = require('path'),
+var path = require('path'),
     assetify = require('assetify');
 
 var config = {
