@@ -238,27 +238,29 @@
             active[template.container] = template;
 
             if (template.container === defaults.container){
-                var alias = getTemplateAlias(template, settings);
+                var title, url,
+                    alias = getTemplateAlias(template, settings);
                 if (alias !== undefined){
-                    var title = setTitle(alias.title, viewModel, settings.data),
-                        url = alias.route.get(settings.data);
-
-                    if(soft === 'replace'){
-                        history.replaceState({
-                            key: template.key,
-                            settings: settings
-                        }, title, url);
-                    }
-                    else if(soft !== true){
-                        history.pushState({
-                            key: template.key,
-                            settings: settings
-                        }, title, url);
-                    }
+                    title = setTitle(alias.title, viewModel, settings.data);
+                    url = alias.route.get(settings.data);
                 }else if(template.title){
-                    setTitle(template.title, viewModel, settings.data);
+                    title = setTitle(template.title, viewModel, settings.data);
+                    url = document.location.pathname;
                 }
-				
+
+                if(soft === 'replace'){
+                    history.replaceState({
+                        key: template.key,
+                        settings: settings
+                    }, title, url);
+                }
+                else if(soft !== true){
+                    history.pushState({
+                        key: template.key,
+                        settings: settings
+                    }, title, url);
+                }
+
 				if (activity.current !== undefined){
 					activity.history.push(activity.current);
 				}
