@@ -260,7 +260,7 @@
             view.fill(config.container, settings.data || {}, settings.identifier);
         }
 
-        function partial(key, viewModel, data){
+        function partial(key, viewModel){
             var template = templates[key];
             if (template === undefined){
                 template = templates['404']; // fall back to 404.
@@ -281,8 +281,8 @@
                 template.afterActivate(viewModel, data || {}, identifier);
             }
 
-            function move(fn){
-                return function(container,data){ /* NOTE: the data-class will be lost, same for event bindings. */
+            function move(fn){/* NOTE: data-class will be lost, same for event bindings. */
+                return function(container,data){
                     var temp = $('<div/>');
                     fill(temp, data);
                     var elements = temp.children();
