@@ -1,12 +1,21 @@
 !function (window,nbrut,moment) {
     function getEntryRoute(regex){
+        var searching = regex.indexOf('\/search') === 0,
+            prefix = searching ? 'search/' : '';
+
         return {
             regex: new RegExp(regex, 'i'),
             get: function(data){
-                return '/{0}'.format(data.query);
+                return '/{0}'.format(data.query.replace(' ','+'));
             },
             map: function(captures){
-                return { query: captures.slice(1).join('/') };
+                var terms = captures.slice(1).join('/'),
+                    decoded = decodeURIComponent(terms).replace('+',' ');
+
+                return {
+                    query: prefix + decoded,
+                    terms: decoded
+                };
             }
         }
     }
@@ -48,6 +57,12 @@
                 return viewModel.entries[0].title;
             },
             route: getEntryRoute(slug + '$')
+        },{
+            key: 'search',
+            title: function(viewModel,data){
+                return 'Search "' + data.terms + '"';
+            },
+            route: getEntryRoute('\/search\/(.*)')
         }]
     });
 

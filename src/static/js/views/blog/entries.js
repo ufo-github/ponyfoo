@@ -1,5 +1,5 @@
 !function (window,$,nbrut,undefined) {
-	function prepare(render, data, identifier){
+	function prepare(render, data){
         if (data.query === undefined){
             complete(render, data);
         }else{
