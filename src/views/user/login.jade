@@ -5,11 +5,11 @@ section#user-login-template.template(data-class='user-login')
     fieldset
       p
         label(for='login-email')='Email'
-        input#login-email(type='text', name='email')
+        input#login-email(type='text', name='email', placeholder='Input your email')
 
       p
         label(for='login-password')='Password'
-        input#login-password(type='password', name='password')
+        input#login-password(type='password', name='password', placeholder='Input your password')
 
     p.login-button
-      input(type='submit')='Login'
+      input(type='submit', value='Login')

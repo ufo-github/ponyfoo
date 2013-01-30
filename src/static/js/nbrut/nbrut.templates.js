@@ -97,7 +97,7 @@
 				backTrigger.on('click', back);
 			}
 		}
-		
+
         function configure(settings) {
             if(!(settings.key in templates)){
                 throw new Error('template not registered.');
