@@ -3,7 +3,8 @@ var config = require('./config.js'),
         source: config.static.folder,
         bin: config.static.bin,
         css: getCss(),
-        js: getJs()
+        js: getJs(),
+        profiles: ['anon','registered','author']
     };
 
 function getCss(){
