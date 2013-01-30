@@ -269,6 +269,7 @@
             }
 
             viewModel.flash = settings.flash  || {};
+            raise('beforeActivate', template, settings);
             var view = partial(template.key, viewModel);
             view.fill(c, settings.data || {}, settings.identifier);
         }

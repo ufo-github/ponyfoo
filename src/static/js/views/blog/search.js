@@ -13,4 +13,12 @@
             }
         }
     });
+
+    nbrut.tt.hook('beforeActivate', function(template,settings){
+        if(template.key === 'home' && settings.key === 'search'){
+            search.val(settings.data.terms);
+        }else{
+            search.val(''); // clear before switching to other templates
+        }
+    });
 }(window,jQuery,nbrut);

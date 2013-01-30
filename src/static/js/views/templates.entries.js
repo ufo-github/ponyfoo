@@ -6,11 +6,11 @@
         return {
             regex: new RegExp(regex, 'i'),
             get: function(data){
-                return '/{0}'.format(data.query.replace(' ','+'));
+                return '/{0}'.format(data.query.replace(/ /g,'+'));
             },
             map: function(captures){
                 var terms = captures.slice(1).join('/'),
-                    decoded = decodeURIComponent(terms).replace('+',' ');
+                    decoded = decodeURIComponent(terms).replace(/\+/g,' ');
 
                 return {
                     query: prefix + decoded,
