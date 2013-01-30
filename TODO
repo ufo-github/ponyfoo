@@ -2,6 +2,8 @@ TODO:
 
 1
 -------
+- create dup user throws
+- validate user email regex [production :)]
 - comments by hand
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
@@ -11,7 +13,6 @@ TODO:
 2
 -------
 - remove trails of the notion of non-#container containers, since they won't ever be used. partials do that.
-- main -> blog
 - blog post search
 - serve different views to google crawl bot
 

@@ -1,0 +1,10 @@
+extends layout
+
+block menu
+  a(href='/user/logout')='Logout'
+  a#review-entries(href='/author/entry/review')='Review Entries'
+  a.button#write-entry(href='/author/entry')='Write Entry'
+
+block templates
+  include ../author/editor
+  include ../author/review

@@ -4,7 +4,8 @@
         source: '#user-register-template',
         aliases: [{
             title: 'Register',
-            route: '/user/register'
+            route: '/user/register',
+            trigger: '#register-user'
         }]
     });
 
@@ -13,7 +14,8 @@
         source: '#user-login-template',
         aliases: [{
             title: 'Login',
-            route: '/user/login'
+            route: '/user/login',
+            trigger: '#login-user'
         }]
     });
 }(window,nbrut);

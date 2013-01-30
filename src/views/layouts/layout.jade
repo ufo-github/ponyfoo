@@ -9,7 +9,7 @@ html(lang='en')
     meta(name="author", content=config.author.email)
     meta(name="viewport", content='width=device-width, initial-scale=1')
 
-    include shared/og
+    include ../shared/_og
 
     link(rel='alternate', type='application/rss+xml', href=config.feed.proxy)
     link(rel='search', type='application/opensearchdescription+xml', title=config.site.title, href=config.opensearch.href)
@@ -21,21 +21,24 @@ html(lang='en')
       h1.layout-heading
         a#home(href='/')=config.site.title
 
-      block menu
+      aside#menu
+        nav
+          block menu
 
     section#content(data-flash=flash.json)
-      include shared/spinner
+      include ../shared/_spinner
 
-    include shared/ribbon
-    include shared/404
-    include shared/validation-errors
+    include ../shared/_ribbon
 
-    include main/entries
-    include main/empty
-    include main/exhausted
-    include main/siblings
-    include main/pager
-    include main/more
+    include ../shared/404
+    include ../shared/validation-errors
+
+    include ../blog/entries
+    include ../blog/partials/empty
+    include ../blog/partials/exhausted
+    include ../blog/partials/siblings
+    include ../blog/partials/pager
+    include ../blog/partials/more
 
     block templates
 

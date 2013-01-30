@@ -16,8 +16,7 @@ function getCss(){
         '/css/defaults/sprite.less',
         '/css/libs/markdown.less',
         '/css/libs/prettify.less',
-        { profile: 'author', local: '/css/layouts/author.less' },
-        '/css/views/main/entries.less',
+        '/css/views/blog/entries.less',
         { profile: 'anon', local: '/css/views/user/register.less' },
         { profile: 'anon', local: '/css/views/user/login.less' },
         { profile: 'author', local: '/css/views/author/editor.less' },
@@ -50,7 +49,7 @@ function getJs(){
         '/js/views/templates.entries.js',
         { profile: 'anon', local: '/js/views/templates.anon.js' },
         { profile: 'author', local: '/js/views/templates.author.js'},
-        '/js/views/main/entries.js',
+        '/js/views/blog/entries.js',
         { profile: 'anon', local: '/js/views/user/login.js' },
         { profile: 'author', local: '/js/views/author/editor.js' },
         { profile: 'author', local: '/js/views/author/review.js' }

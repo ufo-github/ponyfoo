@@ -1,11 +1,15 @@
 module.exports = {
     get: function(req,res){
+        var profile;
+
         if(!req.user){
-            res.render('anon.jade', { profile: 'anon' });
+            profile = 'anon';
         }else if(req.user.author !== true){
-            res.render('anon.jade', { profile: 'anon' });
+            profile = 'registered';
         }else{
-            res.render('author.jade', { profile: 'author' });
+            profile = 'author';
         }
+
+        res.render('layouts/' + profile + '.jade', { profile: profile });
     }
 };

@@ -1,0 +1,9 @@
+extends layout
+
+block menu
+  a#register-user(href='/user/register')='Register'
+  a.button#login-user(href='/user/login')='Login'
+
+block templates
+  include ../user/register
+  include ../user/login

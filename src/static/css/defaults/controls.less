@@ -32,8 +32,6 @@ textarea.resizing {
   pointer-events: none;
   position: absolute;
   overflow: hidden;
-  top: 0;
-  right: 0;
   width: 150px;
   height: 150px;
 }
@@ -41,16 +39,12 @@ textarea.resizing {
 .github-ribbon {
   pointer-events: all;
   position: absolute;
-  top: 42px;
-  right: -43px;
 
   padding: 2px 0;
 
   background-color: #027902;
   .box-gradient-image(rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.15));
   .box-shadow(0px 2px 3px 0px rgba(0, 0, 0, 0.5));
-  .transform-to(45deg);
-
 }
 
 .github-ribbon a {
@@ -72,6 +66,34 @@ textarea.resizing {
   border-width: 1px 0;
   border-style: dotted;
   border-color: rgba(255,255,255,0.7);
+  .box-transition(all 0.4s linear);
+}
+
+.github-ribbon:hover {
+  background-color: #318d2f;
+}
+
+.github-ribbon-wrapper.top-right {
+  top: 0;
+  right: 0;
+}
+
+.github-ribbon-wrapper.top-right .github-ribbon {
+  top: 42px;
+  right: -43px;
+  .transform-to(45deg);
+}
+
+.github-ribbon-wrapper.top-left {
+  top: 0;
+  left: 0;
+  width: 165px;
+}
+
+.github-ribbon-wrapper.top-left .github-ribbon {
+  top: 24px;
+  left: -32px;
+  .transform-to(-30deg);
 }
 
 
