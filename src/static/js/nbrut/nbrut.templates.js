@@ -3,13 +3,15 @@
         var templates = {},
             stringKeys = {},
             regexKeys = [],
-            active = [],
 			activity = {
 				history: []
 			},
-			defaultTemplate = 'home',
+            config = {
+                defaultTemplate: 'home',
+                container: $('#content'),
+                loading: ''
+            },
             defaults = {
-                container: '#content',
                 mustache: false,
                 initialized: false,
                 initialize: $.noop,
@@ -27,7 +29,6 @@
                     literal: true
                 }
             },
-            loading = '',
             plugins = [];
 
         function register(settings) {
@@ -85,7 +86,7 @@
 				to = h[h.length-1];
 				
 			if(!to){
-				activate(defaultTemplate);
+				activate(config.defaultTemplate);
 			}else{
 				activate(to.key, to.settings);
 			}
@@ -184,25 +185,21 @@
                 settings = {};
             }
 
-            var container = $(template.container);
+            var container = config.container;
             settings.flash = container.data('flash');
             container.removeAttr('data-flash').removeData('flash');
 
-            if(template.container in active) {
-                if(active[template.container] === template) { // already active template
-                    if (activity.current !== undefined){ // template engine initialized
-                        if(equalSettings(settings)){ // compare template settings
-                            if(!template.selfCleanup){
-                                return;
-                            }
-                            if (soft !== 'replace'){
-                                soft = true; // don't push history state.
-                            }
-                        }
+            if (activity.current !== undefined && activity.current.key === template.key){ // template engine initialized
+                if(equalSettings(settings)){ // compare template settings
+                    if(!template.selfCleanup){
+                        return;
+                    }
+                    if (soft !== 'replace'){
+                        soft = true; // don't push history state.
                     }
                 }
-                deactivateContainer(template); // clean-up.
             }
+            deactivateContainer(template); // clean-up.
 			
             if(!template.initialized){
                 template.initialized = true;
@@ -226,52 +223,41 @@
         }
 
         function deactivateContainer(template) {
-            if(template.container in active){
-                raise('deactivate', template);
-                $(template.container).removeClass().off().html(loading);
-                active.splice(active.indexOf(template.container), 1);
-            }
+            raise('deactivate', template);
+            config.container.off().removeClass().html(config.loading);
         }
 
         function activateTemplate(template, settings, viewModel, soft){
-            var c = $(template.container);
-            if (c.length !== 1){
-                throw new Error('template container not unique.');
+            var alias = getTemplateAlias(template, settings), title, url;
+            if (alias !== undefined){
+                title = setTitle(alias.title, viewModel, settings.data);
+                url = alias.route.get(settings.data);
+            }else{
+                title = setTitle(template.title, viewModel, settings.data);
+                url = document.location.pathname;
             }
 
-            active[template.container] = template;
-
-            if (template.container === defaults.container){
-                var alias = getTemplateAlias(template, settings), title, url;
-                if (alias !== undefined){
-                    title = setTitle(alias.title, viewModel, settings.data);
-                    url = alias.route.get(settings.data);
-                }else{
-                    title = setTitle(template.title, viewModel, settings.data);
-                    url = document.location.pathname;
-                }
-
-                var method = soft === 'replace' ? 'replaceState' : soft !== true ? 'pushState' : null;
-                if (method !== null){
-                    history[method]({
-                        key: template.key,
-                        settings: settings
-                    }, title, url);
-                }
-
-				if (activity.current !== undefined){
-					activity.history.push(activity.current);
-				}
-				activity.current = {
-					key: template.key,
-					settings: settings
-				};
+            var method = soft === 'replace' ? 'replaceState' : soft !== true ? 'pushState' : null;
+            if (method !== null){
+                history[method]({
+                    key: template.key,
+                    settings: settings
+                }, title, url);
             }
+
+            if (activity.current !== undefined){
+                activity.history.push(activity.current);
+            }
+            activity.current = {
+                key: template.key,
+                settings: settings,
+                template: template
+            };
 
             viewModel.flash = settings.flash  || {};
             raise('beforeActivate', template, settings);
             var view = partial(template.key, viewModel);
-            view.fill(c, settings.data || {}, settings.identifier);
+            view.fill(config.container, settings.data || {}, settings.identifier);
         }
 
         function partial(key, viewModel, data){
@@ -411,7 +397,7 @@
 		}
 		
         function init(){
-            loading = $(defaults.container).html();
+            config.loading = config.container.html();
 
             $(window).on('popstate', popState);
 
@@ -443,7 +429,6 @@
             getRoute: getRoute,
             activate: activate,
             activateRoute: activateRoute,
-            deactivate: deactivateContainer,
             partial: partial,
             hook: hook,
             get active() { return getHash() - 1; } /* offset by one because 0 means nothing is active yet */
