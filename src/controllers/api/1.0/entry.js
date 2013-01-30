@@ -196,5 +196,16 @@ module.exports = {
         });
 	},
 	del: remove,
-    list: list // internal api DRY purposes
+    list: list, // internal api DRY purposes
+    search: function(req,res){
+        var keywords = new RegExp(req.params.keywords, 'i');
+
+        restList(req,res, {
+            $or: [
+                { title: keywords },
+                { brief: keywords },
+                { text: keywords }
+            ]
+        });
+    }
 };

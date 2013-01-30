@@ -54,6 +54,7 @@ function configure(server){
     paged(api, routeYear, controller.getByDate);
     paged(api, routeMonth, controller.getByDate);
     paged(api, routeDay, controller.getByDate);
+    paged(api, '/entry/search/:keywords', controller.search);
 
     api.get(routeSlug, controller.getBySlug);
     api.get('/entry/:id([0-9a-f]+)', controller.getById);
