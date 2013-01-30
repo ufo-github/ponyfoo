@@ -198,13 +198,15 @@ module.exports = {
 	del: remove,
     list: list, // internal api DRY purposes
     search: function(req,res){
-        var keywords = new RegExp(req.params.keywords, 'i');
+        var keywords = req.params.keywords,
+            escaped = keywords.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
+            query = new RegExp(escaped, 'i');
 
         restList(req,res, {
             $or: [
-                { title: keywords },
-                { brief: keywords },
-                { text: keywords }
+                { title: query },
+                { brief: query },
+                { text: query }
             ]
         });
     }
