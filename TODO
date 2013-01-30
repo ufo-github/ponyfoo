@@ -12,7 +12,6 @@ TODO:
 2
 -------
 - remove trails of the notion of non-#container containers, since they won't ever be used. partials do that.
-- blog post search box, search is implemented. :)
 - serve different views to google crawl bot
 
 

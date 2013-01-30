@@ -395,8 +395,8 @@
             });
         }
 
-        function activateRoute(route){
-            activate(route.key, route.settings, 'replace');
+        function activateRoute(route, soft){
+            activate(route.key, route.settings, soft);
         }
 
 		function popState(e){
@@ -405,7 +405,7 @@
                 activateRoute({
                     key: e.originalEvent.state.key,
 				    settings: e.originalEvent.state.settings
-                });
+                },'replace');
 			}
 		}
 		
@@ -416,7 +416,7 @@
 
             $(function(){
                 var route = getRoute(document.location.pathname);
-                activateRoute(route);
+                activateRoute(route, 'replace');
             });
         }
 
@@ -439,7 +439,9 @@
             init: init,
             register: register,
             configure: configure,
+            getRoute: getRoute,
             activate: activate,
+            activateRoute: activateRoute,
             deactivate: deactivateContainer,
             partial: partial,
             hook: hook,
