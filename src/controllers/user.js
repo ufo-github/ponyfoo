@@ -1,7 +1,28 @@
-var passport = require('passport'),
+var config = require('../config.js'),
+    passport = require('passport'),
     text = require('../services/text.js'),
     model = require('../models/user.js'),
     crud = require('../services/crud.js')(model);
+
+function validate(req){
+    var email = req.body.email,
+        password = req.body.password,
+        shouldCreate;
+
+    if(typeof password !== 'string' || password.length === 0){
+        req.flash('error', 'Password can\'t be empty');
+        shouldCreate = false;
+    }
+    if(typeof email !== 'string' || email.length === 0){
+        req.flash('error', 'Email can\'t be empty');
+        shouldCreate = false;
+    }else if(config.env.production && config.regex.email.test(email) === false){
+        req.flash('error', 'Email must be a valid address');
+        shouldCreate = false;
+    }
+
+    return shouldCreate;
+}
 
 module.exports = {
     guard: function(req,res,next){
@@ -12,16 +33,17 @@ module.exports = {
     },
 
     register: function(req,res, next){
-        if(!req.body.password || req.body.password.length === 0){
-            req.flash('error', 'Password can\'t be empty');
-            return res.redirect('/user/register');
-        }
+        var shouldCreate = validate(req);
 
-        model.findOne({ email: req.body.email }, function(err, document){
+        model.findOne({ email: email }, function(err, document){
             if(document !== null){
                 req.flash('error', 'Email already registered');
+                shouldCreate = false;
+            }
+            if(shouldCreate === false){
                 return res.redirect('/user/register');
             }
+
             crud.create(req.body, {
                 res: res,
                 always: function(user){

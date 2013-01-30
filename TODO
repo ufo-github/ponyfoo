@@ -2,8 +2,6 @@ TODO:
 
 1
 -------
-- create dup user throws
-- validate user email regex [production :)]
 - comments by hand
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
