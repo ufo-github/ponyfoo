@@ -12,26 +12,32 @@ module.exports = {
     },
 
     register: function(req,res, next){
-        crud.create(req.body, {
-            res: res,
-            always: function(user){
-                user.author = false; // prevent over-posting.
-            },
-            writeHead: false,
-            then: function(user){
-                req.login(user, function(err) {
-                    if (err) {
-                        return next(err);
-                    }
-                    return res.redirect('/');
-                });
-            }
-        });
-    },
+        if(!req.body.password || req.body.password.length === 0){
+            req.flash('error', 'Password can\'t be empty');
+            return res.redirect('/user/register');
+        }
 
-    login: function(req,res,next){
-        res.locals.flash.error = req.flash('error');
-        next();
+        model.findOne({ email: req.body.email }, function(err, document){
+            if(document !== null){
+                req.flash('error', 'Email already registered');
+                return res.redirect('/user/register');
+            }
+            crud.create(req.body, {
+                res: res,
+                always: function(user){
+                    user.author = false; // prevent over-posting.
+                },
+                writeHead: false,
+                then: function(user){
+                    req.login(user, function(err) {
+                        if (err) {
+                            return next(err);
+                        }
+                        return res.redirect('/');
+                    });
+                }
+            });
+        });
     },
 
     authenticate: passport.authenticate('local', {

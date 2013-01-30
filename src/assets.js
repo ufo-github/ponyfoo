@@ -51,6 +51,7 @@ function getJs(){
         { profile: 'author', local: '/js/views/templates.author.js'},
         '/js/views/blog/entries.js',
         { profile: 'anon', local: '/js/views/user/login.js' },
+        { profile: 'anon', local: '/js/views/user/register.js' },
         { profile: 'author', local: '/js/views/author/editor.js' },
         { profile: 'author', local: '/js/views/author/review.js' }
     ];

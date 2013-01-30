@@ -77,10 +77,9 @@ function configureMiddleware(){
 function configureFlash(){
     server.use(flash());
     server.use(function(req,res,next){
-        res.locals.flash = {}; // initialize flash
-
         var render = res.render;
         res.render = function(view, locals, callback){
+            res.locals.flash = req.flash(); // fetch
             res.locals.flash.json = JSON.stringify(res.locals.flash);
             res.render = render;
             res.render(view, locals, callback);
