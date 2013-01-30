@@ -168,6 +168,35 @@ function unwrapSiblings(entry,cb){
     });
 }
 
+function search(req,res){
+    var keywords = req.params.keywords.split(/ |,|\+|-|;/), escaped, query;
+
+    keywords.forEach(function(keyword, i){ // escape them
+        escaped = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        keywords[i] = new RegExp(escaped, 'i');
+    });
+
+    function target(field){
+        var query = [];
+
+        keywords.forEach(function(keyword){
+            var expression = {};
+            expression[field] = keyword;
+            query.push(expression);
+        });
+
+        return query;
+    }
+
+    restList(req,res, {
+        $or: [
+            { $and: target('title') },
+            { $and: target('brief') },
+            { $and: target('text') }
+        ]
+    });
+}
+
 module.exports = {
     get: function(req,res){
         restList(req,res);
@@ -197,17 +226,5 @@ module.exports = {
 	},
 	del: remove,
     list: list, // internal api DRY purposes
-    search: function(req,res){
-        var keywords = req.params.keywords,
-            escaped = keywords.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
-            query = new RegExp(escaped, 'i');
-
-        restList(req,res, {
-            $or: [
-                { title: query },
-                { brief: query },
-                { text: query }
-            ]
-        });
-    }
+    search: search
 };
