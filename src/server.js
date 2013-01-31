@@ -11,19 +11,6 @@ var config = require('./config.js'),
     views = path.join(__dirname, '/views'),
     server = express();
 
-function compileAssets(done){
-    assetify.use(assetify.plugins.less);
-    assetify.use(assetify.plugins.jsn);
-
-    if (config.env.production){
-        assetify.use(assetify.plugins.bundle);
-        assetify.use(assetify.plugins.minifyCSS);
-        assetify.use(assetify.plugins.minifyJS);
-    }
-    assetify.use(assetify.plugins.forward());
-    assetify.compile(assets, done);
-}
-
 function configureServer(done){
     server.configure(function(){
         configureStatic();
@@ -101,7 +88,7 @@ function configureServerRouting(done){
 
 function compileAndConfigure(done){
     async.parallel([
-        compileAssets,
+        assets.compile,
         configureServerRouting
     ],done);
 }

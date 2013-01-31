@@ -2,17 +2,16 @@ TODO:
 
 1
 -------
+- post regarding opensearch
 - comments by hand
 - improve provider login (make them failsafe)
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 - post regarding js getters and setters
-- post regarding opensearch
 
 2
 -------
 - serve different views to google crawl bot
-
 
 2.5
 -------

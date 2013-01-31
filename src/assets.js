@@ -1,4 +1,5 @@
 var config = require('./config.js'),
+    assetify = require('assetify'),
     assets = {
         source: config.static.folder,
         bin: config.static.bin,
@@ -64,5 +65,18 @@ function getJs(){
 
     return js;
 }
+
+assets.compile = function(done){
+    assetify.use(assetify.plugins.less);
+    assetify.use(assetify.plugins.jsn);
+
+    if (config.env.production){
+        assetify.use(assetify.plugins.bundle);
+        assetify.use(assetify.plugins.minifyCSS);
+        assetify.use(assetify.plugins.minifyJS);
+    }
+    assetify.use(assetify.plugins.forward());
+    assetify.compile(assets, done);
+};
 
 module.exports = assets;
