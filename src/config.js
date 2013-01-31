@@ -51,18 +51,18 @@ var config = {
     tracking: {
         code: process.env.GA_CODE
     },
-    get site() {
-        return this._s = this._s || {
-            title: 'Pony Foo',
-            description: 'Ramblings of a degenerate coder',
-            thumbnail: this.server.authority + '/img/thumbnail.png'
-        };
-    },
     get feed() {
         return this._f = this._f || {
             local: this.server.authority + '/rss/latest.xml',
             get proxy(){ return this._p = this._p || (process.env.FEED_ADDR || this.local); },
             limit: 12
+        };
+    },
+    get site() {
+        return this._s = this._s || {
+            title: 'Pony Foo',
+            description: 'Ramblings of a degenerate coder',
+            thumbnail: this.server.authority + '/img/thumbnail.png'
         };
     },
     author: {
@@ -87,6 +87,28 @@ var config = {
     },
     regex: {
         email: /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/i
+    },
+    auth: {
+        success: '/',
+        register: '/user/register',
+        logout: '/user/logout',
+        login: '/user/login',
+        facebook: {
+            id: process.env.FACEBOOK_APP_ID,
+            secret: process.env.FACEBOOK_APP_SECRET,
+            link: '/user/login/facebook',
+            callback: '/user/login/facebook/callback'
+        },
+        github: {
+            id: process.env.GITHUB_CLIENT_ID,
+            secret: process.env.GITHUB_CLIENT_SECRET,
+            link: '/user/login/github',
+            callback: '/user/login/github/callback'
+        },
+        google: {
+            link: '/user/login/google',
+            callback: '/user/login/google/callback'
+        }
     }
 };
 

@@ -1,14 +1,24 @@
-var controller = require('../../controllers/user.js');
+var config = require('../../config.js'),
+    controller = require('../../controllers/user.js');
+
 
 function configure(server){
-    server.get('/user/register', controller.guard);
-    server.get('/user/login', controller.guard);
-    server.get('/user/logout', controller.logout);
+    server.get(config.auth.register, controller.guard);
+    server.get(config.auth.login, controller.guard);
+    server.get(config.auth.logout, controller.logout);
 
-    server.post('/user/register', controller.register);
-    server.post('/user/login', controller.authenticate);
+    server.post(config.auth.register, controller.register);
+    server.post(config.auth.login, controller.local);
+
+    function configureProvider(name){
+        server.get(config.auth[name].link, controller[name].auth);
+        server.get(config.auth[name].callback, controller[name].callback);
+    }
+
+    configureProvider('facebook');
+    configureProvider('github');
+    configureProvider('google');
 }
-
 
 module.exports = {
     configure: configure

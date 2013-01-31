@@ -5,7 +5,11 @@ var mongoose = require('mongoose'),
         email: { type: String, require: true, index: { unique: true }, trim: true },
         password: { type: String, require: true },
 		created: { type: Date, require: true, default: Date.now },
-        author: { type: Boolean, require: true }
+        author: { type: Boolean, require: true },
+        displayName: { type: String },
+        facebookId: { type: String },
+        githubId: { type: String },
+        googleId: { type: String }
     });
 
 schema.pre('save', function(next) {

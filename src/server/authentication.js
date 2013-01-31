@@ -1,8 +1,12 @@
 var passport = require('passport'),
+    config = require('../config.js'),
     user = require('../models/user.js'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    FacebookStrategy = require('passport-facebook').Strategy,
+    GoogleStrategy = require('passport-google').Strategy,
+    GitHubStrategy = require('passport-github').Strategy;
 
-function configure(done){
+function setupLocal(){
     passport.use(new LocalStrategy({
             usernameField: 'email'
         },
@@ -14,6 +18,7 @@ function configure(done){
                 if (!user) {
                     return done(null, false, 'Invalid credentials');
                 }
+
                 user.validatePassword(password, function(err, isMatch) {
                     if (err){
                         return done(err);
@@ -26,7 +31,55 @@ function configure(done){
             });
         }
     ));
+}
 
+function setupOAuth(name, strategy){
+    var opts =  {
+        clientID: config.auth[name].id,
+        clientSecret: config.auth[name].secret,
+        callbackURL: config.server.authority + config.auth[name].callback
+    };
+
+    setupProvider(strategy, opts, function(accessToken, refreshToken, profile, done) {
+        var query = {};
+        query[name + 'Id'] = profile.id;
+        callback(query, profile, done);
+    });
+}
+
+function setupOpenId(name, strategy){
+    var opts = {
+        returnURL: config.server.authority + config.auth[name].callback,
+        realm: config.server.authority
+    };
+
+    setupProvider(strategy, opts, function(identifier, profile, done) {
+        var query = {};
+        query[name + 'Id'] = identifier;
+        callback(query, profile, done);
+    });
+}
+
+function setupProvider(type, config, cb){
+    passport.use(new type(config, cb));
+}
+
+function callback(query, profile, done) {
+    user.findOne(query, function (err, document) {
+        if(err || document){
+            process.nextTick(function(){
+                done(err, document);
+            });
+            return;
+        }
+        query.email = profile.emails[0].value;
+        query.displayName = profile.displayName;
+        document = new user(query);
+        document.save(done);
+    });
+}
+
+function configure(done){
     passport.serializeUser(function(user, done) {
         done(null, user._id);
     });
@@ -39,6 +92,11 @@ function configure(done){
             return done(null, user);
         });
     });
+
+    setupLocal();
+    setupOAuth('facebook', FacebookStrategy);
+    setupOAuth('github', GitHubStrategy);
+    setupOpenId('google', GoogleStrategy);
 
     process.nextTick(done);
 }

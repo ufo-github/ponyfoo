@@ -24,49 +24,64 @@ function validate(req){
     return shouldCreate;
 }
 
+function register(req,res, next){
+    var shouldCreate = validate(req);
+
+    model.findOne({ email: email }, function(err, document){
+        if(document !== null){
+            req.flash('error', 'Email already registered');
+            shouldCreate = false;
+        }
+        if(shouldCreate === false){
+            return res.redirect(config.auth.register);
+        }
+
+        crud.create(req.body, {
+            res: res,
+            always: function(user){
+                user.author = false; // prevent over-posting.
+            },
+            writeHead: false,
+            then: function(user){
+                req.login(user, function(err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    return res.redirect(config.auth.success);
+                });
+            }
+        });
+    });
+}
+
+var authOpts =  {
+    successRedirect: config.auth.success,
+    failureRedirect: config.auth.login,
+    failureFlash: true
+};
+
+function provider(name){
+    return {
+        auth: passport.authenticate(name),
+        callback: passport.authenticate(name, authOpts)
+    };
+}
+
 module.exports = {
     guard: function(req,res,next){
         if(!!req.user){
-            return res.redirect('/');
+            return res.redirect(config.auth.success);
         }
         return next();
     },
 
-    register: function(req,res, next){
-        var shouldCreate = validate(req);
+    register: register,
 
-        model.findOne({ email: email }, function(err, document){
-            if(document !== null){
-                req.flash('error', 'Email already registered');
-                shouldCreate = false;
-            }
-            if(shouldCreate === false){
-                return res.redirect('/user/register');
-            }
+    local: passport.authenticate('local', authOpts),
 
-            crud.create(req.body, {
-                res: res,
-                always: function(user){
-                    user.author = false; // prevent over-posting.
-                },
-                writeHead: false,
-                then: function(user){
-                    req.login(user, function(err) {
-                        if (err) {
-                            return next(err);
-                        }
-                        return res.redirect('/');
-                    });
-                }
-            });
-        });
-    },
-
-    authenticate: passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/user/login',
-        failureFlash: true
-    }),
+    facebook: provider('facebook'),
+    github: provider('github'),
+    google: provider('google'),
 
     logout: function(req,res){
         req.logout();
