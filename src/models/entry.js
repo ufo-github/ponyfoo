@@ -13,9 +13,13 @@ var mongoose = require('mongoose'),
 		updated: { type: Date, require: true, default: Date.now },
         previous: { type: ObjectId, index: { unique: false }, default: null },
         next: { type: ObjectId, index: { unique: false }, default: null }
-    });
+    },{ id: false, toJSON: { getters: true } });
 
-schema.methods.getPermalink = function(absolute) {
+schema.virtual('permalink').get(function(){
+    return this.getPermalink();
+});
+
+schema.methods.getPermalink = function(absolute){
     var date = moment(this.date).format('YYYY/MM/DD'),
         permalink = '/' + date + '/' + this.slug;
 

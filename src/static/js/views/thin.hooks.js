@@ -13,9 +13,6 @@
             self.published = d.format(moment.dayFormat);
             self.timeAgo = d.fromNow();
 
-            self.url = '/{0}/{1}'.format(self.dateText, self.slug);
-            self.absoluteUrl = nbrut.server.authority + self.url;
-
             self.html = {
                 brief: html(self.brief),
                 text: html(self.text)
