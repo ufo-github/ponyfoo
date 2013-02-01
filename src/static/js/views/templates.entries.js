@@ -17,13 +17,13 @@
                     terms: decoded
                 };
             }
-        }
+        };
     }
 
     var year = '^\/([0-9]{4})\/',
         month = year + '(0[1-9]|1[0-2])\/',
         day = month + '(0[1-9]|[12][0-9]|3[01])\/',
-        slug = day + '([a-z0-9\-]+)';
+        slug = day + '([a-z0-9\-]+)(?:\/comments)?';
 
     nbrut.tt.register({
         key: 'home',

@@ -1,4 +1,4 @@
-!function (window,$,nbrut,moment) {
+!function (window,$,nbrut,moment,undefined) {
     function entryHook(data){
         $.each(data.entries || [data.entry], function(){
             var self = this,
@@ -12,6 +12,8 @@
             self.dateText = d.format();
             self.published = d.format(moment.dayFormat);
             self.timeAgo = d.fromNow();
+
+            self.commentsUrl = self.permalink + '/comments';
 
             self.html = {
                 brief: html(self.brief),

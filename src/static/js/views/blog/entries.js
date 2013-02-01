@@ -37,9 +37,9 @@
         if(viewModel.entries.length === 1){
             var model = viewModel.entries[0].related,
                 siblings = nbrut.tt.partial('entry-siblings', model),
-                entry = container.find('.blog-entry');
+                footer = container.find('.blog-entry-footer');
 
-            siblings.appendTo(entry);
+            siblings.prependTo(footer);
         }
 
         nbrut.md.prettify(container);

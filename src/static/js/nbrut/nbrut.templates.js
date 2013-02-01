@@ -296,6 +296,7 @@
                 css: template.dom.css,
                 fill: fill,
                 appendTo: move('appendTo'),
+                prependTo: move('prependTo'),
                 insertAfter: move('insertAfter')
             };
         }

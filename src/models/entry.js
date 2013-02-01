@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
 		updated: { type: Date, require: true, default: Date.now },
         previous: { type: ObjectId, index: { unique: false }, default: null },
         next: { type: ObjectId, index: { unique: false }, default: null }
-    },{ id: false, toJSON: { getters: true } });
+    },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('permalink').get(function(){
     return this.getPermalink();
