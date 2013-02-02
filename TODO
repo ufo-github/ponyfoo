@@ -16,6 +16,8 @@ TODO:
 
 2.5
 -------
+- DELETE for comments and discussions
+- DEL discussions/comments when deleting post, dele comments when deleting discussions.
 - generalize api GET, PUT and updates.
 - move logic out of controllers
 - client-side caching?
