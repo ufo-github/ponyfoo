@@ -1,0 +1,14 @@
+section#blog-comments-template.template
+  section.blog-entry-comments
+    // {{#discussions}}
+    article.blog-discussion
+      // {{#comments}}
+      section.blog-comment
+        header.blog-comment-author
+          img.user-gravatar(href='{{gravatar}}')
+          span='{{displayName}}'
+
+        section.blog-comment-body='{{html}}'
+      // {{/comments}}
+
+    // {{/discussions}}
