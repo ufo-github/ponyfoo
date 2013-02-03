@@ -1,4 +1,5 @@
-var rest = require('../../../services/rest.js'),
+var mongoose = require('mongoose'),
+    rest = require('../../../services/rest.js'),
     discussion = require('../../../models/discussion.js'),
     comment = require('../../../models/comment.js');
 
@@ -27,7 +28,7 @@ function add(req,res,document){
         }
     };
 
-    document.comments.push(model);
+    document.comments.push(new comment(model));
     document.save(function(err){
         rest.resHandler(err,{
             res: res
