@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
         date: { type: Date, index: { unique: false }, require: true, default: Date.now },
 		author: {
             id: { type: ObjectId, require: true },
-            displayName: { type: String, require: true }
+            displayName: { type: String, require: true },
+            gravatar: { type: String, require: true }
         }
     });
 

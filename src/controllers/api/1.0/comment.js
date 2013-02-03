@@ -24,7 +24,8 @@ function add(req,res,document){
         text: req.body.comment,
         author: {
             id: mongoose.Types.ObjectId(req.user._id),
-            displayName: req.user.displayName
+            displayName: req.user.displayName,
+            gravatar: req.user.getGravatar()
         }
     };
 

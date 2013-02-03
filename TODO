@@ -3,7 +3,11 @@ TODO:
 1
 -------
 - post regarding opensearch
-- comments by hand
+
+- comments
+    - comments partial reply / actions depends on user logged in.
+    - wire it up!
+
 - improve provider login (make them failsafe)
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)

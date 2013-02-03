@@ -109,6 +109,10 @@ var config = {
             link: '/user/login/google',
             callback: '/user/login/google/callback'
         }
+    },
+    avatar: {
+        url: 'http://www.gravatar.com/avatar/',
+        query: '?d=identicon&r=PG'
     }
 };
 

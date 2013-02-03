@@ -19,13 +19,16 @@ function validate(req){
     }else if(config.env.production && config.regex.email.test(email) === false){
         req.flash('error', 'Email must be a valid address');
         shouldCreate = false;
+    }else{
+        req.body.email = email.trim().toLowerCase();
     }
 
     return shouldCreate;
 }
 
 function register(req,res, next){
-    var shouldCreate = validate(req);
+    var shouldCreate = validate(req),
+        email = req.body.email;
 
     model.findOne({ email: email }, function(err, document){
         if(document !== null){

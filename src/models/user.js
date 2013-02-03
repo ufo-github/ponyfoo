@@ -1,16 +1,30 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt'),
+    crypto = require('crypto'),
     config = require('../config.js'),
     schema = new mongoose.Schema({
         email: { type: String, require: true, index: { unique: true }, trim: true },
         password: { type: String, require: true },
-		created: { type: Date, require: true, default: Date.now },
+        created: { type: Date, require: true, default: Date.now },
         author: { type: Boolean, require: true },
         displayName: { type: String },
         facebookId: { type: String },
         githubId: { type: String },
         googleId: { type: String }
     });
+
+schema.virtual('emailHash').get(function(){
+    var text = this.email,
+        hash = crypto.createHash('md5').update(text).digest('hex');
+
+    return hash;
+});
+
+schema.methods.getGravatar = function(){
+    var hash = this.emailHash;
+
+    return config.avatar.url + hash + config.avatar.query;
+};
 
 schema.pre('save', function(next) {
     var user = this;
