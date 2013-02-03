@@ -86,7 +86,7 @@ function routeComments(api){
     api.get(routeComments, comment.get);
 
     // insert discussion, comment
-    api.put(routeDiscussion, connected, comment.discussion);
+    api.put(routeDiscussion, connected, comment.discuss);
     api.put(routeComment, connected, comment.ins);
 }
 

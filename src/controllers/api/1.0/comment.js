@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
     comment = require('../../../models/comment.js');
 
 function discuss(req,res){
-    var entry = req.params.entryId,
-        document = new discussion({ entry: mongoose.Types.ObjectId(entry) });
+    var id = mongoose.Types.ObjectId(req.params.entryId);
+        document = new discussion({ entry: id });
 
     add(req,res,document);
 }
@@ -37,13 +37,16 @@ function add(req,res,document){
 }
 
 function list(req,res){
-    discussion.query({ entry: mongoose.Types.ObjectId(req.params.id) }, callback);
+    var id = mongoose.Types.ObjectId(req.params.entryId);
+    discussion.query({ entry: id }, callback);
 
     function callback(err,documents){
         rest.resHandler(err, {
             res: res,
             then: function(){
-                rest.end(res,documents);
+                rest.end(res,{
+                    discussions: documents
+                });
             }
         });
     }
