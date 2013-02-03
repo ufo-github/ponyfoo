@@ -74,13 +74,12 @@ function routeEntries(api){
     api.put('/entry', author, entry.ins);
     api.put(routeEntry, author, entry.upd);
     api.del(routeEntry, author, entry.del);
-
-    return routeSlug;
 }
 
-function routeComments(api, routeSlug){
-    var routeComments = routeSlug + '/comments',
-        routeDiscussion = routeSlug + '/comment',
+function routeComments(api){
+    var routeEntry = '/entry/:entryId([0-9a-f]+)',
+        routeComments = routeEntry + '/comments',
+        routeDiscussion = routeEntry + '/comment',
         routeComment = '/discussion/:id([a-f0-9]+)/comment';
 
     // get discussion threads
@@ -94,8 +93,8 @@ function routeComments(api, routeSlug){
 function configure(server){
     var api = routing(server);
 
-    var routeSlug = routeEntries(api);
-    routeComments(api, routeSlug);
+    routeEntries(api);
+    routeComments(api);
 
     api.all('/*', notFound);
 }

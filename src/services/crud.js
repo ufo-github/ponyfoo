@@ -2,10 +2,14 @@ var $ = require('./$.js'),
     rest = require('./rest.js');
 
 function getCallback(opts){
-    if(!!opts && !!opts.res){
-        return function(err){
-            opts.args = $.args(arguments).slice(1);
-            rest.resHandler(err, opts);
+    if(opts !== undefined){
+        if(opts.res !== undefined){
+            return function(err){
+                opts.args = $.args(arguments).slice(1);
+                rest.resHandler(err, opts);
+            };
+        }else if(opts.then !== undefined){
+            return opts.then;
         }
     }
     return $.log.err;
