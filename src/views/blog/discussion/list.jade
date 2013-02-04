@@ -1,5 +1,5 @@
 section#discussion-list-template.template
-  section.blog-entry-comments
+  section.blog-entry.blog-discussions
     // {{#discussions}}
     article.blog-discussion(data-id='{{_id}}')
       // {{#comments}}
@@ -10,5 +10,12 @@ section#discussion-list-template.template
 
         section.blog-comment-body='{{html}}'
       // {{/comments}}
+    // {{/discussions}}
 
+    // {{^discussions}}
+    article.blog-entry-uncommented
+      p
+        span='No comments have been posted '
+        i='yet'
+        span='.'
     // {{/discussions}}

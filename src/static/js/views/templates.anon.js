@@ -18,4 +18,10 @@
             trigger: '#login-user'
         }]
     });
+
+    nbrut.tt.register({
+        key: 'authentication',
+        source: '#authentication-required-template',
+        mustache: true
+    });
 }(window,nbrut);

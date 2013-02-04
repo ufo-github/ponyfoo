@@ -19,6 +19,8 @@ function getCss(){
         '/css/libs/markdown.less',
         '/css/libs/prettify.less',
         '/css/views/blog/entries.less',
+        { profile: ['author', 'registered'], local: '/css/views/blog/comments-registered.less' },
+        { profile: 'anon', local: '/css/views/shared/authentication.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
         { profile: 'anon', local: '/css/views/user/register.less' },
         { profile: 'anon', local: '/css/views/user/login.less' },

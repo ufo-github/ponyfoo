@@ -41,7 +41,7 @@
                 footer = container.find('.blog-entry-footer');
 
             siblings.prependTo(footer);
-            addComments(entry, footer);
+            addComments(entry);
         }
 
         nbrut.md.prettify(container);
@@ -134,12 +134,13 @@
         });
     }
 
-    function addComments(entry, target){
+    function addComments(entry){
         nbrut.thin.get('entry', {
             id: entry._id + '/comments',
             then: function(it){
-                var list = nbrut.tt.partial('discussion-list', it),
-                    discussions = list.appendTo(target), actions;
+                var container = $('.blog-entries'),
+                    list = nbrut.tt.partial('discussion-list', it),
+                    discussions = list.appendTo(container), actions;
 
                 if(nbrut.locals.connected){
                     actions = nbrut.tt.partial('discussion-actions', { entryId: entry._id }),
@@ -152,6 +153,9 @@
 
                         reply.appendTo(self);
                     });
+                }else{
+                    authenticate = nbrut.tt.partial('authentication', { action: 'post a comment' });
+                    authenticate.appendTo(discussions);
                 }
             }
         });

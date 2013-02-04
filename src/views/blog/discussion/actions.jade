@@ -1,3 +1,8 @@
 section#discussion-actions-template.template
   footer.discussion-actions
-    button.discussion-create='Comment'
+    div#wmd-button-bar-discussion.wmd-button-bar
+    div
+      textarea#wmd-input-discussion.wmd-input(placeholder='Write your comment. Markdown is enabled.')
+
+    section.discussion-action-buttons
+      button.small.discussion-create='Comment'
