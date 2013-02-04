@@ -6,6 +6,7 @@
 
     nbrut.tt.register({
         key: 'discussion-reply',
-        source: '#discussion-reply-template'
+        source: '#discussion-reply-template',
+        mustache: true
     });
 }(window,nbrut);

@@ -11,6 +11,7 @@ var config = require('./config.js'),
 function getCss(){
     return [
         '/css/defaults/reset.css',
+        '/css/defaults/basic.less',
         '/css/defaults/elements.less',
         '/css/defaults/controls.less',
         '/css/defaults/layout.less',

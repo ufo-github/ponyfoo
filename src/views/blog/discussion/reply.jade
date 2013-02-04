@@ -1,3 +1,10 @@
 section#discussion-reply-template.template
   footer.discussion-footer
+    section.comment-editor.hidden
+      div.wmd-button-bar(id='wmd-button-bar-reply-{{id}}')
+      div
+        textarea.wmd-input(id='wmd-input-reply-{{id}}', data-postfix='-reply-{{id}}', placeholder='Write your comment. Markdown is enabled.')
+
+      section.blog-comment(id='wmd-preview-reply-{{id}}')
+
     button.small.discussion-reply='Reply'
