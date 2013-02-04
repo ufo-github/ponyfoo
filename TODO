@@ -3,6 +3,7 @@ TODO:
 1
 -------
 - comments
+	- sort order
     - after PUT, display the new comment/discussion.
 	- delete buttons (author)
 

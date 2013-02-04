@@ -31,7 +31,7 @@
                 type: how,
                 data: opts.data
             }).done(function(data){
-                (hooks[what][how.toLowerCase()] || $.noop)(data);
+                ((hooks[what]||{})[how.toLowerCase()] || $.noop)(data);
                 (opts.then || $.noop)(data);
             }).always(function(){
                 var i = local.indexOf(xhr);
