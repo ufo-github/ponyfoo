@@ -2,7 +2,7 @@
     var shared = [];
 
     function thinner(container){
-        var ver = '/api/1.0',
+        var apiVersion = '/api/1.0/',
             hooks = {},
             local;
 
@@ -27,7 +27,7 @@
             var id = !!opts.id ? '/' + opts.id : '';
 
             xhr = $.ajax({
-                url: '{0}/{1}{2}'.format(ver, what, id),
+                url: '{0}{1}{2}'.format(apiVersion, what, id),
                 type: how,
                 data: opts.data
             }).done(function(data){

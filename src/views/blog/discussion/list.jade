@@ -1,7 +1,7 @@
-section#blog-comments-template.template
+section#discussion-list-template.template
   section.blog-entry-comments
     // {{#discussions}}
-    article.blog-discussion
+    article.blog-discussion(data-id='{{_id}}')
       // {{#comments}}
       section.blog-comment
         header.blog-comment-author

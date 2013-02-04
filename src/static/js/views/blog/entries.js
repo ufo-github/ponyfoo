@@ -1,5 +1,5 @@
 !function (window,$,nbrut,undefined) {
-	function prepare(render, data){
+    function prepare(render, data){
         if (data.query === undefined){
             complete(render, data);
         }else{
@@ -9,7 +9,7 @@
                 }
             });
         }
-	}
+    }
 
     function complete(render, data, latest){
         nbrut.thin.get('entry', {
@@ -23,9 +23,9 @@
             }
         });
     }
-	
-	function afterActivate(viewModel, data, identifier){
-		var container = $('.blog-entries');
+
+    function afterActivate(viewModel, data, identifier){
+        var container = $('.blog-entries');
 
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
@@ -35,17 +35,19 @@
         }
 
         if(viewModel.entries.length === 1){
-            var model = viewModel.entries[0].related,
+            var entry = viewModel.entries[0],
+                model = entry.related,
                 siblings = nbrut.tt.partial('entry-siblings', model),
                 footer = container.find('.blog-entry-footer');
 
             siblings.prependTo(footer);
+            addComments(entry, footer);
         }
 
         nbrut.md.prettify(container);
 
         addSidebar();
-	}
+    }
 
     function addExhausted(){
         var container = $('.blog-entries'),
@@ -131,10 +133,33 @@
             nbrut.local.set(highlightSidebar, false);
         });
     }
-	
+
+    function addComments(entry, target){
+        nbrut.thin.get('entry', {
+            id: entry._id + '/comments',
+            then: function(it){
+                var list = nbrut.tt.partial('discussion-list', it),
+                    discussions = list.appendTo(target), actions;
+
+                if(nbrut.user.connected){
+                    actions = nbrut.tt.partial('discussion-create', { entryId: entry._id }),
+                        actions.appendTo(discussions);
+
+                    discussions.find('.blog-discussion').each(function(){
+                        var self = $(this),
+                            model = { id: self.data('id') },
+                            reply = nbrut.tt.partial('discussion-reply', model);
+
+                        reply.appendTo(self);
+                    });
+                }
+            }
+        });
+    }
+
     nbrut.tt.configure({
         key: 'home',
         prepare: prepare,
-		afterActivate: afterActivate
+        afterActivate: afterActivate
     });
 }(window,jQuery,nbrut);

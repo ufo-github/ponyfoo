@@ -5,8 +5,8 @@ TODO:
 - post regarding opensearch
 
 - comments
-    - comments partial reply / actions depends on user logged in.
-    - wire it up!
+    - wire up comment / reply if possible within partials themselves rather than on the view itself.
+    - css styles
 
 - improve provider login (make them failsafe)
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php

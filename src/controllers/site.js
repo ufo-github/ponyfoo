@@ -10,6 +10,8 @@ module.exports = {
             profile = 'author';
         }
 
+        res.locals.assetify.js.add('!function(a){a.user={connected:' + req.user !== undefined + '}}(nbrut);');
+
         res.render('layouts/' + profile + '.jade', { profile: profile });
     }
 };

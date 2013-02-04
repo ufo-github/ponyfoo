@@ -10,4 +10,10 @@
         source: '#validation-errors-template',
         mustache: true
     });
+
+    nbrut.tt.register({
+        key: 'discussion-list',
+        source: '#discussion-list-template',
+        mustache: true
+    });
 }(window,nbrut);
