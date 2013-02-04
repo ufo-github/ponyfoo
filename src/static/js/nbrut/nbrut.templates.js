@@ -37,7 +37,9 @@
             $.extend(template, defaults, settings);
 
             if(template.key in templates){
-                throw new Error('template key not unique.');
+                throw new Error('template key not unique. ' + JSON.stringify({
+                    key: template.key
+                }));
             }
             read(template);
 
@@ -113,7 +115,10 @@
         function read(template) {
             var s = $(template.source);
             if (s.length !== 1){
-                throw new Error('template source not unique.');
+                throw new Error('template source not unique. ' + JSON.stringify({
+                    source: template.source,
+                    length: s.length
+                }));
             }
             var css = s.data('class'),
 				html = s.remove().html();

@@ -141,9 +141,9 @@
                 var list = nbrut.tt.partial('discussion-list', it),
                     discussions = list.appendTo(target), actions;
 
-                if(nbrut.user.connected){
-                    actions = nbrut.tt.partial('discussion-create', { entryId: entry._id }),
-                        actions.appendTo(discussions);
+                if(nbrut.locals.connected){
+                    actions = nbrut.tt.partial('discussion-actions', { entryId: entry._id }),
+                    actions.appendTo(discussions);
 
                     discussions.find('.blog-discussion').each(function(){
                         var self = $(this),

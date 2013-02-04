@@ -28,7 +28,7 @@ pre.prettyprint ol.linenums li.highlight-line {
 .com { color: @lightyellow; } /* comments */
 .lit { color: @orange; } /* literals, such as numbers */
 .pun { color: @brown; } /* punctuation */
-.tag { color: @red; } /* html tags */
+.tag { color: @border; } /* html tags */
 .typ { color: @golden; } /* keywords */
 
 code.prettyprint { /* snippets */
@@ -40,7 +40,9 @@ code.prettyprint { /* snippets */
 code.prettyprint .str {
   color: @greenish; /* deal with contrast issues */
 }
-
+code.prettyprint .tag {
+  color: @strong;
+}
 code.prettyprint .com {
   color: @strong; /* 'comments' in inline code are most likely a uri */
 }

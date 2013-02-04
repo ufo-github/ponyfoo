@@ -1,6 +1,6 @@
 module.exports = {
     get: function(req,res){
-        var profile;
+        var profile, locals;
 
         if(!req.user){
             profile = 'anon';
@@ -10,8 +10,12 @@ module.exports = {
             profile = 'author';
         }
 
-        res.locals.assetify.js.add('!function(a){a.user={connected:' + req.user !== undefined + '}}(nbrut);');
+        var locals = JSON.stringify({
+            profile: profile,
+            connected: req.user !== undefined
+        });
 
+        res.locals.assetify.js.add('!function(a){a.locals=' + locals + ';}(nbrut);');
         res.render('layouts/' + profile + '.jade', { profile: profile });
     }
 };

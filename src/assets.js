@@ -6,8 +6,7 @@ var config = require('./config.js'),
         css: getCss(),
         js: getJs(),
         profiles: ['anon','registered','author']
-    },
-    registered = ['anon', 'registered'];
+    };
 
 function getCss(){
     return [
@@ -51,7 +50,7 @@ function getJs(){
         '/js/views/templates.js',
         '/js/views/templates.entries.js',
         { profile: 'anon', local: '/js/views/templates.anon.js' },
-        { profile: registered, local: '/js/views/templates.registered.js' },
+        { profile: ['author', 'registered'], local: '/js/views/templates.registered.js' },
         { profile: 'author', local: '/js/views/templates.author.js'},
         '/js/views/blog/entries.js',
         '/js/views/blog/search.js',

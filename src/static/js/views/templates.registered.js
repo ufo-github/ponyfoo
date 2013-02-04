@@ -1,6 +1,6 @@
 !function (window,nbrut) {
     nbrut.tt.register({
-        key: 'discussion-create',
+        key: 'discussion-actions',
         source: '#discussion-actions-template'
     });
 
