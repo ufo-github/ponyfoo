@@ -143,28 +143,36 @@
 /* ITEM LISTS
  **************/
 
-.blog-entry ul,
-.blog-entry ol {
+.blog-entry-brief ul,
+.blog-entry-brief ol,
+.blog-entry-text ul,
+.blog-entry-text ol {
   margin: 20px 0;
 }
 
-.blog-entry ul li,
-.blog-entry ol li {
+.blog-entry-brief ul li,
+.blog-entry-brief ol li,
+.blog-entry-text ul li,
+.blog-entry-text ol li {
   line-height: 1.6em;
   list-style-position:inside;
 }
 
-.blog-entry ul li {
+.blog-entry-brief ul li,
+.blog-entry-text ul li {
   list-style-type: disc;
   list-style-type: hiragana-iroha;
 }
 
-.blog-entry ol li {
+.blog-entry-brief ol li,
+.blog-entry-text ol li {
   list-style-type: decimal;
 }
 
-.blog-entry ul li:before,
-.blog-entry ol li:before {
+.blog-entry-brief ul li:before,
+.blog-entry-brief ol li:before,
+.blog-entry-text ul li:before,
+.blog-entry-text ol li:before {
   content: '';
   padding-right: 3px;
 }

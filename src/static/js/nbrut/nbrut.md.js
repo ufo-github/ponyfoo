@@ -16,9 +16,12 @@
 
         function runEditor(postfix) {
             var converter = getConverter(),
+                editorSelector = '#wmd-input' + postfix,
                 editor = getEditor(converter, postfix),
-                selector = '#wmd-preview' + postfix,
-                preview = $(selector);
+                previewSelector = '#wmd-preview' + postfix,
+                preview = $(previewSelector);
+
+            $(editorSelector).textareaResizer();
 
             editor.run();
             editor.hooks.chain('onPreviewRefresh', function(){

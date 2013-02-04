@@ -7,8 +7,8 @@ function configure(server){
     server.get(config.auth.login, controller.guard);
     server.get(config.auth.logout, controller.logout);
 
-    server.post(config.auth.register, controller.register);
-    server.post(config.auth.login, controller.local);
+    server.post(config.auth.register, controller.guard, controller.register);
+    server.post(config.auth.login, controller.guard, controller.local);
 
     function configureProvider(name){
         server.get(config.auth[name].link, controller[name].auth);

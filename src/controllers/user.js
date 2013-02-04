@@ -43,6 +43,7 @@ function register(req,res, next){
             res: res,
             always: function(user){
                 user.author = false; // prevent over-posting.
+                user.displayName = email.split('@')[0];
             },
             writeHead: false,
             then: function(user){

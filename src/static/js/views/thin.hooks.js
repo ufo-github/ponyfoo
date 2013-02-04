@@ -20,6 +20,16 @@
                 text: html(self.text)
             };
         });
+
+        $.each(data.discussions || [], function(){
+            var self = this;
+
+            $.each(self.comments, function(){
+                var comment = this;
+
+                comment.html = nbrut.md.html(comment.text);
+            });
+        });
     }
 
     nbrut.thin.hook('entry', {

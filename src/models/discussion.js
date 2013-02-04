@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    comment = require('./comment.js'),
+    comment = require('./schema/comment.js'),
     ObjectId = mongoose.Schema.Types.ObjectId,
     schema = new mongoose.Schema({
         entry: { type: ObjectId, index: { unique: false }, require: true },

@@ -283,26 +283,38 @@
                 container.addClass(template.dom.css).html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
-                template.afterActivate(viewModel, data || {}, identifier);
+
+                return {
+                    identifier: identifier,
+                    elements: container.children()
+                };
             }
 
             function move(fn){/* NOTE: data-class will be lost, same for event bindings. */
                 return function(container,data){
-                    var temp = $('<div/>');
-                    fill(temp, data);
-                    var elements = temp.children();
-                    elements[fn](container);
-                    return elements;
+                    var temp = $('<div/>'),
+                        ctx = fill(temp, data);
+
+                    ctx.elements[fn](container);
+                    return ctx;
                 };
+            }
+
+            function render(internal){
+                return function(container, data, identifier){
+                    var ctx = internal(container, data,identifier);
+                    template.afterActivate(viewModel, data || {}, ctx);
+                    return ctx.elements;
+                }
             }
 
             return {
                 html: html,
                 css: template.dom.css,
-                fill: fill,
-                appendTo: move('appendTo'),
-                prependTo: move('prependTo'),
-                insertAfter: move('insertAfter')
+                fill: render(fill),
+                appendTo: render(move('appendTo')),
+                prependTo: render(move('prependTo')),
+                insertAfter: render(move('insertAfter'))
             };
         }
 

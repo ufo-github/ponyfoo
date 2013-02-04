@@ -23,7 +23,7 @@ function add(req,res,document){
     var model = {
         text: req.body.comment,
         author: {
-            id: mongoose.Types.ObjectId(req.user._id),
+            id: req.user._id,
             displayName: req.user.displayName,
             gravatar: req.user.getGravatar()
         }

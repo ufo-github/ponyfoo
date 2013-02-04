@@ -23,9 +23,6 @@
 
     function prepareEditor() {
         runEditors();
-
-        $('.entry-editor textarea:not(.grippable)').textareaResizer();
-
         bindTitle();
 		
 		var previewContainer = $('#entry-preview');

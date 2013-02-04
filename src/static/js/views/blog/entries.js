@@ -24,14 +24,14 @@
         });
     }
 
-    function afterActivate(viewModel, data, identifier){
+    function afterActivate(viewModel, data, ctx){
         var container = $('.blog-entries');
 
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
         }else if(viewModel.paging !== undefined){
-            addPager(viewModel, identifier, data.query || '');
+            addPager(viewModel, ctx.identifier, data.query || '');
         }
 
         if(viewModel.entries.length === 1){
