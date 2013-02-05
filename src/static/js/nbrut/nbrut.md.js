@@ -9,7 +9,7 @@
         }
 
         function reformatMarkdown(container){
-            container.find('a:not(header a)').anchorSEO();
+            container.anchorSEO('a:not(header a)');
             container.find('pre, code:not(pre code)').addClass('prettyprint');
             prettyPrint();
         }

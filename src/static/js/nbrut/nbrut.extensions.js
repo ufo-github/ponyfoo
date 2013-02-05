@@ -12,8 +12,10 @@
 		});
 	};
 
-    $.fn.anchorSEO = function(){
-        return this.each(function(){
+    $.fn.anchorSEO = function(selector){
+        var container = this;
+
+        container.find(selector || 'a').each(function(){
             var a = $(this),
                 url = a.get(0).href,
                 title = a.attr('title');
@@ -21,14 +23,16 @@
             a.addClass('highlighted-link');
 
             if(!!title){
-                a.data('hint', title);
-                a.removeAttr(title);
+                a.attr('data-hint', title);
+                a.removeAttr('title');
             }
 
             if(url.indexOf(document.location.origin) !== 0){
                 a.attr('rel','nofollow');
             }
         });
+
+        return container.hints(true);
     };
 
     $.fn.hints = function(enabled){
@@ -36,7 +40,7 @@
             var elements = $(this).find('[data-hint]'),
                 hintClassKey = 'hint-class';
 
-            if(enabled === true){ // prevent over-classing
+            if(enabled !== false){ // prevent over-classing
                 elements = elements.filter(':not(.hint, .hint-before)');
             }
 
@@ -45,7 +49,7 @@
                     hintClass = self.data(hintClassKey),
                     className;
 
-                if(enabled === true){
+                if(enabled !== false){
                     self.addClass(hintClass || 'hint');
                 }else{
                     if(hintClass === undefined){
