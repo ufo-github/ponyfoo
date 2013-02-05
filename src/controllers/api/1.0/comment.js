@@ -39,7 +39,7 @@ function add(req,res,document){
 
 function list(req,res){
     var id = mongoose.Types.ObjectId(req.params.entryId);
-    discussion.find({ entry: id }, callback);
+    discussion.find({ entry: id }).sort('-date').exec(callback);
 
     function callback(err,documents){
         rest.resHandler(err, {
