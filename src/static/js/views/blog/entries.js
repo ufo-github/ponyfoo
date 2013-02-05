@@ -143,7 +143,7 @@
                     discussions = list.appendTo(container), actions;
 
                 if(nbrut.locals.connected){
-                    actions = nbrut.tt.partial('discussion-actions', { entryId: entry._id }),
+                    actions = nbrut.tt.partial('discussion-actions', { entryId: entry._id });
                     actions.appendTo(discussions);
 
                     discussions.find('.blog-discussion').each(function(){

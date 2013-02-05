@@ -314,6 +314,7 @@
                 fill: render(fill),
                 appendTo: render(move('appendTo')),
                 prependTo: render(move('prependTo')),
+                insertBefore: render(move('insertBefore')),
                 insertAfter: render(move('insertAfter'))
             };
         }

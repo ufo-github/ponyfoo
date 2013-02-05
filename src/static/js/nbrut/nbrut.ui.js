@@ -1,36 +1,30 @@
 !function (window, $, nbrut, moment, undefined) {
     var ui = function(){
-        function stateButton(button, action) {
-            var buttonText = button.find('span'),
-                originalText = buttonText.data('text'),
-                disabledText = buttonText.data('text-disabled');
+        function enable(button){
+            var originalText = button.data('text');
 
-            function restore(){
-                button.prop('disabled', false);
-                buttonText.text(originalText);
-            }
+            button.prop('disabled', false);
+            button.text(originalText);
+        }
 
-            function disable(){
-                button.prop('disabled', true);
-                buttonText.text(disabledText);
-            }
+        function disable(button){
+            var disabledText = button.data('text-disabled');
 
-            button.on('click', function(){
-                disable();
-                action(restore);
-            });
-            restore();
+            button.prop('disabled', true);
+            button.text(disabledText);
         }
 
         return {
-            stateButton: stateButton
+            disable: disable,
+            enable: enable
         };
     }();
+
+    nbrut.ui = ui;
 
     moment.defaultFormat = 'YYYY/MM/DD';
     moment.fullFormat = 'MMMM Do, YYYY [at] hh:mm a';
     moment.dayFormat = 'MMMM Do, YYYY';
     moment.monthFormat = 'MMMM YYYY';
     moment.yearFormat = 'YYYY';
-    nbrut.ui = ui;
 }(window, jQuery, nbrut, moment);

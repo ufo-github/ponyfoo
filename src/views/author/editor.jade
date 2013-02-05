@@ -24,5 +24,4 @@ section#entry-editor-template.template(data-class='entry-editor')
 
   div#entry-editor-buttons
     a#cancel-entry='Cancel'
-    button#submit-entry(data-id='{{entry._id}}')
-      span(data-text='{{submit.text}}', data-text-disabled='{{submit.disabled}}')
+    button#submit-entry(data-id='{{entry._id}}', data-text='{{submit.text}}', data-text-disabled='{{submit.disabled}}')='{{submit.text}}'

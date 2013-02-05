@@ -1,9 +1,9 @@
 !function (window,$,nbrut,moment,undefined) {
+    var html = nbrut.md.html;
+
     function entryHook(data){
         $.each(data.entries || [data.entry], function(){
-            var self = this,
-                html = nbrut.md.html,
-                d;
+            var self = this, d;
 
             self.date = new Date(self.date);
 
@@ -32,7 +32,18 @@
         });
     }
 
+    function discussionHook(data){
+        if (!!data.comment){
+            data.comment.html = html(data.comment.text);
+        }
+    }
+
     nbrut.thin.hook('entry', {
-        get: entryHook
+        get: entryHook,
+        put: discussionHook
+    });
+
+    nbrut.thin.hook('discussion', {
+        put: discussionHook
     });
 }(window,jQuery,nbrut,moment);

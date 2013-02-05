@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 function discuss(req,res){
     var id = mongoose.Types.ObjectId(req.params.entryId);
-        document = new discussion({ entry: id });
+    document = new discussion({ entry: id });
 
     add(req,res,document);
 }
@@ -32,14 +32,20 @@ function add(req,res,document){
     document.comments.push(new comment(model));
     document.save(function(err){
         rest.resHandler(err,{
-            res: res
+            res: res,
+            then: function(){
+                rest.end(res, {
+                    discussion: document._id,
+                    comment: model
+                });
+            }
         });
     });
 }
 
 function list(req,res){
     var id = mongoose.Types.ObjectId(req.params.entryId);
-    discussion.find({ entry: id }).sort('-date').exec(callback);
+    discussion.find({ entry: id }).sort('date').exec(callback);
 
     function callback(err,documents){
         rest.resHandler(err, {

@@ -60,7 +60,8 @@
             brief = $('#wmd-input-brief'),
             text = $('#wmd-input-text');
 
-        nbrut.ui.stateButton(submit, function(restore){
+        submit.on('click', function(){
+            nbrut.ui.disable(submit);
             nbrut.thin.put('entry', {
                 id: submit.data('id'),
                 data: {

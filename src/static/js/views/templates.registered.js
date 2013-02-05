@@ -9,4 +9,16 @@
         source: '#discussion-reply-template',
         mustache: true
     });
+
+    nbrut.tt.register({
+        key: 'discussion-thread',
+        source: '#discussion-thread-template',
+        mustache: true
+    });
+
+    nbrut.tt.register({
+        key: 'discussion-comment',
+        source: '#discussion-comment-template',
+        mustache: true
+    });
 }(window,nbrut);
