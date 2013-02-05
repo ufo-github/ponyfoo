@@ -93,6 +93,10 @@ function callback(query, profile, done) {
                 for(prop in query){
                     document[prop] = query[prop];
                 }
+
+                if(!document.displayName){
+                    document.displayName = profile.displayName;
+                }
             }
 
             document.save(done);
