@@ -112,7 +112,8 @@ var config = {
     },
     avatar: {
         url: 'http://www.gravatar.com/avatar/',
-        query: '?d=identicon&r=PG'
+        query: '?d=identicon&r=PG',
+        small: '&s=40'
     }
 };
 

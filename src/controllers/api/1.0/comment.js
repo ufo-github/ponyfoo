@@ -25,7 +25,7 @@ function add(req,res,document){
         author: {
             id: req.user._id,
             displayName: req.user.displayName,
-            gravatar: req.user.getGravatar()
+            gravatar: req.user.gravatar
         }
     };
 

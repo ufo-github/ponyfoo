@@ -11,20 +11,18 @@ var mongoose = require('mongoose'),
         facebookId: { type: String },
         githubId: { type: String },
         googleId: { type: String }
-    });
+    },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-schema.virtual('emailHash').get(function(){
+schema.virtual('gravatar').get(function(){
     var text = this.email,
         hash = crypto.createHash('md5').update(text).digest('hex');
 
-    return hash;
+    return config.avatar.url + hash + config.avatar.query;
 });
 
-schema.methods.getGravatar = function(){
-    var hash = this.emailHash;
-
-    return config.avatar.url + hash + config.avatar.query;
-};
+schema.virtual('gravatarSmall').get(function(){
+    return this.gravatar + config.avatar.small;
+});
 
 schema.pre('save', function(next) {
     var user = this;

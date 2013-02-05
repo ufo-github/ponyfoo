@@ -8,7 +8,7 @@ TODO:
 
 2
 -------
-- fix issue with displayName being null (allow profile edit displayName)
+- minimal profile, displayName edits.
 
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - serve different views to google crawl bot

@@ -58,6 +58,11 @@ function configureMiddleware(){
     server.use(passport.initialize());
     server.use(passport.session());
 
+    server.use(function(req,res,next){
+        res.locals.user = req.user;
+        next();
+    });
+
     server.use(server.router);
 }
 
