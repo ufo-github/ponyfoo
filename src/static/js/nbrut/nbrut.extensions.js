@@ -64,7 +64,7 @@
                 face = direction || card.is(':not(.flipped)'),
                 next = !!face ? '.face.back' : '.face.front',
                 prev =  !face ? '.face.back' : '.face.front',
-                delay = parseFloat(card.css('transition-duration')) * 1000;
+                delay = parseFloat(card.css('transition-duration') || 0) * 1000;
 
             card.toggleClass('flipped', direction);
 

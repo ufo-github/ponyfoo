@@ -80,7 +80,7 @@ assets.compile = function(done){
     assetify.use(assetify.plugins.less);
     assetify.use(assetify.plugins.jsn);
 
-    if (config.env.production){
+    if (config.env.production && !config.env.staging){
         assetify.use(assetify.plugins.bundle);
         assetify.use(assetify.plugins.minifyCSS);
         assetify.use(assetify.plugins.minifyJS);
