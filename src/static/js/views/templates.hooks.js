@@ -7,4 +7,8 @@
         }
         layer.abort();
     });
+
+    nbrut.tt.hook('fill', function(container, template){
+        container.hints(true);
+    });
 }(window,jQuery,nbrut);

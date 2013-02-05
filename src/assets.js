@@ -19,6 +19,7 @@ function getCss(){
         '/css/defaults/sprite.less',
         '/css/libs/markdown.less',
         '/css/libs/prettify.less',
+        '/css/libs/hint.less',
         '/css/views/blog/entries.less',
         '/css/views/user/profile.less',
         '/css/views/blog/comments.less',

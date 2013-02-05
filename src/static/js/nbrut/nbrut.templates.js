@@ -283,6 +283,7 @@
                 container.addClass(template.dom.css).html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
+                raise('fill', container, template);
 
                 return {
                     identifier: identifier,

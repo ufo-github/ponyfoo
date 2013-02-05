@@ -14,6 +14,6 @@ section#entry-review-template.template(data-class='entry-review')
         td.title
           a(href='{{permalink}}')='{{title}}'
         td
-          a.edit(title='Edit', href='/author/entry/{{_id}}')='Edit'
-          a.remove(title='Delete')
+          a.edit(data-hint='Edit', href='/author/entry/{{_id}}')='Edit'
+          a.remove(data-hint='Delete')
       // {{/entries}}

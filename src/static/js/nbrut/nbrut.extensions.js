@@ -14,12 +14,68 @@
 
     $.fn.anchorSEO = function(){
         return this.each(function(){
-            var a = $(this).addClass('highlighted-link'),
-                url = a.get(0).href;
+            var a = $(this),
+                url = a.get(0).href,
+                title = a.attr('title');
+
+            a.addClass('highlighted-link');
+
+            if(!!title){
+                a.data('hint', title);
+                a.removeAttr(title);
+            }
 
             if(url.indexOf(document.location.origin) !== 0){
                 a.attr('rel','nofollow');
             }
+        });
+    };
+
+    $.fn.hints = function(enabled){
+        return this.each(function(){
+            var elements = $(this).find('[data-hint]'),
+                hintClassKey = 'hint-class';
+
+            if(enabled === true){ // prevent over-classing
+                elements = elements.filter(':not(.hint, .hint-before)');
+            }
+
+            elements.each(function(){
+                var self = $(this),
+                    hintClass = self.data(hintClassKey),
+                    className;
+
+                if(enabled === true){
+                    self.addClass(hintClass || 'hint');
+                }else{
+                    if(hintClass === undefined){
+                        className = self.hasClass('hint-before') ? 'hint-before' : 'hint';
+                        self.data(hintClassKey, className);
+                    }
+                    self.removeClass('hint hint-before');
+                }
+            });
+        });
+    };
+
+    $.fn.flip = function(direction){
+        return this.each(function(){
+            var card = $(this).filter('.flip-card'),
+                face = direction || card.is(':not(.flipped)'),
+                next = !!face ? '.face.back' : '.face.front',
+                prev =  !face ? '.face.back' : '.face.front',
+                delay = parseFloat(card.css('transition-duration')) * 1000;
+
+            card.toggleClass('flipped', direction);
+
+            // prevent glitch caused by hints in the backside of cards
+            card.find(prev).hints(false);
+
+            setTimeout(function(){
+                card.find(next).hints(true);
+            }, delay);
+
+            return card.is('.flipped');
         });
     };
 

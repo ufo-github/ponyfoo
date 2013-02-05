@@ -94,26 +94,24 @@
             return;
         }
 
-        if(!card.hasClass('flipped')){
-            card.addClass('flipped');
+        card.flip(true);
 
-            nbrut.thin.get('entry', {
-                id: query + page,
-                then: function(it){
-                    if(nbrut.tt.active !== identifier){ // sanity
-                        return;
-                    }
-
-                    var container = $('.blog-entries'),
-                        articles = nbrut.tt.partial('more-entries', it),
-                        elements = articles.appendTo(container);
-
-                    nbrut.md.prettify(elements);
-                    pager.remove();
-                    addPager(it, identifier, query);
+        nbrut.thin.get('entry', {
+            id: query + page,
+            then: function(it){
+                if(nbrut.tt.active !== identifier){ // sanity
+                    return;
                 }
-            });
-        }
+
+                var container = $('.blog-entries'),
+                    articles = nbrut.tt.partial('more-entries', it),
+                    elements = articles.appendTo(container);
+
+                nbrut.md.prettify(elements);
+                pager.remove();
+                addPager(it, identifier, query);
+            }
+        });
     }
 
     function addSidebar(){
@@ -128,7 +126,7 @@
         }
 
         flipper.on('click.flip', function(){
-            card.toggleClass('flipped');
+            card.flip();
             flipper.removeClass(highlight);
             nbrut.local.set(highlightSidebar, false);
         });
