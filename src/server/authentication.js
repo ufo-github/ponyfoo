@@ -19,6 +19,10 @@ function setupLocal(){
                     return done(null, false, 'Invalid credentials');
                 }
 
+                if (!user.password) {
+                    return done(null, false, 'A password hasn\'t been set for this user');
+                }
+
                 user.validatePassword(password, function(err, isMatch) {
                     if (err){
                         return done(err);
@@ -65,17 +69,34 @@ function setupProvider(type, config, cb){
 }
 
 function callback(query, profile, done) {
+    var email = profile.emails[0].value;
+
     user.findOne(query, function (err, document) {
         if(err || document){
-            process.nextTick(function(){
-                done(err, document);
-            });
+            done(err, document);
             return;
         }
-        query.email = profile.emails[0].value;
-        query.displayName = profile.displayName;
-        document = new user(query);
-        document.save(done);
+
+        user.findOne({ email: email }, function (err, document) {
+            var prop;
+
+            if(err){
+                done(err);
+                return;
+            }
+
+            if(!document){ // register user
+                query.email = email;
+                query.displayName = profile.displayName;
+                document = new user(query);
+            }else{ // add provider to user
+                for(prop in query){
+                    document[prop] = query[prop];
+                }
+            }
+
+            document.save(done);
+        });
     });
 }
 

@@ -6,9 +6,6 @@ TODO:
     - after PUT, display the new comment/discussion.
 	- delete buttons (author)
 
-
-- improve provider login (make them failsafe)
-
 2
 -------
 - fix issue with displayName being null (allow profile edit displayName)

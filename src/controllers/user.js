@@ -64,9 +64,9 @@ var authOpts =  {
     failureFlash: true
 };
 
-function provider(name){
+function provider(name, options){
     return {
-        auth: passport.authenticate(name),
+        auth: passport.authenticate(name, options),
         callback: passport.authenticate(name, authOpts)
     };
 }
@@ -83,7 +83,7 @@ module.exports = {
 
     local: passport.authenticate('local', authOpts),
 
-    facebook: provider('facebook'),
+    facebook: provider('facebook', { scope: 'email' }),
     github: provider('github'),
     google: provider('google'),
 

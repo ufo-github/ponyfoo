@@ -51,6 +51,13 @@ schema.pre('save', function(next) {
 });
 
 schema.methods.validatePassword = function(input, cb) {
+    if(input === null || input === undefined || this.password === null || this.password === undefined){
+        process.nextTick(function(){
+            cb(null,false);
+        });
+        return;
+    }
+
     bcrypt.compare(input, this.password, function(err, isMatch) {
         if (err){
             return cb(err);
