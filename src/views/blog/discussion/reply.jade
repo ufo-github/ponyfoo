@@ -5,6 +5,7 @@ section#discussion-reply-template.template
       div
         textarea.wmd-input.comment-input(id='wmd-input-reply-{{id}}', data-postfix='-reply-{{id}}', placeholder='Write your comment. Markdown is enabled.')
 
-      section.blog-comment(id='wmd-preview-reply-{{id}}')
+      section.blog-comment.blog-comment-preview(id='wmd-preview-reply-{{id}}')
 
-    button.small.discussion-reply(data-text='Reply', data-text-disabled='Replying...')='Reply'
+    section.discussion-footer-buttons
+      button.small.discussion-reply(data-text='Reply', data-text-disabled='Replying...')='Reply'

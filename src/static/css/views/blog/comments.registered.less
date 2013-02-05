@@ -14,15 +14,23 @@
 }
 
 .discussion-footer {
+  margin-top: 10px;
+}
+
+.discussion-footer-buttons {
   text-align: right;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-.comment-editor {
-  text-align: initial;
-}
-
-.comment-editor .blog-comment {
+.comment-editor .blog-comment-preview {
   margin-left: 0;
+  padding: 15px;
+  background-color: @yellow_light;
+  border: 1px solid @grayish;
+  .box-radius(6px);
+}
 
+.comment-editor .blog-comment-preview:empty {
+  padding: 0;
+  border: none;
 }
