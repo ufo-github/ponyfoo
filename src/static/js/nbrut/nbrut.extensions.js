@@ -13,7 +13,6 @@
 	};
 
     $.fn.anchorSEO = function(){
-        console.log(this.selector);
         return this.each(function(){
             var a = $(this).addClass('highlighted-link'),
                 url = a.get(0).href;
