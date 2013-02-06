@@ -35,6 +35,16 @@
         return container.hints(true);
     };
 
+    $.fn.loadImages = function(){
+        return this.find('img[data-src]').each(function(){
+            var self = $(this),
+                src = self.data('src');
+
+            self.attr('src', src);
+            self.removeAttr('data-src');
+        });
+    };
+
     $.fn.hints = function(enabled){
         return this.each(function(){
             var elements = $(this).find('[data-hint]'),

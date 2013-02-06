@@ -9,13 +9,7 @@
     });
 
     nbrut.tt.hook('fill', function(container, template){
-        container.find('img[data-src]').each(function(){
-            var self = $(this),
-                src = self.data('src');
-
-            self.attr('src', src);
-            self.removeAttr('data-src');
-        });
+        container.loadImages();
     });
 
     nbrut.tt.hook('fill', function(container, template){
