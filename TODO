@@ -2,13 +2,13 @@ TODO:
 
 1
 -------
-- DELETE for comments and discussions
-- DEL discussions/comments when deleting post, dele comments when deleting discussions.
+- DEL discussions/comments when deleting post
 
 - minimal profile, displayName edits.
 - comments
 	- delete buttons (author)
 	- improve fugly editor disposition
+	- improve/remove widths.
 
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - fix styles, make more responsive
