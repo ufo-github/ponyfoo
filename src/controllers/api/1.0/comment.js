@@ -10,7 +10,7 @@ function discuss(req,res){
     add(req,res,document);
 }
 
-function insert(req,res){
+function reply(req,res){
     discussion.findOne({ _id: req.params.id }, function(err, document){
         if(err){
             throw err;
@@ -59,8 +59,21 @@ function list(req,res){
     }
 }
 
+function del(req,res){
+    // TODO either as the author, or if it's the owner.
+    // TODO delete
+}
+
+function edit(req,res){
+    // TODO either as the author, or if it's the owner.
+    // TODO owner can edit for half an hour, after that, no more edits.
+    // TODO update text, mark as edited (set updated field).
+}
+
 module.exports = {
     get: list,
     discuss: discuss,
-    ins: insert
+    reply: reply,
+    del: del,
+    edit: edit
 };
