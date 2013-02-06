@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
             id: { type: ObjectId, require: true },
             displayName: { type: String, require: true },
             gravatar: { type: String, require: true }
-        }
+        },
+        root: { type: Boolean, require: true, default: false }
     });
 
 module.exports = schema;

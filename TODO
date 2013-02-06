@@ -2,6 +2,9 @@ TODO:
 
 1
 -------
+- DELETE for comments and discussions
+- DEL discussions/comments when deleting post, dele comments when deleting discussions.
+
 - minimal profile, displayName edits.
 - comments
 	- delete buttons (author)
@@ -10,18 +13,17 @@ TODO:
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - fix styles, make more responsive
 
+- post regarding js getters and setters
+
 2
 -------
 
 - serve different views to google crawl bot
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
-- post regarding js getters and setters
 - css for dummies
 
 2.5
 -------
-- DELETE for comments and discussions
-- DEL discussions/comments when deleting post, dele comments when deleting discussions.
 - generalize api GET, PUT and updates.
 - move logic out of controllers
 - client-side caching?

@@ -23,7 +23,7 @@ function connected(req,res,next){
     if(!!req.user){
         next();
     }else{
-        unauthorized(req,res,401);
+        rest.unauthorized(req,res,401);
     }
 }
 
@@ -31,18 +31,10 @@ function author(req,res,next){
     var connected = !!req.user,
         authorized = connected && req.user.author === true;
     if (authorized !== true){
-        unauthorized(req,res,connected?403:401);
+        rest.unauthorized(req,res,connected?403:401);
     }else{
         next();
     }
-}
-
-function unauthorized(req, res, code){
-    rest.error(res,code,'api endpoint unauthorized');
-}
-
-function notFound(req, res){
-    rest.error(res,404,'api endpoint not found');
 }
 
 function paged(api, path, cb){
@@ -81,7 +73,7 @@ function routeComments(api){
         routeComments = routeEntry + '/comments',
         routeDiscuss = routeEntry + '/comment',
         routeReply = '/discussion/:id([a-f0-9]+)/comment',
-        routeComment = '/comment/:id([a-f0-9]+)';
+        routeComment = routeReply + '/:commentId([a-f0-9]+)';
 
     // get discussion threads
     api.get(routeComments, comment.get);
@@ -101,7 +93,7 @@ function configure(server){
     routeEntries(api);
     routeComments(api);
 
-    api.all('/*', notFound);
+    api.all('/*', rest.notFound);
 }
 
 module.exports = {

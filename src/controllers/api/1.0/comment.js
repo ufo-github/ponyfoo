@@ -7,7 +7,7 @@ function discuss(req,res){
     var id = mongoose.Types.ObjectId(req.params.entryId);
     document = new discussion({ entry: id });
 
-    add(req,res,document);
+    add(req,res,document,true);
 }
 
 function reply(req,res){
@@ -15,18 +15,19 @@ function reply(req,res){
         if(err){
             throw err;
         }
-        add(req,res,document);
+        add(req,res,document,false);
     });
 }
 
-function add(req,res,document){
+function add(req,res,document,root){
     var model = {
         text: req.body.comment,
         author: {
             id: req.user._id,
             displayName: req.user.displayName,
             gravatar: req.user.gravatar
-        }
+        },
+        root: root
     };
 
     document.comments.push(new comment(model));
@@ -60,8 +61,31 @@ function list(req,res){
 }
 
 function del(req,res){
-    // TODO either as the author, or if it's the owner.
-    // TODO delete
+    var id = mongoose.Types.ObjectId(req.params.id),
+        commentId = mongoose.Types.ObjectId(req.params.commentId);
+
+    discussion.findOne({ _id: id }, function(err, discussion){
+        if(err){
+            rest.resHandler(err,{res:res});
+            return;
+        }
+
+        var comment = discussion.comments.id(commentId),
+            author = req.user.author === true,
+            authorized = author ||  comment.author.id === req.user._id;
+
+        if(authorized){
+            if(comment.root){
+                discussion.remove(done);
+            }else{
+                comment.remove(done);
+            }
+        }
+
+        function done(err){
+            rest.resHandler(err,{res:res});
+        }
+    });
 }
 
 function edit(req,res){

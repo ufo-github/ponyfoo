@@ -10,7 +10,7 @@
 
 .blog-comment {
   margin-top: 20px;
-  margin-left: 130px;
+  margin-left: 86px;
 }
 
 .blog-comment:first-child {
@@ -18,21 +18,21 @@
 }
 
 .blog-comment-author {
-  width: 130px;
-  text-align: center;
-  display: inline-block;
+  color: @strong;
+  margin: 20px 0 12px;
+  padding: 10px 8px;
+
+  background-color: @strongish;
+  .box-radius(6px);
+  .box-shadow(1px 2px 1px @border);
 }
 
+.blog-comment-gravatar,
 .blog-comment-body {
   display: inline-block;
   vertical-align: top;
+}
+
+.blog-comment-body {
   margin-left: 8px;
-}
-
-.blog-comment .blog-comment-body {
-  width: 74%;
-}
-
-.blog-comment:first-child .blog-comment-body {
-  width: 78%;
 }

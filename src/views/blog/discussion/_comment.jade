@@ -1,6 +1,7 @@
 section.blog-comment
-  header.blog-comment-author
-    span.user-name='{{author.displayName}}'
+  header.blog-comment-author.user-name='{{author.displayName}}'
+
+  section.blog-comment-gravatar
     img.user-gravatar(data-src='{{author.gravatar}}')
 
   section.blog-comment-body='{{{html}}}'

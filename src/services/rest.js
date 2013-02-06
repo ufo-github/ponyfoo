@@ -51,10 +51,20 @@ function resHandler(err, opts){
     }
 }
 
+function unauthorized(req, res, code){
+    error(res,code||401,'api endpoint unauthorized');
+}
+
+function notFound(req, res){
+    error(res,404,'api endpoint not found');
+}
+
 module.exports = {
     head: head,
     write: write,
     end: end,
     error: error,
-    resHandler: resHandler
+    resHandler: resHandler,
+    unauthorized: unauthorized,
+    notFound: notFound
 };
