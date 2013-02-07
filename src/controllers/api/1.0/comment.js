@@ -102,8 +102,6 @@ function del(req,res){
             return;
         }
 
-        console.log(discussion);
-
         var comment = discussion.comments.id(commentId), author, authorized;
         if (comment === null){
             rest.notFound(req,res);
