@@ -1,31 +1,59 @@
 @import "common.less";
 
-.social, .sidebar-flipper {
-  .box-transition(all 0.4s linear);
+.action, .social, .sidebar-flipper {
   text-indent: -9999em;
   overflow: hidden;
+  border: none;
+  background-color: transparent;
 }
+
+
+
+/* ACTION ICONS
+ *******************/
+
+.action {
+  background-image: url('/img/action.png');
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.action:hover {
+  background-position-y: -24px;
+}
+
+.action.edit    { background-position-x: -24px *0; }
+.action.remove  { background-position-x: -24px *1; }
+
+/* SOCIAL ICONS
+ *******************/
 
 .social {
   background-image: url('/img/social.png');
   width: 26px;
   height: 26px;
   display: inline-block;
-  .box-transition(none);
+  .box-transition(opacity 0.2s linear);
 }
 
 .social:hover {
   opacity: 0.6;
 }
 
-.social.stackoverflow { background-position: 0px 0px; }
-.social.github { background-position: -26px 0px; }
-.social.linkedin { background-position: -52px 0px; }
-.social.twitter { background-position: -78px 0px; }
-.social.email { background-position: -104px 0px; }
-.social.rss { background-position: -130px 0px; }
-.social.facebook { background-position: -156px 0px; }
-.social.google { background-position: -182px 0px; }
+.social.stackoverflow { background-position-x: -26px *0; }
+.social.github        { background-position-x: -26px *1; }
+.social.linkedin      { background-position-x: -26px *2; }
+.social.twitter       { background-position-x: -26px *3; }
+.social.email         { background-position-x: -26px *4; }
+.social.rss           { background-position-x: -26px *5; }
+.social.facebook      { background-position-x: -26px *6; }
+.social.google        { background-position-x: -26px *7; }
+
+
+
+/* SIDEBAR FLIP ICONS
+ *******************/
 
 .sidebar-flipper {
   background-image: url('/img/sidebar-flip.png');
@@ -33,5 +61,5 @@
   height: 32px;
 }
 
-.sidebar-flipper.about-author { background-position: 0px 0px; }
-.sidebar-flipper.latest-posts { background-position: -32px 0px; }
+.sidebar-flipper.about-author { background-position-x: -32px *0; }
+.sidebar-flipper.latest-posts { background-position-x: -32px *1; }

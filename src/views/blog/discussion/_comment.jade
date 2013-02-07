@@ -2,8 +2,8 @@ section.blog-comment
   header.blog-comment-author
     span.user-name='{{author.displayName}}'
     section.blog-comment-actions
-      button='Edit'
-      button='X'
+      button.action.edit(title='Edit')='Edit'
+      button.action.remove(title='Remove')='Remove'
 
   section.blog-comment-body
     section.blog-comment-gravatar
