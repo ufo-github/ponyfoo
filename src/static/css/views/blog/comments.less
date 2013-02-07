@@ -20,7 +20,16 @@
 .blog-comment-author {
   color: @strong;
   margin: 20px 0 12px;
-  padding: 10px 8px;
+  padding: 10px 0 10px 8px;
+
+  background-color: @strongish;
+  .box-radius(6px);
+  .box-shadow(1px 2px 1px @border);
+}
+
+.blog-comment-actions {
+  float: right;
+  padding: 0 8px 10px;
 
   background-color: @strongish;
   .box-radius(6px);
@@ -28,11 +37,11 @@
 }
 
 .blog-comment-gravatar,
-.blog-comment-body {
+.blog-comment-text {
   display: inline-block;
   vertical-align: top;
 }
 
-.blog-comment-body {
-  margin-left: 8px;
+.blog-comment-text {
+  margin-left: 10px;
 }
