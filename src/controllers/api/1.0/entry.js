@@ -1,7 +1,9 @@
-var async = require('async'),
+var mongoose = require('mongoose'),
+    async = require('async'),
     apiConf = require('../config.js'),
     rest = require('../../../services/rest.js'),
     text = require('../../../services/text.js'),
+    discussion = require('../../../models/discussion.js'),
     model = require('../../../models/entry.js'),
     crud = require('../../../services/crud.js')(model);
 
@@ -102,7 +104,9 @@ function insert(req,res){
 }
 
 function remove(req, res){
-    model.findOne({ _id: req.params.id }, function(err,entry){
+    var id = mongoose.Types.ObjectId(req.params.id);
+
+    model.findOne({ _id: id }, function(err,entry){
         if(err){
             throw err;
         }
@@ -115,6 +119,8 @@ function remove(req, res){
             if(err){
                 throw err;
             }
+
+            discussion.find({ entry: id }).remove(); // remove discussions
 
             async.forEach(siblings, function(sibling, done){
                 if (prev !== null && sibling._id.equals(prev)){
