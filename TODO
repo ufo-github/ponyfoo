@@ -2,13 +2,10 @@ TODO:
 
 1
 -------
-- DEL discussions/comments when deleting post
-
 - minimal profile, displayName edits.
 - comments
-	- delete buttons (author)
-	- improve fugly editor disposition
-	- improve/remove widths.
+	- deletes (author)
+	- edits
 
 - try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
 - fix styles, make more responsive
@@ -20,15 +17,9 @@ TODO:
 
 - serve different views to google crawl bot
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
-- css for dummies
+- post about css for dummies
 
 2.5
 -------
-- generalize api GET, PUT and updates.
-- move logic out of controllers
 - client-side caching?
-
-
-3
--------
 - proper api authentication?

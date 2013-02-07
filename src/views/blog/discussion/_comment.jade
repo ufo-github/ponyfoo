@@ -1,11 +1,17 @@
 section.blog-comment
   header.blog-comment-author
     span.user-name='{{author.displayName}}'
+    // {{#actions}}
     section.blog-comment-actions
+      // {{#edit}}
       button.action.edit(title='Edit')='Edit'
+      // {{/edit}}
+      // {{#remove}}
       button.action.remove(title='Remove')='Remove'
+      // {{/remove}}
+    // {{/actions}}
 
-  section.blog-comment-body
+  section.blog-comment-body.clearfix
     section.blog-comment-gravatar
       img.user-gravatar(data-src='{{author.gravatar}}')
 

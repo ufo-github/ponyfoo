@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    apiConf = require('../config.js'),
     rest = require('../../../services/rest.js'),
     discussion = require('../../../models/discussion.js'),
     comment = require('../../../models/comment.js');
@@ -48,12 +49,42 @@ function list(req,res){
     var id = mongoose.Types.ObjectId(req.params.entryId);
     discussion.find({ entry: id }).sort('date').exec(callback);
 
+    function discussionObjects(discussions){
+        if(!req.user){
+            return discussions;
+        }
+
+        return discussions.map(function(d){
+            d = d.toObject();
+            d.comments = d.comments.map(function(c){
+                if(req.user.author){
+                    c.actions = {
+                        remove: true,
+                        edit: true
+                    };
+                }else if(c.author.id === req.user._id){
+                    c.actions = { remove: true };
+
+                    if(new Date() - c.date > apiConf.comment.editableFor){
+                        c.actions.edit = true;
+                    }
+                }
+
+                return c;
+            });
+
+            return d;
+        });
+
+        return discussions;
+    }
+
     function callback(err,documents){
         rest.resHandler(err, {
             res: res,
             then: function(){
                 rest.end(res,{
-                    discussions: documents
+                    discussions: discussionObjects(documents)
                 });
             }
         });
