@@ -51,8 +51,9 @@ function resHandler(err, opts){
     }
 }
 
-function unauthorized(req, res, code){
-    error(res,code||401,'api endpoint unauthorized');
+function unauthorized(req, res){
+    var connected = !!req.user;
+    error(res,connected?403:401,'api endpoint unauthorized');
 }
 
 function notFound(req, res){

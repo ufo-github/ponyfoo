@@ -28,7 +28,8 @@ function add(req,res,document,root){
             displayName: req.user.displayName,
             gravatar: req.user.gravatar
         },
-        root: root
+        root: root,
+        actions: { edit: true, remove: true }
     };
 
     document.comments.push(new comment(model));
@@ -57,26 +58,26 @@ function list(req,res){
         return discussions.map(function(d){
             d = d.toObject();
             d.comments = d.comments.map(function(c){
+                var actions;
+
                 if(req.user.author){
-                    c.actions = {
+                    actions = {
                         remove: true,
                         edit: true
                     };
-                }else if(c.author.id === req.user._id){
-                    c.actions = { remove: true };
+                }else if(c.author.id.equals(req.user._id)){
+                    actions = { remove: true };
 
-                    if(new Date() - c.date > apiConf.comment.editableFor){
-                        c.actions.edit = true;
+                    if(new Date() - c.date > apiConf.comments.editableFor){
+                        actions.edit = true;
                     }
                 }
-
+                c.actions = actions;
                 return c;
             });
 
             return d;
         });
-
-        return discussions;
     }
 
     function callback(err,documents){
@@ -101,11 +102,21 @@ function del(req,res){
             return;
         }
 
-        var comment = discussion.comments.id(commentId),
-            author = req.user.author === true,
-            authorized = author ||  comment.author.id === req.user._id;
+        console.log(discussion);
 
-        if(authorized){
+        var comment = discussion.comments.id(commentId), author, authorized;
+        if (comment === null){
+            rest.notFound(req,res);
+            return;
+        }
+
+        author = req.user.author === true;
+        authorized = author ||  comment.author.id === req.user._id;
+
+        if(!authorized){
+            rest.unauthorized(req,res);
+            return;
+        }else{
             if(comment.root){
                 discussion.remove(done);
             }else{

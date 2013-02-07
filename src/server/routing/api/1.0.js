@@ -31,7 +31,7 @@ function author(req,res,next){
     var connected = !!req.user,
         authorized = connected && req.user.author === true;
     if (authorized !== true){
-        rest.unauthorized(req,res,connected?403:401);
+        rest.unauthorized(req,res);
     }else{
         next();
     }
@@ -45,7 +45,7 @@ function paged(api, path, cb){
 }
 
 function routeEntries(api){
-    var routeEntry = '/entry/:id([0-9a-f]+)',
+    var routeEntry = '/entry/:id([0-9a-f]{24})',
         routeYear = '/entry/:year([0-9]{4})',
         routeMonth = routeYear + '/:month(0[1-9]|1[0-2])',
         routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
@@ -69,11 +69,11 @@ function routeEntries(api){
 }
 
 function routeComments(api){
-    var routeEntry = '/entry/:entryId([0-9a-f]+)',
+    var routeEntry = '/entry/:entryId([0-9a-f]{24})',
         routeComments = routeEntry + '/comments',
         routeDiscuss = routeEntry + '/comment',
-        routeReply = '/discussion/:id([a-f0-9]+)/comment',
-        routeComment = routeReply + '/:commentId([a-f0-9]+)';
+        routeReply = '/discussion/:id([a-f0-9]{24})/comment',
+        routeComment = routeReply + '/:commentId([a-f0-9]{24})';
 
     // get discussion threads
     api.get(routeComments, comment.get);
@@ -84,7 +84,7 @@ function routeComments(api){
 
     // edit comment, delete comment
     api.put(routeComment, connected, comment.edit);
-    api.del(routeComment, connected, comment.del);
+    api.get(routeComment, connected, comment.del);
 }
 
 function configure(server){
