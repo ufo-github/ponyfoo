@@ -133,8 +133,11 @@
     }
 
     function addComments(entry){
-        nbrut.thin.get('entry', {
-            id: entry._id + '/comments',
+        nbrut.thin.get('comment', {
+            parent: {
+                what: 'entry',
+                id: entry._id
+            },
             then: function(it){
                 var container = $('.blog-entries'),
                     list = nbrut.tt.partial('discussion-list', it),

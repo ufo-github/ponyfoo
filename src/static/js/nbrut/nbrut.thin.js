@@ -24,14 +24,16 @@
         }
 
         function fire(how,what,opts){
-            var id = !!opts.id ? '/' + opts.id : '';
+            var id = !!opts.id ? '/' + opts.id : '',
+                parent = !!opts.parent ? opts.parent.what + '/' + opts.parent.id + '/' : '',
+                action = !!opts.action ? opts.action + '/' : '';
 
             xhr = $.ajax({
-                url: '{0}{1}{2}'.format(apiVersion, what, id),
+                url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
                 type: how,
                 data: opts.data
             }).done(function(data){
-                ((hooks[what]||{})[how.toLowerCase()] || $.noop)(data);
+                raise(what,how,data);
                 (opts.then || $.noop)(data);
             }).always(function(){
                 var i = local.indexOf(xhr);
@@ -40,6 +42,10 @@
 
             local.push(xhr);
             return xhr;
+        }
+
+        function raise(what,how,data){
+            ((hooks[what]||{})[how.toLowerCase()] || $.noop)(data);
         }
 
         function hook(what, opts){

@@ -32,18 +32,22 @@
         });
     }
 
-    function discussionHook(data){
-        if (!!data.comment){
+    function commentHook(data){
+        if (data.discussions !== undefined){
+            data.discussions.forEach(function(discussion){
+                discussion.comments.forEach(function(comment){
+                    comment.html = html(comment.text);
+                });
+            });
+        }
+    }
+
+    function commentPutHook(data){
+        if (data.comment !== undefined){
             data.comment.html = html(data.comment.text);
         }
     }
 
-    nbrut.thin.hook('entry', {
-        get: entryHook,
-        put: discussionHook
-    });
-
-    nbrut.thin.hook('discussion', {
-        put: discussionHook
-    });
+    nbrut.thin.hook('entry', { get: entryHook });
+    nbrut.thin.hook('comment', { get: commentHook, put: commentPutHook });
 }(window,jQuery,nbrut,moment);

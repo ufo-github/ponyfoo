@@ -21,25 +21,25 @@ function reply(req,res){
 }
 
 function add(req,res,document,root){
-    var model = {
-        text: req.body.comment,
-        author: {
-            id: req.user._id,
-            displayName: req.user.displayName,
-            gravatar: req.user.gravatar
+    var data = {
+            text: req.body.comment,
+            author: {
+                id: req.user._id,
+                displayName: req.user.displayName,
+                gravatar: req.user.gravatar
+            },
+            root: root
         },
-        root: root,
-        actions: { edit: true, remove: true }
-    };
+        model = new comment(data);
 
-    document.comments.push(new comment(model));
+    document.comments.push(model);
     document.save(function(err){
         rest.resHandler(err,{
             res: res,
             then: function(){
                 rest.end(res, {
                     discussion: document._id,
-                    comment: model
+                    comment: actionMapper(req)(model)
                 });
             }
         });
@@ -57,24 +57,7 @@ function list(req,res){
 
         return discussions.map(function(d){
             d = d.toObject();
-            d.comments = d.comments.map(function(c){
-                var actions;
-
-                if(req.user.author){
-                    actions = {
-                        remove: true,
-                        edit: true
-                    };
-                }else if(c.author.id.equals(req.user._id)){
-                    actions = { remove: true };
-
-                    if(new Date() - c.date > apiConf.comments.editableFor){
-                        actions.edit = true;
-                    }
-                }
-                c.actions = actions;
-                return c;
-            });
+            d.comments = d.comments.map(actionMapper(req));
 
             return d;
         });
@@ -90,6 +73,30 @@ function list(req,res){
             }
         });
     }
+}
+function actionMapper(req){
+    return function(c){
+        var actions;
+
+        if (c.toObject !== undefined){
+            c = c.toObject();
+        }
+
+        if(req.user.author){
+            actions = {
+                remove: true,
+                edit: true
+            };
+        }else if(c.author.id.equals(req.user._id)){
+            actions = { remove: true };
+
+            if(new Date() - c.date < apiConf.comments.editableFor){
+                actions.edit = true;
+            }
+        }
+        c.actions = actions;
+        return c;
+    };
 }
 
 function del(req,res){
@@ -109,7 +116,7 @@ function del(req,res){
         }
 
         author = req.user.author === true;
-        authorized = author ||  comment.author.id === req.user._id;
+        authorized = author ||  comment.author.id.equals(req.user._id);
 
         if(!authorized){
             rest.unauthorized(req,res);

@@ -70,21 +70,20 @@ function routeEntries(api){
 
 function routeComments(api){
     var routeEntry = '/entry/:entryId([0-9a-f]{24})',
-        routeComments = routeEntry + '/comments',
-        routeDiscuss = routeEntry + '/comment',
+        routeComment = routeEntry + '/comment',
         routeReply = '/discussion/:id([a-f0-9]{24})/comment',
-        routeComment = routeReply + '/:commentId([a-f0-9]{24})';
+        routeOne = routeReply + '/:commentId([a-f0-9]{24})';
 
     // get discussion threads
-    api.get(routeComments, comment.get);
+    api.get(routeComment, comment.get);
 
     // insert discussion, comment
-    api.put(routeDiscuss, connected, comment.discuss);
+    api.put(routeComment, connected, comment.discuss);
     api.put(routeReply, connected, comment.reply);
 
     // edit comment, delete comment
-    api.put(routeComment, connected, comment.edit);
-    api.get(routeComment, connected, comment.del);
+    api.put(routeOne, connected, comment.edit);
+    api.del(routeOne, connected, comment.del);
 }
 
 function configure(server){
