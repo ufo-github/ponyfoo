@@ -102,11 +102,6 @@ a.button {
   background-color: @secondary_moderate*1.05;
 }
 
-.button.small {
-  padding: 3px 5px;
-  font-size: 1em;
-}
-
 .button:hover {
   border: 1px solid @secondary_light;
   background-color: @secondary_light*1.15;
@@ -119,6 +114,15 @@ a.button {
   background-color: #ddd;
   color: #999;
   text-shadow: 0 1px @border;
+}
+
+.button.small {
+  padding: 3px 5px;
+  font-size: 1em;
+}
+
+.button.small[disabled], .button.small[disabled]:hover {
+  padding: 1px 3px;
 }
 
 
