@@ -7,8 +7,8 @@ TODO:
 	- deletes (author)
 	- edits
 
-- try and fix css flips (requirement to specify sizes), http://css3playground.com/flip-card.php
-- fix styles, make more responsive
+- try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
+- RWD
 
 - post regarding js getters and setters
 
