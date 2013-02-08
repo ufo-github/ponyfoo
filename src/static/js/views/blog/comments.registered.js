@@ -33,12 +33,6 @@
                 }
             });
         });
-        /*
-         remove.on('click.remove', function(){
-         nbrut.thin.del('comment',{
-
-         });
-         });*/
     }
 
     function afterPuttingDiscussion(elements,data){
@@ -62,7 +56,7 @@
         nbrut.md.prettify(comment);
     }
 
-    function afterActivateDiscussion(viewModel, data, ctx){
+    function afterCommentButton(viewModel, data, ctx){
         unified(ctx.elements,'.discussion-create',{
             parent: {
                 what: 'entry',
@@ -72,7 +66,7 @@
         });
     }
 
-    function afterActivateReply(viewModel, data, ctx){
+    function afterReplyButton(viewModel, data, ctx){
         unified(ctx.elements,'.discussion-reply',{
             parent: {
                 what: 'discussion',
@@ -82,50 +76,62 @@
         });
     }
 
-    function afterActivateComment(viewModel, data, ctx){
+    function afterList(viewModel, data, ctx){
         var elements = ctx.elements,
-            comment = viewModel, discussion;
+            comments = elements.find('.blog-comment');
 
-        if (comment.comments !== undefined){ // new discussions
-            comment = comment.comments[0]; // normalize
-        }
+        bindCommentActions(comments);
+    }
 
-        discussion = comment.root ? elements : elements.parents('.blog-discussion');
+    function afterReplying(viewModel, data, ctx){
+        bindCommentActions(ctx.elements);
+    }
 
-        // TODO: replicate for discussion-list template
-        elements.find('.remove').on('click.remove', function(){
-            nbrut.thin.del('comment',{
-                id: comment._id,
-                parent: {
-                    what: 'discussion',
-                    id: discussion.data('id')
-                },
-                then: function(){
-                    if(comment.root === true){
-                        elements.slideUp();
+    function bindCommentActions(comments){
+        comments.each(actions);
+
+        function actions(){
+            var comment = $(this),
+                discussion = comment.parents('.blog-discussion');
+
+            comment.find('.remove').on('click.remove', function(){
+                nbrut.thin.del('comment',{
+                    id: comment.data('id'),
+                    parent: {
+                        what: 'discussion',
+                        id: discussion.data('id')
+                    },
+                    then: function(){
+                        if(!comment.is(':first-child')){
+                            comment.slideUpAndRemove();
+                        }else{
+                            discussion.slideUpAndRemove();
+                        }
                     }
-                }
+                });
             });
-        });
+        }
     }
 
     nbrut.tt.configure({
         key: 'discussion-actions',
-        afterActivate: afterActivateDiscussion
+        afterActivate: afterCommentButton
     });
-
     nbrut.tt.configure({
         key: 'discussion-reply',
-        afterActivate: afterActivateReply
+        afterActivate: afterReplyButton
     });
 
     nbrut.tt.configure({
         key: 'discussion-comment',
-        afterActivate: afterActivateComment
+        afterActivate: afterReplying
     });
-
     nbrut.tt.configure({
         key: 'discussion-thread',
-        afterActivate: afterActivateComment
+        afterActivate: afterList
+    });
+    nbrut.tt.configure({
+        key: 'discussion-list',
+        afterActivate: afterList
     });
 }(window,jQuery,nbrut);

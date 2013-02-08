@@ -103,6 +103,9 @@ function del(req,res){
     var id = mongoose.Types.ObjectId(req.params.id),
         commentId = mongoose.Types.ObjectId(req.params.commentId);
 
+    console.log(id);
+    console.log(commentId);
+
     discussion.findOne({ _id: id }, function(err, discussion){
         if(err){
             rest.resHandler(err,{res:res});
@@ -121,12 +124,13 @@ function del(req,res){
         if(!authorized){
             rest.unauthorized(req,res);
             return;
+        }
+
+        if(comment.root){
+            discussion.remove(done);
         }else{
-            if(comment.root){
-                discussion.remove(done);
-            }else{
-                comment.remove(done);
-            }
+            comment.remove();
+            discussion.save(done);
         }
 
         function done(err){

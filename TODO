@@ -4,7 +4,6 @@ TODO:
 -------
 - minimal profile, displayName edits.
 - comments
-	- deletes (fix 404)
 	- edits (implement)
 
 - try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
