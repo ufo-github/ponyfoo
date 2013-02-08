@@ -215,11 +215,11 @@
 
             settings.identifier = getHash();
 
-			function render(viewModel, err){
+			function render(viewModel, notFound){
                 if(settings.identifier !== getHash()){ // prevent mis-rendering when the user navigated away.
                     return;
                 }
-                if(err === true){
+                if(notFound === true){
                     activate();
                     return;
                 }
@@ -453,6 +453,7 @@
             activateRoute: activateRoute,
             partial: partial,
             hook: hook,
+            templateLinks: fixLocalRoutes,
             get active() { return getHash() - 1; } /* offset by one because 0 means nothing is active yet */
         };
     }();

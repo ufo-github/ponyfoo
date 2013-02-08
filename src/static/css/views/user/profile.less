@@ -1,10 +1,26 @@
 @import "../../defaults/common.less";
 
+.user-gravatar-link.hint:after,
+.user-gravatar-link.hint-before:before,{
+  top: 0px;
+}
+
+.user-gravatar-link.small.hint:after,
+.user-gravatar-link.small.hint-before:before,{
+  top: 30px;
+}
+
 .user-gravatar {
   width: 60px;
   height: 60px;
   border: 3px solid @strong;
   .box-radius(6px);
+  .box-shadow(1px 2px 1px @pinkish);
+
+  cursor: pointer;
+}
+
+.user-gravatar:hover {
   .box-shadow(1px 2px 1px @pink);
 }
 
@@ -20,15 +36,17 @@
 
 .user-profile-link {
   display: inline-block;
-  margin-right: 12px;
 }
 
 .user-profile-link .user-gravatar {
   display: inline-block;
   margin-bottom: -17px;
-  margin-right: 12px;
 }
 
 .user-profile-link .user-name {
   display: inline-block;
+}
+
+.user-name:not(:hover) {
+  color: @strong;
 }
