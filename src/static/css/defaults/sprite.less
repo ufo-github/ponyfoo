@@ -19,12 +19,11 @@
   display: inline-block;
 }
 
-.action:hover {
-  background-position-y: -24px;
-}
+.action.edit          { background-position: -24px *0 0; }
+.action.remove        { background-position: -24px *1 0; }
 
-.action.edit    { background-position-x: -24px *0; }
-.action.remove  { background-position-x: -24px *1; }
+.action.edit:hover    { background-position: -24px *0 -24px; }
+.action.remove:hover  { background-position: -24px *1 -24px; }
 
 /* SOCIAL ICONS
  *******************/
@@ -41,14 +40,14 @@
   opacity: 0.6;
 }
 
-.social.stackoverflow { background-position-x: -26px *0; }
-.social.github        { background-position-x: -26px *1; }
-.social.linkedin      { background-position-x: -26px *2; }
-.social.twitter       { background-position-x: -26px *3; }
-.social.email         { background-position-x: -26px *4; }
-.social.rss           { background-position-x: -26px *5; }
-.social.facebook      { background-position-x: -26px *6; }
-.social.google        { background-position-x: -26px *7; }
+.social.stackoverflow { background-position: -26px *0 0; }
+.social.github        { background-position: -26px *1 0; }
+.social.linkedin      { background-position: -26px *2 0; }
+.social.twitter       { background-position: -26px *3 0; }
+.social.email         { background-position: -26px *4 0; }
+.social.rss           { background-position: -26px *5 0; }
+.social.facebook      { background-position: -26px *6 0; }
+.social.google        { background-position: -26px *7 0; }
 
 
 
@@ -61,5 +60,5 @@
   height: 32px;
 }
 
-.sidebar-flipper.about-author { background-position-x: -32px *0; }
-.sidebar-flipper.latest-posts { background-position-x: -32px *1; }
+.sidebar-flipper.about-author { background-position: -32px *0 0; }
+.sidebar-flipper.latest-posts { background-position: -32px *1 0; }
