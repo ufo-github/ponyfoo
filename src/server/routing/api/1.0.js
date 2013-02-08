@@ -1,7 +1,8 @@
 var rest = require('../../../services/rest.js'),
     $ = require('../../../services/$.js'),
     entry = require('./../../../controllers/api/1.0/entry.js'),
-    comment = require('./../../../controllers/api/1.0/comment.js');
+    comment = require('./../../../controllers/api/1.0/comment.js'),
+    user = require('./../../../controllers/api/1.0/user.js');
 
 function routing(server){
 	var base = '/api/1.0',
@@ -86,11 +87,16 @@ function routeComments(api){
     api.del(routeOne, connected, comment.del);
 }
 
+function routeUsers(api){
+    api.get('/user/:id([a-f0-9]{24})', user.get);
+}
+
 function configure(server){
     var api = routing(server);
 
     routeEntries(api);
     routeComments(api);
+    routeUsers(api);
 
     api.all('/*', rest.notFound);
 }

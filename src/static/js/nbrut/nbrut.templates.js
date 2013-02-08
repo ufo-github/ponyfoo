@@ -220,7 +220,7 @@
                     return;
                 }
                 if(notFound === true){
-                    activate();
+                    activate(undefined, undefined, 'replace');
                     return;
                 }
 				activateTemplate(template, settings, viewModel || {}, soft); // set-up.
