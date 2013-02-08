@@ -62,6 +62,7 @@ function getJs(){
         '/js/views/blog/entries.js',
         '/js/views/blog/comments.js',
         { profile: ['author', 'registered'], local: '/js/views/blog/comments.registered.js' },
+        { profile: ['author', 'registered'], local: '/js/views/blog/comments.edit.js' },
         '/js/views/blog/search.js',
         { profile: 'anon', local: '/js/views/user/login.js' },
         { profile: 'anon', local: '/js/views/user/register.js' },

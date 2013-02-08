@@ -99,12 +99,9 @@ function actionMapper(req){
     };
 }
 
-function del(req,res){
+function findComment(req, res, then){
     var id = mongoose.Types.ObjectId(req.params.id),
         commentId = mongoose.Types.ObjectId(req.params.commentId);
-
-    console.log(id);
-    console.log(commentId);
 
     discussion.findOne({ _id: id }, function(err, discussion){
         if(err){
@@ -126,23 +123,32 @@ function del(req,res){
             return;
         }
 
+        then(discussion, comment, function (err){
+            rest.resHandler(err,{res:res});
+        });
+    });
+}
+
+function del(req, res){
+    findComment(req, res, function(discussion, comment, done){
         if(comment.root){
             discussion.remove(done);
         }else{
             comment.remove();
             discussion.save(done);
         }
-
-        function done(err){
-            rest.resHandler(err,{res:res});
-        }
     });
 }
 
 function edit(req,res){
-    // TODO either as the author, or if it's the owner.
-    // TODO owner can edit for half an hour, after that, no more edits.
-    // TODO update text, mark as edited (set updated field).
+    findComment(req,res, function(discussion, comment, done){
+        if(req.user.author !== true && new Date() - comment.date < apiConf.comments.editableFor){
+            rest.unauthorized(req,res);
+        }
+
+        comment.text = req.body.comment;
+        discussion.save(done);
+    });
 }
 
 module.exports = {

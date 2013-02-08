@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    var edits = [];
+
     function unified(elements,buttonClass,opts){
         var editor = elements.find('.comment-editor'),
             textarea = elements.find('.wmd-input'),
@@ -13,23 +15,38 @@
             if(editor.is(':hidden')){
                 container.find('.comment-editor').hide();
                 editor.show();
+                button.trigger('edit-exit');
                 return;
             }
 
             textarea.prop('disabled', true);
 
+            var comment = textarea.val(),
+                edit = button.data('edit') || { empty: true };
+
             nbrut.ui.disable(button);
             nbrut.thin.put('comment', {
-                parent: opts.parent,
-                data: { comment: textarea.val() },
+                id: edit.id, // in case of edits
+                parent: edit.parent || opts.parent,
+                data: { comment: comment },
                 then: function(data){
-                    textarea.val('');
+                    textarea.val('').trigger('paste');
                     textarea.prop('disabled', false);
-
-                    elements.find('.blog-comment').empty(); // clear preview
                     nbrut.ui.enable(button);
 
-                    opts.done(elements,data);
+                    if(edit.empty === true){
+                        opts.done(elements,data);
+                    }else{
+                        var selector = '.blog-comment[data-id={0}]'.format(edit.id),
+                            target = $(selector).find('.blog-comment-text'),
+                            commentHtml = nbrut.md.html(comment);
+
+                        edits[edit.id] = comment;
+                        target.html(commentHtml);
+                        nbrut.md.prettify(target);
+                    }
+
+                    button.trigger('edit-exit');
                 }
             });
         });
@@ -76,25 +93,44 @@
         });
     }
 
+    function afterThread(viewModel, data, ctx){
+        ctx.elements.siblings('.blog-entry-uncommented').slideUpAndRemove();
+
+        afterList([viewModel], data, ctx);
+    }
+
+    function afterInitialList(viewModel, data, ctx){
+        afterList(viewModel.discussions, data, ctx);
+        nbrut.md.prettify(ctx.elements);
+    }
+
     function afterList(viewModel, data, ctx){
         var elements = ctx.elements,
             comments = elements.find('.blog-comment');
 
-        bindCommentActions(comments);
+        bindCommentActions(comments, viewModel);
     }
 
     function afterReplying(viewModel, data, ctx){
-        bindCommentActions(ctx.elements);
+        bindCommentActions(ctx.elements, [{ comments: [viewModel] }]);
     }
 
-    function bindCommentActions(comments){
+    function bindCommentActions(comments, discussions){
         comments.each(actions);
 
         function actions(){
-            var comment = $(this),
-                discussion = comment.parents('.blog-discussion');
+            var comment = $(this);
+            remove(comment);
+            edit(comment);
+        }
 
-            comment.find('.remove').on('click.remove', function(){
+        function remove(comment){
+            var discussion = comment.parents('.blog-discussion'),
+                remove = comment.find('.remove');
+
+            remove.on('click.remove', function(){
+                remove.trigger('edit-exit');
+
                 nbrut.thin.del('comment',{
                     id: comment.data('id'),
                     parent: {
@@ -110,6 +146,62 @@
                     }
                 });
             });
+        }
+
+        function edit(comment){
+            var button = comment.find('.edit');
+
+            button.on('click.edit', function(){
+                var discussions = $('.blog-discussions'),
+                    discussion = comment.parents('.blog-discussion'),
+                    discussionId = discussion.data('id'),
+                    footer = discussions.find('.discussion-actions'),
+                    buttons = footer.find('.discussion-action-buttons'),
+                    editor = footer.find('.comment-editor'),
+                    editors = discussions.find('.comment-editor').not(editor),
+                    textarea = editor.find('.comment-input'),
+                    id = comment.data('id'),
+                    commentText = lookupText(id);
+
+                button.trigger('edit-exit');
+
+                editors.hide();
+                editor.show().scrollIntoView();
+
+                textarea.val(commentText).trigger('paste');
+
+                var partial = nbrut.tt.partial('comment-edit', {
+                    id: id,
+                    discussionId: discussionId,
+                    textarea: textarea,
+                    discussions: discussions,
+                    actions: buttons,
+                    comment: comment
+                });
+                partial.prependTo(buttons);
+            });
+        }
+
+        function lookupText(id){
+            var text = edits[id];
+            if (text !== undefined){
+                return text;
+            }
+
+            $.each(discussions, function(){
+                $.each(this.comments, function(){
+                    if(this._id === id){
+                        text = this.text;
+                        return false;
+                    }
+                });
+
+                if(text !== undefined){
+                    return false;
+                }
+            });
+
+            return text;
         }
     }
 
@@ -128,10 +220,10 @@
     });
     nbrut.tt.configure({
         key: 'discussion-thread',
-        afterActivate: afterList
+        afterActivate: afterThread
     });
     nbrut.tt.configure({
         key: 'discussion-list',
-        afterActivate: afterList
+        afterActivate: afterInitialList
     });
 }(window,jQuery,nbrut);

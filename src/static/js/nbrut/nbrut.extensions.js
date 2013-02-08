@@ -110,4 +110,12 @@
     $.fn.slideUpAndRemove = function(then) {
         doThisAndRemove.apply(this, ['slideUp',then]);
     };
+
+    $.fn.scrollIntoView = function () {
+        $('html, body').animate({
+            scrollTop: $(this).position().top - 30
+        }, 'fast');
+
+        return this;
+    };
 }(jQuery);

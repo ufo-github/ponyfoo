@@ -21,4 +21,9 @@
         source: '#discussion-comment-template',
         mustache: true
     });
+
+    nbrut.tt.register({
+        key: 'comment-edit',
+        source: '#comment-edit-template'
+    });
 }(window,nbrut);

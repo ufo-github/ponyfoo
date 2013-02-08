@@ -103,7 +103,9 @@
 
         function configure(settings) {
             if(!(settings.key in templates)){
-                throw new Error('template not registered.');
+                throw new Error('template not registered. ' + JSON.stringify({
+                    key: settings.key
+                }));
             }
             var configured = {},
                 template = templates[settings.key];
