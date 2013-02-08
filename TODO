@@ -3,6 +3,7 @@ TODO:
 1
 -------
 - minimal profile, displayName edits.
+- highlight post author if it's a blog owner (Author)
 
 - try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
 - RWD
