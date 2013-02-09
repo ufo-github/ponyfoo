@@ -10,9 +10,10 @@ module.exports = {
             profile = 'author';
         }
 
-        var locals = JSON.stringify({
+        locals = JSON.stringify({
             profile: profile,
-            connected: req.user !== undefined
+            connected: req.user !== undefined,
+            author: profile === 'author'
         });
 
         res.locals.assetify.js.add('!function(a){a.locals=' + locals + ';}(nbrut);');

@@ -3,7 +3,7 @@ TODO:
 1
 -------
 - minimal profile, displayName edits.
-- highlight post author if it's a blog owner (Author)
+- rename 'author' to 'blogger' everywhere except for comment authors.
 
 - try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
 - RWD

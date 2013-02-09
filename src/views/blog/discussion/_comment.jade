@@ -1,6 +1,6 @@
 section.blog-comment(data-id='{{_id}}')
-  header.blog-comment-author
-    a.user-name.highlighted-link(data-hint='See profile', href='/user/profile/{{author.id}}')='{{author.displayName}}'
+  header(class='{{css}}')
+    a.user-name(data-hint='See profile', href='/user/profile/{{author.id}}')='{{author.displayName}}'
     // {{#actions}}
     section.blog-comment-actions
       // {{#edit}}

@@ -35,17 +35,20 @@
     function commentHook(data){
         if (data.discussions !== undefined){
             data.discussions.forEach(function(discussion){
-                discussion.comments.forEach(function(comment){
-                    comment.html = html(comment.text);
-                });
+                discussion.comments.forEach(addCommentProperties);
             });
         }
     }
 
     function commentPutHook(data){
         if (data.comment !== undefined){
-            data.comment.html = html(data.comment.text);
+            addCommentProperties(data.comment);
         }
+    }
+
+    function addCommentProperties(comment){
+        comment.html = html(comment.text);
+        comment.css = 'blog-comment-author' + (comment.author.blogger ? ' blogger' : '');
     }
 
     nbrut.thin.hook('entry', { get: entryHook });

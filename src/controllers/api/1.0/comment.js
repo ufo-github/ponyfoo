@@ -26,7 +26,8 @@ function add(req,res,document,root){
             author: {
                 id: req.user._id,
                 displayName: req.user.displayName,
-                gravatar: req.user.gravatar
+                gravatar: req.user.gravatar,
+                blogger: req.user.author
             },
             root: root
         },

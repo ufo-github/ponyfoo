@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 		author: {
             id: { type: ObjectId, require: true },
             displayName: { type: String, require: true },
-            gravatar: { type: String, require: true }
+            gravatar: { type: String, require: true },
+            blogger: { type: Boolean, require: true }
         },
         root: { type: Boolean, require: true, default: false }
     });
