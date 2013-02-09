@@ -1,12 +1,8 @@
-section#user-profile-template.template
+section#user-profile-edit-template.template
+  span.profile-edit-notice='(editing)'
   h1='{{profileTitle}}'
 
   article.user-profile-card
-    // {{#me}}
-    section.user-profile-actions
-      a.action.edit(href='/user/profile/{{_id}}/edit', title='Edit')='Edit'
-    // {{/me}}
-
     img.user-gravatar.large(data-src='{{gravatarLarge}}')
 
     section

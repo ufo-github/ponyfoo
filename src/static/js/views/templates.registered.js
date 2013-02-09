@@ -36,7 +36,7 @@
             route:{
                 regex: /\/user\/profile\/([a-f0-9]{24})\/edit$/,
                 get: function(data){
-                    return '/user/profile/{0}'.format(data.id);
+                    return '/user/profile/{0}/edit'.format(data.id);
                 },
                 map: function(captures){
                     return { id: captures[1] };

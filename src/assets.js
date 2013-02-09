@@ -25,6 +25,7 @@ function getCss(){
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
 
         '/css/views/user/profile.less',
+        { profile: ['blogger', 'registered'], local: '/css/views/user/profile.edit.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
         { profile: 'anon', local: '/css/views/user/register.less' },
         { profile: 'anon', local: '/css/views/user/login.less' },
