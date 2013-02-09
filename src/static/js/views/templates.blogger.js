@@ -6,15 +6,15 @@
 		back: '#cancel-entry',
         aliases: [{
             title: 'Entry Writer',
-            route: '/author/entry',
+            route: '/blogger/entry',
             trigger: '#write-entry'
         }, {
             key: 'edit',
             title: 'Entry Editor',
             route: {
-                regex: /^\/author\/entry\/([0-9a-f]{24})$/i,
+                regex: /^\/blogger\/entry\/([0-9a-f]{24})$/i,
                 get: function(data){
-                    return '/author/entry/{0}'.format(data.id);
+                    return '/blogger/entry/{0}'.format(data.id);
                 },
                 map: function(captures){
                     return { id: captures[1] };
@@ -29,7 +29,7 @@
         mustache: true,
         aliases: [{
             title: 'Review',
-            route: '/author/entry/review',
+            route: '/blogger/entry/review',
             trigger: '#review-entries'
         }]
     });

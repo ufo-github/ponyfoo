@@ -3,7 +3,6 @@ TODO:
 1
 -------
 - minimal profile, displayName edits.
-- rename 'author' to 'blogger' everywhere except for comment authors.
 
 - try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
 - RWD

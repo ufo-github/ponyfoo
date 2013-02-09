@@ -65,7 +65,7 @@ var config = {
             thumbnail: this.server.authority + '/img/thumbnail.png'
         };
     },
-    author: {
+    blogger: {
         name: 'Nicolas Bevacqua',
         email: 'nicolasbevacqua@gmail.com',
         github: 'https://github.com/bevacqua',

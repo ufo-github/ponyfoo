@@ -4,16 +4,16 @@ module.exports = {
 
         if(!req.user){
             profile = 'anon';
-        }else if(req.user.author !== true){
+        }else if(req.user.blogger !== true){
             profile = 'registered';
         }else{
-            profile = 'author';
+            profile = 'blogger';
         }
 
         locals = JSON.stringify({
             profile: profile,
             connected: req.user !== undefined,
-            author: profile === 'author'
+            blogger: profile === 'blogger'
         });
 
         res.locals.assetify.js.add('!function(a){a.locals=' + locals + ';}(nbrut);');

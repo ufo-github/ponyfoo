@@ -5,7 +5,7 @@ var config = require('./config.js'),
         bin: config.static.bin,
         css: getCss(),
         js: getJs(),
-        profiles: ['anon','registered','author']
+        profiles: ['anon','registered','blogger']
     };
 
 function getCss(){
@@ -23,13 +23,13 @@ function getCss(){
         '/css/views/blog/entries.less',
         '/css/views/user/profile.less',
         '/css/views/blog/comments.less',
-        { profile: ['author', 'registered'], local: '/css/views/blog/comments.registered.less' },
+        { profile: ['blogger', 'registered'], local: '/css/views/blog/comments.registered.less' },
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
         { profile: 'anon', local: '/css/views/user/register.less' },
         { profile: 'anon', local: '/css/views/user/login.less' },
-        { profile: 'author', local: '/css/views/author/editor.less' },
-        { profile: 'author', local: '/css/views/author/review.less' }
+        { profile: 'blogger', local: '/css/views/blogger/editor.less' },
+        { profile: 'blogger', local: '/css/views/blogger/review.less' }
     ];
 }
 
@@ -57,18 +57,18 @@ function getJs(){
         '/js/views/templates.js',
         '/js/views/templates.entries.js',
         { profile: 'anon', local: '/js/views/templates.anon.js' },
-        { profile: ['author', 'registered'], local: '/js/views/templates.registered.js' },
-        { profile: 'author', local: '/js/views/templates.author.js'},
-        { profile: ['author', 'registered'], local: '/js/views/user/profile.js' },
+        { profile: ['blogger', 'registered'], local: '/js/views/templates.registered.js' },
+        { profile: 'blogger', local: '/js/views/templates.blogger.js'},
+        { profile: ['blogger', 'registered'], local: '/js/views/user/profile.js' },
         '/js/views/blog/entries.js',
         '/js/views/blog/comments.js',
-        { profile: ['author', 'registered'], local: '/js/views/blog/comments.registered.js' },
-        { profile: ['author', 'registered'], local: '/js/views/blog/comments.edit.js' },
+        { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.registered.js' },
+        { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.edit.js' },
         '/js/views/blog/search.js',
         { profile: 'anon', local: '/js/views/user/login.js' },
         { profile: 'anon', local: '/js/views/user/register.js' },
-        { profile: 'author', local: '/js/views/author/editor.js' },
-        { profile: 'author', local: '/js/views/author/review.js' }
+        { profile: 'blogger', local: '/js/views/blogger/editor.js' },
+        { profile: 'blogger', local: '/js/views/blogger/review.js' }
     ];
 
     if(config.tracking.code !== undefined){

@@ -27,7 +27,7 @@ function add(req,res,document,root){
                 id: req.user._id,
                 displayName: req.user.displayName,
                 gravatar: req.user.gravatar,
-                blogger: req.user.author
+                blogger: req.user.blogger
             },
             root: root
         },
@@ -83,7 +83,7 @@ function actionMapper(req){
             c = c.toObject();
         }
 
-        if(req.user.author){
+        if(req.user.blogger){
             actions = {
                 remove: true,
                 edit: true
@@ -110,14 +110,14 @@ function findComment(req, res, then){
             return;
         }
 
-        var comment = discussion.comments.id(commentId), author, authorized;
+        var comment = discussion.comments.id(commentId), blogger, authorized;
         if (comment === null){
             rest.notFound(req,res);
             return;
         }
 
-        author = req.user.author === true;
-        authorized = author ||  comment.author.id.equals(req.user._id);
+        blogger = req.user.blogger === true;
+        authorized = blogger ||  comment.author.id.equals(req.user._id);
 
         if(!authorized){
             rest.unauthorized(req,res);
@@ -143,7 +143,7 @@ function del(req, res){
 
 function edit(req,res){
     findComment(req,res, function(discussion, comment, done){
-        if(req.user.author !== true && new Date() - comment.date < apiConf.comments.editableFor){
+        if(req.user.blogger !== true && new Date() - comment.date < apiConf.comments.editableFor){
             rest.unauthorized(req,res);
         }
 

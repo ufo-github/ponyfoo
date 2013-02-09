@@ -2,7 +2,7 @@ aside.blog-sidebar.flip-wrapper
   article.flip-card
     section#latest-posts.face.front
       header
-        a.sidebar-flipper.about-author(title='About me')
+        a.sidebar-flipper.about-blogger(title='About me')
         h5.underline='Latest Posts'
 
       section
@@ -11,18 +11,18 @@ aside.blog-sidebar.flip-wrapper
           a.highlighted-link(href='{{permalink}}', data-hint='posted {{published}}')='{{title}}'
           // {{/latest}}
 
-    section#about-author.face.back
+    section#about-blogger.face.back
       header
         a.sidebar-flipper.latest-posts(title='Latest posts')
         h5.underline='About'
 
-      section.author-description
-        p=config.author.about
-        p=config.author.social
+      section.blogger-description
+        p=config.blogger.about
+        p=config.blogger.social
 
       footer.social-links
-        a.social.github(title='Follow me on GitHub', target='_blank', href=config.author.github)='GitHub'
-        a.social.stackoverflow(title='Follow me on Stack Overflow', target='_blank', href=config.author.stackoverflow)='Stack Overflow'
-        a.social.linkedin(title='Follow me on LinkedIn', target='_blank', href=config.author.linkedin)='LinkedIn'
-        a.social.email(title='Contact me via email', target='_blank', href='mailto:' + config.author.email)='Email'
+        a.social.github(title='Follow me on GitHub', target='_blank', href=config.blogger.github)='GitHub'
+        a.social.stackoverflow(title='Follow me on Stack Overflow', target='_blank', href=config.blogger.stackoverflow)='Stack Overflow'
+        a.social.linkedin(title='Follow me on LinkedIn', target='_blank', href=config.blogger.linkedin)='LinkedIn'
+        a.social.email(title='Contact me via email', target='_blank', href='mailto:' + config.blogger.email)='Email'
         a.social.rss(title='Subscribe to my RSS feed', target='_blank', href=config.feed.proxy)='RSS Feed'

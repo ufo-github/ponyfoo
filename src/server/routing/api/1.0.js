@@ -28,9 +28,9 @@ function connected(req,res,next){
     }
 }
 
-function author(req,res,next){
+function blogger(req,res,next){
     var connected = !!req.user,
-        authorized = connected && req.user.author === true;
+        authorized = connected && req.user.blogger === true;
     if (authorized !== true){
         rest.unauthorized(req,res);
     }else{
@@ -64,9 +64,9 @@ function routeEntries(api){
     api.get(routeEntry, entry.getById);
 
     // insert, update, delete
-    api.put('/entry', author, entry.ins);
-    api.put(routeEntry, author, entry.upd);
-    api.del(routeEntry, author, entry.del);
+    api.put('/entry', blogger, entry.ins);
+    api.put(routeEntry, blogger, entry.upd);
+    api.del(routeEntry, blogger, entry.del);
 }
 
 function routeComments(api){

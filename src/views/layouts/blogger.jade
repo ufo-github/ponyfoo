@@ -1,0 +1,13 @@
+extends layout
+
+block menu
+  include _registered-menu
+  a(href='/user/logout')='Logout'
+  a#review-entries(href='/blogger/entry/review')='Review Entries'
+  a.button#write-entry(href='/blogger/entry')='Write Entry'
+
+block templates
+  include _registered-templates
+
+  include ../blogger/editor
+  include ../blogger/review

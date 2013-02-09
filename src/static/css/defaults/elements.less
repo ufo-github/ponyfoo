@@ -136,3 +136,34 @@ tr {
 :-ms-input-placeholder {
   color: #999;
 }
+
+
+
+/* ITEM LISTS
+ **************/
+
+ul.item-list,
+ol.item-list {
+  margin: 20px 0;
+}
+
+ul.item-list li,
+ol.item-list li {
+  line-height: 1.6em;
+  list-style-position:inside;
+}
+
+ul.item-list li {
+  list-style-type: disc;
+  list-style-type: hiragana-iroha;
+}
+
+ol.item-list li {
+  list-style-type: decimal;
+}
+
+ul.item-list li:before,
+ol.item-list li:before {
+  content: '';
+  padding-right: 3px;
+}

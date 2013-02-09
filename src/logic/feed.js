@@ -11,7 +11,7 @@ function rebuild(done){
     var opts = {
         title: config.site.title,
         description: config.site.description,
-        author: config.author.name,
+        author: config.blogger.name,
         site_url: config.server.authority,
         image_url: config.site.thumbnail,
         feed_url: config.feed.local
@@ -33,7 +33,7 @@ function rebuild(done){
                     title: entry.title,
                     description: brief,
                     url: entry.getPermalink(true),
-                    author: config.author.name,
+                    author: config.blogger.name,
                     date: entry.date
                 });
                 done();

@@ -42,7 +42,7 @@ function register(req,res, next){
         crud.create(req.body, {
             res: res,
             always: function(user){
-                user.author = false; // prevent over-posting.
+                user.blogger = false; // prevent over-posting.
                 user.displayName = email.split('@')[0];
             },
             writeHead: false,

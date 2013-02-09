@@ -11,6 +11,7 @@
         function reformatMarkdown(container){
             container.anchorSEO('a:not(header a)');
             container.find('pre, code:not(pre code)').addClass('prettyprint');
+            container.find('ul, ol:not(.linenums)').addClass('item-list');
             prettyPrint();
         }
 
