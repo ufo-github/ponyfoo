@@ -4,7 +4,7 @@
             prefix = searching ? 'search/' : '';
 
         return {
-            regex: new RegExp(regex, 'i'),
+            regex: new RegExp(regex),
             get: function(data){
                 return '/{0}'.format(data.query.replace(/ /g,'+'));
             },

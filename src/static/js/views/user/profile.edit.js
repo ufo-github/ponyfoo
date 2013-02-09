@@ -1,7 +1,4 @@
 !function (window,$,nbrut, undefined) {
-	var profile = $('.user-profile-link');
-    nbrut.tt.templateLinks(profile);
-
     function prepare(render, data){
         nbrut.thin.get('user',{
             id: data.id,
@@ -13,7 +10,7 @@
     }
 
     nbrut.tt.configure({
-        key: 'user-profile',
+        key: 'user-profile-edit',
         prepare: prepare
     })
 }(window,jQuery,nbrut);

@@ -24,7 +24,7 @@
         aliases: [{
             title: 'User Profile',
             route:{
-                regex: /\/user\/profile\/([a-f0-9]{24})/,
+                regex: /\/user\/profile\/([a-f0-9]{24})$/,
                 get: function(data){
                     return '/user/profile/{0}'.format(data.id);
                 },

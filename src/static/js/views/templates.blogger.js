@@ -12,7 +12,7 @@
             key: 'edit',
             title: 'Entry Editor',
             route: {
-                regex: /^\/blogger\/entry\/([0-9a-f]{24})$/i,
+                regex: /^\/blogger\/entry\/([0-9a-f]{24})$/,
                 get: function(data){
                     return '/blogger/entry/{0}'.format(data.id);
                 },

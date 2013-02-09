@@ -26,4 +26,22 @@
         key: 'comment-edit',
         source: '#comment-edit-template'
     });
+
+    nbrut.tt.register({
+        key: 'user-profile-edit',
+        source: '#user-profile-edit-template',
+        mustache: true,
+        aliases: [{
+            title: 'Edit Profile',
+            route:{
+                regex: /\/user\/profile\/([a-f0-9]{24})\/edit$/,
+                get: function(data){
+                    return '/user/profile/{0}'.format(data.id);
+                },
+                map: function(captures){
+                    return { id: captures[1] };
+                }
+            }
+        }]
+    })
 }(window,nbrut);

@@ -10,7 +10,12 @@ var mongoose = require('mongoose'),
         displayName: { type: String },
         facebookId: { type: String },
         githubId: { type: String },
-        googleId: { type: String }
+        googleId: { type: String },
+        website: {
+            title: { type: String },
+            url: { type: String }
+        },
+        bio: { type: String }
     },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatarLarge').get(function(){
