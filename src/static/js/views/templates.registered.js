@@ -42,6 +42,7 @@
                     return { id: captures[1] };
                 }
             }
-        }]
+        }],
+        back: '#profile-edit-cancel'
     })
 }(window,nbrut);
