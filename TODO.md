@@ -3,8 +3,9 @@ TODO
 
 1
 -------
+- make more RWD
+
 - try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
-- RWD
 
 - serve different views to google crawl bot
 
