@@ -30,7 +30,7 @@
         if(viewModel.entries.length === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
-        }else if(viewModel.paging !== undefined){
+        }else if(viewModel.entries.length !== 1){
             addPager(viewModel, ctx.identifier, data.query || '');
         }
 
