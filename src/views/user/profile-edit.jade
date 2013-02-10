@@ -8,15 +8,15 @@ section#user-profile-edit-template.template
     section.user-profile-info
       p
         span.label='password'
-        input(name='password', type='password', placeholder='{{passwordPlaceholder}}')
+        input.user-password(type='password', placeholder='{{passwordPlaceholder}}')
 
       p
         span.label='website title'
-        input(name='website.title', placeholder='Your site title')='{{website.title}}'
+        input.website-title(placeholder='Your site title')='{{website.title}}'
 
       p
         span.label='website url'
-        input(name='website.title', placeholder='Your site url')='{{website.url}}'
+        input.website-url(placeholder='Your site url')='{{website.url}}'
 
   div#wmd-button-bar-bio.wmd-button-bar
   div
@@ -26,4 +26,4 @@ section#user-profile-edit-template.template
 
   section.profile-edit-actions
     a#profile-edit-cancel='Cancel'
-    button#profile-edit-submit.button(data-text='Save Edits', data-text-disabled='Saving...')='Save Edits'
+    button#profile-edit-submit.button(data-id='{{_id}}', data-text='Save Edits', data-text-disabled='Saving...')='Save Edits'

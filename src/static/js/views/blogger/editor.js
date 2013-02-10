@@ -73,6 +73,9 @@
                 },
                 then: function(){
                     nbrut.tt.activate('entry-review');
+                },
+                always: function(){
+                    nbrut.ui.enable(submit);
                 }
             });
         });

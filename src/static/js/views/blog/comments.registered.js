@@ -32,7 +32,6 @@
                 then: function(data){
                     textarea.val('').trigger('paste');
                     textarea.prop('disabled', false);
-                    nbrut.ui.enable(button);
 
                     if(edit.empty === true){
                         opts.done(elements,data);
@@ -47,6 +46,9 @@
                     }
 
                     button.trigger('edit-exit');
+                },
+                always: function(){
+                    nbrut.ui.enable(button);
                 }
             });
         });
