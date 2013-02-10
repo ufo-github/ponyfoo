@@ -48,12 +48,18 @@ function upd(req,res){
             document.password = changes.password;
         }
 
-        document.website = changes.website;
+        var site = changes.website;
+        if(!!site){
+            if(!!site.url && site.url.search(/https?:\/\//i) === -1){
+                site.url = 'http://' + site.url;
+            }
 
-        if(typeof document.website.url === 'string' && document.website.url.search(/https?:\/\//i) === -1){
-            document.website.url = 'http://' + document.website.url;
+            if(!site.url || !site.title){
+                site = {};
+            }
         }
 
+        document.website = site;
         document.bio = changes.bio;
         document.save(function (err){
             rest.resHandler(err,{res:res});
