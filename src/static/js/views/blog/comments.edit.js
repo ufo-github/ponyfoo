@@ -28,7 +28,7 @@
 
         function exit(){
             exits.off('edit-exit');
-            viewModel.comment.removeClass('comment-editing');
+            viewModel.comment.removeClass('comment-editing').scrollIntoView();
             viewModel.textarea.val('').trigger('paste');
             cancel.remove();
             submit.removeData('edit');
