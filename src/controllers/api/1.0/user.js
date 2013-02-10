@@ -48,6 +48,11 @@ function upd(req,res){
         }
 
         document.website = changes.website;
+
+        if(typeof document.website.url === 'string' && document.website.url.search(/https?:\/\//i) === -1){
+            document.website.url = 'http://' + document.website.url;
+        }
+
         document.bio = changes.bio;
         document.save(function (err){
             rest.resHandler(err,{res:res});
