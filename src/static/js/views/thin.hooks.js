@@ -69,6 +69,8 @@
 
             user.profileTitle = me ? 'My Profile' : user.displayName;
             user.bioHtml = nbrut.md.html(user.bio);
+
+            user.passwordPlaceholder = user.passwordUndefined ? 'Leave blank or choose a password' : 'Leave blank or change your password';
         }
     }
 

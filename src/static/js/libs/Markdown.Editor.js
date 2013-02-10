@@ -1145,18 +1145,16 @@
             okButton.type = "button";
             okButton.onclick = function () { return close(false); };
             okButton.value = "OK";
+            okButton.className = 'button';
             style = okButton.style;
             style.margin = "10px";
             style.display = "inline";
 
-
             // The cancel button
-            var cancelButton = doc.createElement("input");
-            cancelButton.type = "button";
+            var cancelButton = doc.createElement("a");
             cancelButton.onclick = function () { return close(true); };
-            cancelButton.value = "Cancel";
+            cancelButton.innerText = "Cancel";
             style = cancelButton.style;
-            style.margin = "10px";
             style.display = "inline";
 
             form.appendChild(okButton);
@@ -1166,6 +1164,7 @@
             dialog.style.top = "50%";
             dialog.style.left = "50%";
             dialog.style.display = "block";
+
             if (uaSniffed.isIE_5or6) {
                 dialog.style.position = "absolute";
                 dialog.style.top = doc.documentElement.scrollTop + 200 + "px";

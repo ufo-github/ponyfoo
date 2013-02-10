@@ -1,5 +1,9 @@
 !function (window,$,nbrut, undefined) {
     function prepare(render, data){
+        if(data.id !== nbrut.locals.id){
+            render(null, true);
+        }
+
         nbrut.thin.get('user',{
             id: data.id,
             then: function(data){
@@ -9,8 +13,13 @@
         });
     }
 
+    function afterActivate(){
+        nbrut.md.runEditor('-bio');
+    }
+
     nbrut.tt.configure({
         key: 'user-profile-edit',
-        prepare: prepare
+        prepare: prepare,
+        afterActivate: afterActivate
     })
 }(window,jQuery,nbrut);

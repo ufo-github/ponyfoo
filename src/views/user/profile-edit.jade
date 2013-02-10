@@ -5,18 +5,21 @@ section#user-profile-edit-template.template
   article.user-profile-card
     img.user-gravatar.large(data-src='{{gravatarLarge}}')
 
-    section
+    section.user-profile-info
       p
-        span='member for'
-        span(data-hint='registered on {{createdText}}')='{{duration}}'
+        span.label='password'
+        input(name='password', type='password', placeholder='{{passwordPlaceholder}}')
 
       p
-        span='website'
-        // {{#website}}
-        a(href='{{website.href}}', data-hint='{{website.title}}')='{{website.title}}'
-        // {{/website}}
-        // {{^website}}
-        span='(none)'
-        // {{/website}}
+        span.label='website title'
+        input(name='website.title', placeholder='Your site title')='{{website.title}}'
 
-  article.user-profile-bio='{{{biographyHtml}}}'
+      p
+        span.label='website url'
+        input(name='website.title', placeholder='Your site url')='{{website.url}}'
+
+  div#wmd-button-bar-bio.wmd-button-bar
+  div
+    textarea#wmd-input-bio.wmd-input(placeholder='You can leave your bio here')='{{bio}}'
+
+  article#wmd-preview-bio.user-profile-bio

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 function get(req,res){
     var id = mongoose.Types.ObjectId(req.params.id);
 
-    user.findOne({ _id: id}, function(err,document){
+    user.findOne({ _id: id}, function(err, document){
         if(err){
             rest.resHandler(err,{res:res});
             return;
@@ -15,7 +15,13 @@ function get(req,res){
             res:res,
             then: function(){
                 rest.end(res,{
-                    user: document
+                    user: {
+                        displayName: document.displayName,
+                        gravatarLarge: document.gravatarLarge,
+                        website: document.website,
+                        bio: document.bio,
+                        passwordUndefined: document.password === undefined
+                    }
                 });
             }
         });

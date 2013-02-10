@@ -9,13 +9,13 @@ section#user-profile-template.template
 
     img.user-gravatar.large(data-src='{{gravatarLarge}}')
 
-    section
+    section.user-profile-info
       p
-        span='member for'
+        span.label='member for'
         span(data-hint='registered on {{createdText}}')='{{duration}}'
 
       p
-        span='website'
+        span.label='website'
         // {{#website}}
         a(href='{{website.href}}', data-hint='{{website.title}}')='{{website.title}}'
         // {{/website}}
