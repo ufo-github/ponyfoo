@@ -293,12 +293,13 @@
                 };
             }
 
-            function move(fn){/* NOTE: data-class will be lost, same for event bindings. */
+            function move(fn){/* NOTE: data-class loses it's meaning in this case. */
                 return function(container,data){
-                    var temp = $('<div/>'),
+                    var temp = $('<div/>').hide().appendTo('body'), /* append to DOM to avoid inconsistencies */
                         ctx = fill(temp, data);
 
                     ctx.elements[fn](container);
+                    temp.remove();
                     return ctx;
                 };
             }

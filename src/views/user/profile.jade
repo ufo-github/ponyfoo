@@ -16,10 +16,16 @@ section#user-profile-template.template
       p
         span.label='website'
         // {{#website}}
-        a(href='{{website.href}}', data-hint='{{website.title}}')='{{website.title}}'
+        a.highlighted-link(href='{{website.href}}', data-hint='{{website.title}}')='{{website.title}}'
         // {{/website}}
         // {{^website}}
         span='(none)'
         // {{/website}}
 
-  article.markdown='{{{bioHtml}}}'
+  // {{#bioHtml}}
+  article.user-profile-bio
+    header
+      h3='About'
+
+    section.markdown='{{{bioHtml}}}'
+  // {{/bioHtml}}

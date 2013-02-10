@@ -4,12 +4,9 @@
     function unified(elements,buttonClass,opts){
         var editor = elements.find('.comment-editor'),
             textarea = elements.find('.wmd-input'),
-            postfix = textarea.data('postfix'),
             button = elements.find(buttonClass),
             container = $('.blog-discussions'),
             remove = elements.find('.remove');
-
-        nbrut.md.runEditor(postfix);
 
         button.on('click.comment', function(){
             if(editor.is(':hidden')){
@@ -64,15 +61,11 @@
 
         var reply = nbrut.tt.partial('discussion-reply', { id: data.discussion });
         reply.appendTo(thread);
-
-        nbrut.md.prettify(thread);
     }
 
     function afterPuttingComment(elements,data){
         var partial = nbrut.tt.partial('discussion-comment', data.comment),
             comment = partial.insertBefore(elements);
-
-        nbrut.md.prettify(comment);
     }
 
     function afterCommentButton(viewModel, data, ctx){
@@ -103,7 +96,6 @@
 
     function afterInitialList(viewModel, data, ctx){
         afterList(viewModel.discussions, data, ctx);
-        nbrut.md.prettify(ctx.elements);
     }
 
     function afterList(viewModel, data, ctx){

@@ -33,12 +33,11 @@
                 type: how,
                 data: opts.data
             }).done(function(data){
-                raise(what,how,data,'done');
+                raise(what,how,data);
                 (opts.then || $.noop)(data);
             }).always(function(data){
                 var i = local.indexOf(xhr);
                 local.splice(i,1);
-                raise(what,how,data,'always');
                 (opts.always || $.noop)(data);
             });
 
@@ -46,8 +45,8 @@
             return xhr;
         }
 
-        function raise(what,how,data,when){
-            ((hooks[what]||{})[how.toLowerCase()] || $.noop)(data,when);
+        function raise(what,how,data){
+            ((hooks[what]||{})[how.toLowerCase()] || $.noop)(data);
         }
 
         function hook(what, opts){

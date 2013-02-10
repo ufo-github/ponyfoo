@@ -1,9 +1,4 @@
 !function (window,$,nbrut) {
-    function runEditors(){
-        nbrut.md.runEditor('-brief');
-        nbrut.md.runEditor('-text');
-    }
-
     function bindTitle(){
         var input = $('#entry-title'),
             title = $('.entry-editor .blog-entry-title h1');
@@ -19,14 +14,6 @@
         });
         input.focus();
         updateTitlePreview();
-    }
-
-    function prepareEditor() {
-        runEditors();
-        bindTitle();
-		
-		var previewContainer = $('#entry-preview');
-		nbrut.md.prettify(previewContainer);
     }
 
     function prepare(render, data){
@@ -82,7 +69,7 @@
     }
 
     function afterActivate(){
-        prepareEditor();
+        bindTitle();
         bindSubmit();
     }
 

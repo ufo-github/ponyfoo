@@ -89,6 +89,7 @@ function routeComments(api){
 
 function routeUsers(api){
     api.get('/user/:id([a-f0-9]{24})', user.get);
+    api.put('/user/:id([a-f0-9]{24})', connected, user.upd);
 }
 
 function configure(server){

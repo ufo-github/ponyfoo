@@ -78,7 +78,6 @@ function getJs(){
 
         '/js/views/blog/search.js',
         '/js/views/blog/entries.js',
-        '/js/views/blog/comments.js',
 
         { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.registered.js' },
         { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.edit.js' },

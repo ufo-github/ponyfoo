@@ -14,7 +14,6 @@
     }
 
     function afterActivate(){
-        nbrut.md.runEditor('-bio');
         bindSave();
     }
 

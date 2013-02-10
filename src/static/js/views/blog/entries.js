@@ -44,8 +44,6 @@
             addComments(entry);
         }
 
-        nbrut.md.prettify(container);
-
         addSidebar();
     }
 
@@ -107,7 +105,6 @@
                     articles = nbrut.tt.partial('more-entries', it),
                     elements = articles.appendTo(container);
 
-                nbrut.md.prettify(elements);
                 pager.remove();
                 addPager(it, identifier, query);
             }
