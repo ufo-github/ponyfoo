@@ -8,7 +8,7 @@
             id: data.id,
             then: function(data){
                 var user = data.user;
-                render(user, user === null);
+                render(user, user === null || user.me === false);
             }
         });
     }

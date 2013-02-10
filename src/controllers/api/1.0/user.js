@@ -16,6 +16,7 @@ function get(req,res){
             then: function(){
                 rest.end(res,{
                     user: {
+                        _id: document._id,
                         displayName: document.displayName,
                         gravatarLarge: document.gravatarLarge,
                         website: document.website,

@@ -19,6 +19,7 @@ function getCss(){
         '/css/defaults/sprite.less',
 
         '/css/libs/markdown.less',
+        '/css/libs/markdown.editor.less',
         '/css/libs/prettify.less',
         '/css/libs/hint.less',
 

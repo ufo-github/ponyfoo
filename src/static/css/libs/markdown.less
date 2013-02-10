@@ -1,82 +1,83 @@
 @import "../defaults/common.less";
 
-.wmd-button-row {
-    padding: 0px;
-    height: 20px;
-    margin: 0;
-}
+/* COMMON ELEMENTS
+ *******************/
 
-.wmd-button-bar {
-    height: 25px;
-    margin: 10px 0px 2px 0px;
-}
-
-.wmd-button {
-  width: 20px;
-  height: 20px;
-  padding-left: 2px;
-  padding-right: 3px;
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
   display: inline-block;
-  list-style: none;
-  cursor: pointer;
-  border: 2px solid transparent;
-}
-
-.wmd-button:hover {
-  border-top: 2px solid @border;
-  border-left: 2px solid @border;
-}
-
-.wmd-button > span {
-    background-image: url('/img/wmd-buttons.png');
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-}
-
-.wmd-spacer {
-    width: 1px;
-    height: 20px;
-    margin: 0 6px;
-    background-color: silver;
-    display: inline-block;
-    list-style: none;
-}
-
-.wmd-input {
-  min-height: 60px;
-  max-height: 500px;
-  line-height: 1.2;
-  height: 180px;
-
-  width: 100%;
-  .box-sizing();
-}
-
-.wmd-prompt-background {
-    background-color: #000;
-}
-
-.wmd-prompt-dialog {
-  border: 1px solid @border;
-  background-color: @moderate;
-  padding: 12px;
-}
-
-.wmd-prompt-dialog p {
-  margin-bottom: 15px;
-}
-
-.wmd-prompt-title {
-  padding-bottom: 6px;
-  color: @strong;
+  margin-bottom: 10px;
+  margin-top: 25px;
   font-weight: bold;
-  font-size: 1.2em;
-  border-bottom: 1px solid @border;
+  color: @strong;
 }
 
-.wmd-prompt-dialog form {
-  text-align: center;
+.markdown p {
+  line-height: 1.3em;
+  margin-top: 15px;
+}
+
+.markdown p:first-child {
+  margin-top: 0;
+}
+
+.markdown blockquote {
+  .box-radius(8px);
+
+  padding: 12px 12px 12px 42px;
+  margin: 25px 0 15px 0;
+  background-color: @light;
+
+  border: 1px solid @grayish;
+  border-top: 2px solid @light;
+  border-left: 2px solid @light;
+
+  min-height: 24px;
+
+  position: relative;
+}
+
+.markdown blockquote:before {
+  content: '{}';
+  color: @strong + #777;
+  text-shadow: 0 1px @strong;
+  font-size: 30px;
+  font-weight: bold;
+
+  float: left;
+
+  position: absolute;
+  top: 50%;
+  left: 12px;
+
+  margin-top: -20px;
+}
+
+
+
+/* CODE BLOCKS
+ ***************/
+
+.markdown pre {
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.markdown pre code {
+  display: block;
+}
+
+
+/* PREVIEW
+ *************/
+
+.markdown-preview:not(:empty) {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ddc;
+  border: 1px solid #ddc;
+  .box-radius(3px);
 }
