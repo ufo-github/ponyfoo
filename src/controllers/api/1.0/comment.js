@@ -75,6 +75,11 @@ function list(req,res){
         });
     }
 }
+
+function editable(comment){
+    return new Date() - comment.date < apiConf.comments.editableFor;
+}
+
 function actionMapper(req){
     return function(c){
         var actions;
@@ -91,7 +96,7 @@ function actionMapper(req){
         }else if(c.author.id.equals(req.user._id)){
             actions = { remove: true };
 
-            if(new Date() - c.date < apiConf.comments.editableFor){
+            if(editable(c)){
                 actions.edit = true;
             }
         }
@@ -143,7 +148,7 @@ function del(req, res){
 
 function edit(req,res){
     findComment(req,res, function(discussion, comment, done){
-        if(req.user.blogger !== true && new Date() - comment.date < apiConf.comments.editableFor){
+        if(req.user.blogger !== true && !editable(comment)){
             rest.unauthorized(req,res);
         }
 
