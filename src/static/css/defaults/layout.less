@@ -12,12 +12,18 @@ body {
 
 header.layout-header {
   text-align: left;
-  padding: 12px 0;
   margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 768px) {
-    header.layout-header { margin-bottom: 30px; }
+  header.layout-header {
+    padding: 12px 0;
+    margin-bottom: 30px;
+  }
+
+  a#home {
+    margin-left: 25px;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
@@ -27,10 +33,6 @@ header.layout-header {
 h1.layout-heading {
   margin: 0 auto;
   display: inline-block;
-}
-
-a#home {
-  margin-left: 25px;
 }
 
 section#content {

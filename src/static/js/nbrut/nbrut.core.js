@@ -26,7 +26,7 @@
                     return $.parseJSON(value);
                 }
             }
-            return defaultValue || undefined;
+            return defaultValue;
         }
 
         function setStorageItem(key, value) {
@@ -48,7 +48,7 @@
                     return $.parseJSON(value);
                 }
             }
-            return defaultValue || undefined;
+            return defaultValue;
         }
 
         function setPreference(key, value, expires) {
