@@ -3,9 +3,6 @@ TODO
 
 1
 -------
-- RWD
-  - search magnifying glass for mobile version
-
 - serve different views to google crawl bot
 
 - post regarding js getters and setters
