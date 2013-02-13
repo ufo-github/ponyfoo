@@ -3,12 +3,21 @@
 /* HEADINGS
 ----------------------------------------------------------*/
 
-h1 { font-size: 1.6em; font-weight: bold; }
-h2 { font-size: 1.5em; font-weight: bold; }
-h3 { font-size: 1.4em; font-weight: bold; }
-h4 { font-size: 1.3em; font-weight: bold; }
-h5 { font-size: 1.2em; font-weight: bold; }
-h6 { font-size: 1.1em; font-weight: bold; }
+h1 { font-size: 1.30em; font-weight: bold; }
+h2 { font-size: 1.25em; font-weight: bold; }
+h3 { font-size: 1.20em; font-weight: bold; }
+h4 { font-size: 1.15em; font-weight: bold; }
+h5 { font-size: 1.10em; font-weight: bold; }
+h6 { font-size: 1.05em; font-weight: bold; }
+
+@media only screen and (min-width: 768px) {
+  h1 { font-size: 1.6em; }
+  h2 { font-size: 1.5em; }
+  h3 { font-size: 1.4em; }
+  h4 { font-size: 1.3em; }
+  h5 { font-size: 1.2em; }
+  h6 { font-size: 1.1em; }
+}
 
 #content h1,
 #content h2,
@@ -59,7 +68,10 @@ ins { text-decoration: none; }
 
 del { text-decoration: line-through; }
 
-img { border: none; }
+img {
+  max-width: 100%;
+  border: none;
+}
 
 kbd {
   padding: 0.1em 0.6em;

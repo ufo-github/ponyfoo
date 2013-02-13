@@ -1141,11 +1141,10 @@
             form.appendChild(input);
 
             // The ok button
-            var okButton = doc.createElement("input");
-            okButton.type = "button";
+            var okButton = doc.createElement("button");
             okButton.onclick = function () { return close(false); };
-            okButton.value = "OK";
-            okButton.className = 'button';
+            okButton.innerText = "OK";
+            okButton.className = 'button small';
             style = okButton.style;
             style.margin = "10px";
             style.display = "inline";
