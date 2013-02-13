@@ -24,6 +24,7 @@ function getCss(){
         '/css/libs/prettify.less',
         '/css/libs/hint.less',
 
+        '/css/views/shared/404.less',
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
 
         '/css/views/user/profile.less',
