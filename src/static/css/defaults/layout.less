@@ -59,10 +59,37 @@ section#content {
 
 #menu {
   float: right;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 #menu a {
-  margin-right: 15px;
   display: inline-block;
+  margin-left: 15px;
+}
+
+#menu a:first-child {
+  margin-left: 0;
+}
+
+#menu nav {
+  display: none;
+}
+
+#search {
+  display: inline-block;
+  width: 80px;
+}
+
+@media only screen and (min-width: 768px) {
+  #menu {
+    margin-top: 10px;
+  }
+
+  #menu nav {
+    display: inline-block;
+  }
+
+  #search {
+    margin-left: 15px;
+  }
 }

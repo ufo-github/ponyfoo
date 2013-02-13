@@ -8,7 +8,7 @@ body {
   background: @background;
 }
 
-input,textarea {
+input, textarea {
   .box-radius(2px);
 
   border: 1px solid @grayish;
@@ -33,35 +33,39 @@ input:focus,textarea:focus {
 /* WIREFRAME
 ----------------------------------------------------------*/
 
-h1.layout-heading {
+.layout-heading {
   font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
   font-size: 2.4em;
   color: @strong;
 }
 
-h1.layout-heading a:hover {
+.layout-heading a:hover {
   text-decoration: none;
 }
 
 @media only screen and (min-width: 768px) {
-  h1.layout-heading {
+  .layout-heading {
     font-size: 3.2em;
   }
 }
 
 @media only screen and (min-width: 1024px) {
-  h1.layout-heading {
+  .layout-heading {
     font-size: 4.6em;
   }
 }
 
-section#content {
+#content {
   .box-radius(4px);
 }
 
-section#content {
+#content {
   background-color: @moderate;
   border: 1px solid @grayish;
+}
+
+#search{
+  background-color: @moderate;
 }
 
 
