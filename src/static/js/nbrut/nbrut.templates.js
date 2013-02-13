@@ -9,7 +9,7 @@
             config = {
                 defaultTemplate: 'home',
                 container: $('#content'),
-                loading: ''
+                loading: { html: '', css: '' }
             },
             defaults = {
                 mustache: false,
@@ -230,8 +230,9 @@
         }
 
         function deactivateContainer(template) {
+            var loader = config.loading;
             raise('deactivate', template);
-            config.container.off().removeClass().html(config.loading);
+            config.container.off().removeClass().addClass(loader.css).html(loader.html);
         }
 
         function activateTemplate(template, settings, viewModel, soft){
@@ -282,7 +283,7 @@
             }
 
             function fill(container, data, identifier){
-                container.addClass(template.dom.css).html(html);
+                container.off().removeClass().addClass(template.dom.css).html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
                 raise('fill', container, template);
@@ -420,7 +421,10 @@
 		}
 		
         function init(){
-            config.loading = config.container.html();
+            config.loading = {
+                html: config.container.html(),
+                css: config.container.attr('class')
+            };
 
             $(window).on('popstate', popState);
 
