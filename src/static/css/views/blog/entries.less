@@ -1,16 +1,20 @@
 @import "../../defaults/common.less";
 
 /* ENTRY ARTICLES
- ************/
+ *****************/
 
 .blog-entry-title {
-  font-size: 2em;
-  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, Helvetica, sans-serif;
-  font-weight: bold;
   margin-bottom: 35px;
 }
 
+@media only screen and (min-width: 768px) {
+  .blog-entry-title {
+    font-size: 2em;
+  }
+}
+
 .blog-entry-title h1 {
+  .ff-calibri();
   display: block;
 }
 
@@ -40,27 +44,32 @@
   border: none;
 }
 
-.blog-entries, .blog-entry {
-  max-width: 870px;
+.blog-sidebar {
+  display: none;
 }
 
-.blog-entries, .blog-sidebar {
-  display: inline-block;
-  vertical-align: top;
+@media only screen and (min-width: 768px) {
+  .blog-entries, .blog-sidebar {
+    display: inline-block;
+    vertical-align: top;
+  }
 }
 
-.blog-entry(){
-  margin-top: 45px;
+.blog-entries .blog-entry,
+.blog-pager .face {
+  margin-top: 25px;
   padding: 25px;
   background-color: @moderate;
   border: 1px solid @grayish;
   .box-radius(4px);
 }
 
-.blog-entries .blog-entry {
-  .blog-entry();
+@media only screen and (min-width: 768px) {
+  .blog-entries .blog-entry,
+  .blog-pager .face {
+    margin-top: 45px;
+  }
 }
-
 .blog-entries .blog-entry:first-child {
   padding: 25px;
   margin-top: 0;
@@ -128,14 +137,6 @@
 /* PAGER
  ***********/
 
-.blog-pager {
-  height: 300px;
-}
-
-.blog-pager .face {
-  .blog-entry();
-}
-
 .blog-pager .face.front {
   text-align: center;
   font-size: 0.8em;
@@ -145,8 +146,25 @@
 }
 
 .blog-pager .flipped .face.back {
-  margin-top: 100px;
   opacity: 0.4;
+}
+
+.blog-pager-text:after {
+  content: 'Tap here to load more posts...'
+}
+
+@media only screen and (min-width: 768px) {
+  .blog-pager {
+    height: 300px;
+  }
+
+  .blog-pager .flipped .face.back {
+    margin-top: 100px;
+  }
+
+  .blog-pager-text:after {
+    content: 'Scroll to the bottom or click here to load more posts...'
+  }
 }
 
 .blog-pager .spinner {
@@ -159,6 +177,10 @@
 }
 
 .blog-navigation-suggestions p {
+  margin-top: 6px;
+}
+
+.blog-navigation-suggestions p:first-child {
   margin-top: 0;
 }
 
@@ -177,7 +199,6 @@
 
 .blog-entry-siblings a.blog-entry-next {
   float: right;
-  margin-left: 40px;
 }
 
 .blog-entry-siblings a.blog-entry-prev:before {
@@ -186,6 +207,10 @@
 
 .blog-entry-siblings a.blog-entry-next:after {
   content: ' »';
+}
+
+.blog-entry-siblings a {
+  max-width: 40%;
 }
 
 .blog-entry-siblings a:empty {

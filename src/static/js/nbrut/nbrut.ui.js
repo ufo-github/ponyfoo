@@ -16,7 +16,12 @@
 
         return {
             disable: disable,
-            enable: enable
+            enable: enable,
+            breaks: {
+                medium: {
+                    width: 768
+                }
+            }
         };
     }();
 

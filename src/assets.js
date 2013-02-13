@@ -14,6 +14,7 @@ function getCss(){
         '/css/defaults/basic.less',
         '/css/defaults/elements.less',
         '/css/defaults/controls.less',
+        '/css/defaults/controls.spinner.less',
         '/css/defaults/layout.less',
         '/css/defaults/design.less',
         '/css/defaults/sprite.less',

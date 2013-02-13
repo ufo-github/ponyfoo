@@ -73,6 +73,10 @@
         }
 
         win.on('scroll.paging', function(){
+            if($(window).width() < nbrut.ui.breaks.medium.width){
+                return;
+            }
+
             var allowance = 80,
                 target = pager.position().top + pager.height() - allowance,
                 y = win.scrollTop() + win.height();

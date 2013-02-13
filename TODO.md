@@ -3,7 +3,9 @@ TODO
 
 1
 -------
-- make more RWD
+- RWD
+  - RWD on markdown contents.
+  - search magnifying glass for mobile version
 
 - try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
 
@@ -20,7 +22,7 @@ TODO
 -------
 - flip card backside shows an extract of user bio (set independently)
 - profile options to reveal or hide: rss/email(in profile and flip card)/git/linkedin (Add provider) / fb / SO
-- **fragmentation**
+- **domain fragmentation**
 
 3.5
 -------

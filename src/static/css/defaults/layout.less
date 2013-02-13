@@ -10,39 +10,42 @@ body {
   padding: 6px 0;
 }
 
-header.layout-header {
+.layout-header {
   text-align: left;
   margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 768px) {
-  header.layout-header {
+  .layout-header {
     padding: 12px 0;
     margin-bottom: 30px;
   }
 
-  a#home {
+  #home {
     margin-left: 25px;
   }
 }
 
 @media only screen and (min-width: 1024px) {
-  header.layout-header { margin-bottom: 40px; }
+  .layout-header { margin-bottom: 40px; }
 }
 
-h1.layout-heading {
+.layout-heading {
   margin: 0 auto;
   display: inline-block;
 }
 
-section#content {
+#content {
   display: inline-block;
   text-align: left;
   padding: 25px;
   min-height: 300px;
-  min-width: 300px;
   margin-bottom: 30px;
+
+  box-sizing: border-box;
+  width: 100%;
 }
+
 
 
 /* TEMPLATES
