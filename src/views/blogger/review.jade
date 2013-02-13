@@ -13,7 +13,7 @@ section#entry-review-template.template(data-class='entry-review')
         td='{{dateText}}'
         td.title
           a.highlighted-link(href='{{permalink}}')='{{title}}'
-        td
+        td.entry-review-actions
           a.action.edit(title='Edit', href='/blogger/entry/{{_id}}')='Edit'
           a.action.remove(title='Remove')='Remove'
       // {{/entries}}
