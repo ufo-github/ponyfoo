@@ -7,8 +7,6 @@ TODO
   - RWD on markdown contents.
   - search magnifying glass for mobile version
 
-- try and remove css flip requirement to specify sizes, http://css3playground.com/flip-card.php
-
 - serve different views to google crawl bot
 
 - post regarding js getters and setters
