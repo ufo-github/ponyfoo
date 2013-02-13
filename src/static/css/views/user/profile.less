@@ -58,6 +58,7 @@
 
 .user-profile-card .user-gravatar {
   cursor: default;
+  position: absolute;
 }
 
 .user-profile-actions {
@@ -65,21 +66,46 @@
 }
 
 .user-profile-info {
-  display: inline-block;
   vertical-align: top;
-  margin-left: 10px;
   font-size: 0.9em;
-}
-
-.user-profile-info p {
-  margin-bottom: 6px;
+  margin-left: 96px; /* gravatar width + 10px margin */
+  min-height: 86px; /* gravatar height */
 }
 
 .user-profile-info .label {
-  width: 90px;
   font-size: 0.85em;
+  display: block;
+}
+
+.user-profile-info p {
+  margin-top: 12px;
+  text-align: right;
+}
+
+.user-profile-info p:first-child {
+  margin-top: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .user-profile-info .label {
+    width: initial;
+    margin-right: 0;
+    margin-bottom: 4px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .user-profile-info p {
+    margin-top: 6px;
+    text-align: initial;
+  }
+
+  .user-profile-info .label {
+    width: 90px;
+    display: inline-block;
+  }
 }
 
 .user-profile-bio {
-  margin-top:30px;
+  margin-top: 30px;
 }

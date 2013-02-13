@@ -3,7 +3,7 @@ section#user-login-template.template(data-class='user-login')
 
   include _providers
 
-  form(method='post', action='/user/login')
+  form.login-form(method='post', action='/user/login')
     fieldset
       p
         label(for='login-email')='Email'

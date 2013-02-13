@@ -7,7 +7,20 @@
 }
 
 .user-profile-info input {
-  width: 220px;
+  max-width: 220px;
+}
+
+@media only screen and (max-width: 768px) {
+  .user-profile-info input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .user-profile-info input {
+    width: 220px;
+  }
 }
 
 .profile-edit-actions {

@@ -3,7 +3,7 @@ section#user-register-template.template(data-class='user-register')
 
   include _providers
 
-  form(method='post', action='/user/register')
+  form.registration-form(method='post', action='/user/register')
     fieldset
       p
         label(for='register-email')='Email'
