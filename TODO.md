@@ -3,9 +3,8 @@ TODO
 
 1
 -------
-- serve different views to google crawl bot
-
 - post regarding js getters and setters
+- serve different views to google crawl bot
 
 2
 -------
