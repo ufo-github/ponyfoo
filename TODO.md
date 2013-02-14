@@ -4,7 +4,6 @@ TODO
 1
 -------
 - post regarding js getters and setters
-- does sitemap.xml do the trick? or serve different views to google crawl bot.
 
 2
 -------

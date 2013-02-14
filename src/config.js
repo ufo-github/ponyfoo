@@ -41,6 +41,10 @@ var config = {
             return this._a;
         }
     },
+    zombie: {
+        enabled: process.env.ZOMBIE_CRAWLER || true,
+        cache: 60000 * 60 // an hour, in ms
+    },
     db: {
         uri: process.env.MONGOLAB_URI || 'mongodb://localhost/nbrut'
     },

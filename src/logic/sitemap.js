@@ -4,7 +4,7 @@ var config = require('../config.js'),
     factory = require('sitemap'),
     user = require('../models/user.js'),
     entry = require('../models/entry.js'),
-    sitemap, urls;
+    sitemap, urls = [];
 
 function statics(done){
     process.nextTick(function(){
@@ -69,16 +69,17 @@ function refresh(){
             return;
         }
 
-        urls = [];
+        var updated = [];
 
         results.forEach(function(result){
-            urls = urls.concat(result);
+            updated = updated.concat(result);
         });
 
         sitemap = factory.createSitemap({
             hostname: config.server.authority,
-            urls: urls
+            urls: updated
         });
+        urls = updated;
     }
 }
 

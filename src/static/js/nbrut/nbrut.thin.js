@@ -64,7 +64,8 @@
             put: put,
             del: del,
             hook: hook,
-            abort: abort
+            abort: abort,
+            get pending(){ return local; }
         };
     }
 

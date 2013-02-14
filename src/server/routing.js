@@ -1,5 +1,7 @@
-var path = require('path'),
+var config = require('../config.js'),
+    path = require('path'),
     $ = require('../services/$.js'),
+    zombie = require('../logic/zombie.js'),
     site = require('../controllers/site.js');
 
 function mapRouting(server, done){
@@ -10,8 +12,11 @@ function mapRouting(server, done){
             module.configure(server);
         });
 
-        server.get('/*', site.get); // GET catch-all
+        if(config.zombie.enabled){
+            server.get('/*', zombie.setup(server).serve); // crawler pass-through catch-all
+        }
 
+        server.get('/*', site.get); // GET catch-all
         done();
     }
 }
