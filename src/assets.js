@@ -104,7 +104,7 @@ assets.compile = function(done){
         assetify.use(assetify.plugins.minifyCSS);
         assetify.use(assetify.plugins.minifyJS);
     }
-    assetify.use(assetify.plugins.forward());
+    assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
     assetify.compile(assets, done);
 };
 
