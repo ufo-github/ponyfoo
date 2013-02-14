@@ -48,22 +48,15 @@ function setup(server){
             return;
         }
 
-        fs.exists(indexpath, function(exists){
-            if(!exists){
-                done(null, []);
+        readFile(indexpath, function(err, data){
+            if(err){
+                done(err);
                 return;
             }
 
-            fs.readFile(indexpath, function(err, data){
-                if(err){
-                    done(err);
-                    return;
-                }
-
-                _index = JSON.parse(data);
-                done(err, _index);
-            });
-        })
+            _index = data ? JSON.parse(data) : [];
+            done(err, _index);
+        });
     }
 
     function dumpIndex(done){
@@ -101,13 +94,13 @@ function setup(server){
             if(!result || (new Date() - result.date > config.zombie.cache)){
                 refresh(url, done);
             }else{
-                fs.readFile(result.file, function(err, data){
+                readFile(result.file, function(err, data){
                     if(err){
                         done(err);
                         return;
                     }
 
-                    done(err, data);
+                    done(err, data || '');
                 });
             }
         });
@@ -150,6 +143,24 @@ function setup(server){
                 dumpIndex(function(){
                     done(err, html);
                 });
+            });
+        });
+    }
+
+    function readFile(file, done){
+        fs.exists(file, function(exists){
+            if(!exists){
+                done();
+                return;
+            }
+
+            fs.readFile(file, function(err, data){
+                if(err){
+                    done(err);
+                    return;
+                }
+
+                done(err, data);
             });
         });
     }
