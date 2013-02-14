@@ -2,7 +2,7 @@ var path = require('path'),
     $ = require('../services/$.js'),
     site = require('../controllers/site.js');
 
-function routing(server, done){
+function mapRouting(server, done){
     $.findModules({ folder: path.join(__dirname, '/routing') }, configure);
 
     function configure(modules){
@@ -17,5 +17,5 @@ function routing(server, done){
 }
 
 module.exports = {
-    map: routing
+    map: mapRouting
 };

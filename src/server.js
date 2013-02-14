@@ -1,102 +1,11 @@
 var config = require('./config.js'),
     express = require('express'),
-    flash = require('connect-flash'),
-    sessionStore = require("connect-mongoose")(express),
+    statics = require('./server/statics.js'),
+    middleware = require('./server/middleware.js'),
     async = require('async'),
     path = require('path'),
-    passport = require('passport'),
-    assetify = require('assetify'),
     assets = require('./assets.js'),
-    favicon = path.join(assets.bin, '/img/favicon.ico'),
-    views = path.join(__dirname, '/views'),
     server = express();
-
-function configureServer(done){
-    server.configure(function(){
-        configureStatic();
-
-        if (config.env.development){
-            server.use(express.logger({ format: 'dev' }));
-        }
-
-        configureMiddleware();
-
-        if (config.env.development){
-            server.use(express.errorHandler({
-                showStack: true,
-                dumpExceptions: true
-            }));
-        }
-    });
-
-    process.nextTick(done);
-}
-
-function configureStatic(){
-    if (config.env.production){
-        server.use(express.compress());
-    }
-    server.use(express.favicon(favicon));
-    server.use(express.static(assets.bin));
-    server.use(assetify.middleware());
-}
-
-function configureMiddleware(){
-    server.set('views', views);
-    server.locals.settings['x-powered-by'] = false;
-    server.locals.config = config;
-
-    server.use(express.cookieParser());
-    server.use(express.bodyParser());
-
-    server.use(express.session({
-        secret: config.security.sessionSecret,
-        store: new sessionStore()
-    }));
-    configureFlash();
-
-    server.use(passport.initialize());
-    server.use(passport.session());
-
-    server.use(function(req,res,next){
-        res.locals.user = req.user;
-        next();
-    });
-
-    server.use(server.router);
-}
-
-function configureFlash(){
-    server.use(flash());
-    server.use(function(req,res,next){
-        var render = res.render;
-        res.render = function(view, locals, callback){
-            res.locals.flash = req.flash(); // fetch
-            res.locals.flash.json = JSON.stringify(res.locals.flash);
-            res.render = render;
-            res.render(view, locals, callback);
-        };
-        next();
-    })
-}
-
-function configureServerRouting(done){
-    var authentication = require('./server/authentication.js'),
-        routing = require('./server/routing.js');
-
-    async.series([
-        configureServer,
-        async.apply(authentication.configure),
-        async.apply(routing.map, server)
-    ],done);
-}
-
-function compileAndConfigure(done){
-    async.parallel([
-        assets.compile,
-        configureServerRouting
-    ],done);
-}
 
 function main(){
     var db = require('./server/db.js'),
@@ -111,6 +20,45 @@ function main(){
         async.apply(feed.rebuild),
         async.apply(listener.listen, server)
     ]);
+}
+
+function compileAndConfigure(done){
+    async.parallel([
+        assets.compile,
+        configure
+    ],done);
+}
+
+function configure(done){
+    var authentication = require('./server/authentication.js'),
+        routing = require('./server/routing.js');
+
+    async.series([
+        configureServer,
+        async.apply(authentication.configure),
+        async.apply(routing.map, server)
+    ],done);
+}
+
+function configureServer(done){
+    server.configure(function(){
+        statics.configure(server);
+
+        if (config.env.development){
+            server.use(express.logger({ format: 'dev' }));
+        }
+
+        middleware.configure(server);
+
+        if (config.env.development){
+            server.use(express.errorHandler({
+                showStack: true,
+                dumpExceptions: true
+            }));
+        }
+    });
+
+    process.nextTick(done);
 }
 
 main();
