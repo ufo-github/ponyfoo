@@ -28,7 +28,7 @@ function setup(server){
             browser.wait(loaded, function(){
                 var html = browser.html();
 
-                fs.writeFile(opts.file, html, function(err){
+                writeFile(opts.file, html, function(err){
                     if(err){
                         done(err);
                         return;
@@ -67,14 +67,8 @@ function setup(server){
     }
 
     function dumpIndex(done){
-        fse.mkdirs(bin, function(err){
-            if(err){
-                throw err;
-            }
-
-            console.log('Updating zombie index');
-            fs.writeFile(indexpath,  JSON.stringify(_index,null,4), done);
-        });
+        console.log('Updating zombie index');
+        writeFile(indexpath,  JSON.stringify(_index,null,4), done);
     }
 
     function find(url, done){
@@ -157,6 +151,16 @@ function setup(server){
                     done(err, html);
                 });
             });
+        });
+    }
+
+    function writeFile(file, data, done){
+        fse.mkdirs(bin, function(err){
+            if(err){
+                throw err;
+            }
+
+            fs.writeFile(file, data, done);
         });
     }
 
