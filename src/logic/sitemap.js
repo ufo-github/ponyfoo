@@ -83,7 +83,7 @@ function refresh(){
     }
 }
 
-setInterval(refresh, 10000);
+setInterval(refresh, config.sitemap.refresh);
 refresh();
 
 module.exports = {

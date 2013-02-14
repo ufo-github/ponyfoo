@@ -41,6 +41,9 @@ var config = {
             return this._a;
         }
     },
+    sitemap: {
+        refresh: 60000 * 60 // an hour, in ms
+    },
     zombie: {
         enabled: process.env.ZOMBIE_CRAWLER || true,
         cache: 60000 * 60 // an hour, in ms
