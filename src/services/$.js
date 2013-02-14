@@ -13,8 +13,7 @@ function logger(){
             }
 
             if(dev){
-                out.log(level);
-                out.log(message);
+                out.log(level + ': ' + message);
             }
         }
 

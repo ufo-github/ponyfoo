@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     rest = require('../../../services/rest.js'),
     user = require('../../../models/user.js');
 
-function get(req,res){
+function find(req,res){
     var id = mongoose.Types.ObjectId(req.params.id);
 
     user.findOne({ _id: id}, function(err, document){
@@ -68,6 +68,6 @@ function upd(req,res){
 }
 
 module.exports = {
-    get: get,
+    get: find,
     upd: upd
 };

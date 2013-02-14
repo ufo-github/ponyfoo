@@ -26,6 +26,7 @@ schema.methods.getPermalink = function(absolute){
     if(absolute === true){
         return config.server.authority + permalink;
     }
+
     return permalink;
 };
 

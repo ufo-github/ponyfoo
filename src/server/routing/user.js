@@ -1,7 +1,6 @@
 var config = require('../../config.js'),
     controller = require('../../controllers/user.js');
 
-
 function configure(server){
     server.get(config.auth.register, controller.guard);
     server.get(config.auth.login, controller.guard);
