@@ -1,4 +1,4 @@
-!function (window,$,nbrut) {
+!function (window,$,nbrut,undefined) {
     nbrut.tt.hook('deactivate', function(template){
         var layer = nbrut.thin;
 
@@ -39,24 +39,34 @@
     });
 
     // open graph micro data (mostly for feeding our zombie-crawler)
-    nbrut.tt.hook('activated', function(template, viewModel, settings){
-        var head = $('head'),
-            ogModel = {
-                title: viewModel.title,
-                url: window.location.href,
-                images: [
-                    // TODO: appropriate images
-                ],
-                description: 'foo bar' // TODO appropriate description
-            },
-            og = nbrut.tt.partial('opengraph', ogModel);
+    nbrut.tt.hook('activated', function(container, template, viewModel, settings){
+        var head = $('head'), ogModel, og,
+            descriptionLength = 200,
+            descriptionElem = container.find('.og-description:first'),
+            description = descriptionElem.length === 0 ? undefined : descriptionElem.text().trim().substr(0, descriptionLength);
 
-        head.find('meta[property^="og:"]').remove(); // remove existing micro data
+        ogModel = {
+            title: viewModel.title,
+            url: window.location.href,
+            images: container.find('img').map(function(){
+                var img = this,
+                    image = $(img),
+                    width = image.width(),
+                    height = image.height(),
+                    high = Math.max(width, height),
+                    low = Math.min(width, height);
+
+                if (high / low > 0.3 && width + height > 250){
+                    return img.src;
+                }
+                return null;
+            }).get(),
+            description: description
+        };
+        og = nbrut.tt.partial('opengraph', ogModel);
+
+        // refresh micro data
+        head.find('meta[property^="og:"]').remove();
         og.appendTo(head);
-
-        console.log(template);
-        console.log(viewModel);
-        console.log(settings);
-        console.log(ogModel);
     });
 }(window,jQuery,nbrut);
