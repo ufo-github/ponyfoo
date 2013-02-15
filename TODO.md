@@ -6,8 +6,11 @@ TODO
 - post regarding js getters and setters
 
 - tagging
+  - tags per post
+  - paged search filter by tag (api/web)
 
 - profiles expansion
+  - user profile view title
   - profile options to reveal or hide: rss/email(in profile and flip card)/git/linkedin (Add provider) / fb / SO
   - flip card backside shows an extract of user bio (set independently)
 
