@@ -6,6 +6,12 @@
     });
 
     nbrut.tt.register({
+        key: 'opengraph',
+        source: '#opengraph-template',
+        mustache: true
+    });
+
+    nbrut.tt.register({
         key: 'validation-errors',
         source: '#validation-errors-template',
         mustache: true

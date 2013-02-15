@@ -13,8 +13,6 @@
             },
             defaults = {
                 mustache: false,
-                initialized: false,
-                initialize: $.noop,
                 prepare: function(next){
 					next();
 				},
@@ -207,12 +205,6 @@
                 }
             }
             deactivateContainer(template); // clean-up.
-			
-            if(!template.initialized){
-                template.initialized = true;
-                template.initialize();
-            }
-
             settings.identifier = getHash();
 
 			function render(viewModel, notFound){
@@ -266,6 +258,7 @@
             raise('beforeActivate', template, settings);
             var view = partial(template.key, viewModel);
             view.fill(config.container, settings.data || {}, settings.identifier);
+            raise('activated', template, viewModel, settings);
         }
 
         function partial(key, viewModel){

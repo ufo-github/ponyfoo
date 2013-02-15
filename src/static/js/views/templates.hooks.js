@@ -37,4 +37,26 @@
         var md = container.find('.markdown');
         nbrut.md.prettify(md);
     });
+
+    // open graph micro data (mostly for feeding our zombie-crawler)
+    nbrut.tt.hook('activated', function(template, viewModel, settings){
+        var head = $('head'),
+            ogModel = {
+                title: viewModel.title,
+                url: window.location.href,
+                images: [
+                    // TODO: images + pony foo
+                ],
+                description: 'foo bar' // TODO appropriate description
+            },
+            og = nbrut.tt.partial('opengraph', ogModel);
+
+        head.find('meta[property^="og:"]').remove(); // remove existing micro data
+        og.appendTo(head);
+
+        console.log(template);
+        console.log(viewModel);
+        console.log(settings);
+        console.log(ogModel);
+    });
 }(window,jQuery,nbrut);

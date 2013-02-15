@@ -1,0 +1,10 @@
+section#opengraph-template.template
+  meta(property='og:site_name', content=config.site.title)
+  meta(property='og:url', content='{{url}}')
+
+  // {{#images}}
+  meta(property='og:image', content='{{.}}')
+  // {{/images}}
+
+  meta(property='og:title', content='{{title}}')
+  meta(property='og:description', content='{{description}}')
