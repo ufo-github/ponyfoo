@@ -5,11 +5,12 @@ TODO
 -------
 - post regarding js getters and setters
 
+- tagging
+
 - profiles expansion
   - profile options to reveal or hide: rss/email(in profile and flip card)/git/linkedin (Add provider) / fb / SO
   - flip card backside shows an extract of user bio (set independently)
 
-- tagging
 
 2
 -------

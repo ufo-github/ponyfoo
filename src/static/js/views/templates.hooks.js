@@ -43,7 +43,11 @@
         var head = $('head'), ogModel, og,
             descriptionLength = 200,
             descriptionElem = container.find('.og-description:first'),
-            description = descriptionElem.length === 0 ? undefined : descriptionElem.text().trim().substr(0, descriptionLength);
+            description;
+
+        if (descriptionElem.length !== 0){ // otherwise, let the template use it's default value
+            description = descriptionElem.text().trim().substr(0, descriptionLength) + ' [...]';
+        }
 
         ogModel = {
             title: viewModel.title,
