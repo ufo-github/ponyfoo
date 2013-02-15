@@ -66,10 +66,16 @@ input:focus,textarea:focus {
   border: 1px solid @grayish;
 }
 
-#search{
+#search {
   background-color: @moderate;
+  .box-transition(width 1s ease);
 }
 
+@media only screen and (min-width: 1200px) {
+  #search:focus {
+    width: 200px;
+  }
+}
 
 
 /* BUTTONS

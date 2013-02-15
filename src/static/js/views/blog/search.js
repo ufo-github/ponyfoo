@@ -1,5 +1,6 @@
 !function (window,$,nbrut,undefined) {
-    var input = $('#search'),
+    var win = $(window),
+        input = $('#search'),
         button = $('.search-button');
 
     button.on('click', search);
