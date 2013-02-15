@@ -175,11 +175,21 @@ function setup(server){
         });
     }
 
-    function serve(req,res,next){
-        var googlebot = req.headers['user-agent'].indexOf('Googlebot') !== -1,
-            zombiebot = req.headers['user-agent'].indexOf('Zombie.js') !== -1;
+    function shouldIgnore(req){
+        var ua = req.headers['user-agent'],
+            zombie = /Zombie\.js/i.test(ua),
+            crawlers = [
+                /Googlebot/i, // google
+                /facebookexternalhit/i // facebook
+            ];
 
-        if(!googlebot || zombiebot){ // sanity
+        return zombie || !crawlers.some(function(crawler){
+            return crawler.test(ua);
+        });
+    }
+
+    function serve(req,res,next){
+        if(shouldIgnore(req)){ // sanity
             next();
             return;
         }
