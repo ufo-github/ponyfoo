@@ -9,4 +9,10 @@ section#opengraph-template.template
   meta(property='og:image', content=config.site.thumbnail)
 
   meta(property='og:title', content='{{title}}')
+
+  // {{#description}}
   meta(property='og:description', content='{{description}}')
+  // {{/description}}
+  // {{^description}}
+  meta(property='og:description', content=config.site.description)
+  // {{/description}}
