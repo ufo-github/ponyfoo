@@ -34,15 +34,11 @@ pre.prettyprint ol.linenums li.highlight-line {
 code.prettyprint { /* snippets */
   background-color: @border;
   padding: 1px 4px;
-  color: @strong;
 }
 
-code.prettyprint .str {
-  color: @greenish; /* deal with contrast issues */
-}
-code.prettyprint .tag {
-  color: @strong;
-}
-code.prettyprint .com {
-  color: @strong; /* 'comments' in inline code are most likely a uri */
-}
+code.prettyprint { color: @strong; } /* stand-alone code snippets */
+code.prettyprint .str { color: @greenish; } /* deal with contrast issues */
+code.prettyprint .tag { color: @strong; } /* HTML tags and the like */
+code.prettyprint .com { color: @strong; } /* 'comments' in inline code are most likely a uri */
+
+a code.prettyprint:hover { color: inherit; }
