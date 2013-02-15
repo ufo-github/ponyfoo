@@ -49,17 +49,16 @@
             title: viewModel.title,
             url: window.location.href,
             images: container.find('img').map(function(){
-                var img = this,
-                    image = $(img),
+                var image = $(this),
                     width = image.width(),
                     height = image.height(),
                     high = Math.max(width, height),
-                    low = Math.min(width, height);
+                    low = Math.min(width, height),
+                    src;
 
                 if (high / low > 0.3 && width + height > 250){
-                    return img.src;
+                    return image.prop('src');
                 }
-                return null;
             }).get(),
             description: description
         };
