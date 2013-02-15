@@ -5,9 +5,12 @@ TODO
 -------
 - post regarding js getters and setters
 
+- latest posts => more than just 6, 8?
+
 - tagging
   - tags per post
   - paged search filter by tag (api/web)
+  - tagsoup below latest posts might be nice.
 
 - profiles expansion
   - user profile view title
