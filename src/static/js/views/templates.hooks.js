@@ -38,16 +38,32 @@
         nbrut.md.prettify(md);
     });
 
+    function getDescription(container){
+        var descriptionLength = 160,
+            descriptionElem = container.find('.og-description:first'),
+            description, idx;
+
+        if (descriptionElem.length === 0){ // let the template use it's default value
+            return undefined;
+        }
+        description = descriptionElem.text().trim();
+
+        if (description.length > descriptionLength){
+            description = description.substr(0, descriptionLength);
+            idx = description.lastIndexOf(' ');
+
+            if(idx !== -1){ // truncate the last word, which might have been trimmed
+                description = description.substr(0, idx);
+            }
+
+            description += ' [...]';
+        }
+        return description;
+    }
+
     // open graph micro data (mostly for feeding our zombie-crawler)
     nbrut.tt.hook('activated', function(container, template, viewModel, settings){
-        var head = $('head'), ogModel, og,
-            descriptionLength = 200,
-            descriptionElem = container.find('.og-description:first'),
-            description;
-
-        if (descriptionElem.length !== 0){ // otherwise, let the template use it's default value
-            description = descriptionElem.text().trim().substr(0, descriptionLength) + ' [...]';
-        }
+        var head = $('head'), ogModel, og;
 
         ogModel = {
             title: viewModel.title,
@@ -64,7 +80,7 @@
                     return image.prop('src');
                 }
             }).get(),
-            description: description
+            description: getDescription(container)
         };
         og = nbrut.tt.partial('opengraph', ogModel);
 
