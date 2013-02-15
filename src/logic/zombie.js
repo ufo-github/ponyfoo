@@ -21,7 +21,11 @@ function setup(server){
             var container = window.$('#content'),
                 loading = container.is('.spinner-container');
 
-            return !loading && window.nbrut.thin.pending.length === 0;
+            if(!loading && window.nbrut.thin.pending.length === 0){
+                window.$('script').remove(); // make it _really_ static
+                return true;
+            }
+            return false;
         }
 
         browser.visit(opts.url, function(){
