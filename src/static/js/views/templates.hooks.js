@@ -56,7 +56,7 @@
                     low = Math.min(width, height),
                     src;
 
-                if (high / low > 0.3 && width + height > 250){
+                if (width + height >= 650 || (width + height >= 250 && high / low > 0.3)){
                     return image.prop('src');
                 }
             }).get(),
