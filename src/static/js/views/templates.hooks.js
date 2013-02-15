@@ -45,7 +45,7 @@
                 title: viewModel.title,
                 url: window.location.href,
                 images: [
-                    // TODO: images + pony foo
+                    // TODO: appropriate images
                 ],
                 description: 'foo bar' // TODO appropriate description
             },
