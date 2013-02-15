@@ -34,17 +34,34 @@
   height: 40px;
 }
 
+/* the following two rules keep the user gravatar always centered,
+ * no matter the height for the username comes to be.
+ */
+@gravatarSize: 46px; /* 40px + 3px borders */
+
 .user-profile-link {
   display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  padding-left: @gravatarSize;
 }
 
-.user-profile-link .user-gravatar {
+#menu .user-profile-link .user-gravatar-link.small {
+  position: absolute;
+  top: 50%;
+  width: @gravatarSize;
+  height: @gravatarSize;
+  margin-top: -@gravatarSize / 2;
+  margin-left: -@gravatarSize;
+}
+
+.user-profile-link .user-gravatar.small {
   display: inline-block;
-  margin-bottom: -17px;
 }
 
 .user-profile-link .user-name {
   display: inline-block;
+  max-width: 160px;
 }
 
 .user-name {
