@@ -27,7 +27,7 @@
                     literal: true
                 }
             },
-            plugins = [];
+            plugins = nbrut.pluginFactory.instance()
 
         function register(settings) {
             var template = {};
@@ -223,7 +223,7 @@
 
         function deactivateContainer(template) {
             var loader = config.loading;
-            raise('deactivate', template);
+            plugins.raise('deactivate', template);
             config.container.off().removeClass().addClass(loader.css).html(loader.html);
         }
 
@@ -255,10 +255,10 @@
             };
 
             viewModel.flash = settings.flash  || {};
-            raise('beforeActivate', template, settings);
+            plugins.raise('beforeActivate', template, settings);
             var view = partial(template.key, viewModel);
             view.fill(config.container, settings.data || {}, settings.identifier);
-            raise('activated', config.container, template, viewModel, settings);
+            plugins.raise('activated', config.container, template, viewModel, settings);
         }
 
         function partial(key, viewModel){
@@ -279,7 +279,7 @@
                 container.off().removeClass().addClass(template.dom.css).html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
-                raise('fill', container, template);
+                plugins.raise('fill', container, template);
 
                 return {
                     identifier: identifier,
@@ -427,20 +427,6 @@
             });
         }
 
-        function raise(eventName){
-            var args = $.makeArray(arguments).splice(1);
-            $.each(plugins[eventName] || [],function(){
-                this.apply(null, args);
-            });
-        }
-
-        function hook(eventName, plugin){
-            if (plugins[eventName] === undefined){
-                plugins[eventName] = [];
-            }
-            plugins[eventName].push(plugin);
-        }
-
         return {
             defaults: defaults,
             init: init,
@@ -450,7 +436,7 @@
             activate: activate,
             activateRoute: activateRoute,
             partial: partial,
-            hook: hook,
+            hook: plugins.hook,
             templateLinks: fixLocalRoutes,
             get active() { return getHash() - 1; } /* offset by one because 0 means nothing is active yet */
         };

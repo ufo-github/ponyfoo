@@ -58,6 +58,7 @@ function getJs(){
         '/js/nbrut/nbrut.extensions.js',
         '/js/nbrut/nbrut.core.js',
         { local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
+        '/js/nbrut/nbrut.pluginFactory.js',
         '/js/nbrut/nbrut.md.js',
         '/js/nbrut/nbrut.ui.js',
         '/js/nbrut/nbrut.templates.js',

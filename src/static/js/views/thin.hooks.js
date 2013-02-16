@@ -74,7 +74,23 @@
         }
     }
 
-    nbrut.thin.hook('entry', { get: entryHook });
-    nbrut.thin.hook('comment', { get: commentHook, put: commentPutHook });
-    nbrut.thin.hook('user', { get: userHook });
+    nbrut.thin.hook({
+        eventName: 'done',
+        context: 'GET entry'
+    }, entryHook);
+
+    nbrut.thin.hook({
+        eventName: 'done',
+        context: 'GET comment'
+    }, commentHook);
+
+    nbrut.thin.hook({
+        eventName: 'done',
+        context: 'PUT comment'
+    }, commentPutHook);
+
+    nbrut.thin.hook({
+        eventName: 'done',
+        context: 'GET user'
+    }, userHook);
 }(window,jQuery,nbrut,moment);

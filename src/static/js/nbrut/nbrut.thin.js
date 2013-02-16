@@ -3,7 +3,7 @@
 
     function thinner(container){
         var apiVersion = '/api/1.0/',
-            hooks = {},
+            plugins = nbrut.pluginFactory.instance(),
             local;
 
         if (shared[container] === undefined){
@@ -32,25 +32,31 @@
                 url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
                 type: how,
                 data: opts.data
-            }).done(function(data){
-                raise(what,how,data);
+            }).done(done).always(always);
+
+            function done(data){
+                plugins.raise({
+                    eventName: 'done',
+                    context: how + ' ' + what
+                }, data);
+
                 (opts.then || $.noop)(data);
-            }).always(function(data){
+            }
+
+            function always(data){
                 var i = local.indexOf(xhr);
                 local.splice(i,1);
+
+                plugins.raise({
+                    eventName: 'always',
+                    context: how + ' ' + what
+                }, data);
+
                 (opts.always || $.noop)(data);
-            });
+            }
 
             local.push(xhr);
             return xhr;
-        }
-
-        function raise(what,how,data){
-            ((hooks[what]||{})[how.toLowerCase()] || $.noop)(data);
-        }
-
-        function hook(what, opts){
-            hooks[what] = opts;
         }
 
         function abort(){
@@ -63,7 +69,7 @@
             get: get,
             put: put,
             del: del,
-            hook: hook,
+            hook: plugins.hook,
             abort: abort,
             get pending(){ return local; }
         };
