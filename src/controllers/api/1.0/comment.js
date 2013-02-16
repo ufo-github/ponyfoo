@@ -163,7 +163,12 @@ function del(req, res){
 function edit(req,res){
     findComment(req,res, function(discussion, comment, done){
         if(req.user.blogger !== true && !editable(comment)){
-            rest.unauthorized(req,res);
+            rest.badRequest(req,res, {
+                validation: [
+                    'Your comment can\'t be edited anymore'
+                ]
+            });
+            return;
         }
 
         if (!validate(req,res)){
