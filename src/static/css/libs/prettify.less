@@ -3,17 +3,13 @@
 @brownish: #2a211c;
 @plaintext: #bdae9d;
 @highlights: #4b3c34;
-@golden: #e5c138;
-@lightyellow: #a59c59;
 @brown: #aa9680;
-@orange: #ff7f50;
-@greenish: #4b918b;
 
-pre.prettyprint { /* code blocks */
+.prettyprint { /* code blocks */
   background-color: @brownish;
   color: @plaintext;
-  .box-radius(4px);
-  .box-shadow-dual(0 1px 0 #bbb, 0 0 0 2px #fff inset);
+  .box-radius(3px);
+  .box-shadow(1px 1px 3px @highlights);
 }
 
 pre.prettyprint ol.linenums li {
@@ -25,20 +21,17 @@ pre.prettyprint ol.linenums li.highlight-line {
 }
 
 .str { color: #fff; } /* string literals */
-.com { color: @lightyellow; } /* comments */
-.lit { color: @orange; } /* literals, such as numbers */
+.com { color: @yellow_light; } /* comments */
+.lit { color: @yellow; } /* literals, such as numbers */
 .pun { color: @brown; } /* punctuation */
 .tag { color: @border; } /* html tags */
-.typ { color: @golden; } /* keywords */
+.typ { color: @blue; } /* keywords */
 
 code.prettyprint { /* snippets */
-  background-color: @border;
-  padding: 1px 4px;
+  display: inline-block;
+  padding: 0 6px 2px;
+  line-height: 22px;
+  margin: 0 2px;
 }
-
-code.prettyprint { color: @strong; } /* stand-alone code snippets */
-code.prettyprint .str { color: @greenish; } /* deal with contrast issues */
-code.prettyprint .tag { color: @strong; } /* HTML tags and the like */
-code.prettyprint .com { color: @strong; } /* 'comments' in inline code are most likely a uri */
 
 a code.prettyprint:hover { color: inherit; }

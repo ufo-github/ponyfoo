@@ -31,8 +31,8 @@
   background-color: @light;
 
   border: 1px solid @grayish;
-  border-top: 2px solid @light;
-  border-left: 2px solid @light;
+  border-top: 1px solid @light;
+  border-left: 1px solid @light;
 
   min-height: 24px;
 
@@ -53,6 +53,37 @@
   left: 12px;
 
   margin-top: -20px;
+}
+
+
+
+/* ITEM LISTS
+ **************/
+
+.markdown ul.item-list,
+.markdown ol.item-list {
+  margin: 20px 0;
+}
+
+.markdown ul.item-list li,
+.markdown ol.item-list li {
+  line-height: 1.6em;
+  list-style-position:inside;
+}
+
+.markdown ul.item-list li {
+  list-style-type: disc;
+  list-style-type: hiragana-iroha;
+}
+
+.markdown ol.item-list li {
+  list-style-type: decimal;
+}
+
+.markdown ul.item-list li:before,
+.markdown ol.item-list li:before {
+  content: '';
+  padding-right: 3px;
 }
 
 .markdown blockquote ul.item-list:only-child,
