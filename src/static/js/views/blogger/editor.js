@@ -28,7 +28,7 @@
         }else{
             nbrut.thin.get('entry', {
                 id: data.id,
-                then: function(it){
+                done: function(it){
                     render({
                         entry: it.entry,
                         submit: {
@@ -58,7 +58,7 @@
                         text: text.val()
                     }
                 },
-                then: function(){
+                done: function(){
                     nbrut.tt.activate('entry-review');
                 },
                 always: function(){

@@ -24,7 +24,7 @@
                 id: edit.id, // in case of edits
                 parent: edit.parent || opts.parent,
                 data: { comment: comment },
-                then: function(data){
+                done: function(data){
                     textarea.val('').trigger('paste');
 
                     if(edit.empty === true){
@@ -128,7 +128,7 @@
                         what: 'discussion',
                         id: discussion.data('id')
                     },
-                    then: function(){
+                    done: function(){
                         if(!comment.is(':first-child')){
                             comment.slideUpAndRemove();
                         }else{

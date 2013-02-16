@@ -74,6 +74,12 @@
         }
     }
 
+    function validationMessages(xhr, textStatus, errorThrown){
+        console.log(xhr);
+        console.log(textStatus);
+        console.log(errorThrown);
+    }
+
     nbrut.thin.hook({
         eventName: 'done',
         context: 'GET entry'
@@ -93,4 +99,6 @@
         eventName: 'done',
         context: 'GET user'
     }, userHook);
+
+    nbrut.thin.hook('fail', validationMessages);
 }(window,jQuery,nbrut,moment);

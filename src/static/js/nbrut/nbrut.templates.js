@@ -27,7 +27,7 @@
                     literal: true
                 }
             },
-            plugins = nbrut.pluginFactory.instance()
+            plugins = nbrut.pluginFactory.create();
 
         function register(settings) {
             var template = {};

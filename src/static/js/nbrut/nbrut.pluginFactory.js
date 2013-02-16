@@ -1,5 +1,5 @@
 !function (nbrut, $, undefined) {
-    function instance(){
+    function create(){
         var plugins = [];
 
         function normalize(opts){
@@ -18,6 +18,10 @@
             var args = $.makeArray(arguments).splice(1),
                 events = plugins[opts.eventName] || {},
                 hooks = events[opts.context] || [];
+
+            if(opts.context !== 'global'){ // avoid duplication
+                hooks = hooks.concat(events.global || []);
+            }
 
             $.each(hooks, function(){
                 this.apply(null, args);
@@ -46,6 +50,6 @@
     }
 
     nbrut.pluginFactory = {
-        instance: instance
+        create: create
     };
 }(nbrut, jQuery);

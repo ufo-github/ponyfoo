@@ -3,7 +3,7 @@
 
     function thinner(container){
         var apiVersion = '/api/1.0/',
-            plugins = nbrut.pluginFactory.instance(),
+            plugins = nbrut.pluginFactory.create(),
             local;
 
         if (shared[container] === undefined){
@@ -26,33 +26,33 @@
         function fire(how,what,opts){
             var id = !!opts.id ? '/' + opts.id : '',
                 parent = !!opts.parent ? opts.parent.what + '/' + opts.parent.id + '/' : '',
-                action = !!opts.action ? opts.action + '/' : '';
+                action = !!opts.action ? opts.action + '/' : '',
+                eventContext = '{0} {1}'.format(how, what);
 
             xhr = $.ajax({
                 url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
                 type: how,
                 data: opts.data
-            }).done(done).always(always);
+            }).done(raiseHooks('done'))
+            .fail(raiseHooks('fail'))
+            .always(remove)
+            .always(raiseHooks('always'));
 
-            function done(data){
-                plugins.raise({
-                    eventName: 'done',
-                    context: how + ' ' + what
-                }, data);
+            function raiseHooks(name){
+                return function(dataOrXhr, textStatus, errorThrownOrXhr){
+                    var raiseOpts = {
+                        eventName: name,
+                        context: eventContext
+                    };
 
-                (opts.then || $.noop)(data);
+                    plugins.raise.call(null, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
+                    (opts[name] || $.noop).call(null, dataOrXhr, textStatus, errorThrownOrXhr);
+                };
             }
 
-            function always(data){
+            function remove(){
                 var i = local.indexOf(xhr);
                 local.splice(i,1);
-
-                plugins.raise({
-                    eventName: 'always',
-                    context: how + ' ' + what
-                }, data);
-
-                (opts.always || $.noop)(data);
             }
 
             local.push(xhr);

@@ -5,7 +5,7 @@
     function prepare(render, data){
         nbrut.thin.get('user',{
             id: data.id,
-            then: function(data){
+            done: function(data){
                 var user = data.user;
                 render(user, user === null);
             }

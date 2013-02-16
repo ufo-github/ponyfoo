@@ -4,7 +4,7 @@
             complete(render, data);
         }else{
             nbrut.thin.get('entry', {
-                then: function(it){
+                done: function(it){
                     complete(render, data, it.entries)
                 }
             });
@@ -14,7 +14,7 @@
     function complete(render, data, latest){
         nbrut.thin.get('entry', {
             id: data.query,
-            then: function(it){
+            done: function(it){
                 render({
                     entries: it.entries || [it.entry],
                     paging: it.paging,
@@ -102,7 +102,7 @@
 
         nbrut.thin.get('entry', {
             id: query + page,
-            then: function(it){
+            done: function(it){
                 if(nbrut.tt.active !== identifier){ // sanity
                     return;
                 }
@@ -141,7 +141,7 @@
                 what: 'entry',
                 id: entry._id
             },
-            then: function(it){
+            done: function(it){
                 var container = $('.blog-entries'),
                     list = nbrut.tt.partial('discussion-list', it),
                     discussions = list.appendTo(container), actions;

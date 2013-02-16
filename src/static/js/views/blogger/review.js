@@ -1,7 +1,7 @@
 !function (window,$,nbrut) {
     function prepare(render){
         nbrut.thin.get('entry', {
-            then: function(it){
+            done: function(it){
                 render(it);
             }
         });
@@ -15,7 +15,7 @@
 			row.find('a.remove').on('click', function(){
                 nbrut.thin.del('entry', {
                     id: id,
-                    then: function(){
+                    done: function(){
                         row.fadeOutAndRemove();
                     }
                 });

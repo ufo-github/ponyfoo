@@ -6,7 +6,7 @@
 
         nbrut.thin.get('user',{
             id: data.id,
-            then: function(data){
+            done: function(data){
                 var user = data.user;
                 render(user, user === null || user.me === false);
             }
@@ -35,7 +35,7 @@
             nbrut.thin.put('user', {
                 id: id,
                 data: { user: data },
-                then: function(){
+                done: function(){
                     nbrut.tt.activate('user-profile', {
                         data: { id: id }
                     });
