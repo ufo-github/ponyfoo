@@ -12,7 +12,7 @@
 .hint:after,
 .hint-before:before {
   position: absolute;
-  opacity: 0;
+  display: none;
   z-index: 5000;
   pointer-events: none;
 
@@ -20,15 +20,16 @@
   padding: 8px 10px;
   line-height: 12px;
   white-space: nowrap;
+  text-decoration: none;
   text-indent: initial;
   overflow: initial;
 
-  .box-transition(0.3s ease);
+  .box-transition(all 0.3s ease);
 }
 
 .hint:hover:after,
 .hint-before:hover:before {
-  opacity: 1;
+  display: initial;
 }
 
 /**
@@ -41,7 +42,7 @@
 
 .hint:after,
 .hint-before:before {
-  top: 16px;
+  top: 12px;
   left: 6px;
 
   font-size: 12px;

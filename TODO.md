@@ -5,8 +5,6 @@ TODO
 -------
 - post regarding js getters and setters
 
-- CSS styles for code tag (especially inline code)
-
 - validation in profile, write post / write comment (in context / popup when no context is given)
 
 - image upload
