@@ -74,10 +74,15 @@
         }
     }
 
-    function validationMessages(xhr, textStatus, errorThrown){
-        console.log(xhr);
-        console.log(textStatus);
-        console.log(errorThrown);
+    function validationMessages(xhr){
+        if(xhr.status === 400){ // request validation failed
+            var response = JSON.parse(xhr.responseText),
+                validation = response.error.data.validation;
+
+            if($.isArray(validation)){
+                // TODO: display
+            }
+        }
     }
 
     nbrut.thin.hook({
