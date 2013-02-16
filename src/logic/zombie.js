@@ -3,8 +3,7 @@ var config = require('../config.js'),
     path = require('path'),
     fs = require('fs'),
     fse = require('fs-extra'),
-    zombie = require('zombie'),
-    sitemap = require('./sitemap.js');
+    zombie = require('zombie');
 
 function setup(server){
     var views = server.get('views'),
@@ -187,7 +186,13 @@ function setup(server){
                 /facebookexternalhit/i // facebook
             ];
 
-        return zombie || !crawlers.some(function(crawler){
+        if(zombie){ // prevent recursive non-sense
+            return true;
+        }
+        if(config.env.development && req.query['static'] !== undefined){
+            return false;
+        }
+        return !crawlers.some(function(crawler){
             return crawler.test(ua);
         });
     }
