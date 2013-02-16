@@ -3,11 +3,12 @@ TODO
 
 1
 -------
-- post regarding js getters and setters
 
-- validation in profile, write post / write comment (in context / popup when no context is given)
+- actually display validation messages (in context / popup when no context is given)
 
 - image upload
+
+- post regarding js getters and setters
 
 
 2
