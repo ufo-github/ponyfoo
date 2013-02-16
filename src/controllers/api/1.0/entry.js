@@ -82,13 +82,48 @@ function rebuildFeed(res){
     };
 }
 
+function required(val,update,field,length,message){
+    if(update && field === undefined){
+        return; // updates may ignore fields entirely
+    }
+    if(!field || field.length < length){
+        val.push(message);
+    }
+}
+
+function validateEntry(req,res,update){
+    var source = req.body.entry || {},
+        val = [],
+        document = {
+            title: source.title,
+            brief: source.brief,
+            text: source.text
+        };
+
+    required(val, update, document.title, 10, 'You forgot the all-important, descriptive title');
+    required(val, update, document.brief, 30, 'Please remember to write an introduction to your post');
+    required(val, update, document.text, 60, 'That was pretty scarce, do you mind sharing at least a pair of sentences?');
+
+    if (val.length > 0){
+        rest.badRequest(req, res, { validation: val });
+        return undefined;
+    }
+
+    return document;
+}
+
 function insert(req,res){
+    var document = validateEntry(req,res);
+    if (document === undefined){
+        return;
+    }
+
     model.findOne().sort('-date').exec(function(err,previous){
         if(err){
             throw err;
         }
 
-        crud.create(req.body.entry, {
+        crud.create(document, {
             res: res,
             always: function(entry){
                 entry.previous = previous._id;
@@ -100,7 +135,22 @@ function insert(req,res){
             }
         });
     });
+}
 
+function update(req,res){
+    var document = validateEntry(req,res,true);
+    if (document === undefined){
+        return;
+    }
+
+    crud.update({ _id: req.params.id }, document, {
+        res: res,
+        always: function(entry){
+            entry.updated = new Date();
+            entry.slug = text.slug(entry.title);
+        },
+        then: rebuildFeed(res)
+    });
 }
 
 function remove(req, res){
@@ -207,30 +257,21 @@ module.exports = {
     get: function(req,res){
         restList(req,res);
     },
-	getByDate: function(req,res){
-		var query = mapRequestToQuery(req);
+    getByDate: function(req,res){
+        var query = mapRequestToQuery(req);
         restList(req, res, query);
-	},
-	getBySlug: function(req,res){
+    },
+    getBySlug: function(req,res){
         var query = mapRequestToQuery(req);
         query.slug = req.params.slug;
         restOne(res, query);
-	},
-	getById: function(req,res){
+    },
+    getById: function(req,res){
         restOne(res, { _id: req.params.id });
-	},
+    },
     ins: insert,
-	upd: function(req,res){
-        crud.update({ _id: req.params.id }, req.body.entry, {
-            res: res,
-            always: function(entry){
-                entry.updated = new Date();
-                entry.slug = text.slug(entry.title);
-            },
-            then: rebuildFeed(res)
-        });
-	},
-	del: remove,
+    upd: update,
+    del: remove,
     list: list, // internal api DRY purposes
     search: search
 };

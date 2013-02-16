@@ -9,14 +9,14 @@ TODO
 
 - image upload
 
-- latest posts => more than just 6, 8?
-
 
 2
 -------
 
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 - post about css for dummies
+
+- latest posts => more than just 6, 8?
 
 - tagging
   - tags per post

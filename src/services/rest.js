@@ -21,24 +21,30 @@ function end(res,value){
     res.end(encoded);
 }
 
-function error(res,code,message,err){
+function error(opts){
     var json = {
         error: {
-            code: code,
-            message: message || 'internal server error'
+            code: opts.code,
+            message: opts.message,
+            data: opts.data || {}
         }
     };
 
-    $.log.err(err);
+    $.log.err(opts.err);
 
-    head(res,code);
-    end(res,json);
+    head(opts.res,opts.code);
+    end(opts.res,json);
 }
 
 function resHandler(err, opts){
     var test = !!err;
     if (test){
-        error(opts.res,500,undefined,err);
+        error({
+            res: opts.res,
+            code: 500,
+            message: 'internal server error',
+            err: err
+        });
     }else{
         if(opts.writeHead !== false){
             head(opts.res,200);
@@ -53,19 +59,36 @@ function resHandler(err, opts){
 
 function unauthorized(req, res){
     var connected = !!req.user;
-    error(res,connected?403:401,'api endpoint unauthorized');
+    error({
+        res: res,
+        code: connected ? 403 : 401,
+        message: 'api endpoint unauthorized'
+    });
 }
 
 function notFound(req, res){
-    error(res,404,'api endpoint not found');
+    error({
+        res: res,
+        code: 404,
+        message: 'api endpoint not found'
+    });
+}
+
+function badRequest(req, res, data){
+    error({
+        res: res,
+        code: 400,
+        message: 'bad request',
+        data: data
+    });
 }
 
 module.exports = {
     head: head,
     write: write,
     end: end,
-    error: error,
     resHandler: resHandler,
     unauthorized: unauthorized,
-    notFound: notFound
+    notFound: notFound,
+    badRequest: badRequest
 };
