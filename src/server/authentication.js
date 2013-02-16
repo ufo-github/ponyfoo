@@ -70,6 +70,10 @@ function setupProvider(type, config, cb){
 
 function callback(query, profile, done) {
     var email = profile.emails[0].value;
+    if(!email){
+        done(null,false,'Unable to get email address');
+        return;
+    }
 
     user.findOne(query, function (err, document) {
         if(err || document){

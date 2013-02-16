@@ -16,8 +16,6 @@
                 return;
             }
 
-            textarea.prop('disabled', true);
-
             var comment = textarea.val(),
                 edit = button.data('edit') || { empty: true };
 
@@ -28,7 +26,6 @@
                 data: { comment: comment },
                 then: function(data){
                     textarea.val('').trigger('paste');
-                    textarea.prop('disabled', false);
 
                     if(edit.empty === true){
                         opts.done(elements,data);

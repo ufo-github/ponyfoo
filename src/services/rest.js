@@ -79,7 +79,7 @@ function badRequest(req, res, data){
         res: res,
         code: 400,
         message: 'bad request',
-        data: data
+        data: data || {}
     });
 }
 

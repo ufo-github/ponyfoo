@@ -50,9 +50,18 @@ function findModules(opts,done){
     });
 }
 
+function findProperty(on, path){
+    var children = path.split('.');
+    while(children.length > 0){
+        on = on[children.shift()];
+    }
+    return on;
+}
+
 module.exports = {
     noop: function(){},
     log: logger(),
     args: args,
-    findModules: findModules
+    findModules: findModules,
+    findProperty: findProperty
 };

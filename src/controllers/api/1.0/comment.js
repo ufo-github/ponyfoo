@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     apiConf = require('../config.js'),
+    validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
     discussion = require('../../../models/discussion.js'),
     comment = require('../../../models/comment.js');
@@ -20,7 +21,20 @@ function reply(req,res){
     });
 }
 
+function validate(req,res){
+    return validation.validate(req,res,{
+        document: { text: req.body.comment },
+        rules: [
+            { field: 'text', length: 10, message: 'Your comment must be at least 10 characters long' }
+        ]
+    });
+}
+
 function add(req,res,document,root){
+    if(!validate(req,res)){
+        return;
+    }
+
     var data = {
             text: req.body.comment,
             author: {
@@ -150,6 +164,10 @@ function edit(req,res){
     findComment(req,res, function(discussion, comment, done){
         if(req.user.blogger !== true && !editable(comment)){
             rest.unauthorized(req,res);
+        }
+
+        if (!validate(req,res)){
+            return;
         }
 
         comment.text = req.body.comment;

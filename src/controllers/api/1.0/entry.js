@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     apiConf = require('../config.js'),
+    validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
     text = require('../../../services/text.js'),
     discussion = require('../../../models/discussion.js'),
@@ -82,34 +83,22 @@ function rebuildFeed(res){
     };
 }
 
-function required(val,update,field,length,message){
-    if(update && field === undefined){
-        return; // updates may ignore fields entirely
-    }
-    if(!field || field.length < length){
-        val.push(message);
-    }
-}
-
 function validateEntry(req,res,update){
-    var source = req.body.entry || {},
-        val = [],
-        document = {
+    var source = req.body.entry || {};
+
+    return validation.validate(req,res,{
+        ignoreUndefined: update,
+        document: {
             title: source.title,
             brief: source.brief,
             text: source.text
-        };
-
-    required(val, update, document.title, 10, 'You forgot the all-important, descriptive title');
-    required(val, update, document.brief, 30, 'Please remember to write an introduction to your post');
-    required(val, update, document.text, 60, 'That was pretty scarce, do you mind sharing at least a pair of sentences?');
-
-    if (val.length > 0){
-        rest.badRequest(req, res, { validation: val });
-        return undefined;
-    }
-
-    return document;
+        },
+        rules: [
+            { field: 'title', length: 10, message: 'You forgot the all-important, descriptive title' },
+            { field: 'brief', length: 30, message: 'Please remember to write an introduction to your post' },
+            { field: 'text', length: 60, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article?' }
+        ]
+    });
 }
 
 function insert(req,res){
