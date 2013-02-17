@@ -2,9 +2,8 @@ extends layout
 
 block menu
   include _registered-menu
-  a(href='/user/logout')='Logout'
-  a#review-entries(href='/blogger/entry/review')='Review Entries'
-  a.button#write-entry(href='/blogger/entry')='Write Entry'
+  a#review-entries(href='/blogger/entry/review')='Review'
+  a.button#write-entry(href='/blogger/entry')='Write'
 
 block templates
   include _registered-templates

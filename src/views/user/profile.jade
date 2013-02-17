@@ -2,6 +2,7 @@ section#user-profile-template.template
   // {{#me}}
   section.user-profile-actions
     a.action.edit(href='/user/profile/{{_id}}/edit', title='Edit')='Edit'
+    a.logout(href='/user/logout')='Logout'
   // {{/me}}
   h1='{{profileTitle}}'
 

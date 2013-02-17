@@ -38,14 +38,15 @@ input:focus,textarea:focus {
 .layout-heading {
   .ff-calibri();
   font-size: 2.4em;
-  color: @strong;
 }
 
 .layout-heading a {
   border-bottom: 2px solid @moderate;
+  color: @strong;
 }
 
 .layout-heading a:hover {
+  color: @strong_hover;
   text-decoration: none;
 }
 
@@ -57,7 +58,6 @@ input:focus,textarea:focus {
   .layout-heading a {
     border-bottom: 3px solid @moderate;
   }
-
 }
 
 @media only screen and (min-width: 1024px) {
@@ -79,16 +79,60 @@ input:focus,textarea:focus {
   border: 1px solid @grayish;
 }
 
-#search {
+
+
+/* SEARCH
+ ****************/
+
+.search-input {
   background-color: @moderate;
   .box-transition(width 1s ease);
+  .box-radius(6px 0 0 6px);
+}
+
+.search-button {
+  background-color: @strong;
+  .box-radius(0 6px 6px 0);
+  border-bottom: 1px solid transparent;
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+
+.search-input:focus + .search-button {
+  background-color: @strong_hover;
+  border-bottom: 1px solid @grayish;
+  border-top: 2px solid @border;
+  border-right: 2px solid @border;
+}
+
+.search-button:hover {
+  background-color: @strong_hover;
+}
+
+@media only screen and (min-width: 768px) {
+  .search-input:focus {
+    width: 80px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .search-input:focus {
+    width: 130px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-  #search:focus {
+  .search-input:focus {
     width: 200px;
   }
 }
+
+@media only screen and (min-width: 1400px) {
+  .search-input:focus {
+    width: 400px;
+  }
+}
+
 
 
 /* BUTTONS

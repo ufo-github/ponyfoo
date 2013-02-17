@@ -1,9 +1,11 @@
 !function (window,$,nbrut,undefined) {
-    var win = $(window),
-        input = $('#search'),
+    var input = $('.search-input'),
         button = $('.search-button');
 
-    button.on('click', search);
+    button.on('click', function(){
+        search();
+    });
+
     input.on('keypress', function(e){
         if(e.which === 13){
             search();

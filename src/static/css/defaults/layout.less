@@ -1,3 +1,5 @@
+@import "common.less";
+
 /* BASIC LAYOUT
 ----------------------------------------------------------*/
 
@@ -76,18 +78,25 @@ body {
 
 #menu nav {
   display: none;
+  vertical-align: top;
 }
 
-#search {
+.search-area {
   display: inline-block;
-  width: 80px;
+}
+
+input.search-input {
+  display: inline-block;
+  vertical-align: top;
+  width: 70px;
+  margin: 0;
+  padding: 13px 8px;
 }
 
 .search-button {
+  display: inline-block;
   cursor: pointer;
-  vertical-align: middle;
-  margin-left: 6px;
-  margin-top: -2px;
+  padding: 8px 2px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -100,7 +109,11 @@ body {
     display: inline-block;
   }
 
-  #search {
+  .search-area {
     margin-left: 15px;
+  }
+
+  .search-button {
+    padding: 8px;
   }
 }

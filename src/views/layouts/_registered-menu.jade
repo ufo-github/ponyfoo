@@ -1,5 +1,6 @@
-section.user-profile-link
-  a.user-gravatar-link.small.hint(data-hint='See profile', href='/user/profile/' + user._id)
-    img.user-gravatar.small(src=user.gravatarSmall)
+section.user-profile-menu
+  section.user-profile-link
+    a.user-gravatar-link.small.hint(data-hint='See profile', href='/user/profile/' + user._id)
+      img.user-gravatar.small(src=user.gravatarSmall)
 
   a.user-name.hint(data-hint='See profile', href='/user/profile/' + user._id)=user.displayName
