@@ -5,7 +5,7 @@
             var validation = nbrut.tt.partial('validation-errors', {
                 errors: errors, closable: true
             });
-            validation.insertAfter('.user-login h1');
+            validation.insertBefore('.authentication-providers');
         }
 	}
 	
