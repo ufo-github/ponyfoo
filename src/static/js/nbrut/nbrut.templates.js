@@ -224,7 +224,7 @@
         function deactivateContainer(template) {
             var loader = config.loading;
             plugins.raise('deactivate', template);
-            config.container.off().removeClass().addClass(loader.css).html(loader.html);
+            config.container.off().removeClass().addClass(loader.css).empty().html(loader.html);
         }
 
         function activateTemplate(template, settings, viewModel, soft){
@@ -276,7 +276,7 @@
             }
 
             function fill(container, data, identifier, noEvent){
-                container.off().removeClass().addClass(template.dom.css).html(html);
+                container.off().removeClass().addClass(template.dom.css).empty().html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
 
