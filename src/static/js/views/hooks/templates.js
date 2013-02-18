@@ -22,8 +22,13 @@
     nbrut.tt.hook('fill', function (container){
         var close = container.find('.close');
 
-        close.on('click', function(){
+        container.on('container.close', function(){
             container.fadeOutAndRemove();
+            return false; // stop propagation
+        });
+
+        close.on('click.close', function(){
+            container.trigger('container.close');
         });
     })
 }(window,jQuery,nbrut);

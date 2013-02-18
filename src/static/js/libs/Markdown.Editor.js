@@ -1,7 +1,5 @@
 ﻿// needs Markdown.Converter.js at the moment
-
-(function () {
-
+!function($, nbrut) {
     var util = {},
         position = {},
         ui = {},
@@ -26,7 +24,6 @@
 
         link: "Hyperlink <a> Ctrl+L",
         linkdescription: "enter link description here",
-        linkdialog: '<h1 class="underline">Insert Hyperlink</h1><p>http://example.com/ "optional title"</p>',
 
         quote: "Blockquote <blockquote> Ctrl+Q",
         quoteexample: "Blockquote",
@@ -36,7 +33,6 @@
 
         image: "Image <img> Ctrl+G",
         imagedescription: "enter image description here",
-        imagedialog: '<h1 class="underline">Insert Image</h1><p>http://example.com/images/diagram.jpg "optional title"</p>',
 
         olist: "Numbered List <ol> Ctrl+O",
         ulist: "Bulleted List <ul> Ctrl+U",
@@ -53,23 +49,6 @@
 
         help: "Markdown Editing Help"
     };
-
-
-    // -------------------------------------------------------------------
-    //  YOUR CHANGES GO HERE
-    //
-    // I've tried to localize the things you are likely to change to
-    // this area.
-    // -------------------------------------------------------------------
-
-    // The default text that appears in the dialog input box when entering
-    // links.
-    var imageDefaultText = "http://";
-    var linkDefaultText = "http://";
-
-    // -------------------------------------------------------------------
-    //  END OF YOUR CHANGES
-    // -------------------------------------------------------------------
 
     // options, if given, can have the following properties:
     //   options.helpButton = { handler: yourEventHandler }
@@ -108,9 +87,9 @@
         hooks.addNoop("onPreviewRefresh");       // called with no arguments after the preview has been refreshed
         hooks.addNoop("postBlockquoteCreation"); // called with the user's selection *after* the blockquote was created; should return the actual to-be-inserted text
         hooks.addFalse("insertImageDialog");     /* called with one parameter: a callback to be called with the URL of the image. If the application creates
-                                                  * its own image insertion dialog, this hook should return true, and the callback should be called with the chosen
-                                                  * image url (or null if the user cancelled). If this hook returns false, the default dialog will be used.
-                                                  */
+         * its own image insertion dialog, this hook should return true, and the callback should be called with the chosen
+         * image url (or null if the user cancelled). If this hook returns false, the default dialog will be used.
+         */
 
         this.getConverter = function () { return markdownConverter; }
 
@@ -848,13 +827,13 @@
                 result = window.pageYOffset;
             }
             else
-                if (doc.documentElement && doc.documentElement.scrollTop) {
-                    result = doc.documentElement.scrollTop;
-                }
-                else
-                    if (doc.body) {
-                        result = doc.body.scrollTop;
-                    }
+            if (doc.documentElement && doc.documentElement.scrollTop) {
+                result = doc.documentElement.scrollTop;
+            }
+            else
+            if (doc.body) {
+                result = doc.body.scrollTop;
+            }
 
             return result;
         };
@@ -1015,45 +994,6 @@
         init();
     };
 
-    // Creates the background behind the hyperlink text entry box.
-    // And download dialog
-    // Most of this has been moved to CSS but the div creation and
-    // browser-specific hacks remain here.
-    ui.createBackground = function () {
-
-        var background = doc.createElement("div"),
-            style = background.style;
-
-        background.className = "wmd-prompt-background";
-
-        style.position = "absolute";
-        style.top = "0";
-
-        style.zIndex = "1000";
-
-        if (uaSniffed.isIE) {
-            style.filter = "alpha(opacity=50)";
-        }
-        else {
-            style.opacity = "0.5";
-        }
-
-        var pageSize = position.getPageSize();
-        style.height = pageSize[1] + "px";
-
-        if (uaSniffed.isIE) {
-            style.left = doc.documentElement.scrollLeft;
-            style.width = doc.documentElement.clientWidth;
-        }
-        else {
-            style.left = "0";
-            style.width = "100%";
-        }
-
-        doc.body.appendChild(background);
-        return background;
-    };
-
     // This simulates a modal dialog box and asks for the URL when you
     // click the hyperlink or image buttons.
     //
@@ -1062,142 +1002,22 @@
     // callback: The function which is executed when the prompt is dismissed, either via OK or Cancel.
     //      It receives a single argument; either the entered text (if OK was chosen) or null (if Cancel
     //      was chosen).
-    ui.prompt = function (text, defaultInputText, callback) {
+    ui.prompt = function(partialName, callback){
+        var body = $('body'),
+            partial = nbrut.tt.partial(partialName, { complete: complete });
 
-        // These variables need to be declared at this level since they are used
-        // in multiple functions.
-        var dialog;         // The dialog box.
-        var input;         // The text box where you enter the hyperlink.
+        partial.appendTo(body);
 
-
-        if (defaultInputText === undefined) {
-            defaultInputText = "";
-        }
-
-        // Used as a keydown event handler. Esc dismisses the prompt.
-        // Key code 27 is ESC.
-        var checkEscape = function (key) {
-            var code = (key.charCode || key.keyCode);
-            if (code === 27) {
-                close(true);
-            }
-        };
-
-        // Dismisses the hyperlink input box.
-        // isCancel is true if we don't care about the input text.
-        // isCancel is false if we are going to keep the text.
-        var close = function (isCancel) {
-            util.removeEvent(doc.body, "keydown", checkEscape);
-            var text = input.value;
-
-            if (isCancel) {
-                text = null;
-            }
-            else {
-                // Fixes common pasting errors.
+        function complete(text){
+            if (text !== null){ // Fixes common pasting errors.
                 text = text.replace(/^http:\/\/(https?|ftp):\/\//, '$1://');
-                if (!/^(?:https?|ftp):\/\//.test(text))
+                if (!/^(?:https?|ftp):\/\//.test(text)){
                     text = 'http://' + text;
+                }
             }
-
-            dialog.parentNode.removeChild(dialog);
 
             callback(text);
-            return false;
-        };
-
-
-
-        // Create the text input box form/window.
-        var createDialog = function () {
-
-            // The main dialog box.
-            dialog = doc.createElement("div");
-            dialog.className = "wmd-prompt-dialog dialog";
-            dialog.style.padding = "10px;";
-            dialog.style.position = "fixed";
-            dialog.style.width = "400px";
-            dialog.style.zIndex = "1001";
-
-            // The dialog text.
-            var question = doc.createElement("div");
-            question.innerHTML = text;
-            dialog.appendChild(question);
-
-            // The web form container for the text box and buttons.
-            var form = doc.createElement("form"),
-                style = form.style;
-            form.onsubmit = function () { return close(false); };
-            dialog.appendChild(form);
-
-            // The input text box
-            input = doc.createElement("input");
-            input.type = "text";
-            input.value = defaultInputText;
-            style = input.style;
-            style.display = "block";
-            style.width = "80%";
-            style.marginLeft = style.marginRight = "auto";
-            form.appendChild(input);
-
-            // The cancel button
-            var cancelButton = doc.createElement("a");
-            cancelButton.onclick = function () { return close(true); };
-            cancelButton.innerText = "Cancel";
-            style = cancelButton.style;
-            style.display = "inline";
-
-            // The ok button
-            var okButton = doc.createElement("button");
-            okButton.onclick = function () { return close(false); };
-            okButton.innerText = "OK";
-            okButton.className = 'button small ok-button';
-            style = okButton.style;
-            style.display = "inline";
-
-            form.appendChild(cancelButton);
-            form.appendChild(okButton);
-
-            util.addEvent(doc.body, "keydown", checkEscape);
-            dialog.style.top = "50%";
-            dialog.style.left = "50%";
-            dialog.style.display = "block";
-
-            if (uaSniffed.isIE_5or6) {
-                dialog.style.position = "absolute";
-                dialog.style.top = doc.documentElement.scrollTop + 200 + "px";
-                dialog.style.left = "50%";
-            }
-            doc.body.appendChild(dialog);
-
-            // This has to be done AFTER adding the dialog to the form if you
-            // want it to be centered.
-            dialog.style.marginTop = -(position.getHeight(dialog) / 2) + "px";
-            dialog.style.marginLeft = -(position.getWidth(dialog) / 2) + "px";
-
-        };
-
-        // Why is this in a zero-length timeout?
-        // Is it working around a browser bug?
-        setTimeout(function () {
-
-            createDialog();
-
-            var defTextLen = defaultInputText.length;
-            if (input.selectionStart !== undefined) {
-                input.selectionStart = 0;
-                input.selectionEnd = defTextLen;
-            }
-            else if (input.createTextRange) {
-                var range = input.createTextRange();
-                range.collapse(false);
-                range.moveStart("character", -defTextLen);
-                range.moveEnd("character", defTextLen);
-                range.select();
-            }
-
-            input.focus();
-        }, 0);
+        }
     };
 
     function UIManager(postfix, panels, undoManager, previewManager, commandManager, helpOptions, getString) {
@@ -1719,9 +1539,6 @@
             // The function to be executed when you enter a link and press OK or Cancel.
             // Marks up the link and adds the ref.
             var linkEnteredCallback = function (link) {
-
-                background.parentNode.removeChild(background);
-
                 if (link !== null) {
                     // (                          $1
                     //     [^\\]                  anything that's not a backslash
@@ -1761,14 +1578,12 @@
                 postProcessing();
             };
 
-            background = ui.createBackground();
-
             if (isImage) {
-                if (!this.hooks.insertImageDialog(linkEnteredCallback))
-                    ui.prompt(this.getString("imagedialog"), imageDefaultText, linkEnteredCallback);
-            }
-            else {
-                ui.prompt(this.getString("linkdialog"), linkDefaultText, linkEnteredCallback);
+                if (!this.hooks.insertImageDialog(linkEnteredCallback)){
+                    ui.prompt('prompt-image', linkEnteredCallback);
+                }
+            } else {
+                ui.prompt('prompt-link', linkEnteredCallback);
             }
             return true;
         }
@@ -1841,15 +1656,15 @@
         // text *directly before* the selection already was a blockquote:
 
         /*
-        if (chunk.before) {
-        chunk.before = chunk.before.replace(/\n?$/, "\n");
-        }
-        chunk.before = chunk.before.replace(/(((\n|^)(\n[ \t]*)*>(.+\n)*.*)+(\n[ \t]*)*$)/,
-        function (totalMatch) {
-        chunk.startTag = totalMatch;
-        return "";
-        });
-        */
+         if (chunk.before) {
+         chunk.before = chunk.before.replace(/\n?$/, "\n");
+         }
+         chunk.before = chunk.before.replace(/(((\n|^)(\n[ \t]*)*>(.+\n)*.*)+(\n[ \t]*)*$)/,
+         function (totalMatch) {
+         chunk.startTag = totalMatch;
+         return "";
+         });
+         */
 
         // This comes down to:
         // Go backwards as many lines a possible, such that each line
@@ -1956,10 +1771,10 @@
 
         if (!/\n/.test(chunk.selection)) {
             chunk.selection = chunk.selection.replace(/^(> *)/,
-            function (wholeMatch, blanks) {
-                chunk.startTag += blanks;
-                return "";
-            });
+                function (wholeMatch, blanks) {
+                    chunk.startTag += blanks;
+                    return "";
+                });
         }
     };
 
@@ -2195,6 +2010,4 @@
         chunk.selection = "";
         chunk.skipLines(2, 1, true);
     }
-
-
-})();
+}(jQuery,nbrut);

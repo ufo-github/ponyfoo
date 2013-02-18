@@ -50,7 +50,6 @@ function getJs(){
         '/js/libs/jquery.textarearesizer.min.js',
         '/js/libs/Markdown.Converter.js',
         '/js/libs/Markdown.Sanitizer.js',
-        '/js/libs/Markdown.Editor.js',
         '/js/libs/prettify.js',
 
         '/js/ext/prettify.extensions.js',
@@ -66,6 +65,9 @@ function getJs(){
         '/js/nbrut/nbrut.thin.js',
         '/js/nbrut/nbrut.init.js',
 
+        // depends on nbrut.templates
+        '/js/libs/Markdown.Editor.js',
+
         // hooks
         '/js/views/hooks/thin.js',
         '/js/views/hooks/thin.validation.js',
@@ -75,6 +77,7 @@ function getJs(){
 
         // template registration
         '/js/views/templates/shared.js',
+        '/js/views/templates/markdown.js',
         '/js/views/templates/entries.js',
         { profile: 'anon', local: '/js/views/templates/anon.js' },
         { profile: ['blogger', 'registered'], local: '/js/views/templates/registered.js' },
@@ -82,6 +85,7 @@ function getJs(){
 
         // template configuration
         '/js/views/shared/validation.dialog.js',
+        '/js/views/markdown/prompts.js',
 
         '/js/views/user/profile.js',
         { profile: 'anon', local: '/js/views/user/login.js' },

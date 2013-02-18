@@ -1,5 +1,8 @@
 @import "../defaults/common.less";
 
+/* EDITOR
+ ***************/
+
 .wmd-button-row {
     padding: 0px;
     height: 20px;
@@ -55,18 +58,21 @@
   .box-sizing();
 }
 
-.wmd-prompt-background {
-    background-color: #000;
+/* PROMPTS
+ ****************/
+
+.markdown-prompt-dialog p {
+  margin-top: 10px;
 }
 
-.wmd-prompt-dialog p {
-  margin-bottom: 15px;
+.markdown-prompt-dialog p:first-child {
+  margin-top: 0;
 }
 
-.wmd-prompt-dialog form {
-  text-align: right;
+.markdown-prompt-dialog input.prompt-input {
+  width: 90%;
 }
 
-.wmd-prompt-dialog .ok-button {
-  margin: 10px 30px 10px 10px;
+.markdown-prompt-dialog .ok-button {
+  margin-left: 10px;
 }
