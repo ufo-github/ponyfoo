@@ -18,8 +18,8 @@
     });
 
     nbrut.tt.register({
-        key: 'discussion-list',
-        source: '#discussion-list-template',
+        key: 'validation-dialog',
+        source: '#validation-dialog-template',
         mustache: true
     });
 

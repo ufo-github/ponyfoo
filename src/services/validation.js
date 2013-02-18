@@ -41,12 +41,18 @@ function applyRule(ctx, rule){
 
 function validate(req,res,opts){
     var messages = [],
-        invalid = (opts.rules || []).some(function(rule){
-            return applyRule({
-                messages: messages,
-                opts: opts
-            }, rule)
-        });
+        invalid;
+
+    (opts.rules || []).forEach(function(rule){
+        var failed = applyRule({
+            messages: messages,
+            opts: opts
+        }, rule);
+
+        if(failed){
+            invalid = true;
+        }
+    });
 
     if(invalid){
         if(!messages.length){

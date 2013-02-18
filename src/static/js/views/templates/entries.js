@@ -93,4 +93,10 @@
         source: '#entry-siblings-template',
         mustache: true
     });
+
+    nbrut.tt.register({
+        key: 'discussion-list',
+        source: '#discussion-list-template',
+        mustache: true
+    });
 }(window,nbrut,moment);

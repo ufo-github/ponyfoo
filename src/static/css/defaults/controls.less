@@ -25,6 +25,40 @@ textarea.resizing {
 
 
 
+/* UI DIALOG
+ ****************/
+
+.dialog {
+  padding: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 100%;
+  text-align: left;
+  background-color: @strongish;
+  border-top: 2px solid @grayish;
+  border-left: 2px solid @grayish;
+  .box-radius(6px);
+  .box-shadow(2px 2px 5px @border);
+}
+
+.dialog-title {
+  .ff-trebuchet();
+  font-size: 1.4em;
+  font-weight: bold;
+  color: @strong;
+}
+
+.dialog-body {
+}
+
+.dialog-buttons {
+  text-align: right;
+  margin-top: 20px;
+}
+
+
+
 /* GITHUB RIBBON
  ****************/
 
@@ -109,7 +143,6 @@ textarea.resizing {
   .flip-card.flipped .face.back { display: block; }
 }
 
-
 @media only screen and (min-width: 768px) {
   .flip-wrapper {
     position: relative;
@@ -175,20 +208,6 @@ textarea.resizing {
 .box-highlight {
   .box-radius(5px);
   .animation(opacity-shake 0.8s linear infinite alternate);
-}
-
-
-
-/* CLEARFIX
- **************/
-
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
 }
 
 

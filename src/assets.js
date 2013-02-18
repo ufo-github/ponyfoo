@@ -55,6 +55,7 @@ function getJs(){
 
         '/js/ext/prettify.extensions.js',
 
+        // nbrut
         '/js/nbrut/nbrut.extensions.js',
         '/js/nbrut/nbrut.core.js',
         { local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
@@ -65,14 +66,21 @@ function getJs(){
         '/js/nbrut/nbrut.thin.js',
         '/js/nbrut/nbrut.init.js',
 
-        '/js/views/thin.hooks.js',
-        '/js/views/templates.hooks.js',
+        // hooks
+        '/js/views/hooks/thin.js',
+        '/js/views/hooks/templates.js',
+        '/js/views/hooks/templates.md.js',
+        '/js/views/hooks/templates.og.js',
 
-        '/js/views/templates.js',
-        '/js/views/templates.entries.js',
-        { profile: 'anon', local: '/js/views/templates.anon.js' },
-        { profile: ['blogger', 'registered'], local: '/js/views/templates.registered.js' },
-        { profile: 'blogger', local: '/js/views/templates.blogger.js'},
+        // template registration
+        '/js/views/templates/shared.js',
+        '/js/views/templates/entries.js',
+        { profile: 'anon', local: '/js/views/templates/anon.js' },
+        { profile: ['blogger', 'registered'], local: '/js/views/templates/registered.js' },
+        { profile: 'blogger', local: '/js/views/templates/blogger.js'},
+
+        // template configuration
+        '/js/views/shared/validation.dialog.js',
 
         '/js/views/user/profile.js',
         { profile: 'anon', local: '/js/views/user/login.js' },

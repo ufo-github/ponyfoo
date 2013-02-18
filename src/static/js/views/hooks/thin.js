@@ -80,7 +80,11 @@
                 validation = response.error.data.validation;
 
             if($.isArray(validation)){
-                // TODO: display
+                var body = $('body'),
+                    partial = nbrut.tt.partial('validation-dialog', { errors: validation }),
+                    dialog = partial.appendTo(body);
+
+                dialog.center().hide().fadeIn();
             }
         }
     }

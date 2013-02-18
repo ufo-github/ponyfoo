@@ -210,27 +210,29 @@
   margin-top: 30px;
 }
 
-.blog-entry-siblings .blog-entry-prev {
+.blog-entry-siblings a:empty {
+  display: none;
+}
+
+.blog-entry-prev {
   padding-right: 6px;
 }
-.blog-entry-siblings .blog-entry-prev:before {
+.blog-entry-prev a:before {
   content: '« ';
 }
 
-.blog-entry-siblings .blog-entry-next {
+.blog-entry-next {
   padding-left: 6px;
   text-align: right;
 }
-.blog-entry-siblings .blog-entry-next:after {
+
+.blog-entry-next a:after {
   content: ' »';
 }
 
-.blog-entry-siblings a {
+.blog-entry-next,
+.blog-entry-prev {
   display: inline-block;
   box-sizing: border-box;
   width: 50%;
-}
-
-.blog-entry-siblings a:empty {
-  display: none;
 }
