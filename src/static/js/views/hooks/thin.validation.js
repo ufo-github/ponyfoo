@@ -17,14 +17,14 @@
 
     function validationInDialog(validation){
         var body = $('body'),
-            partial = nbrut.tt.partial('validation-dialog', { errors: validation, closable: false });
+            partial = nbrut.tt.partial('validation-dialog', { errors: validation, unclosable: true });
 
         body.find('.validation-dialog').remove();
         partial.appendTo(body);
     }
 
     function validationInContext(validation, context){
-        var partial = nbrut.tt.partial('validation-errors', { errors: validation, closable: true });
+        var partial = nbrut.tt.partial('validation-errors', { errors: validation });
 
         removeMessageInContext(context);
         partial.prependTo(context);

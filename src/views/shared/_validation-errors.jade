@@ -1,7 +1,7 @@
 section.validation-errors
-  // {{#closable}}
-  a.validation-close.action.close
-  // {{/closable}}
+  // {{^unclosable}}
+  a.action.close(title='Close')='Close'
+  // {{/unclosable}}
   ul
     // {{#errors}}
     li='{{.}}'

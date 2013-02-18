@@ -9,12 +9,21 @@
     });
 
     // parse data-src in images
-    nbrut.tt.hook('fill', function(container, template){
+    nbrut.tt.hook('fill', function(container){
         container.loadImages();
     });
 
     // tooltip hints
-    nbrut.tt.hook('fill', function(container, template){
+    nbrut.tt.hook('fill', function(container){
         container.hints(true);
     });
+
+    // close buttons
+    nbrut.tt.hook('fill', function (container){
+        var close = container.find('.close');
+
+        close.on('click', function(){
+            container.fadeOutAndRemove();
+        });
+    })
 }(window,jQuery,nbrut);

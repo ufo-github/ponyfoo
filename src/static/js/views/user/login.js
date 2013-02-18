@@ -3,7 +3,7 @@
         var errors = viewModel.flash.error;
         if (errors !== undefined && errors.length !== 0){
             var validation = nbrut.tt.partial('validation-errors', {
-                errors: errors, closable: true
+                errors: errors
             });
             validation.insertBefore('.authentication-providers');
         }

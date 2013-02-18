@@ -275,11 +275,14 @@
                 html = template.dom.html;
             }
 
-            function fill(container, data, identifier){
+            function fill(container, data, identifier, noEvent){
                 container.off().removeClass().addClass(template.dom.css).html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
-                plugins.raise('fill', container, template);
+
+                if(noEvent !== true){
+                    plugins.raise('fill', container, template);
+                }
 
                 return {
                     identifier: identifier,
@@ -290,10 +293,11 @@
             function move(fn){/* NOTE: data-class loses it's meaning in this case. */
                 return function(container,data){
                     var temp = $('<div/>').hide().appendTo('body'), /* append to DOM to avoid inconsistencies */
-                        ctx = fill(temp, data);
+                        ctx = fill(temp, data, undefined, true);
 
                     ctx.elements[fn](container);
                     temp.remove();
+                    plugins.raise('fill', ctx.elements, template);
                     return ctx;
                 };
             }
