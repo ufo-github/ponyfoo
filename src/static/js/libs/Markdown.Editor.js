@@ -26,7 +26,7 @@
 
         link: "Hyperlink <a> Ctrl+L",
         linkdescription: "enter link description here",
-        linkdialog: '<p class="wmd-prompt-title">Insert Hyperlink</p><p>http://example.com/ "optional title"</p>',
+        linkdialog: '<h1 class="underline">Insert Hyperlink</h1><p>http://example.com/ "optional title"</p>',
 
         quote: "Blockquote <blockquote> Ctrl+Q",
         quoteexample: "Blockquote",
@@ -36,7 +36,7 @@
 
         image: "Image <img> Ctrl+G",
         imagedescription: "enter image description here",
-        imagedialog: '<p class="wmd-prompt-title">Insert Image</p><p>http://example.com/images/diagram.jpg "optional title"</p>',
+        imagedialog: '<h1 class="underline">Insert Image</h1><p>http://example.com/images/diagram.jpg "optional title"</p>',
 
         olist: "Numbered List <ol> Ctrl+O",
         ulist: "Bulleted List <ul> Ctrl+U",
@@ -1113,7 +1113,7 @@
 
             // The main dialog box.
             dialog = doc.createElement("div");
-            dialog.className = "wmd-prompt-dialog";
+            dialog.className = "wmd-prompt-dialog dialog";
             dialog.style.padding = "10px;";
             dialog.style.position = "fixed";
             dialog.style.width = "400px";
@@ -1140,15 +1140,6 @@
             style.marginLeft = style.marginRight = "auto";
             form.appendChild(input);
 
-            // The ok button
-            var okButton = doc.createElement("button");
-            okButton.onclick = function () { return close(false); };
-            okButton.innerText = "OK";
-            okButton.className = 'button small';
-            style = okButton.style;
-            style.margin = "10px";
-            style.display = "inline";
-
             // The cancel button
             var cancelButton = doc.createElement("a");
             cancelButton.onclick = function () { return close(true); };
@@ -1156,8 +1147,16 @@
             style = cancelButton.style;
             style.display = "inline";
 
-            form.appendChild(okButton);
+            // The ok button
+            var okButton = doc.createElement("button");
+            okButton.onclick = function () { return close(false); };
+            okButton.innerText = "OK";
+            okButton.className = 'button small ok-button';
+            style = okButton.style;
+            style.display = "inline";
+
             form.appendChild(cancelButton);
+            form.appendChild(okButton);
 
             util.addEvent(doc.body, "keydown", checkEscape);
             dialog.style.top = "50%";
