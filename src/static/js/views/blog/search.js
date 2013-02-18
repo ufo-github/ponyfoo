@@ -13,7 +13,7 @@
     });
 
     function search(){
-        var keywords = input.val();
+        var keywords = input.val().trim();
         if (keywords.length !== 0){
             var route = nbrut.tt.getRoute('/search/' + keywords);
             nbrut.tt.activateRoute(route);
