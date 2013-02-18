@@ -1,4 +1,4 @@
-﻿!function($) {
+﻿!function(window, $, undefined) {
 	String.prototype.format = function() {
 		var args = arguments;
 		return this.replace( /\{\{|\}\}|\{(\d+)\}/g , function(m, n) {
@@ -119,18 +119,6 @@
         return this;
     };
 
-    /* the element requires the following CSS in order to be properly centered using this method.
-     * left: 50%;
-     * top: 50%;
-     * position: absolute;
-     */
-    $.fn.center = function() {
-        return this.each(function() {
-            var self = $(this);
-            self.css('marginLeft', -self.width() / 2);
-            self.css('marginTop', -self.height() / 2);
-        });
-    };
     $.fn.center = function () {
         return this.each(function() {
             var self = $(this),
@@ -140,4 +128,4 @@
             self.css('left', Math.max(0, ((win.width() - self.outerWidth()) / 2) + win.scrollLeft()) + 'px');
         });
     }
-}(jQuery);
+}(window, jQuery);
