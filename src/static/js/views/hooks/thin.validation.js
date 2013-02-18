@@ -1,4 +1,4 @@
-!function (window,$,nbrut,moment,undefined) {
+!function (window,$,nbrut,undefined) {
     function validationMessages(xhr){
         if(xhr.status === 400){ // request validation failed
             var response = JSON.parse(xhr.responseText),
@@ -28,6 +28,8 @@
 
         removeMessageInContext(context);
         partial.prependTo(context);
+
+        context.scrollIntoView();
     }
 
     function clearValidationMessages(){
@@ -43,4 +45,4 @@
 
     nbrut.thin.hook('fail', validationMessages);
     nbrut.thin.hook('done', clearValidationMessages);
-}(window,jQuery,nbrut,moment);
+}(window,jQuery,nbrut);
