@@ -81,6 +81,7 @@ function getJs(){
         { profile: 'blogger', local: '/js/views/templates/blogger.js'},
 
         // template configuration
+        '/js/views/shared/validation.errors.js',
         '/js/views/shared/validation.dialog.js',
 
         '/js/views/user/profile.js',

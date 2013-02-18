@@ -1,4 +1,8 @@
-ul.validation-errors
-  // {{#errors}}
-  li='{{.}}'
-  // {{/errors}}
+section.validation-errors
+  // {{#closable}}
+  a.validation-close.action.close
+  // {{/closable}}
+  ul
+    // {{#errors}}
+    li='{{.}}'
+    // {{/errors}}
