@@ -4,7 +4,7 @@ TODO
 1
 -------
 
-- actually display validation messages (in context / popup when no context is given)
+- validation messages (**in context**, popup when no context is given)
 
 - image upload
 

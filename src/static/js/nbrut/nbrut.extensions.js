@@ -131,4 +131,13 @@
             self.css('marginTop', -self.height() / 2);
         });
     };
+    $.fn.center = function () {
+        return this.each(function() {
+            var self = $(this),
+                win = $(window);
+
+            self.css('top', Math.max(0, ((win.height() - self.outerHeight()) / 2) + win.scrollTop()) + 'px');
+            self.css('left', Math.max(0, ((win.width() - self.outerWidth()) / 2) + win.scrollLeft()) + 'px');
+        });
+    }
 }(jQuery);

@@ -83,8 +83,6 @@
                 var body = $('body'),
                     partial = nbrut.tt.partial('validation-dialog', { errors: validation }),
                     dialog = partial.appendTo(body);
-
-                dialog.center().hide().fadeIn();
             }
         }
     }
