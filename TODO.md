@@ -4,6 +4,8 @@ TODO
 1
 -------
 
+- clicking in the background when a dialog is active, closes that dialog.
+
 - image upload
 
 - post regarding js getters and setters

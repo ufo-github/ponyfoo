@@ -30,5 +30,5 @@
         close.on('click.close', function(){
             container.trigger('container.close');
         });
-    })
+    });
 }(window,jQuery,nbrut);
