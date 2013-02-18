@@ -68,6 +68,7 @@ function getJs(){
 
         // hooks
         '/js/views/hooks/thin.js',
+        '/js/views/hooks/thin.validation.js',
         '/js/views/hooks/templates.js',
         '/js/views/hooks/templates.md.js',
         '/js/views/hooks/templates.og.js',

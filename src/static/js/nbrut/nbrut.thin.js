@@ -32,7 +32,8 @@
             xhr = $.ajax({
                 url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
                 type: how,
-                data: opts.data
+                data: opts.data,
+                context: opts.context
             }).done(raiseHooks('done'))
             .fail(raiseHooks('fail'))
             .always(remove)
@@ -45,8 +46,8 @@
                         context: eventContext
                     };
 
-                    plugins.raise.call(null, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
-                    (opts[name] || $.noop).call(null, dataOrXhr, textStatus, errorThrownOrXhr);
+                    plugins.raise.call(opts.context, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
+                    (opts[name] || $.noop).call(opts.context, dataOrXhr, textStatus, errorThrownOrXhr);
                 };
             }
 

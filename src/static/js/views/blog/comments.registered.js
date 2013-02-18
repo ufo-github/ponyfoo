@@ -24,6 +24,7 @@
                 id: edit.id, // in case of edits
                 parent: edit.parent || opts.parent,
                 data: { comment: comment },
+                context: editor,
                 done: function(data){
                     textarea.val('').trigger('paste');
 

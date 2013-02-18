@@ -42,7 +42,8 @@
     }
 
     function bindSubmit(){
-        var submit = $('#submit-entry'),
+        var editor = $('#entry-editor'),
+            submit = $('#submit-entry'),
             title = $('#entry-title'),
             brief = $('#wmd-input-brief'),
             text = $('#wmd-input-text');
@@ -58,6 +59,7 @@
                         text: text.val()
                     }
                 },
+                context: editor,
                 done: function(){
                     nbrut.tt.activate('entry-review');
                 },

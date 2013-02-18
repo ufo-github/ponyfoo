@@ -35,6 +35,7 @@
             nbrut.thin.put('user', {
                 id: id,
                 data: { user: data },
+                context: $('.user-profile-card'),
                 done: function(){
                     nbrut.tt.activate('user-profile', {
                         data: { id: id }

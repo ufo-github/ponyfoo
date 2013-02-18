@@ -4,8 +4,6 @@ TODO
 1
 -------
 
-- validation messages (**in context**, popup when no context is given)
-
 - image upload
 
 - post regarding js getters and setters

@@ -13,6 +13,8 @@
         }
 
         function raise(opts){
+            var context = this;
+
             opts = normalize(opts);
 
             var args = $.makeArray(arguments).splice(1),
@@ -24,7 +26,7 @@
             }
 
             $.each(hooks, function(){
-                this.apply(null, args);
+                this.apply(context, args);
             });
         }
 

@@ -74,19 +74,6 @@
         }
     }
 
-    function validationMessages(xhr){
-        if(xhr.status === 400){ // request validation failed
-            var response = JSON.parse(xhr.responseText),
-                validation = response.error.data.validation;
-
-            if($.isArray(validation)){
-                var body = $('body'),
-                    partial = nbrut.tt.partial('validation-dialog', { errors: validation }),
-                    dialog = partial.appendTo(body);
-            }
-        }
-    }
-
     nbrut.thin.hook({
         eventName: 'done',
         context: 'GET entry'
@@ -106,6 +93,4 @@
         eventName: 'done',
         context: 'GET user'
     }, userHook);
-
-    nbrut.thin.hook('fail', validationMessages);
 }(window,jQuery,nbrut,moment);
