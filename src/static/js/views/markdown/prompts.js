@@ -3,10 +3,6 @@
         var dialog = ctx.elements,
             input = dialog.find('.prompt-input');
 
-        dialog.center().hide().fadeIn('fast', function(){
-            input.focus();
-        });
-
         dialog.find('.ok-button').on('click', ok);
         input.on('keydown', function(e){
             if(e.which === 13){

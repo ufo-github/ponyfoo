@@ -23,7 +23,9 @@
         var close = container.find('.close');
 
         container.on('container.close', function(){
-            container.fadeOutAndRemove();
+            var then = removeContentOverlay();
+
+            container.fadeOutAndRemove(then);
             return false; // stop propagation
         });
 
@@ -31,4 +33,28 @@
             container.trigger('container.close');
         });
     });
+
+    // dialog display
+    nbrut.tt.hook('fill', function(container){
+        var dialog = container.is('.dialog');
+        if (dialog){
+            container.center().hide().fadeIn('fast', function(){
+                container.find('[data-focus]').focus();
+            });
+
+            $('body').addClass('overlayed');
+        }
+    });
+
+    function removeContentOverlay(){
+        if(container.is('.dialog')){
+            return function(){
+                var body = $('body');
+                if (body.find('.dialog').length === 0){
+                    body.removeClass('overlayed');
+                }
+            };
+        }
+        return $.noop;
+    }
 }(window,jQuery,nbrut);

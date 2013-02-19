@@ -281,23 +281,31 @@
                 bindBack(template);
 
                 if(noEvent !== true){
-                    plugins.raise('fill', container, template);
+                    raise(container);
+                }
+
+                function raise(where){
+                    plugins.raise('fill', where, viewModel, data, template);
                 }
 
                 return {
-                    identifier: identifier,
-                    elements: container.children()
+                    raise: raise,
+                    ctx: {
+                        identifier: identifier,
+                        elements: container.children()
+                    }
                 };
             }
 
             function move(fn){/* NOTE: data-class loses it's meaning in this case. */
                 return function(container,data){
                     var temp = $('<div/>').hide().appendTo('body'), /* append to DOM to avoid inconsistencies */
-                        ctx = fill(temp, data, undefined, true);
+                        fillResult = fill(temp, data, undefined, true),
+                        ctx = fillResult.ctx;
 
                     ctx.elements[fn](container);
                     temp.remove();
-                    plugins.raise('fill', ctx.elements, template);
+                    fillResult.raise(ctx.elements);
                     return ctx;
                 };
             }

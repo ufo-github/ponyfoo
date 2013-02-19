@@ -1,5 +1,21 @@
 ﻿@import "common.less";
 
+/* CONTENT OVERLAY
+ ******************/
+
+body.overlayed:before {
+  content: ' ';
+  position: fixed;
+  z-index: @z-overlay;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+
+
 /* TEXTAREA GRIP
  ****************/
 
@@ -41,7 +57,7 @@ textarea.resizing {
   border-left: 2px solid @grayish;
   .box-radius(6px);
   .box-shadow(2px 2px 5px @border);
-  z-index: 1001;
+  z-index: @z-dialog;
 }
 
 .dialog .action.close {
@@ -155,7 +171,7 @@ textarea.resizing {
 @media only screen and (min-width: 768px) {
   .flip-wrapper {
     position: relative;
-    z-index: 1;
+    z-index: @z-flipcard;
   }
 
   .flip-wrapper {
