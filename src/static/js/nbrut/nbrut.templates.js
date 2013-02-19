@@ -306,13 +306,15 @@
                     ctx.elements[fn](container);
                     temp.remove();
                     fillResult.raise(ctx.elements);
-                    return ctx;
+                    return fillResult;
                 };
             }
 
             function render(internal){
                 return function(container, data, identifier){
-                    var ctx = internal(container, data,identifier);
+                    var fillResult = internal(container, data,identifier),
+                        ctx = fillResult.ctx;
+
                     template.afterActivate(viewModel, data || {}, ctx);
                     return ctx.elements;
                 }

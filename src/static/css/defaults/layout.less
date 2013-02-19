@@ -95,8 +95,11 @@ input.search-input {
 
 .search-button {
   display: inline-block;
-  cursor: pointer;
   padding: 8px 2px;
+}
+
+#menu .search-button { /* overrides #menu a */
+  margin-left: 0;
 }
 
 @media only screen and (min-width: 768px) {

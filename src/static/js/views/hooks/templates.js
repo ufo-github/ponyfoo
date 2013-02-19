@@ -23,7 +23,7 @@
         var close = container.find('.close');
 
         container.on('container.close', function(){
-            var then = removeContentOverlay();
+            var then = removeContentOverlay(container);
 
             container.fadeOutAndRemove(then);
             return false; // stop propagation
@@ -46,7 +46,7 @@
         }
     });
 
-    function removeContentOverlay(){
+    function removeContentOverlay(container){
         if(container.is('.dialog')){
             return function(){
                 var body = $('body');
