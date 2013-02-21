@@ -7,6 +7,9 @@ meta(name='description', content=config.site.description)
 meta(name='author', content=config.blogger.email)
 meta(name='viewport', content='width=device-width, initial-scale=1')
 
+if !config.env.production
+  meta(name='robots', content='noindex,nofollow')
+
 link(rel='alternate', type='application/rss+xml', href=config.feed.proxy)
 link(rel='search', type='application/opensearchdescription+xml', title=config.site.title, href=config.opensearch.href)
 link(rel='shortcut icon', href='/favicon.ico')
