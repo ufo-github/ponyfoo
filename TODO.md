@@ -6,14 +6,12 @@ TODO
 
 - image upload
 
-- post regarding js getters and setters
-
+- post about css for dummies
 
 2
 -------
 
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
-- post about css for dummies
 
 - latest posts => more than just 6, 8?
 
