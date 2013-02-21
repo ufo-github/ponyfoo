@@ -21,7 +21,6 @@ TODO
   - tagsoup below latest posts might be nice.
 
 - profiles expansion
-  - user profile view title
   - profile options to reveal or hide: rss/email(in profile and flip card)/git/linkedin (Add provider) / fb / SO
   - flip card backside shows an extract of user bio (set independently)
 

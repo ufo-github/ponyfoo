@@ -28,7 +28,9 @@
         source: '#user-profile-template',
         mustache: true,
         aliases: [{
-            title: 'User Profile',
+            title: function(viewModel){
+                return viewModel.displayName;
+            },
             route:{
                 regex: /\/user\/profile\/([a-f0-9]{24})$/,
                 get: function(data){
