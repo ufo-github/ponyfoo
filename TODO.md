@@ -30,9 +30,14 @@ TODO
 
 3
 -------
+
+- backend
+  - user profile list
+  - comments list
+
 - **domain fragmentation**
 
-3.5
+5
 -------
 - client-side caching?
 - proper api authentication?
