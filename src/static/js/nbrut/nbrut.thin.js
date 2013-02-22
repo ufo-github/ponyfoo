@@ -36,7 +36,6 @@
                 context: opts.context
             }).done(raiseHooks('done'))
             .fail(raiseHooks('fail'))
-            .always(remove)
             .always(raiseHooks('always'));
 
             function raiseHooks(name){
@@ -51,12 +50,7 @@
                 };
             }
 
-            function remove(){
-                var i = local.indexOf(xhr);
-                local.splice(i,1);
-            }
-
-            local.push(xhr);
+            track(xhr);
             return xhr;
         }
 
@@ -64,6 +58,17 @@
             $.each(local, function(){
                 this.abort();
             });
+            local = [];
+        }
+
+        function track(xhr){
+            function untrack(){
+                var i = local.indexOf(xhr);
+                local.splice(i,1);
+            }
+
+            xhr.always(untrack);
+            local.push(xhr);
         }
 
         return {
@@ -72,7 +77,8 @@
             del: del,
             hook: plugins.hook,
             abort: abort,
-            get pending(){ return local; }
+            get pending(){ return local; },
+            track: track
         };
     }
 

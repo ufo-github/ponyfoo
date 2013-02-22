@@ -9,6 +9,14 @@ section#prompt-image-template.template
       p
         input.prompt-input(type='text', placeholder='Type or paste the url to your image', data-focus)
 
+      section.upload-area
+        section.upload-form
+          p
+            span='Or, upload one. '
+            em='You can also drag and drop over here.'
+
+          input.upload-input(type='file', name='file')
+
     footer.dialog-buttons
       a.close(title='Cancel')='Cancel'
       button.button.small.ok-button='OK'

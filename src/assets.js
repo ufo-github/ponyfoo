@@ -10,6 +10,7 @@ var config = require('./config.js'),
 
 function getCss(){
     return [
+        // basic layout and design
         '/css/defaults/reset.css',
         '/css/defaults/basic.less',
         '/css/defaults/elements.less',
@@ -19,14 +20,18 @@ function getCss(){
         '/css/defaults/design.less',
         '/css/defaults/sprite.less',
 
+        // libs
         '/css/libs/markdown.less',
         '/css/libs/markdown.editor.less',
         '/css/libs/prettify.less',
         '/css/libs/hint.less',
 
+        // shared
         '/css/views/shared/404.less',
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
+        '/css/views/shared/upload.less',
 
+        // view-specific rules
         '/css/views/user/profile.less',
         { profile: ['blogger', 'registered'], local: '/css/views/user/profile.edit.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
@@ -47,6 +52,8 @@ function getJs(){
         config.jQuery.asset,
         '/js/libs/moment.min.js',
         '/js/libs/mustache.js',
+        '/js/libs/jquery.ui.widget.js',
+        '/js/libs/jquery.fileupload.js',
         '/js/libs/jquery.textarearesizer.min.js',
         '/js/libs/Markdown.Converter.js',
         '/js/libs/Markdown.Sanitizer.js',
