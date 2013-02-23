@@ -4,7 +4,7 @@ TODO
 1
 -------
 
-- implement image upload on the api,
+- copy file over from tmp
 - handle success/failure on the client
 
 
