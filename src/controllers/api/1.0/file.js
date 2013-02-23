@@ -6,24 +6,48 @@ var async = require('async'),
     config = require('../../../config.js');
 
 function upload(req,res){
-    var file = req.files.file, folder, filename, url;
+    var file = req.files.file, uploads, filename, url;
     if(!file){
         rest.badRequest(req,res,{ validation: ['File not received by the matrix']});
         return;
     }
 
-    folder = '/img/uploads/';
-    filename = path.basename(file.path) + '_' + file.name;
-    url = folder + filename;
+    uploads = '/img/uploads/';
 
-    async.parallel([
-        async.apply(fse.copy, file.path, path.join(config.static.folder, folder, filename)),
-        async.apply(fse.copy, file.path, path.join(config.static.bin, folder, filename))
-    ], function(){
+    async.waterfall([
+        function(done){
+            copyOver(file.path, path.join(config.static.folder, uploads), file.name, 1, done);
+        },
+        function(indexed, done){
+            copyOver(file.path, path.join(config.static.bin, uploads), indexed, 1, done);
+        }
+    ], function(err, filename){
         rest.end(res, {
             alt: file.name,
-            url: url
+            url: uploads + filename
         });
+    });
+}
+
+function copyOver(source, folder, filename, index, done){
+    var indexed, ext, target;
+    if (index === 1){
+        indexed = filename;
+    }else{
+        ext = path.extname(filename);
+        indexed = path.basename(filename, ext) + '_' + index + ext;
+    }
+
+    target = path.join(folder, indexed);
+
+    fs.exists(target, function(exists){
+        if(exists){
+            copyOver(source, folder, filename, ++index, done);
+        }else{
+            fse.copy(source,target, function(){
+                done(null, indexed);
+            });
+        }
     });
 }
 
