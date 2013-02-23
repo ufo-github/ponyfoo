@@ -28,20 +28,25 @@ input.upload-input {
   .box-sizing();
 }
 
-.upload-area.upload-dragover .upload-form {
-  visibility: hidden; /* hide, preserve width ;) */
-  height: 0; /* don't preserve height! */
+.upload-area .upload-drop-text {
+  display: none;
 }
 
 .upload-area.upload-dragover {
   background-color: transparent;
   border: 3px dashed @blue_light;
-  padding: 20px 8px;
+  padding: 8px;
   text-align: center;
+  position: relative;
 }
 
-.upload-area.upload-dragover:before {
-  content: 'Drop here to begin upload';
+.upload-area.upload-dragover .upload-form {
+  visibility: hidden; /* hide, but preserve dimensions ;) */
+}
+
+.upload-area.upload-dragover .upload-drop-text {
+  display: block;
+  position: absolute;
   font-size: 1.4em;
   color: @blue;
   text-shadow: 1px 1px 1px;

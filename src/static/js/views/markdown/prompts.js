@@ -25,15 +25,22 @@
             doc = $(document),
             dialog = ctx.elements,
             area = dialog.find('.upload-area'),
+            dropText = dialog.find('.upload-drop-text'),
             fileUpload = area.find('.upload-input'),
             dragClass = 'upload-dragover',
             fileTypes = /(\.|image\/)(gif|jpe?g|png)$/i;
 
         body.on('dragover.invalidate-dragover', function(){
-            area.addClass(dragClass);
+            if(!area.hasClass(dragClass)){
+                area.addClass(dragClass);
+                dropText.centerTextOnParent();
+            }
         }).on('mouseenter.invalidate-dragover drop.invalidate-dragover', function(){
-            area.removeClass(dragClass);
-        });
+                if (area.hasClass(dragClass)){
+                    area.removeClass(dragClass);
+                    dropText.clearInlineMargins();
+                }
+            });
 
         fileUpload.fileupload({
             type: 'PUT',
