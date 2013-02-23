@@ -4,7 +4,9 @@ TODO
 1
 -------
 
-- image upload
+- implement image upload on the api,
+- handle success/failure on the client
+
 
 - post about css for dummies
 
