@@ -49,6 +49,7 @@ function getCss(){
 
 function getJs(){
     var js = [
+        // external libraries
         config.jQuery.asset,
         '/js/libs/moment.min.js',
         '/js/libs/mustache.js',

@@ -3,7 +3,7 @@
 
     var body = $('body');
 
-    body.on('keydown', function(e){
+    body.on('keydown.close', function(e){
         if(e.which === 27){ // esc
             var dialogs = body.find('.dialog');
             if (dialogs.length > 0){
@@ -11,5 +11,9 @@
                 return false;
             }
         }
+    });
+
+    body.on('dragover.prevent drop.prevent', function(e){
+        e.preventDefault(); // prevent browsers from doing clunky stuff.
     });
 }(window,jQuery,nbrut);

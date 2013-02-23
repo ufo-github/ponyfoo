@@ -21,15 +21,17 @@
     function afterActivateImage(viewModel, data, ctx){
         afterActivate(viewModel, data, ctx);
 
-        var dialog = ctx.elements,
+        var body = $('body'),
+            doc = $(document),
+            dialog = ctx.elements,
             area = dialog.find('.upload-area'),
             fileUpload = area.find('.upload-input'),
             dragClass = 'upload-dragover',
-            fileTypes = /(\.|\/)(gif|jpe?g|png)$/i;
+            fileTypes = /(\.|image\/)(gif|jpe?g|png)$/i;
 
-        area.on('dragover', function(){
+        body.on('dragover.invalidate-dragover', function(){
             area.addClass(dragClass);
-        }).on('dragleave drop', function(){
+        }).on('mouseenter.invalidate-dragover drop.invalidate-dragover', function(){
             area.removeClass(dragClass);
         });
 
@@ -40,17 +42,22 @@
             dropZone: area,
             pasteZone: area,
             add: function(e, data){
+                var xhr;
+
                 if(data.paramName !== 'file'){
                     return;
                 }
 
-                data.files = $.filter(data.files, function(){
-                    var file = this;
-                    return !fileTypes.test(file.type) && !fileTypes.test(file.name);
+                data.files = $.map(data.files, function(file){
+                    if (fileTypes.test(file.type) || fileTypes.test(file.name)){
+                        return file;
+                    }
                 }).slice(0,1); // just the first image file.
 
-                var xhr = data.submit();
-                nbrut.thin.track(xhr);
+                if(data.files.length > 0){
+                    xhr = data.submit();
+                    nbrut.thin.track(xhr);
+                }
             },
             done: function (e, data) {
                 console.log(data);
