@@ -1,14 +1,19 @@
 !function (window,$,nbrut,undefined) {
-    function validationMessages(xhr){
-        var response = JSON.parse(xhr.responseText),
-            validation;
+    function validationMessages(xhr, textStatus){
+        var response, validation;
 
-        if(xhr.status === 400){ // request validation failed
-            validation = response.error.data.validation;
-        }else if(xhr.status === 404){ // resource not found
-            validation = ['Resource not found in the matrix. Try again later'];
-        }else if(xhr.status === 500){ // mayhem!
-            validation = ['Oops! The matrix won\'t cooperate with your request'];
+        if(textStatus === 'timeout'){
+            validation = ['The matrix is not responding to your request'];
+        }else if(!!xhr.responseText){
+            response = JSON.parse(xhr.responseText);
+
+            if(xhr.status === 400){ // request validation failed
+                validation = response.error.data.validation;
+            }else if(xhr.status === 404){ // resource not found
+                validation = ['Resource not found in the matrix. Try again later'];
+            }else if(xhr.status === 500){ // mayhem!
+                validation = ['Oops! The matrix won\'t cooperate with your request'];
+            }
         }
 
         if($.isArray(validation)){

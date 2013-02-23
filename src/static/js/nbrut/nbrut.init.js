@@ -16,4 +16,8 @@
     body.on('dragover.prevent drop.prevent', function(e){
         e.preventDefault(); // prevent browsers from doing clunky stuff.
     });
+    
+    $.ajaxSetup({
+        timeout: 20000 // long-polling sets it's own timeout anyways
+    });
 }(window,jQuery,nbrut);
