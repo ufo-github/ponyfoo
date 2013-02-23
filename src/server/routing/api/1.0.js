@@ -1,8 +1,10 @@
 var rest = require('../../../services/rest.js'),
     $ = require('../../../services/$.js'),
-    entry = require('./../../../controllers/api/1.0/entry.js'),
-    comment = require('./../../../controllers/api/1.0/comment.js'),
-    user = require('./../../../controllers/api/1.0/user.js');
+    controllers = './../../../controllers/api/1.0/',
+    entry = require(controllers + '/entry.js'),
+    comment = require(controllers + '/comment.js'),
+    user = require(controllers + '/user.js'),
+    file = require(controllers + '/file.js');
 
 function routing(server){
 	var base = '/api/1.0',
@@ -92,12 +94,17 @@ function routeUsers(api){
     api.put('/user/:id([a-f0-9]{24})', connected, user.upd);
 }
 
+function routeFiles(api){
+    api.put('/file', connected, file.upload);
+}
+
 function configure(server){
     var api = routing(server);
 
     routeEntries(api);
     routeComments(api);
     routeUsers(api);
+    routeFiles(api);
 
     api.all('/*', rest.notFound);
 }

@@ -6,7 +6,9 @@
         if(xhr.status === 400){ // request validation failed
             validation = response.error.data.validation;
         }else if(xhr.status === 404){ // resource not found
-            validation = ['Resource not found'];
+            validation = ['Resource not found in the matrix. Try again later'];
+        }else if(xhr.status === 500){ // mayhem!
+            validation = ['Oops! The matrix won\'t cooperate with your request'];
         }
 
         if($.isArray(validation)){
