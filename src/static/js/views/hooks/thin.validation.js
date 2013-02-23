@@ -1,16 +1,20 @@
 !function (window,$,nbrut,undefined) {
     function validationMessages(xhr){
-        if(xhr.status === 400){ // request validation failed
-            var response = JSON.parse(xhr.responseText),
-                validation = response.error.data.validation;
+        var response = JSON.parse(xhr.responseText),
+            validation;
 
-            if($.isArray(validation)){
-                var context = this;
-                if (context === window){
-                    validationInDialog(validation);
-                }else{
-                    validationInContext(validation, context);
-                }
+        if(xhr.status === 400){ // request validation failed
+            validation = response.error.data.validation;
+        }else if(xhr.status === 404){ // resource not found
+            validation = ['Resource not found'];
+        }
+
+        if($.isArray(validation)){
+            var context = this;
+            if (context === window){
+                validationInDialog(validation);
+            }else{
+                validationInContext(validation, context);
             }
         }
     }

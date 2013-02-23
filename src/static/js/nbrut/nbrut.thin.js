@@ -26,31 +26,18 @@
         function fire(how,what,opts){
             var id = !!opts.id ? '/' + opts.id : '',
                 parent = !!opts.parent ? opts.parent.what + '/' + opts.parent.id + '/' : '',
-                action = !!opts.action ? opts.action + '/' : '',
-                eventContext = '{0} {1}'.format(how, what);
+                action = !!opts.action ? opts.action + '/' : '';
+
+            opts.eventContext = '{0} {1}'.format(how, what);
 
             xhr = $.ajax({
                 url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
                 type: how,
                 data: opts.data,
                 context: opts.context
-            }).done(raiseHooks('done'))
-            .fail(raiseHooks('fail'))
-            .always(raiseHooks('always'));
+            });
 
-            function raiseHooks(name){
-                return function(dataOrXhr, textStatus, errorThrownOrXhr){
-                    var raiseOpts = {
-                        eventName: name,
-                        context: eventContext
-                    };
-
-                    plugins.raise.call(opts.context, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
-                    (opts[name] || $.noop).call(opts.context, dataOrXhr, textStatus, errorThrownOrXhr);
-                };
-            }
-
-            track(xhr);
+            track(xhr, opts);
             return xhr;
         }
 
@@ -61,13 +48,29 @@
             local = [];
         }
 
-        function track(xhr){
+        function track(xhr, opts){
             function untrack(){
                 var i = local.indexOf(xhr);
                 local.splice(i,1);
             }
 
-            xhr.always(untrack);
+            function raiseHooks(name){
+                return function(dataOrXhr, textStatus, errorThrownOrXhr){
+                    var raiseOpts = {
+                        eventName: name,
+                        context: opts.eventContext
+                    };
+
+                    plugins.raise.call(opts.context, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
+                    (opts[name] || $.noop).call(opts.context, dataOrXhr, textStatus, errorThrownOrXhr);
+                };
+            }
+
+            xhr.done(raiseHooks('done'))
+                .fail(raiseHooks('fail'))
+                .always(raiseHooks('always'))
+                .always(untrack);
+
             local.push(xhr);
         }
 

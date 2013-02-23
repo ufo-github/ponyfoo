@@ -26,6 +26,7 @@
             dialog = ctx.elements,
             area = dialog.find('.upload-area'),
             dropText = dialog.find('.upload-drop-text'),
+            uploadContainer = dialog.find('.upload-form'),
             fileUpload = area.find('.upload-input'),
             dragClass = 'upload-dragover',
             fileTypes = /(\.|image\/)(gif|jpe?g|png)$/i;
@@ -36,11 +37,11 @@
                 dropText.centerTextOnParent();
             }
         }).on('mouseenter.invalidate-dragover drop.invalidate-dragover', function(){
-                if (area.hasClass(dragClass)){
-                    area.removeClass(dragClass);
-                    dropText.clearInlineMargins();
-                }
-            });
+            if (area.hasClass(dragClass)){
+                area.removeClass(dragClass);
+                dropText.clearInlineMargins();
+            }
+        });
 
         fileUpload.fileupload({
             type: 'PUT',
@@ -61,9 +62,20 @@
                     }
                 }).slice(0,1); // just the first image file.
 
-                if(data.files.length > 0){
+                uploadContainer.find('.validation-errors').remove();
+
+                if(data.files.length === 0){
+                    var validation = nbrut.tt.partial('validation-errors', {
+                        errors: ['Only GIF, JPEG and PNG images are allowed.']
+                    });
+                    validation.prependTo(uploadContainer);
+                }else{
                     xhr = data.submit();
-                    nbrut.thin.track(xhr);
+                    nbrut.thin.track(xhr, {
+                        name: 'file',
+                        eventContext: 'PUT file',
+                        context: uploadContainer
+                    });
                 }
             },
             done: function (e, data) {

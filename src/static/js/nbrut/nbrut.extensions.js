@@ -111,10 +111,26 @@
         doThisAndRemove.apply(this, ['slideUp',then]);
     };
 
+    $.fn.inView = function(){
+        return this.is(function(){
+            var rect = this.getBoundingClientRect();
+
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= window.innerHeight &&
+                rect.right <= window.innerWidth
+            );
+        });
+    };
+
     $.fn.scrollIntoView = function () {
-        $('html, body').animate({
-            scrollTop: $(this).position().top - 30
-        }, 'fast');
+        var self = $(this);
+        if(!self.inView()){
+            $('html, body').animate({
+                scrollTop: self.position().top - 30
+            }, 'fast');
+        }
 
         return this;
     };
