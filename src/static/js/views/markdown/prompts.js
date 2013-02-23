@@ -79,7 +79,13 @@
                 }
             },
             done: function (e, data) {
-                console.log(data);
+                var input = dialog.find('.prompt-input'),
+                    ok = dialog.find('.ok-button'),
+                    response = data.result,
+                    link = '{0} "{1}"'.format(response.url, response.alt);
+
+                input.val(link);
+                ok.trigger('click');
             }
         });
     }

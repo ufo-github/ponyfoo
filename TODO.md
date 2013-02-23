@@ -4,8 +4,7 @@ TODO
 1
 -------
 
-- copy file over from tmp
-- handle success/failure on the client
+- when uploading, display progress
 
 
 - post about css for dummies

@@ -1,4 +1,5 @@
-var path = require('path'),
+var fs = require('fs'),
+    path = require('path'),
     walk = require('walk'),
     config = require('../config.js'),
     dev = config.env.development;

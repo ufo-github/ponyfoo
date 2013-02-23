@@ -1011,7 +1011,7 @@
         function complete(text){
             if (text !== null){ // Fixes common pasting errors.
                 text = text.replace(/^http:\/\/(https?|ftp):\/\//, '$1://');
-                if (!/^(?:https?|ftp):\/\//.test(text)){
+                if (text[0] !== '/' && !/^(?:https?|ftp):\/\//.test(text)){
                     text = 'http://' + text;
                 }
             }
