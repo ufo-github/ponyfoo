@@ -54,6 +54,7 @@ function uploadTraditionally(req, res, file){
 
 function copyOver(source, folder, filename, index, done){
     var indexed, ext, target;
+
     if (index === 1){
         indexed = filename;
     }else{
@@ -63,14 +64,20 @@ function copyOver(source, folder, filename, index, done){
 
     target = path.join(folder, indexed);
 
-    fs.exists(target, function(exists){
-        if(exists){
-            copyOver(source, folder, filename, ++index, done);
-        }else{
-            fse.copy(source,target, function(){
-                done(null, indexed);
-            });
+    fse.mkdirs(folder, function(err){
+        if(err){
+            throw err;
         }
+
+        fs.exists(target, function(exists){
+            if(exists){
+                copyOver(source, folder, filename, ++index, done);
+            }else{
+                fse.copy(source,target, function(){
+                    done(null, indexed);
+                });
+            }
+        });
     });
 }
 
