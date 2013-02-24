@@ -4,14 +4,14 @@ TODO
 1
 -------
 
-- when uploading, display progress
+- when uploading, display progress (statically)
 
 
-- post about css for dummies
 
 2
 -------
 
+- post about css for dummies
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 
 - latest posts => more than just 6, 8?

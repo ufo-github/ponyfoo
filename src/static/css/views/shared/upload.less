@@ -28,7 +28,7 @@ input.upload-input {
   .box-sizing();
 }
 
-.upload-area .upload-drop-text {
+.upload-drop-text {
   display: none;
 }
 
@@ -36,7 +36,11 @@ input.upload-input {
   margin: 0;
 }
 
-.upload-area.upload-dragover {
+.upload-legend:empty {
+  display: none;
+}
+
+.upload-dragover {
   background-color: transparent;
   border: 3px dashed @blue_light;
   padding: 8px;
@@ -44,11 +48,11 @@ input.upload-input {
   position: relative;
 }
 
-.upload-area.upload-dragover .upload-form {
+.upload-dragover .upload-form {
   visibility: hidden; /* hide, but preserve dimensions ;) */
 }
 
-.upload-area.upload-dragover .upload-drop-text {
+.upload-dragover .upload-drop-text {
   display: block;
   position: absolute;
   font-size: 1.4em;
