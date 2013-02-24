@@ -117,6 +117,9 @@ var config = {
             callback: '/user/login/google/callback'
         }
     },
+    uploads: {
+        imgurKey: process.env.IMGUR_API_KEY
+    },
     avatar: {
         url: 'http://www.gravatar.com/avatar/',
         query: '?d=identicon&r=PG',

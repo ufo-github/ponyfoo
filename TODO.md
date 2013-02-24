@@ -16,6 +16,8 @@ TODO
 2
 -------
 
+- cdn hosted uploads rather than self-hosted, heroku doesn't support uploads very well at all.
+
 - post about css for dummies
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 

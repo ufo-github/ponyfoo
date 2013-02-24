@@ -2,17 +2,40 @@ var async = require('async'),
     path = require('path'),
     fs = require('fs'),
     fse = require('fs-extra'),
+    imgur = require('imgur'),
     rest = require('../../../services/rest.js'),
     config = require('../../../config.js');
 
 function upload(req,res){
-    var file = req.files.file, uploads, filename, url;
+    var file = req.files.file;
     if(!file){
         rest.badRequest(req,res,{ validation: ['File not received by the matrix']});
         return;
     }
 
-    uploads = '/img/uploads/';
+    if(config.uploads.imgurKey !== undefined){
+        uploadToImgur(req,res,file);
+    }else{
+        uploadTraditionally(req,res,file);
+    }
+}
+
+function uploadToImgur(req, res, file){
+    imgur.setKey(config.uploads.imgurKey);
+    imgur.upload(file.path, function (data) {
+        if (data.error) {
+            throw data.error;
+        }
+
+        rest.end(res, {
+            alt: file.name,
+            url: data.links.original
+        });
+    });
+}
+
+function uploadTraditionally(req, res, file){
+    var uploads = '/img/uploads/';
 
     async.waterfall([
         function(done){
