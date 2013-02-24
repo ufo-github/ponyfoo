@@ -14,7 +14,7 @@
             dragClass = 'upload-dragover';
 
         $('body').on('dragover.invalidate-dragover', function(){
-            if(!area.hasClass(dragClass)){
+            if(!area.hasClass(dragClass) && !area.hasClass('upload-progress')){
                 area.addClass(dragClass);
                 dropText.centerTextOnParent();
             }
@@ -23,6 +23,19 @@
                 area.removeClass(dragClass);
                 dropText.clearInlineMargins();
             }
+        });
+    }
+
+    function dropDesign(area, xhr){
+        var uploadClass = 'upload-progress',
+            uploadText = area.find('.upload-progress-text');
+
+        area.addClass(uploadClass);
+        uploadText.centerTextOnParent();
+
+        xhr.always(function(){
+            area.removeClass(uploadClass);
+            uploadText.clearInlineMargins();
         });
     }
 
@@ -44,6 +57,10 @@
             add: function(e, data){
                 var xhr, validation;
 
+                if(area.is('.upload-progress')){
+                    return; // sanity
+                }
+
                 if(data.paramName !== 'file'){
                     return;
                 }
@@ -64,6 +81,7 @@
                 }else{
                     xhr = data.submit();
                     nbrut.thin.track(xhr, viewModel.thin);
+                    dropDesign(area, xhr);
                 }
             },
             done: viewModel.done

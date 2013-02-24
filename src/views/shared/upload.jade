@@ -1,6 +1,9 @@
 section#file-upload-template.template
   section.upload-area
     p.upload-drop-text='Drop here to begin upload'
+
+    p.upload-progress-text='Uploading file...'
+
     section.upload-form
       p.upload-legend='{{{legend}}}'
       input.upload-input(type='file', name='file')

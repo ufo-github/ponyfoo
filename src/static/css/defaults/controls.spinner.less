@@ -84,12 +84,12 @@
 
 @media only screen and (min-width: 768px) {
   .spinner {
-    font-size: 100px;
+    position: relative;
     width: 1em;
     height: 1em;
-    position: relative;
+    .box-radius(50%);
+    font-size: 100px;
     margin: 100px auto;
-    border-radius: 50%;
     list-style: none;
   }
 
@@ -97,7 +97,7 @@
     position: absolute;
     width: .2em;
     height: .2em;
-    border-radius: 50%;
+    .box-radius(50%);
   }
 
   .spinner li:nth-child(1) {

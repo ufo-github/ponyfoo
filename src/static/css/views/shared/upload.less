@@ -32,6 +32,10 @@ input.upload-input {
   display: none;
 }
 
+.upload-area .upload-progress-text {
+  display: none;
+}
+
 .upload-form .validation-errors {
   margin: 0;
 }
@@ -40,22 +44,29 @@ input.upload-input {
   display: none;
 }
 
-.upload-dragover {
+.upload-dragover,
+.upload-progress {
   background-color: transparent;
-  border: 3px dashed @blue_light;
   padding: 8px;
-  text-align: center;
   position: relative;
+  text-align: center;
 }
 
-.upload-dragover .upload-form {
+.upload-dragover { border: 3px dashed @blue_light; }
+.upload-progress { border: 3px dashed @green_light; }
+
+.upload-dragover .upload-form,
+.upload-progress .upload-form {
   visibility: hidden; /* hide, but preserve dimensions ;) */
 }
 
-.upload-dragover .upload-drop-text {
+.upload-dragover .upload-drop-text,
+.upload-progress .upload-progress-text {
   display: block;
   position: absolute;
   font-size: 1.4em;
-  color: @blue;
   text-shadow: 1px 1px 1px;
 }
+
+.upload-drop-text { color: @blue; }
+.upload-progress-text { color: @green; }
