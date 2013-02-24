@@ -92,6 +92,8 @@ function getJs(){
         { profile: 'blogger', local: '/js/views/templates/blogger.js'},
 
         // template configuration
+        '/js/views/shared/upload.js',
+
         '/js/views/markdown/prompts.js',
 
         '/js/views/user/profile.js',

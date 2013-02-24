@@ -24,6 +24,12 @@
     });
 
     nbrut.tt.register({
+        key: 'file-upload',
+        source: '#file-upload-template',
+        mustache: true
+    });
+
+    nbrut.tt.register({
         key: 'user-profile',
         source: '#user-profile-template',
         mustache: true,
