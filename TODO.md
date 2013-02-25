@@ -5,8 +5,6 @@ TODO
 -------
 
 - tagging
-  - tags per post
-  - tags show up on title hint (Tagged: foo, bar baz :) )
   - paged search filter by tag (api/web)
   - tagsoup below latest posts might be nice.
 

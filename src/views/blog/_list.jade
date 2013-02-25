@@ -1,14 +1,23 @@
 // {{#entries}}
-article.blog-entry
+article.blog-entry(data-keywords='{{keywords}}')
   header.blog-entry-title
     h1
-      a(href='{{permalink}}')='{{title}}'
+      a(href='{{permalink}}', data-hint='{{tagged}}')='{{title}}'
     span.blog-entry-date(data-hint='posted {{dateText}}')='posted {{timeAgo}}'
 
   section.markdown.blog-entry-brief.og-description='{{{html.brief}}}'
   section.markdown.blog-entry-text='{{{html.text}}}'
 
-  footer.blog-entry-footer
+  footer.blog-entry-footer.clearfix
     section.comment-count
       a.highlighted-link.hint-before(href='{{commentsLink}}', data-hint='Visit the discussion section')='{{commentsText}}'
+
+    // {{#tagged}}
+    section.blog-entry-tags
+      span='Tagged:'
+      // {{#_tags}}
+      a(href='/search/tagged/{{.}}').highlighted-link='{{.}}'
+      // {{/_tags}}
+    // {{/tagged}}
+
 // {{/entries}}

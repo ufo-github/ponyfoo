@@ -2,15 +2,27 @@ var $ = require('./$.js'),
     rest = require('./rest.js');
 
 function evaluateRule(opts){
+    var rule = opts.rule;
+
+    function failed(message){
+        if (typeof message === 'string'){
+            opts.messages.push(message);
+        }
+        return true;
+    }
+
     if(opts.ignoreUndefined && opts.field === undefined){
         return false;
     }
 
-    if(!opts.field || opts.field.length < (opts.length || 1)){
-        if (typeof opts.message === 'string'){
-            opts.messages.push(opts.message);
+    if (rule.validator){
+        var result = rule.validator.apply(opts.field);
+        if (typeof result === 'string'){
+            return failed(result);
         }
-        return true;
+    }
+    if(!opts.field || opts.field.length < (rule.length || 1)){
+        return failed(rule.message);
     }
     return false;
 }
@@ -33,8 +45,7 @@ function applyRule(ctx, rule){
             messages: ctx.messages,
             ignoreUndefined: ctx.opts.ignoreUndefined,
             field: $.findProperty(ctx.opts.document, rule.field),
-            length: rule.length,
-            message: rule.message
+            rule: rule
         });
     }
 }
@@ -61,6 +72,7 @@ function validate(req,res,opts){
         rest.badRequest(req, res, { validation: messages });
         return undefined;
     }
+
     return opts.document;
 }
 

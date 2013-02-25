@@ -3,7 +3,7 @@
 
     function entryHook(data){
         $.each(data.entries || [data.entry], function(){
-            var self = this, d, comments = self.commentCount;
+            var self = this, d, comments = self.commentCount, tags = self.tags;
 
             self.date = new Date(self.date);
 
@@ -17,12 +17,17 @@
             self.commentsText = '{0}Comment{1}'.format(
                 !!comments ? comments + ' ' : '',
                 comments !== 1 ? 's' : ''
-            )
+            );
 
             self.html = {
                 brief: html(self.brief),
                 text: html(self.text)
             };
+
+            self.keywords = tags.join(', ');
+            self._tags = tags;
+            self.tagged = tags.length ? 'Tagged: ' + self.keywords : '';
+            self.tags = tags.join(' ');
         });
 
         $.each(data.discussions || [], function(){
@@ -30,7 +35,6 @@
 
             $.each(self.comments, function(){
                 var comment = this;
-
                 comment.html = nbrut.md.html(comment.text);
             });
         });

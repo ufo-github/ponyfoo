@@ -41,12 +41,13 @@
                     return image.prop('src');
                 }
             }).get(),
-            description: getDescription(container)
+            description: getDescription(container),
+            keywords: container.find('[data-keywords]:first').data('keywords')
         };
         og = nbrut.tt.partial('opengraph', ogModel);
 
         // refresh micro data
-        head.find('meta[property^="og:"]').remove();
+        head.find('meta[name=keywords], meta[name=description], meta[property^="og:"]').remove();
         og.appendTo(head);
     });
 }(window,jQuery,nbrut);

@@ -12,6 +12,10 @@
         });
     };
 
+    String.prototype.trimReduce = function() {
+        return this.trim().replace(/\s{2,}/g, ' ');
+    };
+
     $.fn.anchorSEO = function(selector){
         var container = this;
 
@@ -47,7 +51,7 @@
 
     $.fn.hints = function(enabled){
         return this.each(function(){
-            var elements = $(this).find('[data-hint]'),
+            var elements = $(this).find('[data-hint][data-hint!=""]'), // non-empty hints
                 hintClassKey = 'hint-class';
 
             if(enabled !== false){ // prevent over-classing

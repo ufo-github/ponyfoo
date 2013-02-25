@@ -41,7 +41,7 @@
                 siblings = nbrut.tt.partial('entry-siblings', model),
                 footer = container.find('.blog-entry-footer');
 
-            siblings.prependTo(footer);
+            siblings.appendTo(footer);
             addComments(entry, data);
         }
 

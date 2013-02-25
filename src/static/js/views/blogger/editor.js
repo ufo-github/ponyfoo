@@ -46,7 +46,8 @@
             submit = $('#submit-entry'),
             title = $('#entry-title'),
             brief = $('#wmd-input-brief'),
-            text = $('#wmd-input-text');
+            text = $('#wmd-input-text'),
+            tags = $('#entry-tags');
 
         submit.on('click', function(){
             nbrut.ui.disable(submit);
@@ -56,7 +57,8 @@
                     entry: {
                         title: title.val(),
                         brief: brief.val(),
-                        text: text.val()
+                        text: text.val(),
+                        tags: tags.val().trimReduce().split(' ')
                     }
                 },
                 context: editor,

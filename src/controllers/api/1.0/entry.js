@@ -114,12 +114,38 @@ function validateEntry(req,res,update){
         document: {
             title: source.title,
             brief: source.brief,
-            text: source.text
+            text: source.text,
+            tags: source.tags
         },
         rules: [
             { field: 'title', length: 10, message: 'You forgot the all-important, descriptive title' },
             { field: 'brief', length: 30, message: 'Please remember to write an introduction to your post' },
-            { field: 'text', length: 60, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article?' }
+            { field: 'text', length: 60, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article?' },
+            {
+                field: 'tags',
+                validator: function(){
+                    var self = this, failed;
+
+                    if(!Array.isArray(self) || self.length === 0){
+                        return 'Tag your article with at least one keyword';
+                    }else if(self.length > 5){
+                        return 'Six tags are enough. Pick the most relevant ones';
+                    }
+
+                    failed = self.some(function(tag, i){
+                        if(typeof tag === 'string'){
+                            self[i] = tag.replace(/ /g,'').toLowerCase();
+                            return !/^[a-z0-9._-]+$/.test(self[i]);
+                        }else{
+                            return true;
+                        }
+                    });
+
+                    if(failed){
+                        return 'Tags can only contain letters, numbers, or punctuation';
+                    }
+                }
+            }
         ]
     });
 }
