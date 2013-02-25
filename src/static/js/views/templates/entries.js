@@ -20,10 +20,15 @@
         };
     }
 
+    function oneTitle(viewModel){ // always exactly one single entry.
+        return viewModel.entries[0].title;
+    }
+
     var year = '^\/([0-9]{4})\/',
         month = year + '(0[1-9]|1[0-2])\/',
         day = month + '(0[1-9]|[12][0-9]|3[01])\/',
-        slug = day + '([a-z0-9\-]+)(?:\/comments)?';
+        slug = day + '([a-z0-9\-]+)',
+        comments = slug + '([a-z0-9\-]+)(?:\/comments)';
 
     nbrut.tt.register({
         key: 'home',
@@ -53,10 +58,12 @@
             route: getEntryRoute(day + '?$')
         },{
             key: 'one',
-            title: function(viewModel){ // always exactly one single entry.
-                return viewModel.entries[0].title;
-            },
+            title: oneTitle,
             route: getEntryRoute(slug + '$')
+        },{
+            key: 'one-comments',
+            title: oneTitle,
+            route: getEntryRoute(comments + '$')
         },{
             key: 'search',
             title: function(viewModel,data){

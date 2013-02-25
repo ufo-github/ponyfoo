@@ -81,6 +81,21 @@
 			}
 		}
 
+        /* a template can be stuck if, for example, a request against the API
+         * fails during the prepare method of the initialization code.
+         * this simple check ensures the previous view gets reloaded in such cases.
+         */
+        function reloadIfStuck(){
+            var to = activity.current;
+            if (to !== undefined){
+                if (config.container.children().is('.spinner')){
+                    activate(to.key, to.settings);
+                }
+            }else if(window.location.pathname !== '/'){ // avoid looping
+                back();
+            }
+        }
+
 		function back(){
 			var h = activity.history,
 				to = h[h.length-1];
@@ -450,6 +465,7 @@
             activate: activate,
             activateRoute: activateRoute,
             partial: partial,
+            reloadIfStuck: reloadIfStuck,
             hook: plugins.hook,
             templateLinks: fixLocalRoutes,
             get active() { return getHash() - 1; } /* offset by one because 0 means nothing is active yet */

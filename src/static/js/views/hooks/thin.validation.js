@@ -23,6 +23,8 @@
             }else{
                 validationInContext(validation, context);
             }
+
+            nbrut.tt.reloadIfStuck();
         }
     }
 
