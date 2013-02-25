@@ -13,7 +13,7 @@
             self.published = m.format(moment.dayFormat);
             self.timeAgo = m.fromNow();
 
-            self.commentsLink = self.permalink + '/comments';
+            self.commentsLink = self.permalink + '#comments';
 
             self.html = {
                 brief: html(self.brief),

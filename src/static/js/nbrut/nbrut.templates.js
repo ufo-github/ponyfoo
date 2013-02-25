@@ -247,9 +247,9 @@
             if (alias !== undefined){
                 title = setTitle(alias.title, viewModel, settings.data);
                 url = alias.route.get(settings.data);
-            }else{
+            }else{ // template not found
                 title = setTitle(template.title, viewModel, settings.data);
-                url = document.location.pathname;
+                url = document.location.pathname + document.location.hash; // preserve hash, too.
             }
 
             var method = soft === 'replace' ? 'replaceState' : soft !== true ? 'pushState' : null;
@@ -300,7 +300,7 @@
                 }
 
                 function raise(where){
-                    plugins.raise('fill', where, viewModel, data, template);
+                    plugins.raise('fill', where, viewModel, data || {}, template);
                 }
 
                 return {
@@ -381,6 +381,14 @@
             return title;
         }
 
+        function getRouteFromComponents(path, hash){
+            var route = getRoute(path + hash);
+            if (route === undefined){
+                route = getRoute(path);
+            }
+            return route;
+        }
+
         function getRoute(url){
             if(url === undefined){
                 return {};
@@ -451,7 +459,9 @@
             $(window).on('popstate', popState);
 
             $(function(){
-                var route = getRoute(document.location.pathname);
+                var location = document.location,
+                    route = getRouteFromComponents(location.pathname, location.hash);
+
                 activateRoute(route, 'replace');
             });
         }

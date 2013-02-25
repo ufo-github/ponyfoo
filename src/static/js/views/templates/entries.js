@@ -1,12 +1,22 @@
-!function (window,nbrut,moment) {
+!function (window, nbrut, moment, undefined) {
+    var year = '^\/([0-9]{4})\/',
+        month = year + '(0[1-9]|1[0-2])\/',
+        day = month + '(0[1-9]|[12][0-9]|3[01])\/',
+        slug = day + '([a-z0-9\-]+)',
+        commentsHash = '#comments',
+        commentsSection = slug + '(?:{0})'.format(commentsHash);
+
     function getEntryRoute(regex){
         var searching = regex.indexOf('\/search') === 0,
-            prefix = searching ? 'search/' : '';
+            comments = regex.indexOf(commentsHash) !== -1,
+            prefix = searching ? 'search/' : '',
+            hash = comments ? commentsHash : undefined;
 
         return {
             regex: new RegExp(regex),
             get: function(data){
-                return '/{0}'.format(data.query.replace(/ /g,'+'));
+                var sanitized = data.query.replace(/ /g,'+');
+                return '/{0}{1}'.format(sanitized, hash || '');
             },
             map: function(captures){
                 var terms = captures.slice(1).join('/'),
@@ -14,7 +24,8 @@
 
                 return {
                     query: prefix + decoded,
-                    terms: decoded
+                    terms: decoded,
+                    hash: hash
                 };
             }
         };
@@ -23,12 +34,6 @@
     function oneTitle(viewModel){ // always exactly one single entry.
         return viewModel.entries[0].title;
     }
-
-    var year = '^\/([0-9]{4})\/',
-        month = year + '(0[1-9]|1[0-2])\/',
-        day = month + '(0[1-9]|[12][0-9]|3[01])\/',
-        slug = day + '([a-z0-9\-]+)',
-        comments = slug + '([a-z0-9\-]+)(?:\/comments)';
 
     nbrut.tt.register({
         key: 'home',
@@ -63,7 +68,7 @@
         },{
             key: 'one-comments',
             title: oneTitle,
-            route: getEntryRoute(comments + '$')
+            route: getEntryRoute(commentsSection + '$')
         },{
             key: 'search',
             title: function(viewModel,data){

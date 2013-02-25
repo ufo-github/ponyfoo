@@ -8,6 +8,18 @@
         layer.abort();
     });
 
+    // scroll to hash
+    nbrut.tt.hook('fill', function(container, viewModel, data){
+        if(data.hash !== undefined){
+            var filter = '[data-hash={0}]',
+                hash = data.hash.substr(1),
+                selector = filter.format(hash),
+                element = container.find(selector);
+
+            element.scrollIntoView();
+        }
+    });
+
     // parse data-src in images
     nbrut.tt.hook('fill', function(container){
         container.loadImages();
