@@ -25,23 +25,24 @@
     }
 
     function afterActivate(viewModel, data, ctx){
-        var container = $('.blog-entries');
+        var container = $('.blog-entries'),
+            count = viewModel.entries.length;
 
-        if(viewModel.entries.length === 0){
+        if (count === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
-        }else if(viewModel.entries.length !== 1){
+        }else if(count !== 1){
             addPager(viewModel, ctx.identifier, data.query || '');
         }
 
-        if(viewModel.entries.length === 1){
+        if(count === 1){
             var entry = viewModel.entries[0],
                 model = entry.related,
                 siblings = nbrut.tt.partial('entry-siblings', model),
                 footer = container.find('.blog-entry-footer');
 
             siblings.prependTo(footer);
-            addComments(entry);
+            addComments(entry, data);
         }
 
         addSidebar();
@@ -135,15 +136,17 @@
         });
     }
 
-    function addComments(entry){
+    function addComments(entry, data){
+        var container = $('.blog-entries');
+        container.find('.comment-count').remove(); // these are just for the list view
+
         nbrut.thin.get('comment', {
             parent: {
                 what: 'entry',
                 id: entry._id
             },
             done: function(it){
-                var container = $('.blog-entries'),
-                    list = nbrut.tt.partial('discussion-list', it),
+                var list = nbrut.tt.partial('discussion-list', it),
                     discussions = list.appendTo(container), actions;
 
                 if(nbrut.locals.connected){
@@ -160,6 +163,10 @@
                 }else{
                     authenticate = nbrut.tt.partial('authentication', { action: 'post a comment' });
                     authenticate.appendTo(discussions);
+                }
+
+                if (data.hash === '#comments'){
+                    discussions.find('.blog-entry-title').scrollIntoView();
                 }
             }
         });

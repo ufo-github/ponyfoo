@@ -3,7 +3,7 @@
 
     function entryHook(data){
         $.each(data.entries || [data.entry], function(){
-            var self = this, d;
+            var self = this, d, comments = self.commentCount;
 
             self.date = new Date(self.date);
 
@@ -14,6 +14,10 @@
             self.timeAgo = m.fromNow();
 
             self.commentsLink = self.permalink + '#comments';
+            self.commentsText = '{0}Comment{1}'.format(
+                !!comments ? comments + ' ' : '',
+                comments !== 1 ? 's' : ''
+            )
 
             self.html = {
                 brief: html(self.brief),

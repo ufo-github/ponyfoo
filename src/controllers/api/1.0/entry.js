@@ -1,5 +1,8 @@
 var mongoose = require('mongoose'),
     async = require('async'),
+    jsdom = require('jsdom'),
+    pagedown = require('pagedown'),
+    config = require('../../../config.js'),
     apiConf = require('../config.js'),
     validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
@@ -40,7 +43,27 @@ function list(opts,done){
 
     async.parallel({
         entries: function(cb){
-            where.sort('-date').skip(index).limit(lim).exec(cb);
+            where.sort('-date').skip(index).limit(lim).exec(function(err, documents){
+                if(err){
+                    done(err);
+                    return;
+                }
+
+                async.map(documents, function(document, done){
+                    discussion.find({ entry: document._id }, function(err, discussions){
+                        if(err){
+                            done(err);
+                            return;
+                        }
+
+                        var result = document.toObject();
+                        result.commentCount = discussions.reduce(function(accumulator, discussion) {
+                            return accumulator + discussion.comments.length;
+                        }, 0);
+                        done(null, result);
+                    });
+                }, cb);
+            });
         },
         paging: function(cb){
             where.count().exec(function(err,count){
@@ -204,7 +227,7 @@ function unwrapSiblings(entry,cb){
             var key = prev !== null && sibling._id.equals(prev) ? 'previous' : 'next';
 
             unwrapped.related[key] = {
-                url: sibling.getPermalink(),
+                url: sibling.permalink,
                 title: sibling.title
             };
         });
@@ -242,6 +265,26 @@ function search(req,res){
     });
 }
 
+function getPlainTextBrief(entry, done) {
+    var converter = new pagedown.getSanitizingConverter(),
+        html = converter.makeHtml(entry.brief);
+
+    jsdom.env({
+        html: '<foo>' + html + '</foo>', // empty and HTML tags throw for some obscure reason.
+        scripts: [config.jQuery.local],
+        done: function(err,window){
+            if(err){
+                done(err);
+                return;
+            }
+            var $ = window.$,
+                plain = $(':root').text();
+
+            done(null,plain);
+        }
+    });
+};
+
 module.exports = {
     get: function(req,res){
         restList(req,res);
@@ -262,5 +305,6 @@ module.exports = {
     upd: update,
     del: remove,
     list: list, // internal api DRY purposes
-    search: search
+    search: search,
+    getPlainTextBrief: getPlainTextBrief
 };

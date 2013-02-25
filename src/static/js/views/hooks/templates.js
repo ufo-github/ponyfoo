@@ -11,7 +11,7 @@
     // scroll to hash
     nbrut.tt.hook('fill', function(container, viewModel, data){
         if(data.hash !== undefined){
-            var filter = '[data-hash={0}]',
+            var filter = '[data-hash-autoscroll][data-hash={0}]',
                 hash = data.hash.substr(1),
                 selector = filter.format(hash),
                 element = container.find(selector);

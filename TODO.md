@@ -4,12 +4,11 @@ TODO
 1
 -------
 
-- comment counts
-
 - latest posts => more than just 6, 8?
 
 - tagging
   - tags per post
+  - tags show up on title hint (Tagged: foo, bar baz :) )
   - paged search filter by tag (api/web)
   - tagsoup below latest posts might be nice.
 

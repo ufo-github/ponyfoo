@@ -126,7 +126,7 @@
 
     $.fn.scrollIntoView = function () {
         var self = $(this);
-        if(!self.inView()){
+        if (self.length > 0 && !self.inView()){
             $('html, body').animate({
                 scrollTop: self.position().top - 30
             }, 'fast');

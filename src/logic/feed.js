@@ -25,14 +25,14 @@ function rebuild(done){
         }
 
         async.forEach(list.entries, function(entry,done){
-            entry.getPlainTextBrief(function(err,brief){
+            controller.getPlainTextBrief(entry, function(err,brief){
                 if(err){
                     done(err);
                 }
                 feed.item({
                     title: entry.title,
                     description: brief,
-                    url: entry.getPermalink(true),
+                    url: config.server.authority + entry.permalink,
                     author: config.blogger.name,
                     date: entry.date
                 });

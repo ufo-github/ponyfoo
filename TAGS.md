@@ -23,6 +23,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - On the API
   - Client-side captures API errors and displays warnings
 
+- Features
+  - Much needed comment counts on post list
   
 0.1 (frozen)
 ============
