@@ -4,8 +4,6 @@ TODO
 1
 -------
 
-- latest posts => more than just 6, 8?
-
 - tagging
   - tags per post
   - tags show up on title hint (Tagged: foo, bar baz :) )
