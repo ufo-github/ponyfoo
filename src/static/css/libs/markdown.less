@@ -91,6 +91,17 @@
   margin: 0;
 }
 
+/* lists within lists */
+.markdown li > p {
+  display: inline-block;
+}
+
+.markdown li > ul.item-list,
+.markdown li > ol.item-list {
+  margin-top: 0;
+  margin-left: 20px;
+}
+
 
 
 /* CODE BLOCKS
