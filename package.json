@@ -16,7 +16,7 @@
     "connect-mongoose": "0.0.2",
     "express": "~3.0.6",
     "fs-extra": "~0.3.2",
-    "imgur": "0.0.1",
+    "imgur": "0.0.2",
     "jade": "~0.27.7",
     "jsdom": "~0.3.4",
     "jsn": "0.0.3",
