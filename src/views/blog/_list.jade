@@ -16,7 +16,7 @@ article.blog-entry(data-keywords='{{keywords}}')
     section.blog-entry-tags
       span='Tagged:'
       // {{#_tags}}
-      a(href='/search/tagged/{{.}}').highlighted-link='{{.}}'
+      a(href='/search/tagged/{{.}}', data-hint='Search posts tagged "{{.}}"').highlighted-link='{{.}}'
       // {{/_tags}}
     // {{/tagged}}
 

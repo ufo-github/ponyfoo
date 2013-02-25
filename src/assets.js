@@ -30,6 +30,7 @@ function getCss(){
         '/css/views/shared/404.less',
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
         '/css/views/shared/upload.less',
+        '/css/views/shared/expand.less',
 
         // view-specific rules
         '/css/views/user/profile.less',
@@ -93,6 +94,7 @@ function getJs(){
 
         // template configuration
         '/js/views/shared/upload.js',
+        '/js/views/shared/expand.section.js',
 
         '/js/views/markdown/prompts.js',
 

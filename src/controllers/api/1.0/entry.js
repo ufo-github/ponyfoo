@@ -262,8 +262,10 @@ function unwrapSiblings(entry,cb){
     });
 }
 
+var separator = / |,|\+|;/;
+
 function search(req,res){
-    var keywords = req.params.keywords.split(/ |,|\+|-|;/), escaped, query;
+    var keywords = req.params.keywords.split(separator), escaped, query;
 
     keywords.forEach(function(keyword, i){ // escape them
         escaped = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -289,6 +291,11 @@ function search(req,res){
             { $and: target('text') }
         ]
     });
+}
+
+function tagged(req,res){
+    var tags = req.params.tags.toLowerCase().split(separator);
+    restList(req,res,{ tags: { $all: tags }});
 }
 
 function getPlainTextBrief(entry, done) {
@@ -330,7 +337,8 @@ module.exports = {
     ins: insert,
     upd: update,
     del: remove,
-    list: list, // internal api DRY purposes
+    list: list,
     search: search,
+    tagged: tagged,
     getPlainTextBrief: getPlainTextBrief
 };

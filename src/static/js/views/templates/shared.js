@@ -30,6 +30,12 @@
     });
 
     nbrut.tt.register({
+        key: 'expand-section',
+        source: '#expand-section-template',
+        mustache: true
+    });
+
+    nbrut.tt.register({
         key: 'user-profile',
         source: '#user-profile-template',
         mustache: true,

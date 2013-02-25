@@ -23,8 +23,14 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - On the API
   - Client-side captures API errors and displays warnings
 
-- Features
-  - Much needed comment counts on post list
+- Much needed comment counts on post list
+
+- Search now hides the article bodies
+
+- Tagging
+  - Entry tagging
+  - Search by tag
+
   
 0.1 (frozen)
 ============

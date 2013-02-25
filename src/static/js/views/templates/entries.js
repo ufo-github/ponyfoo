@@ -25,7 +25,8 @@
                 return {
                     query: prefix + decoded,
                     terms: decoded,
-                    hash: hash
+                    hash: hash,
+                    search: searching
                 };
             }
         };
@@ -72,7 +73,12 @@
         },{
             key: 'search',
             title: function(viewModel,data){
-                return 'Search "' + data.terms + '"';
+                var tagged = 'tagged/',
+                    tags = data.terms.indexOf(tagged) === 0,
+                    terms = tags ? data.terms.substr(tagged.length) : data.terms,
+                    prefix = tags ? 'Search tagged' : 'Search';
+
+                return '{0} "{1}"'.format(prefix, terms);
             },
             route: getEntryRoute('\/search\/(.*)')
         }]

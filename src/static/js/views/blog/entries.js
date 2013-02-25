@@ -28,6 +28,18 @@
         var container = $('.blog-entries'),
             count = viewModel.entries.length;
 
+        if(data.search){
+            container.find('.blog-entry-text').each(function(){
+                var self = $(this).hide(),
+                    expand = nbrut.tt.partial('expand-section', {
+                        target: self,
+                        legend: 'Click to reveal the rest of this post'
+                    });
+
+                expand.insertBefore(self);
+            });
+        }
+
         if (count === 0){
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);

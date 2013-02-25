@@ -5,7 +5,6 @@ TODO
 -------
 
 - tagging
-  - paged search filter by tag (api/web)
   - tagsoup below latest posts might be nice.
 
 

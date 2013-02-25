@@ -60,6 +60,7 @@ function routeEntries(api){
     paged(api, routeMonth, entry.getByDate);
     paged(api, routeDay, entry.getByDate);
     paged(api, '/entry/search/:keywords', entry.search);
+    paged(api, '/entry/search/tagged/:tags', entry.tagged);
 
     // one entry
     api.get(routeSlug, entry.getBySlug);
