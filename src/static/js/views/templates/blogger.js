@@ -4,7 +4,7 @@
         source: '#blogger-tools-template',
         mustache: true,
         aliases: [{
-            title: 'Blogger Tools',
+            title: 'Tools',
             route: '/blogger',
             trigger: '#blogger-tools'
         }]
