@@ -33,3 +33,4 @@ TODO
 -------
 - client-side caching?
 - proper api authentication?
+- reduce fat in client-side template registration

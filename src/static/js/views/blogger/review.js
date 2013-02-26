@@ -10,7 +10,7 @@
 
 	function afterActivate(viewModel, data, ctx){
         var elements = ctx.elements,
-            table = elements.find('.entry-review-table');
+            table = elements.filter('.entry-review-table');
 
         table.find('.entry-row').each(function(){
 			var row = $(this),
@@ -27,10 +27,10 @@
 			});
 		});
 
-        bindPager(elements);
+        bindPager(table, viewModel, '');
 	}
 
-    function bindPager(table, viewModel){
+    function bindPager(table, viewModel, query){
         if(viewModel.paging.next === false){
             return;
         }
@@ -41,7 +41,21 @@
             link = pager.find('a');
 
         link.one('click.paging', function(){
-            // TODO take stuff from entries.js
+            link.text('Loading...').css({ cursor: 'wait' });
+
+            nbrut.thin.get('entry', {
+                id: query + page,
+                done: function(it){
+                    var tbody = table.find('tbody'),
+                        partial = nbrut.tt.partial('entry-review-list', it),
+                        rows = partial.appendTo(tbody);
+
+                    rows.find('tr:first').addClass('entry-row-separator');
+                    rows.children().unwrap(); // remove the tbody that comes with the partial
+                    pager.remove();
+                    bindPager(table, it, query);
+                }
+            });
         });
     }
 	

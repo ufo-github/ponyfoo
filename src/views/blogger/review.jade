@@ -9,23 +9,4 @@ section#entry-review-template.template(data-class='entry-review')
         th='Tags'
         th
     tbody
-      // {{#entries}}
-      tr.entry-row(data-id='{{_id}}')
-        td.date(data-hint='posted {{timeAgo}}')='{{dateText}}'
-        td.title
-          a.highlighted-link(href='{{permalink}}', data-hint='This post has {{commentCount}} comments')='{{title}}'
-
-        td.tags
-          // {{#_tags}}
-          a(href='/search/tagged/{{.}}', data-hint='Find posts tagged "{{.}}"').highlighted-link='{{.}}'
-          // {{/_tags}}
-
-        td.actions
-          a.action.edit(title='Edit', href='/blogger/entry/{{_id}}')='Edit'
-          a.action.remove(title='Remove')='Remove'
-      // {{/entries}}
-
-  // {{#paging.next}}
-  section.entry-review-pager
-    a.highlighted-link(data-hint='Click here to load more posts')='Review older'
-  // {{/paging.next}}
+      include _review-list

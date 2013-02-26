@@ -303,7 +303,8 @@
 
             function move(fn){/* NOTE: data-class loses it's meaning in this case. */
                 return function(container,data){
-                    var temp = $('<div/>').hide().appendTo('body'), /* append to DOM to avoid inconsistencies */
+                    var tag = '<div/>',
+                        temp = $(tag).hide().appendTo('body'), /* append to DOM to avoid inconsistencies */
                         fillResult = fill(temp, data, undefined, true),
                         ctx = fillResult.ctx;
 

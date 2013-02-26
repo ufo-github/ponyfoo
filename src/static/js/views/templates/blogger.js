@@ -38,4 +38,10 @@
         key: 'entry-review-pager',
         source: '#entry-review-pager-template'
     });
+
+    nbrut.tt.register({
+        key: 'entry-review-list',
+        source: '#entry-review-list-template',
+        mustache: true
+    });
 }(window,nbrut);

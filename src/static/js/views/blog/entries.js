@@ -46,7 +46,7 @@
             var empty = nbrut.tt.partial('empty-entry', viewModel);
             empty.fill(container);
         }else if(count !== 1){
-            addPager(viewModel, ctx.identifier, data.query || '');
+            addPager(viewModel, data.query || '');
         }
 
         if(count === 1){
@@ -69,7 +69,7 @@
         exhausted.appendTo(container);
     }
 
-    function addPager(viewModel, identifier, query){
+    function addPager(viewModel, query){
         if(viewModel.paging.next === false){
             addExhausted();
             return;
@@ -84,7 +84,7 @@
         function more(){
             win.off('scroll.paging');
             pager.off('click.paging');
-            pagingEvent(identifier, pager, query, page);
+            pagingEvent(pager, query, page);
         }
 
         win.on('scroll.paging', function(){
@@ -106,28 +106,19 @@
         pager.on('click.paging', more);
     }
 
-    function pagingEvent(identifier,pager,query,page){
+    function pagingEvent(pager,query,page){
         var card = pager.find('.flip-card');
-
-        if(nbrut.tt.active !== identifier){ // sanity
-            return;
-        }
-
         card.flip(true);
 
         nbrut.thin.get('entry', {
             id: query + page,
             done: function(it){
-                if(nbrut.tt.active !== identifier){ // sanity
-                    return;
-                }
-
                 var container = $('.blog-entries'),
                     articles = nbrut.tt.partial('more-entries', it),
                     elements = articles.appendTo(container);
 
                 pager.remove();
-                addPager(it, identifier, query);
+                addPager(it, query);
             }
         });
     }
