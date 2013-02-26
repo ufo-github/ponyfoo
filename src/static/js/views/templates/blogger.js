@@ -33,4 +33,9 @@
             trigger: '#review-entries'
         }]
     });
+
+    nbrut.tt.register({
+        key: 'entry-review-pager',
+        source: '#entry-review-pager-template'
+    });
 }(window,nbrut);

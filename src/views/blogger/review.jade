@@ -1,7 +1,7 @@
 section#entry-review-template.template(data-class='entry-review')
   h1='Entry Review'
 
-  table
+  table.entry-review-table
     thead
       tr
         th='Date'
@@ -24,3 +24,8 @@ section#entry-review-template.template(data-class='entry-review')
           a.action.edit(title='Edit', href='/blogger/entry/{{_id}}')='Edit'
           a.action.remove(title='Remove')='Remove'
       // {{/entries}}
+
+  // {{#paging.next}}
+  section.entry-review-pager
+    a.highlighted-link(data-hint='Click here to load more posts')='Review older'
+  // {{/paging.next}}
