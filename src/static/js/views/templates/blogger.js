@@ -16,12 +16,12 @@
         mustache: true,
 		back: '#cancel-entry',
         aliases: [{
-            title: 'Entry Writer',
+            title: 'Compose Entry',
             route: '/blogger/entry',
             trigger: '#write-entry'
         }, {
             key: 'edit',
-            title: 'Entry Editor',
+            title: 'Edit Entry',
             route: {
                 regex: /^\/blogger\/entry\/([0-9a-f]{24})$/,
                 get: function(data){
@@ -39,7 +39,7 @@
         source: '#entry-review-template',
         mustache: true,
         aliases: [{
-            title: 'Review',
+            title: 'Review Entries',
             route: '/blogger/entry/review'
         }]
     });
@@ -53,5 +53,25 @@
         key: 'entry-review-list',
         source: '#entry-review-list-template',
         mustache: true
+    });
+
+    nbrut.tt.register({
+        key: 'blogger-users',
+        source: '#blogger-users-template',
+        mustache: true,
+        aliases: [{
+            title: 'Users',
+            route: '/blogger/users'
+        }]
+    });
+
+    nbrut.tt.register({
+        key: 'blogger-comments',
+        source: '#blogger-comments-template',
+        mustache: true,
+        aliases: [{
+            title: 'Review Comments',
+            route: '/blogger/comments'
+        }]
     });
 }(window,nbrut);

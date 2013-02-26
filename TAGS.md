@@ -32,6 +32,10 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Entry tagging
   - Search by tag
 
+- Blogger Tools
+  - Quick access panel to blogger features
+  - Post review is more detailed
+
 
   
 0.1 (frozen)

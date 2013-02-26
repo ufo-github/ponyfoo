@@ -6,7 +6,7 @@ TODO
 
 - backend
   - user profile list
-  - comments list
+  - discussion list
 
 
 
