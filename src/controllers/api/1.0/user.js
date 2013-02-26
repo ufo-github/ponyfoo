@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
     crud = require('../../../services/crud.js')(user);
 
 function list(req,res){
-    var opts = {
+    crud.list({
         listName: 'users',
         hardLimit: apiConf.paging.limit,
         page: req.params.page,
@@ -16,8 +16,7 @@ function list(req,res){
                 done(null, userView(document));
             }, cb);
         }
-    };
-    crud.list(opts, rest.wrapCallback(res));
+    }, rest.wrapCallback(res));
 }
 
 function find(req,res){
