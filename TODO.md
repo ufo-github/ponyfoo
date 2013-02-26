@@ -4,10 +4,8 @@ TODO
 1
 -------
 
-- tagging
-  - tagsoup below latest posts might be nice.
-
 - backend
+  - entry review -> happier list
   - user profile list
   - comments list
 
