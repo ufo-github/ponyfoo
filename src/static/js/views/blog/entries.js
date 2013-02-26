@@ -123,9 +123,9 @@
                 }
 
                 var container = $('.blog-entries'),
-                    articles = nbrut.tt.partial('more-entries', it),
-                    elements = articles.appendTo(container);
+                    articles = nbrut.tt.partial('more-entries', it);
 
+                articles.appendTo(container);
                 pager.remove();
                 addPager(it, identifier, query);
             }
