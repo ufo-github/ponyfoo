@@ -5,7 +5,6 @@ TODO
 -------
 
 - backend
-  - user profile list
   - discussion list
 
 - login-redirect

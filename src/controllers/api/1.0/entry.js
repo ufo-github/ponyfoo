@@ -26,7 +26,8 @@ function mapRequestToQuery(req){
 
 function list(opts,then){
     opts.listName = 'entries';
-    opts.hardLimit = apiConf.paging.limit;
+    opts.limit = opts.limit || apiConf.paging.limit;
+    opts.sort = '-date';
     opts.mapper = function(documents, cb){
         async.map(documents, function(document, done){
             discussion.find({ entry: document._id }, function(err, discussions){

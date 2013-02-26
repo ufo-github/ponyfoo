@@ -34,7 +34,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 - Blogger Tools
   - Quick access panel to blogger features
-  - Post review is more detailed
+  - Paged list of registered users
 
 
   

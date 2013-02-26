@@ -14,6 +14,13 @@
             button.text(disabledText);
         }
 
+        function pagedTable(viewModel){
+            if(viewModel.paging.next !== false){
+                var pager = nbrut.tt.partial('table-pager', viewModel);
+                pager.insertAfter(viewModel.table);
+            }
+        }
+
         return {
             disable: disable,
             enable: enable,
@@ -21,7 +28,8 @@
                 medium: {
                     width: 768
                 }
-            }
+            },
+            pagedTable: pagedTable
         };
     }();
 

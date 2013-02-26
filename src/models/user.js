@@ -33,6 +33,10 @@ schema.virtual('gravatarSmall').get(function(){
     return this.gravatarLarge + config.avatar.small;
 });
 
+schema.virtual('gravatarTiny').get(function(){
+    return this.gravatarLarge + config.avatar.tiny;
+});
+
 schema.pre('save', function(next) {
     var user = this;
 

@@ -36,6 +36,12 @@
     });
 
     nbrut.tt.register({
+        key: 'table-pager',
+        source: '#table-pager-template',
+        mustache: true
+    });
+
+    nbrut.tt.register({
         key: 'user-profile',
         source: '#user-profile-template',
         mustache: true,

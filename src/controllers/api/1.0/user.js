@@ -9,8 +9,9 @@ var mongoose = require('mongoose'),
 function list(req,res){
     crud.list({
         listName: 'users',
-        hardLimit: apiConf.paging.limit,
+        limit: apiConf.paging.limit,
         page: req.params.page,
+        sort: '-created',
         mapper: function(documents, cb){
             async.map(documents, function(document, done){
                 done(null, userView(document));
@@ -45,6 +46,7 @@ function userView(document){
         created: document.created,
         displayName: document.displayName,
         gravatarLarge: document.gravatarLarge,
+        gravatarTiny: document.gravatarTiny,
         website: document.website,
         bio: document.bio,
         passwordUndefined: document.password === undefined

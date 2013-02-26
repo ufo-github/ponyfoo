@@ -31,6 +31,7 @@ function getCss(){
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
         '/css/views/shared/upload.less',
         '/css/views/shared/expand.less',
+        '/css/views/shared/table.pager.less',
 
         // view-specific rules
         '/css/views/user/profile.less',
@@ -45,7 +46,8 @@ function getCss(){
 
         { profile: 'blogger', local: '/css/views/blogger/index.less' },
         { profile: 'blogger', local: '/css/views/blogger/editor.less' },
-        { profile: 'blogger', local: '/css/views/blogger/review.less' }
+        { profile: 'blogger', local: '/css/views/blogger/review.less' },
+        { profile: 'blogger', local: '/css/views/blogger/users.less' }
     ];
 }
 
@@ -96,6 +98,7 @@ function getJs(){
         // template configuration
         '/js/views/shared/upload.js',
         '/js/views/shared/expand.section.js',
+        '/js/views/shared/table.pager.js',
 
         '/js/views/markdown/prompts.js',
 

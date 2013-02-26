@@ -27,37 +27,15 @@
 			});
 		});
 
-        bindPager(table, viewModel, '');
-	}
-
-    function bindPager(table, viewModel, query){
-        if(viewModel.paging.next === false){
-            return;
-        }
-
-        var page = 'p/' + viewModel.paging.next,
-            partial = nbrut.tt.partial('entry-review-pager'),
-            pager = partial.insertAfter(table),
-            link = pager.find('a');
-
-        link.one('click.paging', function(){
-            link.text('Loading...').css({ cursor: 'wait' });
-
-            nbrut.thin.get('entry', {
-                id: query + page,
-                done: function(it){
-                    var tbody = table.find('tbody'),
-                        partial = nbrut.tt.partial('entry-review-list', it),
-                        rows = partial.appendTo(tbody);
-
-                    rows.find('tr:first').addClass('entry-row-separator');
-                    rows.children().unwrap(); // remove the tbody that comes with the partial
-                    pager.remove();
-                    bindPager(table, it, query);
-                }
-            });
+        nbrut.ui.pagedTable({
+            what: 'entry',
+            friendlyName: 'entries',
+            legend: 'Review older',
+            partial: 'entry-review-list',
+            paging: viewModel.paging,
+            table: table
         });
-    }
+	}
 	
     nbrut.tt.configure({
         key: 'entry-review',

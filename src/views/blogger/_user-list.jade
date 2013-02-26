@@ -1,0 +1,10 @@
+// {{#users}}
+tr.user-row
+  td.date(data-hint='registered {{timeAgo}}')='{{createdDate}}'
+  td.user-icon
+    a(href='/user/profile/{{_id}}', data-hint='See profile')
+      img.user-gravatar.tiny(data-src='{{gravatarTiny}}')
+
+  td
+    a.highlighted-link(href='/user/profile/{{_id}}', data-hint='See profile')='{{displayName}}'
+// {{/users}}

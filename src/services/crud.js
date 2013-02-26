@@ -41,13 +41,13 @@ function crud(model){
 
     function list(opts,done){
         var page = parseInt(opts.page || 1),
-            lim = opts.limit || opts.hardLimit,
+            lim = opts.limit,
             index = (page-1) * lim,
             where = model.find(opts.query || {});
 
         async.parallel({
             documents: function(cb){
-                where.sort('-date').skip(index).limit(lim).exec(function(err, documents){
+                where.sort(opts.sort).skip(index).limit(lim).exec(function(err, documents){
                     if(err){
                         cb(err);
                         return;

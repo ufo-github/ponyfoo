@@ -123,6 +123,7 @@ var config = {
     avatar: {
         url: 'http://www.gravatar.com/avatar/',
         query: '?d=identicon&r=PG',
+        tiny: '&s=24',
         small: '&s=40',
         regular: '&s=60'
     }

@@ -45,11 +45,6 @@
     });
 
     nbrut.tt.register({
-        key: 'entry-review-pager',
-        source: '#entry-review-pager-template'
-    });
-
-    nbrut.tt.register({
         key: 'entry-review-list',
         source: '#entry-review-list-template',
         mustache: true
@@ -63,6 +58,12 @@
             title: 'Users',
             route: '/blogger/users'
         }]
+    });
+
+    nbrut.tt.register({
+        key: 'user-list',
+        source: '#user-list-template',
+        mustache: true
     });
 
     nbrut.tt.register({

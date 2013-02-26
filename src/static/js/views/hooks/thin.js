@@ -60,8 +60,11 @@
     }
 
     function userHook(data){
-        var user = data.user;
-        if (user !== undefined){
+        $.each(data.users || [data.user], function(){
+            var user = this;
+            if (user === undefined){
+                return;
+            }
             var created = user.created,
                 m = moment(created),
                 me = user._id === nbrut.locals.id;
@@ -69,6 +72,8 @@
             user.me = me;
             user.created = new Date(created);
             user.createdText = m.format(moment.dayFormat);
+            user.createdDate = m.format();
+            user.timeAgo = m.fromNow();
             user.duration = m.fromNow(true);
 
             if (user.website.title === undefined || user.website.url === undefined){
@@ -79,7 +84,7 @@
             user.bioHtml = nbrut.md.html(user.bio);
 
             user.passwordPlaceholder = user.passwordUndefined ? 'Leave blank or choose a password' : 'Leave blank or change your password';
-        }
+        });
     }
 
     nbrut.thin.hook({
