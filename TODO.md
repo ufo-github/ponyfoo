@@ -7,8 +7,6 @@ TODO
 - tagging
   - tagsoup below latest posts might be nice.
 
-- expand icon!
-
 2
 -------
 
