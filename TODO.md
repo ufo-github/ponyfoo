@@ -5,7 +5,6 @@ TODO
 -------
 
 - backend
-  - entry review -> happier list
   - user profile list
   - comments list
 

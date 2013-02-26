@@ -4,6 +4,7 @@ Changes by tag
 Brief list of changes implemented in each tagged version of **NBrut**.
 
 
+
 0.2 (tip)
 ============
 
@@ -30,6 +31,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Tagging
   - Entry tagging
   - Search by tag
+
 
   
 0.1 (frozen)
