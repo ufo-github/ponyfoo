@@ -1,10 +1,11 @@
 @import "common.less";
 
-.action, .social, .sidebar-flipper {
+.action, .tool, .social, .sidebar-flipper {
   text-indent: -9999em;
   overflow: hidden;
   border: none;
   background-color: transparent;
+  display: inline-block;
 }
 
 
@@ -16,7 +17,6 @@
   background-image: url('/img/action.png');
   width: 24px;
   height: 24px;
-  display: inline-block;
 }
 
 .action.edit          { background-position: -24px *0 0; }
@@ -31,6 +31,24 @@
 .action.close:hover   { background-position: -24px *3 -24px; }
 .action.expand:hover  { background-position: -24px *4 -24px; }
 
+
+
+/* TOOL ICONS
+ *******************/
+
+.tool {
+  background-image: url('/img/tool.png');
+  width: 32px;
+  height: 32px;
+}
+
+.tool.write    { background-position: -32px *0 0; }
+.tool.review   { background-position: -32px *1 0; }
+.tool.users    { background-position: -32px *2 0; }
+.tool.comments { background-position: -32px *3 0; }
+
+
+
 /* SOCIAL ICONS
  *******************/
 
@@ -38,7 +56,6 @@
   background-image: url('/img/social.png');
   width: 26px;
   height: 26px;
-  display: inline-block;
   .box-transition(opacity 0.2s linear);
 }
 

@@ -1,5 +1,39 @@
 @import "../../defaults/common.less";
 
-.entry-tools a{
+.tool-section {
   display: block;
+  padding: 8px;
+  background-color: @blue_light;
+  .box-radius(6px);
+  .box-shadow(1px 1px 1px @border);
+  margin-top: 20px;
+}
+
+.tool-section:first-child {
+  margin-top: 0;
+}
+
+.tool-section:hover {
+  text-decoration: none;
+  background-color: @blue_hover;
+}
+
+.tool-section:hover .highlighted-link {
+  text-decoration: underline;
+}
+
+.tool-icon {
+  position: absolute;
+}
+
+.tool-description {
+  margin-left: 32px + 8px; /* 32px accounts for the icons */
+  min-height: 32px; /* accounts for the icons */
+}
+
+.tool-description p {
+  margin-top: 6px;
+  font-size: 0.9em;
+  font-style: italic;
+  color: @strong;
 }
