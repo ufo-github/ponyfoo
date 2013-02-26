@@ -4,6 +4,7 @@
             complete(render, data);
         }else{
             nbrut.thin.get('entry', {
+                context: 'prepare',
                 done: function(it){
                     complete(render, data, it.entries)
                 }
@@ -14,6 +15,7 @@
     function complete(render, data, latest){
         nbrut.thin.get('entry', {
             id: data.query,
+            context: 'prepare',
             done: function(it){
                 render({
                     entries: it.entries || [it.entry],

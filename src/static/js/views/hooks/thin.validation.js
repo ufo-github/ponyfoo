@@ -20,11 +20,11 @@
             var context = this;
             if (context === window){
                 validationInDialog(validation);
-            }else{
+            }else if(context.jquery){
                 validationInContext(validation, context);
+            }else if(context.constructor === String && context.toString() === 'prepare'){
+                nbrut.tt.activateNotFound(); // 404
             }
-
-            nbrut.tt.reloadIfStuck();
         }
     }
 
@@ -46,14 +46,13 @@
     }
 
     function clearValidationMessages(){
-        var context = this;
-        if (context !== window){
-            removeMessageInContext(context);
-        }
+        removeMessageInContext(this);
     }
 
     function removeMessageInContext(context){
-        context.find('.validation-errors:first-child').remove();
+        if (context.jquery){
+            context.find('.validation-errors:first-child').remove();
+        }
     }
 
     nbrut.thin.hook('fail', validationMessages);

@@ -7,6 +7,12 @@ TODO
 - tagging
   - tagsoup below latest posts might be nice.
 
+- backend
+  - user profile list
+  - comments list
+
+
+
 2
 -------
 
@@ -21,10 +27,6 @@ TODO
 
 3
 -------
-
-- backend
-  - user profile list
-  - comments list
 
 - **domain fragmentation**
 
