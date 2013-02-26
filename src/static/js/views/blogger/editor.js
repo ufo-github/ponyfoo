@@ -28,6 +28,7 @@
         }else{
             nbrut.thin.get('entry', {
                 id: data.id,
+                context: 'prepare',
                 done: function(it){
                     render({
                         entry: it.entry,

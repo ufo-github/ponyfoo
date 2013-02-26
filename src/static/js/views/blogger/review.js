@@ -1,6 +1,7 @@
 !function (window,$,nbrut) {
     function prepare(render){
         nbrut.thin.get('entry', {
+            context: 'prepare',
             done: function(it){
                 render(it);
             }
