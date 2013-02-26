@@ -3,7 +3,6 @@
         nbrut.thin.get('user', {
             context: 'prepare',
             done: function(it){
-                console.log(it);
                 render(it);
             }
         });
