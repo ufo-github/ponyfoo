@@ -40,11 +40,14 @@ function blogger(req,res,next){
     }
 }
 
-function paged(api, path, cb){
-    var paging = '/p/:page([2-9]|[1-9][0-9]+)';
+function paged(api, path){
+    var paging = '/p/:page([2-9]|[1-9][0-9]+)',
+        callbacks = $.args(arguments).slice(2),
+        regular = [path].concat(callbacks),
+        paged = [path + paging].concat(callbacks);
 
-    api.get(path, cb);
-    api.get(path + paging, cb);
+    api.get.apply(null, regular);
+    api.get.apply(null, paged);
 }
 
 function routeEntries(api){
@@ -91,7 +94,9 @@ function routeComments(api){
 }
 
 function routeUsers(api){
-    api.get('/user/:id([a-f0-9]{24})', user.get);
+    paged(api, '/user', blogger, user.get);
+
+    api.get('/user/:id([a-f0-9]{24})', user.getById);
     api.put('/user/:id([a-f0-9]{24})', connected, user.upd);
 }
 

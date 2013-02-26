@@ -83,6 +83,17 @@ function badRequest(req, res, data){
     });
 }
 
+function wrapCallback(res, map){
+    return function (err,response){
+        resHandler(err, {
+            res: res,
+            then: function(){
+                end(res,map ? map(response) : response);
+            }
+        });
+    };
+}
+
 module.exports = {
     head: head,
     write: write,
@@ -90,5 +101,6 @@ module.exports = {
     resHandler: resHandler,
     unauthorized: unauthorized,
     notFound: notFound,
-    badRequest: badRequest
+    badRequest: badRequest,
+    wrapCallback: wrapCallback
 };

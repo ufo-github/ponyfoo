@@ -111,7 +111,9 @@ function getJs(){
         { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.edit.js' },
 
         { profile: 'blogger', local: '/js/views/blogger/editor.js' },
-        { profile: 'blogger', local: '/js/views/blogger/review.js' }
+        { profile: 'blogger', local: '/js/views/blogger/review.js' },
+        { profile: 'blogger', local: '/js/views/blogger/comments.js' },
+        { profile: 'blogger', local: '/js/views/blogger/users.js' }
     ];
 
     if(config.tracking.code !== undefined){

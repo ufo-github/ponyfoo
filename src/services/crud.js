@@ -1,4 +1,5 @@
-var $ = require('./$.js'),
+var async = require('async'),
+    $ = require('./$.js'),
     rest = require('./rest.js');
 
 function getCallback(opts){
@@ -38,6 +39,46 @@ function crud(model){
         model.remove(query, callback);
     }
 
+    function list(opts,done){
+        var page = parseInt(opts.page || 1),
+            lim = opts.limit || opts.hardLimit,
+            index = (page-1) * lim,
+            where = model.find(opts.query || {});
+
+        async.parallel({
+            documents: function(cb){
+                where.sort('-date').skip(index).limit(lim).exec(function(err, documents){
+                    if(err){
+                        cb(err);
+                        return;
+                    }
+                    if (opts.mapper){
+                        opts.mapper(documents, cb);
+                    }else{
+                        cb(null, documents);
+                    }
+                });
+            },
+            paging: function(cb){
+                where.count().exec(function(err,count){
+                    cb(err, {
+                        page: page,
+                        index: index,
+                        limit: lim,
+                        total: count,
+                        next: count > index + lim ? page + 1 : false
+                    });
+                });
+            }
+        }, function(err,results){
+            if (results.documents && opts.listName){
+                results[opts.listName] = results.documents;
+                delete results.documents;
+            }
+            done(err,results);
+        });
+    }
+
     var http = {
         remove: function(req,res){
             remove({ _id: req.params.id }, {
@@ -50,6 +91,7 @@ function crud(model){
         create: create,
         update: update,
         remove: remove,
+        list: list,
         http: http
     }
 }

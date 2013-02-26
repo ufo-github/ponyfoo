@@ -1,20 +1,6 @@
 !function (window,$,nbrut,undefined) {
     function validationMessages(xhr, textStatus){
-        var response, validation;
-
-        if(textStatus === 'timeout'){
-            validation = ['The matrix is not responding to your request'];
-        }else if(!!xhr.responseText){
-            response = JSON.parse(xhr.responseText);
-
-            if(xhr.status === 400){ // request validation failed
-                validation = response.error.data.validation;
-            }else if(xhr.status === 404){ // resource not found
-                validation = ['Resource not found in the matrix. Try again later'];
-            }else if(xhr.status === 500){ // mayhem!
-                validation = ['Oops! The matrix won\'t cooperate with your request'];
-            }
-        }
+        var validation = parseResponseText(xhr, textStatus);
 
         if($.isArray(validation)){
             var context = this;
@@ -25,6 +11,35 @@
             }else if(context.constructor === String && context.toString() === 'prepare'){
                 nbrut.tt.activateNotFound(); // 404
             }
+        }
+    }
+
+    function parseResponseText(xhr, textStatus){
+        var response, notFound = ['Resource not found in the matrix. Try again later'];
+
+        if(textStatus === 'timeout'){
+            return ['The matrix is not responding to your request'];
+        }
+        if(!xhr.responseText){
+            return;
+        }
+
+        try{
+            response = JSON.parse(xhr.responseText);
+        }catch(e){
+            return notFound;
+        }
+
+        if(xhr.status === 400){ // request validation failed
+            try{
+                return response.error.data.validation;
+            }catch(e){
+                return notFound;
+            }
+        }else if(xhr.status === 404){ // resource not found
+            return notFound;
+        }else if(xhr.status === 500){ // mayhem!
+            return ['Oops! The matrix won\'t cooperate with your request'];
         }
     }
 

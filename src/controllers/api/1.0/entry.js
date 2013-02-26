@@ -24,66 +24,34 @@ function mapRequestToQuery(req){
     };
 }
 
-function wrapCallback(res, map){
-    return function (err,response){
-        rest.resHandler(err, {
-            res: res,
-            then: function(){
-                rest.end(res,map ? map(response) : response);
-            }
-        });
-    };
-}
-
-function list(opts,done){
-    var page = parseInt(opts.page || 1),
-        lim = opts.limit || apiConf.paging.limit,
-        index = (page-1) * lim,
-        where = model.find(opts.query || {});
-
-    async.parallel({
-        entries: function(cb){
-            where.sort('-date').skip(index).limit(lim).exec(function(err, documents){
+function list(opts,then){
+    opts.listName = 'entries';
+    opts.hardLimit = apiConf.paging.limit;
+    opts.mapper = function(documents, cb){
+        async.map(documents, function(document, done){
+            discussion.find({ entry: document._id }, function(err, discussions){
                 if(err){
                     done(err);
                     return;
                 }
 
-                async.map(documents, function(document, done){
-                    discussion.find({ entry: document._id }, function(err, discussions){
-                        if(err){
-                            done(err);
-                            return;
-                        }
+                var result = document.toObject();
+                result.commentCount = discussions.reduce(function(accumulator, discussion) {
+                    return accumulator + discussion.comments.length;
+                }, 0);
+                done(null, result);
+            });
+        }, cb);
+    };
 
-                        var result = document.toObject();
-                        result.commentCount = discussions.reduce(function(accumulator, discussion) {
-                            return accumulator + discussion.comments.length;
-                        }, 0);
-                        done(null, result);
-                    });
-                }, cb);
-            });
-        },
-        paging: function(cb){
-            where.count().exec(function(err,count){
-                cb(err, {
-                    page: page,
-                    index: index,
-                    limit: lim,
-                    total: count,
-                    next: count > index + lim ? page + 1 : false
-                });
-            });
-        }
-    },done);
+    crud.list(opts, then);
 }
 
 function restList(req,res,query){
     list({
         query: query,
         page: req.params.page
-    }, wrapCallback(res));
+    }, rest.wrapCallback(res));
 }
 
 function restOne(res, query){
@@ -92,7 +60,7 @@ function restOne(res, query){
             throw err;
         }
 
-        unwrapSiblings(entry, wrapCallback(res, function(result){
+        unwrapSiblings(entry, rest.wrapCallback(res, function(result){
             return { entry: result };
         }));
     });

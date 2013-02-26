@@ -1,7 +1,24 @@
 var mongoose = require('mongoose'),
+    async = require('async'),
+    apiConf = require('../config.js'),
     validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
-    user = require('../../../models/user.js');
+    user = require('../../../models/user.js'),
+    crud = require('../../../services/crud.js')(user);
+
+function list(req,res){
+    var opts = {
+        listName: 'users',
+        hardLimit: apiConf.paging.limit,
+        page: req.params.page,
+        mapper: function(documents, cb){
+            async.map(documents, function(document, done){
+                done(null, userView(document));
+            }, cb);
+        }
+    };
+    crud.list(opts, rest.wrapCallback(res));
+}
 
 function find(req,res){
     var id = mongoose.Types.ObjectId(req.params.id);
@@ -16,19 +33,23 @@ function find(req,res){
             res:res,
             then: function(){
                 rest.end(res,{
-                    user: {
-                        _id: document._id,
-                        created: document.created,
-                        displayName: document.displayName,
-                        gravatarLarge: document.gravatarLarge,
-                        website: document.website,
-                        bio: document.bio,
-                        passwordUndefined: document.password === undefined
-                    }
+                    user: userView(document)
                 });
             }
         });
     });
+}
+
+function userView(document){
+    return {
+        _id: document._id,
+        created: document.created,
+        displayName: document.displayName,
+        gravatarLarge: document.gravatarLarge,
+        website: document.website,
+        bio: document.bio,
+        passwordUndefined: document.password === undefined
+    };
 }
 
 function validate(req,res){
@@ -90,6 +111,7 @@ function upd(req,res){
 }
 
 module.exports = {
-    get: find,
+    get: list,
+    getById: find,
     upd: upd
 };
