@@ -1,5 +1,16 @@
 !function (window,nbrut) {
     nbrut.tt.register({
+        key: 'blogger-tools',
+        source: '#blogger-tools-template',
+        mustache: true,
+        aliases: [{
+            title: 'Blogger Tools',
+            route: '/blogger',
+            trigger: '#blogger-tools'
+        }]
+    });
+
+    nbrut.tt.register({
         key: 'entry-editor',
         source: '#entry-editor-template',
         mustache: true,
@@ -29,8 +40,7 @@
         mustache: true,
         aliases: [{
             title: 'Review',
-            route: '/blogger/entry/review',
-            trigger: '#review-entries'
+            route: '/blogger/entry/review'
         }]
     });
 

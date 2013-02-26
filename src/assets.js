@@ -43,6 +43,7 @@ function getCss(){
         '/css/views/blog/comments.less',
         { profile: ['blogger', 'registered'], local: '/css/views/blog/comments.registered.less' },
 
+        { profile: 'blogger', local: '/css/views/blogger/index.less' },
         { profile: 'blogger', local: '/css/views/blogger/editor.less' },
         { profile: 'blogger', local: '/css/views/blogger/review.less' }
     ];

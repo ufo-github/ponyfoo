@@ -2,12 +2,13 @@ extends layout
 
 block menu
   include _registered-menu
-  a#review-entries(href='/blogger/entry/review')='Review'
+  a.hint#blogger-tools(href='/blogger', data-hint='Access tools to manage your blog')='Blogger Tools'
   a.button#write-entry(href='/blogger/entry')='Write'
 
 block templates
   include _registered-templates
 
+  include ../blogger/index
   include ../blogger/editor
   include ../blogger/review
   include ../blogger/review-list
