@@ -1,9 +1,11 @@
 var mongoose = require('mongoose'),
+    async = require('async'),
     apiConf = require('../config.js'),
     validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
     discussion = require('../../../models/discussion.js'),
-    comment = require('../../../models/comment.js');
+    comment = require('../../../models/comment.js'),
+    crud = require('../../../services/crud.js')(discussion);
 
 function discuss(req,res){
     var id = mongoose.Types.ObjectId(req.params.entryId);
@@ -180,8 +182,36 @@ function edit(req,res){
     });
 }
 
+function discussions(req,res){
+    crud.list({
+        listName: 'discussions',
+        limit: apiConf.paging.limit,
+        page: req.params.page,
+        sort: '-date',
+        mapper: function(documents, cb){
+            async.map(documents, function(document, done){
+                done(null, {
+                    _id: document._id,
+                    comments: document.comments,
+                    last: document.comments[document.comments.length - 1]
+                });
+            }, function(err, documents){
+                if(err){
+                    cb(err);
+                    return;
+                }
+
+                cb(null, documents.sort(function(a, b){
+                    return a.last.date < b.last.date ? -1 : 1;
+                }));
+            });
+        }
+    }, rest.wrapCallback(res));
+}
+
 module.exports = {
     get: list,
+    discussions: discussions,
     discuss: discuss,
     reply: reply,
     del: del,

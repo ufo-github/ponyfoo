@@ -41,11 +41,13 @@
     }
 
     function commentHook(data){
-        if (data.discussions !== undefined){
-            data.discussions.forEach(function(discussion){
-                discussion.comments.forEach(addCommentProperties);
+        $.each(data.discussions || [], function(){
+            var discussion = this;
+            $.each(discussion.comments || [], function(){
+                addCommentProperties(this);
             });
-        }
+            addCommentProperties(discussion.last);
+        });
     }
 
     function commentPutHook(data){
@@ -55,8 +57,17 @@
     }
 
     function addCommentProperties(comment){
-        comment.html = html(comment.text);
-        comment.css = 'blog-comment-author' + (comment.author.blogger ? ' blogger' : '');
+        if (comment !== undefined){
+            comment.date = new Date(comment.date);
+
+            var m = moment(comment.date);
+
+            comment.dateText = m.format();
+            comment.timeAgo = m.fromNow();
+
+            comment.html = html(comment.text);
+            comment.css = 'blog-comment-author' + (comment.author.blogger ? ' blogger' : '');
+        }
     }
 
     function userHook(data){
@@ -95,6 +106,11 @@
     nbrut.thin.hook({
         eventName: 'done',
         context: 'GET comment'
+    }, commentHook);
+
+    nbrut.thin.hook({
+        eventName: 'done',
+        context: 'GET discussion'
     }, commentHook);
 
     nbrut.thin.hook({

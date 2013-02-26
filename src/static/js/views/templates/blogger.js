@@ -67,12 +67,18 @@
     });
 
     nbrut.tt.register({
-        key: 'blogger-comments',
-        source: '#blogger-comments-template',
+        key: 'blogger-discussions',
+        source: '#blogger-discussions-template',
         mustache: true,
         aliases: [{
-            title: 'Review Comments',
-            route: '/blogger/comments'
+            title: 'Review Discussions',
+            route: '/blogger/discussions'
         }]
+    });
+
+    nbrut.tt.register({
+        key: 'discussion-rows',
+        source: '#discussion-rows-template',
+        mustache: true
     });
 }(window,nbrut);

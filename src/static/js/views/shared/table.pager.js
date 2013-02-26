@@ -18,11 +18,14 @@
                 done: function(it){
                     var tbody = table.find('tbody'),
                         partial = nbrut.tt.partial(viewModel.partial, it),
-                        rows = partial.appendTo(tbody);
+                        appended = partial.appendTo(tbody),
+                        rows = appended.children();
 
                     rows.find('tr:first').addClass('table-page-separator');
-                    rows.children().unwrap(); // remove the tbody that comes with the partial
+                    rows.unwrap(); // remove the tbody that comes with the partial
                     container.remove();
+
+                    (viewModel.then || $.noop)(rows);
 
                     bindNextPager(viewModel, it.paging);
                 }

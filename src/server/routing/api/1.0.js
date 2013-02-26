@@ -78,10 +78,13 @@ function routeEntries(api){
 function routeComments(api){
     var routeEntry = '/entry/:entryId([0-9a-f]{24})',
         routeComment = routeEntry + '/comment',
-        routeReply = '/discussion/:id([a-f0-9]{24})/comment',
+        routeDiscussion = '/discussion',
+        routeReply = routeDiscussion + '/:id([a-f0-9]{24})/comment',
         routeOne = routeReply + '/:commentId([a-f0-9]{24})';
 
     // get discussion threads
+    paged(api, routeDiscussion, blogger, comment.discussions);
+
     api.get(routeComment, comment.get);
 
     // insert discussion, comment

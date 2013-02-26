@@ -5,8 +5,9 @@ TODO
 -------
 
 - backend
-  - discussion list
+  - go to discussion
 
+- handle gravatar sizes in client-side hooks
 - login-redirect
 
 
