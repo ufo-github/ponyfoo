@@ -4,7 +4,7 @@
         day = month + '(0[1-9]|[12][0-9]|3[01])\/',
         slug = day + '([a-z0-9\-]+)',
         comments = slug + '(#comments)',
-        commentThread = slug + '(#comment-thread-[a-z0-9\-]+)';
+        commentThread = slug + '(#thread-[a-z0-9\-]+)';
 
     function getEntryRoute(regex){
         var searching = regex.indexOf('\/search') === 0,
