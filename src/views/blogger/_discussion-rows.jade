@@ -4,7 +4,7 @@ tr.discussion-row
     span(data-hint='last updated {{last.timeAgo}}')='{{last.dateText}}'
 
   td.user-icon
-    a(href='/user/profile/{{last.author.id}}', data-hint='See profile')
+    a(href='/user/profile/{{last.author.id}}', data-hint="See {{last.author.displayName}}'s profile")
       img.user-gravatar.tiny(data-src='{{last.author.gravatar}}')
 
   td.entry
