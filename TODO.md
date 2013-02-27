@@ -4,8 +4,10 @@ TODO
 1
 -------
 
+- StackOverflow oauth
+
 - profiles expansion
-  - profile options to reveal or hide: rss/email(in profile and flip card)/git/linkedin (Add provider) / fb / SO
+  - profile options to reveal or hide: rss/email(in profile and flip card) / git / linkedin / fb / SO
   - flip card backside shows an extract of user bio (set independently)
 
 - **domain fragmentation**

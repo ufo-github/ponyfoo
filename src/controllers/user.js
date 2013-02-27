@@ -98,6 +98,7 @@ module.exports = {
     facebook: provider('facebook', { scope: 'email' }),
     github: provider('github'),
     google: provider('google'),
+    linkedin: provider('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }),
 
     logout: function(req,res){
         req.logout();

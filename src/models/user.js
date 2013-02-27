@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
         facebookId: { type: String },
         githubId: { type: String },
         googleId: { type: String },
+        linkedinId: { type: String },
         website: {
             title: { type: String },
             url: { type: String }

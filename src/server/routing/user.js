@@ -17,6 +17,7 @@ function configure(server){
     configureProvider('facebook');
     configureProvider('github');
     configureProvider('google');
+    configureProvider('linkedin');
 }
 
 module.exports = {

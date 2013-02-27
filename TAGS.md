@@ -8,7 +8,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 0.3 (tip)
 ============
 
--
+- Registration and Login Providers
+  - Added LinkedIn
 
 
 
@@ -60,7 +61,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Also Markdown flavored
   
 - Users
-  - OAuth, OpenID and traditional logon
+  - OAuth, OpenID and traditional logon (GitHub, Facebook, Google)
   - Gravatars
   - Profiles
   - Commenting

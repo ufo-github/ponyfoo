@@ -115,6 +115,12 @@ var config = {
         google: {
             link: '/user/login/google',
             callback: '/user/login/google/callback'
+        },
+        linkedin: {
+            id: process.env.LINKEDIN_API_KEY,
+            secret: process.env.LINKEDIN_API_SECRET,
+            link: '/user/login/linkedin',
+            callback: '/user/login/linkedin/callback'
         }
     },
     uploads: {

@@ -4,7 +4,8 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GoogleStrategy = require('passport-google').Strategy,
-    GitHubStrategy = require('passport-github').Strategy;
+    GitHubStrategy = require('passport-github').Strategy,
+    LinkedInStrategy = require('passport-linkedin').Strategy;
 
 function setupLocal(){
     passport.use(new LocalStrategy({
@@ -37,8 +38,23 @@ function setupLocal(){
     ));
 }
 
-function setupOAuth(name, strategy){
-    var opts =  {
+function setupOAuth1(name, strategy, fields){
+    var opts = {
+        consumerKey: config.auth[name].id,
+        consumerSecret: config.auth[name].secret,
+        callbackURL: config.server.authority + config.auth[name].callback,
+        profileFields: fields
+    };
+
+    setupProvider(strategy, opts, function(token, tokenSecret, profile, done) {
+        var query = {};
+        query[name + 'Id'] = profile.id;
+        callback(query, profile, done);
+    });
+}
+
+function setupOAuth2(name, strategy){
+    var opts = {
         clientID: config.auth[name].id,
         clientSecret: config.auth[name].secret,
         callbackURL: config.server.authority + config.auth[name].callback
@@ -69,7 +85,8 @@ function setupProvider(type, config, cb){
 }
 
 function callback(query, profile, done) {
-    var email = profile.emails[0].value;
+    console.log(profile);
+    var email = profile.emails ? profile.emails[0].value : undefined;
     if(!email){
         done(null,false,'Unable to get email address');
         return;
@@ -123,9 +140,10 @@ function configure(done){
     });
 
     setupLocal();
-    setupOAuth('facebook', FacebookStrategy);
-    setupOAuth('github', GitHubStrategy);
+    setupOAuth2('facebook', FacebookStrategy);
+    setupOAuth2('github', GitHubStrategy);
     setupOpenId('google', GoogleStrategy);
+    setupOAuth1('linkedin', LinkedInStrategy, ['id', 'first-name', 'last-name', 'email-address']);
 
     process.nextTick(done);
 }
