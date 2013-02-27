@@ -4,7 +4,6 @@ TODO
 1
 -------
 
-- handle gravatar sizes in client-side hooks
 - login-redirect
 
 

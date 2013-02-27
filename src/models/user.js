@@ -18,23 +18,11 @@ var mongoose = require('mongoose'),
         bio: { type: String }
     },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-schema.virtual('gravatarLarge').get(function(){
+schema.virtual('gravatar').get(function(){
     var text = this.email,
         hash = crypto.createHash('md5').update(text).digest('hex');
 
     return config.avatar.url + hash + config.avatar.query;
-});
-
-schema.virtual('gravatar').get(function(){
-    return this.gravatarLarge + config.avatar.regular;
-});
-
-schema.virtual('gravatarSmall').get(function(){
-    return this.gravatarLarge + config.avatar.small;
-});
-
-schema.virtual('gravatarTiny').get(function(){
-    return this.gravatarLarge + config.avatar.tiny;
 });
 
 schema.pre('save', function(next) {

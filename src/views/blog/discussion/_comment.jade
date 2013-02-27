@@ -14,6 +14,6 @@ section.blog-comment(data-id='{{_id}}')
   section.blog-comment-body.clearfix
     section.blog-comment-gravatar
       a.user-gravatar-link(data-hint='See profile', href='/user/profile/{{author.id}}')
-        img.user-gravatar(data-src='{{author.gravatar}}')
+        img.user-gravatar(data-src='{{author.gravatar.regular}}')
 
     section.markdown.blog-comment-text='{{{html}}}'

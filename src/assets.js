@@ -128,6 +128,10 @@ function getJs(){
         js.push({ local: '/js/ext/analytics.jsn', context: { config: config } });
     }
 
+    if(config.env.development === true){
+        js.push('/js/debug.js');
+    }
+
     return js;
 }
 

@@ -45,8 +45,7 @@ function userView(document){
         _id: document._id,
         created: document.created,
         displayName: document.displayName,
-        gravatarLarge: document.gravatarLarge,
-        gravatarTiny: document.gravatarTiny,
+        gravatar: document.gravatar,
         website: document.website,
         bio: document.bio,
         passwordUndefined: document.password === undefined

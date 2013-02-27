@@ -5,7 +5,7 @@ tr.discussion-row
 
   td.user-icon
     a(href='/user/profile/{{last.author.id}}', data-hint="See {{last.author.displayName}}'s profile")
-      img.user-gravatar.tiny(data-src='{{last.author.gravatar}}')
+      img.user-gravatar.tiny(data-src='{{last.author.gravatar.tiny}}')
 
   td.entry
     a.highlighted-link(href='{{entry.permalink}}#thread-{{_id}}', data-hint='This thread has {{commentCount}}')='{{entry.title}}'

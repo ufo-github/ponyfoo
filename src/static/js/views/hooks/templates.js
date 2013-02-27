@@ -1,4 +1,5 @@
 !function (window,$,nbrut,undefined) {
+    // abort thin requests
     nbrut.tt.hook('deactivate', function(template){
         var layer = nbrut.thin;
 
@@ -46,7 +47,7 @@
         });
     });
 
-    // dialog display
+    // dialog focus and overlay
     nbrut.tt.hook('fill', function(container){
         var dialog = container.is('.dialog');
         if (dialog){

@@ -78,8 +78,12 @@
             var self = $(this),
                 original = self.css('backgroundColor');
 
-            self.animate({ backgroundColor: settings.color }, half)
-                .animate({ backgroundColor: original }, half);
+            if(!self.is(':animated')){
+                self.animate({ backgroundColor: settings.color }, half)
+                    .animate({ backgroundColor: original }, half, function(){
+                        self.css('backgroundColor', ''); // remove inline style
+                    });
+            }
         });
     };
 }(window, jQuery);

@@ -63,13 +63,16 @@
         if (comment !== undefined){
             comment.date = new Date(comment.date);
 
-            var m = moment(comment.date);
+            var m = moment(comment.date),
+                author = comment.author;
 
             comment.dateText = m.format();
             comment.timeAgo = m.fromNow();
 
             comment.html = html(comment.text);
-            comment.css = 'blog-comment-author' + (comment.author.blogger ? ' blogger' : '');
+            comment.css = 'blog-comment-author' + (author.blogger ? ' blogger' : '');
+
+            author.gravatar = expandGravatar(author.gravatar);
         }
     }
 
@@ -98,7 +101,19 @@
             user.bioHtml = nbrut.md.html(user.bio);
 
             user.passwordPlaceholder = user.passwordUndefined ? 'Leave blank or choose a password' : 'Leave blank or change your password';
+            user.gravatar = expandGravatar(user.gravatar);
         });
+    }
+
+    function expandGravatar(gravatar){
+        var dimensions = nbrut.avatar;
+
+        return {
+            tiny: gravatar + dimensions.tiny,
+            small: gravatar + dimensions.small,
+            regular: gravatar + dimensions.regular,
+            large: gravatar
+        };
     }
 
     nbrut.thin.hook({
