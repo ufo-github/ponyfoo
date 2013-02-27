@@ -1,5 +1,5 @@
 !function (window,$,nbrut, undefined) {
-    var ignored = ['/user/login','/user/register'],
+    var ignored = ['/','/user/login','/user/register'],
         prev;
 
     function prepare(render, data, ctx){
