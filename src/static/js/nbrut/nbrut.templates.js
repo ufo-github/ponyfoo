@@ -211,6 +211,12 @@
             deactivateContainer(template); // clean-up.
             settings.identifier = getHash();
 
+            var ctx = { identifier: settings.identifier };
+
+            if (activity.current !== undefined){
+                ctx.prev = document.location.pathname + document.location.hash; // preserve hash, too.
+            }
+
 			function render(viewModel, notFound){
                 if(settings.identifier !== getHash()){ // prevent mis-rendering when the user navigated away.
                     return;
@@ -219,10 +225,10 @@
                     activateNotFound();
                     return;
                 }
-				activateTemplate(template, settings, viewModel || {}, soft); // set-up.
+				activateTemplate(template, settings, viewModel || {}, ctx, soft); // set-up.
 			}
 
-			template.prepare(render, settings.data || {}, settings.identifier);
+			template.prepare(render, settings.data || {}, ctx);
         }
 
         function deactivateContainer(template) {
@@ -231,18 +237,19 @@
             config.container.off().removeClass().addClass(loader.css).empty().html(loader.html);
         }
 
-        function activateTemplate(template, settings, viewModel, soft){
-            var alias = getTemplateAlias(template, settings), title, url;
+        function activateTemplate(template, settings, viewModel, ctx, soft){
+            var alias = getTemplateAlias(template, settings), title, url, method, view;
             if (alias !== undefined){
                 title = setTitle(alias.title, viewModel, settings.data);
                 url = alias.route.get(settings.data);
             }else{ // template not found
                 title = setTitle(template.title, viewModel, settings.data);
-                url = document.location.pathname + document.location.hash; // preserve hash, too.
+                url = ctx.prev; // preserve current url
             }
 
-            var method = soft === 'replace' ? 'replaceState' : soft !== true ? 'pushState' : null;
-            if (method !== null){
+            if(soft !== true){
+                method = soft === 'replace' ? 'replaceState' : 'pushState';
+
                 history[method]({
                     key: template.key,
                     settings: settings
@@ -260,8 +267,9 @@
 
             viewModel.flash = settings.flash  || {};
             plugins.raise('beforeActivate', template, settings);
-            var view = partial(template.key, viewModel);
-            view.fill(config.container, settings.data || {}, settings.identifier);
+
+            view = partial(template.key, viewModel);
+            view.fill(config.container, settings.data || {}, ctx);
             plugins.raise('activated', config.container, template, viewModel, settings);
         }
 
@@ -279,7 +287,7 @@
                 html = template.dom.html;
             }
 
-            function fill(container, data, identifier, noEvent){
+            function fill(container, data, ctx, noEvent){
                 container.off().removeClass().addClass(template.dom.css).empty().html(html);
                 fixLocalRoutes(container);
                 bindBack(template);
@@ -292,12 +300,14 @@
                     plugins.raise('fill', where, viewModel, data || {}, template);
                 }
 
+                if (ctx === undefined){
+                    ctx = {};
+                }
+                ctx.elements = container.children();
+
                 return {
                     raise: raise,
-                    ctx: {
-                        identifier: identifier,
-                        elements: container.children()
-                    }
+                    ctx: ctx
                 };
             }
 
@@ -316,9 +326,9 @@
             }
 
             function render(internal){
-                return function(container, data, identifier){
-                    var fillResult = internal(container, data,identifier),
-                        ctx = fillResult.ctx;
+                return function(container, data, ctx){
+                    var fillResult = internal(container, data, ctx),
+                        ctx = fillResult.ctx; // the argument could be undefined, update
 
                     template.afterActivate(viewModel, data || {}, ctx);
                     return ctx.elements;
@@ -462,6 +472,7 @@
             register: register,
             configure: configure,
             getRoute: getRoute,
+            activity: activity,
             activate: activate,
             activateRoute: activateRoute,
             activateNotFound: activateNotFound,

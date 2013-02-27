@@ -11,7 +11,7 @@
             var table = viewModel.table,
                 loading = 'Loading {0}...'.format(viewModel.friendlyName);
 
-            link.text(loading).addClass('table-pager-loading');
+            link.text(loading).addClass('table-pager-loading').removeClass('hint');
 
             nbrut.thin.get(viewModel.what, {
                 id: query + page,

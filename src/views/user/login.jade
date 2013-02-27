@@ -1,9 +1,11 @@
-section#user-login-template.template(data-class='user-login')
-  h1='User Login'
+section#user-login-template.template(data-class='user-authentication')
+  h1='Sign In'
 
   include _providers
 
-  form.login-form(method='post', action='/user/login')
+  form.authentication-form(method='post', action='/user/login')
+    input(type='hidden', name='redirect', value='{{prev}}')
+
     fieldset
       p
         label(for='login-email')='Email'
@@ -13,5 +15,5 @@ section#user-login-template.template(data-class='user-login')
         label(for='login-password')='Password'
         input#login-password(type='password', name='password', placeholder='Input your password')
 
-    p.login-button
+    p.authentication-button
       input.button(type='submit', value='Login')

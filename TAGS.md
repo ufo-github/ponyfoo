@@ -37,6 +37,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Paged list of registered users, sorted by registration date
   - Paged list of discussion threads, sorted by last updated
 
+- Login and Register redirect to the last relevant view
+
 
   
 0.1 (frozen)

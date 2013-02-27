@@ -51,7 +51,7 @@ function register(req,res, next){
                     if (err) {
                         return next(err);
                     }
-                    return res.redirect(config.auth.success);
+                    next();
                 });
             }
         });
@@ -59,7 +59,6 @@ function register(req,res, next){
 }
 
 var authOpts =  {
-    successRedirect: config.auth.success,
     failureRedirect: config.auth.login,
     failureFlash: true
 };
@@ -71,16 +70,29 @@ function provider(name, options){
     };
 }
 
+function rememberReturnUrl(req,res,next){
+    req.session.redirect = req.query.redirect;
+    next();
+}
+
+function redirect(req,res){
+    var sessionRedirect = req.session.redirect;
+    delete req.session.redirect;
+    res.redirect(req.body.redirect || sessionRedirect || config.auth.success);
+}
+
 module.exports = {
     guard: function(req,res,next){
         if(!!req.user){
-            return res.redirect(config.auth.success);
+            redirect(req,res);
         }
-        return next();
+        next();
     },
 
-    register: register,
+    rememberReturnUrl: rememberReturnUrl,
+    redirect: redirect,
 
+    register: register,
     local: passport.authenticate('local', authOpts),
 
     facebook: provider('facebook', { scope: 'email' }),

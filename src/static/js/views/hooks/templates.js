@@ -1,38 +1,38 @@
 !function (window,$,nbrut,undefined) {
+    var tt = nbrut.tt;
+
     // abort thin requests
-    nbrut.tt.hook('deactivate', function(template){
+    tt.hook('deactivate', function(template){
         var layer = nbrut.thin;
 
-        if(template.container !== nbrut.tt.defaults.container){
+        if(template.container !== tt.defaults.container){
             layer = layer.thinner(template.container);
         }
         layer.abort();
     });
 
-    // scroll to hash
-    nbrut.tt.hook('fill', function(container, viewModel, data){
+    // hash auto-scrolling
+    tt.hook('fill', function(container, viewModel, data){
         if(data.hash !== undefined){
-            var filter = '[data-hash-autoscroll][data-hash={0}]',
-                hash = data.hash.substr(1),
-                selector = filter.format(hash),
-                element = container.find(selector);
+            var autoscroll = data.hash + '[data-hash-autoscroll]',
+                element = container.find(autoscroll);
 
             element.scrollIntoView();
         }
     });
 
     // parse data-src in images
-    nbrut.tt.hook('fill', function(container){
+    tt.hook('fill', function(container){
         container.loadImages();
     });
 
     // tooltip hints
-    nbrut.tt.hook('fill', function(container){
+    tt.hook('fill', function(container){
         container.hints(true);
     });
 
     // close buttons
-    nbrut.tt.hook('fill', function (container){
+    tt.hook('fill', function (container){
         var close = container.find('.close');
 
         container.on('container.close', function(){
@@ -48,7 +48,7 @@
     });
 
     // dialog focus and overlay
-    nbrut.tt.hook('fill', function(container){
+    tt.hook('fill', function(container){
         var dialog = container.is('.dialog');
         if (dialog){
             container.center().hide().fadeIn('fast', function(){

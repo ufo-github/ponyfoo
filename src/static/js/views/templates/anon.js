@@ -2,6 +2,7 @@
     nbrut.tt.register({
         key: 'user-register',
         source: '#user-register-template',
+        mustache: true,
         aliases: [{
             title: 'Register',
             route: '/user/register',
@@ -12,6 +13,7 @@
     nbrut.tt.register({
         key: 'user-login',
         source: '#user-login-template',
+        mustache: true,
         aliases: [{
             title: 'Login',
             route: '/user/login',

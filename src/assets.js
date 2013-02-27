@@ -37,8 +37,7 @@ function getCss(){
         '/css/views/user/profile.less',
         { profile: ['blogger', 'registered'], local: '/css/views/user/profile.edit.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
-        { profile: 'anon', local: '/css/views/user/register.less' },
-        { profile: 'anon', local: '/css/views/user/login.less' },
+        { profile: 'anon', local: '/css/views/user/authentication.less' },
 
         '/css/views/blog/entries.less',
         '/css/views/blog/comments.less',
@@ -108,8 +107,7 @@ function getJs(){
         '/js/views/markdown/prompts.js',
 
         '/js/views/user/profile.js',
-        { profile: 'anon', local: '/js/views/user/login.js' },
-        { profile: 'anon', local: '/js/views/user/register.js' },
+        { profile: 'anon', local: '/js/views/user/authentication.js' },
         { profile: ['blogger', 'registered'], local: '/js/views/user/profile.edit.js' },
 
         '/js/views/blog/search.js',
