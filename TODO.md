@@ -4,7 +4,6 @@ TODO
 1
 -------
 
-- flash when hash loading
 - handle gravatar sizes in client-side hooks
 - login-redirect
 

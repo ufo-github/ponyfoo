@@ -12,12 +12,14 @@
         });
     };
 
-    $.fn.scrollIntoView = function () {
+    $.fn.scrollIntoView = function(then) {
         var self = $(this);
         if (self.length > 0 && !self.inView()){
-            $('html, body').animate({
+            $('body').animate({
                 scrollTop: self.position().top - 30
-            }, 'fast');
+            }, 'fast', then);
+        }else if(then){
+            then.call(self);
         }
 
         return this;

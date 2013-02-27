@@ -161,7 +161,7 @@
             },
             done: function(it){
                 var list = nbrut.tt.partial('discussion-list', it),
-                    discussions = list.appendTo(container), actions;
+                    discussions = list.appendTo(container), actions, anchor;
 
                 if(nbrut.locals.connected){
                     actions = nbrut.tt.partial('discussion-actions', { entryId: entry._id });
@@ -180,7 +180,10 @@
                 }
 
                 if (data.hash !== undefined){ // hashes target comment anchors
-                    discussions.find(data.hash).scrollIntoView();
+                    anchor = discussions.find(data.hash);
+                    anchor.scrollIntoView(function(){
+                        anchor.flash('#ffc');
+                    });
                 }
             }
         });
