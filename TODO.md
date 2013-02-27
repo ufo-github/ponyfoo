@@ -4,8 +4,7 @@ TODO
 1
 -------
 
-- backend
-  - go to discussion
+- comment review: link needs
 
 - handle gravatar sizes in client-side hooks
 - login-redirect

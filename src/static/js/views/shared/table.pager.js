@@ -15,13 +15,14 @@
 
             nbrut.thin.get(viewModel.what, {
                 id: query + page,
+                context: table,
                 done: function(it){
                     var tbody = table.find('tbody'),
                         partial = nbrut.tt.partial(viewModel.partial, it),
                         appended = partial.appendTo(tbody),
                         rows = appended.children();
 
-                    rows.find('tr:first').addClass('table-page-separator');
+                    rows.first().addClass('table-page-separator');
                     rows.unwrap(); // remove the tbody that comes with the partial
                     container.remove();
 

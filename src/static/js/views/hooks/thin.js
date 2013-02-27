@@ -42,11 +42,14 @@
 
     function commentHook(data){
         $.each(data.discussions || [], function(){
-            var discussion = this;
-            $.each(discussion.comments || [], function(){
+            var discussion = this,
+                comments = discussion.comments;
+
+            $.each(comments || [], function(){
                 addCommentProperties(this);
             });
             addCommentProperties(discussion.last);
+            discussion.commentCount = '{0} comment{1}'.format(comments.length, comments.length === 1 ? '' : 's');
         });
     }
 

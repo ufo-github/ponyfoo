@@ -3,23 +3,23 @@
         month = year + '(0[1-9]|1[0-2])\/',
         day = month + '(0[1-9]|[12][0-9]|3[01])\/',
         slug = day + '([a-z0-9\-]+)',
-        commentsHash = '#comments',
-        commentsSection = slug + '(?:{0})'.format(commentsHash);
+        comments = slug + '(#comments)',
+        commentThread = slug + '(#comment-thread-[a-z0-9\-]+)';
 
     function getEntryRoute(regex){
         var searching = regex.indexOf('\/search') === 0,
-            comments = regex.indexOf(commentsHash) !== -1,
-            prefix = searching ? 'search/' : '',
-            hash = comments ? commentsHash : undefined;
+            hashed = regex.indexOf('#') !== -1,
+            prefix = searching ? 'search/' : '';
 
         return {
             regex: new RegExp(regex),
             get: function(data){
                 var sanitized = data.query.replace(/ /g,'+');
-                return '/{0}{1}'.format(sanitized, hash || '');
+                return '/{0}{1}'.format(sanitized, data.hash || '');
             },
             map: function(captures){
-                var terms = captures.slice(1).join('/'),
+                var hash = hashed ? captures.pop() : undefined,
+                    terms = captures.slice(1).join('/'),
                     decoded = decodeURIComponent(terms).replace(/\+/g,' ');
 
                 return {
@@ -69,7 +69,11 @@
         },{
             key: 'one-comments',
             title: oneTitle,
-            route: getEntryRoute(commentsSection + '$')
+            route: getEntryRoute(comments + '$')
+        },{
+            key: 'one-comment-thread',
+            title: oneTitle,
+            route: getEntryRoute(commentThread + '$')
         },{
             key: 'search',
             title: function(viewModel,data){

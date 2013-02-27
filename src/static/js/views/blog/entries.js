@@ -179,8 +179,8 @@
                     authenticate.appendTo(discussions);
                 }
 
-                if (data.hash === '#comments'){
-                    discussions.find('.blog-entry-title').scrollIntoView();
+                if (data.hash !== undefined){ // hashes target comment anchors
+                    discussions.find(data.hash).scrollIntoView();
                 }
             }
         });
