@@ -58,6 +58,7 @@ function getJs(){
         config.jQuery.asset,
         '/js/libs/moment.min.js',
         '/js/libs/mustache.js',
+        '/js/libs/jquery.color-2.1.1.js',
         '/js/libs/jquery.ui.widget.js',
         '/js/libs/jquery.fileupload.js',
         '/js/libs/jquery.textarearesizer.min.js',
@@ -65,10 +66,13 @@ function getJs(){
         '/js/libs/Markdown.Sanitizer.js',
         '/js/libs/prettify.js',
 
-        '/js/ext/prettify.extensions.js',
+        '/js/ext/String.js',
+        '/js/ext/prettify.js',
+        '/js/ext/jquery.layout.js',
+        '/js/ext/jquery.ui.js', // not the well known, huge, jQuery UI. just a few extensions
+        '/js/ext/jquery.nbrut.js',
 
         // nbrut
-        '/js/nbrut/nbrut.extensions.js',
         '/js/nbrut/nbrut.core.js',
         { local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
         '/js/nbrut/nbrut.pluginFactory.js',
