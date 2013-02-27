@@ -5,7 +5,14 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 
 
-0.2 (tip)
+0.3 (tip)
+============
+
+-
+
+
+
+0.2 (frozen)
 ============
 
 - Design
