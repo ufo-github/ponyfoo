@@ -1,23 +1,20 @@
 @import "../../defaults/common.less";
 
+.discussion-row {
+  border-top: 1px solid @border;
+}
+
+.discussion-row:first-child {
+  border-top: none;
+}
+
 .discussion-row td {
   vertical-align: top;
   padding-top: 5px;
   padding-bottom: 5px;
+  white-space: nowrap;
 }
 
-.discussion-row .date {
-  width: 85px;
-}
-
-.discussion-row .user-icon {
-  width: 30px;
-}
-
-.discussion-row .user-displayName {
-  width: 160px;
-}
-
-.discussion-row .discussion-actions {
-  width: 24px;
+.discussion-row .comment {
+  width: 100%;
 }

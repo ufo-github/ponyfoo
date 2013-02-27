@@ -203,7 +203,8 @@ function discussions(req,res){
                         last: document.comments[document.comments.length - 1],
                         entry: {
                             _id: document.entry,
-                            permalink: entry.permalink
+                            permalink: entry.permalink,
+                            title: entry.title
                         }
                     });
                 });
