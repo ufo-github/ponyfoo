@@ -11,7 +11,7 @@
             var table = viewModel.table,
                 loading = 'Loading {0}...'.format(viewModel.friendlyName);
 
-            link.text(loading).css({ cursor: 'wait' });
+            link.text(loading).addClass('table-pager-loading');
 
             nbrut.thin.get(viewModel.what, {
                 id: query + page,
