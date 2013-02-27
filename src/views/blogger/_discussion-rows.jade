@@ -12,5 +12,5 @@ tr.discussion-row
 
   td.comment='{{{last.html}}}'
   td.discussion-actions
-    a.action.follow(href='#comment-thread-{{_id}}', title='Navigate to this discussion thread ({{commentCount}})')='Follow'
+    a.action.follow(href='{{entry.permalink}}#comment-thread-{{_id}}', title='Navigate to this discussion thread ({{commentCount}})')='Follow'
 // {{/discussions}}

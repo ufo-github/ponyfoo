@@ -4,8 +4,7 @@ TODO
 1
 -------
 
-- comment review: link needs
-
+- flash when hash loading
 - handle gravatar sizes in client-side hooks
 - login-redirect
 

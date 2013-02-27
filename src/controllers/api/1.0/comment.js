@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     rest = require('../../../services/rest.js'),
     discussion = require('../../../models/discussion.js'),
     comment = require('../../../models/comment.js'),
+    entry = require('../../../models/entry.js'),
     crud = require('../../../services/crud.js')(discussion);
 
 function discuss(req,res){
@@ -190,10 +191,21 @@ function discussions(req,res){
         sort: '-date',
         mapper: function(documents, cb){
             async.map(documents, function(document, done){
-                done(null, {
-                    _id: document._id,
-                    comments: document.comments,
-                    last: document.comments[document.comments.length - 1]
+                entry.findOne({ _id: document.entry }, function(err, entry){
+                    if(err){
+                        done(err);
+                        return;
+                    }
+
+                    done(null, {
+                        _id: document._id,
+                        comments: document.comments,
+                        last: document.comments[document.comments.length - 1],
+                        entry: {
+                            _id: document.entry,
+                            permalink: entry.permalink
+                        }
+                    });
                 });
             }, function(err, documents){
                 if(err){
