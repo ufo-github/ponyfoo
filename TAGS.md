@@ -8,6 +8,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 0.3 (tip)
 ============
 
+- **Blog Schema**
+
 - Registration and Login Providers
   - Added LinkedIn
 

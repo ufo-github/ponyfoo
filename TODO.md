@@ -5,7 +5,7 @@ TODO
 -------
 
 - profiles expansion
-  - use blog info in about flip-card
+  - use blog info in about flip-card (set up a "blog" local context for each request)
 
 - **domain fragmentation**
 
