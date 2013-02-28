@@ -20,4 +20,9 @@
     $.ajaxSetup({
         timeout: 20000 // long-polling sets it's own timeout anyways
     });
+
+    var loc = document.location;
+    if (loc.hash === '#_=_'){ // sweet jesus, facebook. come on
+        history.replaceState(undefined, '', loc.pathname + loc.search);
+    }
 }(window,jQuery,nbrut);

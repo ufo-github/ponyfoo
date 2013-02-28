@@ -12,7 +12,6 @@
 .hint:after,
 .hint-before:before {
   position: absolute;
-  display: none;
   z-index: @z-hint;
   pointer-events: none;
 
@@ -25,23 +24,8 @@
   overflow: initial;
 
   .box-transition(all 0.3s ease);
-}
 
-.hint:hover:after,
-.hint-before:hover:before {
-  display: initial;
-}
-
-/**
- * positioning and design
- */
-.hint:hover:after,
-.hint-before:hover:before {
-  .box-transform(translateY(8px));
-}
-
-.hint:after,
-.hint-before:before {
+  // positioning and design
   top: 16px;
   left: 6px;
 
@@ -54,4 +38,33 @@
 
   .box-shadow(1px 2px 6px rgba(0,0,0,0.3));
   .box-radius(2px);
+}
+
+.hint:hover:after,
+.hint-before:hover:before {
+  .box-transform(translateY(8px));
+}
+
+@media only screen and (max-width: 767px) {
+  .hint:after,
+  .hint-before:before {
+    display: none;
+  }
+
+  .hint:hover:after,
+  .hint-before:hover:before {
+    display: initial;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .hint:after,
+  .hint-before:before {
+    opacity: 0;
+  }
+
+  .hint:hover:after,
+  .hint-before:hover:before {
+    opacity: 1;
+  }
 }
