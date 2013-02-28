@@ -11,6 +11,10 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Registration and Login Providers
   - Added LinkedIn
 
+- Host validation and 301 redirects
+  - In case your site is available on multiple domains, but you want only one to expose it
+    e.g: when hosting on Heroku
+
 
 
 0.2 (frozen)
