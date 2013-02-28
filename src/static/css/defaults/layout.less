@@ -23,14 +23,24 @@ body {
   float: left;
 }
 
+.layout-legend {
+  display: none;
+  margin-top: 6px;
+}
+
 @media only screen and (min-width: 768px) {
   .layout-header {
     padding: 12px 0;
     margin-bottom: 30px;
   }
 
-  #home {
+  .layout-title,
+  .layout-legend {
     margin-left: 25px;
+  }
+
+  .layout-legend {
+    display: block;
   }
 }
 

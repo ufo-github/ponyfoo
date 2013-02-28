@@ -69,6 +69,7 @@ var config = {
     get site() {
         return this._s = this._s || {
             title: 'Pony Foo',
+            legend: 'Ramblings of a degenerate coder',
             description: 'Ramblings of a degenerate coder',
             thumbnail: this.server.authority + '/img/thumbnail.png'
         };

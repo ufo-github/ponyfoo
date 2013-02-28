@@ -8,8 +8,12 @@ html(lang='en')
 
   body
     header.layout-header.clearfix
-      h1.layout-heading
-        a#home(href='/')=config.site.title
+      section.layout-heading
+        h1.layout-title
+          a#home(href='/')=config.site.title
+
+        if config.site.legend
+          h2.layout-legend=config.site.legend
 
       aside#menu
         nav
