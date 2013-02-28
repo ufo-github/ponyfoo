@@ -4,10 +4,6 @@ TODO
 1
 -------
 
-- StackOverflow oauth?
-
-- production site: 301 requests on *.herokuapp?
-
 - profiles expansion
   - profile options to reveal or hide: rss/email(in profile and flip card) / git / linkedin / fb / SO
   - flip card backside shows an extract of user bio (set independently)

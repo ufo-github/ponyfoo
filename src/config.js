@@ -22,6 +22,7 @@ var config = {
     },
     server: {
         host: process.env.HOST || 'http://localhost',
+        hostRegex: process.env.HOST_REGEX ? new RegExp(process.env.HOST_REGEX) : undefined,
         listener: parseInt(process.env.PORT || 8081),
         get port(){ return this._p = this._p || parseInt(process.env.PUBLIC_PORT || this.listener); },
         get authority(){
