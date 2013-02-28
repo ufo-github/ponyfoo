@@ -85,7 +85,6 @@ function setupProvider(type, config, cb){
 }
 
 function callback(query, profile, done) {
-    console.log(profile);
     var email = profile.emails ? profile.emails[0].value : undefined;
     if(!email){
         done(null,false,'Unable to get email address');
