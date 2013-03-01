@@ -4,9 +4,9 @@ var path = require('path'),
 var config = {
     env: {
         current: process.env.NODE_ENV || 'development',
-        get development(){ return this._d = this._d || this.current === 'development'; },
-        get staging(){ return this._s = this._s || this.current === 'staging'; },
-        get production(){ return this._p = this._p || this.current === 'production' || this.staging; }
+        get development(){ return this.current === 'development'; },
+        get staging(){ return this.current === 'staging'; },
+        get production(){ return this.current === 'production' || this.staging; }
     },
     static: {
         folder: __dirname + '/static',
@@ -24,7 +24,7 @@ var config = {
         host: process.env.HOST || 'http://localhost',
         hostRegex: process.env.HOST_REGEX ? new RegExp('^' + process.env.HOST_REGEX + '$') : undefined,
         listener: parseInt(process.env.PORT || 8081),
-        get port(){ return this._p = this._p || parseInt(process.env.PUBLIC_PORT || this.listener); },
+        get port(){ return parseInt(process.env.PUBLIC_PORT || this.listener); },
         get authority(){
             if(this._a === undefined){
                 var host = this.host,
@@ -62,7 +62,7 @@ var config = {
     get feed() {
         return this._f = this._f || {
             local: this.server.authority + '/rss/latest.xml',
-            get proxy(){ return this._p = this._p || (process.env.FEED_ADDR || this.local); },
+            get proxy(){ process.env.FEED_ADDR || this.local; },
             limit: 12
         };
     },
