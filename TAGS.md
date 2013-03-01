@@ -19,7 +19,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Added LinkedIn
 
 - Host validation and 301 redirects
-  - In case your site is available on multiple domains, but you want only one to expose it
+  - In case your instance is available on multiple domains, but you want only one to expose it
     e.g: when hosting on Heroku
 
 - Search Engine Optimization

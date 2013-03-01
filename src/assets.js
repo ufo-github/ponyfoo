@@ -35,9 +35,13 @@ function getCss(){
         '/css/defaults/sprite.less'
     ];
 
+    var raw = [
+        { profile: 'dormant', local: '/css/dormant/index.less' },
+        '/css/libs/markdown.less'
+    ];
+
     var blog = [
         // libs
-        '/css/libs/markdown.less',
         '/css/libs/markdown.editor.less',
         '/css/libs/prettify.less',
         '/css/libs/hint.less',
@@ -69,7 +73,7 @@ function getCss(){
     for(var i = 0;i < blog.length; i++){
         blog[i] = mapSharedProfileToBlogOnly(blog[i]);
     }
-    return barebones.concat(blog);
+    return barebones.concat(raw).concat(blog);
 }
 
 function getJs(){
