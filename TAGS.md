@@ -17,6 +17,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - In case your site is available on multiple domains, but you want only one to expose it
     e.g: when hosting on Heroku
 
+- Search Engine Optimization
+  - [**Schema.org**](http://schema.org) microdata
 
 
 0.2 (frozen)

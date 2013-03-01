@@ -29,7 +29,7 @@ function setup(server){
 
         browser.visit(opts.url, function(){
             browser.wait(loaded, function(){
-                var html = browser.html();
+                var html = config.site.doctype + browser.html();
 
                 writeFile(opts.file, html, function(err){
                     if(err){
