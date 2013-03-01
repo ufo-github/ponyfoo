@@ -89,7 +89,7 @@ function getJs(){
         '/js/views/hooks/thin.validation.js',
         '/js/views/hooks/templates.js',
         '/js/views/hooks/templates.md.js',
-        '/js/views/hooks/templates.og.js',
+        '/js/views/hooks/templates.metadata.js',
 
         // template registration
         '/js/views/templates/shared.js',

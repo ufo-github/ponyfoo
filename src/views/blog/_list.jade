@@ -1,12 +1,18 @@
 // {{#entries}}
-article.blog-entry(data-keywords='{{keywords}}')
+article.blog-entry(data-keywords='{{keywords}}', itemscope, itemtype='http://schema.org/BlogPosting')
+  meta(itemprop='dateCreated', content='{{dateText}}')
+  meta(itemprop='keywords', content='{{keywords}}')
+  meta(itemprop='discussionUrl', content=config.server.authority + '{{permalink}}#comments')
+  meta(itemprop='interactionCount', content='{{commentCount}} UserComments')
+
   header.blog-entry-title
     h1
-      a(href='{{permalink}}', data-hint='{{tagged}}')='{{title}}'
+      a(href='{{permalink}}', data-hint='{{tagged}}', itemprop='headline')='{{title}}'
     span.blog-entry-date(data-hint='posted {{dateText}}')='posted {{timeAgo}}'
 
-  section.markdown.blog-entry-brief.og-description='{{{html.brief}}}'
-  section.markdown.blog-entry-text='{{{html.text}}}'
+  section.markdown.blog-entry-body(itemprop='articleBody')
+    section.blog-entry-brief.og-description(itemprop='about')='{{{html.brief}}}'
+    section.blog-entry-text='{{{html.text}}}'
 
   footer.blog-entry-footer.clearfix
     section.comment-count
@@ -14,7 +20,6 @@ article.blog-entry(data-keywords='{{keywords}}')
 
     // {{#tagged}}
     section.blog-entry-tags
-      span='Tagged:'
       // {{#_tags}}
       a.tag(href='/search/tagged/{{.}}', data-hint='Find posts tagged "{{.}}"').highlighted-link='{{.}}'
       // {{/_tags}}

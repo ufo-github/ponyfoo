@@ -13,6 +13,7 @@
             self.published = m.format(moment.dayFormat);
             self.timeAgo = m.fromNow();
 
+            self.commentCount = comments || 0;
             self.commentsLink = self.permalink + '#comments';
             self.commentsText = '{0}Comment{1}'.format(
                 !!comments ? comments + ' ' : '',

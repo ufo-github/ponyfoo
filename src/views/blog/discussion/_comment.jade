@@ -1,6 +1,6 @@
 section.blog-comment(data-id='{{_id}}')
   header(class='{{css}}')
-    a.user-name(data-hint='See profile', href='/user/profile/{{author.id}}')='{{author.displayName}}'
+    a.user-name(data-hint='See profile', href='/user/profile/{{author.id}}', itemprop='creator')='{{author.displayName}}'
     // {{#actions}}
     section.blog-comment-actions
       // {{#edit}}
@@ -16,4 +16,4 @@ section.blog-comment(data-id='{{_id}}')
       a.user-gravatar-link(data-hint='See profile', href='/user/profile/{{author.id}}')
         img.user-gravatar(data-src='{{author.gravatar.regular}}')
 
-    section.markdown.blog-comment-text='{{{html}}}'
+    section.markdown.blog-comment-text(itemprop='commentText')='{{{html}}}'

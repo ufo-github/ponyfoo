@@ -44,10 +44,12 @@
             description: getDescription(container),
             keywords: container.find('[data-keywords]:first').data('keywords')
         };
-        og = nbrut.tt.partial('opengraph', ogModel);
+        ogModel.images.push(nbrut.site.thumbnail);
+        ogModel.firstImage = ogModel.images.slice(0,1);
+        og = nbrut.tt.partial('metadata', ogModel);
 
         // refresh micro data
-        head.find('meta[name=keywords], meta[name=description], meta[property^="og:"]').remove();
+        head.find('meta[name=keywords], meta[name=description], meta[property^="og:"], meta[itemprop]').remove();
         og.appendTo(head);
     });
 }(window,jQuery,nbrut);

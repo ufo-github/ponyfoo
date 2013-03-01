@@ -4,7 +4,8 @@
     };
 
     nbrut.site = {
-        title: '@config.site.title'
+        title: '@config.site.title',
+        thumbnail: '@config.site.thumbnail'
     };
 
     nbrut.avatar = {

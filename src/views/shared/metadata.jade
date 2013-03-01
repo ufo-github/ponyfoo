@@ -1,4 +1,4 @@
-section#opengraph-template.template
+section#metadata-template.template
   meta(name='keywords', content='{{keywords}}')
   meta(name='description', content='{{description}}')
 
@@ -9,13 +9,18 @@ section#opengraph-template.template
   meta(property='og:image', content='{{.}}')
   // {{/images}}
 
-  meta(property='og:image', content=config.site.thumbnail)
-
   meta(property='og:title', content='{{title}}')
 
   // {{#description}}
   meta(property='og:description', content='{{description}}')
+  meta(itemprop='description', content='{{description}}')
   // {{/description}}
   // {{^description}}
   meta(property='og:description', content=config.site.description)
+  meta(itemprop='description', content=config.site.description)
   // {{/description}}
+
+  meta(itemprop='creator', content=config.blogger.name)
+  meta(itemprop='name', content='{{title}}')
+  meta(itemprop='image', content='{{firstImage}}')
+  meta(itemprop='url', content='{{url}}')

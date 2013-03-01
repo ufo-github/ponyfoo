@@ -6,8 +6,8 @@
     });
 
     nbrut.tt.register({
-        key: 'opengraph',
-        source: '#opengraph-template',
+        key: 'metadata',
+        source: '#metadata-template',
         mustache: true
     });
 
