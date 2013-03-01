@@ -5,6 +5,8 @@ TODO
 -------
 
 - **domain fragmentation**
+  - dormant startup for development
+  - available blog market
 
 - absolute path in js/css/image for better caching
 

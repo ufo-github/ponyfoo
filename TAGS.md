@@ -9,6 +9,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 ============
 
 - **Blog Schema**
+  - Domain fragmentation, allowing users to take control of sub-domains
 
 - Registration and Login Providers
   - Added LinkedIn
