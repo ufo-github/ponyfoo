@@ -8,6 +8,10 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 0.3 (tip)
 ============
 
+- Documentation
+  - Improved [**README**](/README.md) with setup and installation steps to get started
+  - Added an [**ENV**](/ENV.md) document with a descriptive list of environment variables
+
 - **Blog Schema**
   - Domain fragmentation, allowing users to take control of sub-domains
 

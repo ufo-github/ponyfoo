@@ -23,7 +23,7 @@ var config = {
     },
     server: {
         defaultSlug: env.HOST_DEFAULT_SLUG || 'www',
-        tld: env.HOST_TLD || 'local-ponyfoo.com',
+        tld: env.HOST_TLD || 'local-sandbox.com',
         tldReserved: env.HOST_TLD_RESERVED ? new RegExp('^' + env.HOST_TLD_RESERVED + '$') : undefined,
         get host(){ return 'http://' + this.defaultSlug + '.' + this.tld + this.portPart },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
@@ -49,7 +49,7 @@ var config = {
         cache: 60000 * 60 // an hour, in ms
     },
     db: {
-        uri: env.MONGOLAB_URI || 'mongodb://localhost/nbrut'
+        uri: env.MONGOLAB_URI || env.MONGO_URI || 'mongodb://localhost/nbrut'
     },
     security: {
         saltWorkFactor: parseInt(env.SALT_WORK_FACTOR || 10),

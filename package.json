@@ -33,7 +33,8 @@
     "sitemap": "0.6.0",
     "walk": "~2.2.1",
     "zombie": "~1.4.1",
-    "newrelic": "~0.9.18-138"
+    "newrelic": "~0.9.18-138",
+    "marked": "~0.2.8"
   },
   "devDependencies": {
     "mocha": "*",
