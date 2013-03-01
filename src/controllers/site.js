@@ -1,15 +1,15 @@
 var config = require('../config.js'),
     blog = require('../models/blog.js'),
-    live;
+    publicApi;
 
 function getStatus(done){
-    if(live !== undefined){
+    if(publicApi.live !== undefined){
         process.nextTick(done);
         return;
     }
 
     blog.count({}, function(err, count){
-        live = count > 0;
+        publicApi.live = count > 0;
         done();
     });
 }
@@ -26,7 +26,7 @@ function findBlog(req,res){
         var slug = getBlogSlug(req),
             reserve = config.server.tldReserved;
 
-        if(!live){ // website isn't configured at all
+        if(!publicApi.live){ // website isn't configured at all
             if (req.url !== '/' || slug !== config.server.defaultSlug){
                 return res.redirect(config.server.host); // not 301 because the slug can be claimed
             }
@@ -84,7 +84,7 @@ function renderView(req,res){
     res.render('layouts/' + profile + '.jade', { profile: profile });
 }
 
-module.exports = {
+publicApi = {
     hostValidation: function(req,res,next){
         var val = config.server.hostRegex;
         if (val !== undefined && !val.test(req.host)){
@@ -95,3 +95,5 @@ module.exports = {
     },
     get: findBlog
 };
+
+module.exports = publicApi;
