@@ -135,6 +135,9 @@ var config = {
         tiny: '&s=24',
         small: '&s=40',
         regular: '&s=60'
+    },
+    plugins: {
+        newrelic: !!process.env.NEW_RELIC_HOME
     }
 };
 

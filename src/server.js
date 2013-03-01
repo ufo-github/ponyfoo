@@ -5,9 +5,12 @@ var config = require('./config.js'),
     async = require('async'),
     path = require('path'),
     assets = require('./assets.js'),
+    relic = require('./server/newrelic.js'),
     server = express();
 
 function main(){
+    relic.init();
+
     var db = require('./server/db.js'),
         opensearch = require('./logic/opensearch.js'),
         feed = require('./logic/feed.js'),

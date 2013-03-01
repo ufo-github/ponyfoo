@@ -2,11 +2,20 @@
     nbrut.tt.register({
         key: 'blogger-tools',
         source: '#blogger-tools-template',
-        mustache: true,
         aliases: [{
             title: 'Tools',
             route: '/blogger',
             trigger: '#blogger-tools'
+        }]
+    });
+
+    nbrut.tt.register({
+        key: 'blog-configuration',
+        source: '#blog-configuration-template',
+        mustache: true,
+        aliases: [{
+            title: 'Configure your Blog',
+            route: '/blogger/blog'
         }]
     });
 
