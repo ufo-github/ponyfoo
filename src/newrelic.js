@@ -1,7 +1,7 @@
-var config = require('../config.js');
+var config = require('config.js');
 
 function init(){
-    if(config.plugins.newrelic){
+    if(!!process.env.NEW_RELIC_LICENSE_KEY){
         require('newrelic');
     }
 }
