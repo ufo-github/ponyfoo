@@ -6,12 +6,33 @@ block head
 block body
   header.layout-header.clearfix
     section.layout-heading
-      h1.layout-title='Hello NBrut;'
+      h1.layout-title="'Hello NBrut';"
       h2.layout-legend='Quickly set up NBrut in your server environment'
 
   article#content
-    h1='Welcome!'
+    h1='Wow! That was fast.'
 
-    section.markdown
+    section.happy-talk.markdown
       :markdown
-        In the extremely unlikely case you have _no clue_ what you've been doing, this is [**NBrut**](https://github.com/bevacqua/NBrut "Repository on GitHub"). **NBrut** is a blogging platform that allows users to create their own blogs and host them on
+        In the extremely unlikely case you have _no clue_ what you've been doing, this is [**NBrut**](https://github.com/bevacqua/NBrut "Repository on GitHub"). **NBrut** is a blogging platform that allows users to create their own blogs easily.
+
+        **NBrut** is different in that it focuses primarily on providing a _smooth user experience_, a reasonable _user interface_ and is aimed to _technical blogging_, providing access to the [Markdown](http://daringfireball.net/projects/markdown/) syntax.
+
+        ![homer.gif](/img/homer.gif "Enough happy talk")
+
+        _Enough **happy talk**._
+
+    section.setup
+      h1='Setup your account'
+
+      form(method='post')
+        fieldset
+          p
+            label(for='email')='Email'
+            input#email(type='text', name='email', placeholder='Provide your email')
+
+          p
+            label(for='password')='Password'
+            input#password(type='password', name='password', placeholder='Choose your password')
+
+          // TODO: SUBMIT INPUT, the rest can be configured later.

@@ -1,13 +1,34 @@
 @import "../defaults/common.less";
 
-/* LINKS
- ********/
+#content {
+  max-width: 700px;
+}
 
-.markdown a {
+.happy-talk img {
+  display: block;
+  margin: 0 auto;
+}
+
+.happy-talk a {
   color: @pink;
   font-weight: bold;
 }
 
-.markdown a:visited {
+.happy-talk a:visited {
   color: @pink - #333;
+}
+
+.setup {
+  margin-top: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+  .setup label {
+    display: block;
+    text-align: left;
+  }
+
+  .setup input {
+    width: 200px;
+  }
 }
