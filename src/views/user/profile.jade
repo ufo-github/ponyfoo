@@ -17,7 +17,7 @@ section#user-profile-template.template
       p
         span.label='website'
         // {{#website}}
-        a.highlighted-link(href='{{website.url}}', data-hint='{{website.title}}')='{{website.title}}'
+        a.highlighted-link(href='{{website.url}}', data-hint='{{website.title}}', rel='nofollow')='{{website.title}}'
         // {{/website}}
         // {{^website}}
         span='(none)'

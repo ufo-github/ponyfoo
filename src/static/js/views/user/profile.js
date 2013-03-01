@@ -16,5 +16,5 @@
     nbrut.tt.configure({
         key: 'user-profile',
         prepare: prepare
-    })
+    });
 }(window,jQuery,nbrut);
