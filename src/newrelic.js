@@ -1,4 +1,4 @@
-var config = require('config.js');
+var config = require('./config.js');
 
 function init(){
     if(!!process.env.NEW_RELIC_LICENSE_KEY){
