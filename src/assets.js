@@ -5,12 +5,26 @@ var config = require('./config.js'),
         bin: config.static.bin,
         css: getCss(),
         js: getJs(),
-        profiles: ['anon','registered','blogger']
+        profiles: [
+            'dormant',
+            'available',
+            'anon',
+            'registered',
+            'blogger'
+        ]
     };
 
+function mapSharedProfileToBlogOnly(resource){
+    if(typeof resource === 'string'){
+        resource = { local: resource };
+    }
+
+    resource.profile = ['blogger', 'registered', 'anon'];
+    return resource;
+}
+
 function getCss(){
-    return [
-        // basic layout and design
+    var barebones = [ // basic layout and design
         '/css/defaults/reset.css',
         '/css/defaults/basic.less',
         '/css/defaults/elements.less',
@@ -18,8 +32,10 @@ function getCss(){
         '/css/defaults/controls.spinner.less',
         '/css/defaults/layout.less',
         '/css/defaults/design.less',
-        '/css/defaults/sprite.less',
+        '/css/defaults/sprite.less'
+    ];
 
+    var blog = [
         // libs
         '/css/libs/markdown.less',
         '/css/libs/markdown.editor.less',
@@ -49,6 +65,11 @@ function getCss(){
         { profile: 'blogger', local: '/css/views/blogger/discussions.less' },
         { profile: 'blogger', local: '/css/views/blogger/users.less' }
     ];
+
+    for(var i = 0;i < blog.length; i++){
+        blog[i] = mapSharedProfileToBlogOnly(blog[i]);
+    }
+    return barebones.concat(blog);
 }
 
 function getJs(){
@@ -130,6 +151,9 @@ function getJs(){
         js.push('/js/debug.js');
     }
 
+    for(var i = 0;i < js.length; i++){
+        js[i] = mapSharedProfileToBlogOnly(js[i]);
+    }
     return js;
 }
 

@@ -1,0 +1,10 @@
+!= config.site.doctype
+
+html(lang='en')
+  head
+    !=assetify.css.emit(profile)
+
+  body
+    block body
+
+    !=assetify.js.emit(profile)

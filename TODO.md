@@ -4,10 +4,13 @@ TODO
 1
 -------
 
+- **domain fragmentation**
+
+- absolute path in js/css/image for better caching
+
 - profiles expansion
   - use blog info in about flip-card (set up a "blog" local context for each request)
 
-- **domain fragmentation**
 
 
 
