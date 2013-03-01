@@ -66,7 +66,6 @@ function getJs(){
         '/js/libs/prettify.js',
 
         '/js/ext/String.js',
-        '/js/ext/Array.js',
         '/js/ext/prettify.js',
         '/js/ext/jquery.layout.js',
         '/js/ext/jquery.ui.js', // not the well known, huge, jQuery UI. just a few extensions
@@ -90,7 +89,6 @@ function getJs(){
         '/js/views/hooks/thin.validation.js',
         '/js/views/hooks/templates.js',
         '/js/views/hooks/templates.md.js',
-        '/js/views/hooks/templates.beautify.js',
         '/js/views/hooks/templates.metadata.js',
 
         // template registration
