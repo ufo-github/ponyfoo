@@ -10,6 +10,9 @@ function configure(server){
     server.post(config.auth.login, controller.guard, controller.local, controller.redirect);
 
     function configureProvider(name){
+        if(!config.auth[name].enabled){
+            return;
+        }
         server.get(config.auth[name].link, controller.rememberReturnUrl, controller[name].auth);
         server.get(config.auth[name].callback, controller[name].callback, controller.redirect);
     }

@@ -103,12 +103,14 @@ var config = {
         logout: '/user/logout',
         login: '/user/login',
         facebook: {
+            get enabled(){ return this.id && this.secret; },
             id: env.FACEBOOK_APP_ID,
             secret: env.FACEBOOK_APP_SECRET,
             link: '/user/login/facebook',
             callback: '/user/login/facebook/callback'
         },
         github: {
+            get enabled(){ return this.id && this.secret; },
             id: env.GITHUB_CLIENT_ID,
             secret: env.GITHUB_CLIENT_SECRET,
             link: '/user/login/github',
@@ -119,6 +121,7 @@ var config = {
             callback: '/user/login/google/callback'
         },
         linkedin: {
+            get enabled(){ return this.id && this.secret; },
             id: env.LINKEDIN_API_KEY,
             secret: env.LINKEDIN_API_SECRET,
             link: '/user/login/linkedin',

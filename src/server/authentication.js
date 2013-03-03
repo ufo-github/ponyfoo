@@ -39,6 +39,9 @@ function setupLocal(){
 }
 
 function setupOAuth1(name, strategy, fields){
+    if(!config.auth[name].enabled){
+        return;
+    }
     var opts = {
         consumerKey: config.auth[name].id,
         consumerSecret: config.auth[name].secret,
@@ -54,6 +57,10 @@ function setupOAuth1(name, strategy, fields){
 }
 
 function setupOAuth2(name, strategy){
+    if(!config.auth[name].enabled){
+        return;
+    }
+
     var opts = {
         clientID: config.auth[name].id,
         clientSecret: config.auth[name].secret,
