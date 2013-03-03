@@ -22,9 +22,9 @@ var config = {
         };
     },
     server: {
-        defaultSlug: env.HOST_DEFAULT_SLUG || 'www',
+        defaultSlug: env.HOST_SLUG_DEFAULT || 'www',
         tld: env.HOST_TLD || 'local-sandbox.com',
-        tldReserved: env.HOST_TLD_RESERVED ? new RegExp('^' + env.HOST_TLD_RESERVED + '$') : undefined,
+        slugRegex: env.HOST_SLUG_RESERVED ? new RegExp('^' + env.HOST_SLUG_RESERVED + '$') : undefined,
         get host(){ return 'http://' + this.defaultSlug + '.' + this.tld + this.portPart },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         listener: parseInt(env.PORT || 8081),

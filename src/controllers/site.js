@@ -24,7 +24,7 @@ function getBlogSlug(req){
 function findBlog(req,res){
     getStatus(function(){
         var slug = getBlogSlug(req),
-            reserve = config.server.tldReserved;
+            reserve = config.server.slugRegex;
 
         if(!publicApi.live){ // website isn't configured at all
             if (req.url !== '/' || slug !== config.server.defaultSlug){
