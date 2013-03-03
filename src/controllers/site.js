@@ -27,14 +27,14 @@ function findBlog(req,res){
             reserve = config.server.slugRegex;
 
         if(!publicApi.live){ // website isn't configured at all
-            if (req.url !== '/' || slug !== config.server.defaultSlug){
+            if (req.url !== '/' || slug !== config.server.slugHome){
                 return res.redirect(config.server.host); // not 301 because the slug can be claimed
             }
             res.blog = 'dormant';
             return renderView(req,res);
         }
 
-        if(reserve !== undefined && reserve.test(slug)){
+        if(reserve !== undefined && !reserve.test(slug)){
             return res.redirect(config.server.host, 301); // this blog name is forbidden, 301 to the default blog.
         }
 

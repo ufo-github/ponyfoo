@@ -22,10 +22,11 @@ var config = {
         };
     },
     server: {
-        defaultSlug: env.HOST_SLUG_DEFAULT || 'www',
         tld: env.HOST_TLD || 'local-sandbox.com',
+        slugged: env.HOST_SLUG_ENABLED || false,
+        slugHome: env.HOST_SLUG_DEFAULT || 'www',
         slugRegex: env.HOST_SLUG_RESERVED ? new RegExp('^' + env.HOST_SLUG_RESERVED + '$') : undefined,
-        get host(){ return 'http://' + this.defaultSlug + '.' + this.tld + this.portPart },
+        get host(){ return 'http://' + this.slugHome + '.' + this.tld + this.portPart },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         listener: parseInt(env.PORT || 8081),
         get port(){ return parseInt(env.PUBLIC_PORT || this.listener); },
