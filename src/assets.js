@@ -16,10 +16,11 @@ var config = require('./config.js'),
 
 function mapSharedProfileToBlogOnly(resource){
     if(typeof resource === 'string'){
-        resource = { local: resource };
+        return {
+            local: resource,
+            profile: ['blogger', 'registered', 'anon']
+        };
     }
-
-    resource.profile = ['blogger', 'registered', 'anon'];
     return resource;
 }
 

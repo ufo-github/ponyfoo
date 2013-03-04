@@ -16,12 +16,8 @@ function setupLocal(){
                 if (err) {
                     return done(err);
                 }
-                if (!user) {
+                if (!user || !user.password) {
                     return done(null, false, 'Invalid credentials');
-                }
-
-                if (!user.password) {
-                    return done(null, false, 'A password hasn\'t been set for this user');
                 }
 
                 user.validatePassword(password, function(err, isMatch) {

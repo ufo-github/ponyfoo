@@ -1,5 +1,6 @@
 var config = require('../config.js'),
     blog = require('../models/blog.js'),
+    user = require('../models/user.js'),
     rest = require('../services/rest.js'),
     live;
 
@@ -32,7 +33,7 @@ function findBlog(req,res){
             if (req.url !== '/' || slug !== config.server.slugHome){
                 return res.redirect(config.server.host); // not 301 because the slug can be claimed
             }
-            res.blog = 'dormant';
+            req.blog = 'dormant';
             return renderView(req,res);
         }
 
@@ -47,12 +48,12 @@ function findBlog(req,res){
         // the website is live and the blog could be user-defined
         blog.findOne(query, function(err, document){
             if(document !== null){ // this is the blog we're going to use
-                res.blog = document;
+                req.blog = document;
             }else{ // allow the user to grab the blog
                 if (req.url !== '/'){
                     return res.redirect('/'); // not 301 because the slug can be claimed
                 }
-                res.blog = 'available';
+                req.blog = 'available';
             }
             renderView(req,res);
         });
@@ -62,8 +63,8 @@ function findBlog(req,res){
 function renderView(req,res){
     var profile, locals, connected = req.user !== undefined;
 
-    if(typeof res.blog === 'string'){
-        profile = res.blog;
+    if(typeof req.blog === 'string'){
+        profile = req.blog;
     }else{
         if(!connected){
             profile = 'anon';
@@ -91,9 +92,35 @@ function renderView(req,res){
 }
 
 function awaken(req,res,next){
-    // TODO create user and attach blog
-    live = true;
-    res.redirect('/');
+    var email = req.body['user.email'],
+        password = req.body['user.password'],
+        title = req.body['blog.title'];
+
+    user.findOne({ email: email }, function(err, document){ // easier migration from v0.2
+        if(!document){
+            document = new user({
+                email: email,
+                displayName: email.split('@')[0],
+                password: password
+            });
+            document.save(function(err, document){
+                then(document);
+            });
+        }else{
+            then(document);
+        }
+    });
+
+    function then(user){
+        new blog({
+            owner: user._id,
+            slug: getBlogSlug(req),
+            title: title
+        }).save(function(){
+            live = true;
+            res.redirect('/');
+        });
+    }
 }
 
 function claim(req,res,next){
