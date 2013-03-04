@@ -218,7 +218,7 @@ function claim(req,res,next){
 function hostValidation(req,res,next){
     var val = config.server.hostRegex;
     if (val !== undefined && !val.test(req.host)){
-        res.redirect(config.server.authority + req.url, 301);
+        res.redirect(config.server.host + req.url, 301);
         return;
     }
 

@@ -2,7 +2,7 @@
 article.blog-entry(data-keywords='{{keywords}}', itemscope, itemtype='http://schema.org/BlogPosting')
   meta(itemprop='dateCreated', content='{{dateText}}')
   meta(itemprop='keywords', content='{{keywords}}')
-  meta(itemprop='discussionUrl', content=config.server.authority + '{{permalink}}#comments')
+  meta(itemprop='discussionUrl', content=config.server.host + '{{permalink}}#comments')
   meta(itemprop='interactionCount', content='{{commentCount}} UserComments')
 
   header.blog-entry-title

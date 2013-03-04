@@ -1,6 +1,6 @@
 !function(nbrut){
     nbrut.server = {
-        authority: '@config.server.authority'
+        authority: '@config.server.host'
     };
 
     nbrut.avatar = {

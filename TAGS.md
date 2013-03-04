@@ -15,6 +15,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - **Blog Schema**
   - Domain fragmentation, allowing users to take control of sub-domains, referred to as slugs
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
+  - Assets (such as js and css) are now served with absolute urls, for improved caching
 
 - Registration and Login Providers
   - Added LinkedIn

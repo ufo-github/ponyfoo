@@ -41,7 +41,7 @@ function setupOAuth1(name, strategy, fields){
     var opts = {
         consumerKey: config.auth[name].id,
         consumerSecret: config.auth[name].secret,
-        callbackURL: config.server.authority + config.auth[name].callback,
+        callbackURL: config.server.host + config.auth[name].callback,
         profileFields: fields
     };
 
@@ -60,7 +60,7 @@ function setupOAuth2(name, strategy){
     var opts = {
         clientID: config.auth[name].id,
         clientSecret: config.auth[name].secret,
-        callbackURL: config.server.authority + config.auth[name].callback
+        callbackURL: config.server.host + config.auth[name].callback
     };
 
     setupProvider(strategy, opts, function(accessToken, refreshToken, profile, done) {
@@ -72,8 +72,8 @@ function setupOAuth2(name, strategy){
 
 function setupOpenId(name, strategy){
     var opts = {
-        returnURL: config.server.authority + config.auth[name].callback,
-        realm: config.server.authority
+        returnURL: config.server.host + config.auth[name].callback,
+        realm: config.server.host
     };
 
     setupProvider(strategy, opts, function(identifier, profile, done) {

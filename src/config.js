@@ -18,7 +18,7 @@ var config = {
             source: path.join(this.static.folder, 'opensearch.xmln'),
             bin: path.join(this.static.bin, 'opensearch.xml'),
             href: '/opensearch.xml',
-            template: this.server.authority + '/search/{searchTerms}'
+            template: this.server.host + '/search/{searchTerms}'
         };
     },
     server: {
@@ -30,17 +30,7 @@ var config = {
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         listener: parseInt(env.PORT || 8081),
         get port(){ return parseInt(env.PUBLIC_PORT || this.listener); },
-        get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); },
-        get authority(){
-            if(this._a === undefined){
-                var host = this.host;
-                if (host[host.length-1] === '/'){
-                    host = host.substr(0, host.length-1);
-                }
-                this._a = host + this.portPart;
-            }
-            return this._a;
-        }
+        get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); }
     },
     sitemap: {
         refresh: 60000 * 60 // an hour, in ms
@@ -61,7 +51,7 @@ var config = {
     },
     get feed() {
         return this._f = this._f || {
-            local: this.server.authority + '/rss/latest.xml',
+            local: this.server.host + '/rss/latest.xml',
             get proxy(){ return env.FEED_ADDR || this.local; },
             limit: 12
         };
@@ -69,7 +59,7 @@ var config = {
     get site() {
         return {
             doctype: '<!DOCTYPE html>',
-            thumbnail: this.server.authority + '/img/thumbnail.png'
+            thumbnail: this.server.host + '/img/thumbnail.png'
         };
     },
     get siteDeprecated() {

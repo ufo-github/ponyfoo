@@ -12,7 +12,7 @@ function rebuild(done){
         title: config.siteDeprecated.title,
         description: config.siteDeprecated.description,
         author: config.bloggerDeprecated.name,
-        site_url: config.server.authority,
+        site_url: config.server.host,
         image_url: config.site.thumbnail, // TODO use blog.thumbnail, too
         feed_url: config.feed.local
     };
@@ -32,7 +32,7 @@ function rebuild(done){
                 feed.item({
                     title: entry.title,
                     description: brief,
-                    url: config.server.authority + entry.permalink,
+                    url: config.server.host + entry.permalink,
                     author: config.bloggerDeprecated.name,
                     date: entry.date
                 });
@@ -49,7 +49,7 @@ function rebuild(done){
 }
 
 function flush(xml, done){
-    var relative = path.relative(config.server.authority, config.feed.local),
+    var relative = path.relative(config.server.host, config.feed.local),
         physical = path.join(config.static.bin, relative),
         folder = path.dirname(physical);
 

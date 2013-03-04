@@ -76,7 +76,7 @@ function refresh(){
         });
 
         sitemap = factory.createSitemap({
-            hostname: config.server.authority,
+            hostname: config.server.host,
             urls: updated
         });
         urls = updated;

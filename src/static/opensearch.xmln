@@ -3,6 +3,6 @@
     <ShortName>@siteDeprecated.title</ShortName>
     <Description>Search @siteDeprecated.title: @siteDeprecated.description</Description>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image height="16" width="16" type="image/x-icon">@server.authority/favicon.ico</Image>
+    <Image height="16" width="16" type="image/x-icon">@server.host/favicon.ico</Image>
     <Url type="text/html" method="get" template="@opensearch.template" />
 </OpenSearchDescription>

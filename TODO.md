@@ -4,15 +4,10 @@ TODO
 1
 -------
 
-- **domain fragmentation**
-  - available blog market
+- blog configuration of meta stuff
+- blog claiming in available subdomains (existing bloggers can't claim zilch)
 
-- absolute path in js/css/image for better caching (e.g //www.)
-
-- profiles expansion
-  - use blog info in about flip-card (set up a "blog" local context for each request)
-
-- migration:
+- migration steps:
  - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
  - remove query for user when awakening
  - config blog to have stuff from config.site and config.blogger

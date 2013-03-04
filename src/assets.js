@@ -1,4 +1,5 @@
 var config = require('./config.js'),
+    url = require('url'),
     assetify = require('assetify'),
     assets = {
         source: config.static.folder,
@@ -166,6 +167,20 @@ function getJs(){
     return js;
 }
 
+var absoluteLinks = {
+    events: [{
+        eventName: 'afterOutput',
+        plugin: function(items, cfg, ctx, done){
+            items.forEach(function(item){
+                if (item.out){
+                    item.out = url.resolve(config.server.host, item.out);
+                }
+            });
+            done();
+        }
+    }]
+};
+
 assets.compile = function(done){
     assetify.use(assetify.plugins.less);
     assetify.use(assetify.plugins.jsn);
@@ -176,6 +191,8 @@ assets.compile = function(done){
         assetify.use(assetify.plugins.minifyJS);
     }
     assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
+
+    assetify.use(absoluteLinks); // purpose: always route asset requests through a single subdomain, better caching.
     assetify.compile(assets, done);
 };
 
