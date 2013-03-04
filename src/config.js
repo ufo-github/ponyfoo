@@ -118,6 +118,7 @@ var config = {
             callback: '/user/login/github/callback'
         },
         google: {
+            enabled: true,
             link: '/user/login/google',
             callback: '/user/login/google/callback'
         },
