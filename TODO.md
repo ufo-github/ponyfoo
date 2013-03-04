@@ -5,9 +5,8 @@ TODO
 -------
 
 - **domain fragmentation**
-  - dormant startup for development
+  - dormant POST and live
   - available blog market
-  - turn live to true after escaping dormant mode.
 
 - absolute path in js/css/image for better caching (e.g //www.)
 
