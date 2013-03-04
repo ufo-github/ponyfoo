@@ -133,31 +133,19 @@ function claim(req,res,next){
     getStatus(function(){
         if(!live){ // dormant
             awaken(req,res,next);
-        }else if(!config.server.slugged){ // claiming is disabled
-            return rest.error({
-                res: res,
-                code: 403,
-                message: 'Blog slugs are disabled on this platform.'
-            });
+        }else if(!config.server.slugged){
+            return next(); // claiming is disabled
         }else{ // attempt to claim
             var slug = getBlogSlug(req),
                 slugTest = config.server.slugRegex;
 
             if(slugTest !== undefined && !slugTest.test(slug)){
-                return rest.error({ // this slug is forbidden, yield 403 Forbidden.
-                    res: res,
-                    code: 403,
-                    message: 'Blog slug is reserved and can\'t be claimed.'
-                });
+                return next(); // this slug is an alias of the main blog.
             }
 
             blog.findOne({ slug: slug }, function(err, document){
                 if(document !== null){
-                    return rest.error({ // this blog is taken, yield 403 Forbidden.
-                        res: res,
-                        code: 403,
-                        message: 'Blog slug in use'
-                    });
+                    return next(); // this blog is taken, can no longer be claimed.
                 }else{ // allow the user to grab the blog
                     // TODO: handle POST claim requests, validate req.user (or create from req.body), only one blog per user account
                 }
