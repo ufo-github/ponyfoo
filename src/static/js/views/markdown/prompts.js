@@ -27,7 +27,6 @@
         var dialog = ctx.elements,
             dialogBody = dialog.find('.dialog-body'),
             upload = nbrut.tt.partial('file-upload', {
-                legend: '<span>Or, upload one. </span><em>You can also drag and drop over here.</em>',
                 fileType: 'image',
                 url: '/api/1.0/file',
                 thin: {

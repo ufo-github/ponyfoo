@@ -273,3 +273,52 @@ textarea.resizing {
 .validation-errors li:only-child {
   list-style-type: none;
 }
+
+
+
+/* CHECKBOXES
+----------------------------------------------------------*/
+
+.checkbox-input {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  opacity: 0;
+}
+
+.checkbox {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.checkbox:before {
+  display: inline-block;
+  .ff-console();
+  content: '\2713';
+  margin-right: 5px;
+  padding: 3px 5px 4px 5px;
+  background-color: @strong;
+  .box-radius(6px);
+  border: 1px solid @grayish;
+  border-top: 2px solid @light;
+  border-left: 2px solid @light;
+  color: transparent;
+  text-shadow: none;
+}
+
+.checkbox:hover:before {
+  background-color: @strong_hover;
+  color: @blue_hover;
+}
+
+.checkbox-input:checked ~ .checkbox:before {
+  color: #fff;
+  text-shadow: 1px 1px 1px @moderate;
+}
+
+.checkbox:hover:before,
+.checkbox-input:checked ~ .checkbox:before {
+  border: 1px solid @grayish;
+  border-top: 2px solid @border;
+  border-left: 2px solid @border;
+}

@@ -107,6 +107,15 @@ input:not([type='submit']) {
   width: 140px;
 }
 
+input[disabled]:not([type='submit']) {
+  background-color: @yellow_lighter;
+  color: @blue;
+}
+
+label.checkbox {
+  width: initial;
+}
+
 fieldset p {
   margin-top: 4px;
 }

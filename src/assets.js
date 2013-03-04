@@ -70,6 +70,7 @@ function getCss(){
         { profile: ['blogger', 'registered'], local: '/css/views/blog/comments.registered.less' },
 
         { profile: 'blogger', local: '/css/views/blogger/index.less' },
+        { profile: 'blogger', local: '/css/views/blogger/blog.less' },
         { profile: 'blogger', local: '/css/views/blogger/editor.less' },
         { profile: 'blogger', local: '/css/views/blogger/review.less' },
         { profile: 'blogger', local: '/css/views/blogger/discussions.less' },
@@ -147,6 +148,7 @@ function getJs(){
         { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.registered.js' },
         { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.edit.js' },
 
+        { profile: 'blogger', local: '/js/views/blogger/blog.js' },
         { profile: 'blogger', local: '/js/views/blogger/editor.js' },
         { profile: 'blogger', local: '/js/views/blogger/review.js' },
         { profile: 'blogger', local: '/js/views/blogger/discussions.js' },

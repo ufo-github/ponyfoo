@@ -12,7 +12,7 @@
     nbrut.tt.register({
         key: 'blog-configuration',
         source: '#blog-configuration-template',
-        mustache: true,
+        back: '#cancel-blog-configuration',
         aliases: [{
             title: 'Configure your Blog',
             route: '/blogger/blog'

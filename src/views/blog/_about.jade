@@ -1,8 +1,8 @@
 section.blogger-description!=blog.descriptionHtml
 
-if blog.social
+if blog.social.any
   footer.social-links
-    p='Feel free to follow me through the following services'
+    p='Stalk me all over the Internet'
 
     if blog.social.github
       a.social.github(title='Follow me on GitHub', target='_blank', href=blog.social.github)='GitHub'

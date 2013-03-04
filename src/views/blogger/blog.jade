@@ -1,2 +1,67 @@
-section#blog-configuration-template.template
+section#blog-configuration-template.template(data-class='blog-configuration')
   h1='Configure your Blog'
+
+  section.main-configuration
+    p
+      label(for='blog-slug')='Slug'
+      input#blog-slug(type='text', value=blog.slug, disabled, placeholder='Naked domain')
+
+    p
+      label(for='blog-title')='Blog Title'
+      input#blog-title(type='text', value=blog.title, placeholder='Pick a creative title for your blog')
+
+    p
+      label(for='blog-legend')='Legend'
+      input#blog-legend(type='text', value=blog.legend, placeholder='Choose a legend to display below the title')
+
+    p
+      label(for='blog-meta')='Meta Description'
+      input#blog-meta(type='text', value=blog.meta, placeholder='Carefully write your personal meta description')
+
+    p.blog-thumbnail
+      label(for='blog-thumbnail')='Thumbnail'
+      input#blog-thumbnail(type='text', value=blog.thumbnail, placeholder='Your thumbnail. Paste a link or drop a file here')
+
+    section.blog-description
+      label(for='wmd-input-description')='About the Blog'
+
+      div#wmd-button-bar-description.wmd-button-bar
+      div
+        textarea#wmd-input-description.wmd-input(placeholder='The description to display in the about box. Try to keep it short')=blog.description
+
+    section#wmd-preview-description.markdown.markdown-preview
+
+  section.social-configuration
+    header='These links will be used on the blog to publicize your presence in the social media.'
+
+    p
+      label(for='social-rss')='RSS Feed'
+      input.checkbox-input#social-rss(type='checkbox', checked=blog.social.rss)
+      label.checkbox(for='social-rss')='Share'
+
+    p
+      label(for='blog-social-email')='Contact Email'
+      input#blog-social-email(type='text', value=blog.social.email, placeholder='Set up an email address for readers to contact you')=blog.social.email
+    p
+      label(for='blog-social-github')='GitHub'
+      input#blog-social-github(type='text', value=blog.social.github, placeholder='Let your public repositories speak for you')=blog.social.github
+
+    p
+      label(for='blog-social-stackoverflow')='StackOverflow'
+      input#blog-social-stackoverflow(type='text', value=blog.social.stackoverflow, placeholder='Showcase your StackOverflow activity')=blog.social.stackoverflow
+
+    p
+      label(for='blog-social-careers')='Careers'
+      input#blog-social-careers(type='text', value=blog.social.careers, placeholder='Share your StackOverflow Careers profile')=blog.social.careers
+
+    p
+      label(for='blog-social-linkedin')='LinkedIn'
+      input#blog-social-linkedin(type='text', value=blog.social.linkedin, placeholder='Share your LinkedIn profile, get hired!')=blog.social.linkedin
+
+    p
+      label(for='blog-social-twitter')='Twitter'
+      input#blog-social-email(type='text', value=blog.social.twitter, placeholder='Share your Twitter profile')=blog.social.twitter
+
+  section.blog-configuration-buttons
+    a#cancel-blog-configuration='Cancel'
+    button#blog-configuration-submit.button(data-text='Save!', data-text-disabled='Saving...')='Save!'

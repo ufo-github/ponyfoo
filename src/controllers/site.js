@@ -46,14 +46,14 @@ function findBlogInternal(req,res,done){
         }
 
         // the website is live and the blog could be user-defined
-        blog.findOne(query, function(err, document){
+        blog.findOne(query).lean().exec(function(err, document){
             if(document !== null){ // this is the blog we're going to use
-                user.findOne({ _id: document.owner }, function(err, user){
+                user.findOne({ _id: document.owner }).lean().exec(function(err, user){
                     if(err){
                         throw err;
                     }
-                    req.blog = document.toObject();
-                    req.blogger = user.toObject();
+                    req.blog = document;
+                    req.blogger = user;
 
                     var email = req.blog.social && req.blog.social.email ? ' <' + req.blog.social.email + '>' : '';
 
@@ -182,7 +182,10 @@ function awaken(req,res,next){
         new blog({
             owner: user._id,
             slug: getBlogSlug(req),
-            title: title
+            title: title,
+            social: {
+                rss: true
+            }
         }).save(function(){
             live = true;
             res.redirect('/');

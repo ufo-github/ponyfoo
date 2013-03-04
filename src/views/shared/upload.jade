@@ -5,5 +5,12 @@ section#file-upload-template.template
     p.upload-progress-text='Uploading file...'
 
     section.upload-form
+      // {{#legend}}
       p.upload-legend='{{{legend}}}'
+      // {{/legend}}
+      // {{^legend}}
+      p.upload-legend
+        span='Or, upload one. '
+        em='You can also drag and drop over here.'
+      // {{/legend}}
       input.upload-input(type='file', name='file')

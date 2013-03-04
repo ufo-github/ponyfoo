@@ -3,7 +3,6 @@ var mongoose = require('mongoose'),
     ObjectId = mongoose.Schema.Types.ObjectId,
     schema = new mongoose.Schema({
         owner: { type: ObjectId, require: true },
-        live: { type: Boolean, require: true, default: false },
         slug: { type: String, require: true },
         title: { type: String },
         legend: { type: String },
@@ -15,6 +14,7 @@ var mongoose = require('mongoose'),
             email: String,
             github: String,
             stackoverflow: String,
+            careers: String,
             linkedin: String,
             twitter: String
         }
