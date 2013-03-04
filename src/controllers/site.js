@@ -62,7 +62,7 @@ function findBlog(req,res){
 
 function renderView(req,res){
     var profile, locals, connected = req.user !== undefined;
-    
+
     if(typeof req.blog === 'string'){
         profile = req.blog;
     }else{
@@ -159,7 +159,7 @@ function claim(req,res,next){
                         message: 'Blog slug in use'
                     });
                 }else{ // allow the user to grab the blog
-                    // TODO: handle POST claim requests
+                    // TODO: handle POST claim requests, validate req.user (or create from req.body), only one blog per user account
                 }
             });
         }
