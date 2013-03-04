@@ -1,15 +1,16 @@
 var config = require('../config.js'),
     blog = require('../models/blog.js'),
-    publicApi;
+    rest = require('../services/rest.js'),
+    live;
 
 function getStatus(done){
-    if(publicApi.live !== undefined){
+    if(live !== undefined){
         process.nextTick(done);
         return;
     }
 
     blog.count({}, function(err, count){
-        publicApi.live = count > 0;
+        live = count > 0;
         done();
     });
 }
@@ -24,9 +25,10 @@ function getBlogSlug(req){
 function findBlog(req,res){
     getStatus(function(){
         var slug = getBlogSlug(req),
-            reserve = config.server.slugRegex;
+            slugTest = config.server.slugRegex,
+            query = { slug: slug };
 
-        if(!publicApi.live){ // website isn't configured at all
+        if(!live){ // platform isn't configured at all
             if (req.url !== '/' || slug !== config.server.slugHome){
                 return res.redirect(config.server.host); // not 301 because the slug can be claimed
             }
@@ -34,12 +36,16 @@ function findBlog(req,res){
             return renderView(req,res);
         }
 
-        if(reserve !== undefined && !reserve.test(slug)){
-            return res.redirect(config.server.host, 301); // this blog name is forbidden, 301 to the default blog.
+        if(slugTest !== undefined && !slugTest.test(slug)){
+            return res.redirect(config.server.host, 301); // this slug is forbidden, 301 to the default blog.
+        }
+
+        if(!config.server.slugged){
+            delete query.slug;
         }
 
         // the website is live and the blog could be user-defined
-        blog.findOne({ slug: slug }, function(err, document){
+        blog.findOne(query, function(err, document){
             if(document !== null){ // this is the blog we're going to use
                 res.blog = document;
             }else{ // allow the user to grab the blog
@@ -84,7 +90,50 @@ function renderView(req,res){
     res.render('layouts/' + profile + '.jade', { profile: profile });
 }
 
-publicApi = {
+function awaken(req,res,next){
+    // TODO create user and attach blog
+    live = true;
+    res.redirect('/');
+}
+
+function claim(req,res,next){
+    getStatus(function(){
+        if(!live){ // dormant
+            awaken(req,res,next);
+        }else if(!config.server.slugged){ // claiming is disabled
+            return rest.error({
+                res: res,
+                code: 403,
+                message: 'Blog slugs are disabled on this platform.'
+            });
+        }else{ // attempt to claim
+            var slug = getBlogSlug(req),
+                slugTest = config.server.slugRegex;
+
+            if(slugTest !== undefined && !slugTest.test(slug)){
+                return rest.error({ // this slug is forbidden, yield 403 Forbidden.
+                    res: res,
+                    code: 403,
+                    message: 'Blog slug is reserved and can\'t be claimed.'
+                });
+            }
+
+            blog.findOne({ slug: slug }, function(err, document){
+                if(document !== null){
+                    return rest.error({ // this blog is taken, yield 403 Forbidden.
+                        res: res,
+                        code: 403,
+                        message: 'Blog slug in use'
+                    });
+                }else{ // allow the user to grab the blog
+                    // TODO: handle POST claim requests
+                }
+            });
+        }
+    });
+}
+
+module.exports = {
     hostValidation: function(req,res,next){
         var val = config.server.hostRegex;
         if (val !== undefined && !val.test(req.host)){
@@ -93,7 +142,6 @@ publicApi = {
         }
         next();
     },
-    get: findBlog
+    get: findBlog,
+    claim: claim
 };
-
-module.exports = publicApi;

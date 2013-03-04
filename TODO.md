@@ -5,8 +5,11 @@ TODO
 -------
 
 - **domain fragmentation**
-  - dormant POST and live
   - available blog market
+
+- users
+  - drop blogger field
+  - add superadmin field
 
 - absolute path in js/css/image for better caching (e.g //www.)
 

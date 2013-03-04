@@ -5,7 +5,8 @@ var config = require('../config.js'),
     site = require('../controllers/site.js');
 
 function staticNotFound(req, res){
-    res.redirect('/', 404);
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end();
 }
 
 function mapRouting(server, done){
@@ -27,6 +28,7 @@ function mapRouting(server, done){
         }
 
         server.get('/*', site.get); // GET catch-all
+        server.post('/claim', site.claim); // POST to claim a blog slug
         done();
     }
 }

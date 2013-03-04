@@ -23,7 +23,7 @@ var config = {
     },
     server: {
         tld: env.HOST_TLD || 'local-sandbox.com',
-        slugged: env.HOST_SLUG_ENABLED || false,
+        slugged: !!env.HOST_SLUG_ENABLED || false,
         slugHome: env.HOST_SLUG_DEFAULT || 'www',
         slugRegex: env.HOST_SLUG_RESERVED ? new RegExp('^' + env.HOST_SLUG_RESERVED + '$') : undefined,
         get host(){ return 'http://' + this.slugHome + '.' + this.tld + this.portPart },
