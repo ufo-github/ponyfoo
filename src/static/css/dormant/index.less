@@ -6,7 +6,7 @@
 
 .happy-talk img {
   display: block;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .happy-talk a {
@@ -22,13 +22,56 @@
   margin-top: 30px;
 }
 
-@media only screen and (max-width: 767px) {
-  .setup label {
-    display: block;
-    text-align: left;
+.setup p {
+  margin-top: 15px;
+}
+
+.setup label {
+  display: block;
+  text-align: left;
+  font-style: italic;
+}
+
+.setup .field {
+  margin-top: 6px;
+  width: 100%;
+  .box-sizing();
+  .box-radius(6px);
+  font-size: 1em;
+  color: @blue_strong;
+}
+
+.setup .field:focus {
+  background-color: @yellow_light;
+  color: @blue_strong;
+}
+
+.setup-buttons {
+  text-align: right;
+}
+
+.setup-buttons input {
+  .ff-trebuchet();
+  padding: 8px 12px;
+  background-color: @green_light;
+  color: #fff;
+  border: none;
+  .box-shadow(1px 1px 1px @green);
+  text-shadow: 1px 1px 2px @green;
+  font-size: 1.6em;
+}
+
+@media only screen and (min-width: 768px) {
+  .happy-talk img {
+    margin: 40px auto;
   }
 
-  .setup input {
-    width: 200px;
+  .setup .field {
+    font-size: 2em;
+    color: @blue;
+  }
+
+  .setup-buttons input {
+    font-size: 2.3em;
   }
 }

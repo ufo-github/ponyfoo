@@ -9,7 +9,7 @@ TODO
   - available blog market
   - turn live to true after escaping dormant mode.
 
-- absolute path in js/css/image for better caching
+- absolute path in js/css/image for better caching (e.g //www.)
 
 - profiles expansion
   - use blog info in about flip-card (set up a "blog" local context for each request)
