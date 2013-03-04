@@ -13,7 +13,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Added an [**ENV**](/ENV.md) document with a descriptive list of environment variables
 
 - **Blog Schema**
-  - Domain fragmentation, allowing users to take control of sub-domains
+  - Domain fragmentation, allowing users to take control of sub-domains, referred to as slugs
+  - 'Dormant' mode: allows quick setup of the environment when the site is not configured
 
 - Registration and Login Providers
   - Added LinkedIn
@@ -24,6 +25,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 - Search Engine Optimization
   - [**Schema.org**](http://schema.org) microdata
+
 
 
 0.2 (frozen)
