@@ -62,7 +62,7 @@ function findBlog(req,res){
 
 function renderView(req,res){
     var profile, locals, connected = req.user !== undefined;
-
+    
     if(typeof req.blog === 'string'){
         profile = req.blog;
     }else{
@@ -95,6 +95,12 @@ function awaken(req,res,next){
     var email = req.body['user.email'],
         password = req.body['user.password'],
         title = req.body['blog.title'];
+
+    if(!email || !password || !title){ // the most basic form of validation, since it's just the super admin
+        req.flash('validation', 'Oops, you should fill out every field');
+        res.redirect('/');
+        return;
+    }
 
     user.findOne({ email: email }, function(err, document){ // easier migration from v0.2
         if(!document){

@@ -15,11 +15,15 @@ var config = require('./config.js'),
     };
 
 function mapSharedProfileToBlogOnly(resource){
+    var blogOnly = ['blogger', 'registered', 'anon'];
+
     if(typeof resource === 'string'){
         return {
             local: resource,
-            profile: ['blogger', 'registered', 'anon']
+            profile: blogOnly
         };
+    }else if(resource.profile === undefined){
+        resource.profile = blogOnly;
     }
     return resource;
 }

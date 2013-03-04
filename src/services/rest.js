@@ -102,5 +102,6 @@ module.exports = {
     unauthorized: unauthorized,
     notFound: notFound,
     badRequest: badRequest,
-    wrapCallback: wrapCallback
+    wrapCallback: wrapCallback,
+    error: error
 };

@@ -12,6 +12,10 @@ block body
   article#content
     h1='Form Time!'
 
+    if flash.validation
+      ul.validation-errors
+        li= flash.validation
+
     section.setup
       form(method='post', action='/claim')
         fieldset
