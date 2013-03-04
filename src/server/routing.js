@@ -5,7 +5,7 @@ var config = require('../config.js'),
     site = require('../controllers/site.js');
 
 function staticNotFound(req, res){
-    res.redirect('/');
+    res.redirect('/', 404);
 }
 
 function mapRouting(server, done){
