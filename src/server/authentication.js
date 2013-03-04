@@ -27,7 +27,7 @@ function setupLocal(){
                     if(!isMatch){
                         return done(null, false, 'Invalid credentials');
                     }
-                    return done(null, user);
+                    return done(null, user.toObject());
                 });
             });
         }
@@ -96,7 +96,7 @@ function callback(query, profile, done) {
 
     user.findOne(query, function (err, document) {
         if(err || document){
-            done(err, document);
+            done(err, document ? document.toObject() : null);
             return;
         }
 
@@ -122,7 +122,9 @@ function callback(query, profile, done) {
                 }
             }
 
-            document.save(done);
+            document.save(function(err, user){
+                done(err, user ? user.toObject() : null);
+            });
         });
     });
 }
@@ -137,7 +139,7 @@ function configure(done){
             if(err){
                 return done(err);
             }
-            return done(null, user);
+            return done(null, user.toObject());
         });
     });
 

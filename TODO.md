@@ -7,15 +7,14 @@ TODO
 - **domain fragmentation**
   - available blog market
 
-- users
-  - drop blogger field
-  - add superadmin field
-
 - absolute path in js/css/image for better caching (e.g //www.)
 
 - profiles expansion
   - use blog info in about flip-card (set up a "blog" local context for each request)
 
+- migration:
+ - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
+ - remove query for user when awakening
 
 
 

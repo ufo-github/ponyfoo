@@ -10,10 +10,10 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     header.layout-header.clearfix
       section.layout-heading
         h1.layout-title
-          a#home(href='/')=config.site.title
+          a#home(href='/')=blog.title
 
-        if config.site.legend
-          h2.layout-legend=config.site.legend
+        if blog.legend
+          h2.layout-legend=blog.legend
 
       aside#menu
         nav

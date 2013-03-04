@@ -23,7 +23,7 @@ function getBlogSlug(req){
     return slug;
 }
 
-function findBlog(req,res){
+function findBlogInternal(req,res,done){
     getStatus(function(){
         var slug = getBlogSlug(req),
             slugTest = config.server.slugRegex,
@@ -31,14 +31,13 @@ function findBlog(req,res){
 
         if(!live){ // platform isn't configured at all
             if (req.url !== '/' || slug !== config.server.slugHome){
-                return res.redirect(config.server.host); // not 301 because the slug can be claimed
+                return then('dormant-redirect');
             }
-            req.blog = 'dormant';
-            return renderView(req,res);
+            return then('dormant');
         }
 
         if(slugTest !== undefined && !slugTest.test(slug)){
-            return res.redirect(config.server.host, 301); // this slug is forbidden, 301 to the default blog.
+            return then('slug-redirect');
         }
 
         if(!config.server.slugged){
@@ -48,20 +47,64 @@ function findBlog(req,res){
         // the website is live and the blog could be user-defined
         blog.findOne(query, function(err, document){
             if(document !== null){ // this is the blog we're going to use
-                req.blog = document;
+                user.findOne({ _id: document.owner }, function(err, user){
+                    if(err){
+                        throw err;
+                    }
+                    req.blog = document.toObject();
+                    req.blogger = user.toObject();
+
+                    if(req.user){
+                        req.user.blogger = req.user._id.equals(document.owner);
+                    }
+                    return then('blog');
+                });
             }else{ // allow the user to grab the blog
                 if (req.url !== '/'){
-                    return res.redirect('/'); // not 301 because the slug can be claimed
+                    return then('available-redirect'); // not 301 because the slug can be claimed
                 }
-                req.blog = 'available';
+                return then('available');
             }
-            renderView(req,res);
         });
+    });
+
+    function then(status){
+        req.blogStatus = status;
+        done(status);
+    }
+}
+
+function findBlog(req,res){
+    findBlogInternal(req,res,function(status){
+        switch(status){
+            case 'dormant-redirect': { // not 301 because the slug can be awaken
+                return res.redirect(config.server.host);
+            }
+            case 'dormant': {
+                req.blog = 'dormant';
+                return renderView(req,res);
+            }
+            case 'slug-redirect': { // this slug is forbidden, 301 to the default blog.
+                return res.redirect(config.server.host, 301);
+            }
+            case 'available-redirect': {
+                return res.redirect('/');
+            }
+            case 'available': {
+                req.blog = 'available';
+                return renderView(req,res);
+            }
+            case 'blog': {
+                return renderView(req,res);
+            }
+        }
     });
 }
 
 function renderView(req,res){
-    var profile, locals, connected = req.user !== undefined;
+    var profile, locals,
+        connected = req.user !== undefined,
+        isBlogger = connected ? req.user.blogger : false;
 
     if(typeof req.blog === 'string'){
         profile = req.blog;
@@ -73,7 +116,7 @@ function renderView(req,res){
                 connected: false
             });
         }else{
-            if(req.user.blogger !== true){
+            if(!isBlogger){
                 profile = 'registered';
             }else{
                 profile = 'blogger';
@@ -82,13 +125,17 @@ function renderView(req,res){
                 id: req.user._id,
                 profile: profile,
                 connected: true,
-                blogger: req.user._id.equals(req.blog.owner)
+                blogger: isBlogger
             });
         }
         res.locals.assetify.js.add('!function(a){a.locals=' + locals + ';}(nbrut);');
     }
 
-    res.render('layouts/' + profile + '.jade', { profile: profile });
+    res.render('layouts/' + profile + '.jade', {
+        profile: profile,
+        blog: req.blog,
+        blogger: req.blogger
+    });
 }
 
 function awaken(req,res,next){
@@ -154,15 +201,21 @@ function claim(req,res,next){
     });
 }
 
-module.exports = {
-    hostValidation: function(req,res,next){
-        var val = config.server.hostRegex;
-        if (val !== undefined && !val.test(req.host)){
-            res.redirect(config.server.authority + req.url, 301);
-            return;
-        }
+function hostValidation(req,res,next){
+    var val = config.server.hostRegex;
+    if (val !== undefined && !val.test(req.host)){
+        res.redirect(config.server.authority + req.url, 301);
+        return;
+    }
+
+    // crucial: appends blog, blogStatus and blogger to the request.
+    findBlogInternal(req,res,function(req,res,status){
         next();
-    },
+    });
+}
+
+module.exports = {
+    hostValidation: hostValidation,
     get: findBlog,
     claim: claim
 };
