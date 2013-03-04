@@ -11,7 +11,7 @@ function configure(server){
             res.render(view, locals, callback);
         };
         next();
-    })
+    });
 }
 
 module.exports = {

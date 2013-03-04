@@ -15,6 +15,11 @@ TODO
 - migration:
  - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
  - remove query for user when awakening
+ - config blog to have stuff from config.site and config.blogger
+
+- revisit RSS feed stuff, multiple feeds, ? how to deal with that.
+  - same with sitemap(s)
+  - same with opensearch
 
 
 
@@ -29,6 +34,7 @@ TODO
 3
 -------
 
+- marked over pagedown
 - client-side caching?
 - proper api authentication?
 - reduce fat in client-side template registration

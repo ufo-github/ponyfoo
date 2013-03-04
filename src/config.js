@@ -67,22 +67,25 @@ var config = {
         };
     },
     get site() {
-        return this._s = this._s || {
+        return {
             doctype: '<!DOCTYPE html>',
-            title: 'Pony Foo',
-            legend: 'Ramblings of a degenerate coder',
-            description: 'Ramblings of a degenerate coder',
             thumbnail: this.server.authority + '/img/thumbnail.png'
         };
     },
-    blogger: {
-        name: 'Nicolas Bevacqua',
+    get siteDeprecated() {
+        return this._s = this._s || {// TODO should be ported to blog config
+            title: 'Pony Foo',
+            description: 'Ramblings of a degenerate coder'
+        };
+    },
+    bloggerDeprecated: {
+        name: 'Nicolas Bevacqua' /*
+        UNUSED FIELDS, should be ported to blog config
         email: 'nicolasbevacqua@gmail.com',
         github: 'https://github.com/bevacqua',
         stackoverflow: 'http://careers.stackoverflow.com/bevacqua',
         linkedin: 'http://linkedin.com/in/nbevacqua/',
-        about: "I'm Nicolas Bevacqua. I live in Buenos Aires, Argentina. This is my technical blog.",
-        social: 'Feel free to visit my social accounts below:'
+        about: "I'm Nicolas Bevacqua. I live in Buenos Aires, Argentina. This is my technical blog."*/
     },
     get jQuery() {
         if (this._$ === undefined){

@@ -85,7 +85,7 @@
             }
             var created = user.created,
                 m = moment(created),
-                me = user._id === nbrut.locals.id;
+                me = user._id === window.locals.id;
 
             user.me = me;
             user.created = new Date(created);

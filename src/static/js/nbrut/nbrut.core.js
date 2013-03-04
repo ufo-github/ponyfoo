@@ -84,7 +84,6 @@
         };
     }();
 
-    window.nbrut = {
-        local: caching
-    };
+    window.nbrut = window.nbrut || {};
+    window.nbrut.local = caching;
 }(window, jQuery);

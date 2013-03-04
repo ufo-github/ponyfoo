@@ -44,7 +44,7 @@
             description: getDescription(container),
             keywords: container.find('[data-keywords]:first').data('keywords')
         };
-        ogModel.images.push(nbrut.site.thumbnail);
+        ogModel.images.push(window.locals.site.thumbnail);
         ogModel.firstImage = ogModel.images.slice(0,1);
         og = nbrut.tt.partial('metadata', ogModel);
 

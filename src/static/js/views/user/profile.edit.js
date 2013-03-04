@@ -1,6 +1,6 @@
 !function (window,$,nbrut, undefined) {
     function prepare(render, data){
-        if(data.id !== nbrut.locals.id){
+        if(data.id !== window.locals.id){
             render(null, true);
         }
 

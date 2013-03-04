@@ -2,6 +2,7 @@ var config = require('../config.js'),
     blog = require('../models/blog.js'),
     user = require('../models/user.js'),
     rest = require('../services/rest.js'),
+    pagedown = require('pagedown'),
     live;
 
 function getStatus(done){
@@ -53,6 +54,10 @@ function findBlogInternal(req,res,done){
                     }
                     req.blog = document.toObject();
                     req.blogger = user.toObject();
+
+                    var email = req.blog.social && req.blog.social.email ? ' <' + req.blog.social.email + '>' : '';
+
+                    req.blogger.meta = user.displayName + email;
 
                     if(req.user){
                         req.user.blogger = req.user._id.equals(document.owner);
@@ -111,24 +116,33 @@ function renderView(req,res){
     }else{
         if(!connected){
             profile = 'anon';
-            locals = JSON.stringify({
+            locals = {
                 profile: 'anon',
                 connected: false
-            });
+            };
         }else{
             if(!isBlogger){
                 profile = 'registered';
             }else{
                 profile = 'blogger';
             }
-            locals = JSON.stringify({
+            locals = {
                 id: req.user._id,
                 profile: profile,
                 connected: true,
                 blogger: isBlogger
-            });
+            };
+
+            var description = req.blog.description || 'Welcome to my personal blog!',
+                html = new pagedown.getSanitizingConverter().makeHtml(description);
+
+            req.blog.descriptionHtml = html;
         }
-        res.locals.assetify.js.add('!function(a){a.locals=' + locals + ';}(nbrut);');
+        locals.site = {
+            title: req.blog.title,
+            thumbnail: req.blog.thumbnail
+        };
+        res.locals.assetify.js.add('!function(a){a.locals=' + JSON.stringify(locals) + ';}(window);', 'before');
     }
 
     res.render('layouts/' + profile + '.jade', {

@@ -1,4 +1,4 @@
-!function (nbrut, window, $, undefined) {
+!function (nbrut, window, $, locals, undefined) {
     var templating = function () {
         var templates = {},
             stringKeys = {},
@@ -21,9 +21,9 @@
             },
             titleSettings = {
                 tag: $('title'),
-                format: '{0} - ' + nbrut.site.title,
+                format: '{0} - ' + locals.site.title,
                 default: {
-                    text: nbrut.site.title,
+                    text: locals.site.title,
                     literal: true
                 }
             },
@@ -484,4 +484,4 @@
     }();
 
     nbrut.tt = templating;
-}(nbrut, window, jQuery);
+}(nbrut, window, jQuery, locals);

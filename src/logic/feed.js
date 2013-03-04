@@ -9,11 +9,11 @@ var async = require('async'),
 
 function rebuild(done){
     var opts = {
-        title: config.site.title,
-        description: config.site.description,
-        author: config.blogger.name,
+        title: config.siteDeprecated.title,
+        description: config.siteDeprecated.description,
+        author: config.bloggerDeprecated.name,
         site_url: config.server.authority,
-        image_url: config.site.thumbnail,
+        image_url: config.site.thumbnail, // TODO use blog.thumbnail, too
         feed_url: config.feed.local
     };
 
@@ -33,7 +33,7 @@ function rebuild(done){
                     title: entry.title,
                     description: brief,
                     url: config.server.authority + entry.permalink,
-                    author: config.blogger.name,
+                    author: config.bloggerDeprecated.name,
                     date: entry.date
                 });
                 done();

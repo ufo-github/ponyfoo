@@ -13,7 +13,7 @@ function mapRouting(server, done){
     $.findModules({ folder: path.join(__dirname, '/routing') }, configure);
 
     function configure(modules){
-        server.all('/*', site.hostValidation); // validate we're on the right host
+        server.all('/*', site.hostValidation); // validate we're on the right host, append blog-related request parameters
 
         modules.forEach(function(module){
             module.configure(server);

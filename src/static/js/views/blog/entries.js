@@ -163,7 +163,7 @@
                 var list = nbrut.tt.partial('discussion-list', it),
                     discussions = list.appendTo(container), actions, anchor;
 
-                if(nbrut.locals.connected){
+                if(window.locals.connected){
                     actions = nbrut.tt.partial('discussion-actions', { entryId: entry._id });
                     actions.appendTo(discussions);
 

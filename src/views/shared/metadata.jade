@@ -2,7 +2,7 @@ section#metadata-template.template
   meta(name='keywords', content='{{keywords}}')
   meta(name='description', content='{{description}}')
 
-  meta(property='og:site_name', content=config.site.title)
+  meta(property='og:site_name', content=blog.title)
   meta(property='og:url', content='{{url}}')
 
   // {{#images}}
@@ -16,11 +16,11 @@ section#metadata-template.template
   meta(itemprop='description', content='{{description}}')
   // {{/description}}
   // {{^description}}
-  meta(property='og:description', content=config.site.description)
-  meta(itemprop='description', content=config.site.description)
+  meta(property='og:description', content=blog.meta)
+  meta(itemprop='description', content=blog.meta)
   // {{/description}}
 
-  meta(itemprop='creator', content=config.blogger.name)
+  meta(itemprop='creator', content=blogger.meta)
   meta(itemprop='name', content='{{title}}')
   meta(itemprop='image', content='{{firstImage}}')
   meta(itemprop='url', content='{{url}}')

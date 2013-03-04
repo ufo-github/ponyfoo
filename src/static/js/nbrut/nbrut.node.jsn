@@ -3,11 +3,6 @@
         authority: '@config.server.authority'
     };
 
-    nbrut.site = {
-        title: '@config.site.title',
-        thumbnail: '@config.site.thumbnail'
-    };
-
     nbrut.avatar = {
         tiny: '@config.avatar.tiny',
         small: '@config.avatar.small',

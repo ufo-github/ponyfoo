@@ -2,6 +2,7 @@ var config = require('./config.js'),
     express = require('express'),
     statics = require('./server/statics.js'),
     middleware = require('./server/middleware.js'),
+    libraries = require('./server/libraries.js'),
     async = require('async'),
     path = require('path'),
     assets = require('./assets.js'),
@@ -28,6 +29,7 @@ function main(){
 function compileAndConfigure(done){
     async.parallel([
         assets.compile,
+        libraries.configure,
         configure
     ],done);
 }
