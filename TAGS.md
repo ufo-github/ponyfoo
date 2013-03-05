@@ -28,6 +28,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Search Engine Optimization
   - [**Schema.org**](http://schema.org) microdata
 
+- Cleaner AJAX transportation (JSON over url-encoded form data when not making GET requests)
+
 
 
 0.2 (frozen)
@@ -64,10 +66,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 - Login and Register redirect to the last relevant view
 
-- Cleaner AJAX transportation (JSON over url-encoded form data when not making GET requests)
 
 
-  
 0.1 (frozen)
 ============
 
