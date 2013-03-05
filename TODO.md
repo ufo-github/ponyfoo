@@ -4,7 +4,6 @@ TODO
 1
 -------
 
-- blog configuration of meta stuff
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
 - blog entry attached to blog, filters
 

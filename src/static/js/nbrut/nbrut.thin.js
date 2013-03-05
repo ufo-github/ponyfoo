@@ -30,12 +30,20 @@
 
             opts.eventContext = '{0} {1}'.format(how, what);
 
-            xhr = $.ajax({
+            var ajaxOptions = {
                 url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
                 type: how,
                 data: opts.data,
+                dataType: 'json',
                 context: opts.context
-            });
+            };
+
+            if(how !== 'GET'){ // send valid JSON instead of url-encoded form data
+                ajaxOptions.contentType = 'application/json; charset=utf-8';
+                ajaxOptions.data = JSON.stringify(ajaxOptions.data || {});
+            }
+
+            xhr = $.ajax(ajaxOptions);
 
             track(xhr, opts);
             return xhr;

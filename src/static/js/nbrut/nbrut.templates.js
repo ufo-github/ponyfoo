@@ -231,9 +231,11 @@
 			template.prepare(render, settings.data || {}, ctx);
         }
 
-        function deactivateContainer(template) {
+        function deactivateContainer(template) { // template is internal
             var loader = config.loading;
-            plugins.raise('deactivate', template);
+            if(template !== undefined){
+                plugins.raise('deactivate', template);
+            }
             config.container.off().removeClass().addClass(loader.css).empty().html(loader.html);
         }
 
@@ -476,6 +478,7 @@
             activate: activate,
             activateRoute: activateRoute,
             activateNotFound: activateNotFound,
+            loading: deactivateContainer,
             partial: partial,
             hook: plugins.hook,
             templateLinks: fixLocalRoutes,
