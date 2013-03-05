@@ -28,7 +28,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Search Engine Optimization
   - [**Schema.org**](http://schema.org) microdata
 
-- Cleaner AJAX transportation (JSON over url-encoded form data when not making GET requests)
+- Cleaner AJAX transport (JSON over url-encoded form data when not making GET requests)
 
 
 

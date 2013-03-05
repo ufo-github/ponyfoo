@@ -28,6 +28,7 @@ function validate(req,res){
             }
         },
         rules: [
+
         ]
     });
 }
@@ -38,11 +39,9 @@ function update(req,res){
         return;
     }
 
-console.log(req.body.blog.social);rest.end(res,{});/*
     crud.update({ _id: req.blog._id }, document, {
         res: res
     });
-    */
 }
 
 module.exports = {
