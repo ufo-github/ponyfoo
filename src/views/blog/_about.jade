@@ -10,8 +10,14 @@ if blog.social.any
     if blog.social.stackoverflow
       a.social.stackoverflow(title='Follow me on Stack Overflow', target='_blank', href=blog.social.stackoverflow)='Stack Overflow'
 
+    if blog.social.careers
+      a.social.careers(title='Follow me on Careers at Stack Overflow', target='_blank', href=blog.social.careers)='Careers'
+
     if blog.social.linkedin
       a.social.linkedin(title='Follow me on LinkedIn', target='_blank', href=blog.social.linkedin)='LinkedIn'
+
+    if blog.social.twitter
+      a.social.twitter(title='Follow me on Twitter', target='_blank', href=blog.social.twitter)='Twitter'
 
     if blog.social.email
       a.social.email(title='Contact me via email', target='_blank', href='mailto:' + blog.social.email)='Email'

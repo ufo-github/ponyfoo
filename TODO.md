@@ -6,18 +6,16 @@ TODO
 
 - blog configuration of meta stuff
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
-- blog entry attached to blog
-
-- migration steps:
- - db.blogs.update({},{$set:{blogs:{}}}) // locally
- - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
- - remove query for user when awakening
- - config blog to have stuff from config.site and config.blogger
+- blog entry attached to blog, filters
 
 - revisit RSS feed stuff, multiple feeds, ? how to deal with that.
   - same with sitemap(s)
   - same with opensearch
 
+- migration steps:
+ - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
+ - remove query for user when awakening
+ - config blog to have stuff from config.site and config.blogger
 
 
 2

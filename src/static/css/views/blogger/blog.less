@@ -8,7 +8,12 @@
   width: 125px;
 }
 
-.blog-configuration .blog-description {
+.main-configuration header,
+.social-configuration header {
+  margin-bottom: 15px;
+}
+
+.main-configuration .blog-description {
   margin-top: 15px;
 }
 
@@ -19,6 +24,10 @@
 .main-configuration .upload-area {
   display: inline-block;
   background-color: @yellow_lighter;
+}
+
+.main-configuration .upload-input {
+  color: transparent; /* hide 'No file chosen' text */
 }
 
 #blog-thumbnail {
@@ -32,10 +41,6 @@
 
 .social-configuration {
   margin-top: 25px;
-}
-
-.social-configuration header {
-  margin-bottom: 10px;
 }
 
 #social-rss:checked ~ .checkbox:after {

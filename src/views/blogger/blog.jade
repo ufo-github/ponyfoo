@@ -2,6 +2,12 @@ section#blog-configuration-template.template(data-class='blog-configuration')
   h1='Configure your Blog'
 
   section.main-configuration
+    header
+      span='These fields are '
+      em='crucial'
+      span=' to get right, type wisely.'
+
+
     p
       label(for='blog-slug')='Slug'
       input#blog-slug(type='text', value=blog.slug, disabled, placeholder='Naked domain')
@@ -42,24 +48,35 @@ section#blog-configuration-template.template(data-class='blog-configuration')
     p
       label(for='blog-social-email')='Contact Email'
       input#blog-social-email(type='text', value=blog.social.email, placeholder='Set up an email address for readers to contact you')=blog.social.email
+
     p
-      label(for='blog-social-github')='GitHub'
+      label
+        a.highlighted-link(href='https://github.com', data-hint='Visit GitHub.com', target='_blank', rel='nofollow')='GitHub'
+
       input#blog-social-github(type='text', value=blog.social.github, placeholder='Let your public repositories speak for you')=blog.social.github
 
     p
-      label(for='blog-social-stackoverflow')='StackOverflow'
+      label
+        a.highlighted-link(href='http://stackoverflow.com', data-hint='Visit StackOverflow.com', target='_blank', rel='nofollow')='Stack Overflow'
+
       input#blog-social-stackoverflow(type='text', value=blog.social.stackoverflow, placeholder='Showcase your StackOverflow activity')=blog.social.stackoverflow
 
     p
-      label(for='blog-social-careers')='Careers'
+      label
+        a.highlighted-link(href='http://careers.stackoverflow.com', data-hint='Visit Careers at StackOverflow.com', target='_blank', rel='nofollow')='Careers'
+
       input#blog-social-careers(type='text', value=blog.social.careers, placeholder='Share your StackOverflow Careers profile')=blog.social.careers
 
     p
-      label(for='blog-social-linkedin')='LinkedIn'
+      label
+        a.highlighted-link(href='http://www.linkedin.com', data-hint='Visit LinkedIn.com', target='_blank', rel='nofollow')='LinkedIn'
+
       input#blog-social-linkedin(type='text', value=blog.social.linkedin, placeholder='Share your LinkedIn profile, get hired!')=blog.social.linkedin
 
     p
-      label(for='blog-social-twitter')='Twitter'
+      label
+        a.highlighted-link(href='https://twitter.com', data-hint='Visit Twitter.com', target='_blank', rel='nofollow')='Twitter'
+
       input#blog-social-email(type='text', value=blog.social.twitter, placeholder='Share your Twitter profile')=blog.social.twitter
 
   section.blog-configuration-buttons

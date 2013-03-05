@@ -13,7 +13,7 @@
                 eventContext: 'PUT file'
             },
             done: function (e, data) {
-                thumbnail.val(data.result.url);
+                thumbnail.val(data.result.url).focus();
             }
         });
 
