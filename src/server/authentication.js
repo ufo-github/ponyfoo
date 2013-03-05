@@ -17,7 +17,7 @@ function setupLocal(){
                     return done(err);
                 }
                 if (!user || !user.password) {
-                    return done(null, false, 'Invalid credentials');
+                    return done(null, false, 'Invalid login credentials');
                 }
 
                 user.validatePassword(password, function(err, isMatch) {
@@ -25,7 +25,7 @@ function setupLocal(){
                         return done(err);
                     }
                     if(!isMatch){
-                        return done(null, false, 'Invalid credentials');
+                        return done(null, false, 'Invalid login credentials');
                     }
                     return done(null, user.toObject());
                 });
@@ -90,7 +90,7 @@ function setupProvider(type, config, cb){
 function callback(query, profile, done) {
     var email = profile.emails ? profile.emails[0].value : undefined;
     if(!email){
-        done(null,false,'Unable to get email address');
+        done(null,false,'Unable to fetch email address');
         return;
     }
 
