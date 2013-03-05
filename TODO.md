@@ -4,6 +4,9 @@ TODO
 1
 -------
 
+- user website validation
+- blog config validation
+
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
 - blog entry attached to blog, filters
 
