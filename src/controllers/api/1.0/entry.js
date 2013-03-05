@@ -87,9 +87,11 @@ function validateEntry(req,res,update){
             tags: source.tags
         },
         rules: [
-            { field: 'title', length: 10, message: 'You forgot the all-important, descriptive title' },
-            { field: 'brief', length: 30, message: 'Please remember to write an introduction to your post' },
-            { field: 'text', length: 60, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article?' },
+            { field: 'title', length: { min: 6, max: 20 }, message: 'The article\'s title should be between 6 and 20 characters long' },
+            { field: 'brief', length: 20, message: 'Please remember to write an introduction to your post. Use at least 20 characters' },
+            { field: 'brief', length: { max: 10000 }, required: false, message: 'Your introduction\'s markdown shouldn\'t exceed 10k characters in length' },
+            { field: 'text', length: 30, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article? Type at least 30 characters' },
+            { field: 'text', length: { max: 30000 }, required: false, message: 'Your article\'s markdown can\'t exceed 30k characters in length' },
             {
                 field: 'tags',
                 validator: function(){

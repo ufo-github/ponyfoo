@@ -69,10 +69,10 @@ function validate(req,res){
         rules: [
             {
                 all: {
-                    message: 'A website needs both a title and an url',
+                    message: 'A website needs both a title and a url',
                     rules: [
-                        { field: 'website.title' },
-                        { field: 'website.url' }
+                        { field: 'website.title', length: { max: 35 } },
+                        { field: 'website.url', length: { max: 400 } }
                     ]
                 }
             }

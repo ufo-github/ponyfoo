@@ -21,7 +21,17 @@ function evaluateRule(opts){
             return failed(result);
         }
     }
-    if(!opts.field || opts.field.length < (rule.length || 1)){
+
+    var fieldLen = !opts.field ? 0 : opts.field.length,
+        len = rule.length || 0;
+
+    if(typeof len === 'number'){
+        len = { min: len, max: 0 };
+    }
+
+    if(rule.required === false && !opts.field){
+        return false;
+    }else if(!opts.field || (len.min > 0 && fieldLen < len.min) || (len.max > 0 && fieldLen > len.max)){
         return failed(rule.message);
     }
     return false;

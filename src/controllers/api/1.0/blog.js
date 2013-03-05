@@ -28,7 +28,11 @@ function validate(req,res){
             }
         },
         rules: [
-
+            { field: 'title', length: { min: 4, max: 16 }, message: 'Your blog needs a pretty name! Use between 4 and 16 characters' },
+            { field: 'legend', length: { max: 24 }, required: false, message: 'A legend can take up to 24 characters' },
+            { field: 'meta', length: { max: 300 }, required: false, message: 'The meta description must be under 300 characters' },
+            { field: 'description', length: { max: 30000 }, required: false, message: 'Your description markdown can\'t exceed 30k characters in length' },
+            // TODO more stuff
         ]
     });
 }

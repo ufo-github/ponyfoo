@@ -28,7 +28,8 @@ function validate(req,res){
     return validation.validate(req,res,{
         document: { text: req.body.comment },
         rules: [
-            { field: 'text', length: 10, message: 'Your comment must be at least 10 characters long' }
+            { field: 'text', length: 10, message: 'Your comment must be at least 10 characters long' },
+            { field: 'text', length: { max: 3000 }, required: false, message: 'Your markdown can\'t exceed 3k characters in length' }
         ]
     });
 }
