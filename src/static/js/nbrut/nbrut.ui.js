@@ -21,6 +21,17 @@
             }
         }
 
+        function uploadExtend(opts){
+            var defaults = {
+                fileType: 'image',
+                url: '/api/1.0/file',
+                thin: {
+                    name: 'file',
+                    eventContext: 'PUT file'
+                }
+            };
+            return $.extend({}, defaults, opts);
+        }
         return {
             disable: disable,
             enable: enable,
@@ -29,7 +40,8 @@
                     width: 768
                 }
             },
-            pagedTable: pagedTable
+            pagedTable: pagedTable,
+            uploadExtend: uploadExtend
         };
     }();
 

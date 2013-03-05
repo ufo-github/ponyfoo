@@ -26,13 +26,7 @@
     function arrangeImageUpload(ctx){
         var dialog = ctx.elements,
             dialogBody = dialog.find('.dialog-body'),
-            upload = nbrut.tt.partial('file-upload', {
-                fileType: 'image',
-                url: '/api/1.0/file',
-                thin: {
-                    name: 'file',
-                    eventContext: 'PUT file'
-                },
+            upload = nbrut.tt.partial('file-upload', nbrut.ui.uploadExtend({
                 done: function (e, data) {
                     var input = dialog.find('.prompt-input'),
                         ok = dialog.find('.ok-button'),
@@ -42,7 +36,7 @@
                     input.val(link);
                     ok.trigger('click');
                 }
-            });
+            }));
 
         upload.appendTo(dialogBody);
     }

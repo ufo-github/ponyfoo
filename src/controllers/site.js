@@ -134,7 +134,7 @@ function renderView(req,res){
             };
 
             var description = req.blog.description || 'Welcome to my personal blog!',
-                html = new pagedown.getSanitizingConverter().makeHtml(description);
+                html = (new pagedown.getSanitizingConverter()).makeHtml(description);
 
             req.blog.descriptionHtml = html;
         }

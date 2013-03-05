@@ -1,6 +1,7 @@
 var rest = require('../../../services/rest.js'),
     $ = require('../../../services/$.js'),
     controllers = './../../../controllers/api/1.0/',
+    blog = require(controllers + '/blog.js'),
     entry = require(controllers + '/entry.js'),
     comment = require(controllers + '/comment.js'),
     user = require(controllers + '/user.js'),
@@ -48,6 +49,10 @@ function paged(api, path){
 
     api.get.apply(null, regular);
     api.get.apply(null, paged);
+}
+
+function routeBlog(api){
+    api.put('/blog', blogger, blog.update);
 }
 
 function routeEntries(api){
@@ -110,6 +115,7 @@ function routeFiles(api){
 function configure(server){
     var api = routing(server);
 
+    routeBlog(api);
     routeEntries(api);
     routeComments(api);
     routeUsers(api);
