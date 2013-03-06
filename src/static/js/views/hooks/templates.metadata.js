@@ -24,9 +24,9 @@
 
     // open graph micro data (mostly for feeding our zombie-crawler)
     nbrut.tt.hook('activated', function(container, template, viewModel, settings){
-        var head = $('head'), ogModel, og;
+        var head = $('head'), metaModel, meta;
 
-        ogModel = {
+        metaModel = {
             title: viewModel.title,
             url: window.location.href,
             images: container.find('img').map(function(){
@@ -44,12 +44,12 @@
             description: getDescription(container),
             keywords: container.find('[data-keywords]:first').data('keywords')
         };
-        ogModel.images.push(window.locals.site.thumbnail);
-        ogModel.firstImage = ogModel.images.slice(0,1);
-        og = nbrut.tt.partial('metadata', ogModel);
+        metaModel.images.push(window.locals.site.thumbnail);
+        metaModel.firstImage = metaModel.images.splice(0,1);
+        meta = nbrut.tt.partial('metadata', metaModel);
 
         // refresh micro data
         head.find('meta[name=keywords], meta[property^="og:"], meta[itemprop], link[rel=canonical]').remove();
-        og.appendTo(head);
+        meta.appendTo(head);
     });
 }(window,jQuery,nbrut);

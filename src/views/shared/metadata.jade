@@ -4,6 +4,8 @@ section#metadata-template.template
   meta(property='og:site_name', content=blog.title)
   meta(property='og:url', content='{{url}}')
 
+  meta(property='og:image', itemprop='image', content='{{firstImage}}')
+
   // {{#images}}
   meta(property='og:image', content='{{.}}')
   // {{/images}}
@@ -19,7 +21,7 @@ section#metadata-template.template
 
   meta(name='author', itemprop='creator', content=blogger.meta)
   meta(itemprop='name', content='{{title}}')
-  meta(itemprop='image', content='{{firstImage}}')
+
   meta(itemprop='url', content='{{url}}')
 
   link(rel='canonical', href='{{url}}')
