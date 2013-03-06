@@ -49,7 +49,7 @@
         og = nbrut.tt.partial('metadata', ogModel);
 
         // refresh micro data
-        head.find('meta[name=keywords], meta[name=description], meta[property^="og:"], meta[itemprop]').remove();
+        head.find('meta[name=keywords], meta[property^="og:"], meta[itemprop], link[rel=canonical]').remove();
         og.appendTo(head);
     });
 }(window,jQuery,nbrut);

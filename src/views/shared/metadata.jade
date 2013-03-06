@@ -1,6 +1,5 @@
 section#metadata-template.template
   meta(name='keywords', content='{{keywords}}')
-  meta(name='description', content='{{description}}')
 
   meta(property='og:site_name', content=blog.title)
   meta(property='og:url', content='{{url}}')
@@ -12,15 +11,15 @@ section#metadata-template.template
   meta(property='og:title', content='{{title}}')
 
   // {{#description}}
-  meta(property='og:description', content='{{description}}')
-  meta(itemprop='description', content='{{description}}')
+  meta(name='description', property='og:description', itemprop='description', content='{{description}}')
   // {{/description}}
   // {{^description}}
-  meta(property='og:description', content=blog.meta)
-  meta(itemprop='description', content=blog.meta)
+  meta(name='description', property='og:description', itemprop='description', content=blog.meta)
   // {{/description}}
 
-  meta(itemprop='creator', content=blogger.meta)
+  meta(name='author', itemprop='creator', content=blogger.meta)
   meta(itemprop='name', content='{{title}}')
   meta(itemprop='image', content='{{firstImage}}')
   meta(itemprop='url', content='{{url}}')
+
+  link(rel='canonical', href='{{url}}')
