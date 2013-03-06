@@ -1,5 +1,6 @@
 var $ = require('./$.js'),
-    rest = require('./rest.js');
+    rest = require('./rest.js'),
+    config = require('../config.js');
 
 function evaluateRule(opts){
     var rule = opts.rule;
@@ -12,6 +13,9 @@ function evaluateRule(opts){
     }
 
     if(opts.ignoreUndefined && opts.field === undefined){
+        return false;
+    }
+    if(rule.required === false && !opts.field){
         return false;
     }
 
@@ -29,9 +33,7 @@ function evaluateRule(opts){
         len = { min: len, max: 0 };
     }
 
-    if(rule.required === false && !opts.field){
-        return false;
-    }else if(!opts.field || (len.min > 0 && fieldLen < len.min) || (len.max > 0 && fieldLen > len.max)){
+    if(!opts.field || (len.min > 0 && fieldLen < len.min) || (len.max > 0 && fieldLen > len.max)){
         return failed(rule.message);
     }
     return false;
@@ -86,6 +88,26 @@ function validate(req,res,opts){
     return opts.document;
 }
 
+function email(message){
+    return function(){
+        var self = this;
+        if(!!self && !config.regex.email.test(self)){
+            return message || 'Invalid email address';
+        }
+    };
+}
+
+function link(message, entity){
+    return function(){
+        var self = this;
+        if(!!self && !config.regex.link.test(self)){
+            return message || ('Invalid ' + (entity ? entity + ' ' : '') + 'link');
+        }
+    };
+}
+
 module.exports = {
-    validate: validate
+    validate: validate,
+    email: email,
+    link: link
 };

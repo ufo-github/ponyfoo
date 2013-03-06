@@ -32,7 +32,7 @@
                         }
                     }
                 },
-                context: elements.find('.main-configuration'),
+                context: elements.filter('.main-configuration'),
                 done: function(){
                     // YO DAWG! I heard you like loaders, so I put a loader before you load your landing page.
                     nbrut.tt.loading();

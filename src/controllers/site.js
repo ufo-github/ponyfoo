@@ -2,6 +2,7 @@ var config = require('../config.js'),
     blog = require('../models/blog.js'),
     user = require('../models/user.js'),
     rest = require('../services/rest.js'),
+    $ = require('../services/$.js'),
     pagedown = require('pagedown'),
     live;
 
@@ -54,14 +55,7 @@ function findBlogInternal(req,res,done){
                     }
                     req.blog = document;
                     req.blogger = user;
-
-                    var email = req.blog.social && req.blog.social.email ? ' <' + req.blog.social.email + '>' : '';
-
-                    req.blogger.meta = user.displayName + email;
-
-                    if(req.user){
-                        req.user.blogger = req.user._id.equals(document.owner);
-                    }
+                    appendBlogInfo(req);
                     return then('blog');
                 });
             }else{ // allow the user to grab the blog
@@ -76,6 +70,23 @@ function findBlogInternal(req,res,done){
     function then(status){
         req.blogStatus = status;
         done(status);
+    }
+}
+
+function appendBlogInfo(req){
+    var blog = req.blog,
+        social = blog.social,
+        blogger = req.blogger,
+        user = req.user,
+        email = social && social.email ? ' <' + social.email + '>' : '';
+
+    blogger.meta = blogger.displayName + email;
+
+    if (user){
+        user.blogger = user._id.equals(blog.owner);
+    }
+    if (social){
+        social.any = $.hasTruthyProperty(social);
     }
 }
 

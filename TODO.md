@@ -4,9 +4,6 @@ TODO
 1
 -------
 
-- user website validation
-- blog config validation
-
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
 - blog entry attached to blog, filters
 
@@ -23,6 +20,7 @@ TODO
 2
 -------
 
+- introduce library such as underscore on the server-side
 - post about css for dummies
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 

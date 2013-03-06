@@ -92,31 +92,28 @@ function validateEntry(req,res,update){
             { field: 'brief', length: { max: 10000 }, required: false, message: 'Your introduction\'s markdown shouldn\'t exceed 10k characters in length' },
             { field: 'text', length: 30, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article? Type at least 30 characters' },
             { field: 'text', length: { max: 30000 }, required: false, message: 'Your article\'s markdown can\'t exceed 30k characters in length' },
-            {
-                field: 'tags',
-                validator: function(){
-                    var self = this, failed;
+            { field: 'tags', validator: function(){
+                var self = this, failed;
 
-                    if(!Array.isArray(self) || self.length === 0){
-                        return 'Tag your article with at least one keyword';
-                    }else if(self.length > 5){
-                        return 'Six tags are enough. Pick the most relevant ones';
-                    }
-
-                    failed = self.some(function(tag, i){
-                        if(typeof tag === 'string'){
-                            self[i] = tag.replace(/ /g,'').toLowerCase();
-                            return !/^[a-z0-9._-]+$/.test(self[i]);
-                        }else{
-                            return true;
-                        }
-                    });
-
-                    if(failed){
-                        return 'Tags can only contain letters, numbers, or punctuation';
-                    }
+                if(!Array.isArray(self) || self.length === 0){
+                    return 'Tag your article with at least one keyword';
+                }else if(self.length > 5){
+                    return 'Six tags are enough. Pick the most relevant ones';
                 }
-            }
+
+                failed = self.some(function(tag, i){
+                    if(typeof tag === 'string'){
+                        self[i] = tag.replace(/ /g,'').toLowerCase();
+                        return !/^[a-z0-9._-]+$/.test(self[i]);
+                    }else{
+                        return true;
+                    }
+                });
+
+                if(failed){
+                    return 'Tags can only contain letters, numbers, or punctuation';
+                }
+            }}
         ]
     });
 }

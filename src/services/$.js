@@ -59,10 +59,20 @@ function findProperty(on, path){
     return on;
 }
 
+function hasTruthyProperty(obj) {
+    for(var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop) && !!obj[prop]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 module.exports = {
     noop: function(){},
     log: logger(),
     args: args,
     findModules: findModules,
-    findProperty: findProperty
+    findProperty: findProperty,
+    hasTruthyProperty: hasTruthyProperty
 };
