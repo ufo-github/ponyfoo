@@ -2,7 +2,8 @@
 
 html(lang='en')
   head
-    block head
+    include _metadata
+      block title
 
     !=assetify.css.emit(profile)
 

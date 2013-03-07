@@ -6,6 +6,7 @@ var config = require('./config.js'),
         bin: config.static.bin,
         css: getCss(),
         js: getJs(),
+        host: config.server.host,
         profiles: [
             'dormant',
             'available',
@@ -169,20 +170,6 @@ function getJs(){
     return js;
 }
 
-var absoluteLinks = {
-    events: [{
-        eventName: 'beforeRender',
-        plugin: function(items, cfg, ctx, done){
-            items.forEach(function(item){
-                if (item.out){
-                    item.out = url.resolve(config.server.host, item.out);
-                }
-            });
-            done();
-        }
-    }]
-};
-
 assets.compile = function(done){
     assetify.use(assetify.plugins.less);
     assetify.use(assetify.plugins.jsn);
@@ -195,7 +182,6 @@ assets.compile = function(done){
     assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
     assetify.use(assetify.plugins.fingerprint);
 
-    assetify.use(absoluteLinks); // purpose: always route asset requests through a single subdomain, better caching.
     assetify.compile(assets, done);
 };
 

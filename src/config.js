@@ -11,7 +11,9 @@ var config = {
     },
     static: {
         folder: __dirname + '/static',
-        bin: __dirname + '/static/bin'
+        bin: __dirname + '/static/bin',
+        get faviconSource(){ return path.join(this.bin, '/img/favicon.ico'); },
+        favicon: '/favicon.ico'
     },
     get opensearch(){
         return this._o = this._o || {
