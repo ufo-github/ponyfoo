@@ -171,7 +171,7 @@ function getJs(){
 
 var absoluteLinks = {
     events: [{
-        eventName: 'afterOutput',
+        eventName: 'beforeRender',
         plugin: function(items, cfg, ctx, done){
             items.forEach(function(item){
                 if (item.out){
@@ -193,6 +193,7 @@ assets.compile = function(done){
         assetify.use(assetify.plugins.minifyJS);
     }
     assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
+    assetify.use(assetify.plugins.fingerprint);
 
     assetify.use(absoluteLinks); // purpose: always route asset requests through a single subdomain, better caching.
     assetify.compile(assets, done);
