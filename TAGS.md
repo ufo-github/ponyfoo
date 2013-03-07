@@ -15,7 +15,6 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - **Blog Schema**
   - Domain fragmentation, allowing users to take control of sub-domains, referred to as slugs
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
-  - Assets (such as js and css) are now served with absolute urls, for improved caching
   - Personalization. Now each blog has its own set of related metadata and social links.
 
 - Registration and Login Providers
@@ -30,6 +29,9 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 - Cleaner AJAX transport (JSON over url-encoded form data when not making GET requests)
 
+- Performance
+  - Assets (such as js and css) are now served with absolute urls, for improved caching
+  - Assets are now hashed with query string fingerprints and carry Expires headers
 
 
 0.2 (frozen)

@@ -22,6 +22,7 @@ TODO
 -------
 
 - introduce library such as underscore on the server-side
+
 - post about css for dummies
 - post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
 

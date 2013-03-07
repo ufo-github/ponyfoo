@@ -16,7 +16,6 @@ function configure(server){
     server.use(assetify.middleware());
 }
 
-
 module.exports = {
     configure: configure
 };
