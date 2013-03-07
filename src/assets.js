@@ -181,7 +181,6 @@ assets.compile = function(done){
     }
     assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
     assetify.use(assetify.plugins.fingerprint);
-
     assetify.compile(assets, done);
 };
 

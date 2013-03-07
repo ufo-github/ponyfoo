@@ -6,7 +6,7 @@ var config = require('../config.js'),
     assets = require('../assets.js'),
     favicon = config.static.faviconSource;
 
-function assetExpires(req,res,next){
+function forcedExpires(req,res,next){ // expires on assets are handled by assetify, images aren't a part of that
     if (req.url.indexOf('/img/') === 0 || req.url === '/favicon.ico') {
         res.setHeader('Cache-Control', 'public, max-age=31535650');
         res.setHeader('Expires', new Date(Date.now() + 31535650000).toUTCString());
@@ -16,7 +16,7 @@ function assetExpires(req,res,next){
 
 function configure(server){
     server.use(express.compress());
-    server.use(assetExpires);
+    server.use(forcedExpires);
     server.use(express.favicon(favicon));
     server.use(fingerprint(assets.bin));
     server.use(express.static(assets.bin));
