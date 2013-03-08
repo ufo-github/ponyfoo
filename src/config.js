@@ -49,7 +49,8 @@ var config = {
         sessionSecret: env.SESSION_SECRET || 'local'
     },
     tracking: {
-        code: env.GA_CODE
+        analytics: env.GA_CODE,
+        clicky: parseInt(env.CLICKY_SITE_ID || '')
     },
     get feed() {
         return this._f = this._f || {

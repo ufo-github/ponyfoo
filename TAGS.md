@@ -33,6 +33,11 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Assets (such as js and css) are now served with absolute urls, for improved caching
   - Assets are now hashed with query string fingerprints and carry Expires headers
 
+- Analytics
+  - Added support for [**Clicky**](http://clicky.com/ "Clicky Web Analytics") tracking code
+  - Added support for [**New Relic**](http://newrelic.com/ "New Relic Monitoring") monitoring
+
+
 
 0.2 (frozen)
 ============
@@ -86,3 +91,5 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Gravatars
   - Profiles
   - Commenting
+
+- [**Google Analytics**](https://www.google.com/analytics) tracking code

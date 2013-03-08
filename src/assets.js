@@ -156,11 +156,15 @@ function getJs(){
         { profile: 'blogger', local: '/js/views/blogger/users.js' }
     ];
 
-    if(config.tracking.code !== undefined){
+    if(!!config.tracking.analytics){
         js.push({ local: '/js/ext/analytics.jsn', context: { config: config } });
     }
 
-    if(config.env.development === true){
+    if(!!config.tracking.clicky){
+        js.push({ local: '/js/ext/clicky.jsn', context: { config: config } });
+    }
+
+    if(config.env.development){
         js.push('/js/debug.js');
     }
 

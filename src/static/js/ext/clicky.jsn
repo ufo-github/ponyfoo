@@ -1,0 +1,12 @@
+var clicky_site_ids = clicky_site_ids || [];
+clicky_site_ids.push(@config.tracking.clicky);
+
+!function(document) {
+    var clicky = document.createElement('script');
+    clicky.type = 'text/javascript';
+    clicky.async = true;
+    clicky.src = '//static.getclicky.com/js';
+
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(clicky, s);
+}(document);

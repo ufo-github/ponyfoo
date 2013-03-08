@@ -61,5 +61,16 @@ You shouldn't need to touch these, but you can, of course.
 
 - **FEED_ADDR**: Instead of serving the default, raw RSS feed XML, you could want to proxy it on something like [**Feedburner**](http://feedburner.com/), in that case `FEED_ADDR` should be set to the link to that feed.
 
-- **NEW_RELIC_LICENSE_KEY**: Your New Relic license key, in case you're into monitoring your application.
-- **NEW_RELIC_NO_CONFIG_FILE**: Must be set to `'true'` so that the New Relic agent works properly with **NBrut**
+
+
+Analytics
+---------
+
+These enable different analytics tools on your site.
+
+- **GA_CODE**: Set to your [**Google Analytics**](https://www.google.com/analytics) code. Outputs GA tracking code.
+
+- **CLICKY_SITE_ID**: [**Clicky**](http://clicky.com/ "Clicky Web Analytics") service integration, set to the site ID they grant you.
+
+- **NEW_RELIC_LICENSE_KEY**: Your [**New Relic**](http://newrelic.com/ "New Relic Monitoring") license key, in case you're into monitoring your application.
+- **NEW_RELIC_NO_CONFIG_FILE**: Must be set to `'true'` so that the **New Relic** agent works properly with **NBrut**
