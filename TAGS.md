@@ -26,6 +26,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 - Search Engine Optimization
   - [**Schema.org**](http://schema.org) microdata
+  - Better meta descriptions for each individual view
 
 - Cleaner AJAX transport (JSON over url-encoded form data when not making GET requests)
 
