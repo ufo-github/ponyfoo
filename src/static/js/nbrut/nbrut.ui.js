@@ -1,4 +1,6 @@
 !function (window, $, nbrut, moment, undefined) {
+    'use strict';
+
     var ui = function(){
         function enable(button){
             var originalText = button.data('text');
@@ -32,6 +34,7 @@
             };
             return $.extend({}, defaults, opts);
         }
+
         return {
             disable: disable,
             enable: enable,

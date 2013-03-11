@@ -1,4 +1,6 @@
 !function (window, $, nbrut, undefined) {
+    'use strict';
+
     var shared = [];
 
     function thinner(container){
@@ -26,7 +28,8 @@
         function fire(how,what,opts){
             var id = !!opts.id ? '/' + opts.id : '',
                 parent = !!opts.parent ? opts.parent.what + '/' + opts.parent.id + '/' : '',
-                action = !!opts.action ? opts.action + '/' : '';
+                action = !!opts.action ? opts.action + '/' : '',
+                xhr;
 
             opts.eventContext = '{0} {1}'.format(how, what);
 

@@ -1,4 +1,6 @@
 !function (window,$,nbrut) {
+    'use strict';
+
     function prepare(render){
         nbrut.thin.get('entry', {
             context: 'prepare',

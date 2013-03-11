@@ -1,4 +1,6 @@
 !function (window,$,nbrut, undefined) {
+    'use strict';
+
     function prepare(render, data){
         if(data.id !== window.locals.id){
             render(null, true);

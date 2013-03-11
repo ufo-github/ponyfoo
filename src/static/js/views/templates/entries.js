@@ -1,4 +1,6 @@
 !function (window, nbrut, moment, undefined) {
+    'use strict';
+
     var register = nbrut.tt.register,
         year = '^\/([0-9]{4})\/',
         month = year + '(0[1-9]|1[0-2])\/',

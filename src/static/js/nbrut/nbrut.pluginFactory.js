@@ -1,4 +1,6 @@
 !function (nbrut, $, undefined) {
+    'use strict';
+
     function create(){
         var plugins = [];
 

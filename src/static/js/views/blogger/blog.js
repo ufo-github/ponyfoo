@@ -1,4 +1,6 @@
 !function (window,$,nbrut) {
+    'use strict';
+
     function afterActivate(viewModel, data, ctx){
         var elements = ctx.elements,
             thumbnail = elements.find('#blog-thumbnail'),

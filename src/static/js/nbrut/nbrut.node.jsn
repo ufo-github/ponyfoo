@@ -1,4 +1,6 @@
 !function(nbrut){
+    'use strict';
+
     nbrut.server = {
         authority: '@config.server.host'
     };

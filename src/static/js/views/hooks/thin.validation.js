@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function validationMessages(xhr, textStatus){
         var validation = parseResponseText(xhr, textStatus);
 
@@ -65,7 +67,7 @@
     }
 
     function removeMessageInContext(context){
-        if (context.jquery){
+        if (!!context && context.jquery){
             context.find('.validation-errors:first-child').remove();
         }
     }

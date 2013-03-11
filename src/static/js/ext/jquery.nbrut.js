@@ -1,5 +1,9 @@
 ﻿!function(window, $, undefined) {
-    $.fn.anchorSEO = function(selector){
+    'use strict';
+
+    var fn = $.fn;
+
+    fn.anchorSEO = function(selector){
         var container = this;
 
         container.find(selector || 'a').each(function(){
@@ -22,7 +26,7 @@
         return container.hints(true);
     };
 
-    $.fn.loadImages = function(){
+    fn.loadImages = function(){
         return this.find('img[data-src]').each(function(){
             var self = $(this),
                 src = self.data('src');

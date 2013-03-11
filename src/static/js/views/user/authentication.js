@@ -1,4 +1,6 @@
 !function (window,$,nbrut, undefined) {
+    'use strict';
+
     var ignored = ['/','/user/login','/user/register'],
         prev;
 

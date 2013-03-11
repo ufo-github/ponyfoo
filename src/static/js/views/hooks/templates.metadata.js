@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function getDescription(container, template, viewModel, settings){
         var viewMeta = viewModel.meta || {},
             descriptionTitle = viewMeta.title ? viewMeta.title.trim() + ' ' : '',

@@ -1,5 +1,9 @@
 ﻿!function(window, $, undefined) {
-    $.fn.inView = function(){
+    'use strict';
+
+    var fn = $.fn;
+    
+    fn.inView = function(){
         return this.is(function(){
             var rect = this.getBoundingClientRect();
 
@@ -12,7 +16,7 @@
         });
     };
 
-    $.fn.scrollIntoView = function(then) {
+    fn.scrollIntoView = function(then) {
         var self = $(this);
         if (self.length > 0 && !self.inView()){
             $('body').animate({
@@ -25,7 +29,7 @@
         return this;
     };
 
-    $.fn.center = function () {
+    fn.center = function () {
         return this.each(function() {
             var self = $(this),
                 win = $(window);
@@ -50,10 +54,10 @@
         };
     }
 
-    $.fn.textWidth = textDimension('outerWidth');
-    $.fn.textHeight = textDimension('outerHeight');
+    fn.textWidth = textDimension('outerWidth');
+    fn.textHeight = textDimension('outerHeight');
 
-    $.fn.centerTextOnParent = function(){
+    fn.centerTextOnParent = function(){
         var self = $(this),
             parent = self.parent(),
             width = parent.width(),
@@ -71,7 +75,7 @@
         });
     };
 
-    $.fn.clearInlineMargins = function(){
+    fn.clearInlineMargins = function(){
         return this.css({
             marginTop: '',
             marginLeft: '',

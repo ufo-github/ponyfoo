@@ -1,4 +1,6 @@
 !function (window,$,nbrut,moment,undefined) {
+    'use strict';
+
     var html = nbrut.md.html;
 
     function entryHook(data){

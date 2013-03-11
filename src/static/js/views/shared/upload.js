@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function getExtensionRegex(fileType){
         if(fileType === 'image'){
             return {

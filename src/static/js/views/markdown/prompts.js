@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function afterActivate(viewModel, data, ctx){
         var dialog = ctx.elements,
             input = dialog.find('.prompt-input');

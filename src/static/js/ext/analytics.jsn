@@ -3,6 +3,8 @@ _gaq.push(['_setAccount', '@config.tracking.code']);
 _gaq.push(['_trackPageview']);
 
 !function(document) {
+    'use strict';
+
     var ga = document.createElement('script');
     ga.type = 'text/javascript';
     ga.async = true;

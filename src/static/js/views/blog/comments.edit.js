@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function bindExit(viewModel, data, ctx){
         var cancel = ctx.elements,
             exits = viewModel.discussions.find('.edit, .remove, .discussion-reply, .discussion-create');

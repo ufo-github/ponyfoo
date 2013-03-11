@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function afterActivate(viewModel, data, ctx){
         var elements = ctx.elements;
         elements.find('.expand').on('click.expand', function(){

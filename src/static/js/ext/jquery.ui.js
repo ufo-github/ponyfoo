@@ -1,4 +1,6 @@
 ﻿!function(window, $, undefined) {
+    'use strict';
+
     $.fn.hints = function(enabled){
         return this.each(function(){
             var elements = $(this).find('[data-hint][data-hint!=""]'), // non-empty hints

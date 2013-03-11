@@ -1,4 +1,6 @@
 !function (window,$,nbrut) {
+    'use strict';
+
     function bindTitle(){
         var input = $('#entry-title'),
             title = $('.entry-editor .blog-entry-title h1');

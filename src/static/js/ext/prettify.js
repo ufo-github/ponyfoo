@@ -1,4 +1,6 @@
 !function (window, $) {
+    'use strict';
+
     function preProcessHighlights() {
         $('pre.prettyprint:not(.prettyprinted)').each(function () {
             var self = $(this).addClass('linenums'),

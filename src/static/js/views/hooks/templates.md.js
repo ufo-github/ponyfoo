@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     nbrut.tt.hook('fill', function(container){
         var prefix = 'wmd-input',
             inputs = container.find('.wmd-input');

@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function prepare(render, data){
         if (data.query === undefined){
             complete(render, data);

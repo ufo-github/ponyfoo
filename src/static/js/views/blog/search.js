@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     var input = $('.search-input'),
         button = $('.search-button');
 

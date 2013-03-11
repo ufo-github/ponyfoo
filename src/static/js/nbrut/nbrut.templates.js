@@ -1,4 +1,6 @@
 !function (nbrut, window, $, locals, undefined) {
+    'use strict';
+
     var templating = function () {
         var templates = {},
             stringKeys = {},
@@ -70,6 +72,8 @@
 		}
 
 		function bindTrigger(template, alias){
+            var trigger;
+
 			if(typeof alias.trigger === 'string'){
 				trigger = $(alias.trigger);
 				trigger.on('click', function(e){

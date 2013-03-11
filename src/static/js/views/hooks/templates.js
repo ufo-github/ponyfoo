@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     var tt = nbrut.tt;
 
     // abort thin requests

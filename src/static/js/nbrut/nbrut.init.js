@@ -1,4 +1,6 @@
 !function(window,$,nbrut){
+    'use strict';
+
     nbrut.tt.init();
 
     var body = $('body');

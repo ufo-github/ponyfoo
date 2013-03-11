@@ -1,4 +1,6 @@
 !function (window, $, nbrut, undefined) {
+    'use strict';
+
     var md = function(){
         function getConverter() {
             return Markdown.getSanitizingConverter();

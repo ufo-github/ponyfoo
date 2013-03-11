@@ -1,4 +1,6 @@
 !function (window,nbrut) {
+    'use strict';
+
     var register = nbrut.tt.register;
 
     register({

@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     function afterActivate(viewModel, data, ctx){
         bindPager(ctx.elements, viewModel, viewModel.paging, viewModel.query || '');
     }

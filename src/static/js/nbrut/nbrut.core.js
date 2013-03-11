@@ -1,4 +1,6 @@
 !function (window, $, undefined) {
+    'use strict';
+
     var caching = function(){
         function setCookie(key, value, expires) {
             var defaults = {

@@ -1,5 +1,7 @@
 !function (window,$,nbrut, undefined) {
-	var profile = $('.user-profile-menu');
+    'use strict';
+
+    var profile = $('.user-profile-menu');
     nbrut.tt.templateLinks(profile);
 
     function prepare(render, data){

@@ -1,4 +1,6 @@
 !function (window,$,nbrut,undefined) {
+    'use strict';
+
     var edits = [];
 
     function unified(elements,buttonClass,opts){

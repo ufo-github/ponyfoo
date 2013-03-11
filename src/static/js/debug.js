@@ -1,4 +1,6 @@
 !function (window,$,nbrut,Math,undefined) {
+    'use strict';
+
     var opts = {
             flashFill: false
         },
