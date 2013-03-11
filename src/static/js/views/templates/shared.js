@@ -1,47 +1,49 @@
 !function (window,nbrut) {
-    nbrut.tt.register({
+    var register = nbrut.tt.register;
+
+    register({
         key: '404',
         source: '#not-found-template',
         title: 'Not Found'
     });
 
-    nbrut.tt.register({
+    register({
         key: 'metadata',
         source: '#metadata-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'validation-errors',
         source: '#validation-errors-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'validation-dialog',
         source: '#validation-dialog-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'file-upload',
         source: '#file-upload-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'expand-section',
         source: '#expand-section-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'table-pager',
         source: '#table-pager-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'user-profile',
         source: '#user-profile-template',
         mustache: true,

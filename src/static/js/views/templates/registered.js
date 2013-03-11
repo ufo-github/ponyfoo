@@ -1,33 +1,35 @@
 !function (window,nbrut) {
-    nbrut.tt.register({
+    var register = nbrut.tt.register;
+
+    register({
         key: 'discussion-actions',
         source: '#discussion-actions-template'
     });
 
-    nbrut.tt.register({
+    register({
         key: 'discussion-reply',
         source: '#discussion-reply-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'discussion-thread',
         source: '#discussion-thread-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'discussion-comment',
         source: '#discussion-comment-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'comment-edit',
         source: '#comment-edit-template'
     });
 
-    nbrut.tt.register({
+    register({
         key: 'user-profile-edit',
         source: '#user-profile-edit-template',
         mustache: true,

@@ -17,66 +17,85 @@
             id: data.query,
             context: 'prepare',
             done: function(it){
-                render({
-                    entries: it.entries || [it.entry],
-                    paging: it.paging,
-                    latest: latest || it.entries
-                }, it.entry === null);
+                var viewModel = getViewModel(it, latest, data);
+                render(viewModel, it.entry === null);
             }
         });
     }
 
-    function afterActivate(viewModel, data, ctx){
-        var container = $('.blog-entries'),
-            count = viewModel.entries.length;
-
-        if(data.search){
-            container.find('.blog-entry-text').each(function(){
-                var self = $(this).hide(),
-                    expand = nbrut.tt.partial('expand-section', {
-                        target: self,
-                        legend: 'Click to reveal the rest of this post'
-                    });
-
-                expand.insertBefore(self);
-            });
-        }
-
-        if (count === 0){
-            var empty = nbrut.tt.partial('empty-entry', viewModel);
-            empty.fill(container);
-        }else if(count !== 1){
-            addPager(viewModel, ctx.identifier, data.query || '');
-        }
-
-        if(count === 1){
-            var entry = viewModel.entries[0],
-                model = entry.related,
-                siblings = nbrut.tt.partial('entry-siblings', model),
-                footer = container.find('.blog-entry-footer');
-
-            siblings.appendTo(footer);
-            addComments(entry, data);
-        }
-
-        addSidebar();
+    function getViewModel(it, latest, data){
+        var viewModel = {
+            entries: it.entries || [it.entry],
+            paging: it.paging,
+            latest: latest || it.entries
+        };
+console.log(data);
+        return viewModel;
     }
 
-    function addExhausted(){
-        var container = $('.blog-entries'),
-            exhausted = nbrut.tt.partial('exhausted-entries');
+    function afterActivate(viewModel, data, ctx){
+        var elements = ctx.elements,
+            container = elements.filter('.blog-entries'),
+            sidebar = elements.filter('.blog-sidebar'),
+            search = !!data.search,
+            empty;
 
+        switch(viewModel.entries.length){
+            case 0: {
+                empty = nbrut.tt.partial('empty-entry', viewModel);
+                empty.fill(container);
+                break;
+            }
+            case 1: {
+                addSingleEntryPartials(viewModel, container, data);
+                break;
+            }
+            default: {
+                addPager(viewModel, container, ctx.identifier, data.query || '');
+                break;
+            }
+        }
+
+        if(search){
+            addSearchShrinkage(container);
+        }
+        addSidebar(sidebar);
+    }
+
+    function addSearchShrinkage(container){
+        container.find('.blog-entry-text').each(function(){
+            var self = $(this).hide(),
+                expand = nbrut.tt.partial('expand-section', {
+                    target: self,
+                    legend: 'Click to reveal the rest of this post'
+                });
+
+            expand.insertBefore(self);
+        });
+    }
+
+    function addSingleEntryPartials(viewModel, container, data){
+        var entry = viewModel.entries[0],
+            model = entry.related,
+            siblings = nbrut.tt.partial('entry-siblings', model),
+            footer = container.find('.blog-entry-footer');
+
+        siblings.appendTo(footer);
+        addComments(container, entry, data);
+    }
+
+    function addExhausted(container){
+        var exhausted = nbrut.tt.partial('exhausted-entries');
         exhausted.appendTo(container);
     }
 
-    function addPager(viewModel, identifier, query){
+    function addPager(viewModel, container, identifier, query){
         if(viewModel.paging.next === false){
-            addExhausted();
+            addExhausted(container);
             return;
         }
 
         var page = '{0}p/{1}'.format(query.length === 0 ? '' : '/', viewModel.paging.next),
-            container = $('.blog-entries'),
             paging = nbrut.tt.partial('entry-pager'),
             win = $(window),
             pager = paging.appendTo(container);
@@ -84,7 +103,7 @@
         function more(){
             win.off('scroll.paging');
             pager.off('click.paging');
-            pagingEvent(identifier, pager, query, page);
+            pagingEvent(container, identifier, pager, query, page);
         }
 
         win.on('scroll.paging', function(){
@@ -106,7 +125,7 @@
         pager.on('click.paging', more);
     }
 
-    function pagingEvent(identifier,pager,query,page){
+    function pagingEvent(container, identifier, pager, query, page){
         var card = pager.find('.flip-card');
 
         if(nbrut.tt.active !== identifier){ // sanity
@@ -122,19 +141,18 @@
                     return;
                 }
 
-                var container = $('.blog-entries'),
-                    articles = nbrut.tt.partial('more-entries', it);
+                var articles = nbrut.tt.partial('more-entries', it);
 
                 articles.appendTo(container);
                 pager.remove();
-                addPager(it, identifier, query);
+                addPager(it, container, identifier, query);
             }
         });
     }
 
-    function addSidebar(){
-        var flipper = $('.sidebar-flipper'),
-            card = $('.blog-sidebar .flip-card'),
+    function addSidebar(container){
+        var flipper = container.find('.sidebar-flipper'),
+            card = container.find('.flip-card'),
             highlight = 'box-highlight',
             highlightSidebar = 'sidebar-flip-highlight',
             highlighted = nbrut.local.get(highlightSidebar, true);
@@ -150,8 +168,7 @@
         });
     }
 
-    function addComments(entry, data){
-        var container = $('.blog-entries');
+    function addComments(container, entry, data){
         container.find('.comment-count').remove(); // these are just for the list view
 
         nbrut.thin.get('comment', {

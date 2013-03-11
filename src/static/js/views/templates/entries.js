@@ -1,10 +1,24 @@
 !function (window, nbrut, moment, undefined) {
-    var year = '^\/([0-9]{4})\/',
+    var register = nbrut.tt.register,
+        year = '^\/([0-9]{4})\/',
         month = year + '(0[1-9]|1[0-2])\/',
         day = month + '(0[1-9]|[12][0-9]|3[01])\/',
         slug = day + '([a-z0-9\-]+)',
         comments = slug + '(#comments)',
         commentThread = slug + '(#thread-[a-z0-9\-]+)';
+
+    function extractTags(terms){
+        var tagged = 'tagged/',
+            decoded = decodeURIComponent(terms).replace(/\+/g,' '),
+            tagSearch = decoded.indexOf(tagged) === 0,
+            tags = tagSearch ? decoded.substr(tagged.length) : decoded;
+
+        return {
+            tagged: tagSearch,
+            tags: tags === decoded ? null : tags,
+            terms: decoded
+        }
+    }
 
     function getEntryRoute(regex){
         var searching = regex.indexOf('\/search') === 0,
@@ -20,13 +34,14 @@
             map: function(captures){
                 var hash = hashed ? captures.pop() : undefined,
                     terms = captures.slice(1).join('/'),
-                    decoded = decodeURIComponent(terms).replace(/\+/g,' ');
+                    extracted = extractTags(terms);
 
                 return {
-                    query: prefix + decoded,
-                    terms: decoded,
+                    query: prefix + extracted.terms,
+                    terms: extracted.terms,
                     hash: hash,
-                    search: searching
+                    search: searching,
+                    tags: extracted.tags
                 };
             }
         };
@@ -36,7 +51,7 @@
         return viewModel.entries[0].title;
     }
 
-    nbrut.tt.register({
+    register({
         key: 'home',
         source: '#blog-entries-template',
         mustache: true,
@@ -77,46 +92,46 @@
         },{
             key: 'search',
             title: function(viewModel,data){
-                var tagged = 'tagged/',
-                    tags = data.terms.indexOf(tagged) === 0,
-                    terms = tags ? data.terms.substr(tagged.length) : data.terms,
-                    prefix = tags ? 'Search tagged' : 'Search';
+                var terms = data.terms,
+                    extracted = extractTags(terms),
+                    prefix = extracted.tagged ? 'Search tagged' : 'Search',
+                    keywords = extracted.tagged ? extracted.tags : extracted.terms;
 
-                return '{0} "{1}"'.format(prefix, terms);
+                return '{0} "{1}"'.format(prefix, keywords);
             },
             route: getEntryRoute('\/search\/(.*)')
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'empty-entry',
         source: '#empty-entry-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'exhausted-entries',
         source: '#exhausted-entries-template'
     });
 
-    nbrut.tt.register({
+    register({
         key: 'entry-pager',
         source: '#entry-pager-template'
     });
 
-    nbrut.tt.register({
+    register({
         key: 'more-entries',
         source: '#more-entries-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'entry-siblings',
         source: '#entry-siblings-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'discussion-list',
         source: '#discussion-list-template',
         mustache: true

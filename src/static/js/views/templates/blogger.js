@@ -1,5 +1,7 @@
 !function (window,nbrut) {
-    nbrut.tt.register({
+    var register = nbrut.tt.register;
+
+    register({
         key: 'blogger-tools',
         source: '#blogger-tools-template',
         aliases: [{
@@ -9,7 +11,7 @@
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'blog-configuration',
         source: '#blog-configuration-template',
         back: '#cancel-blog-configuration',
@@ -19,7 +21,7 @@
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'entry-editor',
         source: '#entry-editor-template',
         mustache: true,
@@ -43,7 +45,7 @@
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'entry-review',
         source: '#entry-review-template',
         mustache: true,
@@ -53,13 +55,13 @@
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'entry-review-list',
         source: '#entry-review-list-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'blogger-users',
         source: '#blogger-users-template',
         mustache: true,
@@ -69,13 +71,13 @@
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'user-list',
         source: '#user-list-template',
         mustache: true
     });
 
-    nbrut.tt.register({
+    register({
         key: 'blogger-discussions',
         source: '#blogger-discussions-template',
         mustache: true,
@@ -85,7 +87,7 @@
         }]
     });
 
-    nbrut.tt.register({
+    register({
         key: 'discussion-rows',
         source: '#discussion-rows-template',
         mustache: true
