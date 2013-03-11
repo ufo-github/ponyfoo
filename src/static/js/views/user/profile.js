@@ -7,8 +7,14 @@
             id: data.id,
             context: 'prepare',
             done: function(data){
-                var user = data.user;
-                render(user, user === null);
+                var viewModel = data.user;
+                if (viewModel !== null){
+                    viewModel.meta = {
+                        title: "{0}'s profile.".format(viewModel.displayName),
+                        description: 'This user has not provided a personal bio yet.'
+                    };
+                }
+                render(viewModel, viewModel === null);
             }
         });
     }

@@ -11,7 +11,7 @@ article.blog-entry(data-keywords='{{keywords}}', itemscope, itemtype='http://sch
     span.blog-entry-date(data-hint='posted {{dateText}}')='posted {{timeAgo}}'
 
   section.markdown.blog-entry-body(itemprop='articleBody')
-    section.blog-entry-brief.og-description(itemprop='about')='{{{html.brief}}}'
+    section.blog-entry-brief.meta-description(itemprop='about')='{{{html.brief}}}'
     section.blog-entry-text='{{{html.text}}}'
 
   footer.blog-entry-footer.clearfix

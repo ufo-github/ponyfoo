@@ -1,13 +1,17 @@
 !function (window,$,nbrut,undefined) {
-    function getDescription(container){
-        var descriptionLength = 160,
-            descriptionElem = container.find('.og-description:first'),
+    function getDescription(container, template, viewModel, settings){
+        var viewMeta = viewModel.meta || {},
+            descriptionTitle = viewMeta.title ? viewMeta.title.trim() + ' ' : '',
+            descriptionLength = 160,
+            descriptionElem = container.find('.meta-description:first'),
+            descriptionElemText = descriptionElem.text(),
+            descriptionText = descriptionElemText ? descriptionElemText : (viewMeta.description || ''),
             description, idx;
 
-        if (descriptionElem.length === 0){ // let the template use it's default value
+        if (!descriptionText && !descriptionTitle){ // use the default meta description
             return undefined;
         }
-        description = descriptionElem.text().trim();
+        description = (descriptionTitle + descriptionText).trim();
 
         if (description.length > descriptionLength){
             description = description.substr(0, descriptionLength);
@@ -41,7 +45,7 @@
                     return image.prop('src');
                 }
             }).get(),
-            description: getDescription(container),
+            description: getDescription(container, template, viewModel, settings),
             keywords: container.find('[data-keywords]:first').data('keywords')
         };
         metaModel.images.push(window.locals.site.thumbnail);
