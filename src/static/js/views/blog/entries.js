@@ -29,7 +29,30 @@
             paging: it.paging,
             latest: latest || it.entries
         };
-console.log(data);
+
+        return addMeta(viewModel, data);
+    }
+
+    function addMeta(viewModel, data){
+        var meta = {};
+
+        if(data.search){
+            if(data.tags){
+                viewModel.emptyText = 'No posts tagged "{0}" found'.format(data.tags);
+                meta.title = 'Posts tagged "{0}".'.format(data.tags);
+            }else{
+                viewModel.emptyText = 'No posts matching "{0}" found'.format(data.terms);
+                meta.title = 'Posts filtered by "{0}".'.format(data.terms);
+            }
+
+            meta.description = viewModel.emptyText;
+        }else if(data.query === undefined){ // home page
+            meta.title = 'Home Page.';
+        }else if(!data.slug){ // search by date
+            meta.title = 'Posts filtered by date.';
+        }
+
+        viewModel.meta = meta;
         return viewModel;
     }
 

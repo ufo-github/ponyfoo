@@ -5,6 +5,11 @@ section#empty-entry-template.template(data-class='blog-entries')
 
     section
       p
+        // {{#emptyText}}
+        i='{{emptyText}}'
+        // {{/emptyText}}
+        // {{^emptyText}}
         i='No posts found for {{title}}'
+        // {{/emptyText}}
 
       include ../_nav-options

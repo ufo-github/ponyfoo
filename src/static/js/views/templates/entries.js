@@ -17,11 +17,12 @@
             tagged: tagSearch,
             tags: tags === decoded ? null : tags,
             terms: decoded
-        }
+        };
     }
 
     function getEntryRoute(regex){
         var searching = regex.indexOf('\/search') === 0,
+            slugged = regex.indexOf(slug) === 0,
             hashed = regex.indexOf('#') !== -1,
             prefix = searching ? 'search/' : '';
 
@@ -41,7 +42,8 @@
                     terms: extracted.terms,
                     hash: hash,
                     search: searching,
-                    tags: extracted.tags
+                    tags: extracted.tags,
+                    slug: slugged
                 };
             }
         };

@@ -3,7 +3,7 @@
 
     function entryHook(data){
         $.each(data.entries || [data.entry], function(){
-            var self = this, d, comments = self.commentCount, tags = self.tags;
+            var self = this, m, comments = self.commentCount, tags = self.tags || [];
 
             self.date = new Date(self.date);
 

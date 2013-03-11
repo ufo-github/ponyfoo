@@ -8,7 +8,7 @@
             descriptionText = descriptionElemText ? descriptionElemText : (viewMeta.description || ''),
             description, idx;
 
-        if (!descriptionText && !descriptionTitle){ // use the default meta description
+        if(!descriptionText && !descriptionTitle){ // use the default meta description
             return undefined;
         }
         description = (descriptionTitle + descriptionText).trim();
