@@ -15,7 +15,8 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - **Blog Schema**
   - Domain fragmentation, allowing users to take control of sub-domains, referred to as slugs
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
-  - Personalization. Now each blog has its own set of related metadata and social links.
+  - Personalization. Now each blog has its own set of related metadata and social links
+  - OpenSearch.xml now fragmented by sub-domains
 
 - Registration and Login Providers
   - Added LinkedIn

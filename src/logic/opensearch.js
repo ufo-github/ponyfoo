@@ -1,23 +1,49 @@
 var jsn = require('jsn'),
     fs = require('fs'),
-    config = require('../config.js');
+    config = require('../config.js'),
+    xmln;
 
-function output(done){
+function getXmln(done){
+    if(xmln){
+        return process.nextTick(function(){
+            done(xmln);
+        });
+    }
+
     fs.readFile(config.opensearch.source, function(err, data){
         if(err){
             throw err;
         }
 
-        jsn.parse(data.toString(), config, function(err, parsed){
+        xmln = data.toString();
+        done(xmln);
+    });
+}
+
+function getOpenSearch(req,res,next){
+    var blog = req.blog;
+    if(!blog){
+        return next();
+    }
+
+    getXmln(function(xmln){
+        var ctx = {
+            favicon: config.server.host + config.static.favicon,
+            template: config.server.hostSlug(blog.slug) + config.opensearch.template,
+            blog: blog
+        };
+
+        jsn.parse(xmln, ctx, function(err, xml){
             if(err){
                 throw err;
             }
 
-            fs.writeFile(config.opensearch.bin, parsed, done);
+            res.header('Content-Type', 'application/xml');
+            res.end(xml);
         });
     });
 }
 
 module.exports = {
-    output: output
+    get: getOpenSearch
 };

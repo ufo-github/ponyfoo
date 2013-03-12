@@ -88,5 +88,11 @@ refresh();
 
 module.exports = {
     get current() { return sitemap; },
-    get contents() { return urls; }
+    get contents() { return urls; },
+    get: function(req, res) {
+        sitemap.toXML(function(xml) {
+            res.header('Content-Type', 'application/xml');
+            res.end(xml);
+        });
+    }
 };

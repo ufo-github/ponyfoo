@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-    <ShortName>@siteDeprecated.title</ShortName>
-    <Description>Search @siteDeprecated.title: @siteDeprecated.description</Description>
+    <ShortName>@blog.title</ShortName>
+    <Description>Search @blog.title: @blog.legend</Description>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image height="16" width="16" type="image/x-icon">@server.host@static.favicon</Image>
-    <Url type="text/html" method="get" template="@opensearch.template" />
+    <Image height="16" width="16" type="image/x-icon">@favicon</Image>
+    <Url type="text/html" method="get" template="@template" />
 </OpenSearchDescription>

@@ -5,11 +5,19 @@ TODO
 -------
 
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
+
 - blog entry attached to blog, filters
 
-- revisit RSS feed stuff, multiple feeds, ? how to deal with that.
-  - same with sitemap(s)
-  - same with opensearch
+- RSS
+  - one feed per blog.
+  - drop direct feedburner support, except in main blog (via env var)
+
+- sitemaps
+  - http://www.devcha.com/2010/07/how-to-submit-xml-sitemaps-for-multiple.html
+  - sitemap_index.xml references sitemaps for all blogs
+  - sitemap.xml returns sitemap for specific blog or 404 if no blog
+
+
 
 - migration steps:
  - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)

@@ -1,12 +1,9 @@
-var sitemap = require('../../logic/sitemap.js');
+var sitemap = require('../../logic/sitemap.js'),
+    opensearch = require('../../logic/opensearch.js');
 
 function configure(server){
-    server.get('/sitemap.xml', function(req, res) {
-        sitemap.current.toXML(function(xml) {
-            res.header('Content-Type', 'application/xml');
-            res.send(xml);
-        });
-    });
+    server.get('/sitemap.xml', sitemap.get);
+    server.get('/opensearch.xml', opensearch.get);
 }
 
 module.exports = {

@@ -18,9 +18,8 @@ var config = {
     get opensearch(){
         return this._o = this._o || {
             source: path.join(this.static.folder, 'opensearch.xmln'),
-            bin: path.join(this.static.bin, 'opensearch.xml'),
             href: '/opensearch.xml',
-            template: this.server.host + '/search/{searchTerms}'
+            template: '/search/{searchTerms}'
         };
     },
     server: {
@@ -28,11 +27,14 @@ var config = {
         slugged: !!env.HOST_SLUG_ENABLED || false,
         slugHome: env.HOST_SLUG_DEFAULT || 'www',
         slugRegex: env.HOST_SLUG_RESERVED ? new RegExp('^' + env.HOST_SLUG_RESERVED + '$') : undefined,
-        get host(){ return 'http://' + this.slugHome + '.' + this.tld + this.portPart },
+        get host(){ return this.hostSlug(this.slugHome); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         listener: parseInt(env.PORT || 8081),
         get port(){ return parseInt(env.PUBLIC_PORT || this.listener); },
-        get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); }
+        get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); },
+        hostSlug: function(slug){
+            return 'http://' + slug + '.' + this.tld + this.portPart;
+        }
     },
     sitemap: {
         refresh: 60000 * 60 // an hour, in ms
