@@ -102,15 +102,25 @@
   margin-left: 20px;
 }
 
-.markdown li > h1,
-.markdown li > h2,
-.markdown li > h3,
-.markdown li > h4,
-.markdown li > h5,
-.markdown li > h6 {
-  text-decoration: none;
+#content .markdown li > h1,
+#content .markdown li > h2,
+#content .markdown li > h3,
+#content .markdown li > h4,
+#content .markdown li > h5,
+#content .markdown li > h6 {
+  border-bottom: none;
+  margin-bottom: 0;
+  margin-top: 12px;
 }
 
+#content .markdown li:first-child > h1,
+#content .markdown li:first-child > h2,
+#content .markdown li:first-child > h3,
+#content .markdown li:first-child > h4,
+#content .markdown li:first-child > h5,
+#content .markdown li:first-child > h6 {
+  margin-top: 0;
+}
 
 
 /* CODE BLOCKS
