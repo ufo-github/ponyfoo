@@ -8,6 +8,11 @@ var async = require('async'),
     model = require('../models/entry.js');
 
 function rebuild(done){
+    process.nextTick(function(){
+        (done || function(){})();
+    });
+    return;
+
     var opts = {
         title: config.siteDeprecated.title,
         description: config.siteDeprecated.description,

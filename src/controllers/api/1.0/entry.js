@@ -49,19 +49,23 @@ function list(opts,then){
 }
 
 function restList(req,res,query){
+    query.blog = req.blog._id;
+
     list({
         query: query,
         page: req.params.page
     }, rest.wrapCallback(res));
 }
 
-function restOne(res, query){
+function restOne(req, res, query){
+    query.blog = req.blog._id;
+
     model.findOne(query, function(err,entry){
         if(err){
             throw err;
         }
 
-        unwrapSiblings(entry, rest.wrapCallback(res, function(result){
+        unwrapSiblings(req.blog._id, entry, rest.wrapCallback(res, function(result){
             return { entry: result };
         }));
     });
@@ -124,7 +128,7 @@ function insert(req,res){
         return;
     }
 
-    model.findOne().sort('-date').exec(function(err,previous){
+    model.findOne({ blog: req.blog._id }).sort('-date').exec(function(err,previous){
         if(err){
             throw err;
         }
@@ -132,12 +136,15 @@ function insert(req,res){
         crud.create(document, {
             res: res,
             always: function(entry){
-                entry.previous = previous._id;
+                entry.blog = req.blog._id;
+                entry.previous = previous ? previous._id : undefined;
                 entry.slug = text.slug(entry.title);
             },
             then: function(entry){
-                previous.next = entry._id;
-                previous.save(rebuildFeed(res));
+                if (previous){
+                    previous.next = entry._id;
+                    previous.save(rebuildFeed(res));
+                }
             }
         });
     });
@@ -149,7 +156,7 @@ function update(req,res){
         return;
     }
 
-    crud.update({ _id: req.params.id }, document, {
+    crud.update({ _id: req.params.id, blog: req.blog._id }, document, {
         res: res,
         always: function(entry){
             entry.updated = new Date();
@@ -162,14 +169,19 @@ function update(req,res){
 function remove(req, res){
     var id = mongoose.Types.ObjectId(req.params.id);
 
-    model.findOne({ _id: id }, function(err,entry){
+    model.findOne({ _id: id, blog: req.blog._id }, function(err,entry){
         if(err){
             throw err;
         }
 
         var prev = entry.previous,
             next = entry.next,
-            query = { _id: { $in: [prev, next] } };
+            query = {
+                _id: {
+                    $in: [prev, next]
+                },
+                blog: req.blog._id
+            };
 
         model.find(query, function(err, siblings){
             if(err){
@@ -197,7 +209,7 @@ function remove(req, res){
     });
 }
 
-function unwrapSiblings(entry,cb){
+function unwrapSiblings(blogId,entry,cb){
     if (entry == null){ // sanity.
         process.nextTick(function(){
             cb(null, null);
@@ -207,7 +219,12 @@ function unwrapSiblings(entry,cb){
 
     var prev = entry.previous,
         next = entry.next,
-        query = { _id: { $in: [entry.previous, entry.next] } };
+        query = {
+            _id: {
+                $in: [entry.previous, entry.next]
+            },
+            blog: blogId
+        };
 
     model.find(query, function(err, siblings){
         if(err){
@@ -284,11 +301,11 @@ function getPlainTextBrief(entry, done) {
             done(null,plain);
         }
     });
-};
+}
 
 module.exports = {
     get: function(req,res){
-        restList(req,res);
+        restList(req,res, {});
     },
     getByDate: function(req,res){
         var query = mapRequestToQuery(req);
@@ -297,15 +314,14 @@ module.exports = {
     getBySlug: function(req,res){
         var query = mapRequestToQuery(req);
         query.slug = req.params.slug;
-        restOne(res, query);
+        restOne(req, res, query);
     },
     getById: function(req,res){
-        restOne(res, { _id: req.params.id });
+        restOne(req, res, { _id: req.params.id });
     },
     ins: insert,
     upd: update,
     del: remove,
-    list: list,
     search: search,
     tagged: tagged,
     getPlainTextBrief: getPlainTextBrief

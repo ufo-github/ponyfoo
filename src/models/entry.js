@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     config = require('../config.js'),
     ObjectId = mongoose.Schema.Types.ObjectId,
     schema = new mongoose.Schema({
+        blog: { type: ObjectId, index: { unique: false }, require: true },
         title: { type: String, require: true, trim: true },
         slug: { type: String, require: true, trim: true },
         brief: { type: String, require: true },

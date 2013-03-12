@@ -6,7 +6,7 @@ TODO
 
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
 
-- blog entry attached to blog, filters
+- comment restriction
 
 - RSS
   - one feed per blog.
@@ -23,6 +23,7 @@ TODO
  - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
  - remove query for user when awakening
  - config blog to have stuff from config.site and config.blogger
+ - db.entries.update({}, { $set: { blog: { ObjectId("OBJECT_ID_OF_YOUR_BLOG") } }, false, true)
 
 
 

@@ -37,7 +37,7 @@ function profiles(done){
 
 function posts(done){
     var posts = [];
-
+    /*{ blog: undefined }*/
     entry.find({}, 'date slug', function(err,documents){
         if(err){
             done(err);
