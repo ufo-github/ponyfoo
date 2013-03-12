@@ -56,8 +56,11 @@ var config = {
     },
     get feed() {
         return this._f = this._f || {
-            local: this.server.host + '/rss/latest.xml',
-            get proxy(){ return env.FEED_ADDR || this.local; },
+            cache: 60000 * 10, // relatively short-lived cache survives for 10 minutes
+            relative: '/rss/latest.xml',
+            physical: function(slug){
+                return '/rss/' + slug + '.xml';
+            },
             limit: 12
         };
     },
@@ -66,21 +69,6 @@ var config = {
             doctype: '<!DOCTYPE html>',
             thumbnail: this.server.host + '/img/thumbnail.png'
         };
-    },
-    get siteDeprecated() {
-        return this._s = this._s || {// TODO should be ported to blog config
-            title: 'Pony Foo',
-            description: 'Ramblings of a degenerate coder'
-        };
-    },
-    bloggerDeprecated: {
-        name: 'Nicolas Bevacqua' /*
-        UNUSED FIELDS, should be ported to blog config
-        email: 'nicolasbevacqua@gmail.com',
-        github: 'https://github.com/bevacqua',
-        stackoverflow: 'http://careers.stackoverflow.com/bevacqua',
-        linkedin: 'http://linkedin.com/in/nbevacqua/',
-        about: "I'm Nicolas Bevacqua. I live in Buenos Aires, Argentina. This is my technical blog."*/
     },
     get jQuery() {
         if (this._$ === undefined){

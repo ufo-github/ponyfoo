@@ -25,6 +25,9 @@ function mapRequestToQuery(req){
 }
 
 function list(opts,then){
+    opts.query = opts.query || {};
+    opts.query.blog = opts.blog;
+
     opts.listName = 'entries';
     opts.limit = opts.limit || apiConf.paging.limit;
     opts.sort = '-date';
@@ -49,9 +52,8 @@ function list(opts,then){
 }
 
 function restList(req,res,query){
-    query.blog = req.blog._id;
-
     list({
+        blog: req.blog._id,
         query: query,
         page: req.params.page
     }, rest.wrapCallback(res));
@@ -71,11 +73,9 @@ function restOne(req, res, query){
     });
 }
 
-function rebuildFeed(res){
+function endEmpty(res){
     return function(){
         rest.end(res,{});
-        var feed = require('../../../logic/feed.js');
-        process.nextTick(feed.rebuild);
     };
 }
 
@@ -143,7 +143,7 @@ function insert(req,res){
             then: function(entry){
                 if (previous){
                     previous.next = entry._id;
-                    previous.save(rebuildFeed(res));
+                    previous.save(endEmpty(res));
                 }
             }
         });
@@ -162,7 +162,7 @@ function update(req,res){
             entry.updated = new Date();
             entry.slug = text.slug(entry.title);
         },
-        then: rebuildFeed(res)
+        then: endEmpty(res)
     });
 }
 
@@ -203,7 +203,7 @@ function remove(req, res){
                     throw err;
                 }
 
-                entry.remove(rebuildFeed(res));
+                entry.remove(endEmpty(res));
             });
         });
     });
@@ -322,6 +322,7 @@ module.exports = {
     ins: insert,
     upd: update,
     del: remove,
+    list: list,
     search: search,
     tagged: tagged,
     getPlainTextBrief: getPlainTextBrief

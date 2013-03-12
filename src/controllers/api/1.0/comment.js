@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-    async = require('async'),
+var async = require('async'),
     apiConf = require('../config.js'),
     validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
@@ -9,14 +8,16 @@ var mongoose = require('mongoose'),
     crud = require('../../../services/crud.js')(discussion);
 
 function discuss(req,res){
-    var id = mongoose.Types.ObjectId(req.params.entryId);
-    document = new discussion({ entry: id });
+    document = new discussion({
+        entry: req.params.entryId,
+        blog: req.blog._id
+    });
 
     add(req,res,document,true);
 }
 
 function reply(req,res){
-    discussion.findOne({ _id: req.params.id }, function(err, document){
+    discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, document){
         if(err){
             throw err;
         }
@@ -39,17 +40,17 @@ function add(req,res,document,root){
         return;
     }
 
-    var data = {
-            text: req.body.comment,
-            author: {
-                id: req.user._id,
-                displayName: req.user.displayName,
-                gravatar: req.user.gravatar,
-                blogger: req.user.blogger
-            },
-            root: root
+    var model = new comment({
+        blog: req.blog._id,
+        text: req.body.comment,
+        author: {
+            id: req.user._id,
+            displayName: req.user.displayName,
+            gravatar: req.user.gravatar,
+            blogger: req.user.blogger // used just by the css class hook on the client-side
         },
-        model = new comment(data);
+        root: root
+    });
 
     document.comments.push(model);
     document.save(function(err){
@@ -66,8 +67,10 @@ function add(req,res,document,root){
 }
 
 function list(req,res){
-    var id = mongoose.Types.ObjectId(req.params.entryId);
-    discussion.find({ entry: id }).sort('date').exec(callback);
+    discussion.find({
+        entry: req.params.entryId,
+        blog: req.blog._id
+    }).sort('date').exec(callback);
 
     function discussionObjects(discussions){
         if(!req.user){
@@ -124,16 +127,13 @@ function actionMapper(req){
 }
 
 function findComment(req, res, then){
-    var id = mongoose.Types.ObjectId(req.params.id),
-        commentId = mongoose.Types.ObjectId(req.params.commentId);
-
-    discussion.findOne({ _id: id }, function(err, discussion){
+    discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, discussion){
         if(err){
             rest.resHandler(err,{res:res});
             return;
         }
 
-        var comment = discussion.comments.id(commentId), blogger, authorized;
+        var comment = discussion.comments.id(req.params.commentId), blogger, authorized;
         if (comment === null){
             rest.notFound(req,res);
             return;
@@ -187,6 +187,7 @@ function edit(req,res){
 function discussions(req,res){
     crud.list({
         listName: 'discussions',
+        query: { blog: req.blog._id },
         limit: apiConf.paging.limit,
         page: req.params.page,
         sort: '-date',

@@ -87,6 +87,7 @@ function appendBlogInfo(req){
     }
     if (social){
         social.any = $.hasTruthyProperty(social);
+        social.rssXml = config.server.hostSlug(blog.slug) + config.feed.relative;
     }
 }
 

@@ -18,6 +18,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
   - Personalization. Now each blog has its own set of related metadata and social links
   - OpenSearch.xml now fragmented by slug
+  - RSS feed xml fragmented by slug
 
 - Registration and Login Providers
   - Added LinkedIn

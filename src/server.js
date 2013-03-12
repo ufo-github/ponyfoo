@@ -13,13 +13,11 @@ function main(){
     relic.init();
 
     var db = require('./server/db.js'),
-        feed = require('./logic/feed.js'),
         listener = require('./server/listen.js');
 
     async.series([
         async.apply(db.connect),
         async.apply(compileAndConfigure),
-        async.apply(feed.rebuild),
         async.apply(listener.listen, server)
     ]);
 }

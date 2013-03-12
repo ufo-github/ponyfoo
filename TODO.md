@@ -6,12 +6,6 @@ TODO
 
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
 
-- comment restriction
-
-- RSS
-  - one feed per blog.
-  - drop direct feedburner support, except in main blog (via env var)
-
 - sitemaps
   - http://www.devcha.com/2010/07/how-to-submit-xml-sitemaps-for-multiple.html
   - sitemap_index.xml references sitemaps for all blogs
@@ -25,7 +19,14 @@ TODO
  - config blog to have stuff from config.site and config.blogger
  - db.entries.update({}, { $set: { blog: { ObjectId("OBJECT_ID_OF_YOUR_BLOG") } }, false, true)
 
-
+ - use these values in production
+    site: {
+        title: 'Pony Foo',
+        description: 'Ramblings of a degenerate coder'
+    },
+    blogger: {
+        about: "I'm Nicolas Bevacqua. I live in Buenos Aires, Argentina. This is my technical blog."*/
+    },
 
 2
 -------
