@@ -20,7 +20,7 @@ var config = {
         tld: env.HOST_TLD || 'local-sandbox.com',
         slugged: env.HOST_SLUG_ENABLED === 'true',
         slugHome: env.HOST_SLUG_DEFAULT || 'www',
-        slugRegex: env.HOST_SLUG_RESERVED ? new RegExp('^' + env.HOST_SLUG_RESERVED + '$') : undefined,
+        slugRegex: env.HOST_SLUG_REGEX ? new RegExp('^' + env.HOST_SLUG_REGEX + '$') : undefined,
         get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         listener: parseInt(env.PORT || 8081),

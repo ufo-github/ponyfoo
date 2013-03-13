@@ -5,7 +5,6 @@ TODO
 -------
 
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
-  - start migration with domain restricted to just www, so blogs can't be claimed at all, but I can update prod.
 
 
 
