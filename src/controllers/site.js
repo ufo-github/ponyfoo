@@ -167,7 +167,8 @@ function renderView(req,res){
 function awaken(req,res,next){
     var email = req.body['user.email'],
         password = req.body['user.password'],
-        title = req.body['blog.title'];
+        title = req.body['blog.title'],
+        document;
 
     if(!email || !password || !title){ // the most basic form of validation, since it's just the super admin
         req.flash('validation', 'Oops, you should fill out every field');
@@ -175,22 +176,16 @@ function awaken(req,res,next){
         return;
     }
 
-    user.findOne({ email: email }, function(err, document){ // easier migration from v0.2
-        if(!document){
-            document = new user({
-                email: email,
-                displayName: email.split('@')[0],
-                password: password
-            });
-            document.save(function(err, document){
-                then(document);
-            });
-        }else{
-            then(document);
-        }
+    document = new user({
+        email: email,
+        displayName: email.split('@')[0],
+        password: password
     });
+    document.save(function then(err,user){
+        if(err){
+            throw err;
+        }
 
-    function then(user){
         new blog({
             owner: user._id,
             slug: getBlogSlug(req),
@@ -202,7 +197,7 @@ function awaken(req,res,next){
             live = true;
             res.redirect('/');
         });
-    }
+    });
 }
 
 function claim(req,res,next){
