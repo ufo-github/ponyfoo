@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config.js'),
     mongoose = require('mongoose'),
     mongoUri = config.db.uri;

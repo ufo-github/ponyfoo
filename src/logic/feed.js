@@ -1,3 +1,5 @@
+'use strict';
+
 var meta = require('./slug-meta.js'),
     config = require('../config.js'),
     async = require('async'),

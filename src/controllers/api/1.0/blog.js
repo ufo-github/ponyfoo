@@ -1,3 +1,5 @@
+'use strict';
+
 var blog = require('../../../models/blog.js'),
     crud = require('../../../services/crud.js')(blog),
     validation = require('../../../services/validation.js'),

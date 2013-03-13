@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     ObjectId = mongoose.Schema.Types.ObjectId,
     schema = new mongoose.Schema({

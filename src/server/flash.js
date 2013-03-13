@@ -1,3 +1,5 @@
+'use strict';
+
 var flash = require('connect-flash');
 
 function configure(server){

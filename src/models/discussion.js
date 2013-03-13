@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     comment = require('./schema/comment.js'),
     ObjectId = mongoose.Schema.Types.ObjectId,

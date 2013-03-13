@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../../config.js'),
     sitemapIndex = require('../../logic/sitemapIndex.js'),
     sitemap = require('../../logic/sitemap.js'),

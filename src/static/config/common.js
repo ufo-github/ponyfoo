@@ -1,3 +1,5 @@
+'use strict';
+
 function mapSharedProfileToBlogOnly(resource){
     var blogOnly = ['blogger', 'registered', 'anon'];
 

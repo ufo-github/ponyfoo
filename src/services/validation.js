@@ -1,3 +1,5 @@
+'use strict';
+
 var $ = require('./$.js'),
     rest = require('./rest.js'),
     config = require('../config.js');

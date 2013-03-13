@@ -1,3 +1,5 @@
+'use strict';
+
 var config = {
     paging: {
         limit: 8

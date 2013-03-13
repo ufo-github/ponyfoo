@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('./common.js');
 
 function getBarebones(){ // basic layout and design

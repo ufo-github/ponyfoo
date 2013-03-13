@@ -1,3 +1,5 @@
+'use strict';
+
 var $ = require('./$.js');
 
 function head(res,code) {

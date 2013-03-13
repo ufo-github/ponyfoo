@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path'),
     assetify = require('assetify'),
     common = require('./common.js'),

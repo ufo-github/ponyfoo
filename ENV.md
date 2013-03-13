@@ -59,8 +59,6 @@ You shouldn't need to touch these, but you can, of course.
 
 - **SESSION_SECRET**: Your session storage secret key.
 
-- **FEED_ADDR**: Instead of serving the default, raw RSS feed XML, you could want to proxy it on something like [**Feedburner**](http://feedburner.com/), in that case `FEED_ADDR` should be set to the link to that feed.
-
 
 
 Analytics

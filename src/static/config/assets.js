@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('./../../config.js'),
     assetify = require('assetify'),
     common = require('./common.js'),

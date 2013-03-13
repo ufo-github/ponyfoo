@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config.js'),
     blog = require('../models/blog.js'),
     user = require('../models/user.js'),
@@ -32,18 +34,16 @@ function findBlogInternal(req,res,done){
             query = { slug: slug };
 
         if(!live){ // platform isn't configured at all
-            if (req.url !== '/' || slug !== config.server.slugHome){
+            if (req.url !== '/' || (slug !== config.server.slugHome && config.server.slugged)){
                 return then('dormant-redirect');
             }
             return then('dormant');
         }
 
-        if(slugTest !== undefined && !slugTest.test(slug)){
-            return then('slug-redirect');
-        }
-
         if(!config.server.slugged){
             delete query.slug;
+        }else if(slugTest !== undefined && !slugTest.test(slug)){
+            return then('slug-redirect');
         }
 
         // the website is live and the blog could be user-defined

@@ -6,9 +6,9 @@
     "email": "nicolasbevacqua@gmail.com",
     "url": "http://www.ponyfoo.com"
   },
-  "version": "0.0.1",
+  "version": "0.3.0-tip",
   "dependencies": {
-    "assetify": "0.1.5",
+    "assetify": "~0.1.5",
     "async": "~0.1.22",
     "bcrypt": "~0.7.3",
     "connect": "~2.7.2",
@@ -38,9 +38,7 @@
     "zombie": "~1.4.1"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*",
-    "vows": "0.5.x"
+    "mocha": "*"
   },
   "engines": {
     "node": "0.8.x",

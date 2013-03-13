@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config.js'),
     path = require('path'),
     $ = require('../services/$.js'),

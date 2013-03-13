@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config.js'),
     passport = require('passport'),
     text = require('../services/text.js'),

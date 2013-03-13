@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path'),
     env = process.env;
 
@@ -9,23 +11,24 @@ var config = {
         get production(){ return this.current === 'production' || this.staging; }
     },
     static: {
-        folder: __dirname + '/static',
-        bin: __dirname + '/static/bin',
+        folder: path.join(__dirname, '/static'),
+        bin: path.join(__dirname, '/static/bin'),
         get faviconSource(){ return path.join(this.bin, '/img/favicon.ico'); },
         favicon: '/favicon.ico'
     },
     server: {
         tld: env.HOST_TLD || 'local-sandbox.com',
-        slugged: !!env.HOST_SLUG_ENABLED || false,
+        slugged: env.HOST_SLUG_ENABLED === 'true',
         slugHome: env.HOST_SLUG_DEFAULT || 'www',
         slugRegex: env.HOST_SLUG_RESERVED ? new RegExp('^' + env.HOST_SLUG_RESERVED + '$') : undefined,
-        get host(){ return this.hostSlug(this.slugHome); },
+        get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         listener: parseInt(env.PORT || 8081),
         get port(){ return parseInt(env.PUBLIC_PORT || this.listener); },
         get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); },
         hostSlug: function(slug){
-            return 'http://' + slug + '.' + this.tld + this.portPart;
+            var vanity = slug ? (slug + '.') : '';
+            return 'http://' + vanity + this.tld + this.portPart;
         }
     },
     zombie: {

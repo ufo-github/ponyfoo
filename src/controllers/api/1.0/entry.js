@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     async = require('async'),
     jsdom = require('jsdom'),

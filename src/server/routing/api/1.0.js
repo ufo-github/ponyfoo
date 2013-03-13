@@ -1,3 +1,5 @@
+'use strict';
+
 var rest = require('../../../services/rest.js'),
     $ = require('../../../services/$.js'),
     controllers = './../../../controllers/api/1.0/',

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
     moment = require('moment'),
     config = require('../config.js'),

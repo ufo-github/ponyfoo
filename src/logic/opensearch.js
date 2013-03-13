@@ -1,3 +1,5 @@
+'use strict';
+
 var jsn = require('jsn'),
     fs = require('fs'),
     config = require('../config.js'),

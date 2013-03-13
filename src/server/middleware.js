@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config.js'),
     path = require('path'),
     views = path.join(__dirname, '../views'),

@@ -1,3 +1,5 @@
+'use strict';
+
 var async = require('async'),
     apiConf = require('../config.js'),
     validation = require('../../../services/validation.js'),
@@ -8,7 +10,7 @@ var async = require('async'),
     crud = require('../../../services/crud.js')(discussion);
 
 function discuss(req,res){
-    document = new discussion({
+    var document = new discussion({
         entry: req.params.entryId,
         blog: req.blog._id
     });

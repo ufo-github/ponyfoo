@@ -1,3 +1,5 @@
+'use strict';
+
 function slug(text) {
   text = text.replace(/^\s+|\s+$/g, ''); // trim
   text = text.toLowerCase();
