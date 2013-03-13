@@ -1,5 +1,5 @@
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '@config.tracking.code']);
+_gaq.push(['_setAccount', '@config.tracking.analytics']);
 _gaq.push(['_trackPageview']);
 
 !function(document) {
