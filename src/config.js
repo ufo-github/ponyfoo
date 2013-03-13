@@ -48,8 +48,15 @@ var config = {
             template: '/search/{searchTerms}'
         };
     },
+    sitemapIndex: {
+        cache: 60000 * 30, // half an hour, in ms
+        relative: '/sitemap_index.xml',
+        physical: function(){
+            return '/sitemaps/__index.xml';
+        }
+    },
     sitemap: {
-        cache: 60000 * 60, // an hour, in ms
+        cache: 60000 * 30, // half an hour, in ms
         relative: '/sitemap.xml',
         physical: function(slug){
             return '/sitemaps/' + slug + '.xml';

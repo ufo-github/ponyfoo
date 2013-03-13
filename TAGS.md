@@ -28,9 +28,10 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Search Engine Optimization
   - [**Schema.org**](http://schema.org) microdata
   - Better meta descriptions for each individual view
-  - opensearch.xml now fragmented by slug
-  - sitemap.xml fragmented by slug
-  - latest.xml (RSS feed) fragmented by slug
+  - `/opensearch.xml` now fragmented by slug
+  - `/rss/latest.xml` (RSS feed) fragmented by slug
+  - `/sitemap.xml` fragmented by slug
+  - sitemaps are now aggregated in `/sitemap_index.xml`
 
 - Cleaner AJAX transport (JSON over url-encoded form data when not making GET requests)
 

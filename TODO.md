@@ -4,11 +4,6 @@ TODO
 1
 -------
 
-- sitemaps
-  - http://www.devcha.com/2010/07/how-to-submit-xml-sitemaps-for-multiple.html
-  - sitemap_index.xml references sitemaps for all blogs
-
-
 - migration steps:
  - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
  - remove query for user when awakening

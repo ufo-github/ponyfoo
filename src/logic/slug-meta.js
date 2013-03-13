@@ -15,6 +15,7 @@ function getLocations(slug, opts){
         folder: folder
     }
 }
+
 function getMetaXml(opts){
     return function(req,res,next){
         var blog = req.blog;
