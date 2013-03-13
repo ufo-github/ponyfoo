@@ -42,7 +42,7 @@ function findBlogInternal(req,res,done){
 
         if(!config.server.slugged){
             delete query.slug;
-        }else if(slugTest !== undefined && !slugTest.test(slug)){
+        }else if(slugTest !== undefined && !slugTest.test(slug) && slug !== config.server.slugHome){
             return then('slug-redirect');
         }
 

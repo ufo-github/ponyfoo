@@ -7,7 +7,6 @@ TODO
 - migration steps:
  - db.users.update( { blogger: { $exists: true } }, {$unset: { blogger : 1 } }, false, true)
  - remove query for user when awakening
- - config blog to have stuff from config.site and config.blogger
  - db.entries.update({}, { $set: { blog: { ObjectId("OBJECT_ID_OF_YOUR_BLOG") } }, false, true)
 
  - use these values in production's main blog
