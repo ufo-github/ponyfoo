@@ -1,14 +1,14 @@
-var config = require('../config.js'),
+var meta = require('./slug-meta.js'),
+    config = require('../config.js'),
     $ = require('../services/$.js'),
     async = require('async'),
     factory = require('sitemap'),
     user = require('../models/user.js'),
-    entry = require('../models/entry.js'),
-    sitemap, urls = [];
+    entry = require('../models/entry.js');
 
 function statics(done){
     process.nextTick(function(){
-        done(undefined, [
+        done(null, [
             { url: '/user/register', changefreq: 'monthly', priority: 0.3 },
             { url: '/user/login', changefreq: 'monthly',  priority: 0.3 }
         ]);
@@ -35,10 +35,10 @@ function profiles(done){
     });
 }
 
-function posts(done){
+function posts(req, done){
     var posts = [];
-    /*{ blog: undefined }*/
-    entry.find({}, 'date slug', function(err,documents){
+
+    entry.find({ blog: req.blog._id }, 'date slug', function(err,documents){
         if(err){
             done(err);
             return;
@@ -47,8 +47,8 @@ function posts(done){
         documents.forEach(function(document){
             posts.push({
                 url: document.permalink,
-                changefreq: 'daily',
-                priority: 0.7
+                changefreq: 'hourly',
+                priority: 1
             });
         });
 
@@ -56,43 +56,46 @@ function posts(done){
     });
 }
 
-function refresh(){
+function setup(req,done){
     async.parallel([
         statics,
         profiles,
-        posts
-    ], merge);
+        async.apply(posts,req)
+    ], merge(req,done));
+}
 
-    function merge(err, results){
+function merge(req,done){
+    var blog = req.blog;
+
+    return function(err, results){
         if(err){
             $.log.err(err);
             return;
         }
 
-        var updated = [];
+        var all = [];
 
         results.forEach(function(result){
-            updated = updated.concat(result);
+            all = all.concat(result);
         });
 
-        sitemap = factory.createSitemap({
-            hostname: config.server.host,
-            urls: updated
+        var sitemap = factory.createSitemap({
+            hostname: config.server.hostSlug(blog.slug),
+            urls: all
         });
-        urls = updated;
-    }
+        sitemap.toXML(function(xml) {
+            meta.writeToDisk(blog.slug, {
+                config: config.sitemap,
+                data: xml,
+                done: done
+            });
+        });
+    };
 }
 
-setInterval(refresh, config.sitemap.refresh);
-refresh();
-
 module.exports = {
-    get current() { return sitemap; },
-    get contents() { return urls; },
-    get: function(req, res) {
-        sitemap.toXML(function(xml) {
-            res.header('Content-Type', 'application/xml');
-            res.end(xml);
-        });
-    }
+    get: meta.get({
+        config: config.sitemap,
+        setup: setup
+    })
 };

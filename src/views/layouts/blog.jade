@@ -6,7 +6,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
       title=blog.title
 
       link(rel='alternate', type='application/rss+xml', href=blog.social.rssXml)
-      link(rel='search', type='application/opensearchdescription+xml', title=blog.title, href=config.opensearch.href)
+      link(rel='search', type='application/opensearchdescription+xml', title=blog.title, href=config.opensearch.relative)
 
     !=assetify.css.emit(profile)
 

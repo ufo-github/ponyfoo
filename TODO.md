@@ -7,7 +7,6 @@ TODO
 - sitemaps
   - http://www.devcha.com/2010/07/how-to-submit-xml-sitemaps-for-multiple.html
   - sitemap_index.xml references sitemaps for all blogs
-  - sitemap.xml returns sitemap for specific blog or 404 if no blog
 
 
 - migration steps:

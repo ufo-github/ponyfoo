@@ -1,5 +1,4 @@
 var path = require('path'),
-    assetify = require('assetify'),
     env = process.env;
 
 var config = {
@@ -15,13 +14,6 @@ var config = {
         get faviconSource(){ return path.join(this.bin, '/img/favicon.ico'); },
         favicon: '/favicon.ico'
     },
-    get opensearch(){
-        return this._o = this._o || {
-            source: path.join(this.static.folder, 'opensearch.xmln'),
-            href: '/opensearch.xml',
-            template: '/search/{searchTerms}'
-        };
-    },
     server: {
         tld: env.HOST_TLD || 'local-sandbox.com',
         slugged: !!env.HOST_SLUG_ENABLED || false,
@@ -36,16 +28,11 @@ var config = {
             return 'http://' + slug + '.' + this.tld + this.portPart;
         }
     },
-    sitemap: {
-        refresh: 60000 * 60 // an hour, in ms
-    },
     zombie: {
         enabled: env.ZOMBIE_CRAWLER || true,
         cache: 60000 * 60 // an hour, in ms
     },
-    db: {
-        uri: env.MONGOLAB_URI || env.MONGO_URI || 'mongodb://localhost/nbrut'
-    },
+    db: { uri: env.MONGOLAB_URI || env.MONGO_URI || 'mongodb://localhost/nbrut' },
     security: {
         saltWorkFactor: parseInt(env.SALT_WORK_FACTOR || 10),
         sessionSecret: env.SESSION_SECRET || 'local'
@@ -54,32 +41,33 @@ var config = {
         analytics: env.GA_CODE,
         clicky: parseInt(env.CLICKY_SITE_ID || '')
     },
-    get feed() {
-        return this._f = this._f || {
-            cache: 60000 * 10, // relatively short-lived cache survives for 10 minutes
-            relative: '/rss/latest.xml',
-            physical: function(slug){
-                return '/rss/' + slug + '.xml';
-            },
-            limit: 12
+    get opensearch() {
+        return this._o = this._o || {
+            source: path.join(this.static.folder, 'opensearch.xmln'),
+            relative: '/opensearch.xml',
+            template: '/search/{searchTerms}'
         };
+    },
+    sitemap: {
+        cache: 60000 * 60, // an hour, in ms
+        relative: '/sitemap.xml',
+        physical: function(slug){
+            return '/sitemaps/' + slug + '.xml';
+        }
+    },
+    feed: {
+        cache: 60000 * 30, // relatively short-lived cache survives for half an hour
+        relative: '/rss/latest.xml',
+        physical: function(slug){
+            return '/rss/' + slug + '.xml';
+        },
+        limit: 12
     },
     get site() {
         return {
             doctype: '<!DOCTYPE html>',
             thumbnail: this.server.host + '/img/thumbnail.png'
         };
-    },
-    get jQuery() {
-        if (this._$ === undefined){
-            var $ = assetify.jQuery('1.9.0', '/js/jquery-1.9.0.min.js', undefined, this.env.development);
-            this._$ = {
-                asset: $,
-                local: path.join(this.static.folder, $.local),
-                external: 'http:' + $.ext
-            };
-        }
-        return this._$;
     },
     regex: {
         email: /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*$/i,
@@ -117,9 +105,7 @@ var config = {
             callback: '/user/login/linkedin/callback'
         }
     },
-    uploads: {
-        imgurKey: env.IMGUR_API_KEY
-    },
+    uploads: { imgurKey: env.IMGUR_API_KEY },
     avatar: {
         url: 'http://www.gravatar.com/avatar/',
         query: '?d=identicon&r=PG',

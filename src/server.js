@@ -5,7 +5,7 @@ var config = require('./config.js'),
     libraries = require('./server/libraries.js'),
     async = require('async'),
     path = require('path'),
-    assets = require('./assets.js'),
+    assets = require('./static/config/assets.js'),
     relic = require('./server/newrelic.js'),
     server = express();
 

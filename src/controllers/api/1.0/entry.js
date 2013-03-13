@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
     jsdom = require('jsdom'),
     pagedown = require('pagedown'),
     config = require('../../../config.js'),
+    assets = require('../../../static/config/assets.js'),
     apiConf = require('../config.js'),
     validation = require('../../../services/validation.js'),
     rest = require('../../../services/rest.js'),
@@ -289,7 +290,7 @@ function getPlainTextBrief(entry, done) {
 
     jsdom.env({
         html: '<foo>' + html + '</foo>', // empty and HTML tags throw for some obscure reason.
-        scripts: [config.jQuery.local],
+        scripts: [assets.jQuery.local],
         done: function(err,window){
             if(err){
                 done(err);

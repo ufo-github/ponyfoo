@@ -3,7 +3,6 @@ var config = require('../config.js'),
     express = require('express'),
     assetify = require('assetify'),
     fingerprint = require('static-asset'),
-    assets = require('../assets.js'),
     favicon = config.static.faviconSource;
 
 function forcedExpires(req,res,next){ // expires on assets are handled by assetify, images aren't a part of that
@@ -18,8 +17,8 @@ function configure(server){
     server.use(express.compress());
     server.use(forcedExpires);
     server.use(express.favicon(favicon));
-    server.use(fingerprint(assets.bin));
-    server.use(express.static(assets.bin));
+    server.use(fingerprint(config.static.bin));
+    server.use(express.static(config.static.bin));
     server.use(assetify.middleware());
 }
 

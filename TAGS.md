@@ -17,8 +17,6 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Posts and their comments can now only be accessed in the origin slug
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
   - Personalization. Now each blog has its own set of related metadata and social links
-  - OpenSearch.xml now fragmented by slug
-  - RSS feed xml fragmented by slug
 
 - Registration and Login Providers
   - Added LinkedIn
@@ -30,6 +28,9 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Search Engine Optimization
   - [**Schema.org**](http://schema.org) microdata
   - Better meta descriptions for each individual view
+  - opensearch.xml now fragmented by slug
+  - sitemap.xml fragmented by slug
+  - latest.xml (RSS feed) fragmented by slug
 
 - Cleaner AJAX transport (JSON over url-encoded form data when not making GET requests)
 
