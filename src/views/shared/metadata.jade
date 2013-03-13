@@ -10,7 +10,7 @@ section#metadata-template.template
   meta(property='og:image', content='{{.}}')
   // {{/images}}
 
-  meta(property='og:title', content='{{title}}')
+  meta(itemprop='name', property='og:title', content='{{title}}')
 
   // {{#description}}
   meta(name='description', property='og:description', itemprop='description', content='{{description}}')
@@ -20,7 +20,6 @@ section#metadata-template.template
   // {{/description}}
 
   meta(name='author', itemprop='creator', content=blogger.meta)
-  meta(itemprop='name', content='{{title}}')
 
   meta(itemprop='url', content='{{url}}')
 
