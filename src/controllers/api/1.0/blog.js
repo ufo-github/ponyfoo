@@ -19,7 +19,7 @@ function update(req,res){
     });
 }
 
-function claim(req,res,next){
+function claimValidation(req,res,next){
     if(logic.dormant){ // dormant
         awaken(req,res,next);
     }else if(!config.server.slugged){
@@ -32,16 +32,27 @@ function claim(req,res,next){
             return next(); // this slug is an alias of the main blog.
         }
 
-        blog.findOne({ slug: slug }, function(err, document){
-            if(document !== null){
-                return next(); // this blog is taken, can no longer be claimed.
-            }else{ // allow the user to grab the blog
-                // TODO: handle POST claim requests, validate req.user (or create from req.body), only one blog per user account
+        if(!req.user){ // users must be connected to claim a blog
+            return next();
+        }
+
+        blog.findOne({ owner: req.user._id }, function(err, document){
+            if(err){
+                throw err;
             }
+            if(document !== null){ // users can own a single blog at most
+                return flashValidation(req,res,'You already own a blog!');
+            }
+
+            blog.findOne({ slug: slug }, function(err, document){
+                if(document !== null){
+                    return flashValidation(req,res,'This blog already has an owner!');
+                }
+                create(req,res);
+            });
         });
     }
 }
-
 
 function awaken(req,res){
     var email = req.body['user.email'],
@@ -49,10 +60,8 @@ function awaken(req,res){
         title = req.body['blog.title'],
         document;
 
-    if(!email || !password || !title){ // the most basic form of validation, since it's just the super admin
-        req.flash('validation', 'Oops, you should fill out every field');
-        res.redirect('/');
-        return;
+    if(!email || !password){ // the most basic form of validation, since it's just the super admin
+        return flashValidation(req,res,'Oops, you should fill out every field');
     }
 
     document = new user({
@@ -64,22 +73,38 @@ function awaken(req,res){
         if(err){
             throw err;
         }
-
-        new blog({
-            owner: user._id,
-            slug: logic.getSlug(req),
-            title: title,
-            social: {
-                rss: true
-            }
-        }).save(function(){
-            logic.live = true;
-            res.redirect('/');
-        });
+        create(req,res,user);
     });
+}
+
+function create(req,res,user){
+    var owner = user || req.user,
+        slug = logic.getSlug(req),
+        title = req.body['blog.title'];
+
+    if(!title){
+        return flashValidation(req,res,'Oops, you forgot to pick a blog title!');
+    }
+
+    new blog({
+        owner: owner._id,
+        slug: slug,
+        title: title,
+        social: {
+            rss: true
+        }
+    }).save(function(){
+        logic.live = true;
+        res.redirect('/');
+    });
+}
+
+function flashValidation(req,res,message){
+    req.flash('validation', message);
+    res.redirect('/');
 }
 
 module.exports = {
     update: update,
-    claim: claim
+    claim: claimValidation
 };
