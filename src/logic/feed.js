@@ -12,7 +12,7 @@ function setup(req,done){
         host = config.server.hostSlug(blog.slug),
         opts = {
             title: blog.title,
-            description: blog.description,
+            description: blog.meta,
             author: blogger.name,
             site_url: host,
             image_url: blog.thumbnail,
