@@ -5,7 +5,8 @@ var path = require('path'),
     common = require('./common.js'),
     config = require('./../../config.js'),
     jQueryVersion = '1.9.0',
-    $ = assetify.jQuery(jQueryVersion, '/js/jquery-' + jQueryVersion + '.min.js', undefined, config.env.development);
+    $ = assetify.jQuery(jQueryVersion, '/js/jquery-' + jQueryVersion + '.min.js', undefined, config.env.development),
+    registered = ['blogger', 'registered'];
 
 function getVendorLibraries(){
     return [
@@ -63,7 +64,7 @@ function getTemplates(){
         '/js/views/templates/markdown.js',
         '/js/views/templates/entries.js',
         { profile: 'anon', local: '/js/views/templates/anon.js' },
-        { profile: ['blogger', 'registered'], local: '/js/views/templates/registered.js' },
+        { profile: registered, local: '/js/views/templates/registered.js' },
         { profile: 'blogger', local: '/js/views/templates/blogger.js'}
     ];
 }
@@ -85,9 +86,6 @@ function getAnonymousTemplates(){
 
 function getSharedTemplates(){
     return [
-        { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.registered.js' },
-        { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.edit.js' },
-
         '/js/views/user/profile.js',
         '/js/views/blog/search.js',
         '/js/views/blog/entries.js'
@@ -96,9 +94,9 @@ function getSharedTemplates(){
 
 function getRegisteredTemplates(){
     return [
-        { profile: ['blogger', 'registered'], local: '/js/views/user/profile.edit.js' },
-        { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.registered.js' },
-        { profile: ['blogger', 'registered'], local: '/js/views/blog/comments.edit.js' }
+        { profile: registered, local: '/js/views/user/profile.edit.js' },
+        { profile: registered, local: '/js/views/blog/comments.registered.js' },
+        { profile: registered, local: '/js/views/blog/comments.edit.js' }
     ];
 }
 
@@ -125,7 +123,7 @@ function getAnalytics(){
 }
 
 function getJs(){
-    var bundles = [
+    var js = Array.prototype.concat.apply([], [
             getVendorLibraries(),
             getExtensions(),
             getNBrut(),
@@ -137,15 +135,14 @@ function getJs(){
             getRegisteredTemplates(),
             getBloggerTemplates(),
             getAnalytics()
-        ],
-        js = Array.prototype.concat.apply([], bundles);
+        ]);
 
     if(config.env.development){
         js.push('/js/debug.js');
     }
 
     for(var i = 0;i < js.length; i++){
-        js[i] = common.mapSharedProfileToBlogOnly(js[i]);
+        js[i] = common.mapSharedToBlogOnly(js[i]);
     }
     return js;
 }

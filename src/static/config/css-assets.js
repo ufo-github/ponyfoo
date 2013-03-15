@@ -1,11 +1,23 @@
 'use strict';
 
-var common = require('./common.js');
+var common = require('./common.js'),
+    registered = ['blogger', 'registered'],
+    design = [
+        'dormant',
+        'blogger',
+        'registered',
+        'anon'
+    ];
 
-function getBarebones(){ // basic layout and design
+function getBarebones(){ // reset and most elemental styles
     return [
         '/css/defaults/reset.css',
-        '/css/defaults/basic.less',
+        '/css/defaults/basic.less'
+    ];
+}
+
+function getCommonDesign(){ // basic layout and design
+    var sheets = [
         '/css/defaults/elements.less',
         '/css/defaults/controls.less',
         '/css/defaults/controls.spinner.less',
@@ -13,12 +25,18 @@ function getBarebones(){ // basic layout and design
         '/css/defaults/design.less',
         '/css/defaults/sprite.less'
     ];
+
+    for(var i = 0;i < sheets.length; i++){
+        sheets[i] = common.mapSharedTo(design, sheets[i]);
+    }
+
+    return sheets;
 }
 
 function getRaw(){
     return [
         { profile: 'dormant', local: '/css/dormant/index.less' },
-        '/css/libs/markdown.less'
+        { profile: design, local: '/css/libs/markdown.less' }
     ];
 }
 
@@ -43,13 +61,13 @@ function getShared(){
 function getViews(){
     return [
         '/css/views/user/profile.less',
-        { profile: ['blogger', 'registered'], local: '/css/views/user/profile.edit.less' },
+        { profile: registered, local: '/css/views/user/profile.edit.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
         { profile: 'anon', local: '/css/views/user/authentication.less' },
 
         '/css/views/blog/entries.less',
         '/css/views/blog/comments.less',
-        { profile: ['blogger', 'registered'], local: '/css/views/blog/comments.registered.less' },
+        { profile: registered, local: '/css/views/blog/comments.registered.less' },
 
         { profile: 'blogger', local: '/css/views/blogger/index.less' },
         { profile: 'blogger', local: '/css/views/blogger/blog.less' },
@@ -61,18 +79,22 @@ function getViews(){
 }
 
 function getCss(){
-    var barebones = getBarebones(),
-        raw = getRaw(),
-        libs = getLibs(),
-        shared = getShared(),
-        views = getViews(),
-        blog = libs.concat(shared).concat(views);
+    var raw = Array.prototype.concat.apply([], [
+            getBarebones(),
+            getCommonDesign(),
+            getRaw()
+        ]),
+        blog = Array.prototype.concat.apply([], [
+            getLibs(),
+            getShared(),
+            getViews()
+        ]);
 
     for(var i = 0;i < blog.length; i++){
-        blog[i] = common.mapSharedProfileToBlogOnly(blog[i]);
+        blog[i] = common.mapSharedToBlogOnly(blog[i]);
     }
 
-    return barebones.concat(raw).concat(blog);
+    return raw.concat(blog);
 }
 
 module.exports = {

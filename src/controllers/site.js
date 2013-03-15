@@ -144,6 +144,7 @@ function renderView(req,res){
 
     res.render('layouts/' + profile + '.jade', {
         profile: profile,
+        slug: logic.getSlug(req),
         blog: req.blog,
         blogger: req.blogger
     });

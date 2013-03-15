@@ -1,15 +1,22 @@
 'use strict';
 
-function mapSharedProfileToBlogOnly(resource){
-    var blogOnly = ['blogger', 'registered', 'anon'];
+function mapSharedToBlogOnly(resource){
+    var blogOnly = [
+        'blogger',
+        'registered',
+        'anon'
+    ];
+    return mapSharedTo(blogOnly, resource);
+}
 
+function mapSharedTo(profile, resource){
     if(typeof resource === 'string'){
         return {
             local: resource,
-            profile: blogOnly
+            profile: profile
         };
     }else if(resource.profile === undefined){
-        resource.profile = blogOnly;
+        resource.profile = profile;
     }
     return resource;
 }
@@ -22,5 +29,6 @@ module.exports = {
         'registered',
         'blogger'
     ],
-    mapSharedProfileToBlogOnly: mapSharedProfileToBlogOnly
+    mapSharedTo: mapSharedTo,
+    mapSharedToBlogOnly: mapSharedToBlogOnly
 };
