@@ -1,12 +1,10 @@
 extends minimal
 
 block title
-  title=slug + ' could be yours!'
+  title='Your blogging site is just one click away!'
 
 block body
+  header='Read up on the amazing features available to blogs in our network'
+
   main#content
     h1=slug + ' could be yours!'
-
-    section.claim-notice
-      :markdown
-        This subdomain is _available_, and it can be yours if you **claim it**
