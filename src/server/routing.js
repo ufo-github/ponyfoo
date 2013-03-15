@@ -30,7 +30,6 @@ function mapRouting(server, done){
         }
 
         server.get('/*', site.get); // GET catch-all
-        server.post('/claim', site.claim); // POST to claim a blog slug
         done();
     }
 }

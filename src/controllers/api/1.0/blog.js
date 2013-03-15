@@ -1,49 +1,12 @@
 'use strict';
 
-var blog = require('../../../models/blog.js'),
+var config = require('../../../config.js'),
+    logic = require('../../../logic/blog.js'),
+    blog = require('../../../models/blog.js'),
     crud = require('../../../services/crud.js')(blog),
-    validation = require('../../../services/validation.js'),
+    validate = require('./blog-validation.js').validate,
+    user = require('../../../models/user.js'),
     rest = require('../../../services/rest.js');
-
-function validate(req,res){
-    if(!req.body.blog || !req.body.blog.social){
-        return undefined;
-    }
-    var input = req.body.blog,
-        social = input.social;
-    
-    return validation.validate(req,res,{
-        document: {
-            title: input.title,
-            legend: input.legend,
-            meta: input.meta,
-            thumbnail: input.thumbnail,
-            description: input.description,
-            social: {
-                rss: !!social.rss, // cast to boolean
-                email: social.email,
-                github: social.github,
-                stackoverflow: social.stackoverflow,
-                careers: social.careers,
-                linkedin: social.linkedin,
-                twitter: social.twitter
-            }
-        },
-        rules: [
-            { field: 'title', length: { min: 4, max: 16 }, message: 'Your blog needs a pretty name! Use between 4 and 16 characters' },
-            { field: 'legend', length: { max: 60 }, required: false, message: 'A legend can take up to 24 characters' },
-            { field: 'meta', length: { max: 300 }, required: false, message: 'The meta description must be under 300 characters' },
-            { field: 'description', length: { max: 30000 }, required: false, message: 'Your description markdown can\'t exceed 30k characters in length' },
-            { field: 'thumbnail', required: false, validator: validation.link(null, 'thumbnail') },
-            { field: 'social.email', required: false, validator: validation.email('Invalid contact email') },
-            { field: 'social.github', required: false, validator: validation.link(null, 'GitHub') },
-            { field: 'social.stackoverflow', required: false, validator: validation.link(null, 'Stack Overflow') },
-            { field: 'social.careers', required: false, validator: validation.link(null, 'Careers') },
-            { field: 'social.linkedin', required: false, validator: validation.link(null, 'LinkedIn') },
-            { field: 'social.twitter', required: false, validator: validation.link(null, 'Twitter') }
-        ]
-    });
-}
 
 function update(req,res){
     var document = validate(req,res);
@@ -56,6 +19,67 @@ function update(req,res){
     });
 }
 
+function claim(req,res,next){
+    if(logic.dormant){ // dormant
+        awaken(req,res,next);
+    }else if(!config.server.slugged){
+        return next(); // claiming is disabled
+    }else{ // attempt to claim
+        var slug = logic.getSlug(req),
+            slugTest = config.server.slugRegex;
+
+        if(slugTest !== undefined && !slugTest.test(slug)){
+            return next(); // this slug is an alias of the main blog.
+        }
+
+        blog.findOne({ slug: slug }, function(err, document){
+            if(document !== null){
+                return next(); // this blog is taken, can no longer be claimed.
+            }else{ // allow the user to grab the blog
+                // TODO: handle POST claim requests, validate req.user (or create from req.body), only one blog per user account
+            }
+        });
+    }
+}
+
+
+function awaken(req,res){
+    var email = req.body['user.email'],
+        password = req.body['user.password'],
+        title = req.body['blog.title'],
+        document;
+
+    if(!email || !password || !title){ // the most basic form of validation, since it's just the super admin
+        req.flash('validation', 'Oops, you should fill out every field');
+        res.redirect('/');
+        return;
+    }
+
+    document = new user({
+        email: email,
+        displayName: email.split('@')[0],
+        password: password
+    });
+    document.save(function then(err,user){
+        if(err){
+            throw err;
+        }
+
+        new blog({
+            owner: user._id,
+            slug: logic.getSlug(req),
+            title: title,
+            social: {
+                rss: true
+            }
+        }).save(function(){
+            logic.live = true;
+            res.redirect('/');
+        });
+    });
+}
+
 module.exports = {
-    update: update
+    update: update,
+    claim: claim
 };

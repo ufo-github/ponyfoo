@@ -1,39 +1,20 @@
 'use strict';
 
 var config = require('../config.js'),
+    logic = require('../logic/blog.js'),
     blog = require('../models/blog.js'),
     user = require('../models/user.js'),
     rest = require('../services/rest.js'),
     $ = require('../services/$.js'),
-    pagedown = require('pagedown'),
-    live;
-
-function getStatus(done){
-    if(live !== undefined){
-        process.nextTick(done);
-        return;
-    }
-
-    blog.count({}, function(err, count){
-        live = count > 0;
-        done();
-    });
-}
-
-function getBlogSlug(req){
-    var i = req.host.lastIndexOf('.' + config.server.tld),
-        slug = req.host.substr(0, i);
-
-    return slug;
-}
+    pagedown = require('pagedown');
 
 function findBlogInternal(req,res,done){
-    getStatus(function(){
-        var slug = getBlogSlug(req),
+    logic.getStatus(function(){
+        var slug = logic.getSlug(req),
             slugTest = config.server.slugRegex,
             query = { slug: slug };
 
-        if(!live){ // platform isn't configured at all
+        if(logic.dormant){ // platform isn't configured at all
             if (req.url !== '/' || (slug !== config.server.slugHome && config.server.slugged)){
                 return then('dormant-redirect');
             }
@@ -46,31 +27,35 @@ function findBlogInternal(req,res,done){
             return then('slug-redirect');
         }
 
-        // the website is live and the blog could be user-defined
-        blog.findOne(query).lean().exec(function(err, document){
-            if(document !== null){ // this is the blog we're going to use
-                user.findOne({ _id: document.owner }).lean().exec(function(err, user){
-                    if(err){
-                        throw err;
-                    }
-                    req.blog = document;
-                    req.blogger = user;
-                    appendBlogInfo(req);
-                    return then('blog');
-                });
-            }else{ // allow the user to grab the blog
-                if (req.url !== '/'){
-                    return then('available-redirect'); // not 301 because the slug can be claimed
-                }
-                return then('available');
-            }
-        });
+        // the website is live and the blog might be user-defined (or available)
+        return lookupBlog(req,query,then);
     });
 
     function then(status){
         req.blogStatus = status;
         done(status);
     }
+}
+
+function lookupBlog(req,query,then){
+    blog.findOne(query).lean().exec(function(err, document){
+        if(document !== null){ // this is the blog we're going to use
+            user.findOne({ _id: document.owner }).lean().exec(function(err, user){
+                if(err){
+                    throw err;
+                }
+                req.blog = document;
+                req.blogger = user;
+                appendBlogInfo(req);
+                return then('blog');
+            });
+        }else{ // allow the user to grab the blog
+            if (req.url !== '/'){
+                return then('available-redirect'); // not 301 because the slug can be claimed
+            }
+            return then('available');
+        }
+    });
 }
 
 function appendBlogInfo(req){
@@ -164,67 +149,6 @@ function renderView(req,res){
     });
 }
 
-function awaken(req,res,next){
-    var email = req.body['user.email'],
-        password = req.body['user.password'],
-        title = req.body['blog.title'],
-        document;
-
-    if(!email || !password || !title){ // the most basic form of validation, since it's just the super admin
-        req.flash('validation', 'Oops, you should fill out every field');
-        res.redirect('/');
-        return;
-    }
-
-    document = new user({
-        email: email,
-        displayName: email.split('@')[0],
-        password: password
-    });
-    document.save(function then(err,user){
-        if(err){
-            throw err;
-        }
-
-        new blog({
-            owner: user._id,
-            slug: getBlogSlug(req),
-            title: title,
-            social: {
-                rss: true
-            }
-        }).save(function(){
-            live = true;
-            res.redirect('/');
-        });
-    });
-}
-
-function claim(req,res,next){
-    getStatus(function(){
-        if(!live){ // dormant
-            awaken(req,res,next);
-        }else if(!config.server.slugged){
-            return next(); // claiming is disabled
-        }else{ // attempt to claim
-            var slug = getBlogSlug(req),
-                slugTest = config.server.slugRegex;
-
-            if(slugTest !== undefined && !slugTest.test(slug)){
-                return next(); // this slug is an alias of the main blog.
-            }
-
-            blog.findOne({ slug: slug }, function(err, document){
-                if(document !== null){
-                    return next(); // this blog is taken, can no longer be claimed.
-                }else{ // allow the user to grab the blog
-                    // TODO: handle POST claim requests, validate req.user (or create from req.body), only one blog per user account
-                }
-            });
-        }
-    });
-}
-
 function hostValidation(req,res,next){
     var val = config.server.hostRegex;
     if (val !== undefined && !val.test(req.host)){
@@ -233,13 +157,12 @@ function hostValidation(req,res,next){
     }
 
     // crucial: appends blog, blogStatus and blogger to the request.
-    findBlogInternal(req,res,function(req,res,status){
+    findBlogInternal(req,res,function(){
         next();
     });
 }
 
 module.exports = {
     hostValidation: hostValidation,
-    get: findBlog,
-    claim: claim
+    get: findBlog
 };
