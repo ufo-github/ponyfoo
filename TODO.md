@@ -5,6 +5,8 @@ TODO
 -------
 
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
+- fix zombie crawling
+- move blog to blog.ponyfoo.com
 
 
 
