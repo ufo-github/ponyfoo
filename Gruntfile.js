@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         jasmine_node: {
             matchall: true,
             forceExit: true,
-            projectRoot: './test'
+            projectRoot: './test/spec'
         },
         jshint: {
             files: [
