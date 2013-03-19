@@ -7,8 +7,8 @@ var config = require('./../../config.js'),
     js = require('./js-assets.js');
 
 var assets = {
-    source: config.static.folder,
-    bin: config.static.bin,
+    source: config.statics.folder,
+    bin: config.statics.bin,
     css: css.assets,
     js: js.assets,
     jQuery: js.jQuery,

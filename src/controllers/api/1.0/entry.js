@@ -111,7 +111,7 @@ function validateEntry(req,res,update){
                 failed = self.some(function(tag, i){
                     if(typeof tag === 'string'){
                         self[i] = tag.replace(/ /g,'').toLowerCase();
-                        return !/^[a-z0-9._-]+$/.test(self[i]);
+                        return !/^[a-z0-9._\-]+$/.test(self[i]);
                     }else{
                         return true;
                     }
@@ -213,7 +213,7 @@ function remove(req, res){
 }
 
 function unwrapSiblings(blogId,entry,cb){
-    if (entry == null){ // sanity.
+    if (entry === null){ // sanity.
         process.nextTick(function(){
             cb(null, null);
         });
@@ -253,10 +253,10 @@ function unwrapSiblings(blogId,entry,cb){
 var separator = / |,|\+|;/;
 
 function search(req,res){
-    var keywords = req.params.keywords.split(separator), escaped, query;
+    var keywords = req.params.keywords.split(separator), escaped;
 
     keywords.forEach(function(keyword, i){ // escape them
-        escaped = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        escaped = keyword.replace(/([.?*+\^$\[\]\\(){}|\-])/g, '\\$1');
         keywords[i] = new RegExp(escaped, 'i');
     });
 

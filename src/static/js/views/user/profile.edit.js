@@ -55,5 +55,5 @@
         key: 'user-profile-edit',
         prepare: prepare,
         afterActivate: afterActivate
-    })
+    });
 }(window,jQuery,nbrut);

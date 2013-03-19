@@ -18,12 +18,12 @@ function getCallback(opts){
     return $.log.err;
 }
 
-function crud(model){
+function crud(Model){
     function create(source, opts){
         var document,
             callback = getCallback(opts);
 
-        document = new model(source);
+        document = new Model(source);
         (opts.always || $.noop)(document);
         document.save(callback);
     }
@@ -32,20 +32,20 @@ function crud(model){
         var callback = getCallback(opts);
 
         (opts.always || $.noop)(document);
-        model.findOneAndUpdate(query, document, {}, callback);
+        Model.findOneAndUpdate(query, document, {}, callback);
     }
 
     function remove(query, opts){
         var callback = getCallback(opts);
 
-        model.remove(query, callback);
+        Model.remove(query, callback);
     }
 
     function list(opts,done){
-        var page = parseInt(opts.page || 1),
+        var page = parseInt(opts.page || 1, 10),
             lim = opts.limit,
             index = (page-1) * lim,
-            where = model.find(opts.query || {});
+            where = Model.find(opts.query || {});
 
         async.parallel({
             documents: function(cb){
@@ -95,7 +95,7 @@ function crud(model){
         remove: remove,
         list: list,
         http: http
-    }
+    };
 }
 
 module.exports = crud;

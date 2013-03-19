@@ -41,10 +41,10 @@ function uploadTraditionally(req, res, file){
 
     async.waterfall([
         function(done){
-            copyOver(file.path, path.join(config.static.folder, uploads), file.name, 1, done);
+            copyOver(file.path, path.join(config.statics.folder, uploads), file.name, 1, done);
         },
         function(indexed, done){
-            copyOver(file.path, path.join(config.static.bin, uploads), indexed, 1, done);
+            copyOver(file.path, path.join(config.statics.bin, uploads), indexed, 1, done);
         }
     ], function(err, filename){
         rest.end(res, {

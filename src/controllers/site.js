@@ -79,26 +79,20 @@ function appendBlogInfo(req){
 function findBlog(req,res){
     findBlogInternal(req,res,function(status){
         switch(status){
-            case 'dormant-redirect': { // not 301 because the slug can be awaken
+            case 'dormant-redirect': // not 301 because the slug can be awaken
                 return res.redirect(config.server.host);
-            }
-            case 'dormant': {
+            case 'dormant':
                 req.blog = 'dormant';
                 return renderView(req,res);
-            }
-            case 'slug-redirect': { // this slug is forbidden, 301 to the default blog.
+            case 'slug-redirect': // this slug is forbidden, 301 to the default blog.
                 return res.redirect(config.server.host, 301);
-            }
-            case 'available-redirect': {
+            case 'available-redirect':
                 return res.redirect('/');
-            }
-            case 'available': {
+            case 'available':
                 req.blog = 'available';
                 return renderView(req,res);
-            }
-            case 'blog': {
+            case 'blog':
                 return renderView(req,res);
-            }
         }
     });
 }

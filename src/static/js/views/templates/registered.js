@@ -48,5 +48,5 @@
             }
         }],
         back: '#profile-edit-cancel'
-    })
+    });
 }(window,nbrut);

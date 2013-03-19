@@ -36,7 +36,7 @@ function setupLocal(){
     ));
 }
 
-function setupOAuth1(name, strategy, fields){
+function setupOAuth1(name, Strategy, fields){
     if(!config.auth[name].enabled){
         return;
     }
@@ -47,14 +47,14 @@ function setupOAuth1(name, strategy, fields){
         profileFields: fields
     };
 
-    setupProvider(strategy, opts, function(token, tokenSecret, profile, done) {
+    setupProvider(Strategy, opts, function(token, tokenSecret, profile, done) {
         var query = {};
         query[name + 'Id'] = profile.id;
         callback(query, profile, done);
     });
 }
 
-function setupOAuth2(name, strategy){
+function setupOAuth2(name, Strategy){
     if(!config.auth[name].enabled){
         return;
     }
@@ -65,28 +65,28 @@ function setupOAuth2(name, strategy){
         callbackURL: config.server.host + config.auth[name].callback
     };
 
-    setupProvider(strategy, opts, function(accessToken, refreshToken, profile, done) {
+    setupProvider(Strategy, opts, function(accessToken, refreshToken, profile, done) {
         var query = {};
         query[name + 'Id'] = profile.id;
         callback(query, profile, done);
     });
 }
 
-function setupOpenId(name, strategy){
+function setupOpenId(name, Strategy){
     var opts = {
         returnURL: config.server.host + config.auth[name].callback,
         realm: config.server.host
     };
 
-    setupProvider(strategy, opts, function(identifier, profile, done) {
+    setupProvider(Strategy, opts, function(identifier, profile, done) {
         var query = {};
         query[name + 'Id'] = identifier;
         callback(query, profile, done);
     });
 }
 
-function setupProvider(type, config, cb){
-    passport.use(new type(config, cb));
+function setupProvider(Strategy, config, cb){
+    passport.use(new Strategy(config, cb));
 }
 
 function callback(query, profile, done) {

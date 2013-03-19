@@ -38,7 +38,10 @@
     "zombie": "~1.4.1"
   },
   "devDependencies": {
-    "mocha": "*"
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.6",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-jasmine-node": "0.0.6"
   },
   "engines": {
     "node": "0.8.x",

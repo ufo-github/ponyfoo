@@ -47,10 +47,10 @@ function paged(api, path){
     var paging = '/p/:page([2-9]|[1-9][0-9]+)',
         callbacks = $.args(arguments).slice(2),
         regular = [path].concat(callbacks),
-        paged = [path + paging].concat(callbacks);
+        page = [path + paging].concat(callbacks);
 
     api.get.apply(null, regular);
-    api.get.apply(null, paged);
+    api.get.apply(null, page);
 }
 
 function routeBlog(api){
@@ -63,7 +63,7 @@ function routeEntries(api){
         routeYear = '/entry/:year([0-9]{4})',
         routeMonth = routeYear + '/:month(0[1-9]|1[0-2])',
         routeDay = routeMonth + '/:day(0[1-9]|[12][0-9]|3[01])',
-        routeSlug = routeDay + '/:slug([a-z0-9\-]+)';
+        routeSlug = routeDay + '/:slug([a-z0-9\\-]+)';
 
     // entry lists, search
     paged(api, '/entry', entry.get);

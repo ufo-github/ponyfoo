@@ -8,14 +8,14 @@ var async = require('async'),
 
 function getLocations(slug, opts){
     var relative = opts.config.physical(slug),
-        physical = path.join(config.static.bin, relative),
+        physical = path.join(config.statics.bin, relative),
         folder = path.dirname(physical);
 
     return {
         relative: relative,
         physical: physical,
         folder: folder
-    }
+    };
 }
 
 function getMetaXml(opts){
@@ -35,7 +35,7 @@ function getMetaXml(opts){
             fs.exists(loc.physical, function(exists){
                 if(exists){
                     fs.stat(loc.physical,function(err, stats){
-                        var now = new Date;
+                        var now = new Date();
                         if (now - stats.mtime > opts.config.cache){
                             return opts.setup(req, serve(res));
                         }else{
@@ -74,7 +74,7 @@ function writeToDisk(slug,opts){
         async.apply(fs.writeFile,loc.physical,opts.data)
     ], function(err){
         if(err){
-            return done(err);
+            return opts.done(err);
         }
 
         opts.done(err,opts.data,loc.physical);

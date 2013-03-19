@@ -18,7 +18,7 @@ function statics(done){
 }
 
 function profiles(done){
-    var profiles = [];
+    var result = [];
 
     user.find({}, '_id' , function(err,documents){
         if(err){
@@ -27,18 +27,18 @@ function profiles(done){
         }
 
         documents.forEach(function(document){
-            profiles.push({
+            result.push({
                 url: '/user/profile/' + document._id,
                 changefreq: 'daily'
             });
         });
 
-        done(err,profiles);
+        done(err, result);
     });
 }
 
 function posts(req, done){
-    var posts = [];
+    var result = [];
 
     entry.find({ blog: req.blog._id }, 'date slug', function(err,documents){
         if(err){
@@ -47,14 +47,14 @@ function posts(req, done){
         }
 
         documents.forEach(function(document){
-            posts.push({
+            result.push({
                 url: document.permalink,
                 changefreq: 'hourly',
                 priority: 1
             });
         });
 
-        done(err,posts);
+        done(err, result);
     });
 }
 

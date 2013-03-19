@@ -4,8 +4,10 @@ var path = require('path'),
     assetify = require('assetify'),
     common = require('./common.js'),
     config = require('./../../config.js'),
-    jQueryVersion = '1.9.0',
-    $ = assetify.jQuery(jQueryVersion, '/js/jquery-' + jQueryVersion + '.min.js', undefined, config.env.development),
+    jQueryVersion = '1.9.1',
+    extension = config.env.development ? '.js' : '.min.js',
+    local = '/js/libs/jquery-' + jQueryVersion + extension,
+    $ = assetify.jQuery(jQueryVersion, local, undefined, config.env.development),
     registered = ['blogger', 'registered'];
 
 function getVendorLibraries(){
@@ -151,6 +153,6 @@ module.exports = {
     assets: getJs(),
     jQuery: {
         asset: $,
-        local: path.join(config.static.folder, $.local)
+        local: path.join(config.statics.folder, $.local)
     }
 };

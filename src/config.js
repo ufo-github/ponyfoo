@@ -10,7 +10,7 @@ var config = {
         get staging(){ return this.current === 'staging'; },
         get production(){ return this.current === 'production' || this.staging; }
     },
-    static: {
+    statics: {
         folder: path.join(__dirname, '/static'),
         bin: path.join(__dirname, '/static/bin'),
         get faviconSource(){ return path.join(this.bin, '/img/favicon.ico'); },
@@ -23,8 +23,8 @@ var config = {
         slugRegex: env.HOST_SLUG_REGEX ? new RegExp('^' + env.HOST_SLUG_REGEX + '$') : undefined,
         get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
-        listener: parseInt(env.PORT || 8081),
-        get port(){ return parseInt(env.PUBLIC_PORT || this.listener); },
+        listener: parseInt(env.PORT || 8081, 10),
+        get port(){ return parseInt(env.PUBLIC_PORT || this.listener, 10); },
         get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); },
         hostSlug: function(slug){
             var vanity = slug ? (slug + '.') : '';
@@ -37,16 +37,16 @@ var config = {
     },
     db: { uri: env.MONGOLAB_URI || env.MONGO_URI || 'mongodb://localhost/nbrut' },
     security: {
-        saltWorkFactor: parseInt(env.SALT_WORK_FACTOR || 10),
+        saltWorkFactor: parseInt(env.SALT_WORK_FACTOR || 10, 10),
         sessionSecret: env.SESSION_SECRET || 'local'
     },
     tracking: {
         analytics: env.GA_CODE,
-        clicky: parseInt(env.CLICKY_SITE_ID || '')
+        clicky: parseInt(env.CLICKY_SITE_ID || '', 10)
     },
     get opensearch() {
         return this._o = this._o || {
-            source: path.join(this.static.folder, 'opensearch.xmln'),
+            source: path.join(this.statics.folder, 'opensearch.xmln'),
             relative: '/opensearch.xml',
             template: '/search/{searchTerms}'
         };
@@ -80,8 +80,8 @@ var config = {
         };
     },
     regex: {
-        email: /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*$/i,
-        link: /\bhttps?:\/\/[-a-z0-9+&@#/%?=~_|!:,.;]*[-a-z0-9+&@#/%=~_|]/i
+        email: /^[a-z0-9.!#$%&'*+\/=?\^_`{|}~\-]+@[a-z0-9\-]+(?:\.[a-z0-9\-]+)*$/i,
+        link: /\bhttps?:\/\/[\-a-z0-9+&@#\/%?=~_|!:,.;]*[\-a-z0-9+&@#\/%=~_|]/i
     },
     auth: {
         success: '/',
