@@ -1,4 +1,4 @@
-!function (nbrut, window, $, locals, undefined) {
+!function (nbrut, window, $, locals, Mustache, undefined) {
     'use strict';
 
     var templating = function () {
@@ -24,7 +24,7 @@
             titleSettings = {
                 tag: $('title'),
                 format: '{0} - ' + locals.site.title,
-                default: {
+                raw: {
                     text: locals.site.title,
                     literal: true
                 }
@@ -134,7 +134,7 @@
 
             if (template.mustache){
 				var m = {
-					regex: /<!--[ ]*({{[^}]+}})[ ]*-->/g,
+					regex: /<!--[ ]*(\{\{[^}]+\}\})[ ]*-->/g,
 					replace: '$1'
 				};
 				var sanitized = html.replace(m.regex, m.replace);
@@ -238,7 +238,7 @@
         function deactivateContainer(template) { // template is internal
             var loader = config.loading;
             if(template !== undefined){
-                plugins.raise('deactivate', template);
+                plugins.raise(template, 'deactivate');
             }
             config.container.off().removeClass().addClass(loader.css).empty().html(loader.html);
         }
@@ -272,11 +272,11 @@
             };
 
             viewModel.flash = settings.flash  || {};
-            plugins.raise('beforeActivate', template, settings);
+            plugins.raise(template, 'beforeActivate', settings);
 
             view = partial(template.key, viewModel);
             view.fill(config.container, settings.data || {}, ctx);
-            plugins.raise('activated', config.container, template, viewModel, settings);
+            plugins.raise(template, 'activated', config.container, viewModel, settings);
         }
 
         function partial(key, viewModel){
@@ -303,7 +303,7 @@
                 }
 
                 function raise(where){
-                    plugins.raise('fill', where, viewModel, data || {}, template);
+                    plugins.raise(template, 'fill', where, viewModel, data || {});
                 }
 
                 if (ctx === undefined){
@@ -334,11 +334,11 @@
             function render(internal){
                 return function(container, data, ctx){
                     var fillResult = internal(container, data, ctx),
-                        ctx = fillResult.ctx; // the argument could be undefined, update
+                        updated = fillResult.ctx; // the argument could be undefined, update
 
-                    template.afterActivate(viewModel, data || {}, ctx);
-                    return ctx.elements;
-                }
+                    template.afterActivate(viewModel, data || {}, updated);
+                    return updated.elements;
+                };
             }
 
             return {
@@ -372,7 +372,7 @@
 
         function setTitle(opts, viewModel, data){
             if (opts === undefined){
-                opts = titleSettings.default;
+                opts = titleSettings.raw;
             }else if(typeof opts === 'string'){
                 opts = { text: opts };
             }else if($.isFunction(opts)){
@@ -451,7 +451,7 @@
 			if(!initial){
                 activateRoute({
                     key: e.originalEvent.state.key,
-				    settings: e.originalEvent.state.settings
+                    settings: e.originalEvent.state.settings
                 },'replace');
 			}
 		}
@@ -486,9 +486,11 @@
             partial: partial,
             hook: plugins.hook,
             templateLinks: fixLocalRoutes,
-            get active() { return getHash() - 1; } /* offset by one because 0 means nothing is active yet */
+            getActive: function() { // offset by one because 0 means nothing is active yet
+                return getHash() - 1;
+            }
         };
     }();
 
     nbrut.tt = templating;
-}(nbrut, window, jQuery, locals);
+}(nbrut, window, jQuery, locals, Mustache);

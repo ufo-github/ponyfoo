@@ -1,16 +1,15 @@
 !function (window,$,nbrut,undefined) {
     'use strict';
 
-    function validationMessages(xhr, textStatus){
+    function validationMessages(context, xhr, textStatus){
         var validation = parseResponseText(xhr, textStatus);
 
         if($.isArray(validation)){
-            var context = this;
-            if (context === window){
+            if (!context){
                 validationInDialog(validation);
             }else if(context.jquery){
                 validationInContext(validation, context);
-            }else if(context.constructor === String && context.toString() === 'prepare'){
+            }else if(context === 'prepare'){
                 nbrut.tt.activateNotFound(); // 404
             }
         }
@@ -62,16 +61,12 @@
         context.scrollIntoView();
     }
 
-    function clearValidationMessages(){
-        removeMessageInContext(this);
-    }
-
     function removeMessageInContext(context){
-        if (!!context && context.jquery){
+        if (context && context.jquery){
             context.find('.validation-errors:first-child').remove();
         }
     }
 
     nbrut.thin.hook('fail', validationMessages);
-    nbrut.thin.hook('done', clearValidationMessages);
+    nbrut.thin.hook('done', removeMessageInContext);
 }(window,jQuery,nbrut);

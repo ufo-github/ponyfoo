@@ -7,8 +7,7 @@
         var editor = elements.find('.comment-editor'),
             textarea = elements.find('.wmd-input'),
             button = elements.find(buttonClass),
-            container = $('.blog-discussions'),
-            remove = elements.find('.remove');
+            container = $('.blog-discussions');
 
         button.on('click.comment', function(){
             if(editor.is(':hidden')){
@@ -110,20 +109,18 @@
     }
 
     function bindCommentActions(comments, discussions){
-        comments.each(actions);
-
-        function actions(){
+        comments.each(function(){
             var comment = $(this);
             remove(comment);
             edit(comment);
-        }
+        });
 
         function remove(comment){
             var discussion = comment.parents('.blog-discussion'),
-                remove = comment.find('.remove');
+                button = comment.find('.remove');
 
-            remove.on('click.remove', function(){
-                remove.trigger('edit-exit');
+            button.on('click.remove', function(){
+                button.trigger('edit-exit');
 
                 nbrut.thin.del('comment',{
                     id: comment.data('id'),

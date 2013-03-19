@@ -50,21 +50,23 @@
     };
 
     function doThisAndRemove(effect, then) {
-        return this.each(function() {
-            var self = $(this);
-            self[effect]('fast', function() {
-                self.remove();
-                (then || $.noop)();
+        return function(target){
+            target.each(function() {
+                var self = $(this);
+                self[effect]('fast', function() {
+                    self.remove();
+                    (then || $.noop)();
+                });
             });
-        });
+        };
     }
 
     $.fn.fadeOutAndRemove = function(then) {
-        doThisAndRemove.apply(this, ['fadeOut',then]);
+        doThisAndRemove('fadeOut',then)(this);
     };
 
     $.fn.slideUpAndRemove = function(then) {
-        doThisAndRemove.apply(this, ['slideUp',then]);
+        doThisAndRemove('slideUp',then)(this);
     };
 
     $.fn.flash = function(opts) {

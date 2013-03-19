@@ -14,12 +14,10 @@
             return opts;
         }
 
-        function raise(opts){
-            var context = this;
-
+        function raise(context, opts){
             opts = normalize(opts);
 
-            var args = $.makeArray(arguments).splice(1),
+            var args = $.makeArray(arguments).splice(2),
                 events = plugins[opts.eventName] || {},
                 hooks = events[opts.context] || [];
 
@@ -27,8 +25,11 @@
                 hooks = hooks.concat(events.global || []);
             }
 
+            args.unshift(context);
+
             $.each(hooks, function(){
-                this.apply(context, args);
+                var hook = this;
+                hook.apply(hook, args);
             });
         }
 
@@ -50,7 +51,7 @@
         return {
             raise: raise,
             hook: hook
-        }
+        };
     }
 
     nbrut.pluginFactory = {

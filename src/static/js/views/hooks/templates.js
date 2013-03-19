@@ -14,7 +14,7 @@
     });
 
     // hash auto-scrolling
-    tt.hook('fill', function(container, viewModel, data){
+    tt.hook('fill', function(template, container, viewModel, data){
         if(data.hash !== undefined){
             var autoscroll = data.hash + '[data-hash-autoscroll]',
                 element = container.find(autoscroll);
@@ -24,17 +24,17 @@
     });
 
     // parse data-src in images
-    tt.hook('fill', function(container){
+    tt.hook('fill', function(template, container){
         container.loadImages();
     });
 
     // tooltip hints
-    tt.hook('fill', function(container){
+    tt.hook('fill', function(template, container){
         container.hints(true);
     });
 
     // close buttons
-    tt.hook('fill', function (container){
+    tt.hook('fill', function (template, container){
         var close = container.find('.close');
 
         container.on('container.close', function(){
@@ -50,7 +50,7 @@
     });
 
     // dialog focus and overlay
-    tt.hook('fill', function(container){
+    tt.hook('fill', function(template, container){
         var dialog = container.is('.dialog');
         if (dialog){
             container.center().hide().fadeIn('fast', function(){

@@ -41,5 +41,5 @@
     nbrut.tt.configure({
         key: 'comment-edit',
         afterActivate: bindExit
-    })
+    });
 }(window,jQuery,nbrut);

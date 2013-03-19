@@ -72,8 +72,8 @@
                         context: opts.eventContext
                     };
 
-                    plugins.raise.call(opts.context, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
-                    (opts[name] || $.noop).call(opts.context, dataOrXhr, textStatus, errorThrownOrXhr);
+                    plugins.raise(opts.context, raiseOpts, dataOrXhr, textStatus, errorThrownOrXhr);
+                    (opts[name] || $.noop)(dataOrXhr, textStatus, errorThrownOrXhr);
                 };
             }
 
@@ -91,7 +91,7 @@
             del: del,
             hook: plugins.hook,
             abort: abort,
-            get pending(){ return local; },
+            pending: function(){ return local; },
             track: track
         };
     }

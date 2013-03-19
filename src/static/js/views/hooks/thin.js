@@ -3,7 +3,7 @@
 
     var html = nbrut.md.html;
 
-    function entryHook(data){
+    function entryHook(context, data){
         $.each(data.entries || [data.entry], function(){
             var self = this, m, comments = self.commentCount, tags = self.tags || [];
 
@@ -43,7 +43,7 @@
         });
     }
 
-    function commentHook(data){
+    function commentHook(context, data){
         $.each(data.discussions || [], function(){
             var discussion = this,
                 comments = discussion.comments;
@@ -56,7 +56,7 @@
         });
     }
 
-    function commentPutHook(data){
+    function commentPutHook(context, data){
         if (data.comment !== undefined){
             addCommentProperties(data.comment);
         }
@@ -79,7 +79,7 @@
         }
     }
 
-    function userHook(data){
+    function userHook(context, data){
         $.each(data.users || [data.user], function(){
             var user = this;
             if (user === undefined){

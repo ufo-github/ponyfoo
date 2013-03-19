@@ -1,7 +1,7 @@
 !function (window,$,nbrut,undefined) {
     'use strict';
 
-    function getDescription(container, template, viewModel, settings){
+    function getDescription(template, container, viewModel, settings){
         var viewMeta = viewModel.meta || {},
             descriptionTitle = viewMeta.title ? viewMeta.title.trim() + ' ' : '',
             descriptionLength = 160,
@@ -29,7 +29,7 @@
     }
 
     // open graph micro data (mostly for feeding our zombie-crawler)
-    nbrut.tt.hook('activated', function(container, template, viewModel, settings){
+    nbrut.tt.hook('activated', function(template, container, viewModel, settings){
         var head = $('head'), metaModel, meta;
 
         metaModel = {
@@ -47,7 +47,7 @@
                     return image.prop('src');
                 }
             }).get(),
-            description: getDescription(container, template, viewModel, settings),
+            description: getDescription(template, container, viewModel, settings),
             keywords: container.find('[data-keywords]:first').data('keywords')
         };
         metaModel.images.push(window.locals.site.thumbnail);

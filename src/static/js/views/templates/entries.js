@@ -5,9 +5,9 @@
         year = '^\/([0-9]{4})\/',
         month = year + '(0[1-9]|1[0-2])\/',
         day = month + '(0[1-9]|[12][0-9]|3[01])\/',
-        slug = day + '([a-z0-9\-]+)',
+        slug = day + '([a-z0-9\\-]+)',
         comments = slug + '(#comments)',
-        commentThread = slug + '(#thread-[a-z0-9\-]+)';
+        commentThread = slug + '(#thread-[a-z0-9\\-]+)';
 
     function extractTags(terms){
         var tagged = 'tagged/',

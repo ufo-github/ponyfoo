@@ -9,25 +9,33 @@ module.exports = function(grunt) {
             projectRoot: './test/spec'
         },
         jshint: {
-            files: [
-                'gruntfile.js',
-                'src/**/*.js', '!src/static/**',
-                'test/spec/**/*.js'
-            ],
-            options: {
-                jshintrc: '.jshintrc'
+            node: {
+                files: {
+                    src: [
+                        'gruntfile.js',
+                        'src/**/*.js',
+                        '!src/static/**/*.js',
+                        'src/static/config/**/*.js',
+                        'test/spec/**/*.js'
+                    ]
+                },
+                options: {
+                    jshintrc: '.jshintrc'
+                }
+            },
+            browser: {
+                files: {
+                    src: [
+                        'src/static/**/*.js',
+                        '!src/static/config/*.js',
+                        '!src/static/bin/**/*.js',
+                        '!src/static/js/libs/**/*.js'
+                    ]
+                },
+                options: {
+                    jshintrc: '.jshintrc-browser'
+                }
             }
-        }
-    };
-
-    var jshint2 = {
-        files: [
-            'src/static/**/*.js',
-            '!src/static/bin',
-            '!src/static/js/libs/*.js'
-        ],
-        options: {
-            jshintrc: '.jshintrc-browser'
         }
     };
 

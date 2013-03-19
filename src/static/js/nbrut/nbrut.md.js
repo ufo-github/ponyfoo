@@ -1,4 +1,4 @@
-!function (window, $, nbrut, undefined) {
+!function (window, $, nbrut, Markdown, prettyPrint, undefined) {
     'use strict';
 
     var md = function(){
@@ -34,8 +34,8 @@
 
         function html(md){
             var converter = getConverter();
-            var html = converter.makeHtml(md || '');
-            return html;
+            var result = converter.makeHtml(md || '');
+            return result;
         }
 
         return {
@@ -46,4 +46,4 @@
     }();
 
     nbrut.md = md;
-}(window, jQuery, nbrut);
+}(window, jQuery, nbrut, Markdown, prettyPrint);

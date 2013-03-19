@@ -8,7 +8,7 @@
             nbrut.thin.get('entry', {
                 context: 'prepare',
                 done: function(it){
-                    complete(render, data, it.entries)
+                    complete(render, data, it.entries);
                 }
             });
         }
@@ -66,19 +66,15 @@
             empty;
 
         switch(viewModel.entries.length){
-            case 0: {
+            case 0:
                 empty = nbrut.tt.partial('empty-entry', viewModel);
                 empty.fill(container);
                 break;
-            }
-            case 1: {
+            case 1:
                 addSingleEntryPartials(viewModel, container, data);
                 break;
-            }
-            default: {
+            default:
                 addPager(viewModel, container, ctx.identifier, data.query || '');
-                break;
-            }
         }
 
         if(search){
@@ -153,7 +149,7 @@
     function pagingEvent(container, identifier, pager, query, page){
         var card = pager.find('.flip-card');
 
-        if(nbrut.tt.active !== identifier){ // sanity
+        if(nbrut.tt.getActive() !== identifier){ // sanity
             return;
         }
 
