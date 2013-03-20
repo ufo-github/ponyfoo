@@ -16,7 +16,7 @@ function setup(server){
     function visit(opts, done){
         var browser = new zombie({
             site: config.server.authority
-        });
+        }), uri;
 
         function loaded(window) {
             var container = window.$('#content'),
@@ -29,7 +29,8 @@ function setup(server){
             return false;
         }
 
-        browser.visit(opts.url, function(){
+        uri = config.server.hostSlug(opts.resource.slug) + opts.resource.url;
+        browser.visit(uri, function(){
             browser.wait(loaded, function(){
                 var html = config.site.doctype + browser.html();
 
@@ -69,35 +70,37 @@ function setup(server){
         writeFile(indexpath,  JSON.stringify(_index,null,4), done);
     }
 
-    function find(url, done){
+    function find(resource, done){
         getIndex(function(err, index){
             if(err){
                 done(err);
                 return;
             }
 
-            var result;
-
-            index.forEach(function(node){
-                if(node.url === url){
+            function cb(node){
+                var test = node.slug === resource.slug && node.url === resource.url;
+                if (test){
                     node.date = new Date(node.date);
-                    result = node;
+                    done(err, node);
                 }
-            });
+                return test;
+            }
 
-            done(err, result);
+            if(!index.some(cb)){
+                done(err);
+            }
         });
     }
 
-    function findOrRefresh(url, done){
-        find(url, function(err, result){
+    function findOrRefresh(resource, done){
+        find(resource, function(err, result){
             if(err){
                 done(err);
                 return;
             }
 
             if(!result || (new Date() - result.date > config.zombie.cache)){
-                refresh(url, done);
+                refresh(resource, done);
             }else{
                 readFile(result.file, function(err, data){
                     if(err){
@@ -111,7 +114,7 @@ function setup(server){
         });
     }
 
-    function refresh(url, done){
+    function refresh(resource, done){
         getIndex(function(err, index){
             if(err){
                 done(err);
@@ -120,18 +123,18 @@ function setup(server){
             var target;
 
             index.some(function(node){
-                if(node.url === url){
+                if(node.slug === resource.slug && node.url === resource.url){
                     target = node;
                     return true;
                 }
             });
 
             if(target === undefined){
-                var filename = url.replace(/[\/:=\?+]/g, '_') + '.html',
+                var filename = resource.slug + '_' + resource.url.replace(/[\/:=\?+]/g, '_') + '.html',
                     file = path.join(bin, filename);
 
                 target = {
-                    url: url,
+                    resource: resource,
                     file: file
                 };
                 index.push(target);
@@ -205,7 +208,7 @@ function setup(server){
             return;
         }
 
-        findOrRefresh(req.url, function(err, html){
+        findOrRefresh({ slug : req.slug, url: req.url }, function(err, html){
             if(err){
                 throw err;
             }

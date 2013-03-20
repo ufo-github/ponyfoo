@@ -9,9 +9,10 @@ var config = require('../config.js'),
     pagedown = require('pagedown');
 
 function findBlogInternal(req,res,done){
+    var slug = logic.getSlug(req);
+
     logic.getStatus(function(){
-        var slug = logic.getSlug(req),
-            slugTest = config.server.slugRegex,
+        var slugTest = config.server.slugRegex,
             query = { slug: slug };
 
         if(logic.dormant){ // platform isn't configured at all
@@ -32,6 +33,7 @@ function findBlogInternal(req,res,done){
     });
 
     function then(status){
+        req.slug = slug;
         req.blogStatus = status;
         done(status);
     }
@@ -138,7 +140,7 @@ function renderView(req,res){
 
     res.render('layouts/' + profile + '.jade', {
         profile: profile,
-        slug: logic.getSlug(req),
+        slug: req.slug,
         blog: req.blog,
         blogger: req.blogger
     });
