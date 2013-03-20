@@ -6,6 +6,8 @@ TODO
 
 - blog claiming in available subdomains (existing bloggers can't claim zilch)
 - move blog to blog.ponyfoo.com
+- make zombie turn links to shared blog stuff to point to the main blog url:
+  - e.g: /user/login -> http://www.ponyfoo.com/user/login
 
 
 
