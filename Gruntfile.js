@@ -2,7 +2,6 @@
 
 module.exports = function(grunt) {
     var opts = {
-        pkg: grunt.file.readJSON('package.json'),
         jasmine_node: {
             matchall: true,
             forceExit: true,

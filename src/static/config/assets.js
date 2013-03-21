@@ -26,6 +26,7 @@ function compile(done){
         assetify.use(assetify.plugins.minifyCSS);
         assetify.use(assetify.plugins.minifyJS);
     }
+
     assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
     assetify.use(assetify.plugins.fingerprint);
     assetify.compile(assets, done);
