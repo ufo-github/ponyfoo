@@ -43,9 +43,9 @@ function getRaw(){
 
 function getLibs(){
     return [
-        '/css/libs/markdown.editor.less',
-        '/css/libs/prettify.less',
-        '/css/libs/hint.less'
+        '/css/vendor/markdown.editor.less',
+        '/css/vendor/prettify.less',
+        '/css/vendor/hint.less'
     ];
 }
 

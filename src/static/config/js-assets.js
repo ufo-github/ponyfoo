@@ -1,27 +1,22 @@
 'use strict';
 
 var path = require('path'),
-    assetify = require('assetify'),
     common = require('./common.js'),
     config = require('./../../config.js'),
     jQueryVersion = '1.9.1',
-    extension = config.env.development ? '.js' : '.min.js',
-    local = '/js/libs/jquery-' + jQueryVersion + extension,
-    $ = assetify.jQuery(jQueryVersion, local, undefined, config.env.development),
     registered = ['blogger', 'registered'];
 
 function getVendorLibraries(){
     return [
-        $,
-        '/js/libs/moment.min.js',
-        '/js/libs/mustache.js',
-        '/js/libs/jquery.color-2.1.1.js',
-        '/js/libs/jquery.ui.widget.js',
-        '/js/libs/jquery.fileupload.js',
-        '/js/libs/jquery.textarearesizer.min.js',
-        '/js/libs/Markdown.Converter.js',
-        '/js/libs/Markdown.Sanitizer.js',
-        '/js/libs/prettify.js'
+        '/js/vendor/moment.min.js',
+        '/js/vendor/mustache.js',
+        '/js/vendor/jquery.color-2.1.1.js',
+        '/js/vendor/jquery.ui.widget.js',
+        '/js/vendor/jquery.fileupload.js',
+        '/js/vendor/jquery.textarearesizer.min.js',
+        '/js/vendor/Markdown.Converter.js',
+        '/js/vendor/Markdown.Sanitizer.js',
+        '/js/vendor/prettify.js'
     ];
 }
 

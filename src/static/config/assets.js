@@ -1,7 +1,6 @@
 'use strict';
 
 var config = require('./../../config.js'),
-    assetify = require('assetify'),
     common = require('./common.js'),
     css = require('./css-assets.js'),
     js = require('./js-assets.js');
@@ -12,6 +11,7 @@ var assets = {
     bin: config.statics.bin,
     css: css.assets,
     js: js.assets,
+    jQuery: { version: '1.9.1' },
     host: config.server.host,
     profiles: common.profiles
 };
