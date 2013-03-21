@@ -57,3 +57,6 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     block templates
 
     !=assetify.js.emit(profile)
+
+    if config.site.shareVersion
+      !=config.site.version

@@ -4,6 +4,7 @@ var path = require('path'),
     env = process.env;
 
 var config = {
+    pkg: require('../package.json'),
     env: {
         current: env.NODE_ENV || 'development',
         get development(){ return this.current === 'development'; },
@@ -76,7 +77,9 @@ var config = {
     get site() {
         return {
             doctype: '<!DOCTYPE html>',
-            thumbnail: this.server.host + '/img/thumbnail.png'
+            thumbnail: this.server.host + '/img/thumbnail.png',
+            shareVersion: env.SHOW_VERSION === 'true',
+            version: '<!-- engine version: ' + this.pkg.version + ' -->'
         };
     },
     regex: {
