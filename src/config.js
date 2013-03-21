@@ -13,7 +13,7 @@ var config = {
     statics: {
         folder: path.join(__dirname, '/static'),
         bin: path.join(__dirname, '/static/.bin'),
-        get faviconSource(){ return path.join(this.bin, '/img/favicon.ico'); },
+        faviconSource: '/img/favicon.ico',
         favicon: '/favicon.ico'
     },
     server: {

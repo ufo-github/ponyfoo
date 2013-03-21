@@ -1,5 +1,23 @@
 {
+  "curly": true,
+  "eqeqeq": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "boss": true,
+  "eqnull": true,
+  "strict": true,
   "strict": true,
   "browser": true,
-  "expr": true
+  "expr": true,
+  "globals": {
+    "jQuery": false,
+    "locals": false,
+    "Markdown": false,
+    "moment": false,
+    "Mustache": false,
+    "nbrut": false,
+    "prettyPrint": false
+  }
 }

@@ -21,6 +21,7 @@ var assets = {
 
 module.exports = {
     grunt: {
+        production: config.env.production,
         assets: assets,
         plugins: {
             jsn: true,
