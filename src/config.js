@@ -30,7 +30,8 @@ var config = {
         hostSlug: function(slug){
             var vanity = slug ? (slug + '.') : '';
             return 'http://' + vanity + this.tld + this.portPart;
-        }
+        },
+        permanentRedirect: env.HOST_SLUG_REGEX_301 === 'true'
     },
     zombie: {
         enabled: env.ZOMBIE_CRAWLER || true,
