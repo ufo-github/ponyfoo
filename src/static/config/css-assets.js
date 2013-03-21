@@ -37,11 +37,11 @@ function getRaw(){
     return [
         { profile: 'dormant', local: '/css/dormant/index.less' },
         { profile: 'available', local: '/css/available/index.less' },
-        { profile: design, local: '/css/libs/markdown.less' }
+        { profile: design, local: '/css/vendor/markdown.less' }
     ];
 }
 
-function getLibs(){
+function getVendorLibraries(){
     return [
         '/css/vendor/markdown.editor.less',
         '/css/vendor/prettify.less',
@@ -86,7 +86,7 @@ function getCss(){
             getRaw()
         ]),
         blog = Array.prototype.concat.apply([], [
-            getLibs(),
+            getVendorLibraries(),
             getShared(),
             getViews()
         ]);

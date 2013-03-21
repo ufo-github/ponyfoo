@@ -41,7 +41,7 @@ function getNBrut(){
         '/js/nbrut/nbrut.thin.js',
         '/js/nbrut/nbrut.init.js',
 
-        '/js/libs/Markdown.Editor.js' // depends on NBrut
+        '/js/vendor/Markdown.Editor.js' // depends on NBrut
     ];
 }
 
