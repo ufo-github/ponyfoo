@@ -1,7 +1,16 @@
 {
-  "es5": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "boss": true,
+  "eqnull": true,
   "strict": true,
   "node": true,
+  "es5": true,
   "globals": {
     "jasmine": false,
     "describe": false,

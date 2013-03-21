@@ -7,28 +7,27 @@ var config = require('./../../config.js'),
     js = require('./js-assets.js');
 
 var assets = {
+    favicon: config.statics.faviconSource,
     source: config.statics.folder,
     bin: config.statics.bin,
     css: css.assets,
     js: js.assets,
-    jQuery: js.jQuery,
     host: config.server.host,
-    profiles: common.profiles,
-    compile: compile
+    profiles: common.profiles
 };
 
-function compile(done){
-    assetify.use(assetify.plugins.less);
-    assetify.use(assetify.plugins.jsn);
-
-    if (config.env.production){
-        assetify.use(assetify.plugins.bundle);
-        assetify.use(assetify.plugins.minifyCSS);
-        assetify.use(assetify.plugins.minifyJS);
-    }
-    assetify.use(assetify.plugins.forward({ extnames: ['.txt'] }, true));
-    assetify.use(assetify.plugins.fingerprint);
-    assetify.compile(assets, done);
-}
-
-module.exports = assets;
+module.exports = {
+    grunt: {
+        assets: assets,
+        plugins: {
+            jsn: true,
+            forward: [{ extnames: ['.txt'] }, true]
+        },
+        caching: {
+            expiresHeader: function(req){
+                return req.url.indexOf('/img/') === 0;
+            }
+        }
+    },
+    jQuery: js.jQuery
+};

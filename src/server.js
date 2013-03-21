@@ -2,48 +2,15 @@
 
 var config = require('./config.js'),
     express = require('express'),
-    statics = require('./server/statics.js'),
     middleware = require('./server/middleware.js'),
     async = require('async'),
     path = require('path'),
-    assets = require('./static/config/assets.js'),
     relic = require('./server/newrelic.js'),
     server = express();
 
-function main(){
-    relic.init();
-
-    var db = require('./server/db.js'),
-        listener = require('./server/listen.js');
-
-    async.series([
-        async.apply(db.connect),
-        async.apply(compileAndConfigure),
-        async.apply(listener.listen, server)
-    ]);
-}
-
-function compileAndConfigure(done){
-    async.parallel([
-        assets.compile,
-        configureRouter
-    ],done);
-}
-
-function configureRouter(done){
-    var authentication = require('./server/authentication.js'),
-        routing = require('./server/routing.js');
-
-    async.series([
-        configureServer,
-        async.apply(authentication.configure),
-        async.apply(routing.map, server)
-    ],done);
-}
-
-function configureServer(done){
+function configureServer(opts, done){
     server.configure(function(){
-        statics.configure(server);
+        opts.assetify.useBy(server, express);
 
         if (config.env.development){
             server.use(express.logger({ format: 'dev' }));
@@ -62,4 +29,32 @@ function configureServer(done){
     });
 }
 
-main();
+function configureRouter(opts, done){
+    var authentication = require('./server/authentication.js'),
+        routing = require('./server/routing.js');
+
+    async.series([
+        async.apply(configureServer, opts),
+        async.apply(authentication.configure),
+        async.apply(routing.map, server)
+    ],done);
+}
+
+function execute(opts, done){
+    relic.init();
+
+    var db = require('./server/db.js'),
+        listener = require('./server/listen.js');
+
+    async.series([
+        async.apply(db.connect),
+        async.apply(configureRouter, opts),
+        async.apply(listener.listen, server)
+    ], function(){
+        server.on('close', done);
+    });
+}
+
+module.exports = {
+    execute: execute
+};

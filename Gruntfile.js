@@ -2,12 +2,10 @@
 
 module.exports = function(grunt) {
     var opts = {
-        pkg: grunt.file.readJSON('package.json'),
-        jasmine_node: {
-            matchall: true,
-            forceExit: true,
-            projectRoot: './test/spec'
-        },
+        clean: [
+            './src/static/bin',
+            './src/views/bin'
+        ],
         jshint: {
             node: {
                 files: {
@@ -36,14 +34,42 @@ module.exports = function(grunt) {
                     jshintrc: '.jshintrc-browser'
                 }
             }
+        },
+        jasmine_node: {
+            matchall: true,
+            forceExit: true,
+            projectRoot: './test/spec'
+        },
+        assetify: {
+            options: require('./src/static/config/assets.js').grunt
         }
     };
 
     grunt.initConfig(opts);
 
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-assetify');
 
-    grunt.registerTask('default', ['jshint', 'jasmine_node']);
-    grunt.registerTask('travis', ['jshint', 'jasmine_node']);
+    grunt.registerTask('server', function(){
+        var done = this.async(),
+            server = require('./src/server.js');
+
+        server.execute({
+            assetify: {
+                useBy: grunt.config('assetify:binder')
+            }
+        }, done);
+    });
+
+    grunt.registerTask('test', ['clean', 'jshint', 'jasmine_node']);
+
+    grunt.registerTask('default', ['test']);
+    grunt.registerTask('travis', ['test', 'assetify']); // test and compile assets on travis-ci
+
+    grunt.registerTask('full', ['test', 'assetify', 'server']);
+    grunt.registerTask('web', ['clean', 'assetify', 'server']);
+
+    grunt.registerTask('production', ['web']);
 };
