@@ -87,7 +87,7 @@ function findBlog(req,res){
                 req.blog = 'dormant';
                 return renderView(req,res);
             case 'slug-redirect': // this slug is forbidden, redirect to the default blog.
-                return res.redirect(config.server.host, config.server.permanentRedirect ? 301 : 302);
+                return res.redirect(config.server.host + req.url, config.server.permanentRedirect ? 301 : 302);
             case 'available-redirect':
                 return res.redirect('/');
             case 'available':
