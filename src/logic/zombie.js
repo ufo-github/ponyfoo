@@ -9,7 +9,7 @@ var config = require('../config.js'),
 
 function setup(server){
     var views = server.get('views'),
-        bin = path.join(views, '/bin'),
+        bin = path.join(views, '/.bin'),
         indexpath = path.join(bin, 'static.idx'),
         _index;
 

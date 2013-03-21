@@ -3,8 +3,8 @@
 module.exports = function(grunt) {
     var opts = {
         clean: [
-            './src/static/bin',
-            './src/views/bin'
+            './src/static/.bin',
+            './src/views/.bin'
         ],
         jshint: {
             node: {
@@ -26,8 +26,8 @@ module.exports = function(grunt) {
                     src: [
                         'src/static/**/*.js',
                         '!src/static/config/*.js',
-                        '!src/static/bin/**/*.js',
-                        '!src/static/js/libs/**/*.js'
+                        '!src/static/.bin/**/*.js',
+                        '!src/static/js/vendor/**/*.js'
                     ]
                 },
                 options: {

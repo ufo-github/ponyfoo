@@ -145,9 +145,5 @@ function getJs(){
 }
 
 module.exports = {
-    assets: getJs(),
-    jQuery: {
-        asset: $,
-        local: path.join(config.statics.folder, $.local)
-    }
+    assets: getJs()
 };

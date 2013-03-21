@@ -3,7 +3,8 @@
 var config = require('./../../config.js'),
     common = require('./common.js'),
     css = require('./css-assets.js'),
-    js = require('./js-assets.js');
+    js = require('./js-assets.js'),
+    path = require('path');
 
 var assets = {
     favicon: config.statics.faviconSource,
@@ -11,7 +12,9 @@ var assets = {
     bin: config.statics.bin,
     css: css.assets,
     js: js.assets,
-    jQuery: { version: '1.9.1' },
+    jQuery: {
+        version: '1.9.1'
+    },
     host: config.server.host,
     profiles: common.profiles
 };
@@ -29,5 +32,5 @@ module.exports = {
             }
         }
     },
-    jQuery: js.jQuery
+    jQuery: path.join(config.statics.folder, '/js/vendor/jquery-' + assets.jQuery.version + '.js')
 };
