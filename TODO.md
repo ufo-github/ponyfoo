@@ -4,9 +4,14 @@ TODO
 1
 -------
 
-- blog claiming in available subdomains (existing bloggers can't claim zilch)
 - make zombie turn links to shared blog stuff to point to the main blog url:
   - e.g: /user/login -> http://blog.ponyfoo.com/user/login
+
+- blog claiming
+  - www marketing minisite
+  - available subdomains allow blog claiming
+  - existing bloggers can't claim additional blog slugs
+  - sitemap_index available only on www
 
 
 
