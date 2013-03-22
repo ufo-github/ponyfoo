@@ -158,12 +158,10 @@
         nbrut.thin.get('entry', {
             id: query + page,
             done: function(it){
-                if(nbrut.tt.active !== identifier){ // sanity
+                if(nbrut.tt.getActive() !== identifier){ // sanity
                     return;
                 }
-
                 var articles = nbrut.tt.partial('more-entries', it);
-
                 articles.appendTo(container);
                 pager.remove();
                 addPager(it, container, identifier, query);
