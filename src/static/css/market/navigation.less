@@ -1,0 +1,127 @@
+@import "../defaults/common.less";
+
+#top-navigation {
+  .box-transition(background-color 0.2s ease-in-out);
+  background-color: @blue;
+  text-transform: uppercase;
+  .ff-console();
+  color: #fff;
+}
+
+#top-navigation li {
+  cursor: pointer;
+  text-align: center;
+}
+
+#top-navigation .top      { .nav(@blue,         @blue_hover,          @blue_strong);      }
+#top-navigation .features { .nav(@green_light,  @green_light + #111,  @secondary_light);  }
+#top-navigation .hop-in   { .nav(@pinkish,      @pink_light,          @pink);             }
+#top-navigation .about    { .nav(#ccc,          #fff,                 @moderate, #000);   }
+
+.nav(@border, @background, @hover, @color:#fff){
+  text-shadow: 1px 1px 1px @border;
+  border-top: 5px solid @border;
+  background-color: @background;
+  color: @color;
+
+  :hover {
+    background-color: @hover;
+    .box-transition(background-color 0.2s ease-in-out);
+  }
+}
+
+.footer-navigation {
+  border-top: 3px solid @grayish;
+  background-color: @border;
+  font-size: 0.85em;
+}
+
+.footer-navigation a {
+  color: @pink;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.footer-navigation a:hover {
+  text-decoration: underline;
+}
+
+.footer-navigation a:visited {
+  color: @pink - #333;
+}
+
+.footer-navigation .version {
+  font-style: italic;
+  font-size: 0.75em;
+}
+
+.fixed-navigation {
+  display: none;
+}
+
+@media only screen and (min-width: 1024px) {
+  .fixed-navigation {
+    display: block;
+    position: fixed;
+    top: 200px;
+    left: 140px;
+  }
+
+  .fixed-navigation a {
+    display: block;
+    padding: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    .box-radius(50%);
+    .box-shadow(1px 1px 2px rgba(0,0,0,0.2));
+  }
+
+  .fixed-navigation a:hover {
+    background-color: @strong;
+    .box-transition(all 0.2s ease-in-out);
+    .box-shadow(1px 1px 5px lighten(@strong, 20%));
+  }
+
+  .fixed-navigation .prev {
+    padding-left: 0;
+  }
+  .fixed-navigation .next {
+    margin-top: 40px;
+    padding-right: 0;
+  }
+
+  .fixed-navigation span {
+    position: relative;
+    display: inline-block;
+    font-size: 100px;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 2em;
+    vertical-align: middle;
+
+    border: 0.53em solid transparent;
+  }
+
+  .fixed-navigation .prev span {
+    right: 0.25em;
+    border-right: 1em solid @moderate;
+  }
+
+  .fixed-navigation .prev:hover span {
+    border-right: 1em solid @yellow_light;
+  }
+
+  .fixed-navigation .next span {
+    left: 0.25em;
+    border-left: 1em solid @moderate;
+  }
+
+  .fixed-navigation .next:hover span {
+    border-left: 1em solid @yellow_light;
+  }
+
+  .fixed-navigation .hide-nav {
+    visibility: hidden;
+  }
+}
