@@ -19,8 +19,8 @@ function getLocations(slug, opts){
 }
 
 function filter(req, opts){
-    if(opts.requireMarket === true && req.blogStatus === 'market'){
-        return false;
+    if(opts.requireMarket === true){
+        return req.blogStatus !== 'market';
     }
     return !req.blog; // next() on non-blog
 }
@@ -31,7 +31,7 @@ function getMetaXml(opts){
             return next();
         }
 
-        var loc = getLocations(req.blog.slug, opts);
+        var loc = getLocations(req.slug, opts);
 
         fse.mkdirs(loc.folder, function(err){
             if(err){
