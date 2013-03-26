@@ -1,0 +1,55 @@
+﻿@import "../defaults/common.less";
+
+#top-navigation {
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#top-navigation li {
+  display: inline-block;
+}
+
+#top-navigation li a {
+  display: block;
+  height: 30px;
+  padding: 8px;
+  text-decoration: none;
+  .box-sizing();
+}
+
+.market-section {
+  min-height: 600px;
+  padding-top: 35px;
+}
+
+.footer-navigation {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.footer-navigation li {
+  display: inline-block;
+}
+
+.footer-navigation li:not(:first-child):before {
+  content: '|';
+  padding: 0 10px;
+}
+
+@media only screen and (min-width: 768px) {
+  .fluid-center {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  #top-navigation li a {
+    height: 45px;
+    padding: 15px;
+  }
+
+  .market-section {
+    padding-top: 65px;
+  }
+}

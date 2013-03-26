@@ -16,14 +16,16 @@
         });
     };
 
-    fn.scrollIntoView = function(then) {
-        var self = $(this);
+    fn.scrollIntoView = function(opts) {
+        var o = opts || {},
+            self = $(this);
+
         if (self.length > 0 && !self.inView()){
             $('body').animate({
-                scrollTop: self.position().top - 30
-            }, 'fast', then);
-        }else if(then){
-            then.call(self);
+                scrollTop: self.position().top + (o.offset || 0)
+            }, 'fast', o.then);
+        }else if(o.then){
+            o.then.call(self);
         }
 
         return this;

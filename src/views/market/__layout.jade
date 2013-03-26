@@ -1,10 +1,63 @@
 extends ../layouts/minimal
 
 block title
-  title='market thing'
+  title='Blogging, Revisited - Pony Foo'
 
 block body
-  header='foo'
+  header#top-navigation
+    nav.fluid-center
+      ul
+        li.top
+          a(href='#top')='Home'
+        li.features
+          a(href='#features')='Features'
+        li.hop-in
+          a(href='#hop')='Hop in!'
+        li.about
+          a(href='#about')='About'
 
   main#content
-    h1='bar'
+    article#top.market-section(data-nav='.top')
+      section.fluid-center
+        header
+          h1='Pony Foo'
+          h2='What is it?'
+
+    article#features.market-section(data-nav='.features')
+      section.fluid-center
+        header
+          h1='Features'
+          h2='What\'s in it for me?'
+
+    article#hop.market-section(data-nav='.hop-in')
+      section.fluid-center
+        header
+          h1='Hop in, then'
+          h2='It\'s fast, easy, and free!'
+
+    article#about.market-section(data-nav='.about')
+      section.fluid-center
+        header
+          h1='About'
+          h2='Who\'s behind this?'
+
+  footer.footer-navigation
+    ul
+      li
+        a(href=config.server.defaultBlogUrl, target='_blank', title='Visit our blog, inception!')='news'
+      li
+        a(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='github'
+
+      if config.contact.twitter
+        li
+          a(href=config.contact.twitter, target='_blank', title='Follow us on twitter')='twitter'
+
+      if config.contact.email
+        li
+          a(href=config.contact.email, target='_blank', title='Contact us by email')='email'
+
+      if config.site.shareVersion
+        li
+          span.version=config.site.version
+
+  include _ribbon

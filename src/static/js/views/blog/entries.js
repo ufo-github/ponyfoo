@@ -217,8 +217,11 @@
 
                 if (data.hash !== undefined){ // hashes target comment anchors
                     anchor = discussions.find(data.hash);
-                    anchor.scrollIntoView(function(){
-                        anchor.flash('#ffc');
+                    anchor.scrollIntoView({
+                        offset: -30,
+                        then: function(){
+                            anchor.flash('#ffc');
+                        }
                     });
                 }
             }

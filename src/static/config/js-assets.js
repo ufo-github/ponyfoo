@@ -5,6 +5,12 @@ var path = require('path'),
     config = require('./../../config.js'),
     registered = ['blogger', 'registered'];
 
+function getMarket(){
+    return [
+        { profile: 'market', local: '/js/ext/jquery.layout.js' },
+        { profile: 'market', local: '/js/market/index.js' }
+    ];
+}
 function getVendorLibraries(){
     return [
         '/js/vendor/moment.min.js',
@@ -120,6 +126,7 @@ function getAnalytics(){
 
 function getJs(){
     var js = Array.prototype.concat.apply([], [
+            getMarket(),
             getVendorLibraries(),
             getExtensions(),
             getNBrut(),

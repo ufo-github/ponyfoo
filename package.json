@@ -1,6 +1,7 @@
 {
   "name": "NBrut",
   "description": "Seamless micro-blogging platform",
+  "homepage": "https://github.com/bevacqua/NBrut",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "nicolasbevacqua@gmail.com",

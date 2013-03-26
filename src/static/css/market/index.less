@@ -1,0 +1,93 @@
+@import "../defaults/common.less";
+
+body {
+  .ff-helvetica-new();
+}
+
+::selection {
+  background: @pink;
+  color: #fff;
+  text-shadow: 0 1px rgb(0, 0, 0, .2);
+}
+
+#top-navigation {
+  .box-transition(background-color 0.15s ease-in-out);
+  background-color: @blue;
+  text-transform: uppercase;
+  .ff-console();
+  color: #fff;
+}
+
+#top-navigation li {
+  cursor: pointer;
+  text-align: center;
+}
+
+#top-navigation .top      { .nav(@blue,         @blue_hover,          @blue_strong);      }
+#top-navigation .features { .nav(@green_light,  @green_light + #111,  @secondary_light);  }
+#top-navigation .hop-in   { .nav(@pinkish,      @pink_light,          @pink);             }
+#top-navigation .about    { .nav(#ccc,          #fff,                 @moderate, #000);   }
+
+#top      { .market(@blue_hover,          @blue,        @blue_strong);      }
+#features { .market(@green_light + #111,  @green_light, @secondary_light);  }
+#hop      { .market(@pink_light,          @pinkish,     @pink);             }
+#about    { .market(#fff,                 @light,       #000);              }
+
+.nav(@border, @background, @hover, @color:#fff){
+  text-shadow: 1px 1px 1px @border;
+  border-top: 5px solid @border;
+  background-color: @background;
+  color: @color;
+
+  :hover {
+    background-color: @hover;
+  }
+}
+
+.market(@start,@end,@strong){
+  .box-gradient(@start, @end);
+
+  h1 { color: darken(@strong, 30%); }
+  h2 { color: darken(@strong, 15%); }
+
+  ::selection { background: @strong - #111; }
+}
+
+.market-section ::selection {
+  color: #fff;
+  text-shadow: 0 1px rgb(0, 0, 0, .2);
+}
+
+.market-section .fluid-center {
+  padding: 12px;
+}
+
+.market-section h1 {
+  font-size: 3.6em;
+  font-weight: bold;
+}
+
+.market-section h2 {
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.footer-navigation {
+  border-top: 3px solid @grayish;
+  background-color: @border;
+  font-size: 0.85em;
+}
+
+.footer-navigation a {
+  color: @pink;
+  font-weight: bold;
+}
+
+.footer-navigation a:visited {
+  color: @pink - #333;
+}
+
+.footer-navigation .version {
+  font-style: italic;
+  font-size: 0.75em;
+}

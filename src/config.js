@@ -25,6 +25,7 @@ var config = {
         get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         get defaultBlog(){ return env.BLOG_DEFAULT || 'blog'; },
+        get defaultBlogUrl(){ return this.hostSlug(this.defaultBlog); },
         listener: parseInt(env.PORT || 8081, 10),
         get port(){ return parseInt(env.PUBLIC_PORT || this.listener, 10); },
         get portPart(){ return this.port === 80 ? '' : ':' + this.port; },
@@ -81,7 +82,8 @@ var config = {
             doctype: '<!DOCTYPE html>',
             thumbnail: this.server.host + '/img/thumbnail.png',
             shareVersion: env.SHOW_VERSION === 'true',
-            version: '<!-- engine version: ' + this.pkg.version + ' -->'
+            version: 'v' + this.pkg.version,
+            get versionString(){ return '<!-- engine: ' + this.version + ' -->'; }
         };
     },
     regex: {
@@ -127,6 +129,10 @@ var config = {
         tiny: '&s=24',
         small: '&s=40',
         regular: '&s=60'
+    },
+    contact: {
+        twitter: env.CONTACT_TWITTER,
+        email: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : undefined
     }
 };
 
