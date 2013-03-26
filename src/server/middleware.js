@@ -17,6 +17,9 @@ function configure(server){
     server.use(express.bodyParser());
 
     server.use(express.session({
+        cookie: {
+            domain: config.server.tld
+        },
         secret: config.security.sessionSecret,
         store: new sessionStore()
     }));

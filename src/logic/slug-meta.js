@@ -18,14 +18,20 @@ function getLocations(slug, opts){
     };
 }
 
+function filter(req, opts){
+    if(opts.requireMarket === true && req.blogStatus === 'market'){
+        return false;
+    }
+    return !req.blog; // next() on non-blog
+}
+
 function getMetaXml(opts){
     return function(req,res,next){
-        var blog = req.blog;
-        if(!blog){
+        if(filter(req,opts)){
             return next();
         }
 
-        var loc = getLocations(blog.slug, opts);
+        var loc = getLocations(req.blog.slug, opts);
 
         fse.mkdirs(loc.folder, function(err){
             if(err){

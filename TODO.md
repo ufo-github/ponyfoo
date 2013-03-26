@@ -11,7 +11,6 @@ TODO
   - www marketing minisite
   - available subdomains allow blog claiming
   - existing bloggers can't claim additional blog slugs
-  - sitemap_index available only on www
 
 
 

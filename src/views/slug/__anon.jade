@@ -1,10 +1,10 @@
-extends blog
+extends __layout
 
 block menu
   a#register-user(href='/user/register')='Register'
   a.button#login-user(href='/user/login')='Login'
 
 block templates
-  include ../shared/authentication
-  include ../user/register
-  include ../user/login
+  include shared/authentication
+  include user/register
+  include user/login

@@ -32,7 +32,10 @@ function getOpenSearch(req,res,next){
         var ctx = {
             favicon: config.server.host + config.statics.favicon,
             template: config.server.hostSlug(blog.slug) + config.opensearch.template,
-            blog: blog
+            blog: {
+                title: blog.title,
+                legend: blog.legend || 'Search blog posts'
+            }
         };
 
         jsn.parse(xmln, ctx, function(err, xml){

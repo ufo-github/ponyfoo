@@ -20,15 +20,17 @@ These variables are usually very important for **deployments**, but the default 
 - **NODE_ENV**: Node.js environment, defaults to `'development'`, options include `'staging'` and `'production'`. By default, production environments minify and bundle assets, compress responses, while the development environment uses unminified sources and provides a few more features for debugging.
 - **HOST_TLD**: The `TLD` for the site, this is important when slugging, because every blog is hosted on a subdomain. Defaults to `'local-sandbox.com'`.
 - **HOST_SLUG_ENABLED**: Enables blog slugging. When disabled, users can't create their own blogs on the platform. Defaults to `false`.
-- **HOST_SLUG_DEFAULT**: The default `slug` for the site, that is, the **semantic root** of the site. Defaults to `'www'`.
-- **HOST_SLUG_REGEX**: An optional regex to restrict the subdomains that are available to users. Implicitly adds `'^'` and `'$'` to the regex. Requests that fail a test against this regex get permanently redirected to the default slug. By default it's unrestricted.
+- **HOST_MARKET**: The default `slug` for the site, that is, the **semantic root** of the site. Defaults to `'www'`.
+
 - **HOST_REGEX**: An optional regex to restrict the host. Useful when your site is accessible through multiple `TLD`s but you only want one to serve responses. When a request matches this regex, it gets permanently redirected to the same url on the default TLD.
 - **PORT**: The actual port where the application will listen on. Defaults to port `8081`.
 - **PUBLIC_PORT**: The public facing port. Sometimes, production environments use architectures set up with load balancers and assign ports arbitrarily to your application, but the domain will still use port `80`, this helps avoid issues when redirecting requests. Defaults to `PORT`.
 
 - **MONGO_URI** (or **MONGOLAB_URI**): The connection uri to your MongoDB server. Defaults to `'mongodb://localhost/nbrut'`.
 
-
+- **BLOG_DEFAULT**: The default blog slug. Defaults to `'blog'`. i.e: http://blog.local-sandbox.com`
+- **BLOG_REGEX**: An optional regex to restrict the subdomains that are available to users. Implicitly adds `'^'` and `'$'` to the regex. Requests that fail a test against this regex get permanently redirected to the default slug. By default it's unrestricted.
+- **BLOG_REGEX_301**: If `'true'`, permanently redirects requests to filtered blog slugs to the market home.
 
 API Credentials
 ---------------

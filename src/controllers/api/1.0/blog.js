@@ -21,47 +21,65 @@ function update(req,res){
 
 function claimValidation(req,res,next){
     if(logic.dormant){ // dormant
-        awaken(req,res,next);
-    }else if(!config.server.slugged){
-        return next(); // claiming is disabled
-    }else{ // attempt to claim
-        var slug = logic.getSlug(req),
-            slugTest = config.server.slugRegex;
-
-        if(slugTest !== undefined && !slugTest.test(slug)){
-            return next(); // this slug is an alias of the main blog.
-        }
-
-        if(!req.user){ // users must be connected to claim a blog
-            return next();
-        }
-
-        blog.findOne({ owner: req.user._id }, function(err, document){
-            if(err){
-                throw err;
-            }
-            if(document !== null){ // users can own a single blog at most
-                return flashValidation(req,res,'You already own a blog!');
-            }
-
-            blog.findOne({ slug: slug }, function(err, document){
-                if(document !== null){
-                    return flashValidation(req,res,'This blog already has an owner!');
-                }
-                create(req,res);
-            });
-        });
+        return awaken(req,res,next);
     }
+    if(!config.server.slugged){
+        return next(); // claiming is disabled
+    }
+
+    // attempt to claim
+    var slug = logic.getSlug(req),
+        slugTest = config.server.slugRegex;
+
+    if(slugTest !== undefined && !slugTest.test(slug)){
+        return next(); // this slug is an alias of the main blog.
+    }
+
+    if(!req.user){ // users must be connected to claim a blog
+        return next();
+    }
+
+    blog.findOne({ owner: req.user._id }, function(err, document){
+        if(err){
+            throw err;
+        }
+        if(document !== null){ // users can own a single blog at most
+            return flashValidation(req,res,'You already own a blog!');
+        }
+        if(!isValid(req,res)){
+            return;
+        }
+
+        blog.findOne({ slug: slug }, function(err, document){
+            if(document !== null){
+                return flashValidation(req,res,'This blog already has an owner!');
+            }
+            create(req,res);
+        });
+    });
 }
 
+function isValid(req,res,isAwakening){
+    var email = req.body['user.email'],
+        password = req.body['user.password'],
+        title = req.body['blog.title'];
+
+    if(isAwakening && !email || !password){ // the most basic form of validation, since it's just the super admin
+        return flashValidation(req,res,'Oops, you should fill out every field');
+    }
+    if(!title){
+        return flashValidation(req,res,'Oops, you forgot to pick a blog title!');
+    }
+    return true;
+}
 function awaken(req,res){
     var email = req.body['user.email'],
         password = req.body['user.password'],
         title = req.body['blog.title'],
         document;
 
-    if(!email || !password){ // the most basic form of validation, since it's just the super admin
-        return flashValidation(req,res,'Oops, you should fill out every field');
+    if(!isValid(req,res,true)){
+        return;
     }
 
     document = new user({
@@ -73,18 +91,24 @@ function awaken(req,res){
         if(err){
             throw err;
         }
-        create(req,res,user);
+        req.login(user,function(err){
+            if(err){
+                throw err;
+            }
+            
+            create(req,res,{
+                user: user,
+                slug: config.server.defaultBlog
+            });
+        });
     });
 }
 
-function create(req,res,user){
-    var owner = user || req.user,
-        slug = logic.getSlug(req),
+function create(req,res,opts){
+    var o = opts || {},
+        owner = o.user || req.user,
+        slug = o.slug || logic.getSlug(req),
         title = req.body['blog.title'];
-
-    if(!title){
-        return flashValidation(req,res,'Oops, you forgot to pick a blog title!');
-    }
 
     new blog({
         owner: owner._id,
@@ -94,8 +118,9 @@ function create(req,res,user){
             rss: true
         }
     }).save(function(){
+        var host = config.server.hostSlug(slug);
         logic.live = true;
-        res.redirect('/');
+        res.redirect(host);
     });
 }
 

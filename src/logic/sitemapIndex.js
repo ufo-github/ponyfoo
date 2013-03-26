@@ -42,6 +42,7 @@ function setup(req,done){
 module.exports = {
     get: meta.get({
         config: config.sitemapIndex,
-        setup: setup
+        setup: setup,
+        requireMarket: true
     })
 };

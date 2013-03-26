@@ -24,6 +24,8 @@ function findBlogInternal(req,res,done){
 
         if(!config.server.slugged){
             delete query.slug;
+        }else if(slug === config.server.slugHome){
+            return then('market');
         }else if(slugTest !== undefined && !slugTest.test(slug) && slug !== config.server.slugHome){
             return then('slug-redirect');
         }
@@ -88,6 +90,9 @@ function findBlog(req,res){
                 return renderView(req,res);
             case 'slug-redirect': // this slug is forbidden, redirect to the default blog.
                 return res.redirect(config.server.host + req.url, config.server.permanentRedirect ? 301 : 302);
+            case 'market':
+                req.blog = 'market';
+                return renderView(req,res);
             case 'available-redirect':
                 return res.redirect('/');
             case 'available':
@@ -100,12 +105,13 @@ function findBlog(req,res){
 }
 
 function renderView(req,res){
-    var profile, locals,
+    var profile, view, locals,
         connected = req.user !== undefined,
         isBlogger = connected ? req.user.blogger : false;
 
     if(typeof req.blog === 'string'){
         profile = req.blog;
+        view = profile + '/__layout.jade';
     }else{
         if(!connected){
             profile = 'anon';
@@ -131,6 +137,7 @@ function renderView(req,res){
 
             req.blog.descriptionHtml = html;
         }
+        view = 'slug/__' + profile + '.jade';
         locals.site = {
             title: req.blog.title,
             thumbnail: req.blog.thumbnail
@@ -138,7 +145,7 @@ function renderView(req,res){
         res.locals.assetify.js.add('!function(a){a.locals=' + JSON.stringify(locals) + ';}(window);', 'before');
     }
 
-    res.render('layouts/' + profile + '.jade', {
+    res.render(view, {
         profile: profile,
         slug: req.slug,
         blog: req.blog,

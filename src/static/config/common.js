@@ -24,6 +24,7 @@ function mapSharedTo(profile, resource){
 module.exports = {
     profiles: [
         'dormant',
+        'market',
         'available',
         'anon',
         'registered',

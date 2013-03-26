@@ -2,7 +2,7 @@
 
 html(lang='en', itemscope, itemtype='http://schema.org/Blog')
   head
-    include _metadata
+    include ../layouts/_metadata
       title=blog.title
 
       link(rel='alternate', type='application/rss+xml', href=blog.social.rssXml)
@@ -30,29 +30,29 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
             span.action.search
 
     main#content.spinner-container(data-flash=flash.json)
-      include ../shared/_spinner
+      include shared/_spinner
 
-    include ../shared/404
-    include ../shared/metadata
-    include ../shared/validation-dialog
-    include ../shared/validation-errors
-    include ../shared/upload
-    include ../shared/expand-section
-    include ../shared/table-pager
+    include shared/404
+    include shared/metadata
+    include shared/validation/validation-dialog
+    include shared/validation/validation-errors
+    include shared/upload
+    include shared/expand-section
+    include shared/table-pager
 
-    include ../markdown/prompt-link
-    include ../markdown/prompt-image
+    include shared/markdown/prompt-link
+    include shared/markdown/prompt-image
 
-    include ../blog/entries
-    include ../blog/partials/empty
-    include ../blog/partials/exhausted
-    include ../blog/partials/siblings
-    include ../blog/partials/pager
-    include ../blog/partials/more
+    include blog/entries
+    include blog/partials/empty
+    include blog/partials/exhausted
+    include blog/partials/siblings
+    include blog/partials/pager
+    include blog/partials/more
 
-    include ../blog/discussion/list
+    include blog/discussion/list
 
-    include ../user/profile
+    include user/profile
 
     block templates
 

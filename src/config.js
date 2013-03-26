@@ -21,17 +21,18 @@ var config = {
         tld: env.HOST_TLD || 'local-sandbox.com',
         slugged: env.HOST_SLUG_ENABLED === 'true',
         slugHome: env.HOST_SLUG_DEFAULT || 'www',
-        slugRegex: env.HOST_SLUG_REGEX ? new RegExp('^' + env.HOST_SLUG_REGEX + '$') : undefined,
+        slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
         get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
+        get defaultBlog(){ return env.BLOG_DEFAULT || 'blog'; },
         listener: parseInt(env.PORT || 8081, 10),
         get port(){ return parseInt(env.PUBLIC_PORT || this.listener, 10); },
-        get portPart(){ return this._p = this._p || (this.port === 80 ? '' : ':' + this.port); },
+        get portPart(){ return this.port === 80 ? '' : ':' + this.port; },
         hostSlug: function(slug){
             var vanity = slug ? (slug + '.') : '';
             return 'http://' + vanity + this.tld + this.portPart;
         },
-        permanentRedirect: env.HOST_SLUG_REGEX_301 === 'true'
+        permanentRedirect: env.BLOG_REGEX_301 === 'true'
     },
     zombie: {
         enabled: env.ZOMBIE_CRAWLER || true,

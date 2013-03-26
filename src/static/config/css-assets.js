@@ -35,9 +35,9 @@ function getCommonDesign(){ // basic layout and design
 
 function getRaw(){
     return [
+        { profile: design, local: '/css/vendor/markdown.less' },
         { profile: 'dormant', local: '/css/dormant/index.less' },
-        { profile: 'available', local: '/css/available/index.less' },
-        { profile: design, local: '/css/vendor/markdown.less' }
+        { profile: 'available', local: '/css/available/index.less' }
     ];
 }
 

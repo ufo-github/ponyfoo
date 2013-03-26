@@ -3,7 +3,6 @@
 var path = require('path'),
     common = require('./common.js'),
     config = require('./../../config.js'),
-    jQueryVersion = '1.9.1',
     registered = ['blogger', 'registered'];
 
 function getVendorLibraries(){
