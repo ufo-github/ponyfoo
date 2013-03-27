@@ -137,6 +137,11 @@
   animation: @first, @second;
 }
 
+.animation-scale(@rule,@scale){
+  .animation(@rule);
+  .box-transform(scale(@scale));
+}
+
 .box-perspective(@amount){
   -webkit-perspective: @amount;  /* Safari 4+ Chrome 12+ */
      -moz-perspective: @amount;  /* Firefox 10+ */

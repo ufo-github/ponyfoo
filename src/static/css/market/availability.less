@@ -2,6 +2,7 @@
 
 .availability-checker {
   margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 .availability-input {
@@ -33,7 +34,6 @@
   width: 32px;
   height: 32px;
   margin-left: 8px;
-  background-color: #fff;
 }
 
 .availability-checker .legend {
@@ -78,13 +78,15 @@
   cursor: not-allowed;
 }
 
-.availability-checker .proceed i:after {
+.availability-checker .proceed .proceed-tip:after {
   content: 'It\'s free!';
 }
-
-.availability-checker .proceed[disabled] i:after {
-  content: 'Pick a vanity title first';
+.availability-checker .proceed[disabled] .proceed-tip:after {
+  content: 'Pick a vanity title first.';
 }
+
+.availability-checker .proceed .proceed-text:after           { content: ' now!'; }
+.availability-checker .proceed[disabled] .proceed-text:after { content: '...'; }
 
 .availability-checker .proceed span {
   font-size: 1.8em;
