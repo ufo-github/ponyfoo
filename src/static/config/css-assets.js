@@ -36,7 +36,8 @@ function getRaw(){
         { profile: 'market', local: '/css/market/navigation-layout.less' },
         { profile: 'market', local: '/css/market/navigation.less' },
         { profile: 'market', local: '/css/market/availability.less' },
-        { profile: 'market', local: '/css/market/content.less' },
+        { profile: 'market', local: '/css/market/features.less' },
+        { profile: 'market', local: '/css/market/design.less' },
         { profile: 'dormant', local: '/css/dormant/index.less' }
     ];
 }
