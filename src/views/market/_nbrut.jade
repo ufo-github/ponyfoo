@@ -1,6 +1,9 @@
 section.fluid-center
   header
-    h1='NBrut'
+    h1
+      span='NBrut'
+      span.tagline='\'the open-source blogging engine for developers\';'
+
     h2='What\'s waiting for me?'
 
   section.left
@@ -12,7 +15,7 @@ section.fluid-center
       li='A blogging platform targeted at software developers'
       li
         span='100% open-source, publicly available on '
-        a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='GitHub'
+        a.highlighted-link.hint(href=config.pkg.homepage, target='_blank', data-hint='Visit NBrut on GitHub')='GitHub'
 
       li='Simply, elegantly designed'
       li='Bleeding edge. Developed entirely in NodeJS'

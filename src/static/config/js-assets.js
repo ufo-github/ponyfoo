@@ -2,8 +2,7 @@
 
 var path = require('path'),
     common = require('./common.js'),
-    config = require('./../../config.js'),
-    registered = ['blogger', 'registered'];
+    config = require('./../../config.js');
 
 function getMarket(){
     return [
@@ -14,70 +13,70 @@ function getMarket(){
 
 function getVendorLibraries(){
     return [
-        '/js/vendor/moment.min.js',
-        '/js/vendor/mustache.js',
-        '/js/vendor/jquery.color-2.1.1.js',
-        '/js/vendor/jquery.ui.widget.js',
-        '/js/vendor/jquery.fileupload.js',
-        '/js/vendor/jquery.textarearesizer.min.js',
-        '/js/vendor/Markdown.Converter.js',
-        '/js/vendor/Markdown.Sanitizer.js',
-        '/js/vendor/prettify.js'
+        { profile: common.blog, local: '/js/vendor/moment.min.js' },
+        { profile: common.blog, local: '/js/vendor/mustache.js' },
+        { profile: common.blog, local: '/js/vendor/jquery.color-2.1.1.js' },
+        { profile: common.blog, local: '/js/vendor/jquery.ui.widget.js' },
+        { profile: common.blog, local: '/js/vendor/jquery.fileupload.js' },
+        { profile: common.blog, local: '/js/vendor/jquery.textarearesizer.min.js' },
+        { profile: common.blog, local: '/js/vendor/Markdown.Converter.js' },
+        { profile: common.blog, local: '/js/vendor/Markdown.Sanitizer.js' },
+        { profile: common.blog, local: '/js/vendor/prettify.js' }
     ];
 }
 
 function getExtensions(){
     return [
-        '/js/ext/String.js',
-        '/js/ext/prettify.js',
-        '/js/ext/jquery.layout.js',
-        '/js/ext/jquery.ui.js', // not the well known, huge, and hideous, jQuery UI. just a few extensions
-        '/js/ext/jquery.nbrut.js'
+        { profile: common.blog, local: '/js/ext/String.js' },
+        { profile: common.blog, local: '/js/ext/prettify.js' },
+        { profile: common.blog, local: '/js/ext/jquery.layout.js' },
+        { profile: common.blog, local: '/js/ext/jquery.ui.js' }, // not the well known, huge, and hideous, jQuery UI. just a few extensions
+        { profile: common.blog, local: '/js/ext/jquery.nbrut.js' }
     ];
 }
 
 function getNBrut(){
     return [
-        '/js/nbrut/nbrut.core.js',
-        { local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
-        '/js/nbrut/nbrut.pluginFactory.js',
-        '/js/nbrut/nbrut.md.js',
-        '/js/nbrut/nbrut.ui.js',
-        '/js/nbrut/nbrut.templates.js',
-        '/js/nbrut/nbrut.thin.js',
-        '/js/nbrut/nbrut.init.js',
+        { profile: common.blog, local: '/js/nbrut/nbrut.core.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
+        { profile: common.blog, local: '/js/nbrut/nbrut.pluginFactory.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.md.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.ui.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.templates.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.thin.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.init.js' },
 
-        '/js/vendor/Markdown.Editor.js' // depends on NBrut
+        { profile: common.blog, local: '/js/vendor/Markdown.Editor.js' } // depends on NBrut
     ];
 }
 
 function getHooks(){
     return [
-        '/js/views/hooks/thin.js',
-        '/js/views/hooks/thin.validation.js',
-        '/js/views/hooks/templates.js',
-        '/js/views/hooks/templates.md.js',
-        '/js/views/hooks/templates.metadata.js'
+        { profile: common.blog, local: '/js/views/hooks/thin.js' },
+        { profile: common.blog, local: '/js/views/hooks/thin.validation.js' },
+        { profile: common.blog, local: '/js/views/hooks/templates.js' },
+        { profile: common.blog, local: '/js/views/hooks/templates.md.js' },
+        { profile: common.blog, local: '/js/views/hooks/templates.metadata.js' }
     ];
 }
 
 function getTemplates(){
     return [
-        '/js/views/templates/shared.js',
-        '/js/views/templates/markdown.js',
-        '/js/views/templates/entries.js',
+        { profile: common.blog, local: '/js/views/templates/shared.js' },
+        { profile: common.blog, local: '/js/views/templates/markdown.js' },
+        { profile: common.blog, local: '/js/views/templates/entries.js' },
         { profile: 'anon', local: '/js/views/templates/anon.js' },
-        { profile: registered, local: '/js/views/templates/registered.js' },
+        { profile: common.registered, local: '/js/views/templates/registered.js' },
         { profile: 'blogger', local: '/js/views/templates/blogger.js'}
     ];
 }
 
 function getPartials(){
     return [
-        '/js/views/shared/upload.js',
-        '/js/views/shared/expand.section.js',
-        '/js/views/shared/table.pager.js',
-        '/js/views/markdown/prompts.js'
+        { profile: common.blog, local: '/js/views/shared/upload.js' },
+        { profile: common.blog, local: '/js/views/shared/expand.section.js' },
+        { profile: common.blog, local: '/js/views/shared/table.pager.js' },
+        { profile: common.blog, local: '/js/views/markdown/prompts.js' }
     ];
 }
 
@@ -89,17 +88,17 @@ function getAnonymousTemplates(){
 
 function getSharedTemplates(){
     return [
-        '/js/views/user/profile.js',
-        '/js/views/blog/search.js',
-        '/js/views/blog/entries.js'
+        { profile: common.blog, local: '/js/views/user/profile.js' },
+        { profile: common.blog, local: '/js/views/blog/search.js' },
+        { profile: common.blog, local: '/js/views/blog/entries.js' }
     ];
 }
 
 function getRegisteredTemplates(){
     return [
-        { profile: registered, local: '/js/views/user/profile.edit.js' },
-        { profile: registered, local: '/js/views/blog/comments.registered.js' },
-        { profile: registered, local: '/js/views/blog/comments.edit.js' }
+        { profile: common.registered, local: '/js/views/user/profile.edit.js' },
+        { profile: common.registered, local: '/js/views/blog/comments.registered.js' },
+        { profile: common.registered, local: '/js/views/blog/comments.edit.js' }
     ];
 }
 
@@ -142,11 +141,7 @@ function getJs(){
         ]);
 
     if(config.env.development){
-        js.push('/js/debug.js');
-    }
-
-    for(var i = 0;i < js.length; i++){
-        js[i] = common.mapSharedToBlogOnly(js[i]);
+        js.push({ profile: common.blog, local: '/js/debug.js' });
     }
     return js;
 }

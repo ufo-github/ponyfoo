@@ -1,12 +1,11 @@
 'use strict';
 
 var common = require('./common.js'),
-    registered = ['blogger', 'registered'],
     design = [
         'dormant',
-        'blogger',
+        'anon',
         'registered',
-        'anon'
+        'blogger'
     ];
 
 function getBarebones(){ // reset and most elemental styles
@@ -17,20 +16,14 @@ function getBarebones(){ // reset and most elemental styles
 }
 
 function getCommonDesign(){ // basic layout and design
-    var sheets = [
-        '/css/defaults/elements.less',
-        '/css/defaults/controls.less',
-        '/css/defaults/controls.spinner.less',
-        '/css/defaults/layout.less',
-        '/css/defaults/design.less',
-        '/css/defaults/sprite.less'
+    return [
+        { profile: design, local: '/css/defaults/elements.less' },
+        { profile: design, local: '/css/defaults/controls.less' },
+        { profile: design, local: '/css/defaults/controls.spinner.less' },
+        { profile: design, local: '/css/defaults/layout.less' },
+        { profile: design, local: '/css/defaults/design.less' },
+        { profile: design, local: '/css/defaults/sprite.less' }
     ];
-
-    for(var i = 0;i < sheets.length; i++){
-        sheets[i] = common.mapSharedTo(design, sheets[i]);
-    }
-
-    return sheets;
 }
 
 function getRaw(){
@@ -50,32 +43,32 @@ function getRaw(){
 
 function getVendorLibraries(){
     return [
-        '/css/vendor/markdown.editor.less',
-        '/css/vendor/prettify.less',
-        '/css/vendor/hint.less'
+        { profile: common.blog, local: '/css/vendor/markdown.editor.less' },
+        { profile: common.blog, local: '/css/vendor/prettify.less' },
+        { profile: common.profiles, local: '/css/vendor/hint.less' }
     ];
 }
 
 function getShared(){
     return [
-        '/css/views/shared/404.less',
+        { profile: common.blog, local: '/css/views/shared/404.less' },
         { profile: 'anon', local: '/css/views/shared/authentication.less' },
-        '/css/views/shared/upload.less',
-        '/css/views/shared/expand.less',
-        '/css/views/shared/table.pager.less'
+        { profile: common.blog, local: '/css/views/shared/upload.less' },
+        { profile: common.blog, local: '/css/views/shared/expand.less' },
+        { profile: common.blog, local: '/css/views/shared/table.pager.less' }
     ];
 }
 
 function getViews(){
     return [
-        '/css/views/user/profile.less',
-        { profile: registered, local: '/css/views/user/profile.edit.less' },
+        { profile: common.blog, local: '/css/views/user/profile.less' },
+        { profile: common.registered, local: '/css/views/user/profile.edit.less' },
         { profile: 'anon', local: '/css/views/user/_providers.less' },
         { profile: 'anon', local: '/css/views/user/authentication.less' },
 
-        '/css/views/blog/entries.less',
-        '/css/views/blog/comments.less',
-        { profile: registered, local: '/css/views/blog/comments.registered.less' },
+        { profile: common.blog, local: '/css/views/blog/entries.less' },
+        { profile: common.blog, local: '/css/views/blog/comments.less' },
+        { profile: common.registered, local: '/css/views/blog/comments.registered.less' },
 
         { profile: 'blogger', local: '/css/views/blogger/index.less' },
         { profile: 'blogger', local: '/css/views/blogger/blog.less' },
@@ -87,22 +80,14 @@ function getViews(){
 }
 
 function getCss(){
-    var raw = Array.prototype.concat.apply([], [
-            getBarebones(),
-            getCommonDesign(),
-            getRaw()
-        ]),
-        blog = Array.prototype.concat.apply([], [
-            getVendorLibraries(),
-            getShared(),
-            getViews()
-        ]);
-
-    for(var i = 0;i < blog.length; i++){
-        blog[i] = common.mapSharedToBlogOnly(blog[i]);
-    }
-
-    return raw.concat(blog);
+    return Array.prototype.concat.apply([], [
+        getBarebones(),
+        getCommonDesign(),
+        getRaw(),
+        getVendorLibraries(),
+        getShared(),
+        getViews()
+    ]);
 }
 
 module.exports = {
