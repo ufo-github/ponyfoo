@@ -1,4 +1,5 @@
 @import "../reusable/common.less";
+@import "../reusable/links.less";
 @import "../reusable/placeholders.less";
 
 body {
@@ -12,17 +13,7 @@ body {
 }
 
 .highlighted-link {
-  color: @pink;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.highlighted-link:hover {
-  text-decoration: underline;
-}
-
-.highlighted-link:visited {
-  color: @pink - #333;
+  .link();
 }
 
 .placeholders();
