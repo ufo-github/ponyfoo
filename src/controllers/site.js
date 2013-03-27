@@ -84,7 +84,6 @@ function appendBlogInfo(req){
 
 function findBlog(req,res){
     findBlogInternal(req,res,function(status){
-        console.log(status);
         switch(status){
             case 'dormant-redirect': // not 301 because the slug can be awaken
                 return res.redirect(config.server.host);
