@@ -23,7 +23,7 @@ section.fluid-center
 
   section.availability-checker
     section.availability-input
-      input.identifier(placeholder='Type your vanity title', maxlength='32')
+      input.identifier(placeholder='Type your vanity title', value=query.q, maxlength='32')
       span.availability
         span.loading-block
         span.loading-block
@@ -31,8 +31,8 @@ section.fluid-center
 
     span.legend
       span='e.g: '
-      strong='pfoo '
-      span.absolute='becomes ' + config.server.hostSlug('pfoo')
+      strong='nbrut '
+      span.absolute='becomes ' + config.server.hostSlug('nbrut')
 
   section.availability-checker-buttons
     button.proceed(title='Just one more step', disabled)

@@ -146,6 +146,7 @@ function renderView(req,res){
     }
 
     res.render(view, {
+        query: req.query, // query string parameters
         profile: profile,
         slug: req.slug,
         blog: req.blog,

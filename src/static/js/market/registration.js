@@ -11,11 +11,11 @@
 
     input.on('keydown', function(){
         setTimeout(evaluate, 0);
-    }).trigger('keydown');
+    });
 
-    function evaluate(){
+    function evaluate(timeout){
         var slug = input.val();
-        if (slug.length > 3 && query !== slug){
+        if (query !== slug){
             query = slug;
 
             if(key){
@@ -24,12 +24,24 @@
             if (xhr){
                 xhr.abort();
             }
-            key = setTimeout(request, 300);
+
+            if(slug.length){
+                if(timeout === true){
+                    key = setTimeout(request, 300);
+                }else{
+                    request();
+                }
+            }else{
+                buttonText.empty();
+                toggleEnabled(false);
+            }
         }
     }
 
     function request(){
         status.attr('class', statusCss); // default styles
+        status.addClass('loading');
+
         xhr = $.ajax({
             url: '/api/1.0/blog/market',
             type: 'POST',
@@ -44,22 +56,28 @@
             switch(data.status){
                 case 'forbidden':
                     status.addClass('market forbidden');
+                    buttonText.html('<b>{0}</b> is illegal.'.format(query));
                     break;
 
                 case 'taken':
                     status.addClass('market taken');
+                    buttonText.html('<b>{0}</b> is taken.'.format(query));
                     break;
 
                 case 'available':
                     status.addClass('market available');
+                    buttonText.html('<b>{0}</b> can be yours'.format(query));
                     break;
             }
 
-            button.prop('disabled', !available);
-            button.data('slug', available ? query : null);
-            buttonText.html(available ? '<b>{0}</b> can be yours!'.format(query) : '');
+            toggleEnabled(available);
         });
-
-        status.addClass('loading');
     }
+
+    function toggleEnabled(available){
+        button.prop('disabled', !available);
+        button.data('slug', available ? query : null);
+    }
+
+    evaluate(true);
 }(window, jQuery);

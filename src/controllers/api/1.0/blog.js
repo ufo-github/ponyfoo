@@ -145,7 +145,11 @@ function market(req,res,next){
         return forbidden(res);
     }
 
-    if(!/^[a-z0-9][a-z0-9\-]{2,}[a-z0-9]$/i.test(slug)){
+    if(slug === config.server.slugHome){
+        return forbidden(res);
+    }
+
+    if(!/^[a-z0-9][a-z0-9\-]{1,}[a-z0-9]$/i.test(slug)){
         return forbidden(res);
     }
 
