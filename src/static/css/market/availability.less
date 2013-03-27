@@ -73,9 +73,17 @@
 }
 
 .availability-checker .proceed[disabled] {
-  background-color: @blue;
+  background-color: @grayish_blue;
   color: @grayish;
   cursor: not-allowed;
+}
+
+.availability-checker .proceed i:after {
+  content: 'It\'s free!';
+}
+
+.availability-checker .proceed[disabled] i:after {
+  content: 'Pick a vanity title first';
 }
 
 .availability-checker .proceed span {
