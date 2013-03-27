@@ -7,7 +7,8 @@ var path = require('path'),
 function getMarket(){
     return [
         { profile: 'market', local: '/js/ext/jquery.layout.js' },
-        { profile: 'market', local: '/js/market/index.js' }
+        { profile: 'market', local: '/js/market/navigation.js' },
+        { profile: 'market', local: '/js/market/registration.js' }
     ];
 }
 

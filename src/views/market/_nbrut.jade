@@ -23,7 +23,7 @@ section.fluid-center
 
   section.availability-checker
     section.availability-input
-      input.identifier(placeholder='Type your vanity title')
+      input.identifier(placeholder='Type your vanity title', maxlength='32')
       span.availability
         span.loading-block
         span.loading-block
@@ -34,7 +34,7 @@ section.fluid-center
       strong='pfoo'
       span.absolute=' - ' + config.server.hostSlug('pfoo')
 
-    section.buttons
-      button.proceed(title='Just one more step', disabled)
-        span.proceed-text='Register'
-        i.proceed-tip
+  section.availability-checker-buttons
+    button.proceed(title='Just one more step', disabled)
+      span.proceed-text='Register'
+      i.proceed-tip

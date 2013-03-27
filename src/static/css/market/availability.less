@@ -1,8 +1,13 @@
 @import "../reusable/common.less";
 
 .availability-checker {
-  margin-top: 15px;
+  margin: 15px auto 0;
+}
+
+.availability-checker-buttons {
+  margin-top: 8px;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .availability-input {
@@ -49,12 +54,7 @@
   display: inline-block;
 }
 
-.availability-checker .buttons {
-  margin-top: 8px;
-  text-align: center;
-}
-
-.availability-checker .proceed {
+.availability-checker-buttons .proceed {
   text-align: left;
   border: none;
   background-color: darken(@blue, 40%);
@@ -66,33 +66,33 @@
   text-shadow: 1px 1px 1px darken(@blue, 30%);
 }
 
-.availability-checker .proceed:hover {
+.availability-checker-buttons .proceed:hover {
   background-color: darken(@blue, 20%);
   color: @blue_hover;
   .box-transition(background-color 0.2s ease-in-out);
 }
 
-.availability-checker .proceed[disabled] {
+.availability-checker-buttons .proceed[disabled] {
   background-color: @grayish_blue;
   color: @grayish;
   cursor: not-allowed;
 }
 
-.availability-checker .proceed .proceed-tip:after {
+.availability-checker-buttons .proceed .proceed-tip:after {
   content: 'It\'s free!';
 }
-.availability-checker .proceed[disabled] .proceed-tip:after {
+.availability-checker-buttons .proceed[disabled] .proceed-tip:after {
   content: 'Pick a vanity title first.';
 }
 
-.availability-checker .proceed .proceed-text:after           { content: ' now!'; }
-.availability-checker .proceed[disabled] .proceed-text:after { content: '...'; }
+.availability-checker-buttons .proceed           .proceed-text:after { content: ' now!'; }
+.availability-checker-buttons .proceed[disabled] .proceed-text:after { content: '...'; }
 
-.availability-checker .proceed span {
+.availability-checker-buttons .proceed span {
   font-size: 1.8em;
   font-weight: bold;
 }
 
-.availability-checker .proceed i {
+.availability-checker-buttons .proceed i {
   display: block;
 }
