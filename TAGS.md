@@ -13,7 +13,7 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - Added an [**ENV**](/ENV.md) document with a descriptive list of environment variables
 
 - **Blog Schema**
-  - Domain fragmentation, allowing users to take control of sub-domains, referred to as slugs
+  - Market, allowing users to take control of sub-domains, referred to as slugs
   - Posts and their comments can now only be accessed in the origin slug
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
   - Personalization. Now each blog has its own set of related metadata and social links
@@ -41,7 +41,6 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 
 - Analytics
   - Added support for [**Clicky**](http://clicky.com/ "Clicky Web Analytics") tracking code
-  - Added support for [**New Relic**](http://newrelic.com/ "New Relic Monitoring") monitoring
 
 
 
