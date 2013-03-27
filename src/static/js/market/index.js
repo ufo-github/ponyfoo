@@ -1,7 +1,8 @@
 !function(window, $, undefined) {
     'use strict';
 
-    var nav = $('#top-navigation'),
+    var doc = $(document),
+        nav = $('#top-navigation'),
         articles = $('.market-section'),
         first = articles.first(),
         last = articles.last(),
@@ -34,7 +35,7 @@
         next.toggleClass(disabled, me.is(last));
     }).trigger('scroll');
 
-    prev.on('click', function(){
+    prev.on('click', function(e){
         if(!prev.hasClass(disabled)){
             me.prev().scrollIntoView();
         }
@@ -44,5 +45,21 @@
         if(!next.hasClass(disabled)){
             me.next().scrollIntoView();
         }
+    });
+
+    function keydown(it, keyCodes){
+        return function(e){
+            if(keyCodes.indexOf(e.which) !== -1){
+                it.trigger('click');
+                return false;
+            }
+        };
+    }
+
+    doc.on('keydown', keydown(prev, [37,38]));
+    doc.on('keydown', keydown(next, [39,40]));
+
+    $('input').on('keydown', function(e){
+        e.stopPropagation();
     });
 }(window, jQuery);

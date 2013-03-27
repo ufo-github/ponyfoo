@@ -1,4 +1,5 @@
 @import "../defaults/common.less";
+@import "../reusable/lists.less";
 
 /* COMMON ELEMENTS
  *******************/
@@ -60,46 +61,8 @@
 /* ITEM LISTS
  **************/
 
-.markdown ul.item-list,
-.markdown ol.item-list {
-  margin: 20px 0;
-}
-
-.markdown ul.item-list li,
-.markdown ol.item-list li {
-  line-height: 1.6em;
-  list-style-position:inside;
-}
-
-.markdown ul.item-list li {
-  list-style-type: disc;
-  list-style-type: hiragana-iroha;
-}
-
-.markdown ol.item-list li {
-  list-style-type: decimal;
-}
-
-.markdown ul.item-list li:before,
-.markdown ol.item-list li:before {
-  content: '';
-  padding-right: 3px;
-}
-
-.markdown blockquote ul.item-list:only-child,
-.markdown blockquote ol.item-list:only-child {
-  margin: 0;
-}
-
-/* lists within lists */
-.markdown li > p {
-  display: inline-block;
-}
-
-.markdown li > ul.item-list,
-.markdown li > ol.item-list {
-  margin-top: 0;
-  margin-left: 20px;
+.markdown {
+  .item-list();
 }
 
 

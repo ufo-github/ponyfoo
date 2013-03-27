@@ -36,20 +36,6 @@
   font-size: 0.85em;
 }
 
-.footer-navigation a {
-  color: @pink;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.footer-navigation a:hover {
-  text-decoration: underline;
-}
-
-.footer-navigation a:visited {
-  color: @pink - #333;
-}
-
 .footer-navigation .version {
   font-style: italic;
   font-size: 0.75em;
@@ -62,13 +48,12 @@
 @media only screen and (min-width: 1024px) {
   .fixed-navigation {
     display: block;
-    position: fixed;
-    top: 200px;
-    left: 50px;
   }
 
 /* circles */
   .fixed-navigation a {
+    position: fixed;
+    left: 50px;
     display: block;
     padding: 10px;
     background-color: transparent;
@@ -85,10 +70,11 @@
 
   .fixed-navigation .prev {
     padding-left: 0;
+    top: 150px;
   }
   .fixed-navigation .next {
-    margin-top: 40px;
     padding-right: 0;
+    bottom: 150px;
   }
 
 /* arrows */

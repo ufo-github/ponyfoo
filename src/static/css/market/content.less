@@ -1,4 +1,5 @@
 @import "../defaults/common.less";
+@import "../reusable/lists.less";
 
 #top      { .market(@blue_hover,          @blue,        @blue_strong);      }
 #features { .market(@green_light + #111,  @green_light, @secondary_light);  }
@@ -31,4 +32,8 @@
 .market-section h2 {
   font-style: italic;
   font-size: 0.9em;
+}
+
+.market-section {
+  .item-list();
 }

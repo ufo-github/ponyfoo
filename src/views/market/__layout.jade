@@ -20,8 +20,20 @@ block body
     article#top.market-section(data-nav='.top')
       section.fluid-center
         header
-          h1='Pony Foo'
-          h2='What is it?'
+          h1='NBrut'
+          h2='What\'s waiting for me?'
+
+        section.left
+          a(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')
+            img.icon-128(src='/img/icon-128.png?v=1', alt='')
+
+        section.right
+          ul.item-list
+            li='A blogging platform targeted at software developers'
+            li
+              span='100% open-source, publicly available on '
+              a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='GitHub'
+            li='Bleeding edge. Developed entirely in NodeJS'
 
     article#features.market-section(data-nav='.features')
       section.fluid-center
@@ -29,11 +41,40 @@ block body
           h1='Features'
           h2='What\'s in it for me?'
 
+        section
+          ul
+            li.feature
+              span.market.quick
+              p='Quick start, ease of use'
+
+            li.feature
+              span.market.design
+              p='Responsive, sharp design'
+
+            li.feature
+              span.market.ajax
+              p='Single Page AJAX Application'
+
+            li.feature
+              span.market.md-editor
+              p='Markdown support for bloggers and commenters alike'
+
+            li.feature
+              span.market.meta
+              p='Metadata intensive'
+
+            li.feature
+              span.market.rest-api
+              p='REST API'
+
     article#hop.market-section(data-nav='.hop-in')
       section.fluid-center
         header
           h1='Hop in, then'
           h2='It\'s fast, easy, and free!'
+
+        section
+          input(placeholder='Type an identifier to check availability', value)
 
     article#about.market-section(data-nav='.about')
       section.fluid-center
@@ -48,23 +89,5 @@ block body
     a.next
       span
 
-  footer.footer-navigation
-    ul.fluid-center
-      li
-        a(href=config.server.defaultBlogUrl, target='_blank', title='Visit our blog, inception!')='news'
-      li
-        a(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='github'
-
-      if config.contact.twitter
-        li
-          a(href=config.contact.twitter, target='_blank', title='Follow us on twitter')='twitter'
-
-      if config.contact.email
-        li
-          a(href=config.contact.email, target='_blank', title='Contact us by email')='email'
-
-      if config.site.shareVersion
-        li
-          span.version=config.site.version
-
+  include _footer-navigation
   include _ribbon

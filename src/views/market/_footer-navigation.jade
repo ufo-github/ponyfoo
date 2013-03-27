@@ -1,0 +1,15 @@
+footer.footer-navigation
+  ul.fluid-center
+    li
+      a.highlighted-link(href=config.server.defaultBlogUrl, title='Visit our blog, inception!')='news'
+    li
+      a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='github'
+    if config.contact.twitter
+      li
+        a.highlighted-link(href=config.contact.twitter, target='_blank', title='Follow us on twitter')='twitter'
+    if config.contact.email
+      li
+        a.highlighted-link(href=config.contact.email, target='_blank', title='Contact us by email')='email'
+    if config.site.shareVersion
+      li
+        span.version=config.site.version

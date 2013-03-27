@@ -37,6 +37,7 @@ function getRaw(){
     return [
         { profile: design, local: '/css/vendor/markdown.less' },
         { profile: 'market', local: '/css/market/defaults.less' },
+        { profile: 'market', local: '/css/market/sprite.less' },
         { profile: 'market', local: '/css/market/controls.less' },
         { profile: 'market', local: '/css/market/layout.less' },
         { profile: 'market', local: '/css/market/navigation.less' },
