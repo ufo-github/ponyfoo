@@ -4,4 +4,4 @@ node_js:
   - 0.8
 
 script:
-  - grunt travis --verbose
+  - grunt travis --verbose --stack

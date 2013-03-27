@@ -52,7 +52,7 @@ function execute(opts, done){
         async.apply(listener.listen, server)
     ], function(){
         server.on('close', done);
-    });
+    });throw new Error('foo');
 }
 
 module.exports = {
