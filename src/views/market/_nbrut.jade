@@ -1,0 +1,23 @@
+section.fluid-center
+  header
+    h1='NBrut'
+    h2='What\'s waiting for me?'
+
+  section.left
+    a(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')
+      img.icon-256(src='/img/icon-256.png?v=1', alt='')
+
+  section.right
+    ul.item-list
+      li='A blogging platform targeted at software developers'
+      li
+        span='100% open-source, publicly available on '
+        a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='GitHub'
+
+      li='Simply, elegantly designed'
+      li='Bleeding edge. Developed entirely in NodeJS'
+      li='Convention over configuration'
+
+  section
+    input(placeholder='Type an identifier to check availability')
+    span='e.g: pfoo - ' + config.server.hostSlug('pfoo')

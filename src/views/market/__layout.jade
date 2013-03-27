@@ -7,80 +7,27 @@ block body
   header#top-navigation
     nav.fluid-center
       ul
-        li.top
+        li.top-link
           a(href='#top')='Home'
-        li.features
+        li.features-link
           a(href='#features')='Features'
-        li.hop-in
+        li.hop-in-link
           a(href='#hop')='Hop in!'
-        li.about
+        li.about-link
           a(href='#about')='About'
 
   main#content
-    article#top.market-section(data-nav='.top')
-      section.fluid-center
-        header
-          h1='NBrut'
-          h2='What\'s waiting for me?'
+    article#top.market-section.nbrut(data-nav='.top-link')
+      include _nbrut
 
-        section.left
-          a(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')
-            img.icon-128(src='/img/icon-128.png?v=1', alt='')
+    article#features.market-section.features(data-nav='.features-link')
+      include _features
 
-        section.right
-          ul.item-list
-            li='A blogging platform targeted at software developers'
-            li
-              span='100% open-source, publicly available on '
-              a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit NBrut on GitHub')='GitHub'
-            li='Bleeding edge. Developed entirely in NodeJS'
+    article#hop.market-section.hop-in(data-nav='.hop-in-link')
+      include _hop
 
-    article#features.market-section(data-nav='.features')
-      section.fluid-center
-        header
-          h1='Features'
-          h2='What\'s in it for me?'
-
-        section
-          ul
-            li.feature
-              span.market.quick
-              p='Quick start, ease of use'
-
-            li.feature
-              span.market.design
-              p='Responsive, sharp design'
-
-            li.feature
-              span.market.ajax
-              p='Single Page AJAX Application'
-
-            li.feature
-              span.market.md-editor
-              p='Markdown support for bloggers and commenters alike'
-
-            li.feature
-              span.market.meta
-              p='Metadata intensive'
-
-            li.feature
-              span.market.rest-api
-              p='REST API'
-
-    article#hop.market-section(data-nav='.hop-in')
-      section.fluid-center
-        header
-          h1='Hop in, then'
-          h2='It\'s fast, easy, and free!'
-
-        section
-          input(placeholder='Type an identifier to check availability', value)
-
-    article#about.market-section(data-nav='.about')
-      section.fluid-center
-        header
-          h1='About'
-          h2='Who\'s behind this?'
+    article#about.market-section.about(data-nav='.about-link')
+      include _about
 
   section.fixed-navigation
     a.prev

@@ -61,6 +61,7 @@ You shouldn't need to touch these, but you can, of course.
 
 - **SESSION_SECRET**: Your session storage secret key.
 
+- **SHOW_VERSION**: Whether to display the current version number on a few, discrete places.
 
 
 Analytics
@@ -73,4 +74,13 @@ These enable different analytics tools on your site.
 - **CLICKY_SITE_ID**: [**Clicky**](http://clicky.com/ "Clicky Web Analytics") service integration, set to the site ID they grant you.
 
 - **NEW_RELIC_LICENSE_KEY**: Your [**New Relic**](http://newrelic.com/ "New Relic Monitoring") license key, in case you're into monitoring your application.
-- **NEW_RELIC_NO_CONFIG_FILE**: Must be set to `'true'` so that the **New Relic** agent works properly with **NBrut**
+- **NEW_RELIC_NO_CONFIG_FILE**: Must be set to `'true'` so that the **New Relic** agent works properly with **NBrut**.
+
+
+Contact
+---------
+
+These are used in the market (**semantic root**) to display contact information
+
+- **CONTACT_EMAIL**: An email address you can be reached at.
+- **CONTACT_TWITTER**: A link to your twitter account.

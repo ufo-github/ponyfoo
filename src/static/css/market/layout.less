@@ -1,41 +1,15 @@
 ﻿@import "../reusable/common.less";
 
-#top-navigation {
-  display: block;
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-#top-navigation li {
-  display: inline-block;
-}
-
-#top-navigation li a {
-  display: block;
-  height: 30px;
-  padding: 8px;
-  text-decoration: none;
-  .box-sizing();
-}
-
+/* general layout */
 .market-section {
   min-height: 600px;
   padding-top: 35px;
 }
 
-.footer-navigation {
-  padding: 10px 0;
-  text-align: center;
-}
-
-.footer-navigation li {
+.market-section .left,
+.market-section .right {
   display: inline-block;
-}
-
-.footer-navigation li:not(:first-child):before {
-  content: '|';
-  padding: 0 10px;
+  vertical-align: top;
 }
 
 @media only screen and (min-width: 768px) {
@@ -44,15 +18,31 @@
     margin: 0 auto;
   }
 
-  #top-navigation li a {
-    height: 45px;
-    padding: 15px;
-  }
-
   .market-section {
     padding-top: 65px;
   }
 }
+
+/* specific concerns */
+
+.nbrut .right {
+  margin-top: 10px;
+}
+
+.nbrut .right li {
+  margin-top: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+  .nbrut .right {
+    margin-top: 50px; /* the large pony has a lot of unused pixels */
+  }
+
+  .nbrut .right ul.item-list li {
+    line-height: 2.1em;
+  }
+}
+
 
 .feature > p {
   display: inline-block;
