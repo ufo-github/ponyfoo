@@ -11,6 +11,7 @@ function getMarket(){
         { profile: 'market', local: '/js/market/index.js' }
     ];
 }
+
 function getVendorLibraries(){
     return [
         '/js/vendor/moment.min.js',

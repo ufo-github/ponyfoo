@@ -6,9 +6,14 @@ var config = require('../config.js'),
     user = require('../models/user.js'),
     rest = require('../services/rest.js'),
     $ = require('../services/$.js'),
-    pagedown = require('pagedown');
+    pagedown = require('pagedown'),
+    qs = require('querystring');
 
 function findBlogInternal(req,res,done){
+    if(req.slug && req.blogStatus){ // shortcut
+        return done(req.blogStatus);
+    }
+
     var slug = logic.getSlug(req);
 
     logic.getStatus(function(){
@@ -54,9 +59,6 @@ function lookupBlog(req,query,then){
                 return then('blog');
             });
         }else{ // allow the user to grab the blog
-            if (req.url !== '/'){
-                return then('available-redirect'); // not 301 because the slug can be claimed
-            }
             return then('available');
         }
     });
@@ -82,6 +84,7 @@ function appendBlogInfo(req){
 
 function findBlog(req,res){
     findBlogInternal(req,res,function(status){
+        console.log(status);
         switch(status){
             case 'dormant-redirect': // not 301 because the slug can be awaken
                 return res.redirect(config.server.host);
@@ -93,11 +96,9 @@ function findBlog(req,res){
             case 'market':
                 req.blog = 'market';
                 return renderView(req,res);
-            case 'available-redirect':
-                return res.redirect('/');
             case 'available':
-                req.blog = 'available';
-                return renderView(req,res);
+                var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
+                return res.redirect(config.server.host + query);
             case 'blog':
                 return renderView(req,res);
         }

@@ -7,6 +7,7 @@
         last = articles.last(),
         prev = $('.prev'),
         next = $('.next'),
+        disabled = 'disable-nav',
         me;
 
     nav.on('click', 'a', function(){
@@ -29,15 +30,19 @@
 
         nav.css('backgroundColor', color);
 
-        prev.toggleClass('hide-nav', me.is(first));
-        next.toggleClass('hide-nav', me.is(last));
+        prev.toggleClass(disabled, me.is(first));
+        next.toggleClass(disabled, me.is(last));
     }).trigger('scroll');
 
     prev.on('click', function(){
-        me.prev().scrollIntoView();
+        if(!prev.hasClass(disabled)){
+            me.prev().scrollIntoView();
+        }
     });
 
     next.on('click', function(){
-        me.next().scrollIntoView();
+        if(!next.hasClass(disabled)){
+            me.next().scrollIntoView();
+        }
     });
 }(window, jQuery);
