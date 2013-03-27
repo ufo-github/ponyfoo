@@ -1,5 +1,9 @@
 ﻿@import "../reusable/common.less";
-@import "../reusable/placeholders.less";
+@import "../reusable/elements.less";
+
+.basic-elements();
+
+
 
 /* HEADINGS
 ----------------------------------------------------------*/
@@ -57,35 +61,6 @@ pre {
     overflow: auto;
     padding: 5px;
     width: auto;
-}
-
-b, strong, .bold { font-weight: bold; }
-
-i, em, .italic { font-style: italic; }
-
-ins { text-decoration: none; }
-
-del { text-decoration: line-through; }
-
-img {
-  max-width: 100%;
-  border: none;
-}
-
-kbd {
-  padding: 0.1em 0.6em;
-  border: 1px solid #ccc;
-  font-size: 11px;
-  .ff-arial();
-  background-color: #f7f7f7;
-  color: #333;
-  .box-shadow-dual(0 1px 0 #bbb, 0 0 0 2px #fff inset);
-  .box-radius(3px);
-  display: inline-block;
-  margin: 0 0.1em;
-  text-shadow: 0 1px 0 #fff;
-  line-height: 1.4;
-  white-space: nowrap;
 }
 
 
@@ -146,10 +121,3 @@ th, td {
 tr {
   line-height: 1.3em;
 }
-
-
-
-/* PLACEHOLDERS
- **********************/
-
-.placeholders();

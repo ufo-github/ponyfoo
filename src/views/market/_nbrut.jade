@@ -18,6 +18,17 @@ section.fluid-center
       li='Bleeding edge. Developed entirely in NodeJS'
       li='Convention over configuration'
 
-  section
-    input(placeholder='Type an identifier to check availability')
-    span='e.g: pfoo - ' + config.server.hostSlug('pfoo')
+  section.availability-checker
+    section.availability-input
+      input.identifier(placeholder='Type your vanity title')
+      span.availability
+
+    span.legend
+      span='e.g: '
+      strong='pfoo'
+      span.absolute=' - ' + config.server.hostSlug('pfoo')
+
+    section.buttons
+      button.proceed(title='Just one more step')
+        span='Register now!'
+        i='It\'s free!'

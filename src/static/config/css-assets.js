@@ -42,6 +42,7 @@ function getRaw(){
         { profile: 'market', local: '/css/market/layout.less' },
         { profile: 'market', local: '/css/market/navigation-layout.less' },
         { profile: 'market', local: '/css/market/navigation.less' },
+        { profile: 'market', local: '/css/market/availability.less' },
         { profile: 'market', local: '/css/market/content.less' },
         { profile: 'dormant', local: '/css/dormant/index.less' }
     ];

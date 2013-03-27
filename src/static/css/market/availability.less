@@ -1,0 +1,88 @@
+@import "../reusable/common.less";
+
+.availability-checker {
+  margin-top: 15px;
+}
+
+.availability-input {
+  border: 4px solid @blue;
+  background-color: @blue_light;
+
+  .box-radius(6px);
+  .box-shadow(1px 1px 3px rgba(0,0,0,0.2));
+
+  position: relative;
+}
+
+.availability-checker .identifier {
+  background-color: transparent;
+  color: @blue_strong;
+  border: none;
+  font-size: 1.4em;
+  padding: 8px 48px 8px 8px; /* 48px to the right account for the icon */
+  width: 100%;
+  .box-sizing();
+}
+
+.availability-checker .availability {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+
+  background-color: transparent;
+  width: 32px;
+  height: 32px;
+  margin-left: 8px;
+  background-color: #fff;
+}
+
+.availability-checker .legend {
+  margin-top: 5px;
+  margin-left: 2px;
+  display: block;
+  font-size: 0.8em;
+  font-style: italic;
+  color: @blue_strong;
+}
+
+.availability-checker .legend .absolute {
+  display: inline-block;
+}
+
+.availability-checker .buttons {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.availability-checker .proceed {
+  text-align: left;
+  border: none;
+  background-color: darken(@blue, 40%);
+  padding: 12px 8px;
+  color: #fff;
+  cursor: pointer;
+  .box-radius(6px);
+  .box-shadow(1px 1px 3px rgba(0,0,0,0.2));
+  text-shadow: 1px 1px 1px darken(@blue, 30%);
+}
+
+.availability-checker .proceed:hover {
+  background-color: darken(@blue, 20%);
+  color: @blue_hover;
+  .box-transition(background-color 0.2s ease-in-out);
+}
+
+.availability-checker .proceed[disabled] {
+  background-color: @blue;
+  color: @grayish;
+  cursor: not-allowed;
+}
+
+.availability-checker .proceed span {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.availability-checker .proceed i {
+  display: block;
+}
