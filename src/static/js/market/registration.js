@@ -5,11 +5,13 @@
         input = section.find('.identifier'),
         status = section.find('.availability'),
         statusCss = status.attr('class'),
-        key, xhr, query;
+        key, xhr, query,
+        button = $('.proceed'),
+        buttonText = button.find('.proceed-tip');
 
     input.on('keydown', function(){
         setTimeout(evaluate, 0);
-    });
+    }).trigger('keydown');
 
     function evaluate(){
         var slug = input.val();
@@ -19,26 +21,43 @@
             if(key){
                 clearTimeout(key);
             }
+            if (xhr){
+                xhr.abort();
+            }
             key = setTimeout(request, 300);
         }
     }
 
     function request(){
-        if (xhr){
-            xhr.abort();
-        }
-        
         status.attr('class', statusCss); // default styles
         xhr = $.ajax({
-            method: 'POST',
-            url: '/api/1.0/blog/availability',
-            data: { slug: query }
+            url: '/api/1.0/blog/market',
+            type: 'POST',
+            data: JSON.stringify({ slug: query }),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
         }).always(function(){
             status.removeClass('loading');
-        }).done(function(){
-            status.addClass('market available');
-        }).fail(function(){
-            status.addClass('market forbidden');
+        }).done(function(data){
+            var available = data.status === 'available';
+
+            switch(data.status){
+                case 'forbidden':
+                    status.addClass('market forbidden');
+                    break;
+
+                case 'taken':
+                    status.addClass('market taken');
+                    break;
+
+                case 'available':
+                    status.addClass('market available');
+                    break;
+            }
+
+            button.prop('disabled', !available);
+            button.data('slug', available ? query : null);
+            buttonText.html(available ? '<b>{0}</b> can be yours!'.format(query) : '');
         });
 
         status.addClass('loading');

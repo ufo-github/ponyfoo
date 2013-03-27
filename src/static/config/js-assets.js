@@ -28,7 +28,7 @@ function getVendorLibraries(){
 
 function getExtensions(){
     return [
-        { profile: common.blog, local: '/js/ext/String.js' },
+        '/js/ext/String.js',
         { profile: common.blog, local: '/js/ext/prettify.js' },
         { profile: common.blog, local: '/js/ext/jquery.layout.js' },
         { profile: common.blog, local: '/js/ext/jquery.ui.js' }, // not the well known, huge, and hideous, jQuery UI. just a few extensions

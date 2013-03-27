@@ -54,6 +54,7 @@ function paged(api, path){
 }
 
 function routeBlog(api){
+    api.post('/blog/market', blog.market);
     api.post('/blog/claim', blog.claim);
     api.put('/blog', blogger, blog.update);
 }

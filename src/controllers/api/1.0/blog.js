@@ -129,7 +129,44 @@ function flashValidation(req,res,message){
     res.redirect('/');
 }
 
+function forbidden(res){
+    rest.end(res,{
+        status: 'forbidden'
+    });
+}
+
+function market(req,res,next){
+    if(req.blogStatus !== 'market'){
+        return next();
+    }
+
+    var slug = req.body.slug;
+    if(!slug || typeof slug !== 'string'){
+        return forbidden(res);
+    }
+
+    if(!/^[a-z0-9][a-z0-9\-]{2,}[a-z0-9]$/i.test(slug)){
+        return forbidden(res);
+    }
+
+    var slugTest = config.server.slugRegex;
+    if (slugTest !== undefined && !slugTest.test(slug)){
+        return forbidden(res);
+    }
+
+    blog.count({ slug: slug }, function(err,count){
+        if(err){
+            throw err;
+        }
+
+        rest.end(res,{
+            status: count === 0 ? 'available' : 'taken'
+        });
+    });
+}
+
 module.exports = {
     update: update,
-    claim: claimValidation
+    claim: claimValidation,
+    market: market
 };

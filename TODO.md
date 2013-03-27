@@ -12,6 +12,7 @@ TODO
   - available subdomains allow blog claiming
   - existing bloggers can't claim additional blog slugs
 
+- when coming from avail slug, set that on the vanity title input.
 - query the api for slug availability
 - turn register button on when available and off when not
 - step to register or login
