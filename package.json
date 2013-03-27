@@ -29,7 +29,6 @@
     "marked": "~0.2.8",
     "moment": "~1.7.2",
     "mongoose": "~3.5.3",
-    "newrelic": "~0.9.18-138",
     "pagedown": "~1.0.0",
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",

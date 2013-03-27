@@ -5,7 +5,6 @@ var config = require('./config.js'),
     middleware = require('./server/middleware.js'),
     async = require('async'),
     path = require('path'),
-    relic = require('./server/newrelic.js'),
     server = express();
 
 function configureServer(opts, done){
@@ -41,8 +40,6 @@ function configureRouter(opts, done){
 }
 
 function execute(opts, done){
-    relic.init();
-
     var db = require('./server/db.js'),
         listener = require('./server/listen.js');
 
@@ -52,7 +49,7 @@ function execute(opts, done){
         async.apply(listener.listen, server)
     ], function(){
         server.on('close', done);
-    });throw new Error('foo');
+    });
 }
 
 module.exports = {
