@@ -1,5 +1,6 @@
 @import "../reusable/common.less";
 @import "../reusable/lists.less";
+@import "../reusable/links.less";
 
 #top      { .market(@blue_hover,          @blue,        @blue_strong);      }
 #features { .market(@green_light + #111,  @green_light, @secondary_light);  }
@@ -7,6 +8,8 @@
 
 .market(@start,@end,@strong){
   .box-gradient(@start, @end);
+
+  color: darken(@strong, 15%);
 
   h1 { color: darken(@strong, 30%); }
   h2 { color: darken(@strong, 15%); }
@@ -30,9 +33,16 @@
 }
 
 .market-section h1 .tagline {
+  display: none;
   font-size: 0.35em;
   font-weight: normal;
   margin-left: 8px;
+}
+
+@media only screen and (min-width: 768px){
+  .market-section h1 .tagline {
+    display: inline;
+  }
 }
 
 .market-section h2 {
@@ -42,4 +52,8 @@
 
 .market-section {
   .item-list();
+}
+
+.markdown a {
+  .link();
 }

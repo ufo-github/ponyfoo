@@ -11,11 +11,15 @@
         disabled = 'disable-nav',
         me;
 
-    nav.on('click', 'a', function(){
+    function scrollNavigate(){
         var target = $(this).attr('href');
         $(target).scrollIntoView();
         return false;
-    });
+    }
+
+    nav.on('click.navigate', 'a', scrollNavigate);
+
+    $('a[href^=#]', articles).on('click', scrollNavigate);
 
     $(window).on('scroll.navigate', function(){
         var viewing = articles.filter(function(){
