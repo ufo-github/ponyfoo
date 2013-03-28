@@ -7,9 +7,14 @@ TODO
 - make zombie turn links to shared blog stuff to point to the main blog url:
   - e.g: /user/login -> http://blog.ponyfoo.com/user/login
 
-- existing bloggers can't claim additional blog slugs
-- step to register or login
-- Go.
+- blog claim path
+  - existing bloggers can't claim additional blog slugs
+  - step to register or login
+  - Go.
+
+- sitemap.xml for www (just the root for now)
+
+
 
 2
 -------
