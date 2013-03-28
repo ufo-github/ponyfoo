@@ -36,7 +36,7 @@ function build(feed, req, host, done){
         async.forEach(list.entries, function(entry,done){
             controller.getPlainTextBrief(entry, function(err,brief){
                 if(err){
-                    done(err);
+                    return done(err);
                 }
 
                 feed.item({

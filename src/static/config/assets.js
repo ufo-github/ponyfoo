@@ -19,6 +19,9 @@ var assets = {
     profiles: common.profiles
 };
 
+// absolute path used to load jQuery locally
+var jQueryAbsolute = path.join(config.statics.folder, '/js/vendor/jquery-' + assets.jQuery.version + '.min.js');
+
 module.exports = {
     grunt: {
         production: config.env.production,
@@ -33,5 +36,5 @@ module.exports = {
             }
         }
     },
-    jQuery: path.join(config.statics.folder, '/js/vendor/jquery-' + assets.jQuery.version + '.js')
+    jQuery: jQueryAbsolute
 };

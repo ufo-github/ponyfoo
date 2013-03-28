@@ -291,17 +291,18 @@ function getPlainTextBrief(entry, done) {
         html = converter.makeHtml(entry.brief);
 
     jsdom.env({
-        html: '<foo>' + html + '</foo>', // empty and HTML tags throw for some obscure reason.
-        scripts: [assets.jQuery.local],
+        html: '<foo>' + html + '</foo>', // empty and <HTML> tags throw, for some obscure reason.
+        scripts: [assets.jQuery],
         done: function(err,window){
             if(err){
-                done(err);
-                return;
+                return done(err);
             }
-            var $ = window.$,
-                plain = $(':root').text();
-
-            done(null,plain);
+            var $ = window.$, plain;
+            if (typeof $ !== 'function'){
+                return done('jQuery not a function');
+            }
+            plain = $(':root').text();
+            done(null, plain);
         }
     });
 }
