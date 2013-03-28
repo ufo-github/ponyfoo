@@ -11,15 +11,19 @@
         disabled = 'disable-nav',
         me;
 
-    function scrollNavigate(){
-        var target = $(this).attr('href');
+    function scrollNavigate(selector){
+        var target = $(selector).attr('href');
         $(target).scrollIntoView();
         return false;
     }
 
-    nav.on('click.navigate', 'a', scrollNavigate);
+    nav.on('click.navigate', 'a', function(){
+        scrollNavigate(this);
+    });
 
-    $('a[href^=#]', articles).on('click', scrollNavigate);
+    $('a[href^=#]', articles).on('click', function(){
+        scrollNavigate(this);
+    });
 
     $(window).on('scroll.navigate', function(){
         var viewing = articles.filter(function(){
