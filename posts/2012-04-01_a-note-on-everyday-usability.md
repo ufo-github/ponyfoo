@@ -32,5 +32,7 @@ Luckily, I brought with me a good book on usability design, [The Design of Every
 
 [![design-of-everyday-things.jpg][1]](http://www.amazon.com/dp/0465067107 "Look up The Design of Everyday Things on Amazon")
 
+Happy easter!
+
   [1]: http://i.imgur.com/7kwknYH.jpg
   [2]: http://i.imgur.com/e0sLaK7.png "Don't. Pretty is nice, but usable is better"
