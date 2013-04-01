@@ -10,6 +10,8 @@ A similar case might be made about the _in flight announcements_. Although I did
 
 In this particular situation, I learned that **consistency** is really important. Having a consistent UI design would've saved me the mental leap (albeit a small one).
 
+Transitioning back to the web. In my experience, given that I live in _Argentina_, [...]
+
 
 
 Luckily, I brought a good book on usability design for this trip, [The Design of Everyday Things](http://www.amazon.com/dp/0465067107 "Look up The Design of Everyday Things on Amazon"). I didn't read much of it yet, but I will surely expand on this topic once I get to the end of it.
