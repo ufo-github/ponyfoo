@@ -25,7 +25,7 @@
                 hooks = hooks.concat(events.global || []);
             }
 
-            args.unshift(context);
+            args.unshift(context); // TODO verify
 
             $.each(hooks, function(){
                 var hook = this;
