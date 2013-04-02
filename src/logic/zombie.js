@@ -188,7 +188,9 @@ function setup(server){
             zombie = /Zombie\.js/i.test(ua),
             crawlers = [
                 /Googlebot/i, // google
-                /facebookexternalhit/i // facebook
+                /facebookexternalhit/i, // facebook
+                /bingbot/i, // bing
+                /slurp/i // yahoo slurp
             ];
 
         if(zombie){ // prevent recursive non-sense
