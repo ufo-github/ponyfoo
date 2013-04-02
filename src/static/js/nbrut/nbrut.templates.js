@@ -259,7 +259,7 @@
             }
 
             function updateHistory(){
-                var info = getHistoryInfo(alias), 
+                var info = getHistoryInfo(), 
                     method;
 
                 if (activity.current && activity.current.key === template.key){ // template engine initialized
