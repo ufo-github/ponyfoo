@@ -4,9 +4,6 @@ TODO
 1
 -------
 
-- make zombie turn links to shared blog stuff to point to the main blog url:
-  - e.g: /user/login -> http://blog.ponyfoo.com/user/login
-
 - blog claim path
   - existing bloggers can't claim additional blog slugs
   - step to register or login
