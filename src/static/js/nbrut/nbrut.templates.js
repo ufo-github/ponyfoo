@@ -6,7 +6,7 @@
             stringKeys = {},
             regexKeys = [],
 			activity = {
-				history: []
+				log: []
 			},
             config = {
                 defaultTemplate: 'home',
@@ -18,8 +18,7 @@
                 prepare: function(next){
 					next();
 				},
-                afterActivate: $.noop,
-                selfCleanup: true
+                afterActivate: $.noop
             },
             titleSettings = {
                 tag: $('title'),
@@ -86,8 +85,8 @@
 		}
 
 		function back(){
-			var h = activity.history,
-				to = h[h.length-1];
+			var log = activity.log,
+				to = log[log.length-1];
 				
 			if(!to){
 				activate(config.defaultTemplate);
@@ -157,7 +156,7 @@
         }
 
         function getHash(){
-            return activity.history.length + (activity.current === undefined ? 0 : 1);
+            return activity.log.length + (activity.current === undefined ? 0 : 1);
         }
 
         function equalSettings(x){
@@ -188,7 +187,7 @@
             activate(undefined, undefined, 'replace');
         }
 
-        function activate(key, settings, soft) { // soft: don't push history state.
+        function activate(key, settings, soft) {
             var template = templates[key];
             if (template === undefined) {
                 template = templates['404']; // fall back to 404.
@@ -202,16 +201,6 @@
             settings.flash = container.data('flash');
             container.removeAttr('data-flash').removeData('flash');
 
-            if (activity.current !== undefined && activity.current.key === template.key){ // template engine initialized
-                if(equalSettings(settings)){ // compare template settings
-                    if(!template.selfCleanup){
-                        return;
-                    }
-                    if (soft !== 'replace'){
-                        soft = true; // don't push history state.
-                    }
-                }
-            }
             deactivateContainer(template); // clean-up.
             settings.identifier = getHash();
 
@@ -244,32 +233,9 @@
         }
 
         function activateTemplate(template, settings, viewModel, ctx, soft){
-            var alias = getTemplateAlias(template, settings), title, url, method, view;
-            if (alias !== undefined){
-                title = setTitle(alias.title, viewModel, settings.data);
-                url = alias.route.get(settings.data);
-            }else{ // template not found
-                title = setTitle(template.title, viewModel, settings.data);
-                url = ctx.prev; // preserve current url
-            }
+            var view;
 
-            if(soft !== true){
-                method = soft === 'replace' ? 'replaceState' : 'pushState';
-
-                history[method]({
-                    key: template.key,
-                    settings: settings
-                }, title, url);
-            }
-
-            if (activity.current !== undefined){
-                activity.history.push(activity.current);
-            }
-            activity.current = {
-                key: template.key,
-                settings: settings,
-                template: template
-            };
+            updateHistory();
 
             viewModel.flash = settings.flash  || {};
             plugins.raise(template, 'beforeActivate', settings);
@@ -277,6 +243,56 @@
             view = partial(template.key, viewModel);
             view.fill(config.container, settings.data || {}, ctx);
             plugins.raise(template, 'activated', config.container, viewModel, settings);
+
+            function getHistoryInfo(){
+                var alias = getTemplateAlias(template, settings);
+                if (alias === undefined){ // template not found
+                    return {
+                        title: setTitle(template.title, viewModel, settings.data),
+                        url: ctx.prev // preserve current url
+                    };
+                } 
+                return {
+                    title: setTitle(alias.title, viewModel, settings.data),
+                    url: alias.route.get(settings.data)
+                };
+            }
+
+            function updateHistory(){
+                var info = getHistoryInfo(alias), 
+                    method;
+
+                if (activity.current && activity.current.key === template.key){ // template engine initialized
+                    if(equalSettings(settings)){ // same template settings
+                        if (soft !== 'replace'){
+                            soft = true; // don't push history state.
+                        }
+                    }
+                }
+
+                if(soft !== true){
+                    if(soft === 'replace'){
+                        method = 'replaceState';
+                    }else{
+                        method = 'pushState';
+                        nbrut.analytics.historyChange(info);
+                    }
+
+                    window.history[method]({
+                        key: template.key,
+                        settings: settings
+                    }, info.title, info.url);
+                }
+
+                if (activity.current !== undefined){
+                    activity.log.push(activity.current);
+                }
+                activity.current = {
+                    key: template.key,
+                    settings: settings,
+                    template: template
+                };
+            }
         }
 
         function partial(key, viewModel){

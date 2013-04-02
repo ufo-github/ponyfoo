@@ -45,6 +45,7 @@ function getNBrut(){
         { profile: common.blog, local: '/js/nbrut/nbrut.ui.js' },
         { profile: common.blog, local: '/js/nbrut/nbrut.templates.js' },
         { profile: common.blog, local: '/js/nbrut/nbrut.thin.js' },
+        { profile: common.blog, local: '/js/nbrut/nbrut.analytics.js' },
         { profile: common.blog, local: '/js/nbrut/nbrut.init.js' },
 
         { profile: common.blog, local: '/js/vendor/Markdown.Editor.js' } // depends on NBrut

@@ -1,15 +1,15 @@
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '@config.tracking.analytics']);
-_gaq.push(['_trackPageview']);
 
-!function(document) {
+!function(document,nbrut) {
     'use strict';
 
-    var ga = document.createElement('script');
-    ga.type = 'text/javascript';
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	_gaq.push(['_setAccount', '@config.tracking.analytics']);
+	_gaq.push(['_trackPageview']);
 
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga, s);
-}(document);
+    var protocol = document.location.protocol === 'https:' ? 'https://ssl' : 'http://www';
+
+    nbrut.analytics.fetch(protocol + '.google-analytics.com/ga.js');
+    nbrut.analytics.onHistoryChange(function(data){
+		_gaq.push(['_trackPageview', data.url]);
+    });
+}(document,nbrut);

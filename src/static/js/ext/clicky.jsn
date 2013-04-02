@@ -1,14 +1,17 @@
-var clicky_site_ids = clicky_site_ids || [];
-clicky_site_ids.push(@config.tracking.clicky);
+var clicky_site_ids = clicky_site_ids || [],
+	clicky_custom = clicky_custom || {};
 
-!function(document) {
+!function(window,nbrut) {
     'use strict';
 
-    var clicky = document.createElement('script');
-    clicky.type = 'text/javascript';
-    clicky.async = true;
-    clicky.src = '//static.getclicky.com/js';
+	clicky_site_ids.push(@config.tracking.clicky);
+	clicky_custom.timer = 0; // non-sense
 
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(clicky, s);
-}(document);
+    nbrut.analytics.fetch('//static.getclicky.com/js');
+    nbrut.analytics.onHistoryChange(function(data){
+        var clicky = window.clicky;
+    	if (clicky){ // sanity
+			clicky.log(data.url);
+    	}
+    });
+}(window,nbrut);
