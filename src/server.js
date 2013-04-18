@@ -9,7 +9,7 @@ var config = require('./config.js'),
 
 function configureServer(opts, done){
     server.configure(function(){
-        opts.assetify.useBy(server, express);
+        opts.assetify.configure(server, express);
 
         if (config.env.development){
             server.use(express.logger({ format: 'dev' }));

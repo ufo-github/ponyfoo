@@ -5,7 +5,7 @@ var config = require('../config.js'),
 
 function listen(server, done){
     server.listen(port, function(){
-        console.log('Listening on port ' + port );
+        console.log('Listening on port %s, preferred tld "%s"', port, config.server.tld);
         process.nextTick(done);
     });
 }

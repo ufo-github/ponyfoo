@@ -58,7 +58,7 @@ module.exports = function(grunt) {
 
         server.execute({
             assetify: {
-                useBy: grunt.config('assetify:binder')
+                configure: grunt.config('assetify:binder')
             }
         }, done);
     });
