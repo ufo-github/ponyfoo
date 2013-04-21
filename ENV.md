@@ -1,7 +1,11 @@
 Environment Variables
 =====================
 
-A good place to configure Node.js environment variables is the JetBrains IDE for Node.js, [**WebStorm**](http://www.jetbrains.com/webstorm/). Note that most of these have default values, which might come either from Node.js or from the configuration file for **NBrut**
+If you are hosting your site using [**Heroku**](https://heroku.com "Heroku"), you should use [**Foreman**](https://devcenter.heroku.com/articles/config-vars#local-setup "Local Setup for Heroku sites") to configure these locally.
+
+A good alternative is the JetBrains IDE for Node.JS, [**WebStorm**](http://www.jetbrains.com/webstorm/ "WebStorm"). 
+
+Note that most of these have default values, which might come either from Node.js or from the configuration file for **NBrut**.
 
 Required
 --------

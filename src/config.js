@@ -18,7 +18,8 @@ var config = {
         favicon: '/favicon.ico'
     },
     server: {
-        tld: env.HOST_TLD || 'local-sandbox.com',
+        defaultTld: 'local-sandbox.com',
+        get tld(){ return env.HOST_TLD || this.defaultTld; },
         slugged: env.HOST_SLUG_ENABLED === 'true',
         slugHome: env.HOST_SLUG_DEFAULT || 'www',
         slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,

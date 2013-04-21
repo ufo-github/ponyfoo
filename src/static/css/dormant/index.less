@@ -5,12 +5,8 @@
   max-width: 700px;
 }
 
-.happy-talk img {
-  display: block;
-  margin: 20px auto;
-}
-
-.happy-talk a {
+.happy-talk a,
+.configuration a {
   .link();
 }
 
@@ -66,11 +62,48 @@
   color: #fff;
 }
 
-@media only screen and (min-width: 768px) {
-  .happy-talk img {
-    margin: 40px auto;
-  }
+.configuration section {
+  margin-top: 40px;
+  padding: 12px;
+  background-color: lighten(@grayish, 15%);
+  border: 1px solid @border;
+}
 
+.configuration header {
+  float: right;
+}
+
+.configuration h1:first-of-type {
+  float: left;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.configuration h1:first-of-type + * {
+  clear: both;
+}
+
+.configuration .visit-github {
+  font-size: 0.7em;
+}
+
+.configuration ul {
+  margin: 20px 0 10px;
+}
+
+.configuration li {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  margin-left: 20px;
+  list-style-type: disc;
+  line-height: 1.2em;
+}
+
+.configuration li ul {
+  margin-top: 0;
+}
+
+@media only screen and (min-width: 768px) {
   .setup .field {
     font-size: 2em;
     color: @blue;

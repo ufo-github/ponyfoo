@@ -39,3 +39,14 @@
     text-shadow: 0 1px rgb(0, 0, 0, .2);
   }
 }
+
+.clearfix(){
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}

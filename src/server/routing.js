@@ -26,7 +26,7 @@ function mapRouting(server, done){
         server.get('/css/*', staticNotFound);
 
         if(config.zombie.enabled){
-            server.get('/*', zombie.setup(server).serve); // crawler pass-through catch-all
+            server.get('/*', zombie.setup(server).proxy); // crawler pass-through catch-all
         }
 
         server.get('/*', site.get); // GET catch-all

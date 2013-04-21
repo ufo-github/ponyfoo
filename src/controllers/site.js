@@ -6,10 +6,10 @@ var config = require('../config.js'),
     user = require('../models/user.js'),
     rest = require('../services/rest.js'),
     $ = require('../services/$.js'),
-    pagedown = require('pagedown'),
-    qs = require('querystring');
+    qs = require('querystring'),
+    view = require('../logic/siteViews.js');
 
-function findBlogInternal(req,res,done){
+function findBlog(req,res,done){
     if(req.slug && req.blogStatus){ // shortcut
         return done(req.blogStatus);
     }
@@ -82,92 +82,37 @@ function appendBlogInfo(req){
     }
 }
 
-function findBlog(req,res){
-    findBlogInternal(req,res,function(status){
+function locateView(req,res){
+    findBlog(req,res,function(status){
         switch(status){
             case 'dormant-redirect': // not 301 because the slug can be awaken
                 return res.redirect(config.server.host);
-            case 'dormant':
-                req.blog = 'dormant';
-                return renderView(req,res);
             case 'slug-redirect': // this slug is forbidden, redirect to the default blog.
-                return res.redirect(config.server.host + req.url, config.server.permanentRedirect ? 301 : 302);
-            case 'market':
-                req.blog = 'market';
-                return renderView(req,res);
+                var statusCode = config.server.permanentRedirect ? 301 : 302;
+                return res.redirect(config.server.host + req.url, statusCode);
             case 'available':
                 var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
                 return res.redirect(config.server.host + query);
-            case 'blog':
-                return renderView(req,res);
+            default: // 'dormant', 'market', and 'blog'
+                req.blog = req.blog || status;
+                return view.render(req,res);
         }
-    });
-}
-
-function renderView(req,res){
-    var profile, view, locals,
-        connected = req.user !== undefined,
-        isBlogger = connected ? req.user.blogger : false;
-
-    if(typeof req.blog === 'string'){
-        profile = req.blog;
-        view = profile + '/__layout.jade';
-    }else{
-        if(!connected){
-            profile = 'anon';
-            locals = {
-                profile: 'anon',
-                connected: false
-            };
-        }else{
-            if(!isBlogger){
-                profile = 'registered';
-            }else{
-                profile = 'blogger';
-            }
-            locals = {
-                id: req.user._id,
-                profile: profile,
-                connected: true,
-                blogger: isBlogger
-            };
-
-            var description = req.blog.description || 'Welcome to my personal blog!',
-                html = (new pagedown.getSanitizingConverter()).makeHtml(description);
-
-            req.blog.descriptionHtml = html;
-        }
-        view = 'slug/__' + profile + '.jade';
-        locals.site = {
-            title: req.blog.title,
-            thumbnail: req.blog.thumbnail
-        };
-        res.locals.assetify.js.add('!function(a){a.locals=' + JSON.stringify(locals) + ';}(window);', 'before');
-    }
-
-    res.render(view, {
-        query: req.query, // query string parameters
-        profile: profile,
-        slug: req.slug,
-        blog: req.blog,
-        blogger: req.blogger
     });
 }
 
 function hostValidation(req,res,next){
     var val = config.server.hostRegex;
     if (val !== undefined && !val.test(req.host)){
-        res.redirect(config.server.host + req.url, 301);
-        return;
+        return res.redirect(config.server.host + req.url, 301);
     }
 
     // crucial: appends blog, blogStatus and blogger to the request.
-    findBlogInternal(req,res,function(){
+    findBlog(req,res,function(){
         next();
     });
 }
 
 module.exports = {
     hostValidation: hostValidation,
-    get: findBlog
+    get: locateView
 };

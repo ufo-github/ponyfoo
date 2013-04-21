@@ -204,13 +204,12 @@ function setup(server){
         });
     }
 
-    function serve(req,res,next){
+    function proxy(req,res,next){
         if(shouldIgnore(req)){ // sanity
-            next();
-            return;
+            return next();
         }
 
-        findOrRefresh({ slug : req.slug, url: req.url }, function(err, html){
+        findOrRefresh({ slug: req.slug, url: req.url }, function(err, html){
             if(err){
                 throw err;
             }
@@ -220,7 +219,7 @@ function setup(server){
     }
 
     return {
-        serve: serve
+        proxy: proxy
     };
 }
 
