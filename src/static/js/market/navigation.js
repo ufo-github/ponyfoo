@@ -31,16 +31,24 @@
                 var rect = this.getBoundingClientRect();
                 return rect.top >= 0 || rect.bottom >= 50;
             });
-        }), cssClass, color;
+        }), now, cssClass, color;
 
-        me = viewing.first();
-        cssClass = me.data('nav');
-        color = $(cssClass, nav).css('borderTopColor');
+        now = viewing.first();
 
-        nav.css('backgroundColor', color);
+        if (me !== now){ // prevent redundancy
+            me = now;
 
-        prev.toggleClass(disabled, me.is(first));
-        next.toggleClass(disabled, me.is(last));
+            cssClass = me.data('nav');
+            color = $(cssClass, nav).css('borderTopColor');
+
+            nav.css({
+                backgroundColor: color,
+                boxShadow: color + ' 0px 10px 50px'
+            });
+
+            prev.toggleClass(disabled, me.is(first));
+            next.toggleClass(disabled, me.is(last));
+        }
     }).trigger('scroll.navigate');
 
     prev.on('click.navigate', function(e){

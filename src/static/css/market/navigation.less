@@ -6,7 +6,7 @@
   color: #fff;
   .ff-console();
   .box-transition(background-color 0.2s ease-in-out);
-  .box-shadow(#fff 0px 0px 60px);
+  .box-shadow(@blue 0px 10px 50px);
 }
 
 #top-navigation li {
@@ -118,5 +118,21 @@
 @media only screen and (min-width: 1280px) {
   .fixed-navigation {
     left: 140px;
+  }
+}
+
+@media only screen and (max-height: 500px) {
+  .fixed-navigation .prev {
+    top: 90px;
+  }
+
+  .fixed-navigation .next {
+    bottom: 50px;
+  }
+}
+
+@media only screen and (max-height: 300px) {
+  .fixed-navigation {
+    display: none;
   }
 }
