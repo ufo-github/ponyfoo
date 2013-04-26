@@ -1,3 +1,5 @@
+'use strict';
+
 var pagedown = require('pagedown'),
     fs = require('fs'),
     path = require('path');
@@ -18,7 +20,7 @@ function getProfile(req){
 }
 
 function render(req,res){
-    var profile, view, viewModel, locals, json,
+    var view, viewModel, locals, json,
         connected = req.user !== undefined,
         profile = getProfile(req);
 
@@ -70,12 +72,12 @@ function prepare(req,res,viewModel,locals){
 
     function readMarkdown(file){
         var absolute = path.resolve(__dirname, file),
-            file = fs.readFileSync(absolute);
+            md = fs.readFileSync(absolute);
 
-        return pd.makeHtml(file.toString());
+        return pd.makeHtml(md.toString());
     }
 }
 
 module.exports = {
     render: render
-}
+};
