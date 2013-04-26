@@ -1,8 +1,8 @@
-.env
-.idea
 .DS_Store
-node_modules
-*.lnk
+.idea
+.env
 .bin
-*.sublime-*
 Thumbs.db
+*.sublime-*
+node_modules
+local
