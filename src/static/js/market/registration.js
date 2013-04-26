@@ -76,6 +76,7 @@
 
     function toggleEnabled(available){
         button.prop('disabled', !available);
+        button.prop('title', available ? 'Just one more step...' : 'Pick a vanity title first');
         button.data('slug', available ? query : null);
     }
 
