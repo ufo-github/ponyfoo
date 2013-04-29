@@ -1,1 +1,1 @@
-web: grunt web --stack
+web: grunt production --stack
