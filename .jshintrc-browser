@@ -8,7 +8,6 @@
   "boss": true,
   "eqnull": true,
   "strict": true,
-  "strict": true,
   "browser": true,
   "expr": true,
   "globals": {
