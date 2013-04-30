@@ -56,6 +56,7 @@ module.exports = function(grunt) {
                 'test/**/*.js'
             ],
             options: {
+                interrupt: true
             }
         }
     };
@@ -89,8 +90,4 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', ['watch', 'local']); // watch for changes and refresh
     grunt.registerTask('production', ['web']); // in production we just run the server task
-
-    grunt.event.on('watch', function(action, filepath) {
-        grunt.log.writeln(filepath + ' has ' + action);
-    });
 };
