@@ -1,1 +1,1 @@
-web: grunt production --stack
+web: grunt production --stack --no-color
