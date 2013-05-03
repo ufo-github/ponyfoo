@@ -100,25 +100,27 @@ function validateEntry(req,res,update){
             { field: 'text', length: 30, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article? Type at least 30 characters' },
             { field: 'text', length: { max: 30000 }, required: false, message: 'Your article\'s markdown can\'t exceed 30k characters in length' },
             { field: 'tags', validator: function(){
-                var self = this, failed;
+                var empty = 'Tag your article with at least one keyword',
+                    generic = 'Tags can only contain letters, numbers, or punctuation',
+                    tags = this, i = 0, len = tags.length, tag;
 
-                if(!Array.isArray(self) || self.length === 0){
-                    return 'Tag your article with at least one keyword';
-                }else if(self.length > 5){
+                if(!Array.isArray(tags) || tags.length === 0){
+                    return empty;
+                }else if(tags.length > 6){
                     return 'Six tags are enough. Pick the most relevant ones';
                 }
 
-                failed = self.some(function(tag, i){
-                    if(typeof tag === 'string'){
-                        self[i] = tag.replace(/ /g,'').toLowerCase();
-                        return !/^[a-z0-9._\-]+$/.test(self[i]);
+                for(; i < len; i++){
+                    if(typeof tags[i] === 'string'){
+                        tags[i] = tags[i].replace(/ /g,'').toLowerCase();
+                        if(tags[i].length === 0){
+                            return empty;
+                        }else if(!/^[a-z0-9._\-]+$/.test(tags[i])){
+                            return generic;
+                        }
                     }else{
-                        return true;
+                        return generic;
                     }
-                });
-
-                if(failed){
-                    return 'Tags can only contain letters, numbers, or punctuation';
                 }
             }}
         ]

@@ -23,7 +23,7 @@ function setup(server){
                 loading = container.is('.spinner-container');
 
             if(!loading && window.nbrut.thin.pending().length === 0){
-                window.$('script').remove(); // make it _really_ static
+                window.$('script').remove(); // make it _truly_ static
                 return true;
             }
             return false;

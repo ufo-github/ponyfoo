@@ -1,7 +1,6 @@
 {
   "curly": true,
   "eqeqeq": true,
-  "immed": true,
   "newcap": true,
   "noarg": true,
   "sub": true,
@@ -10,6 +9,7 @@
   "eqnull": true,
   "strict": true,
   "node": true,
+  "immed": true,
   "es5": true,
   "globals": {
     "jasmine": false,

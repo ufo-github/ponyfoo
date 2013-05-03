@@ -1,5 +1,7 @@
 'use strict';
 
+var config = require('./src/config.js');
+
 module.exports = function(grunt) {
     var opts = {
         clean: [
@@ -42,6 +44,20 @@ module.exports = function(grunt) {
         },
         assetify: {
             options: require('./src/static/config/assets.js').grunt
+        },
+        watch: {
+            tasks: ['local'],
+            files: [
+                'gruntfile.js',
+                'src/**/*.js',
+                'src/**/*.less',
+                'src/**/*.jade',
+                '!src/**/.bin',
+                'test/**/*.js'
+            ],
+            options: {
+                interrupt: true
+            }
         }
     };
 
@@ -49,6 +65,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-assetify');
 
@@ -63,13 +80,14 @@ module.exports = function(grunt) {
         }, done);
     });
 
-    grunt.registerTask('test', ['clean', 'jshint', 'jasmine_node']);
+    grunt.registerTask('test', ['clean', 'jshint', 'jasmine_node']); // cleanup and run tests
 
-    grunt.registerTask('default', ['test']);
-    grunt.registerTask('travis', ['test', 'assetify']); // test and compile assets on travis-ci
+    grunt.registerTask('default', ['test']); // by default just run the tests
+    grunt.registerTask('travis', ['test', 'assetify']); // just run tests and compile assets on travis-ci
 
-    grunt.registerTask('full', ['test', 'assetify', 'server']);
-    grunt.registerTask('web', ['clean', 'assetify', 'server']);
+    grunt.registerTask('local', ['test', 'assetify', 'server']); // run tests, compile, and listen
+    grunt.registerTask('web', ['clean', 'assetify', 'server']); // cleanup, compile, and listen
 
-    grunt.registerTask('production', ['web']);
+    grunt.registerTask('dev', ['watch', 'local']); // watch for changes and refresh
+    grunt.registerTask('production', ['web']); // in production we just run the server task
 };
