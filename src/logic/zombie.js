@@ -190,7 +190,8 @@ function setup(server){
                 /Googlebot/i, // google
                 /facebookexternalhit/i, // facebook
                 /bingbot/i, // bing
-                /slurp/i // yahoo slurp
+                /slurp/i, // yahoo slurp
+                /LinkedInBot/i // linkedin
             ];
 
         if(zombie){ // prevent recursive non-sense
