@@ -1,3 +1,5 @@
+# The Architecture of Productivity #
+
 It's been a while since I last blogged. I went on vacation, switched jobs, and have been generally busy. I'm now working _full-time remote_, which will _hopefully_ give me some more time to dedicate to this blog.
 
 A few days ago, I read an [interesting rant](https://plus.google.com/116904230181415286707/posts/DnAMAN5sUR8 "His original post"), written by [Ryan Dahl](https://github.com/ry "Ryan Dahl, father of Node.JS"), about software development. It prompted me to write this blog post about it, and share my thoughts on the matter. You can find his post at the end of this entry.
