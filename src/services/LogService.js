@@ -25,6 +25,11 @@ function write(level){
 	}
 
 	return  function(message, err, done) {
+		if (done === undefined){
+			done = err;
+			err = undefined;
+		}
+
 		var log = new Log({
 			level: level,
 			message: message,
