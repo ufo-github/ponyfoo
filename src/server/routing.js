@@ -1,7 +1,6 @@
 'use strict';
 
-var config = require('../config.js'),
-    path = require('path'),
+var path = require('path'),
     $ = require('../services/$.js'),
     zombie = require('../logic/zombie.js'),
     site = require('../controllers/site.js');
@@ -9,6 +8,11 @@ var config = require('../config.js'),
 function staticNotFound(req, res){
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end();
+}
+
+function errorHandler(err,req,res,next){
+    console.log(err.stack);
+    next();
 }
 
 function mapRouting(server, done){
@@ -25,11 +29,10 @@ function mapRouting(server, done){
         server.get('/js/*', staticNotFound);
         server.get('/css/*', staticNotFound);
 
-        if(config.zombie.enabled){
-            server.get('/*', zombie.setup(server).proxy); // crawler pass-through catch-all
-        }
+        server.get('/*', zombie.setup(server).proxy); // crawler pass-through catch-all
 
         server.get('/*', site.get); // GET catch-all
+        server.use(errorHandler);
         done();
     }
 }

@@ -16,6 +16,8 @@ TODO
 2
 -------
 
+- re-organize folder structure, config, controllers, models, etc.
+
 - introduce library such as underscore on the server-side
 
 - post about css for dummies

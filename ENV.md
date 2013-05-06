@@ -16,14 +16,23 @@ These are the environment variables that are an _absolute must_ for **NBrut** to
 
 
 
+General
+-------
+
+These are general purpose variables which are always useful to configure.
+
+- **LOG_LEVEL**: One of the following values: `['DEBUG','INFO','WARN','ERROR','FATAL']`. Determines the verbosity of the logging output.
+
+
+
 Hosting
 -------
 
 These variables are usually very important for **deployments**, but the default values are _Ok_ in the development environment.
 
 - **NODE_ENV**: Node.js environment, defaults to `'development'`, options include `'staging'` and `'production'`. By default, production environments minify and bundle assets, compress responses, while the development environment uses unminified sources and provides a few more features for debugging.
-- **HOST_TLD**: The `TLD` for the site, this is important when slugging, because every blog is hosted on a subdomain. Defaults to `'local-sandbox.com'`.
-- **HOST_SLUG_ENABLED**: Enables blog slugging. When disabled, users can't create their own blogs on the platform. Defaults to `false`.
+- **HOST_TLD**: The `TLD` for the site, this is important when slugging, because every blog is hosted on a subdomain. Defaults to `'local-nbrut.com'`.
+- **ENABLE_SLUGGING**: Enables blog slugging. When disabled, users can't create their own blogs on the platform. Defaults to `false`.
 - **HOST_MARKET**: The default `slug` for the site, that is, the **semantic root** of the site. Defaults to `'www'`.
 
 - **HOST_REGEX**: An optional regex to restrict the host. Useful when your site is accessible through multiple `TLD`s but you only want one to serve responses. When a request matches this regex, it gets permanently redirected to the same url on the default TLD.
@@ -32,9 +41,9 @@ These variables are usually very important for **deployments**, but the default 
 
 - **MONGO_URI** (or **MONGOLAB_URI**): The connection uri to your MongoDB server. Defaults to `'mongodb://localhost/nbrut'`.
 
-- **BLOG_DEFAULT**: The default blog slug. Defaults to `'blog'`. i.e: http://blog.local-sandbox.com`
+- **BLOG_DEFAULT**: The default blog slug. Defaults to `'blog'`. i.e: http://blog.local-nbrut.com`
 - **BLOG_REGEX**: An optional regex to restrict the subdomains that are available to users. Implicitly adds `'^'` and `'$'` to the regex. Requests that fail a test against this regex get permanently redirected to the default slug. By default it's unrestricted.
-- **BLOG_REGEX_301**: If `'true'`, permanently redirects requests to filtered blog slugs to the market home.
+- **ENABLE_BLOG_REGEX_301**: If `'true'`, permanently redirects requests to filtered blog slugs to the market home.
 
 API Credentials
 ---------------
@@ -59,13 +68,14 @@ Incidental
 
 You shouldn't need to touch these, but you can, of course.
 
-- **ZOMBIE_CRAWLER**: Whether or not to configure a headless browser to yield something other than a bunch of templates when a crawler hits the site. By default, this is set to true.
+- **ENABLE_ZOMBIE_CRAWLER**: Whether or not to configure a headless browser to yield something other than a bunch of templates when a crawler hits the site. By default, this is set to `true`.
 
 - **SALT_WORK_FACTOR**: Your choice of a salt work factor for [**bcrypt**](https://github.com/ncb000gt/node.bcrypt.js) encryption, shouldn't need to edit.
 
 - **SESSION_SECRET**: Your session storage secret key.
 
-- **SHOW_VERSION**: Whether to display the current version number on a few, discrete places.
+- **ENABLE_VERSION_DISPLAY**: Whether to display the current version number on a few, discrete places.
+
 
 
 Analytics

@@ -6,7 +6,7 @@ var path = require('path'),
 var config = {
     pkg: require('../package.json'),
     env: {
-        current: env.NODE_ENV || 'development',
+        current: env.NODE_ENV,
         get development(){ return this.current === 'development'; },
         get staging(){ return this.current === 'staging'; },
         get production(){ return this.current === 'production' || this.staging; }
@@ -18,39 +18,39 @@ var config = {
         favicon: '/favicon.ico'
     },
     server: {
-        defaultTld: 'local-sandbox.com',
-        get tld(){ return env.HOST_TLD || this.defaultTld; },
-        slugged: env.HOST_SLUG_ENABLED === 'true',
-        slugHome: env.HOST_SLUG_DEFAULT || 'www',
+        get tld(){ return env.HOST_TLD; },
+        slugged: env.ENABLE_SLUGGING,
+        slugHome: env.HOST_SLUG_DEFAULT,
         slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
         get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
-        get defaultBlog(){ return env.BLOG_DEFAULT || 'blog'; },
+        get defaultBlog(){ return env.BLOG_DEFAULT; },
         get defaultBlogUrl(){ return this.hostSlug(this.defaultBlog); },
-        listener: parseInt(env.PORT || 8081, 10),
-        get port(){ return parseInt(env.PUBLIC_PORT || this.listener, 10); },
+        listener: env.PORT,
+        get port(){ return env.PUBLIC_PORT || this.listener; },
         get portPart(){ return this.port === 80 ? '' : ':' + this.port; },
         hostSlug: function(slug){
             var vanity = slug ? (slug + '.') : '';
             return 'http://' + vanity + this.tld + this.portPart;
         },
-        permanentRedirect: env.BLOG_REGEX_301 === 'true'
+        permanentRedirect: env.ENABLE_BLOG_REGEX_301
     },
+    logging: { level: env.LOG_LEVEL },
     zombie: {
-        enabled: env.ZOMBIE_CRAWLER || true,
+        enabled: env.ENABLE_ZOMBIE_CRAWLER,
         cache: 60000 * 60 // an hour, in ms
     },
     db: { uri: env.MONGOLAB_URI || env.MONGO_URI || 'mongodb://localhost/nbrut' },
     security: {
-        saltWorkFactor: parseInt(env.SALT_WORK_FACTOR || 10, 10),
-        sessionSecret: env.SESSION_SECRET || 'local'
+        saltWorkFactor: env.SALT_WORK_FACTOR,
+        sessionSecret: env.SESSION_SECRET
     },
     tracking: {
         analytics: env.GA_CODE,
-        clicky: parseInt(env.CLICKY_SITE_ID || '', 10)
+        clicky: env.CLICKY_SITE_ID
     },
     get opensearch() {
-        return this._o = this._o || {
+        return {
             source: path.join(this.statics.folder, 'opensearch.xmln'),
             relative: '/opensearch.xml',
             template: '/search/{searchTerms}'
@@ -82,7 +82,7 @@ var config = {
         return {
             doctype: '<!DOCTYPE html>',
             thumbnail: this.server.host + '/img/thumbnail.png',
-            shareVersion: env.SHOW_VERSION === 'true',
+            displayVersion: env.ENABLE_VERSION_DISPLAY,
             version: 'v' + this.pkg.version,
             get versionString(){ return '<!-- engine: ' + this.version + ' -->'; }
         };

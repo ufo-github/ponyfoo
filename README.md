@@ -19,8 +19,8 @@ Setup and Installation
 To get up and running locally you will need to have installed [**Node.js**](http://nodejs.org/) and [**MongoDB**](http://www.mongodb.org/).
 
 - Configure MongoDB and then create a local database called `nbrut`. [You might **want to read this**](http://docs.mongodb.org/manual/tutorial/getting-started/ "Getting Started with MongoDB Development")
-- Configure `www.local-sandbox.com` as an alias of `127.0.0.1`. On windows it's very easy to do so, adding a line to this file: `%WINDIR%\System32\drivers\etc\hosts`
+- Configure `www.local-nbrut.com` as an alias of `127.0.0.1`. On windows it's very easy to do so, adding a line to this file: `%WINDIR%\System32\drivers\etc\hosts`
 
-After following those steps, the application should be accessible at `www.local-sandbox.com`. Now you can follow the installation instructions on the setup guide, available once you access the website.
+After following those steps, the application should be accessible at `www.local-nbrut.com`. Now you can follow the installation instructions on the setup guide, available once you access the website.
 
 An extensive list of [**Environment Variables**](/ENV.md) is available for you to look at, _but you don't need to set any of that to get up and running_.

@@ -8,6 +8,14 @@ var config = require('../config.js'),
     zombie = require('zombie');
 
 function setup(server){
+    if(config.zombie.enabled){
+        return {
+            proxy: function(req,res,next) {
+                next();
+            }
+        };
+    }
+
     var views = server.get('views'),
         bin = path.join(views, '/.bin'),
         indexpath = path.join(bin, 'static.idx'),
