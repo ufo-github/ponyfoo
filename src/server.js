@@ -52,10 +52,6 @@ function execute(opts, done){
     });
 }
 
-process.on('uncaughtException', function uncaughtHandler(err) {
-   console.log(err.stack);
-});
-
 module.exports = {
     execute: execute
 };

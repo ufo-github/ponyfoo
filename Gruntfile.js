@@ -46,7 +46,7 @@ module.exports = function(grunt) {
             options: require('./src/static/config/assets.js').grunt
         },
         watch: {
-            tasks: ['local'],
+            tasks: ['dev-server'],
             files: [
                 'gruntfile.js',
                 'src/**/*.js',
@@ -83,11 +83,11 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['clean', 'jshint', 'jasmine_node']); // cleanup and run tests
 
     grunt.registerTask('default', ['test']); // by default just run the tests
+
+    grunt.registerTask('dev-server', ['test', 'assetify', 'server']); // run tests, compile assets, and listen
+    grunt.registerTask('dev', ['watch', 'dev-server']); // watch for changes and refresh
+
     grunt.registerTask('travis', ['test', 'assetify']); // just run tests and compile assets on travis-ci
-
-    grunt.registerTask('local', ['test', 'assetify', 'server']); // run tests, compile, and listen
-    grunt.registerTask('web', ['clean', 'assetify', 'server']); // cleanup, compile, and listen
-
-    grunt.registerTask('dev', ['watch', 'local']); // watch for changes and refresh
-    grunt.registerTask('production', ['web']); // in production we just run the server task
+    
+    grunt.registerTask('production', ['clean', 'assetify', 'server']); // in production we cleanup, compile assets, and listen
 };

@@ -145,7 +145,7 @@ function market(req,res,next){
         return forbidden(res);
     }
 
-    if(slug === config.server.slugHome){
+    if(slug === config.server.slugMarket){
         return forbidden(res);
     }
 

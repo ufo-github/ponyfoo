@@ -9,19 +9,14 @@ TODO
   - step to register or login
   - Go.
 
-- sitemap.xml for www (just the root for now)
-
 
 
 2
 -------
 
-- re-organize folder structure, config, controllers, models, etc.
-
-- introduce library such as underscore on the server-side
-
-- post about css for dummies
-- post regarding css flips (And temporary highlighting, usage of localStorage, maybe separately)
+- re-organize
+  - folder structure, config, controllers, models, etc.
+  - pass exceptions around rather than throw in async execution models.
 
 
 

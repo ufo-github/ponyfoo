@@ -12,6 +12,10 @@ function getXml(blogs){
     ];
     var date = moment().format();
 
+    if(config.server.slugged){
+        blogs.unshift({ slug: config.server.slugMarket });
+    }
+    
     blogs.forEach(function(blog){
         xml.push('<sitemap><loc>');
         xml.push(config.server.hostSlug(blog.slug) + config.sitemap.relative);

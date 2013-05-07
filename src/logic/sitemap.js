@@ -38,7 +38,7 @@ function profiles(done){
 }
 
 function posts(req, done){
-    var result = [];
+    var result = [{ url: '/', changefreq: 'hourly', priority: 1 }];
 
     entry.find({ blog: req.blog._id }, 'date slug', function(err,documents){
         if(err){
@@ -58,16 +58,31 @@ function posts(req, done){
     });
 }
 
+function market(done){
+    process.nextTick(function(){
+        done(null, [
+            { url: '/', changefreq: 'hourly', priority: 1 }
+        ]);
+    });
+}
+
 function setup(req,done){
-    async.parallel([
-        statics,
-        profiles,
-        async.apply(posts,req)
-    ], merge(req,done));
+    var tasks;
+
+    if(req.blogStatus !== 'market'){
+        tasks = [
+            async.apply(posts, req),
+            statics,
+            profiles
+        ];
+    }else{
+        tasks = [market];
+    }
+    async.parallel(tasks, merge(req,done));
 }
 
 function merge(req,done){
-    var blog = req.blog;
+    var slug = req.slug;
 
     return function(err, results){
         if(err){
@@ -82,11 +97,11 @@ function merge(req,done){
         });
 
         var sitemap = factory.createSitemap({
-            hostname: config.server.hostSlug(blog.slug),
+            hostname: config.server.hostSlug(slug),
             urls: all
         });
         sitemap.toXML(function(xml) {
-            meta.writeToDisk(blog.slug, {
+            meta.writeToDisk(slug, {
                 config: config.sitemap,
                 data: xml,
                 done: done
@@ -98,6 +113,9 @@ function merge(req,done){
 module.exports = {
     get: meta.get({
         config: config.sitemap,
-        setup: setup
+        setup: setup,
+        requestFilter: function(){
+            return false;
+        }
     })
 };

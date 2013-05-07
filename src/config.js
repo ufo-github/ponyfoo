@@ -20,9 +20,9 @@ var config = {
     server: {
         get tld(){ return env.HOST_TLD; },
         slugged: env.ENABLE_SLUGGING,
-        slugHome: env.HOST_SLUG_DEFAULT,
+        slugMarket: env.HOST_MARKET,
         slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
-        get host(){ return this.hostSlug(this.slugged ? this.slugHome : null); },
+        get host(){ return this.hostSlug(this.slugged ? this.slugMarket : null); },
         hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         get defaultBlog(){ return env.BLOG_DEFAULT; },
         get defaultBlogUrl(){ return this.hostSlug(this.defaultBlog); },
@@ -67,7 +67,7 @@ var config = {
         cache: 60000 * 30, // half an hour, in ms
         relative: '/sitemap.xml',
         physical: function(slug){
-            return '/sitemaps/' + slug + '.xml';
+            return '/sitemaps/' + (slug || '__market') + '.xml';
         }
     },
     feed: {

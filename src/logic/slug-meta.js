@@ -19,6 +19,9 @@ function getLocations(slug, opts){
 }
 
 function filter(req, opts){
+    if(opts.requestFilter){
+        return opts.requestFilter(req, opts);
+    }
     if(opts.requireMarket === true){
         return req.blogStatus !== 'market';
     }

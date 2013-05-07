@@ -21,7 +21,7 @@ function findBlog(req,res,done){
             query = { slug: slug };
 
         if(logic.dormant){ // platform isn't configured at all
-            if (req.url !== '/' || (slug !== config.server.slugHome && config.server.slugged)){
+            if (req.url !== '/' || (slug !== config.server.slugMarket && config.server.slugged)){
                 return then('dormant-redirect');
             }
             return then('dormant');
@@ -29,9 +29,9 @@ function findBlog(req,res,done){
 
         if(!config.server.slugged){
             delete query.slug;
-        }else if(slug === config.server.slugHome){
+        }else if(slug === config.server.slugMarket){
             return then('market');
-        }else if(slugTest !== undefined && !slugTest.test(slug) && slug !== config.server.slugHome){
+        }else if(slugTest !== undefined && !slugTest.test(slug) && slug !== config.server.slugMarket){
             return then('slug-redirect');
         }
 

@@ -10,11 +10,6 @@ function staticNotFound(req, res){
     res.end();
 }
 
-function errorHandler(err,req,res,next){
-    console.log(err.stack);
-    next();
-}
-
 function mapRouting(server, done){
     $.findModules({ folder: path.join(__dirname, '/routing') }, configure);
 
@@ -32,7 +27,6 @@ function mapRouting(server, done){
         server.get('/*', zombie.setup(server).proxy); // crawler pass-through catch-all
 
         server.get('/*', site.get); // GET catch-all
-        server.use(errorHandler);
         done();
     }
 }
