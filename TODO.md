@@ -9,6 +9,8 @@ TODO
   - step to register or login
   - Go.
 
+- un-mess login redirects
+
 
 
 2
@@ -18,6 +20,8 @@ TODO
   - folder structure, config, controllers, models, etc.
   - pass exceptions around rather than throw in async execution models.
 
+- save drafts
+- redesign commenting infrastructure
 
 
 3
