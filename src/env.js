@@ -1,5 +1,8 @@
 'use strict';
 
+var fs = require('fs'),
+	path = require('path');
+
 function read(dotfile){
 	var hash = {};
 
@@ -43,20 +46,25 @@ function asBoolean(name, s){
 	return s;
 }
 
-var fs = require('fs'),
-	path = require('path'),
-	defaults = path.resolve(__dirname, '../.env.defaults'),
-	local = path.resolve(__dirname, '../.env'),
-	options = [
-		read(defaults),
-		read(local),
-		process.env
-	];
+function parse(){
+	var defaults = path.resolve(__dirname, '../.env.defaults'),
+		local = path.resolve(__dirname, '../.env'),
+		env = {},
+		options = [
+			read(defaults),
+			read(local),
+			process.env
+		];
 
-module.exports = {};
+	for(;options.length > 0;){
+		overwrite(env, options.shift());
+	}
 
-for(;options.length > 0;){
-	overwrite(module.exports, options.shift());
+	console.log('Environment configured as: ' + env.NODE_ENV);
+
+	return env;
 }
 
-console.log('Environment configured as: ' + module.exports.NODE_ENV);
+module.exports = {
+	parse: parse
+};

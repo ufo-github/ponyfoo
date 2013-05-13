@@ -1,7 +1,7 @@
 'use strict';
 
 var path = require('path'),
-    env = require('./env.js');
+    env = require('./env.js').parse();
 
 var config = {
     pkg: require('../package.json'),
