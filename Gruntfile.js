@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-assetify');
 
-    grunt.registerTask('server', function(){
+    grunt.registerTask('server', 'Start the web server', function(){
         var done = this.async(),
             server = require('./src/server.js');
 

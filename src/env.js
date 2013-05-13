@@ -58,3 +58,5 @@ module.exports = {};
 for(;options.length > 0;){
 	overwrite(module.exports, options.shift());
 }
+
+console.log('Environment configured as: ' + module.exports.NODE_ENV);
