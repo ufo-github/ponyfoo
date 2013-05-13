@@ -33,6 +33,7 @@ var config = {
             var vanity = slug ? (slug + '.') : '';
             return 'http://' + vanity + this.tld + this.portPart;
         },
+        get landingSlug(){ return this.slugged ? this.slugMarket : this.defaultBlog; },
         permanentRedirect: env.ENABLE_BLOG_REGEX_301
     },
     logging: { level: env.LOG_LEVEL },

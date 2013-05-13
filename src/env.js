@@ -23,11 +23,11 @@ function read(dotfile){
 
 function overwrite(current, next){
 	for(var key in next){
-		current[key] = parse(key, next[key]);
+		current[key] = parseline(key, next[key]);
 	}
 }
 
-function parse(key, value){
+function parseline(key, value){
 	return asBoolean(key, asInteger(value));
 }
 
@@ -46,7 +46,7 @@ function asBoolean(name, s){
 	return s;
 }
 
-function parse(){
+function parsefiles(){
 	var defaults = path.resolve(__dirname, '../.env.defaults'),
 		local = path.resolve(__dirname, '../.env'),
 		env = {},
@@ -66,5 +66,5 @@ function parse(){
 }
 
 module.exports = {
-	parse: parse
+	parse: parsefiles
 };

@@ -36,7 +36,7 @@ function findBlog(req,res,done){
         }
 
         // the website is live and the blog might be user-defined (or available)
-        return lookupBlog(req,query,then);
+        lookupBlog(req,query,then);
     });
 
     function then(status){

@@ -48,7 +48,9 @@ module.exports = function(grunt) {
         watch: {
             tasks: ['dev-server'],
             files: [
-                'gruntfile.js',
+                '.env',
+                '.env.defaults',
+                'Gruntfile.js',
                 'src/**/*.js',
                 'src/**/*.less',
                 'src/**/*.jade',
