@@ -38,7 +38,7 @@ function vhosted(hostname, vhost){
 }
 
 function execute(opts, done){
-    var db = require('./server/db.js');
+    var db = require('./common/db.js');
 
     db.connect(function(){
         var market = config.server.slugged ? config.server.slugMarket : false;

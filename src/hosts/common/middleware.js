@@ -1,15 +1,12 @@
 'use strict';
 
 var config = require('../config.js'),
-    path = require('path'),
-    views = path.join(__dirname, '../views'),
     express = require('express'),
     sessionStore = require("connect-mongoose")(express),
     flash = require('./flash.js'),
     passport = require('passport');
 
 function configure(server){
-    server.set('views', views);
     server.locals.settings['x-powered-by'] = false;
     server.locals.config = config;
 
