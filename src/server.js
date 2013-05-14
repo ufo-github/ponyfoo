@@ -2,7 +2,8 @@
 
 var config = require('./config.js'),
     express = require('express'),
-    server = express();
+    server = express(),
+    port = config.server.listener;
 
 function vhosted(hostname, vhost){
     var pattern = hostname + '.' + config.server.tld,
@@ -45,6 +46,7 @@ function execute(opts, done){
             server.use(vhosted(market, require('./hosts/market/vhost.js')));
         }
 
+        // TODO: pass middleware to each vhost, so they can stop themselves at any point.
         // TODO: install vhost should be disabled after configuration.
         server.use(vhosted('*', require('./hosts/install/vhost.js')));
         server.use(vhosted('*', require('./hosts/blog/vhost.js')));
