@@ -1,7 +1,8 @@
-var express = require('express'),
+var config = require('../config.js'),
+	express = require('express'),
 	server = express(),
 	vhosting = require('../common/vhosting.js'),
-	vhost = vhosting('*', server),
+	vhost = vhosting(config.server.slugMarket, server),
 	path = require('path'),
 	views = path.join(__dirname, '/views');
 
