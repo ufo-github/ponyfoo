@@ -4,6 +4,12 @@ TODO
 1
 -------
 
+- gruntfile, assetify, support multiple vhosts, using same middleware everywhere just works?
+  - do some more permanent change?
+
+- zombie, opensearch, sitemap, move to a more global level.
+- route for those on the global routing as well, but allow config on a per server basis.
+
 - blog claim path
   - existing bloggers can't claim additional blog slugs
   - step to register or login
