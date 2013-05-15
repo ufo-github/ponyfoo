@@ -4,6 +4,7 @@ var path = require('path'),
     env = require('./env.js').parse();
 
 var config = {
+    cwd: process.cwd,
     pkg: require('../package.json'),
     env: {
         current: env.NODE_ENV,
@@ -137,5 +138,9 @@ var config = {
         email: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : undefined
     }
 };
+
+
+        console.log('config.js');
+        console.log(process.cwd);
 
 module.exports = config;

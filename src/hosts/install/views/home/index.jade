@@ -1,4 +1,4 @@
-extends ../layouts/minimal
+extends /src/frontend/layout/minimal
 
 block title
   title='NBrut Installation'
@@ -17,7 +17,7 @@ block body
         li= flash.validation
 
     section.setup
-      form(method='post', action='/api/1.0/blog/claim')
+      form(method='post', action='/api/1.0/install')
         fieldset
           p
             label(for='email')='Email Address'

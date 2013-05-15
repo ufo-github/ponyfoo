@@ -13,7 +13,8 @@ function configure(server){
     server.get('/js/*', staticNotFound);
     server.get('/css/*', staticNotFound);
 
-    server.get('/*', zombie.setup(server).proxy); // crawler pass-through catch-all
+    // TODO move to blog, the rest aren't ajax, won't need crawler fancy stuff
+    server.get('/*', zombie.setup(server).proxy); // crawler interceptor
 
     // TODO sitemaps rss opensearch
 }

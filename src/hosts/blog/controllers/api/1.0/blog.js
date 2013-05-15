@@ -75,19 +75,17 @@ function isValid(req,res,isAwakening){
 function awaken(req,res){
     var email = req.body['user.email'],
         password = req.body['user.password'],
-        title = req.body['blog.title'],
-        document;
+        title = req.body['blog.title'];
 
     if(!isValid(req,res,true)){
         return;
     }
 
-    document = new user({
+    new user({
         email: email,
         displayName: email.split('@')[0],
         password: password
-    });
-    document.save(function then(err,user){
+    }).save(function then(err,user){
         if(err){
             throw err;
         }
