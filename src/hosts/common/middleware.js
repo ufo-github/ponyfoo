@@ -2,7 +2,7 @@
 
 var config = require('../config.js'),
     express = require('express'),
-    sessionStore = require("connect-mongoose")(express),
+    sessionStore = require('connect-mongoose')(express),
     flash = require('./flash.js'),
     passport = require('passport');
 

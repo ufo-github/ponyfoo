@@ -1,10 +1,4 @@
-var express = require('express'),
-	server = express(),
-	vhosting = require('../common/vhosting.js'),
-	vhost = vhosting('*', server),
-	path = require('path'),
-	views = path.join(__dirname, '/views');
+var vserver = require('../common/vserver.js'),
+    server = vserver('*', __dirname);
 
-vhost.configure(views);
-
-module.exports = vhost; // export the middleware
+module.exports = server; // export the middleware
