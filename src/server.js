@@ -23,7 +23,7 @@ function execute(opts, done){
             }
             server.use(require('./hosts/blog/vhost.js'));
             server.listen(port, function(){
-                console.log('Web server listening on *.%s:%s', port, config.server.tld);
+                console.log('Web server listening on *.%s:%s', config.server.tld, port);
 
                 server.on('close', done);
             });

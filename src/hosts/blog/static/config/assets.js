@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('./../../config.js'),
+var config = require('../../config.js'),
     common = require('./common.js'),
     css = require('./css-assets.js'),
     js = require('./js-assets.js'),

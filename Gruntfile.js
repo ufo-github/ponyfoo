@@ -5,8 +5,7 @@ var config = require('./src/config.js');
 module.exports = function(grunt) {
     var opts = {
         clean: [
-            './src/static/.bin',
-            './src/views/.bin'
+            './**/.bin'
         ],
         jshint: {
             node: {
@@ -43,7 +42,9 @@ module.exports = function(grunt) {
             projectRoot: './test/spec'
         },
         assetify: {
-            options: require('./src/static/config/assets.js').grunt
+            install: require('./src/hosts/install/assets.js'),
+            // market: require('./src/hosts/market/assets.js'),
+            // blog: require('./src/hosts/blog/assets.js')
         },
         watch: {
             tasks: ['dev-server'],

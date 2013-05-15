@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../config.js'),
+var config = require('../../config.js'),
     express = require('express'),
     sessionStore = require('connect-mongoose')(express),
     flash = require('./flash.js'),

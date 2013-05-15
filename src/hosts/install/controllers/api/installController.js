@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../config.js'),
+var config = require('../../../config.js'),
     platformService = require('../service/platformService.js'),
     blogService = require('../service/blogService.js'),
     userService = require('../service/userService.js');

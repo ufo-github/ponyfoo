@@ -3,7 +3,7 @@
 var express = require('express'),
     path = require('path'),
     middleware = require('./middleware.js'),
-    config = require('../config.js'),
+    config = require('../../config.js'),
     dev = config.env.development;
 
 function virtualServer(hostname, root){

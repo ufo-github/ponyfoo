@@ -4,7 +4,7 @@ var path = require('path'),
     env = require('./env.js').parse();
 
 var config = {
-    cwd: process.cwd,
+    cwd: process.cwd(),
     pkg: require('../package.json'),
     env: {
         current: env.NODE_ENV,
@@ -13,9 +13,9 @@ var config = {
         get production(){ return this.current === 'production' || this.staging; }
     },
     statics: {
-        folder: path.join(__dirname, '/static'),
-        bin: path.join(__dirname, '/static/.bin'),
-        faviconSource: '/img/favicon.ico',
+        folder: function(base){ return path.join(base, '/static'); },
+        bin: function(base){ return path.join(base, '/static/.bin'); },
+        faviconSource: path.join(__dirname, '/frontend/img/favicon.ico'),
         favicon: '/favicon.ico'
     },
     server: {
@@ -138,9 +138,5 @@ var config = {
         email: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : undefined
     }
 };
-
-
-        console.log('config.js');
-        console.log(process.cwd);
 
 module.exports = config;
