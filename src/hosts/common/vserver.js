@@ -7,21 +7,27 @@ var express = require('express'),
     dev = config.env.development;
 
 function virtualServer(hostname, root){
-    var pattern = hostname + '.' + config.server.tld,
-        sanitized = pattern.replace(/\./g, '\\.').replace(/[*]/g, '(.*?)'),
+    var pattern, sanitized, rhost;
+
+    if(hostname !== '*'){ // '*' means any subdomain, even the bare tld.
+        pattern = hostname + '.' + config.server.tld;
+        sanitized = pattern.replace(/\./g, '\\.').replace(/[*]/g, '(.*?)');
         rhost = new RegExp('^' + sanitized + '$', 'i');
+    }
 
     var vserver = function(req, res, next){
         if (vserver.enabled === false){
             return next();
         }
 
-        if(!req.headers.host){
-            return next();
-        }
-        var host = req.headers.host.split(':')[0];
-        if(!rhost.test(host)){
-            return next();
+        if(typeof rhost === 'object'){
+            if(!req.headers.host){
+                return next();
+            }
+            var host = req.headers.host.split(':')[0];
+            if(!rhost.test(host)){
+                return next();
+            }
         }
 
         if (typeof vserver.express === 'function'){

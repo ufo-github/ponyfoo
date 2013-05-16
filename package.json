@@ -8,6 +8,13 @@
     "url": "http://www.ponyfoo.com"
   },
   "version": "0.3.0-tip",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bevacqua/NBrut.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bevacqua/NBrut/issues"
+  },
   "dependencies": {
     "async": "~0.1.22",
     "bcrypt": "~0.7.3",
@@ -42,10 +49,10 @@
     "zombie": "~1.4.1"
   },
   "devDependencies": {
-    "grunt-contrib-watch": "~0.3.1"
+    "grunt-contrib-watch": "~0.4.3"
   },
   "engines": {
-    "node": "0.8.x",
+    "node": "0.8.16",
     "npm": "1.2.x"
   }
 }
