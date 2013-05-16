@@ -41,7 +41,7 @@ module.exports = function(grunt) {
         },
         assetify: {
             install: require('./src/hosts/install/assets.js'),
-            // market: require('./src/hosts/market/assets.js'),
+            market: require('./src/hosts/market/assets.js')
             // blog: require('./src/hosts/blog/assets.js')
         },
         watch: {
