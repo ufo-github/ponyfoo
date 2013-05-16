@@ -1,10 +1,17 @@
 'use strict';
 
-module.exports = {
-    using: function(opts){
-        var vserver = require('../common/vserver.js'),
-            server = vserver('*', __dirname);
+var express = require('express');
 
-        return server; // expose the middleware
+module.exports = {
+    using: function(vars){
+        var factory = require('../common/vserver.js'),
+            vserver = factory('*', __dirname),
+            routing = require('./routing.js');
+
+        vars.assetifySetup(vserver.express, express);
+        vserver.setup();
+        routing.setup(vserver.express);
+
+        return vserver; // expose the middleware
     }
 };

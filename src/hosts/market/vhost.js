@@ -3,14 +3,15 @@
 var express = require('express');
 
 module.exports = {
-    using: function(opts){
-        var vserver = require('../common/vserver.js'),
-            server = vserver('www', __dirname),
+    using: function(vars){
+        var factory = require('../common/vserver.js'),
+            vserver = factory('www', __dirname),
             routing = require('./routing.js');
 
-        opts.assetify.configure(server, express);
-        routing.setup(server.express);
+        vars.assetifySetup(vserver.express, express);
+        vserver.setup();
+        routing.setup(vserver.express);
 
-        return server; // expose the middleware
+        return vserver; // expose the middleware
     }
 };

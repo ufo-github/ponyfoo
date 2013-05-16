@@ -16,7 +16,7 @@ var config = {
     statics: {
         folder: function(base){ return path.join(base, '/static'); },
         bin: function(base){ return path.join(base, '/static/.bin'); },
-        faviconSource: path.join(__dirname, '/frontend/img/favicon.ico'),
+        faviconSource: path.resolve(__dirname, '../frontend/img/favicon.ico'),
         favicon: '/favicon.ico'
     },
     server: {

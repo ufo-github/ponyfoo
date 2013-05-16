@@ -71,14 +71,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-assetify');
 
     grunt.registerTask('server', 'Start the web server', function(){
+        grunt.task.requires('assetify');
+        
         var done = this.async(),
-            server = require('./src/server.js');
+            server = require('./src/server.js'),
+            binders = grunt.config('assetify:binders');
 
-        server.execute({
-            assetify: {
-                configure: grunt.config('assetify:binder')
-            }
-        }, done);
+        server.execute(binders, done);
     });
 
     grunt.registerTask('test', ['clean', 'jshint', 'jasmine_node']); // cleanup and run tests

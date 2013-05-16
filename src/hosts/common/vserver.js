@@ -51,19 +51,21 @@ function instanceServer(vserver, root){
         next();
     });
 
-    server.set('views', views);
-    server.use(express.logger({
-        format: dev ? 'dev' : 'tiny'
-    }));
-
-    if (dev){
-        server.use(express.errorHandler({
-            showStack: true,
-            dumpExceptions: true
+    vserver.setup = function(){
+        server.set('views', views);
+        server.use(express.logger({
+            format: dev ? 'dev' : 'tiny'
         }));
-    }
 
-    middleware.configure(server);
+        if (dev){
+            server.use(express.errorHandler({
+                showStack: true,
+                dumpExceptions: true
+            }));
+        }
+
+        middleware.configure(server);
+    };
 
     return server;
 }

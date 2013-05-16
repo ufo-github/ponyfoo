@@ -4,12 +4,9 @@ var config = require('./config'),
     express = require('express'),
     server = express(),
     port = config.server.listener,
-    platformService = require('./service/platformService.js'),
-    install = require('./hosts/install/vhost.js'),
-    market = require('./hosts/market/vhost.js'),
-    blog = require('./hosts/blog/vhost.js');
+    platformService = require('./service/platformService.js');
 
-function execute(opts, done){
+function execute(gruntvars, done){
     var db = require('./db.js');
 
     db.connect(function(){
@@ -17,14 +14,18 @@ function execute(opts, done){
             if(err){
                 throw err;
             }
+
+// TODO || true is temporary. wooh
+
+
             if(!installed || true){ // installation is kind of required.
-                server.use(install.using(opts));
+                vhost('install');
             }
 
             if (config.server.slugged){
-                server.use(market.using(opts));
+                vhost('market');
             }
-            server.use(blog.using(opts));
+            // TODO vhost('blog');
             server.listen(port, function(){
                 console.log('Web server listening on *.%s:%s', config.server.tld, port);
 
@@ -32,6 +33,14 @@ function execute(opts, done){
             });
         });
     });
+
+    function vhost(name){
+        var vars = gruntvars[name],
+            vserver = require('./hosts/' + name + '/vhost.js'),
+            configured = vserver.using(vars);
+
+        server.use(configured);
+    }
 }
 
 module.exports = {
