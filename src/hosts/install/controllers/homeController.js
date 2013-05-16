@@ -9,8 +9,7 @@ module.exports = {
             md: {
                 env: markdownService.readFile('ENV.md'),
                 tags: markdownService.readFile('TAGS.md')
-            },
-            cwd: process.cwd()
+            }
         });
     }
 };
