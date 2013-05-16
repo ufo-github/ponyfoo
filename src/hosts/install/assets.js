@@ -1,23 +1,23 @@
 'use strict';
 
-var configuration = require('../common/assets.js').configure(__dirname),
+var them = require('../common/assets.js').configure(__dirname),
     path = require('path'),
     absolute = path.join(process.cwd(), '/src/frontend/less'),
-    shared = path.relative(configuration.assets.source, absolute);
+    shared = path.relative(them.assets.source, absolute);
 
-configuration.assets.css = [
-    shared + '/defaults/reset.css',/*
-    '/css/defaults/basic.less',
-    '/css/defaults/elements.less',
-    '/css/defaults/controls.less',
-    '/css/defaults/controls.spinner.less',
-    '/css/defaults/layout.less',
-    '/css/defaults/design.less',
-    '/css/defaults/sprite.less',
-    '/css/vendor/markdown.less',*/
+them.assets.css = [
+    shared + '/defaults/reset.css',
+    shared + '/css/defaults/basic.less',
+    shared + '/css/defaults/elements.less',
+    shared + '/css/defaults/controls.less',
+    shared + '/css/defaults/controls.spinner.less',
+    shared + '/css/defaults/layout.less',
+    shared + '/css/defaults/design.less',
+    shared + '/css/defaults/sprite.less',
+    shared + '/css/vendor/markdown.less',
     '/css/views/home/index.less'
 ];
 
-// configuration.assets.host = '';
+// them.assets.host = '';
 
-module.exports = configuration;
+module.exports = them;

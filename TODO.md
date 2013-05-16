@@ -4,7 +4,10 @@ TODO
 1
 -------
 
-- finish up Install VHOST (assets, verify it works correctly, and shuts down into blog platform)
+- assetify build -> make assets be forward relative of bin directory.
+    - dont let them fall outside
+    
+- finish up Install VHOST (verify it works correctly, and shuts down into blog platform)
 - Market VHOST
 - Blog VHOST (and cleanup)
 
