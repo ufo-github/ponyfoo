@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../config.js'),
+var config = require('../config'),
     Blog = require('../model/Blog.js'),
     installed;
 
@@ -24,7 +24,15 @@ function verify(refresh){
     };
 }
 
+function hydrate(req){
+    var i = req.host.lastIndexOf('.' + config.server.tld),
+        slug = req.host.substr(0, i);
+
+    req.slug = slug;
+}
+
 module.exports = {
     isInstalled: verify(false),
-    updateInstalled: verify(true)
+    updateInstalled: verify(true),
+    hydrate: hydrate
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('./src/config.js');
+var config = require('./src/config');
 
 module.exports = function(grunt) {
     var opts = {

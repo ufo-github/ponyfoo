@@ -47,8 +47,9 @@ function asBoolean(name, s){
 }
 
 function parsefiles(){
-	var defaults = path.resolve(__dirname, '../.env.defaults'),
-		local = path.resolve(__dirname, '../.env'),
+	var cwd = process.cwd(),
+		defaults = path.join(cwd, '/.env.defaults'),
+		local = path.join(cwd, '/.env'),
 		env = {},
 		options = [
 			read(defaults),
@@ -65,6 +66,4 @@ function parsefiles(){
 	return env;
 }
 
-module.exports = {
-	parse: parsefiles
-};
+module.exports = parsefiles();

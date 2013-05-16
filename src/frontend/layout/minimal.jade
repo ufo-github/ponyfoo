@@ -5,9 +5,9 @@ html(lang='en')
     include _metadata
       block title
 
-    !=assetify.css.emit(profile)
+    != assetify.css.emit(profile)
 
   body
     block body
 
-    !=assetify.js.emit(profile)
+    != assetify.js.emit(profile)

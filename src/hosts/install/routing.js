@@ -1,12 +1,17 @@
 'use strict';
 
-var defaults = require('../common/routing.js'),
+var config = require('../../config'),
+    defaults = require('../common/routing.js'),
     homeController = require('./controllers/homeController.js'),
     installController = require('./controllers/api/installController.js');
 
 function setup(server){
     server.get('/*', function(req, res, next){
-        console.log(req.host); // TODO: should redirect if not on main slug.
+        if (req.slug !== config.server2.slug.landing){
+            res.redirect(config.server2.authorityLanding + req.url);    
+        }else{
+            next();
+        }
     });
 
     // rest api

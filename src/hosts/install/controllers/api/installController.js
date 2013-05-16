@@ -1,9 +1,10 @@
 'use strict';
 
-var config = require('../../../config.js'),
-    platformService = require('../service/platformService.js'),
-    blogService = require('../service/blogService.js'),
-    userService = require('../service/userService.js');
+var base = '../../../..',
+    config = require(base + '/config'),
+    platformService = require(base + '/service/platformService.js'),
+    blogService = require(base + '/service/blogService.js'),
+    userService = require(base + '/service/userService.js');
 
 module.exports = {
     postInstall: function(req, res){

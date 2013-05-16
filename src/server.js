@@ -1,20 +1,20 @@
 'use strict';
 
-var config = require('./config.js'),
+var config = require('./config'),
     express = require('express'),
     server = express(),
     port = config.server.listener,
-    platform = require('./service/platformService.js');
+    platformService = require('./service/platformService.js');
 
 function execute(opts, done){
     var db = require('./db.js');
 
     db.connect(function(){
-        platform.isInstalled(function(err, installed){
+        platformService.isInstalled(function(err, installed){
             if(err){
                 throw err;
             }
-            if(!installed){ // installation is kind of required.
+            if(!installed || true){ // installation is kind of required.
                 server.use(require('./hosts/install/vhost.js'));
             }
 

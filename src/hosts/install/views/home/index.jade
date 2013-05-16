@@ -1,4 +1,4 @@
-extends /src/frontend/layout/minimal
+extends ../../../../frontend/layout/minimal
 
 block title
   title='NBrut Installation'
@@ -14,7 +14,7 @@ block body
 
     if flash.validation
       ul.validation-errors
-        li= flash.validation
+        li=flash.validation
 
     section.setup
       form(method='post', action='/api/1.0/install')

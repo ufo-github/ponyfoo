@@ -1,7 +1,6 @@
 'use strict';
 
-var path = require('path'),
-    zombie = require('../logic/zombie.js');
+var path = require('path');
 
 function staticNotFound(req, res){
     res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -14,7 +13,8 @@ function configure(server){
     server.get('/css/*', staticNotFound);
 
     // TODO move to blog, the rest aren't ajax, won't need crawler fancy stuff
-    server.get('/*', zombie.setup(server).proxy); // crawler interceptor
+   // var zombie = require('../logic/zombie.js');
+  //  server.get('/*', zombie.setup(server).proxy); // crawler interceptor
 
     // TODO sitemaps rss opensearch
 }

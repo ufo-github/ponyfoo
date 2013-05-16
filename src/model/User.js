@@ -3,7 +3,7 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt'),
     crypto = require('crypto'),
-    config = require('../config.js'),
+    config = require('../config'),
     schema = new mongoose.Schema({
         email: { type: String, require: true, index: { unique: true }, trim: true },
         password: { type: String, require: true },

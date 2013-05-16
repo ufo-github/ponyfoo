@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose'),
     moment = require('moment'),
-    config = require('../config.js'),
+    config = require('../config'),
     ObjectId = mongoose.Schema.Types.ObjectId,
     schema = new mongoose.Schema({
         blog: { type: ObjectId, index: { unique: false }, require: true },

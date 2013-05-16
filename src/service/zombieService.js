@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../config.js'),
+var config = require('../config'),
     async = require('async'),
     path = require('path'),
     fs = require('fs'),
@@ -8,7 +8,7 @@ var config = require('../config.js'),
     zombie = require('zombie');
 
 function setup(server){
-    if(config.zombie.enabled){
+    if(!config.zombie.enabled){
         return {
             proxy: function(req,res,next) {
                 next();
@@ -64,8 +64,7 @@ function setup(server){
 
         readFile(indexpath, function(err, data){
             if(err){
-                done(err);
-                return;
+                return done(err);
             }
 
             _index = data ? JSON.parse(data) : [];
@@ -81,8 +80,7 @@ function setup(server){
     function find(resource, done){
         getIndex(function(err, index){
             if(err){
-                done(err);
-                return;
+                return done(err);
             }
 
             function cb(node){
@@ -103,8 +101,7 @@ function setup(server){
     function findOrRefresh(resource, done){
         find(resource, function(err, result){
             if(err){
-                done(err);
-                return;
+                return done(err);
             }
 
             if(!result || (new Date() - result.date > config.zombie.cache)){
@@ -112,8 +109,7 @@ function setup(server){
             }else{
                 readFile(result.file, function(err, data){
                     if(err){
-                        done(err);
-                        return;
+                        return done(err);
                     }
 
                     done(err, data || '');
@@ -125,8 +121,7 @@ function setup(server){
     function refresh(resource, done){
         getIndex(function(err, index){
             if(err){
-                done(err);
-                return;
+                return done(err);
             }
             var target;
 
@@ -150,8 +145,7 @@ function setup(server){
 
             visit(target, function(err, html){
                 if(err){
-                    done(err);
-                    return;
+                    return done(err);
                 }
                 target.date = new Date();
                 _index = index;
@@ -166,14 +160,12 @@ function setup(server){
     function readFile(file, done){
         fs.exists(file, function(exists){
             if(!exists){
-                done();
-                return;
+                return done();
             }
 
             fs.readFile(file, function(err, data){
                 if(err){
-                    done(err);
-                    return;
+                    return done(err);
                 }
 
                 done(err, data);
@@ -184,7 +176,7 @@ function setup(server){
     function writeFile(file, data, done){
         fse.mkdirs(bin, function(err){
             if(err){
-                throw err;
+                return done(err);
             }
 
             fs.writeFile(file, data, done);
@@ -220,7 +212,7 @@ function setup(server){
 
         findOrRefresh({ slug: req.slug, url: req.url }, function(err, html){
             if(err){
-                throw err;
+                next(err);
             }
 
             res.end(html);

@@ -1,11 +1,12 @@
 'use strict';
 
 var path = require('path'),
-    env = require('./env.js').parse();
+    env = require('./env.js'),
+    cwd = process.cwd();
 
 var config = {
-    cwd: process.cwd(),
-    pkg: require('../package.json'),
+    cwd: cwd,
+    pkg: require(path.join(cwd, '/package.json')),
     env: {
         current: env.NODE_ENV,
         get development(){ return this.current === 'development'; },
@@ -19,7 +20,7 @@ var config = {
         favicon: '/favicon.ico'
     },
     server: {
-        get tld(){ return env.HOST_TLD; },
+        tld: env.HOST_TLD,
         slugged: env.ENABLE_SLUGGING,
         slugMarket: env.HOST_MARKET,
         slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
@@ -37,6 +38,7 @@ var config = {
         get landingSlug(){ return this.slugged ? this.slugMarket : this.defaultBlog; },
         permanentRedirect: env.ENABLE_BLOG_REGEX_301
     },
+    server2: require('./server.js'),
     logging: { level: env.LOG_LEVEL },
     zombie: {
         enabled: env.ENABLE_ZOMBIE_CRAWLER,

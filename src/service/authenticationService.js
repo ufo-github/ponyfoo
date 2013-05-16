@@ -1,8 +1,8 @@
 'use strict';
 
 var passport = require('passport'),
-    config = require('../config.js'),
-    user = require('../models/user.js'),
+    config = require('../config'),
+    User = require('../model/User.js'),
     LocalStrategy = require('passport-local').Strategy,
     FacebookStrategy = require('passport-facebook').Strategy,
     GoogleStrategy = require('passport-google').Strategy,
@@ -14,7 +14,7 @@ function setupLocal(){
             usernameField: 'email'
         },
         function(email, password, done) {
-            user.findOne({ email: email }, function (err, user) {
+            User.findOne({ email: email }, function (err, user) {
                 if (err) {
                     return done(err);
                 }
@@ -96,13 +96,13 @@ function callback(query, profile, done) {
         return;
     }
 
-    user.findOne(query, function (err, document) {
+    User.findOne(query, function (err, document) {
         if(err || document){
             done(err, document ? document.toObject() : null);
             return;
         }
 
-        user.findOne({ email: email }, function (err, document) {
+        User.findOne({ email: email }, function (err, document) {
             var prop;
 
             if(err){
@@ -113,7 +113,7 @@ function callback(query, profile, done) {
             if(!document){ // register user
                 query.email = email;
                 query.displayName = profile.displayName;
-                document = new user(query);
+                document = new User(query);
             }else{ // add provider to user
                 for(prop in query){
                     document[prop] = query[prop];
@@ -131,13 +131,13 @@ function callback(query, profile, done) {
     });
 }
 
-function configure(done){
+function configure(){
     passport.serializeUser(function(user, done) {
         done(null, user._id);
     });
 
     passport.deserializeUser(function(id, done) {
-        user.findOne({ _id: id }, function (err, user) {
+        User.findOne({ _id: id }, function (err, user) {
             if(err){
                 return done(err);
             }
@@ -150,8 +150,6 @@ function configure(done){
     setupOAuth2('github', GitHubStrategy);
     setupOpenId('google', GoogleStrategy);
     setupOAuth1('linkedin', LinkedInStrategy, ['id', 'first-name', 'last-name', 'email-address']);
-
-    process.nextTick(done);
 }
 
 module.exports = {
