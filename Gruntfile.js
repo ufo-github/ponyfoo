@@ -42,7 +42,7 @@ module.exports = function(grunt) {
         assetify: {
             install: require('./src/hosts/install/assets.js'),
             market: require('./src/hosts/market/assets.js')
-            // blog: require('./src/hosts/blog/assets.js')
+            // TODO blog: require('./src/hosts/blog/assets.js')
         },
         watch: {
             tasks: ['dev-server'],
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('server', 'Start the web server', function(){
         grunt.task.requires('assetify');
-        
+
         var done = this.async(),
             server = require('./src/server.js'),
             binders = grunt.config('assetify:binders');

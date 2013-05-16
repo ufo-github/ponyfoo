@@ -4,8 +4,9 @@ TODO
 1
 -------
 
-- gruntfile, assetify, support multiple vhosts, using same middleware everywhere just works?
-  - do some more permanent change?
+- finish up Install VHOST (assets, verify it works correctly, and shuts down into blog platform)
+- Market VHOST
+- Blog VHOST (and cleanup)
 
 - zombie, opensearch, sitemap, move to a more global level.
 - route for those on the global routing as well, but allow config on a per server basis.
@@ -22,12 +23,8 @@ TODO
 2
 -------
 
-- re-organize
-  - folder structure, config, controllers, models, etc.
-  - pass exceptions around rather than throw in async execution models.
-
 - save drafts
-- redesign commenting infrastructure
+- redesign commenting infrastructure (which blows)
 
 
 3

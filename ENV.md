@@ -1,7 +1,9 @@
 Environment Variables
 =====================
 
-If you are hosting your site using [**Heroku**](https://heroku.com "Heroku"), you should use [**Foreman**](https://devcenter.heroku.com/articles/config-vars#local-setup "Local Setup for Heroku sites") to configure these locally.
+Environment configuration is taken from `.env.defaults`, then `.env`, and lastly, `process.env`.
+
+If you are hosting your site using [**Heroku**](https://heroku.com "Heroku"), you might want to use [**Foreman**](https://devcenter.heroku.com/articles/config-vars#local-setup "Local Setup for Heroku sites") to configure these locally.
 
 A good alternative is the JetBrains IDE for Node.JS, [**WebStorm**](http://www.jetbrains.com/webstorm/ "WebStorm"). 
 

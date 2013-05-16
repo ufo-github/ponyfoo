@@ -13,7 +13,6 @@ configuration.assets.css = [/*
     '/css/views/home/index.less'
 ];
 
-// configuration.assets.profiles: ['anon', 'connected'];
 // configuration.assets.host = '';
 
 module.exports = configuration;
