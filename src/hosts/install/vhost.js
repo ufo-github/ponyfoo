@@ -1,7 +1,16 @@
-var vserver = require('../common/vserver.js'),
-    server = vserver('*', __dirname),
-    routing = require('./routing.js');
+'use strict';
 
-routing.setup(server.express);
+var express = require('express');
 
-module.exports = server; // export the middleware
+module.exports = {
+    using: function(opts){
+        var vserver = require('../common/vserver.js'),
+            server = vserver('*', __dirname),
+            routing = require('./routing.js');
+
+        opts.assetify.configure(server, express);
+        routing.setup(server.express);
+
+        return server; // expose the middleware
+    }
+};

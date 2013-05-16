@@ -4,7 +4,10 @@ var config = require('./config'),
     express = require('express'),
     server = express(),
     port = config.server.listener,
-    platformService = require('./service/platformService.js');
+    platformService = require('./service/platformService.js'),
+    install = require('./hosts/install/vhost.js'),
+    market = require('./hosts/market/vhost.js'),
+    blog = require('./hosts/blog/vhost.js');
 
 function execute(opts, done){
     var db = require('./db.js');
@@ -15,13 +18,13 @@ function execute(opts, done){
                 throw err;
             }
             if(!installed || true){ // installation is kind of required.
-                server.use(require('./hosts/install/vhost.js'));
+                server.use(install.using(opts));
             }
 
             if (config.server.slugged){
-                server.use(require('./hosts/market/vhost.js'));
+                server.use(market.using(opts));
             }
-            server.use(require('./hosts/blog/vhost.js'));
+            server.use(blog.using(opts));
             server.listen(port, function(){
                 console.log('Web server listening on *.%s:%s', config.server.tld, port);
 

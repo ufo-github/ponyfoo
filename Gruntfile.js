@@ -5,34 +5,32 @@ var config = require('./src/config');
 module.exports = function(grunt) {
     var opts = {
         clean: [
-            './**/.bin'
+            './src/**/.bin'
         ],
         jshint: {
             node: {
                 files: {
                     src: [
-                        'gruntfile.js',
-                        'src/**/*.js',
-                        '!src/static/**/*.js',
-                        'src/static/config/**/*.js',
-                        'test/spec/**/*.js'
+                        './Gruntfile.js',
+                        './src/**/*.js',
+                        '!./src/hosts/**/static/**/*.js',
+                        './test/spec/**/*.js'
                     ]
                 },
                 options: {
-                    jshintrc: '.jshintrc'
+                    jshintrc: './.jshintrc'
                 }
             },
             browser: {
                 files: {
                     src: [
-                        'src/static/**/*.js',
-                        '!src/static/config/*.js',
-                        '!src/static/.bin/**/*.js',
-                        '!src/static/js/vendor/**/*.js'
+                        './src/hosts/**/static/**/*.js',
+                        '!./src/hosts/**/static/.bin/**/*.js',
+                        '!./src/hosts/**/static/js/vendor/**/*.js'
                     ]
                 },
                 options: {
-                    jshintrc: '.jshintrc-browser'
+                    jshintrc: './.jshintrc-browser'
                 }
             }
         },
@@ -49,14 +47,14 @@ module.exports = function(grunt) {
         watch: {
             tasks: ['dev-server'],
             files: [
-                '.env',
-                '.env.defaults',
+                './.env',
+                './.env.defaults',
                 'Gruntfile.js',
-                'src/**/*.js',
-                'src/**/*.less',
-                'src/**/*.jade',
-                '!src/**/.bin',
-                'test/**/*.js'
+                './src/**/*.js',
+                './src/**/*.less',
+                './src/**/*.jade',
+                '!./src/**/.bin',
+                './test/**/*.js'
             ],
             options: {
                 interrupt: true
