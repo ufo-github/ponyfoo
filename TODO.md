@@ -4,9 +4,6 @@ TODO
 1
 -------
 
-- assetify build -> make assets be forward relative of bin directory.
-    - dont let them fall outside
-    
 - finish up Install VHOST (verify it works correctly, and shuts down into blog platform)
 - Market VHOST
 - Blog VHOST (and cleanup)

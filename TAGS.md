@@ -33,7 +33,9 @@ Brief list of changes implemented in each tagged version of **NBrut**.
   - `/sitemap.xml` fragmented by slug
   - sitemaps are now aggregated in `/sitemap_index.xml`
 
-- Cleaner AJAX transport (JSON over url-encoded form data when not making GET requests)
+- Cleaner Architecture
+  - AJAX transport (JSON over url-encoded form data when not making GET requests)
+  - Subdomains now are one to one relationships with vhost and matching folder structure
 
 - Performance
   - Assets (such as js and css) are now served with absolute urls, for improved caching

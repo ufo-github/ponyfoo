@@ -30,14 +30,15 @@ module.exports = {
 
         function done(err){
             if(err){
-                req.flash('validation', err);
+                console.log(err.stack || err);
+                req.flash('validation', err.message || err);
                 return res.redirect('/');
             }
 
             platformService.updateInstalled(function(err, installed){
                 if(installed){
                     console.log('Installed. Turning off installation vhost.');
-                    req.vhost.shutdown();
+                    req.vserver.shutdown();
                 }
                 res.redirect('/');
             });

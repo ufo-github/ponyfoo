@@ -30,5 +30,6 @@ module.exports = {
                 rss: true
             }
         }).save(done);
-    }
+    },
+    validate: validate
 };
