@@ -15,17 +15,14 @@ function execute(gruntvars, done){
                 throw err;
             }
 
-// TODO || true is temporary. wooh
-
-
-            if(!installed || true){ // installation is kind of required.
+            if(!installed){ // installation is kind of required.
                 vhost('install');
             }
 
             if (config.server.slugged){
                 vhost('market');
             }
-            // TODO vhost('blog');
+            vhost('blog');
             server.listen(port, function(){
                 console.log('Web server listening on *.%s:%s', config.server.tld, port);
 
