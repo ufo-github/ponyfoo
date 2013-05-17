@@ -1,6 +1,7 @@
 'use strict';
 
-var them = require('../common/assets.js').configure(__dirname),
+var config = require('../../config'),
+    them = require('../common/assets.js').configure(__dirname),
     path = require('path'),
     absolute = path.join(process.cwd(), '/src/frontend/less'),
     shared = path.relative(them.assets.source, absolute);
@@ -18,6 +19,6 @@ them.assets.css = [
     '/css/views/home/index.less'
 ];
 
-// them.assets.host = '';
+them.assets.host = config.server2.authorityLanding;
 
 module.exports = them;
