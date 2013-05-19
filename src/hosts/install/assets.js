@@ -1,24 +1,23 @@
 'use strict';
 
 var config = require('../../config'),
-    them = require('../common/assets.js').configure(__dirname),
-    path = require('path'),
-    absolute = path.join(process.cwd(), '/src/frontend/less'),
-    shared = path.relative(them.assets.source, absolute);
+    builder = require('../common/assetDataBuilder.js'),
+    data = builder.prepare(__dirname),
+    resolve = data.resolveFrontendPath;
 
-them.assets.css = [
-    path.join(shared, '/defaults/reset.css'),
-    path.join(shared, '/defaults/basic.less'),
-    path.join(shared, '/defaults/elements.less'),
-    path.join(shared, '/defaults/controls.less'),
-    path.join(shared, '/defaults/controls.spinner.less'),
-    path.join(shared, '/defaults/layout.less'),
-    path.join(shared, '/defaults/design.less'),
-    path.join(shared, '/defaults/sprite.less'),
-    path.join(shared, '/vendor/markdown.less'),
+data.assets.host = config.server2.authorityLanding;
+
+data.assets.css = [
+    resolve('/css/defaults/reset.css'),
+    resolve('/css/defaults/basic.less'),
+    resolve('/css/defaults/elements.less'),
+    resolve('/css/defaults/controls.less'),
+    resolve('/css/defaults/controls.spinner.less'),
+    resolve('/css/defaults/layout.less'),
+    resolve('/css/defaults/design.less'),
+    resolve('/css/defaults/sprite.less'),
+    resolve('/css/vendor/markdown.less'),
     '/css/views/home/index.less'
 ];
 
-them.assets.host = config.server2.authorityLanding;
-
-module.exports = them;
+module.exports = builder.complete(data);

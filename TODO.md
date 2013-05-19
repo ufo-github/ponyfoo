@@ -17,7 +17,7 @@ TODO
 
 - un-mess login redirects
 
-
+- rename config.server vars into server2, and drop config.server
 
 2
 -------

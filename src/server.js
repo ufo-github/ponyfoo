@@ -22,7 +22,7 @@ function execute(gruntvars, done){
             if (config.server.slugged){
                 vhost('market');
             }
-            vhost('blog');
+            //vhost('blog');
             server.listen(port, function(){
                 console.log('Web server listening on *.%s:%s', config.server.tld, port);
 
