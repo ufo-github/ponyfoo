@@ -1,3 +1,3 @@
 # Front-end reusables #
 
-This folder contains reusable templates and code blocks that are used in each different application.
+This folder contains reusable templates, code blocks, and libraries that are shared throughout application.
