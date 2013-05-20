@@ -3,6 +3,6 @@
     <ShortName>@blog.title</ShortName>
     <Description>Search @blog.title: @blog.legend</Description>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image height="16" width="16" type="image/x-icon">@favicon</Image>
-    <Url type="text/html" method="get" template="@template" />
+    <Image height="16" width="16" type="image/x-icon">@authority/favicon.ico</Image>
+    <Url type="text/html" method="get" template="@authority/search/{searchTerms}" />
 </OpenSearchDescription>

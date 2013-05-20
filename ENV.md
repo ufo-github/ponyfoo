@@ -24,7 +24,7 @@ General
 These are general purpose variables which are always useful to configure.
 
 - **LOG_LEVEL**: One of the following values: `['DEBUG','INFO','WARN','ERROR','FATAL']`. Determines the verbosity of the logging output.
-
+- **PLATFORM_NAME**: The name of the platform, used throught the application to refer to the entire platform.
 
 
 Hosting

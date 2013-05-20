@@ -2,12 +2,19 @@
 
 var config = require('../../config'),
     defaults = require('../common/routing.js'),
+    sitemapIndexController = require('./controllers/sitemapIndexController.js'),
+    sitemapController = require('./controllers/sitemapController.js'),
+    opensearchController = require('./controllers/opensearchController.js'),
     homeController = require('./controllers/homeController.js');
 
 function setup(server){
     
     // views
     server.get('/', homeController.getIndex);
+
+    server.get('/sitemap_index.xml', sitemapIndexController.getSitemapIndex);
+    server.get('/sitemap.xml', sitemapController.getSitemap);
+    server.get('/opensearch.xml', opensearchController.getOpensearch);
 
     defaults.configure(server);
     

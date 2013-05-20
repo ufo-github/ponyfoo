@@ -1,7 +1,7 @@
 'use strict';
 
-var meta = require('./slug-meta.js'),
-    config = require('../config.js'),
+var config = require('../../../config'),
+    metadataService = require('../../../service/metadataService.js'),
     async = require('async'),
     rss = require('rss'),
     controller = require('../controllers/api/1.0/entry.js');
@@ -30,7 +30,7 @@ function setup(req,done){
 function build(feed, req, host, done){
     return function(err, list){
         if(err){
-            throw err;
+            return done(err);
         }
 
         async.forEach(list.entries, function(entry,done){
@@ -50,11 +50,11 @@ function build(feed, req, host, done){
             });
         }, function(err){
             if(err){
-                throw err;
+                return done(err);
             }
             var xml = feed.xml();
 
-            meta.writeToDisk(req.blog.slug, {
+            metadataService.writeToDisk(req.blog.slug, {
                 config: config.feed,
                 data: xml,
                 done: done
@@ -64,7 +64,7 @@ function build(feed, req, host, done){
 }
 
 module.exports = {
-    get: meta.get({
+    getFeed: metadataService.get({
         config: config.feed,
         setup: setup
     })

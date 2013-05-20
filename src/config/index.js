@@ -51,13 +51,6 @@ var config = {
         analytics: env.GA_CODE,
         clicky: env.CLICKY_SITE_ID
     },
-    get opensearch() {
-        return {
-            source: path.join(this.statics.folder, 'opensearch.xmln'),
-            relative: '/opensearch.xml',
-            template: '/search/{searchTerms}'
-        };
-    },
     sitemapIndex: {
         cache: 60000 * 30, // half an hour, in ms
         relative: '/sitemap_index.xml',
@@ -86,7 +79,8 @@ var config = {
             thumbnail: this.server.host + '/img/thumbnail.png',
             displayVersion: env.ENABLE_VERSION_DISPLAY,
             version: 'v' + this.pkg.version,
-            get versionString(){ return '<!-- engine: ' + this.version + ' -->'; }
+            get versionString(){ return '<!-- engine: ' + this.version + ' -->'; },
+            name: env.PLATFORM_NAME
         };
     },
     regex: {
