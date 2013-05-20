@@ -5,7 +5,7 @@ var pagedown = require('pagedown'),
     path = require('path');
 
 function getProfile(req){
-    var connected = req.user !== undefined,
+    var connected = !!req.user,
         blogger = connected ? req.user.blogger : false;
 
     if(connected){
@@ -15,33 +15,39 @@ function getProfile(req){
     }
 }
 
-function getView(req,res){
-    var view, viewModel, locals, json,
-        connected = !!req.user,
-        profile = getProfile(req);
-
-    view = 'slug/__' + profile + '.jade';
-    locals = {
-        id: connected ? req.user._id : undefined,
-        blogger: profile === 'blogger',
-        profile: profile,
-        connected: connected,
-        site: {
-            title: req.blog.title,
-            thumbnail: req.blog.thumbnail
-        }
-    };
-    
-    json = '!function(a){a.locals=' + JSON.stringify(locals) + ';}(window);';
-    res.locals.assetify.js.add(json, 'before');
-
-    viewModel = {
+function getViewModel(req, profile){
+    return {
         query: req.query, // query string parameters
         profile: profile,
         slug: req.slug,
         blog: req.blog,
         blogger: req.blogger
     };
+}
+
+function getSettingsJSON(req, profile){
+    var connected = !!req.user,
+        settings = {
+            id: connected ? req.user._id : undefined,
+            blogger: profile === 'blogger',
+            profile: profile,
+            connected: connected,
+            site: {
+                title: req.blog.title,
+                thumbnail: req.blog.thumbnail
+            }
+        };
+
+    return '!function(a){a.locals=' + JSON.stringify(settings) + ';}(window);';
+}
+
+function getView(req,res){
+    var profile = getProfile(req),
+        viewModel = getViewModel(req, profile),
+        json = getSettingsJSON(req, profile),
+        connected = !!req.user;
+        
+    res.locals.assetify.js.add(json, 'before');
 
     if (connected){
         var pd = new pagedown.getSanitizingConverter(),
@@ -51,7 +57,8 @@ function getView(req,res){
         req.blog.descriptionHtml = html;
     }
 
-    res.render(view, viewModel);
+    var viewName = '__' + profile + '.jade';
+    res.render(viewName, viewModel);
 }
 
 module.exports = {

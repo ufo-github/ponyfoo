@@ -3,7 +3,7 @@
 var fs = require('fs'),
     path = require('path'),
     walk = require('walk'),
-    config = require('../config.js'),
+    config = require('../config'),
     dev = config.env.development;
 
 function logger(){

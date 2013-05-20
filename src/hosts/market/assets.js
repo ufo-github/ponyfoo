@@ -5,7 +5,7 @@ var config = require('../../config'),
     data = builder.prepare(__dirname),
     resolve = data.resolveFrontendPath;
 
-data.assets.host = config.server2.authorityLanding;
+data.assets.host = config.server2.authorityMarket;
 
 data.assets.css = [
     resolve('/css/defaults/reset.css'),

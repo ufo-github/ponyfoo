@@ -2,8 +2,8 @@
 
 var config = require('../../../config'),
     defaults = require('../../common/routing.js'),
-    api = require('./api.js'),
-    auth = require('./auth.js'),
+    //api = require('./api.js'),
+    //auth = require('./auth.js'),
     blogController = require('../controllers/blogController.js'),
     viewController = require('../controllers/viewController.js');
 
