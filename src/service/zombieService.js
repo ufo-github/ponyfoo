@@ -7,15 +7,7 @@ var config = require('../config'),
     fse = require('fs-extra'),
     zombie = require('zombie');
 
-function setup(server){
-    if(!config.zombie.enabled){
-        return {
-            proxy: function(req,res,next) {
-                next();
-            }
-        };
-    }
-
+function setup(server, userAgents, loaded){
     var views = server.get('views'),
         bin = path.join(views, '/.bin'),
         indexpath = path.join(bin, 'static.idx'),
@@ -25,17 +17,6 @@ function setup(server){
         var browser = new zombie({
             site: config.server.authority
         }), uri;
-
-        function loaded(window) {
-            var container = window.$('#content'),
-                loading = container.is('.spinner-container');
-
-            if(!loading && window.nbrut.thin.pending().length === 0){
-                window.$('script').remove(); // make it _truly_ static
-                return true;
-            }
-            return false;
-        }
 
         uri = config.server.hostSlug(opts.resource.slug) + opts.resource.url;
         browser.visit(uri, function(){
@@ -185,22 +166,18 @@ function setup(server){
 
     function shouldIgnore(req){
         var ua = req.headers['user-agent'],
-            zombie = /Zombie\.js/i.test(ua),
-            crawlers = [
-                /Googlebot/i, // google
-                /facebookexternalhit/i, // facebook
-                /bingbot/i, // bing
-                /slurp/i, // yahoo slurp
-                /LinkedInBot/i // linkedin
-            ];
+            zombie = /Zombie\.js/i.test(ua);
 
+        if(!config.zombie.enabled){
+            return true;
+        }
         if(zombie){ // prevent recursive non-sense
             return true;
         }
         if(config.env.development && req.query['static'] !== undefined){
             return false;
         }
-        return !crawlers.some(function(crawler){
+        return !userAgents.some(function(crawler){
             return crawler.test(ua);
         });
     }

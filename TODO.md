@@ -4,11 +4,7 @@ TODO
 1
 -------
 
-- zombie,  rss, move to a more global level.
-- route for those on the global routing as well, but allow config on a per server basis.
-- controllers, logic, routing, 'services'..
-
-- Blog VHOST (and cleanup)
+- rss, api, authentication
 
 - blog claim path
   - existing bloggers can't claim additional blog slugs
@@ -17,13 +13,14 @@ TODO
 
 - un-mess login redirects
 
-- rename config.server vars into server2, and drop config.server
 
 2
 -------
 
+- unfold about for more visibility
 - save drafts
 - redesign commenting infrastructure (which blows)
+- rename config.server vars into server2, and drop config.server
 
 
 3
