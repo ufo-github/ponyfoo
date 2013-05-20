@@ -7,7 +7,6 @@ TODO
 - zombie, opensearch, sitemap, move to a more global level.
 - route for those on the global routing as well, but allow config on a per server basis.
 
-- Market VHOST
 - Blog VHOST (and cleanup)
 
 - blog claim path

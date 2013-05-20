@@ -33,13 +33,6 @@ module.exports = {
             }
         };
     },
-    jQuery: function(){
-        return {
-            jQuery: {
-                version: '1.9.1'
-            }
-        };
-    },
     complete: function(data){
         var resolve = data.resolveFrontendPath,
             assets = data.assets;

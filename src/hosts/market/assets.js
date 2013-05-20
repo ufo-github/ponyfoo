@@ -28,6 +28,6 @@ data.assets.js = [
     '/js/registration.js'
 ];
 
-data.jQuery = builder.jQuery();
+data.assets.jQuery = { version: '1.9.1' };
 
 module.exports = builder.complete(data);
