@@ -6,8 +6,8 @@ var qs = require('querystring'),
     utilityService = require('../../../service/utilityService.js');
 
 function ensureTakenThenHydrate(req,res,next){
-    var val = config.server.hostRegex;
-    if (val !== undefined && !val.test(req.host)){
+    var rhost = config.server.hostRegex;
+    if (rhost !== undefined && !rhost.test(req.host)){
         return res.redirect(config.server2.authorityLanding + req.url, 301);
     }
 

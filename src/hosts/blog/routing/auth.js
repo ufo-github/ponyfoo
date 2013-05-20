@@ -1,7 +1,7 @@
 'use strict';
 
 var config = require('../../config.js'),
-    controller = require('../../controllers/user.js'),
+    controller = require('../controllers/userController.js'),
     providers = ['facebook','github','google','linkedin'];
 
 function configure(server){

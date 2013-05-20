@@ -5,9 +5,7 @@ var config = require('../../config'),
     homeController = require('./controllers/homeController.js');
 
 function setup(server){
-    // rest api
-    // server.post('/api/1.0/install', installController.postInstall);
-
+    
     // views
     server.get('/', homeController.getIndex);
 

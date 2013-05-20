@@ -3,20 +3,19 @@
 var config = require('../../../config'),
     defaults = require('../../common/routing.js'),
     api = require('./api.js'),
+    auth = require('./auth.js'),
     blogController = require('../controllers/blogController.js'),
     viewController = require('../controllers/viewController.js');
 
 function setup(server){
     server.all('/*', blogController.ensureTakenThenHydrate);
 
-    // rest api
-    api.configure(server);
-
-    // defaults
+    //auth.configure(server); // authentication
+    //api.configure(server); // rest api
+    
     defaults.configure(server);
 
-    // views
-    server.get('/*', viewController.getView); // GET catch-all
+    server.get('/*', viewController.getView); // GET catch-all, views
 }
 
 module.exports = {
