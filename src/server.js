@@ -15,14 +15,16 @@ function execute(gruntvars, done){
                 throw err;
             }
 
-            if(!installed){ // installation is kind of required.
+            if(!installed){
                 vhost('install');
             }
 
             if (config.server.slugged){
                 vhost('market');
             }
-            //vhost('blog');
+            
+            vhost('blog');
+
             server.listen(port, function(){
                 console.log('Web server listening on *.%s:%s', config.server.tld, port);
 

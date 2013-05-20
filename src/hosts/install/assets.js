@@ -17,6 +17,7 @@ data.assets.css = [
     resolve('/css/defaults/design.less'),
     resolve('/css/defaults/sprite.less'),
     resolve('/css/vendor/markdown.less'),
+    resolve('/css/vendor/hint.less'),    
     '/css/views/home/index.less'
 ];
 

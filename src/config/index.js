@@ -1,12 +1,10 @@
 'use strict';
 
 var path = require('path'),
-    env = require('./env.js'),
-    cwd = process.cwd();
+    env = require('./env.js');
 
 var config = {
-    cwd: cwd,
-    pkg: require(path.join(cwd, '/package.json')),
+    pkg: require(path.join(process.cwd(), '/package.json')),
     env: {
         current: env.NODE_ENV,
         get development(){ return this.current === 'development'; },

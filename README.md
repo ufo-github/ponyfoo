@@ -1,4 +1,4 @@
-NBrut [![Build Status](https://travis-ci.org/bevacqua/NBrut.png?branch=master)](https://travis-ci.org/bevacqua/NBrut)
+NBrut [![Build Status](https://travis-ci.org/bevacqua/NBrut.png?branch=master)](https://travis-ci.org/bevacqua/NBrut) [![Dependency Status](https://gemnasium.com/bevacqua/NBrut.png)](https://gemnasium.com/bevacqua/NBrut)
 ========================================================================================================================
 
 **NBrut** is the open-source blogging platform underlying [**Pony Foo**](http://www.ponyfoo.com "Pony Foo").

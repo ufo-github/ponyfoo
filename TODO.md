@@ -4,8 +4,9 @@ TODO
 1
 -------
 
-- zombie, opensearch, sitemap, move to a more global level.
+- zombie, opensearch, sitemap, rss, move to a more global level.
 - route for those on the global routing as well, but allow config on a per server basis.
+- controllers, logic, routing, 'services'..
 
 - Blog VHOST (and cleanup)
 

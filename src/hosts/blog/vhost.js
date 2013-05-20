@@ -6,7 +6,7 @@ module.exports = {
     using: function(vars){
         var factory = require('../common/vserver.js'),
             vserver = factory('*', __dirname),
-            routing = require('./routing.js');
+            routing = require('./routing');
 
         vars.assetifySetup(vserver.express, express);
         vserver.setup();

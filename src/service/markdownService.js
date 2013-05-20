@@ -1,13 +1,12 @@
 'use strict';
 
-var config = require('../config'),
-    path = require('path'),
+var path = require('path'),
     fs = require('fs'),
     pagedown = require('pagedown');
 
 module.exports = {
     readFile: function(file){
-        var absolute = path.resolve(config.cwd, file),
+        var absolute = path.resolve(process.cwd(), file),
             md = fs.readFileSync(absolute),
             pd = new pagedown.getSanitizingConverter();
 

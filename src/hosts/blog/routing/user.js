@@ -1,7 +1,8 @@
 'use strict';
 
 var config = require('../../config.js'),
-    controller = require('../../controllers/user.js');
+    controller = require('../../controllers/user.js'),
+    providers = ['facebook','github','google','linkedin'];
 
 function configure(server){
     server.get(config.auth.register, controller.guard);
@@ -19,10 +20,9 @@ function configure(server){
         server.get(config.auth[name].callback, controller[name].callback, controller.redirect);
     }
 
-    configureProvider('facebook');
-    configureProvider('github');
-    configureProvider('google');
-    configureProvider('linkedin');
+    for(var key in providers){
+        configureProvider(providers[key]);
+    }
 }
 
 module.exports = {

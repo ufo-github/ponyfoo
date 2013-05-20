@@ -23,6 +23,7 @@ data.assets.css = [
 ];
 
 data.assets.js = [
+    resolve('/js/ext/String.js'),
     resolve('/js/ext/jquery.layout.js'),
     '/js/navigation.js',
     '/js/registration.js'
