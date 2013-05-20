@@ -2,29 +2,21 @@
 
 var config = require('../../../config'),
     defaults = require('../../common/routing.js'),
-    homeController = require('../controllers/homeController.js'),
-    installController = require('../controllers/api/installController.js');
+    api = require('./api.js'),
+    blogController = require('../controllers/blogController.js'),
+    viewController = require('../controllers/viewController.js');
 
 function setup(server){
-    server.get('/*', function(req, res, next){
-        if (req.slug !== config.server2.slug.landing){
-            res.redirect(config.server2.authorityLanding + req.url);    
-        }else{
-            next();
-        }
-    });
+    server.all('/*', blogController.ensureTakenThenHydrate);
 
     // rest api
-    // server.post('/api/1.0/install', installController.postInstall);
+    api.configure(server);
+
+    // defaults
+    defaults.configure(server);
 
     // views
-    // server.get('/', homeController.getIndex);
-
-    defaults.configure(server);
-    /*
-    server.get('/*', function(req, res){
-        res.redirect('/');
-    });*/
+    server.get('/*', viewController.getView); // GET catch-all
 }
 
 module.exports = {

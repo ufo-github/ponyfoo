@@ -1,6 +1,8 @@
 'use strict';
 
-var Blog = require('../model/Blog.js');
+var Blog = require('../model/Blog.js'),
+    User = require('../model/User.js'),
+    config = require('../config');
 
 function validate(model,done){
     var email = model['user.email'],
@@ -20,6 +22,31 @@ function validate(model,done){
     });
 }
 
+function findBySlug(slug, done){
+    var query = { slug: slug };
+
+    if(!config.server.slugged){
+        delete query.slug;
+    }
+
+    Blog.findOne(query).lean().exec(function(err, blog){
+        if(err || !blog){
+            return done(err, blog);
+        }
+
+        User.findOne({ _id: blog.owner }).lean().exec(function(err, user){
+            if(err || !user){
+                return done(err);
+            }
+
+            done(err, {
+                blog: blog,
+                blogger: user
+            });
+        });
+    });
+}
+
 module.exports = {
     create: function (owner, slug, title, done){
         new Blog({
@@ -31,5 +58,6 @@ module.exports = {
             }
         }).save(done);
     },
-    validate: validate
+    validate: validate,
+    findBySlug: findBySlug
 };

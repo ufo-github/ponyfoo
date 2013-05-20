@@ -25,6 +25,7 @@ module.exports = { // TODO eventually replace config.server
     tld: tld,
     authority: authority,
     authorityLanding: authority(slug.landing),
+    authorityMarket: authority(slug.market),
     slug: slug,
     port: port
 };
