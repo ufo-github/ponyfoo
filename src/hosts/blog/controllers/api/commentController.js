@@ -1,16 +1,16 @@
 'use strict';
 
 var async = require('async'),
-    apiConf = require('../config.js'),
-    validation = require('../../../services/validation.js'),
-    rest = require('../../../services/rest.js'),
-    discussion = require('../../../models/discussion.js'),
-    comment = require('../../../models/comment.js'),
-    entry = require('../../../models/entry.js'),
-    crud = require('../../../services/crud.js')(discussion);
+    api = require('../../../../config').api,
+    Discussion = require('../../../../model/Discussion.js'),
+    Comment = require('../../../../model/Comment.js'),
+    Entry = require('../../../../model/Entry.js'),
+    validation = require('../../../../service/validationService.js'),
+    rest = require('../../../../service/restService.js'),
+    crud = require('../../../../service/crudService.js')(Discussion);
 
 function discuss(req,res){
-    var document = new discussion({
+    var document = new Discussion({
         entry: req.params.entryId,
         blog: req.blog._id
     });
@@ -19,7 +19,7 @@ function discuss(req,res){
 }
 
 function reply(req,res){
-    discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, document){
+    Discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, document){
         if(err){
             throw err;
         }
@@ -42,7 +42,7 @@ function add(req,res,document,root){
         return;
     }
 
-    var model = new comment({
+    var model = new Comment({
         blog: req.blog._id,
         text: req.body.comment,
         author: {
@@ -69,7 +69,7 @@ function add(req,res,document,root){
 }
 
 function list(req,res){
-    discussion.find({
+    Discussion.find({
         entry: req.params.entryId,
         blog: req.blog._id
     }).sort('date').exec(callback);
@@ -100,7 +100,7 @@ function list(req,res){
 }
 
 function editable(comment){
-    return new Date() - comment.date < apiConf.comments.editableFor;
+    return new Date() - comment.date < api.comments.editableFor;
 }
 
 function actionMapper(req){
@@ -129,7 +129,7 @@ function actionMapper(req){
 }
 
 function findComment(req, res, then){
-    discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, discussion){
+    Discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, discussion){
         if(err){
             rest.resHandler(err,{res:res});
             return;
@@ -190,12 +190,12 @@ function discussions(req,res){
     crud.list({
         listName: 'discussions',
         query: { blog: req.blog._id },
-        limit: apiConf.paging.limit,
+        limit: api.paging.limit,
         page: req.params.page,
         sort: '-date',
         mapper: function(documents, cb){
             async.map(documents, function(document, done){
-                entry.findOne({ _id: document.entry }, function(err, entry){
+                Entry.findOne({ _id: document.entry }, function(err, entry){
                     if(err){
                         done(err);
                         return;

@@ -1,6 +1,6 @@
 'use strict';
 
-var validation = require('../../../services/validation.js');
+var validation = require('./validationService.js');
 
 function validate(req,res){
     if(!req.body.blog || !req.body.blog.social){

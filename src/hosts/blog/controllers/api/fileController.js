@@ -5,8 +5,8 @@ var async = require('async'),
     fs = require('fs'),
     fse = require('fs-extra'),
     imgur = require('imgur'),
-    rest = require('../../../services/rest.js'),
-    config = require('../../../config.js');
+    rest = require('../../../../service/restService.js'),
+    config = require('../../../../config');
 
 function upload(req,res){
     var file = req.files.file;
@@ -37,14 +37,15 @@ function uploadToImgur(req, res, file){
 }
 
 function uploadTraditionally(req, res, file){
-    var uploads = '/img/uploads/';
+    var uploads = '/img/uploads/',
+        base = path.resolve(__dirname, '../../');
 
     async.waterfall([
         function(done){
-            copyOver(file.path, path.join(config.statics.folder, uploads), file.name, 1, done);
+            copyOver(file.path, path.join(config.statics.folder(base), uploads), file.name, 1, done);
         },
         function(indexed, done){
-            copyOver(file.path, path.join(config.statics.bin, uploads), indexed, 1, done);
+            copyOver(file.path, path.join(config.statics.bin(base), uploads), indexed, 1, done);
         }
     ], function(err, filename){
         rest.end(res, {

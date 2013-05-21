@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require('./$.js');
+var utilityService = require('./utilityService.js');
 
 function head(res,code) {
     res.writeHead(code, {
@@ -32,7 +32,7 @@ function error(opts){
         }
     };
 
-    $.log.err(opts.err);
+    utilityService.log.err(opts.err);
 
     head(opts.res,opts.code);
     end(opts.res,json);

@@ -1,12 +1,11 @@
 'use strict';
 
-var config = require('../../../config.js'),
-    logic = require('../../../logic/blog.js'),
-    blog = require('../../../models/blog.js'),
-    crud = require('../../../services/crud.js')(blog),
-    validate = require('./blog-validation.js').validate,
-    user = require('../../../models/user.js'),
-    rest = require('../../../services/rest.js');
+var config = require('../../../../config'),
+    Blog = require('../../../../model/Blog.js'),
+    User = require('../../../../model/User.js'),
+    crud = require('../../../services/crud.js')(Blog),
+    validate = require('../../../../service/blogValidationService.js').validate,
+    rest = require('../../../../service/restService.js');
 
 function update(req,res){
     var document = validate(req,res);
@@ -20,15 +19,12 @@ function update(req,res){
 }
 
 function claimValidation(req,res,next){
-    if(logic.dormant){ // dormant
-        return awaken(req,res,next);
-    }
     if(!config.server.slugged){
         return next(); // claiming is disabled
     }
 
     // attempt to claim
-    var slug = logic.getSlug(req),
+    var slug = req.slug,
         slugTest = config.server.slugRegex;
 
     if(slugTest !== undefined && !slugTest.test(slug)){
@@ -39,7 +35,7 @@ function claimValidation(req,res,next){
         return next();
     }
 
-    blog.findOne({ owner: req.user._id }, function(err, document){
+    Blog.findOne({ owner: req.user._id }, function(err, document){
         if(err){
             throw err;
         }
@@ -50,7 +46,7 @@ function claimValidation(req,res,next){
             return;
         }
 
-        blog.findOne({ slug: slug }, function(err, document){
+        Blog.findOne({ slug: slug }, function(err, document){
             if(document !== null){
                 return flashValidation(req,res,'This blog already has an owner!');
             }
@@ -81,7 +77,7 @@ function awaken(req,res){
         return;
     }
 
-    new user({
+    new User({
         email: email,
         displayName: email.split('@')[0],
         password: password
@@ -105,10 +101,10 @@ function awaken(req,res){
 function create(req,res,opts){
     var o = opts || {},
         owner = o.user || req.user,
-        slug = o.slug || logic.getSlug(req),
+        slug = o.slug || req.slug,
         title = req.body['blog.title'];
 
-    new blog({
+    new Blog({
         owner: owner._id,
         slug: slug,
         title: title,
@@ -117,7 +113,6 @@ function create(req,res,opts){
         }
     }).save(function(){
         var host = config.server.hostSlug(slug);
-        logic.live = true;
         res.redirect(host);
     });
 }
@@ -156,7 +151,7 @@ function market(req,res,next){
         return forbidden(res);
     }
 
-    blog.count({ slug: slug }, function(err,count){
+    Blog.count({ slug: slug }, function(err,count){
         if(err){
             throw err;
         }

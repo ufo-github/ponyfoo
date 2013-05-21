@@ -2,21 +2,21 @@
 
 var mongoose = require('mongoose'),
     async = require('async'),
-    apiConf = require('../config.js'),
-    validation = require('../../../services/validation.js'),
-    rest = require('../../../services/rest.js'),
-    user = require('../../../models/user.js'),
-    crud = require('../../../services/crud.js')(user);
+    api = require('../../../../config').api,
+    User = require('../../../../model/User.js'),
+    validation = require('../../../../service/validationService.js'),
+    rest = require('../../../../service/restService.js'),
+    crud = require('../../../../service/crudService.js')(User);
 
 function list(req,res){
     crud.list({
         listName: 'users',
-        limit: apiConf.paging.limit,
+        limit: api.paging.limit,
         page: req.params.page,
         sort: '-created',
         mapper: function(documents, cb){
-            async.map(documents, function(document, done){
-                done(null, userView(document));
+            async.map(documents, function(user, done){
+                done(null, userView(user));
             }, cb);
         }
     }, rest.wrapCallback(res));
@@ -25,7 +25,7 @@ function list(req,res){
 function find(req,res){
     var id = mongoose.Types.ObjectId(req.params.id);
 
-    user.findOne({ _id: id }, function(err, document){
+    User.findOne({ _id: id }, function(err, user){
         if(err){
             rest.resHandler(err,{res:res});
             return;
@@ -35,22 +35,22 @@ function find(req,res){
             res:res,
             then: function(){
                 rest.end(res,{
-                    user: userView(document)
+                    user: userView(user)
                 });
             }
         });
     });
 }
 
-function userView(document){
+function userView(user){
     return {
-        _id: document._id,
-        created: document.created,
-        displayName: document.displayName,
-        gravatar: document.gravatar,
-        website: document.website,
-        bio: document.bio,
-        passwordUndefined: document.password === undefined
+        _id: user._id,
+        created: user.created,
+        displayName: user.displayName,
+        gravatar: user.gravatar,
+        website: user.website,
+        bio: user.bio,
+        passwordUndefined: user.password === undefined
     };
 }
 
@@ -92,19 +92,19 @@ function upd(req,res){
         return;
     }
 
-    user.findOne({ _id: id}, function(err, document){
+    User.findOne({ _id: id}, function(err, user){
         if(err){
             rest.resHandler(err,{res:res});
             return;
         }
 
         if (typeof changes.password === 'string' && changes.password.length > 0){
-            document.password = changes.password;
+            user.password = changes.password;
         }
 
-        document.website = changes.website;
-        document.bio = changes.bio;
-        document.save(function (err){
+        user.website = changes.website;
+        user.bio = changes.bio;
+        user.save(function (err){
             rest.resHandler(err,{res:res});
         });
     });

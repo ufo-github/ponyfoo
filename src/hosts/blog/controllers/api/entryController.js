@@ -4,15 +4,14 @@ var mongoose = require('mongoose'),
     async = require('async'),
     jsdom = require('jsdom'),
     pagedown = require('pagedown'),
-    config = require('../../../config.js'),
-    assets = require('../../../static/config/assets.js'),
-    apiConf = require('../config.js'),
-    validation = require('../../../services/validation.js'),
-    rest = require('../../../services/rest.js'),
-    text = require('../../../services/text.js'),
-    discussion = require('../../../models/discussion.js'),
-    model = require('../../../models/entry.js'),
-    crud = require('../../../services/crud.js')(model);
+    api = require('../../../../config').api,
+    Discussion = require('../../../../model/Discussion.js'),
+    Entry = require('../../../../model/Entry.js'),
+    validation = require('../../../../service/validationService.js'),
+    assetService = require('../../../../service/assetService.js'),
+    rest = require('../../../../service/restService.js'),
+    text = require('../../../../service/textService.js'),
+    crud = require('../../../../service/crudService.js')(Entry);
 
 function mapRequestToQuery(req){
     var year = req.params.year,
@@ -32,11 +31,11 @@ function list(opts,then){
     opts.query.blog = opts.blog;
 
     opts.listName = 'entries';
-    opts.limit = opts.limit || apiConf.paging.limit;
+    opts.limit = opts.limit || api.paging.limit;
     opts.sort = '-date';
     opts.mapper = function(documents, cb){
         async.map(documents, function(document, done){
-            discussion.find({ entry: document._id }, function(err, discussions){
+            Discussion.find({ entry: document._id }, function(err, discussions){
                 if(err){
                     done(err);
                     return;
@@ -65,7 +64,7 @@ function restList(req,res,query){
 function restOne(req, res, query){
     query.blog = req.blog._id;
 
-    model.findOne(query, function(err,entry){
+    Entry.findOne(query, function(err,entry){
         if(err){
             throw err;
         }
@@ -133,7 +132,7 @@ function insert(req,res){
         return;
     }
 
-    model.findOne({ blog: req.blog._id }).sort('-date').exec(function(err,previous){
+    Entry.findOne({ blog: req.blog._id }).sort('-date').exec(function(err,previous){
         if(err){
             throw err;
         }
@@ -174,7 +173,7 @@ function update(req,res){
 function remove(req, res){
     var id = mongoose.Types.ObjectId(req.params.id);
 
-    model.findOne({ _id: id, blog: req.blog._id }, function(err,entry){
+    Entry.findOne({ _id: id, blog: req.blog._id }, function(err,entry){
         if(err){
             throw err;
         }
@@ -188,12 +187,12 @@ function remove(req, res){
                 blog: req.blog._id
             };
 
-        model.find(query, function(err, siblings){
+        Entry.find(query, function(err, siblings){
             if(err){
                 throw err;
             }
 
-            discussion.find({ entry: id }).remove(); // remove discussions
+            Discussion.find({ entry: id }).remove(); // remove discussions
 
             async.forEach(siblings, function(sibling, done){
                 if (prev !== null && sibling._id.equals(prev)){
@@ -231,7 +230,7 @@ function unwrapSiblings(blogId,entry,cb){
             blog: blogId
         };
 
-    model.find(query, function(err, siblings){
+    Entry.find(query, function(err, siblings){
         if(err){
             throw err;
         }
@@ -294,7 +293,7 @@ function getPlainTextBrief(entry, done) {
 
     jsdom.env({
         html: '<foo>' + html + '</foo>', // empty and <HTML> tags throw, for some obscure reason.
-        scripts: [assets.jQuery],
+        scripts: [assetService.jQuery.absolute],
         done: function(err,window){
             if(err){
                 return done(err);

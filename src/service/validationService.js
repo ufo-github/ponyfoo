@@ -1,8 +1,8 @@
 'use strict';
 
-var $ = require('./$.js'),
-    rest = require('./rest.js'),
-    config = require('../config.js');
+var config = require('../config'),
+    utilityService = require('./utilityService.js'),
+    rest = require('./restService.js');
 
 function evaluateRule(opts){
     var rule = opts.rule;
@@ -58,7 +58,7 @@ function applyRule(ctx, rule){
         return evaluateRule({
             messages: ctx.messages,
             ignoreUndefined: ctx.opts.ignoreUndefined,
-            field: $.findProperty(ctx.opts.document, rule.field),
+            field: utilityService.findProperty(ctx.opts.document, rule.field),
             rule: rule
         });
     }
