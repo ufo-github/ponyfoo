@@ -31,7 +31,17 @@ function validate(req){
     return shouldCreate;
 }
 
-function register(req,res, next){
+function traditional(req, res, next){
+    if(req.body.create){
+        register(req, res, next);
+    }else{
+        login(req, res, next);
+    }
+}
+
+var login = passport.authenticate('local', authenticationOptions);
+
+function register(req, res, next){
     var shouldCreate = validate(req),
         email = req.body.email;
 
@@ -80,7 +90,7 @@ function redirect(req,res){
     res.redirect(req.body.redirect || sessionRedirect || config.auth.success);
 }
 
-function requireLogon(req,res,next){
+function requireAnonymous(req,res,next){
     if(!!req.user){
         redirect(req,res);
     }
@@ -93,13 +103,13 @@ function logout(req,res){
 }
 
 module.exports = {
-    requireLogon: requireLogon,
+    requireAnonymous: requireAnonymous,
 
     rememberReturnUrl: rememberReturnUrl,
     redirect: redirect,
 
-    register: register,
-    local: passport.authenticate('local', authenticationOptions),
+    login: login,
+    traditional: traditional,
 
     facebook: provider('facebook', { scope: 'email' }),
     github: provider('github'),

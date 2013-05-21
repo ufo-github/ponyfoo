@@ -44,6 +44,10 @@ Brief list of changes implemented in each tagged version of **NBrut**.
 - Analytics
   - Added support for [**Clicky**](http://clicky.com/ "Clicky Web Analytics") tracking code
 
+- Usability
+  - Got rid of redundant 'Register' button.
+  - About box is no longer hidden behind a button, but directly accessible on blog home pages.
+
 
 
 0.2 (frozen)

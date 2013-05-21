@@ -3,17 +3,22 @@ section#user-login-template.template(data-class='user-authentication')
 
   include _providers
 
-  form.authentication-form(method='post', action='/user/login')
+  form.authentication-form(method='post', action=config.auth.traditional)
     input(type='hidden', name='redirect', value='{{prev}}')
 
     fieldset
       p
-        label(for='login-email')='Email'
+        label.authentication-label(for='login-email')='Email'
         input#login-email(type='text', name='email', placeholder='Input your email')
 
       p
-        label(for='login-password')='Password'
+        label.authentication-label(for='login-password')='Password'
         input#login-password(type='password', name='password', placeholder='Input your password')
 
-    p.authentication-button
-      input.button(type='submit', value='Login')
+      p
+        label.authentication-label(for='create-account')='New Account'
+        input.checkbox-input#create-account(type='checkbox', name='create')
+        label.checkbox(for='create-account')='Create'
+
+    p.authentication-form-buttons
+      input.button.authentication-button(type='submit', value='Login')

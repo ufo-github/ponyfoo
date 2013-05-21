@@ -5,12 +5,12 @@ var config = require('../../../config'),
     providers = ['facebook','github','google','linkedin'];
 
 function configure(server){
-    server.get(config.auth.register, controller.requireLogon);
-    server.get(config.auth.login, controller.requireLogon);
+    server.get(config.auth.login, controller.requireAnonymous);
     server.get(config.auth.logout, controller.logout);
 
-    server.post(config.auth.register, controller.requireLogon, controller.register, controller.redirect);
-    server.post(config.auth.login, controller.requireLogon, controller.local, controller.redirect);
+    server.post(config.auth.login, controller.requireAnonymous, controller.login, controller.redirect);
+
+    server.post(config.auth.traditional, controller.requireAnonymous, controller.traditional, controller.redirect);
 
     function configureProvider(name){
         if(!config.auth[name].enabled){

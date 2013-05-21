@@ -9,8 +9,6 @@ data.assets.host = config.server2.authorityBlog;
 data.assets.profiles =  ['blogger', 'registered', 'anon'];
 
 var registered = ['blogger', 'registered'];
-// TODO: used by entry api controller absolute path used to load jQuery locally
-// var jQueryAbsolute = path.join(config.statics.folder, '/js/vendor/jquery-' + assets.jQuery.version + '.min.js');
 
 data.assets.css = [
     resolve('/css/defaults/reset.css'),

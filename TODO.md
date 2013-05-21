@@ -4,8 +4,8 @@ TODO
 1
 -------
 
-- fix logon issues
 - integrate login and register on the market level
+
 - blog claim path
   - step to register or login
   - existing bloggers can't claim additional blog slugs

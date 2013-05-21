@@ -10,7 +10,6 @@ var async = require('async'),
 function statics(done){
     process.nextTick(function(){
         done(null, [
-            { url: '/user/register', changefreq: 'monthly', priority: 0.3 },
             { url: '/user/login', changefreq: 'monthly',  priority: 0.3 }
         ]);
     });

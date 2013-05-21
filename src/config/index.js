@@ -89,9 +89,9 @@ var config = {
     },
     auth: {
         success: '/',
-        register: '/user/register',
-        logout: '/user/logout',
         login: '/user/login',
+        logout: '/user/logout',
+        traditional: '/user/login/traditional',
         facebook: {
             get enabled(){ return this.id && this.secret; },
             id: env.FACEBOOK_APP_ID,

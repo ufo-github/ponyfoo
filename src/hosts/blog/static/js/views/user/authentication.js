@@ -1,7 +1,7 @@
 !function (window,$,nbrut, undefined) {
     'use strict';
 
-    var ignored = ['/','/user/login','/user/register'],
+    var ignored = ['/','/user/login'],
         prev;
 
     function prepare(render, data, ctx){
@@ -30,13 +30,19 @@
                 provider.attr(attr, '{0}?redirect={1}'.format(href, prev));
             });
         }
+
+        var create = $('#create-account'),
+            submit = $('.authentication-button');
+
+        create.on('change', function(){
+            var checked = create.prop('checked');
+            if (checked){
+                submit.val('Register');
+            }else{
+                submit.val('Login');
+            }
+        });
 	}
-	
-    nbrut.tt.configure({
-        key: 'user-register',
-        prepare: prepare,
-		afterActivate: afterActivate
-    });
 
     nbrut.tt.configure({
         key: 'user-login',
