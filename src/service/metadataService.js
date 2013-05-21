@@ -17,7 +17,8 @@ function getLocations(slug, opts){
         folder: folder
     };
 }
-function getMetaXml(opts){
+
+function getMetadata(opts){
     return function(req,res,next){
         var loc = getLocations(req.slug, opts);
 
@@ -76,6 +77,6 @@ function writeToDisk(slug,opts){
 }
 
 module.exports = {
-    getMetadata: getMetaXml,
+    getMetadata: getMetadata,
     writeToDisk: writeToDisk
 };

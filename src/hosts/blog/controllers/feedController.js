@@ -64,7 +64,7 @@ function build(feed, req, host, done){
 }
 
 module.exports = {
-    getFeed: metadataService.get({
+    getFeed: metadataService.getMetadata({
         config: config.feed,
         setup: setup
     })

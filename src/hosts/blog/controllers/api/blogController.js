@@ -3,7 +3,7 @@
 var config = require('../../../../config'),
     Blog = require('../../../../model/Blog.js'),
     User = require('../../../../model/User.js'),
-    crud = require('../../../services/crud.js')(Blog),
+    crud = require('../../../../service/crudService.js')(Blog),
     validate = require('../../../../service/blogValidationService.js').validate,
     rest = require('../../../../service/restService.js');
 

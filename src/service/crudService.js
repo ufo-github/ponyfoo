@@ -1,21 +1,21 @@
 'use strict';
 
 var async = require('async'),
-    $ = require('./$.js'),
-    rest = require('./rest.js');
+    utilityService = require('./utilityService.js'),
+    rest = require('./restService.js');
 
 function getCallback(opts){
     if(opts !== undefined){
         if(opts.res !== undefined){
             return function(err){
-                opts.args = $.args(arguments).slice(1);
+                opts.args = utilityService.args(arguments).slice(1);
                 rest.resHandler(err, opts);
             };
         }else if(opts.then !== undefined){
             return opts.then;
         }
     }
-    return $.log.err;
+    return utilityService.log.err;
 }
 
 function crud(Model){
@@ -24,14 +24,14 @@ function crud(Model){
             callback = getCallback(opts);
 
         document = new Model(source);
-        (opts.always || $.noop)(document);
+        (opts.always || utilityService.noop)(document);
         document.save(callback);
     }
 
     function update(query, document, opts){
         var callback = getCallback(opts);
 
-        (opts.always || $.noop)(document);
+        (opts.always || utilityService.noop)(document);
         Model.findOneAndUpdate(query, document, {}, callback);
     }
 

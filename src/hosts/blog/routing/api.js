@@ -1,6 +1,6 @@
 'use strict';
 
-var rest = require('../../../service/rest.js'),
+var rest = require('../../../service/restService.js'),
     utilityService = require('../../../service/utilityService.js'),
     base = '../controllers/api',
     blog = require(base + '/blogController.js'),
