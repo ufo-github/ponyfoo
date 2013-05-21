@@ -63,6 +63,14 @@ There isn't a lot to say about API credentials. These are required in order to w
 
 - **IMGUR_API_KEY**: Your [**imgur**](https://imgur.com/register/api_anon) API key. Used by **file uploads**, if `undefined`, images will be uploaded to `/img/uploads`.
 
+Twitter API isn't supported for authentication, because they don't provide emails. Twitter is used for broadcasting links to new posts.
+
+- **TWITTER_BROADCAST**: Whether to enable [**Twitter**](https://dev.twitter.com) broadcasts.
+- **TWITTER_CONSUMER_KEY**: Your [**Twitter**](https://dev.twitter.com) application consumer key.
+- **TWITTER_CONSUMER_SECRET**: Your [**Twitter**](https://dev.twitter.com) application consumer secret.
+- **TWITTER_ACCESS_TOKEN_KEY**: Your [**Twitter**](https://dev.twitter.com) application access token key.
+- **TWITTER_ACCESS_TOKEN_SECRET**: Your [**Twitter**](https://dev.twitter.com) application access token secret.
+
 
 
 Incidental

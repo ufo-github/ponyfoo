@@ -11,8 +11,6 @@ TODO
   - existing bloggers can't claim additional blog slugs
   - Go.
 
-
-
 2
 -------
     
