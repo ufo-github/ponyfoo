@@ -4,14 +4,13 @@ TODO
 1
 -------
 
-- rss, api, authentication
+- fix logon issues
 
 - blog claim path
   - existing bloggers can't claim additional blog slugs
   - step to register or login
   - Go.
 
-- un-mess login redirects
 
 
 2
@@ -23,9 +22,9 @@ TODO
 
 - refactor:
     - drop crudService
-    - refactor authenticationController, feedController, 
+    - refactor authenticationController, feedController
+    - refactor api controllers, move logic to services, rename exports more semantically
     - rename config.server vars into server2, and drop config.server
-    - refactor api controller exports and services
 
 
 
