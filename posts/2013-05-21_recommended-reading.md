@@ -20,21 +20,17 @@ This book addresses usability and web design in a very comfortable read which so
 
 Have you ever wondered why the telephone is so damn hard to use? You might not be the only one. Norman will unveil the reason why some products are easier to interact with than others, and you will earn a competitive edge over other, less thought-out, unpolished products.
 
+### [Head First Design Patterns](http://www.amazon.com/First-Design-Patterns-Elisabeth-Freeman/dp/0596007124 "Find it in Amazon") ###
+
+Head First is an excellent book if you want to learn common software design patterns and ways to apply or combine them. The code samples are written in Java, but it should be very easy for you to understand the idea behind the code samples. The book is very easy to read, and gives you lots of examples, which makes it a very fun and relaxed read. You won't even realize how much you're learning.
+
 ### [Programming Pearls](http://www.amazon.com/Programming-Pearls-2nd-Jon-Bentley/dp/0201657880 "Find it in Amazon") ###
 
 In his book, Jon will walk you through the wondrous land of low-level programming. It all boils down to making you think really hard about problems. Even if problems such as sorting and filtering are resolved for the average software programmer today, this is a crucial book going into one of those interviews which attack your coding and reasoning skills ruthlessly.
 
-### [Code Complete: A Practical Handbook of Software Construction](http://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670 "Find it in Amazon") ###
-
-TODO
-
 ### [Refactoring: Improving the Design of Existing Code](http://www.amazon.com/Refactoring-Improving-Design-Existing-Code/dp/0201485672 "Find it in Amazon") ###
 
-TODO
-
-### [Head First Design Patterns](http://www.amazon.com/First-Design-Patterns-Elisabeth-Freeman/dp/0596007124 "Find it in Amazon") ###
-
-TODO
+Fowler goes on to describe a very lengthy list of software refactoring patterns in a very structured way. You can either read the book from beginning to end, or jump right into the recipe you want to use. Each refactoring comes with the reason why you'd want to use it, when not to do it, and a step-by-step explanation on how to implement it. You'll also gain insight into why refactoring is important in the first place, and how to refactor in a clean way that mitigates introducing bugs during the process.
 
 ### [JavaScript: The Good Parts](http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742 "Find it in Amazon") ###
 
