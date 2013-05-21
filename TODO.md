@@ -16,7 +16,6 @@ TODO
 2
 -------
     
-- unfold about for more visibility
 - save drafts
 - redesign commenting infrastructure (which blows)
 

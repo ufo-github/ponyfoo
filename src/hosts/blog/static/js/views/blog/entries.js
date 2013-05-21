@@ -80,7 +80,6 @@
         if(search){
             addSearchShrinkage(container);
         }
-        addSidebar(sidebar);
     }
 
     function addSearchShrinkage(container){
@@ -166,24 +165,6 @@
                 pager.remove();
                 addPager(it, container, identifier, query);
             }
-        });
-    }
-
-    function addSidebar(container){
-        var flipper = container.find('.sidebar-flipper'),
-            card = container.find('.flip-card'),
-            highlight = 'box-highlight',
-            highlightSidebar = 'sidebar-flip-highlight',
-            highlighted = nbrut.local.get(highlightSidebar, true);
-
-        if(highlighted === true){ // only when the user doesn't know about it.
-            flipper.addClass(highlight);
-        }
-
-        flipper.on('click.flip', function(){
-            card.flip();
-            flipper.removeClass(highlight);
-            nbrut.local.set(highlightSidebar, false);
         });
     }
 
