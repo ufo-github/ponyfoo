@@ -1,16 +1,16 @@
 'use strict';
 
-var config = require('../../config.js'),
-    controller = require('../controllers/userController.js'),
+var config = require('../../../config'),
+    controller = require('../controllers/authenticationController.js'),
     providers = ['facebook','github','google','linkedin'];
 
 function configure(server){
-    server.get(config.auth.register, controller.guard);
-    server.get(config.auth.login, controller.guard);
+    server.get(config.auth.register, controller.requireLogon);
+    server.get(config.auth.login, controller.requireLogon);
     server.get(config.auth.logout, controller.logout);
 
-    server.post(config.auth.register, controller.guard, controller.register, controller.redirect);
-    server.post(config.auth.login, controller.guard, controller.local, controller.redirect);
+    server.post(config.auth.register, controller.requireLogon, controller.register, controller.redirect);
+    server.post(config.auth.login, controller.requireLogon, controller.local, controller.redirect);
 
     function configureProvider(name){
         if(!config.auth[name].enabled){

@@ -1,6 +1,6 @@
 'use strict';
 
-var config = {
+module.exports = {
     paging: {
         limit: 8
     },
@@ -8,5 +8,3 @@ var config = {
         editableFor: 1000 * 60 * 5 // 15 minutes
     }
 };
-
-module.exports = config;

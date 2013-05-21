@@ -16,11 +16,17 @@ TODO
 
 2
 -------
-
+    
 - unfold about for more visibility
 - save drafts
 - redesign commenting infrastructure (which blows)
-- rename config.server vars into server2, and drop config.server
+
+- refactor:
+    - drop crudService
+    - refactor authenticationController, feedController, 
+    - rename config.server vars into server2, and drop config.server
+    - refactor api controller exports and services
+
 
 
 3

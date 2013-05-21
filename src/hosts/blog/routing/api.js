@@ -1,13 +1,13 @@
 'use strict';
 
-var rest = require('../../../services/rest.js'),
-    $ = require('../../../services/$.js'),
-    controllers = './../../../controllers/api/1.0/',
-    blog = require(controllers + '/blog.js'),
-    entry = require(controllers + '/entry.js'),
-    comment = require(controllers + '/comment.js'),
-    user = require(controllers + '/user.js'),
-    file = require(controllers + '/file.js');
+var rest = require('../../../service/rest.js'),
+    utilityService = require('../../../service/utilityService.js'),
+    base = '../controllers/api',
+    blog = require(base + '/blogController.js'),
+    entry = require(base + '/entryController.js'),
+    comment = require(base + '/commentController.js'),
+    user = require(base + '/userController.js'),
+    file = require(base + '/fileController.js');
 
 function routing(server){
 	var base = '/api/1.0',
@@ -16,7 +16,7 @@ function routing(server){
 
 	verbs.forEach(function(v){
 		methods[v] = function(){
-            var args = $.args(arguments);
+            var args = utilityService.args(arguments);
             args[0] = base + args[0]; // always use api endpoints.
             server[v].apply(server, args);
 		};
@@ -45,7 +45,7 @@ function blogger(req,res,next){
 
 function paged(api, path){
     var paging = '/p/:page([2-9]|[1-9][0-9]+)',
-        callbacks = $.args(arguments).slice(2),
+        callbacks = utilityService.args(arguments).slice(2),
         regular = [path].concat(callbacks),
         page = [path + paging].concat(callbacks);
 

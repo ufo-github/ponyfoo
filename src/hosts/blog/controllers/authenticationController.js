@@ -1,10 +1,13 @@
 'use strict';
 
-var config = require('../config.js'),
+var config = require('../../../config'),
     passport = require('passport'),
-    text = require('../services/text.js'),
-    model = require('../models/user.js'),
-    crud = require('../services/crud.js')(model);
+    User = require('../../../model/User.js'),
+    crud = require('../../../service/crudService.js')(User),
+    authenticationOptions = {
+        failureRedirect: config.auth.login,
+        failureFlash: true
+    };
 
 function validate(req){
     var email = req.body.email,
@@ -32,8 +35,8 @@ function register(req,res, next){
     var shouldCreate = validate(req),
         email = req.body.email;
 
-    model.findOne({ email: email }, function(err, document){
-        if(document !== null){
+    User.findOne({ email: email }, function(err, user){
+        if(user !== null){
             req.flash('error', 'Email already registered');
             shouldCreate = false;
         }
@@ -59,15 +62,10 @@ function register(req,res, next){
     });
 }
 
-var authOpts =  {
-    failureRedirect: config.auth.login,
-    failureFlash: true
-};
-
 function provider(name, options){
     return {
         auth: passport.authenticate(name, options),
-        callback: passport.authenticate(name, authOpts)
+        callback: passport.authenticate(name, authenticationOptions)
     };
 }
 
@@ -82,27 +80,31 @@ function redirect(req,res){
     res.redirect(req.body.redirect || sessionRedirect || config.auth.success);
 }
 
+function requireLogon(req,res,next){
+    if(!!req.user){
+        redirect(req,res);
+    }
+    next();
+}
+
+function logout(req,res){
+    req.logout();
+    res.redirect('/');
+}
+
 module.exports = {
-    guard: function(req,res,next){
-        if(!!req.user){
-            redirect(req,res);
-        }
-        next();
-    },
+    requireLogon: requireLogon,
 
     rememberReturnUrl: rememberReturnUrl,
     redirect: redirect,
 
     register: register,
-    local: passport.authenticate('local', authOpts),
+    local: passport.authenticate('local', authenticationOptions),
 
     facebook: provider('facebook', { scope: 'email' }),
     github: provider('github'),
     google: provider('google'),
     linkedin: provider('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }),
 
-    logout: function(req,res){
-        req.logout();
-        res.redirect('/');
-    }
+    logout: logout
 };

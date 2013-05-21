@@ -4,7 +4,7 @@ var config = require('../../../config'),
     metadataService = require('../../../service/metadataService.js'),
     async = require('async'),
     rss = require('rss'),
-    controller = require('../controllers/api/1.0/entry.js');
+    entryController = require('./api/entryController.js');
 
 function setup(req,done){
     var blog = req.blog,
@@ -24,7 +24,7 @@ function setup(req,done){
             blog: req.blog._id
         };
 
-    controller.list(listOpts, build(feed, req, host, done));
+    entryController.list(listOpts, build(feed, req, host, done));
 }
 
 function build(feed, req, host, done){
@@ -34,7 +34,7 @@ function build(feed, req, host, done){
         }
 
         async.forEach(list.entries, function(entry,done){
-            controller.getPlainTextBrief(entry, function(err,brief){
+            entryController.getPlainTextBrief(entry, function(err,brief){
                 if(err){
                     return done(err);
                 }
