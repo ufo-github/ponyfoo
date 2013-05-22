@@ -2,11 +2,11 @@
 
 I've mentioned [CI](/2013/01/18/continuous-integration-and-automated-deployments "Continuous Integration, and Automated Deployments") and [static asset management](/2013/01/18/asset-management-in-node "Asset management in Node") in the past. Now I want to talk about code quality.
 
-This article is mostly a follow up on the [CI](/2013/01/18/continuous-integration-and-automated-deployments "Continuous Integration, and Automated Deployments") post. I'll describe how [Grunt](gruntjs.com "Grunt: The JavaScript Task Runner") helped me change the _test_ and _build_ processes used in this blog's [engine](https://github.com/bevacqua/NBrut "NBrut blogging engine").
+This article is mostly a follow up on the [CI](/2013/01/18/continuous-integration-and-automated-deployments "Continuous Integration, and Automated Deployments") post. I'll describe how [Grunt](gruntjs.com "Grunt: The JavaScript Task Runner") helped me change the _test_ and _build_ processes used in this blog's [engine](https://github.com/bevacqua/ponyfoo "ponyfoo blogging engine").
 
 > Before using Grunt, I didn't really have a **real** build process. _Sure_, `git push heroku master` _triggered a build_ on their end, but I didn't control any of it, all I did was `node app.js`.
 
-Similarly, my [Travis-CI hook](https://travis-ci.org/bevacqua/NBrut/builds/5595956 "Travis Build Log") just made sure there weren't any conflicts with my npm packages. I could do _better_.
+Similarly, my [Travis-CI hook](https://travis-ci.org/bevacqua/ponyfoo/builds "Travis Build Log") just made sure there weren't any conflicts with my npm packages. I could do _better_.
 
 I've started leaning towards making the engine more _testable_, I figured I had to start **somewhere**. For me, that first step was to _use a task runner_.
 

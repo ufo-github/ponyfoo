@@ -4,7 +4,7 @@ In the [next post](/2013/01/18/asset-management-in-node "Asset management in Nod
 
 ## Continuous Integration ##
 
-Configuring [Travis CI](https://travis-ci.org/bevacqua/NBrut "NBrut build status on Travis CI") was tricky to get right. I configured my [.travis.yml](http://about.travis-ci.org/docs/user/build-configuration/ "Configuring your Travis CI build") file like this:
+Configuring [Travis CI](https://travis-ci.org/bevacqua/ponyfoo "ponyfoo build status on Travis CI") was tricky to get right. I configured my [.travis.yml](http://about.travis-ci.org/docs/user/build-configuration/ "Configuring your Travis CI build") file like this:
 
 	language: node_js
 

@@ -32,7 +32,7 @@ The different modules packaged through <kbd>npm</kbd>, swiftly followed the conv
 
 # My Point of View #
 
-While developing [this blogging engine](https://github.com/bevacqua/NBrut "NBrut on GitHub"), and _particularly_ the [asset manager](https://github.com/bevacqua/node-assetify "assetify on GitHub") behind it, I made extensive use of [async](https://github.com/caolan/async "async on GitHub"), which vastly improves upon the _raw power_ of manually chaining callbacks.
+While developing [this blogging engine](https://github.com/bevacqua/ponyfoo "ponyfoo on GitHub"), and _particularly_ the [asset manager](https://github.com/bevacqua/node-assetify "assetify on GitHub") behind it, I made extensive use of [async](https://github.com/caolan/async "async on GitHub"), which vastly improves upon the _raw power_ of manually chaining callbacks.
 
 I felt comfortable dealing with callbacks, but some more _complex scenarios demanded a more robust solution_, such as the ones **async** provides.
 

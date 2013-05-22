@@ -29,7 +29,7 @@ The mere notion of having [Javascript](/2013/01/01/javascript-javascript-javascr
 
 ## Where do we go from here? ##
 
-Right now, I'm writing this post on [_Notepad++_](http://notepad-plus-plus.org/ "Notepad++") and I haven't even begun working on the blog application. Even though I've already allocated a public GitHub repository to the task, and I'm code-naming the project [NBrut](https://github.com/bevacqua/NBrut "GitHub repository").
+Right now, I'm writing this post on [_Notepad++_](http://notepad-plus-plus.org/ "Notepad++") and I haven't even begun working on the blog application. Even though I've already allocated a public GitHub repository to the task, and I'm code-naming the project [NBrut](https://github.com/bevacqua/ponyfoo "GitHub repository").
 
 Since I want _leanness_ to be a defining characteristic of how I face **Pony Foo**, I'm using this post as a way to _force myself_ into being able to go live as soon as I'm able to. In order to do that, I have to start by working on implementing _Markdown_, since it's probably the part of the application I'm most comfortable coding. I'll figure out how to solve the rest as I go along.
 

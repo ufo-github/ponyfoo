@@ -129,7 +129,7 @@ Then we need a little initialization code to get things going:
 		console.log('Connected to Mongoose');
 	});
 
-I set up a tentative `config.db.uri = mongodb://localhost/nbrut`. This code will _blatantly fail upon execution_, due to the simple fact that _we didn't fire up MongoDB yet_, so we'll go ahead and do that now.
+I set up a tentative `config.db.uri = mongodb://localhost/ponyfoo`. This code will _blatantly fail upon execution_, due to the simple fact that _we didn't fire up MongoDB yet_, so we'll go ahead and do that now.
 
 [Download and install MongoDB](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/ "MongoDB setup instructions on Windows").
 

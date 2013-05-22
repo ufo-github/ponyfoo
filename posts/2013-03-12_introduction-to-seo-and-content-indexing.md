@@ -48,7 +48,7 @@ After waiting for all the JavaScript to get executed, and after a little cleanup
 
 One last step if you care about performance is dumping this into a file cache that is relatively **short-lived** (meaning you'll _invalidate that cached page_ if a determined amount of time elapses), in order to save yourself a web request in subsequent calls made by a crawler agent against that resource.
 
-If you are curious about how to implement this, [here is my take for this blog](https://github.com/bevacqua/NBrut/blob/v0.2/src/logic/zombie.js "Crawler AJAX Support Implementation"), it is implemented in Node.JS.
+If you are curious about how to implement this, [here is my take for this blog](https://github.com/bevacqua/ponyfoo/blob/v0.2/src/logic/zombie.js "Crawler AJAX Support Implementation"), it is implemented in Node.
 
 Note that _this might not be the latest version_. It's the one contained in the **v0.2** tag. Although I don't expect to change it much.
 

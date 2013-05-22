@@ -29,7 +29,7 @@ I think I did a good job of keeping the interface assetify exposes clean and sim
 
 I built it in such a way that allows you to switch between _development_ and _production_ modes just by turning a boolean, something I couldn't accomplish with the packages I've tried out.
 
-My most recent addition to it (currently version **0.0.8**) was **dynamic asset management**, which even though I didn't need for [NBrut](https://github.com/bevacqua/NBrut), I felt this was a feature that couldn't be missing in **assetify**.
+My most recent addition to it (currently version **0.0.8**) was **dynamic asset management**, which, even though I didn't need for [Pony Foo](https://github.com/bevacqua/ponyfoo), I felt this was a feature that couldn't be missing in **assetify**.
 
 A useful pattern in web architecture is to decompose views into smaller chunks, or _partial views_. One of the _drawbacks_ of such modularization, is handling script blocks. If you're _a purist_, you'll irrevocably want your script blocks **grouped together at the bottom of the page**. But you'll also want to _declare them in the same partial view_ where you are going to be needing them.
 
