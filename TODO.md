@@ -11,6 +11,10 @@ TODO
   - existing bloggers can't claim additional blog slugs
   - Go.
 
+- publicize blogs on main site
+
+
+
 2
 -------
     
