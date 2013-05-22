@@ -1,7 +1,7 @@
 {
   "name": "ponyfoo",
   "description": "Seamless micro-blogging platform",
-  "homepage": "https://github.com/ponyfoo/ponyfoo",
+  "homepage": "https://github.com/bevacqua/ponyfoo",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "nicolasbevacqua@gmail.com",
@@ -10,10 +10,10 @@
   "version": "0.3.0-tip",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ponyfoo/ponyfoo.git"
+    "url": "git://github.com/bevacqua/ponyfoo.git"
   },
   "bugs": {
-    "url": "https://github.com/ponyfoo/ponyfoo/issues"
+    "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
   "dependencies": {
     "async": "0.2.8",
@@ -21,7 +21,7 @@
     "connect": "~2.7.2",
     "connect-flash": "~0.1.0",
     "connect-mongoose": "0.0.2",
-    "express": "3.2.4",
+    "express": "3.2.5",
     "fs-extra": "~0.6.1",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.6",
