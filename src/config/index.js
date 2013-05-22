@@ -42,7 +42,7 @@ var config = {
         enabled: env.ENABLE_ZOMBIE_CRAWLER,
         cache: 60000 * 60 // an hour, in ms
     },
-    db: { uri: env.MONGOLAB_URI || env.MONGO_URI || 'mongodb://localhost/nbrut' },
+    db: { uri: env.MONGOLAB_URI || env.MONGO_URI },
     security: {
         saltWorkFactor: env.SALT_WORK_FACTOR,
         sessionSecret: env.SESSION_SECRET

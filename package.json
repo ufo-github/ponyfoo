@@ -1,7 +1,7 @@
 {
-  "name": "NBrut",
+  "name": "ponyfoo",
   "description": "Seamless micro-blogging platform",
-  "homepage": "https://github.com/bevacqua/NBrut",
+  "homepage": "https://github.com/ponyfoo/ponyfoo",
   "author": {
     "name": "Nicolas Bevacqua",
     "email": "nicolasbevacqua@gmail.com",
@@ -10,10 +10,10 @@
   "version": "0.3.0-tip",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bevacqua/NBrut.git"
+    "url": "git://github.com/ponyfoo/ponyfoo.git"
   },
   "bugs": {
-    "url": "https://github.com/bevacqua/NBrut/issues"
+    "url": "https://github.com/ponyfoo/ponyfoo/issues"
   },
   "dependencies": {
     "async": "~0.1.22",

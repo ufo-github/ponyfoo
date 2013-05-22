@@ -7,14 +7,14 @@ If you are hosting your site using [**Heroku**](https://heroku.com "Heroku"), yo
 
 A good alternative is the JetBrains IDE for Node.JS, [**WebStorm**](http://www.jetbrains.com/webstorm/ "WebStorm"). 
 
-Note that most of these have default values, which might come either from Node.js or from the configuration file for **NBrut**.
+Note that most of these have default values, which might come either from Node.js or from the configuration file for **Pony Foo**.
 
 Required
 --------
 
-These are the environment variables that are an _absolute must_ for **NBrut** to run.
+These are the environment variables that are an _absolute must_ for **Pony Foo** to run.
 
-- No environment variables are required to installing **NBrut**.
+- No environment variables are required to installing **Pony Foo**.
 
 
 
@@ -33,7 +33,7 @@ Hosting
 These variables are usually very important for **deployments**, but the default values are _Ok_ in the development environment.
 
 - **NODE_ENV**: Node.js environment, defaults to `'development'`, options include `'staging'` and `'production'`. By default, production environments minify and bundle assets, compress responses, while the development environment uses unminified sources and provides a few more features for debugging.
-- **HOST_TLD**: The `TLD` for the site, this is important when slugging, because every blog is hosted on a subdomain. Defaults to `'local-nbrut.com'`.
+- **HOST_TLD**: The `TLD` for the site, this is important when slugging, because every blog is hosted on a subdomain. Defaults to `'local-ponyfoo.com'`.
 - **ENABLE_SLUGGING**: Enables blog slugging. When disabled, users can't create their own blogs on the platform. Defaults to `false`.
 - **HOST_MARKET**: The default `slug` for the site, that is, the **semantic root** of the site. Defaults to `'www'`.
 
@@ -41,9 +41,9 @@ These variables are usually very important for **deployments**, but the default 
 - **PORT**: The actual port where the application will listen on. Defaults to port `8081`.
 - **PUBLIC_PORT**: The public facing port. Sometimes, production environments use architectures set up with load balancers and assign ports arbitrarily to your application, but the domain will still use port `80`, this helps avoid issues when redirecting requests. Defaults to `PORT`.
 
-- **MONGO_URI** (or **MONGOLAB_URI**): The connection uri to your MongoDB server. Defaults to `'mongodb://localhost/nbrut'`.
+- **MONGO_URI** (or **MONGOLAB_URI**): The connection uri to your MongoDB server. Defaults to `'mongodb://localhost/ponyfoo'`.
 
-- **BLOG_DEFAULT**: The default blog slug. Defaults to `'blog'`. i.e: http://blog.local-nbrut.com`
+- **BLOG_DEFAULT**: The default blog slug. Defaults to `'blog'`. i.e: http://blog.local-ponyfoo.com`
 - **BLOG_REGEX**: An optional regex to restrict the subdomains that are available to users. Implicitly adds `'^'` and `'$'` to the regex. Requests that fail a test against this regex get permanently redirected to the default slug. By default it's unrestricted.
 - **ENABLE_BLOG_REGEX_301**: If `'true'`, permanently redirects requests to filtered blog slugs to the market home.
 
