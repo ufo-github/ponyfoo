@@ -1,4 +1,4 @@
-Pony Foo [![Build Status](https://travis-ci.org/bevacqua/NBrut.png?branch=master)](https://travis-ci.org/bevacqua/NBrut) [![Dependency Status](https://gemnasium.com/bevacqua/NBrut.png)](https://gemnasium.com/bevacqua/NBrut)
+Pony Foo [![Build Status](https://travis-ci.org/bevacqua/ponyfoo.png?branch=master)](https://travis-ci.org/bevacqua/ponyfoo) [![Dependency Status](https://gemnasium.com/bevacqua/ponyfoo.png)](https://gemnasium.com/bevacqua/ponyfoo)
 ========================================================================================================================
 
 **Pony Foo** is the open-source blogging platform underlying [**Pony Foo**](http://www.ponyfoo.com "Pony Foo").
