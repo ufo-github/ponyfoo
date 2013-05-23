@@ -4,6 +4,17 @@ var Blog = require('../model/Blog.js'),
     User = require('../model/User.js'),
     config = require('../config');
 
+function create(owner, slug, title, done){
+    new Blog({
+        owner: owner._id,
+        slug: slug,
+        title: title,
+        social: {
+            rss: true
+        }
+    }).save(done);
+}
+
 function validate(model,done){
     var email = model['user.email'],
         password = model['user.password'],
@@ -47,17 +58,13 @@ function findBySlug(slug, done){
     });
 }
 
+function findByUser(user, done){
+    Blog.findOne({ owner: user._id }, done);
+}
+
 module.exports = {
-    create: function (owner, slug, title, done){
-        new Blog({
-            owner: owner._id,
-            slug: slug,
-            title: title,
-            social: {
-                rss: true
-            }
-        }).save(done);
-    },
+    create: create,
     validate: validate,
-    findBySlug: findBySlug
+    findBySlug: findBySlug,
+    findByUser: findByUser
 };
