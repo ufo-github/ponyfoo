@@ -67,9 +67,12 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-assetify');
+
+    if(config.env.development){
+        grunt.loadNpmTasks('grunt-contrib-watch');
+    }
 
     grunt.registerTask('server', 'Start the web server', function(){
         grunt.task.requires('assetify');
