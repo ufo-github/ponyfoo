@@ -7,6 +7,11 @@ module.exports = function(grunt) {
         clean: [
             './src/**/.bin'
         ],
+        recess: {
+            install: { src: ['./src/hosts/install/**/*.less'] },
+            market: { src: ['./src/hosts/market/**/*.less'] },
+            blog: { src: ['./src/hosts/blog/**/*.less'] }
+        },
         jshint: {
             node: {
                 files: {
@@ -67,6 +72,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-jasmine-node');
     grunt.loadNpmTasks('grunt-assetify');
 
@@ -84,7 +90,7 @@ module.exports = function(grunt) {
         server.execute(binders, done);
     });
 
-    grunt.registerTask('test', ['clean', 'jshint', 'jasmine_node']); // cleanup and run tests
+    grunt.registerTask('test', ['clean', /*'recess',*/ 'jshint', 'jasmine_node']); // cleanup and run tests
 
     grunt.registerTask('default', ['test']); // by default just run the tests
 

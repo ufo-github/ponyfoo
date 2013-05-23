@@ -19,6 +19,8 @@ TODO
 - save drafts
 - integrate twitter broadcasts
 - redesign commenting infrastructure (which blows)
+- tables css formatting
+- abide by css linter rules!
 
 - refactor:
     - drop crudService
