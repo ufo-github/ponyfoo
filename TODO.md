@@ -4,14 +4,12 @@ TODO
 1
 -------
 
-- integrate login and register on the market level
+- integrate login on the market level
 
 - blog claim path
   - step to register or login
   - existing bloggers can't claim additional blog slugs
   - Go.
-
-- publicize blogs on main site
 
 
 
@@ -19,6 +17,7 @@ TODO
 -------
     
 - save drafts
+- integrate twitter broadcasts
 - redesign commenting infrastructure (which blows)
 
 - refactor:
