@@ -24,7 +24,7 @@ function ensureTakenThenHydrate(req,res,next){
 
         if(!result){
             var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
-            return res.redirect(config.server2.authorityMarket + req.url, 302);
+            return res.redirect(config.server2.authorityMarket + req.url + query, 302);
         }
 
         hydrate(req, result);

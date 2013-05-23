@@ -17,7 +17,6 @@ function getProfile(req){
 
 function getViewModel(req, profile){
     return {
-        query: req.query, // query string parameters
         profile: profile,
         slug: req.slug,
         blog: req.blog,

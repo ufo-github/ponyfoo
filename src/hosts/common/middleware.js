@@ -26,12 +26,8 @@ function configure(server){
     flash.configure(server);
 
     authenticationSetup(server);
+    localsSetup(server);
 
-    server.use(function(req,res,next){
-        platformService.hydrate(req);
-        next();
-    });
-    
     server.use(server.router);
 }
 
@@ -40,9 +36,14 @@ function authenticationSetup(server){
     server.use(passport.session());
 
     authenticationService.configure();
+}
 
+function localsSetup(server){
     server.use(function(req,res,next){
+        platformService.hydrate(req);
+
         res.locals.user = req.user;
+        res.locals.query = req.query;
         next();
     });
 }
