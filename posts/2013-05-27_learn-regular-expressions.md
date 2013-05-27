@@ -120,6 +120,10 @@ Alternatively, you could provide a function callback as a replacement parameter,
 
 You could also use `RegExp.prototype.test` to [test](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp/test "test - MDN") whether a pattern matches the provided string.
 
-[TL;DR cheatsheet](http://i.imgur.com/UTlGckN.png "Regular Expressions Cheat Sheet")
+### Conclusion ###
 
-  [1]: http://i.imgur.com/fp19SqK.jpg
+In this post we've looked at some of the most common patterns of regex. Most importantly, we've looked at the way in which we can build simple regular expressions. I intentionally left out a complicated subset of regular expressions, in [assertions](http://www.regular-expressions.info/lookaround.html "Lookaround assertions"), I will definitely cover that topic at some point in the future.
+
+I test out my regular expressions using this online [REGex Tester](http://regextester.com/ "REGex Tester Tool") tool, or directly in my browser if they are simple enough.
+
+[TL;DR cheatsheet](http://i.imgur.com/UTlGckN.png "Regular Expressions Cheat Sheet")
