@@ -4,7 +4,11 @@
 
 [TL;WR cheatsheet](http://i.imgur.com/UTlGckN.png "Regular Expressions Cheat Sheet")
 
-[![stand-back-regex.jpg][1]](https://xkcd.com/208/ "Everybody stand back")
+I'll try my best not to drown you in a sea of technical stuff, but regular expressions **are** a complicated matter, and learning them is no easy feat.
+
+[![stand-back-regex.jpg][1]](https://xkcd.com/208/ "Everybody stand back, I know regular expressions!")
+
+[1]: http://i.imgur.com/fp19SqK.jpg
 
 ## When not to use a regex ##
 
