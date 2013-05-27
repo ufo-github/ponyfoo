@@ -37,7 +37,7 @@ Next up we have `[`. Everything contained in the brackets has a special meaning.
 
 The second special expression we have is `?`. This is a **quantifier**. Quantifiers determine how the previous expression is matched. `?` means the previous expression is _optional_. `/ate?/` will match both `'ate'` and `'at'`.
 
-Usually, we want to do this in longer expressions than just a single character. In this case, we will use groups. These are expressions enclosed in parenthesis. `/foo (bar )?baz/`, for instance, will match both `'foo bar'`, and `'foo bar baz'`.
+Usually, we want to do this in longer expressions than just a single character. In this case, we will use groups. These are expressions enclosed in parenthesis. `/foo (bar )?baz/`, for instance, will match both `'foo baz'`, and `'foo bar baz'`.
 
 That brings us to the next portion of our regex, `(the|[2-4])`. Here we used a group, but we have several other special characters. The `[2-4]` expression is a range, and it means either 2, 3, or 4. Anything in the _inclusive_ 2-4 range.
 
