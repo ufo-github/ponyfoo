@@ -8,7 +8,7 @@ var async = require('async'),
 
 function getLocations(slug, opts){
     var relative = opts.config.physical(slug),
-        physical = path.join(config.statics.bin, relative),
+        physical = path.join(config.bin.metadata, relative),
         folder = path.dirname(physical);
 
     return {

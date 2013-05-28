@@ -133,6 +133,7 @@ var config = {
     api: require('./api.js'),
     twitter: require('./twitter.js'),
     market: require('./market.js'),
+    bin: require('./bin.js')
 };
 
 module.exports = config;
