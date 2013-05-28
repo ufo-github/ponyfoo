@@ -14,10 +14,19 @@ function execute(gruntvars, done){
             if(err){
                 throw err;
             }
-
+console.log(installed);
             if(!installed){
                 vhost('install');
             }
+
+
+console.log('\n\n\n');
+console.log(JSON.stringify(config.server);
+console.log('\n\n\n');
+console.log(JSON.stringify(config.server2);
+console.log('\n\n\n');
+console.log(config.market.on);
+console.log('\n\n\n');
 
             if (config.market.on && config.server2.slug.enabled){
                 vhost('market');
