@@ -11,12 +11,6 @@ function ensureTakenThenHydrate(req,res,next){
         return res.redirect(config.server2.authorityLanding + req.url, 301);
     }
 
-    var rslug = config.server.slugRegex;
-    if (rslug !== undefined && !rslug.test(req.host)){
-        var statusCode = config.server.permanentRedirect ? 301 : 302;
-        return res.redirect(config.server2.authorityLanding + req.url, statusCode);
-    }
-
     blogService.findBySlug(req.slug, function(err, result){
         if(err){
             return next(err);
