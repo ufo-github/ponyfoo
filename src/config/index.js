@@ -132,7 +132,8 @@ var config = {
         email: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : undefined
     },
     api: require('./api.js'),
-    twitter: require('./twitter.js')
+    twitter: require('./twitter.js'),
+    market: require('./market.js'),
 };
 
 module.exports = config;

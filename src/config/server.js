@@ -16,8 +16,8 @@ var env = require('./env.js'),
         }
     };
 
-function authority(slug){
-    var vanity = slug ? (slug + '.') : '';
+function authority(slugName){
+    var vanity = slug.enabled && slugName ? (slugName + '.') : '';
     return 'http://' + vanity + tld + port.toString();
 }
 

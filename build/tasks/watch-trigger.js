@@ -12,7 +12,7 @@ function trigger(grunt){
 
         fs.appendFile('.buildwatch', status, function(err){
             if(err){
-                return done(err);
+                throw err;
             }
             console.log('updated .buildwatch');
         })

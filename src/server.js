@@ -19,7 +19,7 @@ function execute(gruntvars, done){
                 vhost('install');
             }
 
-            if (config.server.slugged){
+            if (config.market.on){
                 vhost('market');
             }
             
