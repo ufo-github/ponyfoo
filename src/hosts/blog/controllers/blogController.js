@@ -8,11 +8,13 @@ var qs = require('querystring'),
 function ensureTakenThenHydrate(req,res,next){
     var rhost = config.server.hostRegex;
     if (rhost !== undefined && !rhost.test(req.host)){
+        console.log('landing redirect');
         return res.redirect(config.server2.authorityLanding + req.url, 301);
     }
 
     var rslug = config.server.slugRegex;
     if (rslug !== undefined && !rslug.test(req.host)){
+        console.log('authority redirect');
         var statusCode = config.server.permanentRedirect ? 301 : 302;
         return res.redirect(config.server2.authorityMarket + req.url, statusCode);
     }
@@ -24,13 +26,16 @@ function ensureTakenThenHydrate(req,res,next){
 
         if(!result){
             if(config.market.on){
+        console.log('on redirect');
                 var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
                 return res.redirect(config.server2.authorityMarket + req.url + query, 302);
             }else{
+        console.log('foo redirect');
                 return res.redirect(config.server2.authorityLanding, 302);
             }
         }
 
+        console.log('hydrate');
         hydrate(req, result);
         next();
     });
