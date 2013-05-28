@@ -17,7 +17,9 @@ function ensureTakenThenHydrate(req,res,next){
         }
 
         if(!result){
-            var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
+            var queryPart = req.slug ? '?' + qs.stringify({ q: req.slug }) : '',
+                query = config.market.on ? queryPart : '';
+
             return res.redirect(config.server2.authorityLanding + query, 302);
         }
 
