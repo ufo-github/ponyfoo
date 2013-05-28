@@ -23,12 +23,8 @@ function ensureTakenThenHydrate(req,res,next){
         }
 
         if(!result){
-            if(config.market.on){
-                var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
-                return res.redirect(config.server2.authorityMarket + req.url + query, 302);
-            }else{
-                return res.redirect(config.server2.authorityLanding, 302);
-            }
+            var query = req.slug ? '?' + qs.stringify({ q: req.slug }) : '';
+            return res.redirect(config.server2.authorityLanding + query, 302);
         }
 
         hydrate(req, result);
