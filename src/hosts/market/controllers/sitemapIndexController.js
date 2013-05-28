@@ -13,7 +13,7 @@ function getXml(blogs){
     var date = moment().format();
 
     if(config.market.on){
-        blogs.unshift({ slug: config.server.slugMarket });
+        blogs.unshift({ slug: config.server2.slug.market });
     }
     
     blogs.forEach(function(blog){

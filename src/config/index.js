@@ -23,7 +23,6 @@ var config = {
         slugMarket: env.HOST_MARKET,
         slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
         get host(){ return this.hostSlug(this.slugged ? this.slugMarket : null); },
-        hostRegex: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
         get defaultBlog(){ return env.BLOG_DEFAULT; },
         get defaultBlogUrl(){ return this.hostSlug(this.defaultBlog); },
         listener: env.PORT,

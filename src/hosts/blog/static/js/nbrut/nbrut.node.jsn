@@ -1,10 +1,6 @@
 !function(nbrut){
     'use strict';
 
-    nbrut.server = {
-        authority: '@config.server.host'
-    };
-
     nbrut.avatar = {
         tiny: '@config.avatar.tiny',
         small: '@config.avatar.small',

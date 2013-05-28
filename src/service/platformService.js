@@ -25,7 +25,7 @@ function verify(refresh){
 }
 
 function hydrate(req){
-    var i = req.host.lastIndexOf('.' + config.server.tld),
+    var i = req.host.lastIndexOf('.' + config.server2.tld),
         slug = req.host.substr(0, i);
 
     req.slug = slug;

@@ -17,7 +17,7 @@ function configure(server){
 
     server.use(express.session({
         cookie: {
-            domain: config.server.tld
+            domain: config.server2.tld
         },
         secret: config.security.sessionSecret,
         store: new sessionStore()
@@ -44,6 +44,7 @@ function localsSetup(server){
 
         res.locals.user = req.user;
         res.locals.query = req.query;
+        res.locals.slug = req.slug;
         next();
     });
 }

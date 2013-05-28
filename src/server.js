@@ -3,7 +3,7 @@
 var config = require('./config'),
     express = require('express'),
     server = express(),
-    port = config.server.listener,
+    port = config.server2.port.listener,
     platformService = require('./service/platformService.js');
 
 function execute(gruntvars, done){
@@ -26,7 +26,9 @@ function execute(gruntvars, done){
             vhost('blog');
 
             server.listen(port, function(){
-                console.log('Web server listening on *.%s:%s [%s]', config.server.tld, port, config.env.current);
+                var message = 'Web server listening on *.%s:%s [%s]';
+
+                console.log(message, config.server2.tld, port, config.env.current);
 
                 server.on('close', done);
             });
