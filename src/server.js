@@ -21,9 +21,9 @@ console.log(installed);
 
 
 console.log('\n\n\n');
-console.log(JSON.stringify(config.server);
+console.log(JSON.stringify(config.server));
 console.log('\n\n\n');
-console.log(JSON.stringify(config.server2);
+console.log(JSON.stringify(config.server2));
 console.log('\n\n\n');
 console.log(config.market.on);
 console.log('\n\n\n');
