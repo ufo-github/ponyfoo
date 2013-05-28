@@ -23,7 +23,7 @@ module.exports = {
                         return done(err);
                     }
                     
-                    blogService.create(user, config.server2.slug.blog, model.title, done);
+                    blogService.create(user, config.server.slug.blog, model.title, done);
                 });
             });
         });

@@ -25,7 +25,6 @@ TODO
     - drop crudService
     - refactor authenticationController, feedController
     - refactor api controllers, move logic to services, rename exports more semantically
-    - rename config.server vars into server2, and drop config.server
 
 
 

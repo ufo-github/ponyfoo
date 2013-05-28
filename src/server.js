@@ -3,7 +3,7 @@
 var config = require('./config'),
     express = require('express'),
     server = express(),
-    port = config.server2.port.listener,
+    port = config.server.port.listener,
     platformService = require('./service/platformService.js');
 
 function execute(gruntvars, done){
@@ -19,7 +19,7 @@ function execute(gruntvars, done){
                 vhost('install');
             }
 
-            if (config.market.on && config.server2.slug.enabled){
+            if (config.market.on && config.server.slug.enabled){
                 vhost('market');
             }
             
@@ -28,7 +28,7 @@ function execute(gruntvars, done){
             server.listen(port, function(){
                 var message = 'Web server listening on *.%s:%s [%s]';
 
-                console.log(message, config.server2.tld, port, config.env.current);
+                console.log(message, config.server.tld, port, config.env.current);
 
                 server.on('close', done);
             });

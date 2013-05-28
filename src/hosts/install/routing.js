@@ -7,8 +7,8 @@ var config = require('../../config'),
 
 function setup(server){
     server.get('/*', function(req, res, next){
-        if (req.slug !== config.server2.slug.landing){
-            res.redirect(config.server2.authorityLanding + req.url);    
+        if (req.slug !== config.server.slug.landing){
+            res.redirect(config.server.authorityLanding + req.url);    
         }else{
             next();
         }

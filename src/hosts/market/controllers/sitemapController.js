@@ -10,7 +10,7 @@ function setup(req,done){
     }];
 
     var sitemap = factory.createSitemap({
-        hostname: config.server2.authority(req.slug),
+        hostname: config.server.authority(req.slug),
         urls: all
     });
 

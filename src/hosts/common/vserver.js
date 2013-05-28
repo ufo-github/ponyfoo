@@ -10,7 +10,7 @@ function virtualServer(hostname, root){
     var pattern, sanitized, rhost;
 
     if(hostname !== '*'){ // '*' means any subdomain, even the bare tld.
-        pattern = hostname + '.' + config.server2.tld;
+        pattern = hostname + '.' + config.server.tld;
         sanitized = pattern.replace(/\./g, '\\.').replace(/[*]/g, '(.*?)');
         rhost = new RegExp('^' + sanitized + '$', 'i');
     }

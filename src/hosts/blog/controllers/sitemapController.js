@@ -79,7 +79,7 @@ function merge(req,done){
         });
 
         var sitemap = factory.createSitemap({
-            hostname: config.server2.authority(slug),
+            hostname: config.server.authority(slug),
             urls: all
         });
 

@@ -13,12 +13,12 @@ function getXml(blogs){
     var date = moment().format();
 
     if(config.market.on){
-        blogs.unshift({ slug: config.server2.slug.market });
+        blogs.unshift({ slug: config.server.slug.market });
     }
     
     blogs.forEach(function(blog){
         xml.push('<sitemap><loc>');
-        xml.push(config.server2.authority(blog.slug) + config.sitemap.relative);
+        xml.push(config.server.authority(blog.slug) + config.sitemap.relative);
         xml.push('</loc><lastmod>');
         xml.push(date);
         xml.push('</lastmod></sitemap>');

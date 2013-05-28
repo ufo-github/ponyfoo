@@ -15,10 +15,10 @@ function setup(server, userAgents, loaded){
 
     function visit(opts, done){
         var browser = new zombie({
-            site: config.server2.authority(opts.resource.slug)
+            site: config.server.authority(opts.resource.slug)
         }), uri;
 
-        uri = config.server2.authority(opts.resource.slug) + opts.resource.url;
+        uri = config.server.authority(opts.resource.slug) + opts.resource.url;
         browser.visit(uri, function(){
             browser.wait(loaded, function(){
                 var html = config.site.doctype + browser.html();

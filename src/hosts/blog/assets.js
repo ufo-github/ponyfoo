@@ -5,7 +5,7 @@ var config = require('../../config'),
     data = builder.prepare(__dirname),
     resolve = data.resolveFrontendPath;
 
-data.assets.host = config.server2.authorityBlog;
+data.assets.host = config.server.authorityBlog;
 data.assets.profiles =  ['blogger', 'registered', 'anon'];
 
 var registered = ['blogger', 'registered'];

@@ -19,13 +19,13 @@ function update(req,res){
 }
 
 function claimValidation(req,res,next){
-    if(!config.server2.slug.enabled){
+    if(!config.server.slug.enabled){
         return next(); // claiming is disabled
     }
 
     // attempt to claim
     var slug = req.slug,
-        rblog = config.server2.rblog;
+        rblog = config.server.rblog;
 
     if (rblog && !rblog.test(slug)){
         return next(); // this slug is an alias of the main blog.
@@ -92,7 +92,7 @@ function awaken(req,res){
             
             create(req,res,{
                 user: user,
-                slug: config.server2.slug.blog
+                slug: config.server.slug.blog
             });
         });
     });
@@ -112,7 +112,7 @@ function create(req,res,opts){
             rss: true
         }
     }).save(function(){
-        var host = config.server2.authority(slug);
+        var host = config.server.authority(slug);
         res.redirect(host);
     });
 }
@@ -138,7 +138,7 @@ function market(req,res,next){
         return forbidden(res);
     }
 
-    if(slug === config.server2.slug.market){
+    if(slug === config.server.slug.market){
         return forbidden(res);
     }
 
@@ -146,7 +146,7 @@ function market(req,res,next){
         return forbidden(res);
     }
 
-    var rblog = config.server2.rblog;
+    var rblog = config.server.rblog;
     if (rblog !== undefined && !rblog.test(slug)){
         return forbidden(res);
     }

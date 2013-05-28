@@ -17,24 +17,6 @@ var config = {
         faviconSource: path.resolve(__dirname, '../frontend/favicon.ico'),
         favicon: '/favicon.ico'
     },
-    server: {
-        tld: env.HOST_TLD,
-        slugged: env.ENABLE_SLUGGING,
-        slugMarket: env.HOST_MARKET,
-        slugRegex: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
-        get host(){ return this.hostSlug(this.slugged ? this.slugMarket : null); },
-        get defaultBlog(){ return env.BLOG_DEFAULT; },
-        get defaultBlogUrl(){ return this.hostSlug(this.defaultBlog); },
-        listener: env.PORT,
-        get port(){ return env.PUBLIC_PORT || this.listener; },
-        get portPart(){ return this.port === 80 ? '' : ':' + this.port; },
-        hostSlug: function(slug){
-            var vanity = slug ? (slug + '.') : '';
-            return 'http://' + vanity + this.tld + this.portPart;
-        },
-        permanentRedirect: env.ENABLE_BLOG_REGEX_301
-    },
-    server2: require('./server.js'),
     logging: { level: env.LOG_LEVEL },
     zombie: {
         enabled: env.ENABLE_ZOMBIE_CRAWLER,
@@ -129,6 +111,7 @@ var config = {
         twitter: env.CONTACT_TWITTER,
         email: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : undefined
     },
+    server: require('./server.js'),
     api: require('./api.js'),
     twitter: require('./twitter.js'),
     market: require('./market.js'),

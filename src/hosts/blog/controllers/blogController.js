@@ -6,9 +6,9 @@ var qs = require('querystring'),
     utilityService = require('../../../service/utilityService.js');
 
 function ensureTakenThenHydrate(req,res,next){
-    var rtld = config.server2.rtld;
+    var rtld = config.server.rtld;
     if (rtld && !rtld.test(req.host)){
-        return res.redirect(config.server2.authorityLanding + req.url, 301);
+        return res.redirect(config.server.authorityLanding + req.url, 301);
     }
 
     blogService.findBySlug(req.slug, function(err, result){
@@ -20,7 +20,7 @@ function ensureTakenThenHydrate(req,res,next){
             var queryPart = req.slug ? '?' + qs.stringify({ q: req.slug }) : '',
                 query = config.market.on ? queryPart : '';
 
-            return res.redirect(config.server2.authorityLanding + query, 302);
+            return res.redirect(config.server.authorityLanding + query, 302);
         }
 
         hydrate(req, result);
@@ -46,7 +46,7 @@ function hydrate(req, result){
 
     if (social){
         social.any = utilityService.hasTruthyProperty(social);
-        social.rssXml = config.server2.authority(blog.slug) + config.feed.relative;
+        social.rssXml = config.server.authority(blog.slug) + config.feed.relative;
     }
 }
 

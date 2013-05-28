@@ -36,7 +36,7 @@ function validate(model,done){
 function findBySlug(slug, done){
     var query = { slug: slug };
 
-    if(!config.server2.slug.enabled){
+    if(!config.server.slug.enabled){
         delete query.slug;
     }
 

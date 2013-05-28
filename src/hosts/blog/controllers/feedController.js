@@ -9,7 +9,7 @@ var config = require('../../../config'),
 function setup(req,done){
     var blog = req.blog,
         blogger = req.blogger,
-        host = config.server2.authority(blog.slug),
+        host = config.server.authority(blog.slug),
         opts = {
             title: blog.title,
             description: blog.meta,

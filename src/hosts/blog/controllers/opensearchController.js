@@ -9,7 +9,7 @@ var path = require('path'),
 module.exports = {
     getOpensearch: function(req, res, next){
         var ctx = {
-                authority: config.server2.authority(req.slug),
+                authority: config.server.authority(req.slug),
                 blog: {
                     title: req.blog.title,
                     legend: req.blog.legend || 'Find blog posts'
