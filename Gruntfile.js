@@ -3,101 +3,20 @@
 var config = require('./src/config');
 
 module.exports = function(grunt) {
-    var opts = {
-        clean: [
-            './src/**/.bin'
-        ],
-        recess: {
-            install: { src: ['./src/hosts/install/**/*.less'] },
-            market: { src: ['./src/hosts/market/**/*.less'] },
-            blog: { src: ['./src/hosts/blog/**/*.less'] }
-        },
-        jshint: {
-            node: {
-                files: {
-                    src: [
-                        './Gruntfile.js',
-                        './src/**/*.js',
-                        '!./src/frontend/**/*.js',
-                        '!./src/hosts/**/static/**/*.js',
-                        './test/spec/**/*.js'
-                    ]
-                },
-                options: {
-                    jshintrc: './.jshintrc'
-                }
-            },
-            browser: {
-                files: {
-                    src: [
-                        './src/hosts/**/static/**/*.js',
-                        '!./src/hosts/**/static/.bin/**/*.js',
-                        '!./src/hosts/**/static/js/vendor/**/*.js'
-                    ]
-                },
-                options: {
-                    jshintrc: './.jshintrc-browser'
-                }
-            }
-        },
-        jasmine_node: {
-            matchall: true,
-            forceExit: true,
-            projectRoot: './test/spec'
-        },
-        assetify: {
-            install: require('./src/hosts/install/assets.js'),
-            market: require('./src/hosts/market/assets.js'),
-            blog: require('./src/hosts/blog/assets.js')
-        },
-        watch: {
-            tasks: ['dev-server'],
-            files: [
-                './.env',
-                './.env.defaults',
-                'Gruntfile.js',
-                './src/**/*.js',
-                './src/**/*.less',
-                './src/**/*.jade',
-                '!./src/**/.bin',
-                './test/**/*.js'
-            ],
-            options: {
-                interrupt: true
-            }
-        }
-    };
+    var opts = require('./build/config');
 
     grunt.initConfig(opts);
 
+    grunt.loadNpmTasks('grunt-assetify');
+    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-jasmine-node');
-    grunt.loadNpmTasks('grunt-assetify');
+    grunt.loadNpmTasks('grunt-recess');
 
     if(config.env.development){
         grunt.loadNpmTasks('grunt-contrib-watch');
     }
 
-    grunt.registerTask('server', 'Start the web server', function(){
-        grunt.task.requires('assetify');
-
-        var done = this.async(),
-            server = require('./src/server.js'),
-            binders = grunt.config('assetify:binders');
-
-        server.execute(binders, done);
-    });
-
-    grunt.registerTask('test', ['clean', /*'recess',*/ 'jshint', 'jasmine_node']); // cleanup and run tests
-
-    grunt.registerTask('default', ['test']); // by default just run the tests
-
-    grunt.registerTask('dev-server', ['test', 'assetify', 'server']); // run tests, compile assets, and listen
-    grunt.registerTask('dev', ['watch', 'dev-server']); // watch for changes and refresh
-
-    grunt.registerTask('travis', ['test', 'assetify']); // just run tests and compile assets on travis-ci
-    
-    grunt.registerTask('production', ['clean', 'assetify', 'server']); // in production we cleanup, compile assets, and listen
+    grunt.loadTasks('./build/tasks');
 };

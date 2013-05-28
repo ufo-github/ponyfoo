@@ -26,7 +26,7 @@ function execute(gruntvars, done){
             vhost('blog');
 
             server.listen(port, function(){
-                console.log('Web server listening on *.%s:%s', config.server.tld, port);
+                console.log('Web server listening on *.%s:%s [%s]', config.server.tld, port, config.env.current);
 
                 server.on('close', done);
             });

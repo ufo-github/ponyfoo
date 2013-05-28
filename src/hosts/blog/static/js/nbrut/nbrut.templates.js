@@ -10,7 +10,7 @@
 			},
             config = {
                 defaultTemplate: 'home',
-                container: $('#content'),
+                container: $('.content'),
                 loading: { html: '', css: '' }
             },
             defaults = {

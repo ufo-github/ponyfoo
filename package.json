@@ -48,7 +48,8 @@
     "rss": "0.0.4",
     "sitemap": "0.6.0",
     "walk": "~2.2.1",
-    "zombie": "~1.4.1"
+    "zombie": "~1.4.1",
+    "grunt-concurrent": "~0.2.0"
   },
   "devDependencies": {
     "grunt-contrib-watch": "~0.4.3"

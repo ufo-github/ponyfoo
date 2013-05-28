@@ -61,8 +61,6 @@ function parsefiles(){
 		overwrite(env, options.shift());
 	}
 
-	console.log('Environment configured as: ' + env.NODE_ENV);
-
 	return env;
 }
 
