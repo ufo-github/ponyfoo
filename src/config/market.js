@@ -1,8 +1,7 @@
 'use strict';
 
-var env = require('./env.js'),
-    server = require('./server.js');
+var env = require('./env.js');
 
 module.exports = {
-    on: env.ENABLE_MARKET && server.slug.enabled
+    on: env.ENABLE_MARKET
 };

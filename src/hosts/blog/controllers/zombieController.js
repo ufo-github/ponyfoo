@@ -1,7 +1,7 @@
 'use strict';
 
 function loaded(window) {
-    var container = window.$('.content'),
+    var container = window.$('main'),
         loading = container.is('.spinner-container');
 
     if(!loading && window.nbrut.thin.pending().length === 0){

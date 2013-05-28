@@ -1,12 +1,13 @@
 'use strict';
 
 var env = require('./env.js'),
+    market = require('./market.js'),
     tld = env.HOST_TLD,
     slug = {
         enabled: env.ENABLE_SLUGGING,
         market: env.HOST_MARKET,
         blog: env.BLOG_DEFAULT,
-        get landing(){ return this.enabled ? this.market : this.blog; }
+        get landing(){ return market.on ? this.market : this.blog; }
     },
     port = {
         listener: env.PORT,
@@ -17,7 +18,7 @@ var env = require('./env.js'),
     };
 
 function authority(slugName){
-    var vanity = slug.enabled && slugName ? (slugName + '.') : '';
+    var vanity = slugName ? (slugName + '.') : '';
     return 'http://' + vanity + tld + port.toString();
 }
 

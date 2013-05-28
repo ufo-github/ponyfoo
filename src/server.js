@@ -19,7 +19,7 @@ function execute(gruntvars, done){
                 vhost('install');
             }
 
-            if (config.market.on){
+            if (config.market.on && config.server2.slug.enabled){
                 vhost('market');
             }
             
