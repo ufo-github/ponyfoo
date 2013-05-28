@@ -4,6 +4,8 @@ TODO
 1
 -------
 
+- disable market option. push to production.
+
 - integrate login on the market level
 
 - blog claim path
