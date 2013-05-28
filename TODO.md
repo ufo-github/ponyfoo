@@ -4,8 +4,6 @@ TODO
 1
 -------
 
-- disable market option. push to production.
-
 - integrate login on the market level
 
 - blog claim path
@@ -21,8 +19,7 @@ TODO
 - save drafts
 - integrate twitter broadcasts
 - redesign commenting infrastructure (which blows)
-- tables css formatting
-- abide by css linter rules!
+- css lint
 
 - refactor:
     - drop crudService
