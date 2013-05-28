@@ -103,8 +103,8 @@ To replace a string using a regex in JS, we can use `String.prototype.replace`, 
     // the result is
     'the dog is a cow, but the cat is not a cow.'
 
-    // not quite what we wanted, we forgot to add the i modifier.
-    'the cow is a cow, but the cat is not a cow.'.replace(/cow/i, 'dog');
+    // not quite what we wanted, we forgot to add the g modifier.
+    'the cow is a cow, but the cat is not a cow.'.replace(/cow/g, 'dog');
 
     // the result now is
     'the dog is a dog, but the cat is not a dog.'
