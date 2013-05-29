@@ -1,9 +1,12 @@
 !function ($, window, document, undefined) {
     'use strict';
 
-    var lastId = 0,
-        $window = $(window),
+    var $window = $(window),
         $document = $(document),
+        all = [],
+        lastId = 0,
+        scrolled = false,
+        sliceTimer, slice,
         rtrimspaces = /\s+/g;
 
     function Plugin(element) {
@@ -16,43 +19,8 @@
             if(this.$element.length !== 1){
                 throw new Error('jquery.readingTime must run on a single element at a time.');
             }
-            this._id = ++lastId;
             this.$bubble = $('<div/>').addClass('reading-time');
             this.$bubble.appendTo(this.$element);
-            
-            tick(this);
-
-            $window.on('scroll.readingTime-' + this._id, $.proxy(this.updateScroll, this));
-        },
-        destroy: function(){
-            if(this.tick_timer){
-                clearTimeout(this.tick_timer);
-            }
-            $window.off('scroll.readingTime-' + this._id);
-        },
-        updateScroll: function(){
-            this.scrolled = true;
-        },
-        update: function(){
-            var bubble = this.$bubble,
-                measurements = measure(this.$element, bubble),
-                text = getBubbleText(measurements),
-                readable = this.isReadable();
-
-            if(readable){
-                if($window.width() >= 768){
-                    bubble.css('top', measurements.distance).text(text).fadeIn(100);
-                }
-
-                // fade out the annotation after a second of no scrolling through.
-                if(this.fade_timer){
-                    clearTimeout(this.fade_timer);
-                }
-
-                this.fade_timer = setTimeout(function(){
-                    bubble.fadeOut();
-                }, 2000);
-            }
         },
         isReadable: function(){
             return this.$element.is(function(){
@@ -68,15 +36,27 @@
         }
     };
 
-    var tick = function(plugin){
-        if (plugin.scrolled){
-            plugin.scrolled = false;
-            plugin.update();
+    function update(plugin){
+        var bubble = plugin.$bubble,
+            measurements = measure(plugin.$element, bubble),
+            text = getBubbleText(measurements),
+            readable = plugin.isReadable();
+
+        if(readable){
+            if($window.width() >= 768){
+                bubble.css('top', measurements.distance).text(text).fadeIn(100);
+            }
+
+            // fade out the annotation after a second of no scrolling through.
+            if(plugin.fade_timer){
+                clearTimeout(plugin.fade_timer);
+            }
+
+            plugin.fade_timer = setTimeout(function(){
+                bubble.fadeOut();
+            }, 2000);
         }
-        plugin.tick_timer = setTimeout(function(){
-            tick(plugin);
-        }, 5);
-    };
+    }
 
     function getBubbleText(measurements){
         if(measurements.remaining > 1){
@@ -130,25 +110,51 @@
         };
     }
 
+    slice = function(){
+        if (scrolled){
+            scrolled = false;
+
+            all.forEach(function(plugins){
+                plugins.forEach(function(plugin){
+                    update(plugin);
+                });
+            });
+        }
+        sliceTimer = setTimeout(slice, 50);
+    };
+
     $.fn.readingTime = function(options){
-        var plugins = this.map(function(){
+        var i = ++lastId;
+
+        var these = this.map(function(){
             var key = 'plugin_readingTime',
                 plugin = $.data(this, key);
 
             if(!plugin) {
                 plugin = new Plugin(this, options);
-                $.data(this, 'plugin_readingTime', plugin);
+                $.data(this, key, plugin);
             }
 
             return plugin;
         }).get();
 
+        if(all.length === 0){
+            $window.on('scroll.readingTime', function(){
+                scrolled = true;
+            });
+            slice();
+        }
+
+        all[i] = these;
+
         return {
-            plugins: plugins,
             destroy: function(){
-                plugins.forEach(function(plugin){
-                    plugin.destroy();
-                });
+                delete all[i];
+
+                if(all.length === 0){
+                    $window.off('scroll.readingTime');
+                    clearTimeout(sliceTimer);
+                }
             }
         };
     };

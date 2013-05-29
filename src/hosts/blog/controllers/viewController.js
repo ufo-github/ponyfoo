@@ -48,16 +48,18 @@ function getView(req,res){
         
     res.locals.assetify.js.add(json, 'before');
 
-    if (connected){
-        var pd = new pagedown.getSanitizingConverter(),
-            description = req.blog.description || 'Welcome to my personal blog!',
-            html = pd.makeHtml(description);
-
-        req.blog.descriptionHtml = html;
-    }
+    hydrateWithDescription(req);
 
     var viewName = '__' + profile + '.jade';
     res.render(viewName, viewModel);
+}
+
+function hydrateWithDescription(req){
+    var pd = new pagedown.getSanitizingConverter(),
+        description = req.blog.description || 'Welcome to my personal blog!',
+        html = pd.makeHtml(description);
+
+    req.blog.descriptionHtml = html;
 }
 
 module.exports = {
