@@ -22,12 +22,11 @@ data.assets.css = [
     '/css/design.less'
 ];
 
+data.assets.jQuery = { version: '1.9.1' };
 data.assets.js = [
     resolve('/js/ext/String.js'),
     resolve('/js/ext/jquery.layout.js'),
     '/js/registration.js'
 ];
-
-data.assets.jQuery = { version: '1.9.1' };
 
 module.exports = builder.complete(data);

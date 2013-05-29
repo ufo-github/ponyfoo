@@ -19,11 +19,13 @@ data.assets.css = [
     resolve('/css/defaults/layout.less'),
     resolve('/css/defaults/design.less'),
     resolve('/css/defaults/sprite.less'),
+
     resolve('/css/vendor/markdown.less'),
     resolve('/css/vendor/hint.less'),
-
     resolve('/css/vendor/markdown.editor.less'),
     resolve('/css/vendor/prettify.less'),
+
+    resolve('/css/plugin/jquery.readingTime.less'),
 
     { profile: 'anon', local: '/css/views/shared/authentication.less' },
     '/css/views/shared/404.less',
@@ -48,6 +50,7 @@ data.assets.css = [
     { profile: 'blogger', local: '/css/views/blogger/users.less' }
 ];
 
+data.assets.jQuery = { version: '1.9.1' };
 data.assets.js = [
     resolve('/js/vendor/moment.min.js'),
     resolve('/js/vendor/mustache.js'),
@@ -58,6 +61,7 @@ data.assets.js = [
     resolve('/js/vendor/Markdown.Converter.js'),
     resolve('/js/vendor/Markdown.Sanitizer.js'),
     resolve('/js/vendor/prettify.js'),
+    resolve('/js/plugin/jquery.readingTime.js'),
     resolve('/js/ext/String.js'),
     resolve('/js/ext/prettify.js'),
     resolve('/js/ext/jquery.layout.js'),
@@ -109,7 +113,5 @@ data.assets.js = [
     { profile: 'blogger', local: '/js/views/blogger/discussions.js' },
     { profile: 'blogger', local: '/js/views/blogger/users.js' }
 ];
-
-data.assets.jQuery = { version: '1.9.1' };
 
 module.exports = builder.complete(data);
