@@ -49,9 +49,9 @@
                     clearTimeout(this.fade_timer);
                 }
 
-                this.fade_timer = setTimeout(function() {
+                this.fade_timer = setTimeout(function(){
                     bubble.fadeOut();
-                }, 1000);
+                }, 2000);
             }
         },
         isReadable: function(){
@@ -92,9 +92,10 @@
         var text = element.text(),
             stripped = text.replace(rtrimspaces, ' '),
             words = stripped.split(' ').length,
-            wordsPerMinute = 200;
+            wordsPerMinute = 200,
+            minutes = Math.round(words / wordsPerMinute);
 
-        return Math.round(60 * words / wordsPerMinute);
+        return minutes;
     }
 
     function getTotalMinutes($element){
@@ -116,7 +117,7 @@
             readableBottom = readableTop + readableHeight,
             scrollHeight = viewportHeight / readableHeight * viewportHeight,
             progress = (scrollTop - readableTop) / (readableHeight - viewportHeight),
-            total = getTotalMinutes($element) / 60,
+            total = getTotalMinutes($element),
             remaining = Math.ceil(total - (total * progress)),
             distanceProgress = (scrollTop - readableTop) / readableHeight,
             distanceLiteral = readableTop + distanceProgress * readableHeight + viewportHeight / 2 - $bubble.height() / 2,
