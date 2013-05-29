@@ -5,7 +5,7 @@
         $document = $(document),
         all = [],
         lastId = 0,
-        scrolled = false,
+        lastScrollTop = 0,
         sliceTimer, slice,
         rtrimspaces = /\s+/g;
 
@@ -111,21 +111,19 @@
     }
 
     slice = function(){
-        if (scrolled){
-            scrolled = false;
-
+        var scrollTop = $window.scrollTop();
+        if (scrollTop !== lastScrollTop){
             all.forEach(function(plugins){
                 plugins.forEach(function(plugin){
                     update(plugin);
                 });
             });
         }
+        lastScrollTop = scrollTop;
         sliceTimer = setTimeout(slice, 500);
     };
 
     $.fn.readingTime = function(options){
-        var i = ++lastId;
-
         var these = this.map(function(){
             var key = 'plugin_readingTime',
                 plugin = $.data(this, key);
@@ -136,12 +134,9 @@
             }
 
             return plugin;
-        }).get();
+        }).get(), i = ++lastId;
 
         if(all.length === 0){
-            $window.on('scroll.readingTime', function(){
-                scrolled = true;
-            });
             slice();
         }
 
@@ -152,7 +147,6 @@
                 delete all[i];
 
                 if(all.length === 0){
-                    $window.off('scroll.readingTime');
                     clearTimeout(sliceTimer);
                 }
             }
