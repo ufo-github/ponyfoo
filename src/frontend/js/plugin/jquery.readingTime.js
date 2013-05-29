@@ -36,7 +36,7 @@
         update: function(){
             var bubble = this.$bubble,
                 measurements = measure(this.$element, bubble),
-                text = getBubbleText(measurements),
+                text = this._id + ' ' + getBubbleText(measurements),
                 readable = this.isReadable();
 
             if(readable){
@@ -51,6 +51,8 @@
                     bubble.fadeOut();
                 }, 1000);
             }
+
+        console.log({i:this._id,p:measurements.progress,r:readable});
         },
         isReadable: function(){
             return this.$element.is(function(){
@@ -112,14 +114,12 @@
             readableHeight = $element.height(),
             readableBottom = readableTop + readableHeight,
             scrollHeight = viewportHeight / readableHeight * viewportHeight,
-            progress = scrollTop / (readableHeight - viewportHeight),
+            progress = (scrollTop - readableTop) / (readableHeight - viewportHeight),
             total = getTotalMinutes($element) / 60,
             remaining = Math.ceil(total - (total * progress)),
             distanceProgress = (scrollTop - readableTop) / readableHeight,
             distanceLiteral = readableTop + distanceProgress * readableHeight + viewportHeight / 2 - $bubble.height() / 2,
             distance = Math.max(readableTop, Math.min(distanceLiteral, readableBottom));
-
-        console.log(distanceLiteral);
 
         return {
             remaining: remaining,
