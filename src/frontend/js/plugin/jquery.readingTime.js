@@ -40,7 +40,9 @@
                 readable = this.isReadable();
 
             if(readable){
-                bubble.css('top', measurements.distance).text(text).fadeIn(100);
+                if($window.width() >= 768){
+                    bubble.css('top', measurements.distance).text(text).fadeIn(100);
+                }
 
                 // fade out the annotation after a second of no scrolling through.
                 if(this.fade_timer){
