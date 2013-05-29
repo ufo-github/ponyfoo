@@ -16,11 +16,24 @@
 
     Plugin.prototype = {
         init: function (){
-            if(this.$element.length !== 1){
+            var plugin = this,
+                bubble = $('<div/>').addClass('reading-time');
+
+            if(plugin.$element.length !== 1){
                 throw new Error('jquery.readingTime must run on a single element at a time.');
             }
-            this.$bubble = $('<div/>').addClass('reading-time');
-            this.$bubble.appendTo(this.$element);
+            plugin.$bubble = bubble;
+            
+            bubble.appendTo(plugin.$element);
+            bubble.on('mouseenter', function(){
+                if(plugin.fade_timer){
+                    clearTimeout(plugin.fade_timer);
+                }
+                bubble.stop().animate({opacity: 1});
+            });
+            bubble.on('mouseleave', function(){
+                bubble.stop().animate({opacity: 0.4});
+            });
         },
         isReadable: function(){
             return this.$element.is(function(){
