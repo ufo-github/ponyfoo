@@ -221,9 +221,9 @@
         var entries = container.find('.blog-entries'),
             readingTime = entries.data('readingTime');
 
-        readingTime.destroy();
-        console.log('kill');
-        console.log(readingTime);
+        if (readingTime){
+            readingTime.destroy();
+        }
     }
 
     nbrut.tt.configure({

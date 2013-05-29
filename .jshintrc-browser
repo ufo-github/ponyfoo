@@ -17,6 +17,7 @@
     "moment": false,
     "Mustache": false,
     "nbrut": false,
-    "prettyPrint": false
+    "prettyPrint": false,
+    "console": false
   }
 }

@@ -29,7 +29,6 @@
                 clearTimeout(this.tick_timer);
             }
             $window.off('scroll.readingTime-' + this._id);
-            console.log('destroy ' + this._id);
         },
         updateScroll: function(){
             this.scrolled = true;
@@ -75,7 +74,7 @@
         plugin.tick_timer = setTimeout(function(){
             tick(plugin);
         }, 5);
-    }
+    };
 
     function getBubbleText(measurements){
         if(measurements.remaining > 1){
@@ -143,9 +142,11 @@
 
         return {
             plugins: plugins,
-            destroy: plugins.forEach(function(plugin){
-                plugin.destroy();
-            });
+            destroy: function(){
+                plugins.forEach(function(plugin){
+                    plugin.destroy();
+                });
+            }
         };
     };
 }(jQuery, window, document);

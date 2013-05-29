@@ -44,6 +44,8 @@ module.exports = {
         browser: {
             files: {
                 src: [
+                    './src/frontend/**/*.js',
+                    '!./src/frontend/js/vendor/**/*.js',
                     './src/hosts/**/static/**/*.js',
                     '!./src/hosts/**/static/.bin/**/*.js',
                     '!./src/hosts/**/static/js/vendor/**/*.js'
