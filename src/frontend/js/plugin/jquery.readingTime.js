@@ -36,7 +36,7 @@
         update: function(){
             var bubble = this.$bubble,
                 measurements = measure(this.$element, bubble),
-                text = this._id + ' ' + getBubbleText(measurements),
+                text = getBubbleText(measurements),
                 readable = this.isReadable();
 
             if(readable){
@@ -51,15 +51,14 @@
                     bubble.fadeOut();
                 }, 1000);
             }
-
-        console.log({i:this._id,p:measurements.progress,r:readable});
         },
         isReadable: function(){
             return this.$element.is(function(){
-                var rect = this.getBoundingClientRect(),
+                var height = window.innerHeight / 2,
+                    rect = this.getBoundingClientRect(),
                     readable = (
-                        rect.bottom > window.innerHeight / 2 &&
-                        rect.top < window.innerHeight / 2
+                        rect.bottom > height &&
+                        rect.top < height
                     );
 
                 return readable;
@@ -81,7 +80,7 @@
         if(measurements.remaining > 1){
             return measurements.remaining + ' minutes left';
         }else if(measurements.progress >= 1) {
-            return 'Thanks for reading';
+            return 'Thanks for reading!';
         }else if(measurements.remaining <= 1){
             return 'Less than a minute';
         }
