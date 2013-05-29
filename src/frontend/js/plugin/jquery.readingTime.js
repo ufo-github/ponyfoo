@@ -54,7 +54,7 @@
 
             plugin.fade_timer = setTimeout(function(){
                 bubble.fadeOut();
-            }, 2000);
+            }, 1500);
         }
     }
 
@@ -120,7 +120,7 @@
                 });
             });
         }
-        sliceTimer = setTimeout(slice, 50);
+        sliceTimer = setTimeout(slice, 500);
     };
 
     $.fn.readingTime = function(options){
