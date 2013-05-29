@@ -80,6 +80,7 @@
         if(search){
             addSearchShrinkage(container);
         }
+        addReadingTime(container);
     }
 
     function addSearchShrinkage(container){
@@ -92,6 +93,13 @@
 
             expand.insertBefore(self);
         });
+    }
+
+    function addReadingTime(container){
+        var entries = container.find('.blog-entry'),
+            readingTime = entries.readingTime();
+
+        container.data('readingTime', readingTime);
     }
 
     function addSingleEntryPartials(viewModel, container, data){
@@ -139,7 +147,7 @@
                 if (y > target){
                     more();
                 }
-            },0);
+            }, 0);
         });
 
         pager.on('click.paging', more);
@@ -209,9 +217,19 @@
         });
     }
 
+    function unload(container){
+        var entries = container.find('.blog-entries'),
+            readingTime = entries.data('readingTime');
+
+        readingTime.destroy();
+        console.log('kill');
+        console.log(readingTime);
+    }
+
     nbrut.tt.configure({
         key: 'home',
         prepare: prepare,
-        afterActivate: afterActivate
+        afterActivate: afterActivate,
+        unload: unload
     });
 }(window,jQuery,nbrut);

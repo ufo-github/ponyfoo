@@ -29,6 +29,7 @@
                 clearTimeout(this.tick_timer);
             }
             $window.off('scroll.readingTime-' + this._id);
+            console.log('destroy ' + this._id);
         },
         updateScroll: function(){
             this.scrolled = true;
@@ -127,11 +128,24 @@
         };
     }
 
-    $.fn.readingTime = function (options) {
-        return this.each(function () {
-            if(!$.data(this, 'plugin_readingTime')) {
-                $.data(this, 'plugin_readingTime', new Plugin(this, options));
+    $.fn.readingTime = function(options){
+        var plugins = this.map(function(){
+            var key = 'plugin_readingTime',
+                plugin = $.data(this, key);
+
+            if(!plugin) {
+                plugin = new Plugin(this, options);
+                $.data(this, 'plugin_readingTime', plugin);
             }
-        });
+
+            return plugin;
+        }).get();
+
+        return {
+            plugins: plugins,
+            destroy: plugins.forEach(function(plugin){
+                plugin.destroy();
+            });
+        };
     };
 }(jQuery, window, document);

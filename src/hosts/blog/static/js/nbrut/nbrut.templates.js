@@ -228,6 +228,10 @@
             var loader = config.loading;
             if(template !== undefined){
                 plugins.raise(template, 'deactivate');
+
+                if (template.unload){
+                    template.unload();
+                }
             }
             config.container.off().removeClass().addClass(loader.css).empty().html(loader.html);
         }
