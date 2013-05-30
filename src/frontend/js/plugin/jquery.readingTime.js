@@ -34,6 +34,8 @@
                 plugin.startFading();
                 plugin.fadeBubble(0.4);
             });
+
+            putTotalMinutes(plugin.$element);
         },
         isReadable: function(){
             return this.$element.is(function(){
@@ -64,14 +66,13 @@
         },
         update: function update(){
             var plugin = this,
-                bubble = plugin.$bubble,
-                measurements = measure(plugin.$element, bubble),
+                measurements = measure(plugin.$element),
                 text = getBubbleText(measurements),
                 readable = plugin.isReadable();
 
             if(readable){
                 if($window.width() >= 768){
-                    bubble.css('top', measurements.distance).text(text);
+                    plugin.$bubble.css('top', measurements.distance).text(text);
                     plugin.fadeBubble(0.4);
                 }
 
@@ -81,7 +82,6 @@
             }
         }
     };
-
 
     function getBubbleText(measurements){
         if(measurements.remaining > 1){
@@ -93,8 +93,8 @@
         }
     }
 
-    function calculateTotalMinutes(element){
-        var text = element.text(),
+    function calculateTotalMinutes($element){
+        var text = $element.text(),
             stripped = text.replace(rtrimspaces, ' '),
             words = stripped.split(' ').length,
             wordsPerMinute = 200,
@@ -103,35 +103,51 @@
         return minutes;
     }
 
-    function getTotalMinutes($element){
-        var key = 'readingTime-minutes',
-            minutes = $element.data(key);
+    function putTotalMinutes($element){
+        var minutes = calculateTotalMinutes($element),
+            labelTime = minutes ? minutes + ' minutes' : 'less than a minute',
+            label = 'reading time: ' + labelTime;
 
-        if(!minutes){
-            minutes = calculateTotalMinutes($element);
-            $element.data(key, minutes);
-        }
-        return minutes;
+        $element.data('readingTime-minutes', minutes);
+        $element.find('.reading-label').text(label);
     }
 
-    function measure($element, $bubble){
+    function measure($element){
         var scrollTop = $window.scrollTop(),
-            viewportHeight = $window.height(),
-            readableTop = $element.position().top,
-            readableHeight = $element.height(),
-            readableBottom = readableTop + readableHeight,
-            scrollHeight = viewportHeight / readableHeight * viewportHeight,
-            progress = (scrollTop - readableTop) / (readableHeight - viewportHeight),
-            total = getTotalMinutes($element),
-            remaining = Math.ceil(total - (total * progress)),
-            distanceProgress = (scrollTop - readableTop) / readableHeight,
-            distanceLiteral = readableTop + distanceProgress * readableHeight + viewportHeight / 2 - $bubble.height() / 2,
-            distance = Math.max(readableTop, Math.min(distanceLiteral, readableBottom));
+            readTop = $element.position().top,
+            differenceTop = scrollTop - readTop,
+            totalHeight = $window.height(),
+            readHeight = $element.height();
+
+        function calculateReadProgress(){
+            var progress = differenceTop / (readHeight - totalHeight),
+                bounded = Math.max(0, Math.min(progress, 1));
+
+            return bounded; // progress bounded within 0..1
+        }
+
+        function calculateRemaining(progress){
+            var total = $element.data('readingTime-minutes'),
+                remaining = Math.ceil(total - total * progress);
+
+            return remaining; // total minutes remaining
+        }
+
+        function calculateDistanceFromTop(){
+            var readBottom = readTop + readHeight,
+                readProgress = differenceTop / readHeight,
+                distance = readTop + readProgress * readHeight + totalHeight / 2,
+                bounded = Math.max(readTop, Math.min(distance, readBottom));
+
+            return bounded; // absolute distance from { top: 0 }, bounded within $element
+        }
+
+        var progress = calculateReadProgress();
 
         return {
-            remaining: remaining,
+            remaining: calculateRemaining(progress),
             progress: progress,
-            distance: distance
+            distance: calculateDistanceFromTop()
         };
     }
 

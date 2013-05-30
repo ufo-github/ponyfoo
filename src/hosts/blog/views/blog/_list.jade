@@ -8,7 +8,10 @@ article.blog-entry-section.blog-entry(data-keywords='{{keywords}}', itemscope, i
   header.blog-entry-title
     h1
       a(href='{{permalink}}', data-hint='{{tagged}}', itemprop='headline')='{{title}}'
-    span.blog-entry-date(data-hint='posted {{dateText}}')='posted {{timeAgo}}'
+
+    span.blog-entry-legends
+      span.blog-entry-legend.reading-label
+      span.blog-entry-legend(data-hint='posted {{dateText}}')='posted {{timeAgo}}'
 
   section.markdown.blog-entry-body(itemprop='articleBody')
     section.blog-entry-brief.meta-description(itemprop='about')='{{{html.brief}}}'
