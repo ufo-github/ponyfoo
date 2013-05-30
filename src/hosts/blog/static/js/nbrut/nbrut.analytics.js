@@ -1,16 +1,17 @@
-!function(window,$,nbrut){
+!function(window, document, nbrut){
     'use strict';
 
     var hooks = [];
 
     nbrut.analytics = {
         fetch: function(url){
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
+            var tag = 'script',
+                script = document.createElement(tag);
+
             script.async = true;
             script.src = url;
 
-            var s = document.getElementsByTagName('script')[0];
+            var s = document.getElementsByTagName(tag)[0];
             s.parentNode.insertBefore(script, s);
         },
         onHistoryChange: function(fn){
@@ -23,4 +24,4 @@
             }
         }
     };
-}(window,jQuery,nbrut);
+}(window, document, nbrut);

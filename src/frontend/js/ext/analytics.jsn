@@ -1,4 +1,4 @@
-var _gaq = _gaq || [];
+var _gaq = [];
 
 function trackReadTime(seconds){
 	setTimeout(function(){
@@ -17,9 +17,7 @@ function trackReadTime(seconds){
 	trackReadTime(30);
 	trackReadTime(60);
 
-    var protocol = document.location.protocol === 'https:' ? 'https://ssl' : 'http://www';
-
-    nbrut.analytics.fetch(protocol + '.google-analytics.com/ga.js');
+    nbrut.analytics.fetch('//www.google-analytics.com/ga.js');
     nbrut.analytics.onHistoryChange(function(data){
 		_gaq.push(['_trackPageview', data.url]);
     });
