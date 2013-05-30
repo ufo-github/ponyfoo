@@ -19,12 +19,12 @@ TODO
 - save drafts
 - integrate twitter broadcasts
 - redesign commenting infrastructure (which blows)
-- css lint
 
 - refactor:
     - drop crudService
     - refactor authenticationController, feedController
     - refactor api controllers, move logic to services, rename exports more semantically
+    - css lint (and different classing philosophy)
 
 
 
