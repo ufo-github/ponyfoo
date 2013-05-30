@@ -5,7 +5,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**.
 
 
 
-0.3 (tip)
+0.3 (frozen)
 ============
 
 - Documentation
