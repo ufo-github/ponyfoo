@@ -50,7 +50,7 @@
  **************/
 
 /* reset default <main> styles to change how entries are visually separated */
-main.blog-entries-reset {
+.blog-entries-reset {
   padding: 0;
   background: inherit;
   border: none;
@@ -61,11 +61,11 @@ main.blog-entries-reset {
 }
 
 @media only screen and (min-width: 768px) {
-  .blog-entries, .blog-sidebar {
+  .blog-entries-wrapper, .blog-sidebar {
     display: inline-block;
     vertical-align: top;
   }
-
+  
   .blog-entries-wrapper {
     float: left;
     width: 100%;
