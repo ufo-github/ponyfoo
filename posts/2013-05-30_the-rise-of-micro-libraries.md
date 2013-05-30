@@ -17,7 +17,7 @@ The first example that pops to mind is [ThinDOM](https://github.com/jacobgreenle
 
 - `.append()` is a blisteringly fast alternative to `$.append`
 - `.css()` doesn't do any validation, or value transformation, [like $.css does](https://github.com/jquery/jquery/blob/master/src/css.js#L111-L132 "$.css source on GitHub")
-- `.html()` doesn't provide any safeety, no parsing, nothing. [$.html](https://github.com/jquery/jquery/blob/master/src/manipulation.js#L124-L161 "$.html source on GitHub") is a tad slower
+- `.html()` doesn't provide any safety, no parsing, nothing. [$.html](https://github.com/jquery/jquery/blob/master/src/manipulation.js#L124-L161 "$.html source on GitHub") is a tad slower
 - `.attr()` just sets attribute values. That's it. Here's [$.attr](https://github.com/jquery/jquery/blob/master/src/attributes.js#L288-L334 "$.attr source on GitHub")'s take
 - `.get()` unwraps the element wrapped under **ThinDOM**
 
