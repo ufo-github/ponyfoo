@@ -26,13 +26,12 @@
             
             bubble.appendTo(plugin.$element);
             bubble.on('mouseenter', function(){
-                if(plugin.fade_timer){
-                    clearTimeout(plugin.fade_timer);
-                }
-                bubble.stop().animate({opacity: 1});
+                plugin.stopFading();
+                plugin.fadeBubble(1);
             });
             bubble.on('mouseleave', function(){
-                bubble.stop().animate({opacity: 0.4});
+                plugin.startFading();
+                plugin.fadeBubble(0.4);
             });
         },
         isReadable: function(){
@@ -46,30 +45,42 @@
 
                 return readable;
             });
+        },
+        stopFading: function(){
+            if(this.fade_timer){
+                clearTimeout(this.fade_timer);
+            }
+        },
+        startFading: function(){
+            var plugin = this;
+
+            plugin.fade_timer = setTimeout(function(){
+                plugin.fadeBubble(0);
+            }, 1500);
+        },
+        fadeBubble: function(value){
+            this.$bubble.stop().animate({opacity: value});
+        },
+        update: function update(){
+            var plugin = this,
+                bubble = plugin.$bubble,
+                measurements = measure(plugin.$element, bubble),
+                text = getBubbleText(measurements),
+                readable = plugin.isReadable();
+
+            if(readable){
+                if($window.width() >= 768){
+                    bubble.css('top', measurements.distance).text(text);
+                    plugin.fadeBubble(0.4);
+                }
+
+                // fade out the annotation after a second of no scrolling through.
+                plugin.stopFading();
+                plugin.startFading();
+            }
         }
     };
 
-    function update(plugin){
-        var bubble = plugin.$bubble,
-            measurements = measure(plugin.$element, bubble),
-            text = getBubbleText(measurements),
-            readable = plugin.isReadable();
-
-        if(readable){
-            if($window.width() >= 768){
-                bubble.css('top', measurements.distance).text(text).fadeIn(100);
-            }
-
-            // fade out the annotation after a second of no scrolling through.
-            if(plugin.fade_timer){
-                clearTimeout(plugin.fade_timer);
-            }
-
-            plugin.fade_timer = setTimeout(function(){
-                bubble.fadeOut();
-            }, 1500);
-        }
-    }
 
     function getBubbleText(measurements){
         if(measurements.remaining > 1){
@@ -128,7 +139,7 @@
         if (scrollTop !== lastScrollTop){
             all.forEach(function(plugins){
                 plugins.forEach(function(plugin){
-                    update(plugin);
+                    plugin.update();
                 });
             });
         }
