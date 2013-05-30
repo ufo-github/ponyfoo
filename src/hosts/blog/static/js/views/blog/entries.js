@@ -49,7 +49,7 @@
 
             meta.description = viewModel.emptyText;
         }else if(data.query === undefined){ // home page
-            meta.title = 'Home Page.';
+            meta.title = null; // no prefix.
         }else if(!data.slug){ // search by date
             meta.title = 'Posts filtered by date.';
         }
