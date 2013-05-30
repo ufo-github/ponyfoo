@@ -14,7 +14,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**.
 
 - **Blog Schema**
   - Market, allowing users to take control of sub-domains, referred to as slugs
-  - Posts and their comments can now only be accessed in the origin slug
+    - The market can be enabled or disabled through configuration
+    - In a later iteration, it will be possible to create new blogs within the market
+  - Posts and their comments can now only be accessed in the owner slug
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
   - Personalization. Now each blog has its own set of related metadata and social links
 
