@@ -20,8 +20,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**.
   - 'Dormant' mode: allows quick setup of the environment when the site is not configured
   - Personalization. Now each blog has its own set of related metadata and social links
 
-- Registration and Login Providers
-  - Added LinkedIn
+- Providers
+  - Added LinkedIn login and registration
+  - Added Twitter as a service to publish tweets on new posts
 
 - Host validation and 301 redirects
   - In case your instance is available on multiple domains, but you want only one to expose it
@@ -37,7 +38,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**.
 
 - Cleaner Architecture
   - AJAX transport (JSON over url-encoded form data when not making GET requests)
-  - Subdomains now are one to one relationships with vhost and matching folder structure
+  - Hosts are now more cleanly separated
+  - The architecture now follows a slightly more traditional approach
+  - Added RECESS to lint CSS code
 
 - Performance
   - Assets (such as js and css) are now served with absolute urls, for improved caching

@@ -17,6 +17,7 @@ TODO
 -------
     
 - save drafts
+- tweet new posts
 - integrate twitter broadcasts
 - redesign commenting infrastructure (which blows)
 
