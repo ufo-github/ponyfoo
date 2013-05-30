@@ -71,14 +71,16 @@
     width: 100%;
   }
 
+  @sidebar: 325px;
+
   .blog-entries {
-    margin-right: 350px;
+    margin-right: @sidebar + 25px;
   }
 
   .blog-sidebar {
     float: left;
-    width: 325px;
-    margin-left: -325px;
+    width: @sidebar;
+    margin-left: -@sidebar;
   }
 }
 
