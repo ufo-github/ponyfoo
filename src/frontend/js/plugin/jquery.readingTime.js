@@ -24,6 +24,7 @@
             }
             plugin.$bubble = bubble;
             
+            bubble.attr('title', 'Time left to read the rest of this article');
             bubble.appendTo(plugin.$element);
             bubble.on('mouseenter', function(){
                 plugin.stopFading();
