@@ -46,7 +46,7 @@
  **************/
 
 /* reset default <main> styles to change how entries are visually separated */
-main.blog-entries-wrapper {
+main.blog-entries-reset {
   padding: 0;
   background: inherit;
   border: none;
@@ -62,18 +62,19 @@ main.blog-entries-wrapper {
     vertical-align: top;
   }
 
+  .blog-entries-wrapper {
+    float: left;
+    width: 100%;
+  }
+
   .blog-entries {
-    width: 70%;/*
-    margin-right: 350px;*/
+    margin-right: 350px;
   }
 
   .blog-sidebar {
-    padding-left: 30px;
-    width: 30%;
-    .box-sizing();/*
-    float: right;
+    float: left;
     width: 325px;
-    margin-left: -325px;*/
+    margin-left: -325px;
   }
 }
 

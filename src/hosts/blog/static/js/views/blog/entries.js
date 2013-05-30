@@ -60,7 +60,7 @@
 
     function afterActivate(viewModel, data, ctx){
         var elements = ctx.elements,
-            container = elements.filter('.blog-entries'),
+            container = elements.find('.blog-entries'),
             sidebar = elements.filter('.blog-sidebar'),
             search = !!data.search,
             empty;
