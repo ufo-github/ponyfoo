@@ -4,12 +4,12 @@ footer.footer-navigation
       a.highlighted-link(href=config.server.authorityBlog, title='Visit our blog, inception!')='news'
     li
       a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit ponyfoo on GitHub')='github'
-    if config.contact.twitter
+    if config.contact.twitter.url
       li
-        a.highlighted-link(href=config.contact.twitter, target='_blank', title='Follow us on twitter')='twitter'
-    if config.contact.email
+        a.highlighted-link(href=config.contact.twitter.url, target='_blank', title=config.contact.twitter.handle + ' on twitter')='twitter'
+    if config.contact.email.to
       li
-        a.highlighted-link(href=config.contact.email, target='_blank', title='Contact us by email')='email'
+        a.highlighted-link(href=config.contact.email.to, target='_blank', title='Contact us by email')='email'
     if config.site.displayVersion
       li
         span.version=config.site.version

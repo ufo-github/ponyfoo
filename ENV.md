@@ -73,7 +73,9 @@ Twitter API isn't supported for authentication, because they don't provide email
 - **TWITTER_ACCESS_TOKEN_KEY**: Your [**Twitter**](https://dev.twitter.com) application access token key.
 - **TWITTER_ACCESS_TOKEN_SECRET**: Your [**Twitter**](https://dev.twitter.com) application access token secret.
 
-
+- **MANDRILL_APIKEY**: API key used to send email through the [**Mandrill**](https://mandrillapp.com "Mandrill App") service provided by [MailChimp](http://mailchimp.com/ "MailChimp").
+- **MANDRILL_DEBUG_ENABLED**: Whether we are debugging **Mandrill** messages.
+- **MANDRILL_SENDER_ADDRESS**: The email from address to use
 
 Incidental
 ----------
@@ -106,5 +108,5 @@ Contact
 
 These are used in the market (**semantic root**) to display contact information
 
-- **CONTACT_EMAIL**: An email address you can be reached at.
-- **CONTACT_TWITTER**: A link to your twitter account.
+- **CONTACT_EMAIL**: Contact email address.
+- **CONTACT_TWITTER**: Twitter username. No 'at' symbol.

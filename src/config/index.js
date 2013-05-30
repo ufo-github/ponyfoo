@@ -108,14 +108,21 @@ var config = {
         regular: '&s=60'
     },
     contact: {
-        twitter: env.CONTACT_TWITTER,
-        email: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : undefined
+        twitter: {
+            handle: env.CONTACT_TWITTER ? '@' + env.CONTACT_TWITTER : null,
+            url: env.CONTACT_TWITTER ? 'https://twitter.com/' + env.CONTACT_TWITTER : null
+        },
+        email: {
+            raw: env.CONTACT_EMAIL,
+            to: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : null
+        }
     },
     server: require('./server.js'),
     api: require('./api.js'),
     twitter: require('./twitter.js'),
     market: require('./market.js'),
-    bin: require('./bin.js')
+    bin: require('./bin.js'),
+    email: require('./email.js')
 };
 
 module.exports = config;
