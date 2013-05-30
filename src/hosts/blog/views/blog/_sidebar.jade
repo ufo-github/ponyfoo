@@ -1,17 +1,16 @@
 aside.blog-sidebar
-  article
-    section#latest-posts.blog-sidebar-item
-      header
-        h5.underline='Latest Posts'
+  section#latest-posts.blog-sidebar-item
+    header
+      h5.underline='Latest Posts'
 
-      section
-        nav
-          // {{#latest}}
-          a.highlighted-link(href='{{permalink}}', data-hint='posted {{published}}')='{{title}}'
-          // {{/latest}}
+    section
+      nav
+        // {{#latest}}
+        a.highlighted-link(href='{{permalink}}', data-hint='posted {{published}}')='{{title}}'
+        // {{/latest}}
 
-    section#about-blog.blog-sidebar-item
-      header
-        h5.underline='About'
+  section#about-blog.blog-sidebar-item
+    header
+      h5.underline='About'
 
-      include _about
+    include _about
