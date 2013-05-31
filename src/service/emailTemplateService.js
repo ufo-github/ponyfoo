@@ -13,6 +13,8 @@ function renderTemplate(templateName, message, done){
 
 module.exports = {
     render: function(templateName, model, done){
+        model.config = config;
+        
         renderTemplate(templateName, model, function(err, html){
             if(err){
                 return done(err);

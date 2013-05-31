@@ -55,6 +55,7 @@ function sendEmail(template, model, done){
                         email: model.to
                     }],
                     auto_text: true,
+                    inline_css: true,
                     tags: model.tags,
                     images: [{
                         type: 'image/png',

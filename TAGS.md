@@ -1,14 +1,14 @@
 Changes by tag
 ==============
 
-Brief list of changes implemented in each tagged version of **Pony Foo**.
+Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 
 0.4 (tip)
 ============
 
-- WIP
+- Email verification flow for new accounts using traditional login
 
 
 
@@ -58,9 +58,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**.
 
 - Usability and design
   - Re-branded as Pony Foo
-  - Got rid of redundant 'Register' button.
-  - About box is no longer hidden behind a button, but directly accessible on blog home pages.
-  - An estimate of the time to read a post was added, and it's updated as you read a post.
+  - Got rid of redundant 'Register' button
+  - About box is no longer hidden behind a button, but directly accessible on blog home pages
+  - An estimate of the time to read a post was added, and it's updated as you read a post
 
 
 
