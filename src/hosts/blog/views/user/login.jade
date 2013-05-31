@@ -1,24 +1,39 @@
 section#user-login-template.template(data-class='user-authentication')
   h1='Sign In'
 
-  include _providers
+  section.authentication-providers
+    a.social.google(href=config.auth.google.link, title='Authenticate with Google')='Authenticate with Google'
+
+    if config.auth.github.enabled
+      a.social.github(href=config.auth.github.link, title='Authenticate with GitHub')='Authenticate with GitHub'
+
+    if config.auth.facebook.enabled
+      a.social.facebook(href=config.auth.facebook.link, title='Authenticate with Facebook')='Authenticate with Facebook'
+
+    if config.auth.linkedin.enabled
+      a.social.linkedin(href=config.auth.linkedin.link, title='Authenticate with LinkedIn')='Authenticate with LinkedIn'
+
+  p.authentication-alternative
+   span='- or the '
+   i='ancient'
+   span=' way -'
 
   form.authentication-form(method='post', action=config.auth.traditional)
     input(type='hidden', name='redirect', value='{{prev}}')
 
     fieldset
       p
-        label.authentication-label(for='login-email')='Email'
-        input#login-email(type='text', name='email', placeholder='Input your email')
+        input#login-email.authentication-form-input(type='text', name='email', placeholder='Input your email')
 
       p
-        label.authentication-label(for='login-password')='Password'
-        input#login-password(type='password', name='password', placeholder='Input your password')
+        input#login-password.authentication-form-input(type='password', name='password', placeholder='Input your password')
+
+      p.right
+        a.password-reset.highlighted-link(data-hint='Lost your password?')='password reset'
 
       p
-        label.authentication-label(for='create-account')='New Account'
         input.checkbox-input#create-account(type='checkbox', name='create')
-        label.checkbox(for='create-account')='Create'
+        label.checkbox(for='create-account')='New Account'
 
     p.authentication-form-buttons
       input.button.authentication-button(type='submit', value='Login')

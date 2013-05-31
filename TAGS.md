@@ -8,7 +8,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (tip)
 ============
 
-- Email verification flow for new accounts using traditional login
+- WIP
 
 
 

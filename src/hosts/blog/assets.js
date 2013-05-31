@@ -35,8 +35,7 @@ data.assets.css = [
 
     '/css/views/user/profile.less',
     { profile: registered, local: '/css/views/user/profile.edit.less' },
-    { profile: 'anon', local: '/css/views/user/_providers.less' },
-    { profile: 'anon', local: '/css/views/user/authentication.less' },
+    { profile: 'anon', local: '/css/views/user/login.less' },
 
     '/css/views/blog/entries.less',
     '/css/views/blog/comments.less',
@@ -98,7 +97,7 @@ data.assets.js = [
 
     '/js/views/markdown/prompts.js',
 
-    { profile: 'anon', local: '/js/views/user/authentication.js' },
+    { profile: 'anon', local: '/js/views/user/login.js' },
     '/js/views/user/profile.js',
     { profile: registered, local: '/js/views/user/profile.edit.js' },
 

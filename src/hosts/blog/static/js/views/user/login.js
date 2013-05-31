@@ -21,7 +21,7 @@
         }
 
         if (prev !== undefined){
-            var providers = ctx.elements.find('.authentication-provider-links a');
+            var providers = ctx.elements.find('.authentication-providers .social');
             providers.each(function(){
                 var provider = $(this),
                     attr = 'href',
