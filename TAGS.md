@@ -14,6 +14,8 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
   - Accounts created with ancient flow require email verification
   - Password reset implementation
 
+- Productivity
+  - Introduced [dictatorship](https://github.com/bevacqua/dictatorship "dictatorship on GitHub") to bury **EADDRINUSE** issues during continuous development
 
 
 0.3 (frozen)
