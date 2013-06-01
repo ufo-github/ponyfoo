@@ -4,7 +4,7 @@ TODO
 1
 -------
 
-- Email verification flow for new accounts using traditional login
+- Email verification flow for new accounts using ancient login
 - reset password email flow
 - fix logon issues when using providers
 

@@ -1,46 +1,55 @@
 'use strict';
 
 var config = require('./config'),
+    async = require('async'),
     express = require('express'),
     server = express(),
     port = config.server.port.listener,
+    db = require('./db.js'),
     platformService = require('./service/platformService.js');
 
-function execute(gruntvars, done){
-    var db = require('./db.js');
-
-    db.connect(function(){
-        platformService.isInstalled(function(err, installed){
-            if(err){
-                throw err;
-            }
-            
+function execute(gruntvars){
+    async.waterfall([
+        async.apply(db.connect),
+        async.apply(platformService.isInstalled),
+        
+        function(installed, next){
             if(!installed){
-                vhost('install');
+                setup('install');
             }
 
             if (config.market.on && config.server.slug.enabled){
-                vhost('market');
+                setup('market');
             }
             
-            vhost('blog');
+            setup('blog');
+            next();
+        }
+    ], function(err){
+        if(err){
+            throw err;
+        }
 
-            server.listen(port, function(){
-                var message = 'Web server listening on *.%s:%s [%s]';
-
-                console.log(message, config.server.tld, port, config.env.current);
-
-                server.on('close', done);
-            });
-        });
+        if(config.env.development){
+            require('dictatorship').overthrow(port, listen);
+        }else{
+            listen();
+        }
     });
 
-    function vhost(name){
+    function setup(name){
         var vars = gruntvars[name],
-            vserver = require('./hosts/' + name + '/vhost.js'),
-            configured = vserver.using(vars);
+            vhost = require('./hosts/' + name + '/vhost.js'),
+            middleware = vhost.using(vars);
 
-        server.use(configured);
+        server.use(middleware);
+    }
+
+    function listen(){
+        server.listen(port, function(){
+            var message = 'Web server listening on *.%s:%s [%s]';
+            console.log(message, config.server.tld, port, config.env.current);
+        });
     }
 }
 

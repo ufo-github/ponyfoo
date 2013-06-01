@@ -8,7 +8,7 @@ function connect(done){
     mongoose.connect(mongoUri);
     mongoose.connection.on('error', function(err){
         console.error('MongoDB connection failed. Ensure MongoDB is installed, up, and running.');
-        console.error(err);
+        done(err);
     });
     mongoose.connection.on('open', function() {
         console.log('Connected to Mongoose');

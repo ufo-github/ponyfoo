@@ -40,6 +40,11 @@ function sendEmail(template, model, done){
             return done(err);
         }
 
+        if(config.email.trap){
+            model.subject += ' - to: ' + model.to;
+            model.to = config.email.trap;
+        }
+
         emailTemplateService.render(template, model, function(err, html){
             if(err){
                 return done(err);
@@ -56,7 +61,7 @@ function sendEmail(template, model, done){
                     }],
                     auto_text: true,
                     inline_css: true,
-                    tags: model.tags,
+                    tags: model.tag ? [model.tag] : model.tags,
                     images: [{
                         type: 'image/png',
                         name: 'header',

@@ -8,7 +8,11 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (tip)
 ============
 
-- WIP
+- Emailing and email templates
+
+- Enhanced login process
+  - Accounts created with ancient flow require email verification
+  - Password reset implementation
 
 
 
@@ -112,7 +116,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
   - Also Markdown flavored
   
 - Users
-  - OAuth, OpenID and traditional logon (GitHub, Facebook, Google)
+  - OAuth, OpenID and traditional logon (GitHub, Facebook, Google, plain)
   - Gravatars
   - Profiles
   - Commenting

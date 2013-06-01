@@ -93,7 +93,7 @@ function validate(req,res,opts){
 function email(message){
     return function(){
         var self = this;
-        if(!!self && !config.regex.email.test(self)){
+        if(!!self && !config.remail.test(self)){
             return message || 'Invalid email address';
         }
     };
@@ -102,7 +102,7 @@ function email(message){
 function link(message, entity){
     return function(){
         var self = this;
-        if(!!self && !config.regex.link.test(self)){
+        if(!!self && !config.rlink.test(self)){
             return message || ('Invalid ' + (entity ? entity + ' ' : '') + 'link');
         }
     };

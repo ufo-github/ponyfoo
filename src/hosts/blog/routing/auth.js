@@ -10,7 +10,7 @@ function configure(server){
 
     server.post(config.auth.login, controller.requireAnonymous, controller.login, controller.redirect);
 
-    server.post(config.auth.traditional, controller.requireAnonymous, controller.traditional, controller.redirect);
+    server.post(config.auth.ancient, controller.requireAnonymous, controller.ancient, controller.redirect);
 
     function configureProvider(name){
         if(!config.auth[name].enabled){

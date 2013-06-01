@@ -4,6 +4,7 @@ var config = require('../config'),
     mustacheService = require('./mustacheService.js'),
     path = require('path'),
     fs = require('fs'),
+    moment = require('moment'),
     base = '/email';
 
 function renderTemplate(templateName, message, done){
@@ -26,7 +27,8 @@ module.exports = {
                     intro: model.intro,
                     image: {
                         alt: config.site.name
-                    }
+                    },
+                    generated: moment().format('YYYY/MM/DD HH:mm, UTC Z')
                 },
                 body: html,
                 footer: {

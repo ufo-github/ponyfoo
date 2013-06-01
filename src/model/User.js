@@ -1,8 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    bcrypt = require('bcrypt'),
-    crypto = require('crypto'),
+    cryptoService = require('../service/cryptoService.js'),
     config = require('../config'),
     schema = new mongoose.Schema({
         email: { type: String, require: true, index: { unique: true }, trim: true },
@@ -21,50 +20,29 @@ var mongoose = require('mongoose'),
     },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatar').get(function(){
-    var text = this.email,
-        hash = crypto.createHash('md5').update(text).digest('hex');
+    var hash = cryptoService.md5sync(this.email);
 
     return config.avatar.url + hash + config.avatar.query;
 });
 
-schema.pre('save', function(next) {
+schema.pre('save', function(done) {
     var user = this;
 
     if (!user.isModified('password')){
-        return next();
+        return done();
     }
 
-    bcrypt.genSalt(config.security.saltWorkFactor, function(err, salt) {
-        if (err){
-            return next(err);
+    cryptoService.encrypt(user.password, function(err, hash){
+        if(err){
+            return done(err);
         }
-
-        // hash the password
-        bcrypt.hash(user.password, salt, function(err, hash) {
-            if (err){
-                return next(err);
-            }
-
-            user.password = hash;
-            return next();
-        });
+        user.password = hash;
+        done();
     });
 });
 
 schema.methods.validatePassword = function(input, cb) {
-    if(input === null || input === undefined || this.password === null || this.password === undefined){
-        process.nextTick(function(){
-            cb(null,false);
-        });
-        return;
-    }
-
-    bcrypt.compare(input, this.password, function(err, isMatch) {
-        if (err){
-            return cb(err);
-        }
-        cb(null, isMatch);
-    });
+    cryptoService.test(input, this.password, cb);
 };
 
 module.exports = mongoose.model('user', schema);

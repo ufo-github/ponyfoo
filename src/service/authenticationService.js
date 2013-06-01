@@ -92,39 +92,36 @@ function setupProvider(Strategy, config, cb){
 function callback(query, profile, done) {
     var email = profile.emails ? profile.emails[0].value : undefined;
     if(!email){
-        done(null,false,'Unable to fetch email address');
-        return;
+        return done(null,false,'Unable to fetch email address');
     }
 
-    User.findOne(query, function (err, document) {
-        if(err || document){
-            done(err, document ? document.toObject() : null);
-            return;
+    User.findOne(query, function (err, user) {
+        if(err || user){
+            return done(err, user ? user.toObject() : null);
         }
 
-        User.findOne({ email: email }, function (err, document) {
+        User.findOne({ email: email }, function (err, user) {
             var prop;
 
             if(err){
-                done(err);
-                return;
+                return done(err);
             }
 
-            if(!document){ // register user
+            if(!user){ // register user
                 query.email = email;
                 query.displayName = profile.displayName;
-                document = new User(query);
+                user = new User(query);
             }else{ // add provider to user
                 for(prop in query){
-                    document[prop] = query[prop];
+                    user[prop] = query[prop];
                 }
 
-                if(!document.displayName){
-                    document.displayName = profile.displayName;
+                if(!user.displayName){
+                    user.displayName = profile.displayName;
                 }
             }
 
-            document.save(function(err, user){
+            user.save(function(err, user){
                 done(err, user ? user.toObject() : null);
             });
         });

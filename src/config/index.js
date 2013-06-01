@@ -63,15 +63,13 @@ var config = {
             name: env.PLATFORM_NAME
         };
     },
-    regex: {
-        email: /^[a-z0-9.!#$%&'*+\/=?\^_`{|}~\-]+@[a-z0-9\-]+(?:\.[a-z0-9\-]+)*$/i,
-        link: /\bhttps?:\/\/[\-a-z0-9+&@#\/%?=~_|!:,.;]*[\-a-z0-9+&@#\/%=~_|]/i
-    },
+    remail: /^[a-z0-9.!#$%&'*+\/=?\^_`{|}~\-]+@[a-z0-9\-]+(?:\.[a-z0-9\-]+)*$/i,
+    rlink: /\bhttps?:\/\/[\-a-z0-9+&@#\/%?=~_|!:,.;]*[\-a-z0-9+&@#\/%=~_|]/i,
     auth: {
         success: '/',
         login: '/user/login',
         logout: '/user/logout',
-        traditional: '/user/login/traditional',
+        ancient: '/user/login/ancient',
         facebook: {
             get enabled(){ return this.id && this.secret; },
             id: env.FACEBOOK_APP_ID,
@@ -122,7 +120,8 @@ var config = {
     twitter: require('./twitter.js'),
     market: require('./market.js'),
     bin: require('./bin.js'),
-    email: require('./email.js')
+    email: require('./email.js'),
+    tokenExpiration: env.TOKEN_EXPIRATION
 };
 
 module.exports = config;

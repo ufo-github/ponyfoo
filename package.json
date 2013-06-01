@@ -54,7 +54,8 @@
     "zombie": "~1.4.1"
   },
   "devDependencies": {
-    "grunt-contrib-watch": "~0.4.3"
+    "grunt-contrib-watch": "~0.4.3",
+    "dictatorship": "0.1.0"
   },
   "engines": {
     "node": "0.10.6",

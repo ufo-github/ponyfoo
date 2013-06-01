@@ -75,10 +75,11 @@ Twitter API isn't supported for authentication, because they don't provide email
 
 - **MANDRILL_APIKEY**: API key used to send email through the [**Mandrill**](https://mandrillapp.com "Mandrill App") service provided by [MailChimp](http://mailchimp.com/ "MailChimp").
 - **MANDRILL_DEBUG_ENABLED**: Whether we are debugging **Mandrill** messages.
+- **MANDRILL_DEBUG_TRAP**: An email address that will receive every email, ignoring the actual recipient.
 - **MANDRILL_SENDER_ADDRESS**: The email from address to use
 
-Incidental
-----------
+Miscellaneous
+-------------
 
 You shouldn't need to touch these, but you can, of course.
 
@@ -90,6 +91,7 @@ You shouldn't need to touch these, but you can, of course.
 
 - **ENABLE_VERSION_DISPLAY**: Whether to display the current version number on a few, discrete places.
 
+- **TOKEN_EXPIRATION**: Time, expressed in seconds, after which tokens such as password reset or email validation expire.
 
 
 Analytics
