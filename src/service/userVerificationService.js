@@ -9,13 +9,14 @@ var async = require('async'),
 function createToken(user, done){
     var token = new TokenUserVerification({
         userUnverifiedId: user._id
-    }).save(function(err){
+    });
+    token.save(function(err){
         done(err, token);
     });
 }
 
 function getLink(token){
-    return config.server.authorityLanding('/user/verify-email/' + token._id);
+    return config.server.authorityLanding + '/user/verify-email/' + token._id;
 }
 
 function sendEmail(user, token, done){

@@ -11,10 +11,6 @@ function validate(input, done){
         password = input.password,
         messages = [];
 
-    if(typeof password !== 'string' || password.length === 0){
-        messages.push('Your password can\'t be empty');
-    }
-
     if(typeof email !== 'string' || email.length === 0){
         messages.push('The email address can\'t be empty');
     }else if(!config.env.development && !config.remail.test(email)){
@@ -23,15 +19,22 @@ function validate(input, done){
         input.email = email.trim().toLowerCase(); // ignore case
     }
     
+    if(typeof password !== 'string' || password.length === 0){
+        messages.push('Your password can\'t be empty');
+    }
+
     done(null, messages);
 }
 
 function create(email, password, done){
-    new UserUnverified({
+    var user = new UserUnverified({
         email: email,
         displayName: email.split('@')[0],
         password: password
-    }).save(done);
+    });
+    user.save(function(err){
+        done(err, user);
+    });
 }
 
 function register(input, done){
@@ -51,7 +54,7 @@ function register(input, done){
         },
         function(user, next){
             if(user !== null){
-                messages.push('That email address is taken, did you forget your password?');
+                messages.unshift('That email address is unavailable');
             }
 
             if (messages.length){
