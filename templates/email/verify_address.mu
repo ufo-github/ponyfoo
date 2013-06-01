@@ -10,4 +10,4 @@
     <a href='{{{validation.link}}}'>{{{validation.link}}}</a>
 </p>
 <p style='padding-top: 15px;'>No further action is required to ignore this request</p>
-<p>Email verification is in place to mitigate the effect of spam bots using fake email addresses.</p>
+<p>Email verification is in place to mitigate the effect of spam bots using fake email addresses. We apologize for the inconvenience.</p>

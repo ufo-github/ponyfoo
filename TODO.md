@@ -5,6 +5,18 @@ TODO
 -------
 
 - Email verification flow for new accounts using ancient login
+    - flash email sent message in green, make reusable (extract from login.js)
+    - server side stuff (
+        accept the tokens,
+        validate token,
+        validate still not created,
+        mark token as used,
+        create actual user [password stuff],
+        log him in,
+        redirect
+    )
+
+
 - reset password email flow
 - fix logon issues when using providers
 
@@ -17,6 +29,7 @@ TODO
   - Go.
 
 
+- option to resend verification email token
 
 2
 -------

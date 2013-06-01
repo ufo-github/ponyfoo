@@ -185,7 +185,7 @@
                                                 {{header.intro}}
                                             </td>
                                             <td valign="top" width="180" class="preheaderContent" style="padding-top:10px; padding-right:20px; padding-bottom:10px; padding-left:0;">
-                                                This email was generated on {{header.generated}}
+                                                sent {{header.generated}}
                                             </td>
                                         </tr>
                                     </table>
