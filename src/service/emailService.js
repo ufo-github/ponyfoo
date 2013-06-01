@@ -61,7 +61,7 @@ function sendEmail(template, model, done){
                     }],
                     auto_text: true,
                     inline_css: true,
-                    tags: model.tag ? [model.tag] : model.tags,
+                    tags: model.tags ? model.tags : [template],
                     images: [{
                         type: 'image/png',
                         name: 'header',
