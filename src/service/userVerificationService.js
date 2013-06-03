@@ -100,12 +100,10 @@ module.exports = {
                     next(err, unverified);
                 });
             },
-            function(unverified, next){console.log(unverified);
+            function(unverified, next){
                 userService.createUsingEncryptedPassword(unverified.email, unverified.password, next);
             },
             function(user, next){
-                console.log('created');
-                console.log(user);
                 next(null, {
                     status: 'success',
                     message: 'Thanks for validating your email address!',

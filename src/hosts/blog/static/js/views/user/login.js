@@ -37,6 +37,15 @@
                 submit.val('Login');
             }
         });
+
+        $('.password-reset').on('click', function(){
+            nbrut.thin.post('/user/request-password-reset', {
+                api: false,
+                data: {
+                    email: $('#login-email').val()
+                }
+            });
+        });
 	}
 
     nbrut.tt.configure({

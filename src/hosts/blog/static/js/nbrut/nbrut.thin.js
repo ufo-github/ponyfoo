@@ -17,6 +17,10 @@
             fire('GET',what,opts);
         }
 
+        function post(what, opts){
+            fire('POST',what,opts);
+        }
+
         function put(what, opts){
             fire('PUT',what,opts);
         }
@@ -29,12 +33,13 @@
             var id = !!opts.id ? '/' + opts.id : '',
                 parent = !!opts.parent ? opts.parent.what + '/' + opts.parent.id + '/' : '',
                 action = !!opts.action ? opts.action + '/' : '',
+                apiPrefix = !!opts.api ? apiVersion : '',
                 xhr;
 
             opts.eventContext = '{0} {1}'.format(how, what);
 
             var ajaxOptions = {
-                url: '{0}{1}{2}{3}{4}'.format(apiVersion, parent, what, id, action),
+                url: '{0}{1}{2}{3}{4}'.format(apiPrefix, parent, what, id, action),
                 type: how,
                 data: opts.data,
                 dataType: 'json',
@@ -87,6 +92,7 @@
 
         return {
             get: get,
+            post: post,
             put: put,
             del: del,
             hook: plugins.hook,

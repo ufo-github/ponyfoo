@@ -1,7 +1,7 @@
 <h1>Password Reset</h1>
 
 <p>
-    To reset your password, <a href='{{{reset.link}}}'>use this link</a>. You will be prompted for a new password.
+    To reset your password, <a href='{{{reset.link}}}'>use this link</a>. You will be able to choose a new password.
 </p>
 <p>
     This link will expire in {{reset.expires}}.

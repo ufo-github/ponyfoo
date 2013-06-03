@@ -32,12 +32,6 @@ module.exports = {
             access_token_secret: config.twitter.accessTokenSecret
         });
 
-        api.updateStatus(extractStatus(payload), function(err, res){
-            if(err){
-                return done(err);
-            }
-            console.log(res);
-            done();
-        });
+        api.updateStatus(extractStatus(payload), done);
     }
 };
