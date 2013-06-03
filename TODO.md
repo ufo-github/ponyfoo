@@ -5,7 +5,10 @@ TODO
 -------
 
 - reset password email flow
-- fix logon issues when using providers
+- fix logon issues when using providers (domain issues also when validating address)
+
+
+
 
 
 - integrate login on the market level
@@ -16,11 +19,11 @@ TODO
   - Go.
 
 
-- option to resend verification email token
 
 2
 -------
 
+- option to resend verification email token
 - save drafts to localStorage
 - allow saving drafts to backend
 - integrate twitter broadcasts
