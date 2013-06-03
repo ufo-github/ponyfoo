@@ -31,16 +31,16 @@
             return notFound;
         }
 
-        if(xhr.status === 400){ // request validation failed
-            try{
-                return response.error.data.validation;
-            }catch(e){
-                return notFound;
-            }
-        }else if(xhr.status === 404){ // resource not found
+        if(xhr.status === 404){ // resource not found
             return notFound;
         }else if(xhr.status === 500){ // mayhem!
             return ['Oops! The matrix won\'t cooperate with your request'];
+        }
+
+        try{
+            return response.meta.data.validation;
+        }catch(e){
+            return notFound;
         }
     }
 

@@ -23,16 +23,18 @@ function end(res,value){
     res.end(encoded);
 }
 
-function error(opts){
+function meta(opts){
     var json = {
-        error: {
+        meta: {
             code: opts.code,
             message: opts.message,
             data: opts.data || {}
         }
     };
 
-    utilityService.log.err(opts.err);
+    if(opts.err){
+        utilityService.log.err(opts.err);
+    }
 
     head(opts.res,opts.code);
     end(opts.res,json);
@@ -41,7 +43,7 @@ function error(opts){
 function resHandler(err, opts){
     var test = !!err;
     if (test){
-        error({
+        meta({
             res: opts.res,
             code: 500,
             message: 'internal server error',
@@ -61,7 +63,7 @@ function resHandler(err, opts){
 
 function unauthorized(req, res){
     var connected = !!req.user;
-    error({
+    meta({
         res: res,
         code: connected ? 403 : 401,
         message: 'api endpoint unauthorized'
@@ -69,7 +71,7 @@ function unauthorized(req, res){
 }
 
 function notFound(req, res){
-    error({
+    meta({
         res: res,
         code: 404,
         message: 'api endpoint not found'
@@ -77,7 +79,7 @@ function notFound(req, res){
 }
 
 function badRequest(req, res, data){
-    error({
+    meta({
         res: res,
         code: 400,
         message: 'bad request',
@@ -85,6 +87,14 @@ function badRequest(req, res, data){
     });
 }
 
+function ok(req, res, data){
+    meta({
+        res: res,
+        code: 200,
+        message: 'success',
+        data: data || {}
+    });
+}
 function wrapCallback(res, map){
     return function (err,response){
         resHandler(err, {
@@ -105,5 +115,5 @@ module.exports = {
     notFound: notFound,
     badRequest: badRequest,
     wrapCallback: wrapCallback,
-    error: error
+    meta: meta
 };

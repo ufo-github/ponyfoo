@@ -2,7 +2,8 @@
 
 var async = require('async'),
     config = require('../../../config'),
-    passwordResetService = require('../../../service/passwordResetService.js');
+    passwordResetService = require('../../../service/passwordResetService.js'),
+    restService = require('../../../service/restService.js');
 
 module.exports = {
     requestPasswordReset: function(req,res,next){
@@ -11,9 +12,11 @@ module.exports = {
                 return next(err);
             }
 
-// TODO: send json instead of trying to flash it!
-            req.flash(result.status, result.message);
-            res.redirect(config.auth.login);
+            var type = result.status === 'success' ? 'ok' : 'badRequest';
+
+            restService[type](req, res, {
+                validation: [result.message]
+            });
         });
     },
     resetPassword: function(req,res,next){

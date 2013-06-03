@@ -51,7 +51,7 @@ module.exports = {
                 }else{
                     result = {
                         status: 'error',
-                        message: 'No users associated to the provided email address'
+                        message: 'Email not registered!'
                     };
                     next(result);
                 }

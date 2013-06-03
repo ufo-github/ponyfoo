@@ -33,7 +33,7 @@
             var id = !!opts.id ? '/' + opts.id : '',
                 parent = !!opts.parent ? opts.parent.what + '/' + opts.parent.id + '/' : '',
                 action = !!opts.action ? opts.action + '/' : '',
-                apiPrefix = !!opts.api ? apiVersion : '',
+                apiPrefix = opts.api !== false ? apiVersion : '',
                 xhr;
 
             opts.eventContext = '{0} {1}'.format(how, what);

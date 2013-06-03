@@ -12,8 +12,10 @@
     }
 
 	function afterActivate(viewModel, data, ctx){
-        var flashValidation = nbrut.directives('flash-validation');
-        flashValidation(viewModel, '.authentication-providers');
+        var providersSelector = '.authentication-providers',
+            flashValidation = nbrut.directives('flash-validation');
+
+        flashValidation(viewModel, providersSelector);
 
         if (prev !== undefined){
             var providers = ctx.elements.find('.authentication-providers .social');
@@ -43,7 +45,8 @@
                 api: false,
                 data: {
                     email: $('#login-email').val()
-                }
+                },
+                context: $(providersSelector)
             });
         });
 	}
