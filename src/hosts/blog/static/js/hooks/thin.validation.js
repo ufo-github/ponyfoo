@@ -21,8 +21,13 @@
         if(textStatus === 'timeout'){
             return ['The matrix is not responding to your request'];
         }
+
         if(!xhr.responseText){
-            return;
+            if(textStatus === 'success'){
+                return getMeta(xhr);
+            }else{
+                return;
+            }
         }
 
         try{
@@ -37,11 +42,15 @@
             return ['Oops! The matrix won\'t cooperate with your request'];
         }
 
-        try{
-            return response.meta.data.validation;
-        }catch(e){
-            return notFound;
+        function getMeta(response, defaultValue){
+            try{
+                return response.meta.data.validation;
+            }catch(e){
+                return defaultValue;
+            }   
         }
+
+        return getMeta(response, notFound);
     }
 
     function validationInDialog(validation){
@@ -70,6 +79,6 @@
         }
     }
 
-    nbrut.thin.hook('fail', validationMessages);
     nbrut.thin.hook('done', removeMessageInContext);
+    nbrut.thin.hook('always', validationMessages);
 }(window,jQuery,nbrut);

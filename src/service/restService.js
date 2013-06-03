@@ -115,5 +115,6 @@ module.exports = {
     notFound: notFound,
     badRequest: badRequest,
     wrapCallback: wrapCallback,
-    meta: meta
+    meta: meta,
+    ok: ok
 };
