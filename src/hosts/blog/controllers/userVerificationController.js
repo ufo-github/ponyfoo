@@ -8,6 +8,7 @@ module.exports = {
         async.waterfall([
             async.apply(userVerificationService.verifyToken, req.params.token),
             function(result, then){
+                console.log(result);
                 req.flash(result.status, result.message);
                 then(null, result.user);
             },

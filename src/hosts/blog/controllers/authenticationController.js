@@ -31,7 +31,7 @@ function register(req, res, next){
         if(validation){
             req.flash('error', validation);
         }else{
-            req.flash('success', 'Account activation instructions sent to your email!');
+            req.flash('success', 'Activation instructions sent to your email!');
         }
         
         return res.redirect(config.auth.login);

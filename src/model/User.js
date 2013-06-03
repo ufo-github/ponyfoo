@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
     schema = new mongoose.Schema({
         email: { type: String, require: true, index: { unique: true }, trim: true },
         password: { type: String, require: true },
+        passwordEncryption: { type: Boolean, default: true },
         created: { type: Date, require: true, default: Date.now },
         displayName: { type: String },
         facebookId: { type: String },
@@ -27,8 +28,9 @@ schema.virtual('gravatar').get(function(){
 
 schema.pre('save', function(done) {
     var user = this;
-
-    if (!user.isModified('password')){
+    
+    if(!user.passwordEncryption || !user.isModified('password')){
+        user.passwordEncryption = true;
         return done();
     }
 
