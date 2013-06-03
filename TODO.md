@@ -5,7 +5,6 @@ TODO
 -------
 
 - Email verification flow for new accounts using ancient login
-    - flash email sent message in green, make reusable (extract from login.js)
     - server side stuff (
         accept the tokens,
         validate token,
