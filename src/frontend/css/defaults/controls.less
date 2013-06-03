@@ -163,41 +163,49 @@ textarea.resizing {
 
 
 
-/* VALIDATION ERRORS
+/* VALIDATION SECTiON
  ******************/
 
-.validation-errors {
+.validation {
   .ff-console();
+  background-color: inherit;
   font-size: 0.8em;
-  background-color: @blue_light;
   color: @strong;
   padding: 12px;
   margin: 15px 0 10px;
   .box-radius(3px);
 }
 
-.validation-errors .close {
+.validation .close {
   float: right;
   margin-top: -6px;
   margin-right: -6px;
 }
 
-.validation-errors ul:empty {
+.validation ul:empty {
   display: none;
 }
 
-.validation-errors li{
+.validation li{
   margin-top: 8px;
   list-style-position: inside;
   list-style-type: disc;
 }
 
-.validation-errors li:first-child {
+.validation li:first-child {
   margin-top: 0;
 }
 
-.validation-errors li:only-child {
+.validation li:only-child {
   list-style-type: none;
+}
+
+.validation-success {
+  background-color: @green_light;
+}
+
+.validation-errors {
+  background-color: @blue_light;
 }
 
 

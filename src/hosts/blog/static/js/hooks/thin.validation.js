@@ -53,7 +53,10 @@
     }
 
     function validationInContext(validation, context){
-        var partial = nbrut.tt.partial('validation-errors', { errors: validation });
+        var partial = nbrut.tt.partial('validation', {
+            css: 'validation-errors',
+            messages: validation
+        });
 
         removeMessageInContext(context);
         partial.prependTo(context);
@@ -63,7 +66,7 @@
 
     function removeMessageInContext(context){
         if (context && context.jquery){
-            context.find('.validation-errors:first-child').remove();
+            context.find('.validation:first-child').remove();
         }
     }
 

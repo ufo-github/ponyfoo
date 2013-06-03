@@ -72,6 +72,7 @@ data.assets.js = [
     '/js/nbrut/nbrut.pluginFactory.js',
     '/js/nbrut/nbrut.md.js',
     '/js/nbrut/nbrut.ui.js',
+    '/js/nbrut/nbrut.directives.js',
     '/js/nbrut/nbrut.templates.js',
     '/js/nbrut/nbrut.thin.js',
     '/js/nbrut/nbrut.analytics.js',
@@ -84,8 +85,8 @@ data.assets.js = [
     '/js/hooks/templates.md.js',
     '/js/hooks/templates.metadata.js',
 
-    '/js/markdown/prompts.js',
-    
+    '/js/directives/flash-validation.js',
+
     '/js/templates/shared.js',
     '/js/templates/markdown.js',
     '/js/templates/entries.js',
@@ -97,6 +98,8 @@ data.assets.js = [
     '/js/views/shared/expand.section.js',
     '/js/views/shared/table.pager.js',
 
+    '/js/markdown/prompts.js',
+    
     { profile: 'anon', local: '/js/views/user/login.js' },
     '/js/views/user/profile.js',
     { profile: registered, local: '/js/views/user/profile.edit.js' },

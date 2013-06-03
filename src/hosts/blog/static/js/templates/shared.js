@@ -16,8 +16,8 @@
     });
 
     register({
-        key: 'validation-errors',
-        source: '#validation-errors-template',
+        key: 'validation',
+        source: '#validation-template',
         mustache: true
     });
 

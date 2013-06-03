@@ -1,8 +1,8 @@
-section.validation-errors
+section(class='validation {{css}}')
   // {{^unclosable}}
   a.action.close(title='Close')='Close'
   // {{/unclosable}}
   ul
-    // {{#errors}}
+    // {{#messages}}
     li='{{.}}'
-    // {{/errors}}
+    // {{/messages}}

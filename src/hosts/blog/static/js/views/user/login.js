@@ -12,33 +12,8 @@
     }
 
 	function afterActivate(viewModel, data, ctx){
-        var errors = viewModel.flash.error;
-        if (errors !== undefined && errors.length !== 0){
-            var validation = nbrut.tt.partial('validation-errors', {
-                errors: errors
-            });
-            validation.insertBefore('.authentication-providers');
-        }
-
-        
-
-
-
-
-        // TODO! stuff!!!!!!
-
-
-
-
-
-        var info = viewModel.flash.info;
-        if (info !== undefined && info.length !== 0){
-            var partial = nbrut.tt.partial('validation-success', {
-                info: info
-            });
-            partial.insertBefore('.authentication-providers');
-        }
-
+        var flashValidation = nbrut.directives('flash-validation');
+        flashValidation(viewModel, '.authentication-providers');
 
         if (prev !== undefined){
             var providers = ctx.elements.find('.authentication-providers .social');

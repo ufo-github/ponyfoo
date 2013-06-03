@@ -73,11 +73,12 @@
                     }
                 }).slice(0,1); // just the first valid file.
 
-                uploadContainer.find('.validation-errors').remove();
+                uploadContainer.find('.validation').remove();
 
                 if(data.files.length === 0){
-                    validation = nbrut.tt.partial('validation-errors', {
-                        errors: [ext.warning]
+                    validation = nbrut.tt.partial('validation', {
+                        css: 'validation-errors',
+                        messages: [ext.warning]
                     });
                     validation.prependTo(uploadContainer);
                 }else{
