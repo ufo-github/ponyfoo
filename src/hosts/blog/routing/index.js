@@ -3,7 +3,8 @@
 function setup(server){
     var config = require('../../../config'),
         defaults = require('../../common/routing.js'),
-        auth = require('./auth.js'),
+        auth = require('./authentication.js'),
+        user = require('./user.js'),
         api = require('./api.js'),
         zombieController = require('../controllers/zombieController.js').configure(server),
         feedController = require('../controllers/feedController.js'),
@@ -15,6 +16,7 @@ function setup(server){
     server.all('/*', blogController.ensureTakenThenHydrate);
 
     auth.configure(server); // authentication
+    user.configure(server); // user services
     api.configure(server); // rest api
     
     server.get('/rss/latest.xml', feedController.getFeed);

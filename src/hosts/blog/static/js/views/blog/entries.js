@@ -59,7 +59,8 @@
     }
 
     function afterActivate(viewModel, data, ctx){
-        var elements = ctx.elements,
+        var flashValidation = nbrut.directives('flash-validation'),
+            elements = ctx.elements,
             container = elements.find('.blog-entries'),
             sidebar = elements.filter('.blog-sidebar'),
             search = !!data.search,
@@ -81,6 +82,8 @@
             addSearchShrinkage(container);
         }
         addReadingTime(container);
+
+        flashValidation(viewModel, '.blog-entries-wrapper');
     }
 
     function addSearchShrinkage(container){

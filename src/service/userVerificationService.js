@@ -42,5 +42,21 @@ module.exports = {
                 sendEmail(user, token, next);
             }
         ], done);
+    },
+    verifyToken: function(tokenId, done){
+        // TODO: verify email.
+        /*
+        - Email verification flow for new accounts using ancient login
+            - server side stuff (
+                accept the tokens,
+                validate token,
+                validate still not created,
+                mark token as used,
+                create actual user [password stuff],
+                log him in,
+                redirect
+            )
+        */
+        done(true);
     }
 };

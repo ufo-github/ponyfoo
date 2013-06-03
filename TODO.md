@@ -4,18 +4,6 @@ TODO
 1
 -------
 
-- Email verification flow for new accounts using ancient login
-    - server side stuff (
-        accept the tokens,
-        validate token,
-        validate still not created,
-        mark token as used,
-        create actual user [password stuff],
-        log him in,
-        redirect
-    )
-
-
 - reset password email flow
 - fix logon issues when using providers
 
