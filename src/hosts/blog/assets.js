@@ -78,24 +78,24 @@ data.assets.js = [
     '/js/nbrut/nbrut.init.js',
     resolve('/js/vendor/Markdown.Editor.js'), // depends on NBrut
 
-    '/js/views/hooks/thin.js',
-    '/js/views/hooks/thin.validation.js',
-    '/js/views/hooks/templates.js',
-    '/js/views/hooks/templates.md.js',
-    '/js/views/hooks/templates.metadata.js',
+    '/js/hooks/thin.js',
+    '/js/hooks/thin.validation.js',
+    '/js/hooks/templates.js',
+    '/js/hooks/templates.md.js',
+    '/js/hooks/templates.metadata.js',
 
-    '/js/views/templates/shared.js',
-    '/js/views/templates/markdown.js',
-    '/js/views/templates/entries.js',
-    { profile: 'anon', local: '/js/views/templates/anon.js' },
-    { profile: registered, local: '/js/views/templates/registered.js' },
-    { profile: 'blogger', local: '/js/views/templates/blogger.js'},
+    '/js/markdown/prompts.js',
+    
+    '/js/templates/shared.js',
+    '/js/templates/markdown.js',
+    '/js/templates/entries.js',
+    { profile: 'anon', local: '/js/templates/anon.js' },
+    { profile: registered, local: '/js/templates/registered.js' },
+    { profile: 'blogger', local: '/js/templates/blogger.js'},
 
     '/js/views/shared/upload.js',
     '/js/views/shared/expand.section.js',
     '/js/views/shared/table.pager.js',
-
-    '/js/views/markdown/prompts.js',
 
     { profile: 'anon', local: '/js/views/user/login.js' },
     '/js/views/user/profile.js',

@@ -27,6 +27,7 @@ These are general purpose variables which are always useful to configure.
 - **PLATFORM_NAME**: The name of the platform, used throught the application to refer to the entire platform.
 
 
+
 Hosting
 -------
 
@@ -48,6 +49,8 @@ These variables are usually very important for **deployments**, but the default 
 - **BLOG_DEFAULT**: The default blog slug. Defaults to `'blog'`. i.e: http://blog.local-ponyfoo.com`
 - **BLOG_REGEX**: An optional regex to restrict the subdomains that are available to users. Implicitly adds `'^'` and `'$'` to the regex. Requests that fail a test against this regex get permanently redirected to the default slug. By default it's unrestricted.
 - **ENABLE_BLOG_REGEX_301**: If `'true'`, permanently redirects requests to filtered blog slugs to the market home.
+
+
 
 API Credentials
 ---------------
@@ -78,6 +81,8 @@ Twitter API isn't supported for authentication, because they don't provide email
 - **MANDRILL_DEBUG_TRAP**: An email address that will receive every email, ignoring the actual recipient.
 - **MANDRILL_SENDER_ADDRESS**: The email from address to use
 
+
+
 Miscellaneous
 -------------
 
@@ -92,6 +97,7 @@ You shouldn't need to touch these, but you can, of course.
 - **ENABLE_VERSION_DISPLAY**: Whether to display the current version number on a few, discrete places.
 
 - **TOKEN_EXPIRATION**: Time, expressed in seconds, after which tokens such as password reset or email validation expire.
+
 
 
 Analytics
