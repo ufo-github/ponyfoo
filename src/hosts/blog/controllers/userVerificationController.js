@@ -1,12 +1,26 @@
 'use strict';
 
-var userVerificationService = require('../../../service/userVerificationService.js');
+var async = require('async'),
+    userVerificationService = require('../../../service/userVerificationService.js');
 
 module.exports = {
     verifyEmail: function(req,res,next){
-        userVerificationService.verifyToken(req.params.token, function(err){
-            if(err || true){
-                req.flash('error', 'This token has already expired.');
+        async.waterfall([
+            async.apply(userVerificationService.verifyToken, req.params.token),
+            function(result, then){
+                req.flash(result.status, result.message);
+                then(null, result.user);
+            },
+            function(user, then){
+                if(user){
+                    req.login(user, then);
+                }else{
+                    then();
+                }
+            }
+        ], function(err){
+            if(err){
+                return next(err);
             }
             res.redirect('/');
         });
