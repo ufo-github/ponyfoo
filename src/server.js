@@ -24,17 +24,22 @@ function execute(gruntvars){
             
             setup('blog');
             next();
+        },
+        function(next){
+            if(config.env.development){
+                require('dictatorship').overthrow(port, function(){
+                    require('./service/audioService.js').play('success');
+                    next();
+                });
+            }else{
+                next();
+            }
         }
     ], function(err){
         if(err){
             throw err;
         }
-
-        if(config.env.development){
-            require('dictatorship').overthrow(port, listen);
-        }else{
-            listen();
-        }
+        listen();
     });
 
     function setup(name){

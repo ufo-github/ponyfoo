@@ -55,7 +55,9 @@
   },
   "devDependencies": {
     "dictatorship": "0.1.0",
-    "grunt-contrib-watch": "~0.4.3"
+    "grunt-contrib-watch": "~0.4.3",
+    "wav": "~0.1.0",
+    "speaker": "0.0.10"
   },
   "engines": {
     "node": "0.10.6",
