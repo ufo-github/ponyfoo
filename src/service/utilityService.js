@@ -16,7 +16,7 @@ function logger(){
             }
 
             if(dev){
-                out.log(level + ': ' + message);
+                out.log(level + ': ' + JSON.stringify(message));
             }
         }
 
