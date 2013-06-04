@@ -23,6 +23,18 @@
     register({
         key: 'user-password-reset',
         source: '#user-password-reset-template',
-        mustache: true
+        mustache: true,
+        aliases: [{
+            title: 'Reset Password',
+            route: {
+                regex: /^\/user\/password-reset\/([0-9a-f]{24})$/,
+                get: function(data){
+                    return '/user/password-reset/{0}'.format(data.id);
+                },
+                map: function(captures){
+                    return { tokenId: captures[1] };
+                }
+            }
+        }]
     });
 }(window,nbrut);

@@ -36,3 +36,7 @@ TODO
 
 - client-side caching?
 - proper api authentication?
+
+- partition the build process so that continuous development
+  doesn't re-do everything for every single file
+  

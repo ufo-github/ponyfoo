@@ -80,7 +80,7 @@ module.exports = {
             }else{
                 done(null, {
                     status: 'success',
-                    message: 'Password reset instructions email sent!'
+                    message: 'Password reset instructions sent!'
                 });
             }
         });

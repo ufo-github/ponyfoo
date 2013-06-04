@@ -15,6 +15,13 @@ function sendJson(req, res, result){
 }
 module.exports = {
     requestPasswordReset: function(req,res,next){
+        if(!req.body.email){
+            return sendJson(req, res, {
+                status: 'error',
+                message: 'Enter your email in the input below'
+            });
+        }
+
         passwordResetService.emitToken(req.body.email, function(err, result){
             if(err){
                 return next(err);
@@ -37,6 +44,13 @@ module.exports = {
         });
     },
     resetPassword: function(req,res,next){
+        if(!req.body.password){
+            return sendJson(req, res, {
+                status: 'error',
+                message: 'Your password cannot be empty!'
+            });
+        }
+
         passwordResetService.updatePassword(req.params.token, req.body.password, function(err, valid){
             if(err){
                 return next(err);
