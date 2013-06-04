@@ -28,7 +28,7 @@ function execute(gruntvars){
         function(next){
             if(config.env.development){
                 require('dictatorship').overthrow(port, function(){
-                    require('./service/audioService.js').play('success');
+                    require('./service/audioService.js').beep();
                     next();
                 });
             }else{

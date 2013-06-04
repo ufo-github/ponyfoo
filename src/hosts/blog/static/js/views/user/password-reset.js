@@ -3,15 +3,15 @@
 
     function afterActivate(viewModel, data){
         var action = '/user/reset-password/' + data.tokenId,
-            input = $('.js-password-reset');
+            input = $('.password-reset-input');
 
-        $('.js-password-reset-button').on('click', function(){
+        $('.password-reset-button').on('click', function(){
             nbrut.thin.post(action, {
                 api: false,
                 data: {
                     password: input.val()
                 },
-                context: $('.js-password-reset-area')
+                context: $('.password-reset-area')
             });
         });
 
