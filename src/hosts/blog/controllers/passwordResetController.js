@@ -13,6 +13,7 @@ function sendJson(req, res, result){
         validation: [result.message]
     });
 }
+
 module.exports = {
     requestPasswordReset: function(req,res,next){
         if(!req.body.email){

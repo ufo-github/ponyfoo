@@ -8,6 +8,10 @@ var config = require('../config'),
     client = new Mandrill(config.email.apiKey, config.email.debug),
     getImageHeader;
 
+if(!config.email.apiKey){
+    console.log('WARN: email api key not set');
+}
+
 (function(){
     var cached;
 
