@@ -29,7 +29,7 @@
             route: {
                 regex: /^\/user\/password-reset\/([0-9a-f]{24})$/,
                 get: function(data){
-                    return '/user/password-reset/{0}'.format(data.id);
+                    return '/user/password-reset/{0}'.format(data.tokenId);
                 },
                 map: function(captures){
                     return { tokenId: captures[1] };

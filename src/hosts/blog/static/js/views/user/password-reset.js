@@ -1,19 +1,21 @@
 !function (window,$,nbrut, undefined) {
     'use strict';
 
-    function afterActivate(viewModel){
-        var action = '/user/reset-password/' + viewModel.tokenId,
+    function afterActivate(viewModel, data){
+        var action = '/user/reset-password/' + data.tokenId,
             input = $('.js-password-reset');
 
-        $('#lala').on('click', function(){
+        $('.js-password-reset-button').on('click', function(){
             nbrut.thin.post(action, {
                 api: false,
                 data: {
                     password: input.val()
                 },
-                context: input
+                context: $('.js-password-reset-area')
             });
         });
+
+        input.focus();
     }
 
     nbrut.tt.configure({

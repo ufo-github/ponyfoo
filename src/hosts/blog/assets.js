@@ -36,6 +36,7 @@ data.assets.css = [
     '/css/views/user/profile.less',
     { profile: registered, local: '/css/views/user/profile.edit.less' },
     { profile: 'anon', local: '/css/views/user/login.less' },
+    { profile: 'anon', local: '/css/views/user/password-reset.less' },
 
     '/css/views/blog/entries.less',
     '/css/views/blog/comments.less',
