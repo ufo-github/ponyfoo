@@ -54,7 +54,7 @@
     "zombie": "~1.4.1"
   },
   "devDependencies": {
-    "dictatorship": "0.1.0",
+    "dictatorship": "0.1.1",
     "grunt-contrib-watch": "~0.4.3",
     "wav": "~0.1.0",
     "speaker": "0.0.10"

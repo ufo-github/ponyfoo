@@ -4,7 +4,7 @@
     function validationMessages(context, xhr, textStatus){
         var validation = parseResponseText(xhr, textStatus);
 
-        if($.isArray(validation)){
+        if($.isArray(validation.messages)){
             if (!context){
                 validationInDialog(validation);
             }else if(context.jquery){
@@ -16,46 +16,47 @@
     }
 
     function parseResponseText(xhr, textStatus){
-        var response, notFound = ['Resource not found in the matrix. Try again later'];
+        var response,
+            notFound = ['Resource not found in the matrix. Try again later'],
+            result = { failed: textStatus !== 'success' };
 
         if(textStatus === 'timeout'){
             return ['The matrix is not responding to your request'];
         }
 
-        if(!xhr.responseText){
-            if(textStatus === 'success'){
-                return getMeta(xhr);
-            }else{
-                return;
+        if(textStatus === 'success'){
+            response = xhr;
+        }else if(!xhr.responseText){
+            return result;
+        }else{
+            try{
+                response = JSON.parse(xhr.responseText);
+            }catch(e){
+                result.messages = notFound;
+                return result;
             }
         }
 
-        try{
-            response = JSON.parse(xhr.responseText);
-        }catch(e){
-            return notFound;
-        }
-
         if(xhr.status === 404){ // resource not found
-            return notFound;
+            result.messages = notFound;
         }else if(xhr.status === 500){ // mayhem!
-            return ['Oops! The matrix won\'t cooperate with your request'];
-        }
-
-        function getMeta(response, defaultValue){
+            result.messages = ['Oops! The matrix won\'t comply with your request'];
+        }else{
             try{
-                return response.meta.data.validation;
+                result.messages = response.meta.data.validation;
             }catch(e){
-                return defaultValue;
-            }   
+            }
         }
-
-        return getMeta(response, notFound);
+        return result;
     }
 
     function validationInDialog(validation){
         var body = $('body'),
-            partial = nbrut.tt.partial('validation-dialog', { errors: validation, unclosable: true });
+            partial = nbrut.tt.partial('validation-dialog', {
+                css: validation.failed ? 'validation-errors' : 'validation-success',
+                messages: validation.messages,
+                unclosable: true
+            });
 
         body.find('.validation-dialog').remove();
         partial.appendTo(body);
@@ -63,8 +64,8 @@
 
     function validationInContext(validation, context){
         var partial = nbrut.tt.partial('validation', {
-            css: 'validation-errors',
-            messages: validation
+            css: validation.failed ? 'validation-errors' : 'validation-success',
+            messages: validation.messages
         });
 
         removeMessageInContext(context);
