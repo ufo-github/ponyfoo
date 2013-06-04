@@ -33,7 +33,7 @@ function meta(opts){
     };
 
     if(opts.err){
-        utilityService.log.err(opts.err);
+        utilityService.log.err(opts.err.stack || opts.err);
     }
 
     head(opts.res,opts.code);
