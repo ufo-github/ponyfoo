@@ -87,12 +87,12 @@ data.assets.js = [
 
     '/js/directives/flash-validation.js',
 
-    '/js/templates/shared.js',
-    '/js/templates/markdown.js',
-    '/js/templates/entries.js',
-    { profile: 'anon', local: '/js/templates/anon.js' },
-    { profile: registered, local: '/js/templates/registered.js' },
-    { profile: 'blogger', local: '/js/templates/blogger.js'},
+    '/js/plumbing/shared.js',
+    '/js/plumbing/markdown.js',
+    '/js/plumbing/entries.js',
+    { profile: 'anon', local: '/js/plumbing/anon.js' },
+    { profile: registered, local: '/js/plumbing/registered.js' },
+    { profile: 'blogger', local: '/js/plumbing/blogger.js'},
 
     '/js/views/shared/upload.js',
     '/js/views/shared/expand.section.js',
@@ -101,6 +101,7 @@ data.assets.js = [
     '/js/markdown/prompts.js',
     
     { profile: 'anon', local: '/js/views/user/login.js' },
+    { profile: 'anon', local: '/js/views/user/password-reset.js' },
     '/js/views/user/profile.js',
     { profile: registered, local: '/js/views/user/profile.edit.js' },
 

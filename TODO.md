@@ -4,18 +4,6 @@ TODO
 1
 -------
 
-- reset password email flow (
-    receive get request,
-    view,
-    post request to change it, 
-    redirect to login
-)
-- fix logon issues when using providers (domain issues also when validating address)
-
-
-
-
-
 - integrate login on the market level
 
 - blog claim path

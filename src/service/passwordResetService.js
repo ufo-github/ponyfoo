@@ -2,8 +2,10 @@
 
 var async = require('async'),
     moment = require('moment'),
+    mongoose = require('mongoose'),
     config = require('../config'),
     emailService = require('./emailService.js'),
+    userService = require('./userService.js'),
     TokenPasswordReset = require('../model/TokenPasswordReset.js'),
     User = require('../model/User.js');
 
@@ -17,7 +19,7 @@ function createToken(user, done){
 }
 
 function getLink(token){
-    return config.server.authorityLanding + '/user/password-reset/' + token._id;
+    return config.server.authorityBlog + '/user/password-reset/' + token._id;
 }
 
 function getExpiration(token){
@@ -35,6 +37,17 @@ function sendEmail(user, token, done){
         }
     };
     emailService.send('password_reset', model, done);
+}
+
+function validateToken(token, done){
+    if(!token || token.used){
+        return done(null, false);
+    }
+
+    var now = new Date(),
+        expiration = getExpiration(token).toDate();
+
+    done(null, expiration > now);
 }
 
 module.exports = {
@@ -70,6 +83,39 @@ module.exports = {
                     message: 'Password reset instructions email sent!'
                 });
             }
+        });
+    },
+    validateToken: function(tokenId, done){
+        TokenPasswordReset.findOne({ _id: mongoose.Types.ObjectId(tokenId) }, function(err, token){
+            if(err){
+                return done(err);
+            }
+
+            validateToken(token, done);
+        });
+    },
+    updatePassword: function(tokenId, password, done){
+        TokenPasswordReset.findOne({ _id: mongoose.Types.ObjectId(tokenId) }, function(err, token){
+            if(err){
+                return done(err);
+            }
+
+            validateToken(token, function(err, valid){
+                if(err || !valid){
+                    return done(err, valid);
+                }
+
+                token.used = new Date();
+                token.save(function(err){
+                    if(err){
+                        return done(err);
+                    }
+
+                    userService.setPassword(token.userId, password, function(err){
+                        done(err, !err);
+                    });
+                });
+            });
         });
     }
 };

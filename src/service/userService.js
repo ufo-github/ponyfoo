@@ -33,5 +33,15 @@ module.exports = {
         blogService.findByUser(user, function(err, blog){
             done(err, !!blog);
         });
+    },
+    setPassword: function(userId, password, done){
+        User.findOne({ _id: userId }, function(err, user){
+            if(err || !user){
+                return done(err, false);
+            }
+
+            user.password = password;
+            user.save(done);
+        });
     }
 };

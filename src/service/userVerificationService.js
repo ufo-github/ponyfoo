@@ -20,7 +20,7 @@ function createToken(user, done){
 }
 
 function getLink(token){
-    return config.server.authorityLanding + '/user/verify-email/' + token._id;
+    return config.server.authorityBlog + '/user/verify-email/' + token._id;
 }
 
 function getExpiration(token){

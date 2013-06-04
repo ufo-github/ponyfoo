@@ -19,4 +19,10 @@
         source: '#authentication-required-template',
         mustache: true
     });
+
+    register({
+        key: 'user-password-reset',
+        source: '#user-password-reset-template',
+        mustache: true
+    });
 }(window,nbrut);
