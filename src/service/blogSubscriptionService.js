@@ -10,7 +10,7 @@ var async = require('async'),
 
 function update(model, enabled, done){
     BlogSubscriber.find(model, function(err, subscriber){
-        if(err || !!subscriber){
+        if(err){
             return done(err);
         }
 
@@ -35,7 +35,8 @@ function sendConfirmation(subscriber, blog, done){
             title: blog.title
         },
         confirm: {
-            link: authority + '/email/confirm-subscription/' + subscriber._id
+            link: authority + '/email/confirm-subscription/' + subscriber._id,
+            unsubscribe: authority + '/email/unsubscribe/' + subscriber._id
         }
     };
 
