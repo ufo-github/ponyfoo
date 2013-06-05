@@ -1,0 +1,24 @@
+section#blog-subscriptions.blog-sidebar-item
+  header
+    h5.underline='Subscribe!'
+
+  if !user || !user.subscribed
+    section
+      p
+        span='Receive ' + blog.title + ' updates directly in your email! '
+        em='No spam.'
+
+      p='Unsubscribe at any time.'
+
+      if !user
+        p
+          input.email-subscription-input(type='email', placeholder='Enter your email address')
+
+      p
+        button.button.email-subscription='Subscribe!'
+
+  if blog.social.rss
+    section
+      p='Subscribe using our feed'
+      p
+        a.social.rss(title='Subscribe to the RSS feed', target='_blank', href=blog.social.rssXml)='RSS Feed'

@@ -8,14 +8,16 @@ var async = require('async'),
     BlogSubscriber = require('../model/BlogSubscriber.js'),
     User = require('../model/User.js');
 
-function subscribe(model, enabled, done){
+function update(model, enabled, done){
     BlogSubscriber.find(model, function(err, subscriber){
         if(err || !!subscriber){
             return done(err);
         }
 
-        model.enabled = enabled;
-        subscriber = new BlogSubscriber(model);
+        if(!subscriber){
+            subscriber = new BlogSubscriber(model);
+        }
+        subscriber.enabled = enabled;
         subscriber.save(function(err){
             done(err, subscriber);
         });
@@ -68,13 +70,13 @@ module.exports = {
         });
     },
     subscribeUser: function(user, blog, done){
-        subscribe({
+        update({
             blogId: blog._id,
             userId: user._id
         }, true, done);
     },
     subscribeEmail: function(email, blog, done){
-        subscribe({
+        update({
             blogId: blog._id,
             email: email
         }, false, function(err, subscriber){

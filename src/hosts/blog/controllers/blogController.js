@@ -39,8 +39,6 @@ function hydrate(req, model, done){
             req.blogger = model.blogger;
             req.blogger.meta = req.blogger.displayName + email;
 
-            req.subscriber = false;
-
             if (social){
                 social.any = utilityService.hasTruthyProperty(social);
                 social.rssXml = config.server.authority(req.blog.slug) + config.feed.relative;
@@ -56,7 +54,7 @@ function hydrate(req, model, done){
             user.blogger = user._id.equals(req.blog.owner);
 
             if (user.blogger){
-                user.subscriber = true;
+                user.subscribed = true;
                 return next();
             }
             
@@ -64,7 +62,7 @@ function hydrate(req, model, done){
                 if(err){
                     next(err);
                 }
-                user.subscriber = isSubscriber;
+                user.subscribed = isSubscriber;
                 next();
             });
         }

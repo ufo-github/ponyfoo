@@ -70,7 +70,7 @@
                 text = getBubbleText(measurements),
                 readable = plugin.isReadable();
 
-            if(readable){
+            if(readable && text){
                 if($window.width() >= 768){
                     plugin.$bubble.css('top', measurements.distance).text(text);
                     plugin.fadeBubble(0.4);
@@ -84,13 +84,11 @@
     };
 
     function getBubbleText(measurements){
-        if(measurements.remaining > 1){
-            return measurements.remaining + ' minutes left';
-        }else if(measurements.progress >= 1) {
-            return 'Thanks for reading!';
-        }else if(measurements.remaining <= 1){
-            return 'Less than a minute';
+        if(measurements.progress >= 1) {
+            return 'almost!';
         }
+        var minutes = Math.max(1, measurements.remaining);
+        return minutes + ' min.';
     }
 
     function calculateTotalMinutes($element){

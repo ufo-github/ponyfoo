@@ -39,6 +39,7 @@ data.assets.css = [
     { profile: 'anon', local: '/css/views/user/password-reset.less' },
 
     '/css/views/blog/entries.less',
+    '/css/views/blog/entries-sidebar.less',
     '/css/views/blog/comments.less',
     { profile: registered, local: '/css/views/blog/comments.registered.less' },
 

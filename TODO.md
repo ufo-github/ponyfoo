@@ -8,6 +8,9 @@ TODO
 - tweet new posts integration
 - email new articles
 
+- subscribe/unsubscribe from profile
+- unsubscribe from email link
+
 - redesign market
   - registration?
   - existing bloggers can't claim additional blog slugs
