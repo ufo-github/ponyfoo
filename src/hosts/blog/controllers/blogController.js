@@ -1,8 +1,10 @@
 'use strict';
 
-var qs = require('querystring'),
+var async = require('async'),
+    qs = require('querystring'),
     config = require('../../../config'),
     blogService = require('../../../service/blogService.js'),
+    blogSubscriptionService = require('../../../service/blogSubscriptionService.js'),
     utilityService = require('../../../service/utilityService.js');
 
 function ensureTakenThenHydrate(req,res,next){
@@ -23,31 +25,50 @@ function ensureTakenThenHydrate(req,res,next){
             return res.redirect(config.server.authorityLanding + query, 302);
         }
 
-        hydrate(req, result);
-        next();
+        hydrate(req, result, next);
     });
 }
 
-function hydrate(req, result){
-    var blog = result.blog,
-        blogger = result.blogger,
-        social = blog.social,
-        user = req.user,
-        email = social && social.email ? ' <' + social.email + '>' : '';
+function hydrate(req, model, done){
+    async.waterfall([
+        function(next){
+            var social = model.blog.social,
+                email = social && social.email ? ' <' + social.email + '>' : '';
 
-    req.blog = result.blog;
-    req.blogger = result.blogger;
+            req.blog = model.blog;
+            req.blogger = model.blogger;
+            req.blogger.meta = req.blogger.displayName + email;
 
-    blogger.meta = blogger.displayName + email;
+            req.subscriber = false;
 
-    if (user){
-        user.blogger = user._id.equals(blog.owner);
-    }
+            if (social){
+                social.any = utilityService.hasTruthyProperty(social);
+                social.rssXml = config.server.authority(req.blog.slug) + config.feed.relative;
+            }
 
-    if (social){
-        social.any = utilityService.hasTruthyProperty(social);
-        social.rssXml = config.server.authority(blog.slug) + config.feed.relative;
-    }
+            next(null, req.user);
+        },
+        function(user, next){
+            if(!user){
+                return next();
+            }
+
+            user.blogger = user._id.equals(req.blog.owner);
+
+            if (user.blogger){
+                user.subscriber = true;
+                return next();
+            }
+            
+            blogSubscriptionService.isSubscriber(user, function(err, isSubscriber){
+                if(err){
+                    next(err);
+                }
+                user.subscriber = isSubscriber;
+                next();
+            });
+        }
+    ], done);
 }
 
 module.exports = {

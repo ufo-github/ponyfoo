@@ -6,7 +6,7 @@ var config = require('../../../config'),
     rss = require('rss'),
     entryController = require('./api/entryController.js');
 
-function setup(req,done){
+function setup(req, done){
     var blog = req.blog,
         blogger = req.blogger,
         host = config.server.authority(blog.slug),

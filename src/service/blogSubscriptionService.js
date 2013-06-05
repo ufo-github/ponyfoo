@@ -27,7 +27,7 @@ function sendConfirmation(subscriber, blog, done){
         model = {
         to: subscriber.email,
         subject: blog.title + ' Subscription Confirmation',
-        intro: 'Please confirm your subscription to ' + blog.title,
+        intro: 'Please confirm the subscription to ' + blog.title + ' updates',
         blog: {
             authority: authority,
             title: blog.title
@@ -37,7 +37,7 @@ function sendConfirmation(subscriber, blog, done){
         }
     };
 
-    emailService.send('blog_subscription_confirm', model, done);
+    emailService.send('blog_update_subscription', model, done);
 }
 
 function sendNotification(entry, blog, recipients, done){
@@ -58,10 +58,15 @@ function sendNotification(entry, blog, recipients, done){
         }
     };
 
-    emailService.send('notification/blog_article', model, done);
+    emailService.send('notification/blog_update', model, done);
 }
 
 module.exports = {
+    isSubscriber: function(user, done){
+        BlogSubscriber.findOne({ userId: user._id, enabled: true }, function(err, subscriber){
+            done(err, !!subscriber);
+        });
+    },
     subscribeUser: function(user, blog, done){
         subscribe({
             blogId: blog._id,

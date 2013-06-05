@@ -10,6 +10,6 @@
     <a href='{{{confirm.link}}}'>{{{confirm.link}}}</a>
 </p>
 <p>
-    We vow to never send you spam. Promise!
+    With this subscription you'll receive an email every time <a href='{{{blog.authority}}}'>{{blog.title}}</a> is updated with a new article. We vow to <i>never</i> send you spam. Promise!
 </p>
 <p style='padding-top: 25px;'>No further action is required to ignore this request</p>

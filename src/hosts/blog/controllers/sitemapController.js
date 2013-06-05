@@ -10,6 +10,7 @@ var async = require('async'),
 function statics(done){
     process.nextTick(function(){
         done(null, [
+            { url: '/rss/latest.xml', changefreq: 'hourly',  priority: 1 },
             { url: '/user/login', changefreq: 'monthly',  priority: 0.3 }
         ]);
     });

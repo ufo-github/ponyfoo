@@ -7,26 +7,9 @@ var config = require('../../config'),
 
 data.assets.host = config.server.authorityMarket;
 
-data.assets.css = [
-    resolve('/css/defaults/reset.css'),
-    resolve('/css/defaults/basic.less'),
-    resolve('/css/vendor/hint.less'),
-    '/css/defaults.less',
-    '/css/sprite.less',
-    '/css/controls.less',
-    '/css/layout.less',
-    '/css/navigation-layout.less',
-    '/css/navigation.less',
-    '/css/availability.less',
-    '/css/features.less',
-    '/css/design.less'
-];
+data.assets.css = [];
 
-data.assets.jQuery = { version: '1.9.1' };
-data.assets.js = [
-    resolve('/js/ext/String.js'),
-    resolve('/js/ext/jquery.layout.js'),
-    '/js/registration.js'
-];
+// data.assets.jQuery = { version: '1.9.1' };
+data.assets.js = [];
 
 module.exports = builder.complete(data);

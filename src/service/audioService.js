@@ -2,6 +2,6 @@
 
 module.exports = {
     beep: function(){
-        process.stderr.write('\u0007'); // system beep
+        process.stdout.write('\u0007'); // system beep
     }
 };

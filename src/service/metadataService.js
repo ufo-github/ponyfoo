@@ -20,6 +20,10 @@ function getLocations(slug, opts){
 
 function getMetadata(opts){
     return function(req,res,next){
+        if(!req.blog.social.rss){
+            return next();
+        }
+        
         var loc = getLocations(req.slug, opts);
 
         fse.mkdirs(loc.folder, function(err){
