@@ -15,6 +15,9 @@ function update(model, enabled, done){
         }
 
         if(!subscriber){
+            if(model._id){ // unsubscribing a non-existent subscriber
+                return done();
+            }
             subscriber = new BlogSubscriber(model);
         }
         subscriber.enabled = enabled;
@@ -35,9 +38,9 @@ function sendConfirmation(subscriber, blog, done){
             title: blog.title
         },
         confirm: {
-            link: authority + '/email/confirm-subscription/' + subscriber._id,
-            unsubscribe: authority + '/email/unsubscribe/' + subscriber._id
-        }
+            link: authority + '/email/confirm-subscription/' + subscriber._id
+        },
+        unsubscribe: authority + '/email/unsubscribe/' + subscriber._id
     };
 
     emailService.send('blog_update_subscription', model, done);
@@ -46,7 +49,8 @@ function sendConfirmation(subscriber, blog, done){
 function sendNotification(entry, blog, recipients, done){
     var authority = config.server.authority(blog.slug),
         model = {
-        to: recipients,
+        to: recipients.to,
+        merge: { locals: recipients.merge },
         subject: entry.title,
         intro: 'The blog has been updated!',
         blog: {
@@ -88,6 +92,9 @@ module.exports = {
             sendConfirmation(subscriber, blog, done);
         });
     },
+    unsubscribe: function(id, done){
+        update({ _id: mongoose.Types.ObjectId(id) }, false, done);
+    },
     confirmEmailSubscription: function(id, done){
         var query = { _id: mongoose.Types.ObjectId(id), enabled: false };
 
@@ -103,23 +110,37 @@ module.exports = {
         });
     },
     notifySubscribers: function(entry, blog, done){
+        var authority = config.server.authority(blog.slug),
+            recipients = { to: [], merge: [] };
+
         BlogSubscriber.find({ blogId: blog._id }, function(err, subscribers){
             if(err){
                 return done(err);
             }
 
-            async.map(subscribers, function(subscriber, done){
+            async.each(subscribers, function(subscriber, done){
                 if(subscriber.email){
-                    return done(null, { email: subscriber.email });
+                    return complete(subscriber.email);
                 }
                 
                 User.findOne({ _id: subscriber.userId }, function(err, user){
                     if(err){
                         return done(err);
                     }
-                    done(null, { email: user.email });
+                    complete(user.email);
                 });
-            }, function(err, recipients){
+
+                function complete(email){
+                    recipients.to.push({ email: email });
+                    recipients.merge.push({
+                        email: email,
+                        model: {
+                            unsubscribe_link: authority + '/email/unsubscribe/' + subscriber._id
+                        }
+                    });
+                    done();
+                }
+            }, function(err){
                 if(err){
                     return done(err);
                 }

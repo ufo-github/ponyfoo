@@ -38,7 +38,13 @@ module.exports = {
             });
         }
     },
-    postUnsubscribe: function(req, res, next){
+    getUnsubscribe: function(req, res, next){
+        subscriptionService.unsubscribe(req.params.id, function(err){
+            if(err){
+                return next(err);
+            }
 
+            req.flash('success', 'Your subscription is now canceled');
+        });
     }
 };

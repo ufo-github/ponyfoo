@@ -1,6 +1,7 @@
 'use strict';
 
 var config = require('../config'),
+    async = require('async'),
     path = require('path'),
     fsService = require('./fsService.js'),
     emailTemplateService = require('./emailTemplateService.js'),
@@ -34,26 +35,21 @@ if(!config.email.apiKey){
     };
 })();
 
-function sendEmail(template, model, done){
-    if(!model.to){ return done(new Error('required email recipient missing')); }
-    if(!model.subject){ return done(new Error('required email subject missing')); }
-    if(!model.intro){ return done(new Error('required email introduction missing')); }
-
-    getImageHeader(function(err, header){
-        if(err){
-            return done(err);
-        }
-
-        if(config.email.trap){
-            model.subject += ' - to: ' + model.to;
-            model.to = config.email.trap;
-        }
-
-        emailTemplateService.render(template, model, function(err, html){
-            if(err){
-                return done(err);
+function prepareEmailJson(template, model, done){
+    async.waterfall([
+        function(next){
+            getImageHeader(next);
+        },
+        function(header, next){
+            if(config.email.trap){
+                model.subject += ' - to: ' + model.to;
+                model.to = config.email.trap;
             }
-
+            emailTemplateService.render(template, model, function(err, html){
+                next(err, html, header);
+            });
+        },
+        function(html, header, next){
             var emailModel = {
                 message: {
                     html: html,
@@ -75,11 +71,59 @@ function sendEmail(template, model, done){
                 }
             };
 
-            client.messages.send(emailModel, function(response){
-                done(null, response);
-            }, function(err){
-                done(err);
-            });
+            next(null, emailModel);
+        },
+        function(emailModel, next){
+            if(model.merge){
+                emailModel.message.merge = true;
+                emailModel.global_merge_vars = mapMergeHash(model.merge.globals);
+                emailModel.merge_vars = mapMergeLocals(model.merge.locals);
+            }
+
+            next(null, emailModel);
+        }
+    ], done);
+}
+
+function mapMergeHash(hash){
+    var result = [], key;
+
+    for(key in hash || {}){
+        result.push({
+            name: key,
+            content: hash[key]
+        });
+    }
+    return result;
+}
+
+function mapMergeLocals(hash){
+    var result = [], key, local;
+
+    for(key in hash || {}){
+        local = hash[key];
+        result.push({
+            rcpt: local.email,
+            vars: mapMergeHash(local.model)
+        });
+    }
+    return result;
+}
+
+function sendEmail(template, model, done){
+    if(!model.to){ return done(new Error('required email recipient missing')); }
+    if(!model.subject){ return done(new Error('required email subject missing')); }
+    if(!model.intro){ return done(new Error('required email introduction missing')); }
+
+    prepareEmailJson(template, model, function(err, emailModel){
+        if(err){
+            return done(err);
+        }
+
+        client.messages.send(emailModel, function(response){
+            done(null, response);
+        }, function(err){
+            done(err);
         });
     });
 }
