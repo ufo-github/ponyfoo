@@ -4,12 +4,17 @@ var path = require('path'),
     fs = require('fs'),
     pagedown = require('pagedown');
 
+function parse(markdown){
+    var pd = new pagedown.getSanitizingConverter();
+    return pd.makeHtml(markdown);
+}
+
 module.exports = {
     readFile: function(file){
         var absolute = path.resolve(process.cwd(), file),
-            md = fs.readFileSync(absolute),
-            pd = new pagedown.getSanitizingConverter();
+            markdown = fs.readFileSync(absolute);
 
-        return pd.makeHtml(md.toString());
-    }
+        return parse(markdown.toString());
+    },
+    parse: parse
 };

@@ -31,7 +31,6 @@ module.exports = {
             access_token_key: config.twitter.accessTokenKey,
             access_token_secret: config.twitter.accessTokenSecret
         });
-
         api.updateStatus(extractStatus(payload), done);
     }
 };

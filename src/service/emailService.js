@@ -60,11 +60,12 @@ function sendEmail(template, model, done){
                     subject: model.subject,
                     from_email: config.email.sender,
                     from_name: config.site.name,
-                    to: [{
+                    to: typeof model.to === 'string' ? [{
                         email: model.to
-                    }],
+                    }] : model.to,
                     auto_text: true,
                     inline_css: true,
+                    preserve_recipients: false,
                     tags: model.tags ? model.tags : [template],
                     images: [{
                         type: 'image/png',

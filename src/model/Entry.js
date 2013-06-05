@@ -10,10 +10,10 @@ var mongoose = require('mongoose'),
         slug: { type: String, require: true, trim: true },
         brief: { type: String, require: true },
         text: { type: String, require: true },
-        date: { type: Date, index: { unique: false }, require: true, default: Date.now },
-		updated: { type: Date, require: true, default: Date.now },
-        previous: { type: ObjectId, index: { unique: false }, default: null },
-        next: { type: ObjectId, index: { unique: false }, default: null },
+        date: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
+		updated: { type: Date, require: true, 'default': Date.now },
+        previous: { type: ObjectId, index: { unique: false }, 'default': null },
+        next: { type: ObjectId, index: { unique: false }, 'default': null },
         tags: [String]
     },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 

@@ -1,8 +1,6 @@
 'use strict';
 
-var pagedown = require('pagedown'),
-    fs = require('fs'),
-    path = require('path');
+var markdownService = require('../../../service/markdownService.js');
 
 function getProfile(req){
     var connected = !!req.user,
@@ -55,11 +53,8 @@ function getView(req,res){
 }
 
 function hydrateWithDescription(req){
-    var pd = new pagedown.getSanitizingConverter(),
-        description = req.blog.description || 'Welcome to my personal blog!',
-        html = pd.makeHtml(description);
-
-    req.blog.descriptionHtml = html;
+    var description = req.blog.description || 'Welcome to my personal blog!';
+    req.blog.descriptionHtml = markdownService.parse(description);
 }
 
 module.exports = {

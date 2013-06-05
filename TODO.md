@@ -4,12 +4,13 @@ TODO
 1
 -------
 
-- integrate login on the market level
+- comment email notification
+- tweet new posts integration
+- email new articles
 
-- blog claim path
-  - step to register or login
+- redesign market
+  - registration?
   - existing bloggers can't claim additional blog slugs
-  - Go.
 
 
 
