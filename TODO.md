@@ -18,8 +18,6 @@ TODO
 - option to resend verification email token
 - save drafts to localStorage
 - allow saving drafts to backend
-- integrate twitter broadcasts
-- integrate email subscriptions
 - redesign commenting infrastructure (which blows)
 
 - refactor:
