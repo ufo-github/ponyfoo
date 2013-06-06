@@ -13,15 +13,24 @@ Lets give it a first try:
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
         var completed = 4;
-        if(request.readyState === completed){
-            if(request.status === 200){
-                // do something interesting with request.responseText
+        if(xhr.readyState === completed){
+            if(xhr.status === 200){
+                // do something interesting with xhr.responseText
             }else{
                 // don't panic! handle the case where we don't receive a 200 OK
             }
         }
     };
-    xnr.open('GET', '/endpoint', true);
+    xhr.open('GET', '/endpoint', true);
     xhr.send(null);
 
 You can try this in a pen I made [here](http://cdpn.io/ycgzo "Bare XMLHttpRequest"). Before we get into what I actually did in the pen, we should go over the snippet I wrote here, making sure we didn't miss anything.
+
+The `.onreadystatechange` handler will fire every time `xhr.readyState` changes, but the only state that's really relevant is `4`, a _magic number_ that denotes an XHR request is _complete_, whatever the outcome was.
+
+Once the request is complete, the XHR object will have it's `status` filled. If you try to access `status` _before completion_, you might [get an exception](http://stackoverflow.com/a/15623060/389745 "Why does it throw?").
+
+Lastly, when you know the `status` of your XHR request, you can do something about it, you should use `xhr.responseText` to figure out _how to react_ to the response, probably passing that to a callback.
+
+The request is prepared using `xhr.open`, passing the [HTTP method](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html "HTTP/1.1 Method Definitions") in the first parameter, the resource to query in the second parameter, and a third parameter to decide whether the request should be asynchronous (`true`), or block the UI thread and make everyone cry (`false`).
+
