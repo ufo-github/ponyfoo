@@ -105,8 +105,114 @@ Lets say you now want to attach that awesome AJAX call to one your DOM elements,
 
 Sure, you could use jQuery like your life depended on it, but this one is pretty simple to do with 'pure' JS. Lets try a reusable function from the get-go.
 
-    function handle(eventName, callback){
-        
+    function add(element, type, handler){
+        if (element.addEventListener){
+            element.addEventListener(type, handler, false);
+        }else if (element.attachEvent){
+            element.attachEvent('on' + type, handler); 
+        }else{
+            // more on this later
+        }
     }
 
+    function remove(element, type, handler){
+        if (element.removeEventListener){
+            element.removeEventListener(type, handler);
+        }else if (element.detachEvent){
+            element.detachEvent(type, handler);
+        }else{
+            // more on this later
+        }
+    }
+
+This one is pretty straightforward, you just add events with either the IE event model, the W3C event model. 
+
+One last option would be to use `element['on' + type] = handler`, but this would be very bad because we can't attach more than one event to each DOM element.
+
+If the event model isn't enough for you, we _could_ use an array to keep the events in a way that is easy to add and remove. This brings a **whole host of complications**, though:
+
+    !function(window){
+        var events = {};
+
+        function add(element, type, handler){
+            var key = 'on' + type,
+                e = events[element];
+
+            if(!element[key]){
+                element[key] = eventStorm(element, type);
+            }
+
+            if(!e){
+                e = { handlers: {} };
+            }
+
+            if(!e.handlers[type]){
+                e.handlers[type] = [];
+            }
+
+            e.handlers[type].push(handler);
+            e.count++; // faster than mapping them later.
+        }
+
+        function remove(element, type, handler){
+            var key = 'on' + type,
+                e = events[element];
+
+            if(!e || !e.handlers[type]){
+                return;
+            }
+            
+            if (--e.count < 1){
+                if (element[key]){
+                    element[key] = null; // remove the event handler
+                }
+            }
+
+            // not modifying the array, to prevent runtime issues
+            var handlers = e.handlers[type],
+                index = handlers.indexOf(handler);
+
+            delete handlers[index];
+        }
+
+        function eventStorm(element, type){
+            return function(){
+                if(!events[element] || !events[element].handlers[type]){
+                    return;
+                }
+                
+                var handlers = events[element].handlers[type],
+                    len = handlers.length,
+                    i;
+
+                for(i = 0; i < len; i++){
+                    if (handlers[i]){ // remember, we could've deleted them
+                        handlers[i].apply(this, arguments);
+                    }
+                }
+            };
+        }
+
+        window.events = {
+            add: add,
+            remove: remove
+        };
+    }(window);
+
+So, yeah. And this would only account for the last case! We should still definitely be using the actual event model if we are able to. Please note _I haven't actually tested it_, before jumping at me like a crazy panther. It's just so you get an idea.
+
+> What? **Event delegation**? People don't even talk about this, how are you supposed to know what event delegation _is_?
+
+This deserves a separate section!
+
+# Event Delegation #
+
+Foo
+
 # Querying the DOM #
+
+Bar
+
+# Shadow DOM #
+
+Baz
