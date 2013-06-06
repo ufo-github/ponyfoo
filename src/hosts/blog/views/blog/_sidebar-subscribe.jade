@@ -10,12 +10,13 @@ section#blog-subscriptions.blog-sidebar-item
 
       p='Unsubscribe at any time.'
 
-      if !user
-        p
-          input.email-subscription-input(type='email', placeholder='Enter your email address')
+      section.email-subscriptions-form
+        if !user
+          p
+            input.email-subscription-input(type='email', placeholder='Enter your email address')
 
-      p
-        button.button.email-subscription='Subscribe!'
+        p
+          button.button.email-subscription(data-text='Subscribe', data-text-disabled='Subscribing...')='Subscribe!'
 
   if blog.social.rss
     section

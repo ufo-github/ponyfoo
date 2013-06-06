@@ -62,7 +62,6 @@
         var flashValidation = nbrut.directives('flash-validation'),
             elements = ctx.elements,
             container = elements.find('.blog-entries'),
-            sidebar = elements.filter('.blog-sidebar'),
             search = !!data.search,
             empty;
 
@@ -82,6 +81,7 @@
             addSearchShrinkage(container);
         }
         addReadingTime(container);
+        wireSubscriptionButton();
 
         flashValidation(viewModel, '.blog-entries-wrapper');
     }
@@ -227,6 +227,29 @@
         if (readingTime){
             readingTime.destroy();
         }
+    }
+
+    function wireSubscriptionButton(){
+        var container = $('.email-subscriptions-form'),
+            input = container.find('.email-subscription-input'),
+            button = container.find('.email-subscription');
+
+        button.on('click', function(){
+            nbrut.ui.disable(button);
+            nbrut.thin.post('/email/subscribe', {
+                api: false,
+                data: input.length ? {
+                    email: input.val()
+                } : null,
+                context: container,
+                done: function(){
+                    button.text('Subscribed!');
+                },
+                fail: function(){
+                    nbrut.ui.enable(button);
+                }
+            });
+        });
     }
 
     nbrut.tt.configure({
