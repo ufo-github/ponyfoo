@@ -15,7 +15,7 @@ function update(model, enabled, done){
         }
 
         if(!subscriber){
-            if(model._id){ // unsubscribing a non-existent subscriber
+            if(model._id){ // editing a non-existent subscriber?
                 return done();
             }
             subscriber = new BlogSubscriber(model);
@@ -96,24 +96,13 @@ module.exports = {
         update({ _id: mongoose.Types.ObjectId(id) }, false, done);
     },
     confirmEmailSubscription: function(id, done){
-        var query = { _id: mongoose.Types.ObjectId(id), enabled: false };
-
-        BlogSubscriber.findOne(query, function(err, subscriber){
-            if(err || !subscriber){
-                return done(err, false);
-            }
-
-            subscriber.enabled = true;
-            subscriber.save(function(err){
-                done(err, subscriber);
-            });
-        });
+        update({ _id: mongoose.Types.ObjectId(id) }, true, done);
     },
-    notifySubscribers: function(entry, blog, done){
-        var authority = config.server.authority(blog.slug),
+    notifySubscribers: function(payload, done){
+        var authority = config.server.authority(payload.blog.slug),
             recipients = { to: [], merge: [] };
 
-        BlogSubscriber.find({ blogId: blog._id }, function(err, subscribers){
+        BlogSubscriber.find({ blogId: payload.blog._id }, function(err, subscribers){
             if(err){
                 return done(err);
             }
@@ -145,7 +134,7 @@ module.exports = {
                     return done(err);
                 }
 
-                sendNotification(entry, blog, recipients, done);
+                sendNotification(payload.entry, payload.blog, recipients, done);
             });
         });
     }

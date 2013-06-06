@@ -39,12 +39,23 @@ module.exports = {
         }
     },
     getUnsubscribe: function(req, res, next){
-        subscriptionService.unsubscribe(req.params.id, function(err){
+        subscriptionService.unsubscribe(req.params.id, function(err, subscriber){
             if(err){
                 return next(err);
             }
 
-            req.flash('success', 'Your subscription is now canceled');
+            req.flash('success', 'Your subscription to this blog is now canceled');
+            res.redirect('/');
+        });
+    },
+    getConfirmSubscription: function(req, res, next){
+        subscriptionService.unsubscribe(req.params.id, function(err, subscriber){
+            if(err){
+                return next(err);
+            }
+
+            req.flash('success', 'Thanks! You are subscribed to updates from this blog');
+            res.redirect('/');
         });
     }
 };

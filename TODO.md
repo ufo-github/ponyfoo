@@ -4,12 +4,8 @@ TODO
 1
 -------
 
+- broadcast integration
 - comment email notification
-- tweet new posts integration
-- email new articles
-
-- subscribe/unsubscribe from profile
-- unsubscribe from email link
 
 - redesign market
   - registration?

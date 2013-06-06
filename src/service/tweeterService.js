@@ -6,9 +6,11 @@ var config = require('../config'),
     rtag = /[a-z0-9]+/i;
 
 function extractStatus(payload){
-    var status = [payload.title, payload.url];
+    var authority = config.server.authority(payload.blog.slug),
+        permalink = authority + payload.blog.permalink,
+        status = [payload.entry.title, permalink];
 
-    payload.tags.forEach(function(tag){
+    payload.entry.tags.forEach(function(tag){
         tag = tag.replace(rhyphens, '');
 
         if(rtag.test(tag)){
