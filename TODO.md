@@ -4,8 +4,6 @@ TODO
 1
 -------
 
-- comment email notifications
-
 - redesign market
   - registration?
   - existing bloggers can't claim additional blog slugs
@@ -15,10 +13,10 @@ TODO
 2
 -------
 
-- option to resend verification email token
 - save drafts to localStorage
-- allow saving drafts to backend
-- redesign commenting infrastructure (which blows)
+- allow storing drafts in backend
+- redesign commenting frontend (which blows)
+- email notifications for comments
 
 - refactor:
     - drop crudService
