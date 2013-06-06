@@ -9,12 +9,14 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 ============
 
 - Emailing and email templates
+  - Transactional email using [Mandrill](https://mandrillapp.com "Mandrill by MailChimp")
+  - Blog post email subscriptions
 
 - Enhanced login process
   - Accounts created with ancient flow require email verification
   - Password reset implementation
 
-- Productivity
+- Development Productivity
   - Introduced [dictatorship](https://github.com/bevacqua/dictatorship "dictatorship on GitHub") to bury **EADDRINUSE** issues during continuous development
 
 
