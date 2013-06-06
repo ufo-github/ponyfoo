@@ -4,6 +4,8 @@ TODO
 1
 -------
 
+- grunt-assetify allow { folder: '' } syntax convenience when ordering doesn't matter
+
 - redesign market
   - registration?
   - existing bloggers can't claim additional blog slugs
