@@ -2026,7 +2026,7 @@
                 right = val.substring(end);
 
             // set textarea value to: text before caret + tab + text after caret
-            self.val(left + '    ' + right);
+            self.val(left + '    ' + right); // spaces beat tabs!
 
             // put caret at right position again
             ta.selectionStart = ta.selectionEnd = start + 4;
