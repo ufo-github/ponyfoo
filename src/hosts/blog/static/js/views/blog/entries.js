@@ -243,7 +243,8 @@
                 } : null,
                 context: container,
                 done: function(){
-                    button.text('Subscribed!');
+                    input.fadeOutAndRemove();
+                    button.addClass('user-subscribed').text('Subscribed!');
                 },
                 fail: function(){
                     nbrut.ui.enable(button);

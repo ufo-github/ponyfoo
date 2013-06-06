@@ -49,7 +49,7 @@ module.exports = {
         });
     },
     getConfirmSubscription: function(req, res, next){
-        subscriptionService.unsubscribe(req.params.id, function(err, subscriber){
+        subscriptionService.confirmEmailSubscription(req.params.id, function(err, subscriber){
             if(err){
                 return next(err);
             }

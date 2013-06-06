@@ -35,16 +35,34 @@ if(!config.email.apiKey){
     };
 })();
 
+function getRecipients(recipients){
+    if(typeof recipients === 'string'){
+        return recipients;
+    }
+    if(!recipients.length){
+        return 'nobody!';
+    }
+    if(recipients.length === 1){
+        return recipients[0].email;
+    }
+
+    return recipients.length + ' recipients';
+}
+
 function prepareEmailJson(template, model, done){
+    if(config.email.trap){
+        model.subject += ' - to: ' + getRecipients(model.to);
+        model.to = config.email.trap;
+    }
+    var recipients = typeof model.to === 'string' ? [{
+        email: model.to
+    }] : model.to;
+
     async.waterfall([
         function(next){
             getImageHeader(next);
         },
         function(header, next){
-            if(config.email.trap){
-                model.subject += ' - to: ' + model.to;
-                model.to = config.email.trap;
-            }
             emailTemplateService.render(template, model, function(err, html){
                 next(err, html, header);
             });
@@ -56,9 +74,7 @@ function prepareEmailJson(template, model, done){
                     subject: model.subject,
                     from_email: config.email.sender,
                     from_name: config.site.name,
-                    to: typeof model.to === 'string' ? [{
-                        email: model.to
-                    }] : model.to,
+                    to: recipients,
                     auto_text: true,
                     inline_css: true,
                     preserve_recipients: false,

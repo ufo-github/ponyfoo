@@ -2,7 +2,7 @@
 
 var async = require('async'),
     tweeter = require('./tweeterService.js'),
-    subscription = require('./subscriptionService.js');
+    subscription = require('./blogSubscriptionService.js');
 
 module.exports = {
     publish: function(payload, done){

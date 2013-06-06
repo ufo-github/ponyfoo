@@ -20,6 +20,9 @@ section#blog-subscriptions.blog-sidebar-item
 
   if blog.social.rss
     section
-      p='Subscribe using our feed'
+      p
+        span='Subscribe using our '
+        a.highlighted-link.hint(rel='nofollow', href='http://google.com/search?q=best+rss+readers', data-hint='Need a RSS reader?')='feed'
+
       p
         a.social.rss(title='Subscribe to the RSS feed', target='_blank', href=blog.social.rssXml)='RSS Feed'

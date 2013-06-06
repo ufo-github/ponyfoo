@@ -4,8 +4,7 @@ TODO
 1
 -------
 
-- broadcast integration
-- comment email notification
+- comment email notifications
 
 - redesign market
   - registration?

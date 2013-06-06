@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     api = require('../../../../config').api,
     Discussion = require('../../../../model/Discussion.js'),
     Entry = require('../../../../model/Entry.js'),
-    validation = require('../../../../service/validationService.js'),
+    entryService = require('../../../../service/blogEntryService.js'),
+    broadcastService = require('../../../../service/broadcastService.js'),
     assetService = require('../../../../service/assetService.js'),
     rest = require('../../../../service/restService.js'),
     text = require('../../../../service/textService.js'),
@@ -75,59 +76,8 @@ function restOne(req, res, query){
     });
 }
 
-function endEmpty(res){
-    return function(){
-        rest.end(res,{});
-    };
-}
-
-function validateEntry(req,res,update){
-    var source = req.body.entry || {};
-
-    return validation.validate(req,res,{
-        ignoreUndefined: update,
-        document: {
-            title: source.title,
-            brief: source.brief,
-            text: source.text,
-            tags: source.tags
-        },
-        rules: [
-            { field: 'title', length: { min: 6, max: 50 }, message: 'The article\'s title should be somewhere between 6 and 50 characters long' },
-            { field: 'brief', length: 20, message: 'Please remember to write an introduction to your post. Use at least 20 characters' },
-            { field: 'brief', length: { max: 10000 }, required: false, message: 'Your introduction\'s markdown shouldn\'t exceed 10k characters in length' },
-            { field: 'text', length: 30, message: 'That was pretty scarce. Do you mind sharing at least a pair of sentences in your article? Type at least 30 characters' },
-            { field: 'text', length: { max: 30000 }, required: false, message: 'Your article\'s markdown can\'t exceed 30k characters in length' },
-            { field: 'tags', validator: function(){
-                var empty = 'Tag your article with at least one keyword',
-                    generic = 'Tags can only contain letters, numbers, or punctuation',
-                    tags = this, i = 0, len = tags.length, tag;
-
-                if(!Array.isArray(tags) || tags.length === 0){
-                    return empty;
-                }else if(tags.length > 6){
-                    return 'Six tags are enough. Pick the most relevant ones';
-                }
-
-                for(; i < len; i++){
-                    if(typeof tags[i] === 'string'){
-                        tags[i] = tags[i].replace(/ /g,'').toLowerCase();
-                        if(tags[i].length === 0){
-                            return empty;
-                        }else if(!/^[a-z0-9._\-]+$/.test(tags[i])){
-                            return generic;
-                        }
-                    }else{
-                        return generic;
-                    }
-                }
-            }}
-        ]
-    });
-}
-
 function insert(req,res){
-    var document = validateEntry(req,res);
+    var document = entryService.validate(req,res);
     if (document === undefined){
         return;
     }
@@ -147,7 +97,14 @@ function insert(req,res){
             then: function(entry){
                 if (previous){
                     previous.next = entry._id;
-                    previous.save(endEmpty(res));
+                    previous.save(function(){
+                        broadcastService.publish({
+                            entry: entry,
+                            blog: req.blog
+                        }, function(){
+                            rest.end(res,{});
+                        });
+                    });
                 }
             }
         });
@@ -155,7 +112,7 @@ function insert(req,res){
 }
 
 function update(req,res){
-    var document = validateEntry(req,res,true);
+    var document = entryService.validate(req,res,true);
     if (document === undefined){
         return;
     }
@@ -166,7 +123,9 @@ function update(req,res){
             entry.updated = new Date();
             entry.slug = text.slug(entry.title);
         },
-        then: endEmpty(res)
+        then: function(){
+            rest.end(res,{});
+        }
     });
 }
 
@@ -207,7 +166,9 @@ function remove(req, res){
                     throw err;
                 }
 
-                entry.remove(endEmpty(res));
+                entry.remove(function(){
+                    rest.end(res,{});
+                });
             });
         });
     });

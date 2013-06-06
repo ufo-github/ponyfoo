@@ -9,7 +9,7 @@ var async = require('async'),
     User = require('../model/User.js');
 
 function update(model, enabled, done){
-    BlogSubscriber.find(model, function(err, subscriber){
+    BlogSubscriber.findOne(model, function(err, subscriber){
         if(err){
             return done(err);
         }
@@ -52,7 +52,7 @@ function sendNotification(entry, blog, recipients, done){
         to: recipients.to,
         merge: { locals: recipients.merge },
         subject: entry.title,
-        intro: 'The blog has been updated!',
+        intro: 'Brand new content has been added to the blog!',
         blog: {
             authority: authority,
             title: blog.title

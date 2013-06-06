@@ -10,7 +10,7 @@
     <a href='{{{confirm.link}}}'>{{{confirm.link}}}</a>
 </p>
 <p>
-    With this subscription you'll receive an email every time <a href='{{{blog.authority}}}'>{{blog.title}}</a> is updated with a new article. We vow to <i>never</i> send you spam. Promise!
+    With this subscription you'll receive an email every time <a href='{{{blog.authority}}}'>{{blog.title}}</a> is updated with a new article. We vow to <i>never send you spam</i>. Promise!
 </p>
 <p style='padding-top: 25px;'>
     Use the following link to <a href='{{{unsubscribe}}}'>unsubscribe</a> at any time.

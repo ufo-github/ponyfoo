@@ -34,6 +34,16 @@
                 text-decoration:underline;
             }
 
+            img {
+              max-width: 100%;
+              border: none;
+            }
+
+            blockquote {
+                border-left: 6px solid #cbc5c0;
+                padding-left: 15px;
+            }
+            
             body, #bodyTable{ background-color:#f3f4eb; }
             #bodyCell{ border-top: 4px solid #dedede; }
             #templateContent{ background-color: #f4f4f4; }
@@ -79,7 +89,7 @@
 
             #headerImage{
                 height:auto;
-                max-width:600px;
+                width: 100%;
             }
 
             .bodyContent{
@@ -109,7 +119,7 @@
                 padding-right:20px;
                 padding-bottom:20px;
                 padding-left:20px;
-                text-align:left;
+                text-align:right;
             }
 
             @media only screen and (max-width: 480px){
@@ -143,12 +153,6 @@
                 /* ======== Header Styles ======== */
 
                 #templatePreheader{ display:none !important; }
-
-                #headerImage{
-                    height:auto !important;
-                    max-width:460px !important;
-                    width:100% !important;
-                }
 
                 .headerContent{
                     font-size:20px !important;
