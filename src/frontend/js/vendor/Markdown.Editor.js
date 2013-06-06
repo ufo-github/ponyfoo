@@ -1,5 +1,5 @@
 ﻿// needs Markdown.Converter.js at the moment
-!function($, nbrut) {
+!function(window, $, nbrut) {
     var util = {},
         position = {},
         ui = {},
@@ -2010,4 +2010,26 @@
         chunk.selection = "";
         chunk.skipLines(2, 1, true);
     }
-}(jQuery,nbrut);
+
+    $(doc).delegate('.wmd-input', 'keydown', function(e) {
+        var self = $(this),
+            ta = self.get(0),
+            keyCode = e.which;
+
+        if (keyCode == 9) {
+            e.preventDefault();
+
+            var start = ta.selectionStart,
+                end = ta.selectionEnd,
+                val = self.val(),
+                left = val.substring(0, start),
+                right = val.substring(end);
+
+            // set textarea value to: text before caret + tab + text after caret
+            self.val(left + '    ' + right);
+
+            // put caret at right position again
+            ta.selectionStart = ta.selectionEnd = start + 4;
+        }
+    });
+}(window,jQuery,nbrut);

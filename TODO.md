@@ -4,6 +4,7 @@ TODO
 1
 -------
 
+- fix nightmares with session, domains, and passports
 - grunt-assetify allow { folder: '' } syntax convenience when ordering doesn't matter
 
 - redesign market
