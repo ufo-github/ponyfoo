@@ -28,14 +28,6 @@ function configure(server){
     authenticationSetup(server);
     localsSetup(server);
 
-    server.use(function(req,res,next){
-        console.log('\n\n\ncookies:');
-        console.log(req.cookies);
-        console.log(req.session);
-        console.log('\n\n');
-        next();
-    });
-    
     server.use(server.router);
 }
 
