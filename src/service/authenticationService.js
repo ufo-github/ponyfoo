@@ -131,11 +131,14 @@ function callback(query, profile, done) {
 
 function configure(){
     passport.serializeUser(function(user, done) {
+        console.log('serializing ' + user._id);
         done(null, user._id);
     });
 
     passport.deserializeUser(function(id, done) {
+        console.log('deserializing ' + id);
         User.findOne({ _id: mongoose.Types.ObjectId(id) }, function (err, user) {
+            console.log('deserialized ' + id + '. ' + !!user);
             done(err, user ? user.toObject() : null);
         });
     });
