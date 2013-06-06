@@ -1,7 +1,6 @@
 'use strict';
 
 var passport = require('passport'),
-    mongoose = require('mongoose'),
     config = require('../config'),
     User = require('../model/User.js'),
     LocalStrategy = require('passport-local').Strategy,
@@ -131,14 +130,11 @@ function callback(query, profile, done) {
 
 function configure(){
     passport.serializeUser(function(user, done) {
-        console.log('serializing ' + user._id);
         done(null, user._id);
     });
 
     passport.deserializeUser(function(id, done) {
-        console.log('deserializing ' + id);
-        User.findOne({ _id: mongoose.Types.ObjectId(id) }, function (err, user) {
-            console.log('deserialized ' + id + '. ' + !!user);
+        User.findOne({ _id: id }, function (err, user) {
             done(err, user ? user.toObject() : null);
         });
     });
