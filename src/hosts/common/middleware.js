@@ -17,7 +17,7 @@ function configure(server){
 
     server.use(express.session({
         cookie: {
-            domain: '.' + config.server.tld
+            domain: config.server.tld
         },
         secret: config.security.sessionSecret,
         store: new sessionStore()
