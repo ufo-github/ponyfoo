@@ -41,14 +41,14 @@ module.exports = {
 
         if(!!config.tracking.analytics){
             assets.js.push({
-                local: resolve('/js/ext/analytics.jsn'),
+                file: resolve('/js/ext/analytics.jsn'),
                 context: { config: config }
             });
         }
 
         if(!!config.tracking.clicky){
             assets.js.push({
-                local: resolve('/js/ext/clicky.jsn'),
+                file: resolve('/js/ext/clicky.jsn'),
                 context: { config: config }
             });
         }

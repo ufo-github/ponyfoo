@@ -27,28 +27,28 @@ data.assets.css = [
 
     resolve('/css/plugin/jquery.readingTime.less'),
 
-    { profile: 'anon', local: '/css/views/shared/authentication.less' },
+    { profile: 'anon', file: '/css/views/shared/authentication.less' },
     '/css/views/shared/404.less',
     '/css/views/shared/upload.less',
     '/css/views/shared/expand.less',
     '/css/views/shared/table.pager.less',
 
     '/css/views/user/profile.less',
-    { profile: registered, local: '/css/views/user/profile.edit.less' },
-    { profile: 'anon', local: '/css/views/user/login.less' },
-    { profile: 'anon', local: '/css/views/user/password-reset.less' },
+    { profile: registered, file: '/css/views/user/profile.edit.less' },
+    { profile: 'anon', file: '/css/views/user/login.less' },
+    { profile: 'anon', file: '/css/views/user/password-reset.less' },
 
     '/css/views/blog/entries.less',
     '/css/views/blog/entries-sidebar.less',
     '/css/views/blog/comments.less',
-    { profile: registered, local: '/css/views/blog/comments.registered.less' },
+    { profile: registered, file: '/css/views/blog/comments.registered.less' },
 
-    { profile: 'blogger', local: '/css/views/blogger/index.less' },
-    { profile: 'blogger', local: '/css/views/blogger/blog.less' },
-    { profile: 'blogger', local: '/css/views/blogger/editor.less' },
-    { profile: 'blogger', local: '/css/views/blogger/review.less' },
-    { profile: 'blogger', local: '/css/views/blogger/discussions.less' },
-    { profile: 'blogger', local: '/css/views/blogger/users.less' }
+    { profile: 'blogger', file: '/css/views/blogger/index.less' },
+    { profile: 'blogger', file: '/css/views/blogger/blog.less' },
+    { profile: 'blogger', file: '/css/views/blogger/editor.less' },
+    { profile: 'blogger', file: '/css/views/blogger/review.less' },
+    { profile: 'blogger', file: '/css/views/blogger/discussions.less' },
+    { profile: 'blogger', file: '/css/views/blogger/users.less' }
 ];
 
 data.assets.jQuery = { version: '1.9.1' };
@@ -70,7 +70,7 @@ data.assets.js = [
     
     '/js/nbrut/jquery.nbrut.js',
     '/js/nbrut/nbrut.core.js',
-    { local: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
+    { file: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
     '/js/nbrut/nbrut.pluginFactory.js',
     '/js/nbrut/nbrut.md.js',
     '/js/nbrut/nbrut.ui.js',
@@ -92,9 +92,9 @@ data.assets.js = [
     '/js/plumbing/shared.js',
     '/js/plumbing/markdown.js',
     '/js/plumbing/entries.js',
-    { profile: 'anon', local: '/js/plumbing/anon.js' },
-    { profile: registered, local: '/js/plumbing/registered.js' },
-    { profile: 'blogger', local: '/js/plumbing/blogger.js'},
+    { profile: 'anon', file: '/js/plumbing/anon.js' },
+    { profile: registered, file: '/js/plumbing/registered.js' },
+    { profile: 'blogger', file: '/js/plumbing/blogger.js'},
 
     '/js/views/shared/upload.js',
     '/js/views/shared/expand.section.js',
@@ -102,21 +102,21 @@ data.assets.js = [
 
     '/js/markdown/prompts.js',
     
-    { profile: 'anon', local: '/js/views/user/login.js' },
-    { profile: 'anon', local: '/js/views/user/password-reset.js' },
+    { profile: 'anon', file: '/js/views/user/login.js' },
+    { profile: 'anon', file: '/js/views/user/password-reset.js' },
     '/js/views/user/profile.js',
-    { profile: registered, local: '/js/views/user/profile.edit.js' },
+    { profile: registered, file: '/js/views/user/profile.edit.js' },
 
     '/js/views/blog/search.js',
     '/js/views/blog/entries.js',
-    { profile: registered, local: '/js/views/blog/comments.registered.js' },
-    { profile: registered, local: '/js/views/blog/comments.edit.js' },
+    { profile: registered, file: '/js/views/blog/comments.registered.js' },
+    { profile: registered, file: '/js/views/blog/comments.edit.js' },
     
-    { profile: 'blogger', local: '/js/views/blogger/blog.js' },
-    { profile: 'blogger', local: '/js/views/blogger/editor.js' },
-    { profile: 'blogger', local: '/js/views/blogger/review.js' },
-    { profile: 'blogger', local: '/js/views/blogger/discussions.js' },
-    { profile: 'blogger', local: '/js/views/blogger/users.js' }
+    { profile: 'blogger', file: '/js/views/blogger/blog.js' },
+    { profile: 'blogger', file: '/js/views/blogger/editor.js' },
+    { profile: 'blogger', file: '/js/views/blogger/review.js' },
+    { profile: 'blogger', file: '/js/views/blogger/discussions.js' },
+    { profile: 'blogger', file: '/js/views/blogger/users.js' }
 ];
 
 module.exports = builder.complete(data);
