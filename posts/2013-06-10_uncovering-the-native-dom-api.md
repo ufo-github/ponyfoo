@@ -282,9 +282,9 @@ We've been mentioning selectors such as `.bar` this whole time, but how does _th
 
 # Querying the DOM #
 
-You might have heard of [Sizzle](http://sizzlejs.com/ "Sizzle Selector Library"), the internal library jQuery uses as a selector engine. I don't particularly understand the internals of Sizzle, but you might want to [take a look around](https://github.com/jquery/sizzle/blob/master/dist/sizzle.js "sizzle.js on GitHub").
+You might have heard of [Sizzle](http://sizzlejs.com/ "Sizzle Selector Library"), the internal library jQuery uses as a selector engine. I don't particularly understand the internals of Sizzle, but you might want to [take a look around](https://github.com/jquery/sizzle/blob/master/dist/sizzle.js "sizzle.js on GitHub") their codebase.
 
-The important part is that, for the most part, it uses `c.querySelector` and `c.querySelectorAll`. These methods enjoy [very good support accross browsers](http://stackoverflow.com/questions/3856294/is-queryselector-supported-by-all-browsers "Is querySelector supported by all browsers?").
+For the most part, it uses `c.querySelector` and `c.querySelectorAll`. These methods enjoy [very good support accross browsers](http://stackoverflow.com/questions/3856294/is-queryselector-supported-by-all-browsers "Is querySelector supported by all browsers?").
 
 Sizzle performs optimizations such as picking whether to use `c.getElementById`, `c.getElementsByTagName`, `c.getElementsByClassName`, or one of the [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Element.querySelector "Element.querySelector - MDN") functions. It also fixes inconsistencies in IE8, and some other cross-browser fixes.
 
@@ -294,12 +294,37 @@ Lets turn to [manipulation](http://api.jquery.com/category/manipulation/ "DOM Ma
 
 # DOM Manipulation #
 
-Bar
+> Manipulating the DOM is one of those things that is _remarkably important_ to get right, and _strikingly easy_ to get wrong.
+
+Everyone knows how to add nodes to the DOM, so I won't waste my time on that. Instead, I'll talk about [createDocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/document.createDocumentFragment "document.createDocumentFragment - MDN").
+
+`document.createDocumentFragment` allows us to create a DOM structure that's not attached to the main DOM tree. This allows us to create nodes that only exist in memory, and helps us to [avoid DOM reflowing](http://www.stubbornella.org/content/2009/03/27/reflows-repaints-css-performance-making-your-javascript-slow/ "Reflows & Repaints"). 
+
+Once our tree fragment is ready, we can attach it to the DOM. When we do, all the child nodes in the fragment are attached to the specified node.
+
+    var somewhere = document.getElementById('here'),
+        fragment = document.createDocumentFragment(),
+        i, foo;
+
+    for(i = 0, i < 1000; i++){
+        foo = document.createElement('div');
+        foo.innerText = i;
+        fragment.appendChild(foo);
+    }
+    somewhere.appendChild(fragment);
+
+[Pen here](http://cdpn.io/sweoB "Document Fragment Usage")
+
+There's a cute post on DocumentFragments, written by _John Resig_, you might want to [check out](http://ejohn.org/blog/dom-documentfragments/ "DOM DocumentFragments").
+
+Given that we've been talking about the DOM for a while, let me introduce you to the dark side of the DOM.
 
 # Shadow DOM #
 
-Baz
+A couple of years ago I got [introduced to the shadow DOM](http://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/ "What the Heck is Shadow DOM?"). I had no idea it existed. You probably don't, either.
 
-If you got this far, and are looking for a job, [this link](https://github.com/bevacqua/frontend-job-listings "Front End Job Listings") might help you in your search.
+In short, the shadow DOM is a part of the DOM that's inaccessible for the most part. JavaScript acts as if there's nothing there, and so does CSS. There are a few browser-specific shadow DOM elements you can style (on certain properties), but interaction with the shadow DOM is _very carefully limited_ in general.
+
+If you got this far, and happen to be looking for a job, [this link](https://github.com/bevacqua/frontend-job-listings "Front End Job Listings") might help you in your search.
 
   [1]: http://i.imgur.com/UDGhrLQ.jpg "Well, maybe not that"
