@@ -10,7 +10,7 @@ I'll help you explore some of the parts of the **DOM API** that are usually abst
 
 # Meet: XMLHttpRequest #
 
-Surely you know how to write AJAX requests, right? Probably omething like...
+Surely you know how to write AJAX requests, right? Probably something like...
 
     $.ajax({
         url: '/endpoint'
