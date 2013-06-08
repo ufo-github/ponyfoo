@@ -1,7 +1,17 @@
-extends ../../../../frontend/views/layout/minimal
+html(lang='en')
+  head
+    include _metadata
+    title='The Nerd Blogging Platform - Pony Foo'
 
-block title
-  title='The Nerd Blogging Platform - Pony Foo'
+    != assetify.css.emit(profile)
 
-block body
-  section='Foo'
+  body.container
+    section.row
+      section.span6
+        section.video-container
+          iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
+
+      section.span6
+        p='Foo!'
+
+    != assetify.js.emit(profile)

@@ -77,7 +77,6 @@ module.exports = {
                 './build/**/*.js',
                 './src/**/*.js',
                 './src/**/*.less',
-                './src/**/*.jade',
                 '!./src/**/.bin',
                 './test/**/*.js'
             ],

@@ -8,10 +8,15 @@ var config = require('../../config'),
 data.assets.host = config.server.authorityMarket;
 
 data.assets.css = [
-    resolve('/css/vendor/flatstrap/bootstrap.less')
+    '/css/vendor/flatstrap/bootstrap.less',
+    '/css/vendor/flatstrap/responsive.less',
+    resolve('/css/youtube.less'),
+    '/css/views/home/index.less'
 ];
 
-// data.assets.jQuery = { version: '1.9.1' };
-data.assets.js = [];
+data.assets.jQuery = { version: '1.9.1' };
+data.assets.js = [
+    '/js/views/home/index.js'
+];
 
 module.exports = builder.complete(data);

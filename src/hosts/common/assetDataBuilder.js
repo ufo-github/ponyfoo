@@ -21,7 +21,7 @@ module.exports = {
             },
             plugins: {
                 jsn: true,
-                forward: [{ extnames: ['.txt'] }, true]
+                forward: [{ extnames: [] }, true]
             },
             caching: {
                 expiresHeader: function(req){
