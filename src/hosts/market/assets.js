@@ -8,7 +8,7 @@ var config = require('../../config'),
 data.assets.host = config.server.authorityMarket;
 
 data.assets.css = [
-    { folder: resolve('/css/vendor/bootstrap/**/*.less') }
+    resolve('/css/vendor/flatstrap/bootstrap.less')
 ];
 
 // data.assets.jQuery = { version: '1.9.1' };
