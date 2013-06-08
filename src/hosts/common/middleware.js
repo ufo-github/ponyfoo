@@ -9,6 +9,7 @@ var config = require('../../config'),
     platformService = require('../../service/platformService.js');
 
 function configure(server){
+    server.locals.basedir = process.cwd();
     server.locals.settings['x-powered-by'] = false;
     server.locals.config = config;
 
