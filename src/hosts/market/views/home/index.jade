@@ -6,12 +6,16 @@ html(lang='en')
     != assetify.css.emit(profile)
 
   body.container
-    section.row
-      section.span6
-        section.video-container
+    div.row
+      div.span12
+        p='Super Easy Blogging'
+
+    div.row
+      div.span6
+        div.video-container
           iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
 
-      section.span6
+      div.span6
         p='Foo!'
 
     != assetify.js.emit(profile)
