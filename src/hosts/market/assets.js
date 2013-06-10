@@ -10,6 +10,7 @@ data.assets.host = config.server.authorityMarket;
 data.assets.css = [
     '/css/vendor/flatstrap/bootstrap.less',
     '/css/vendor/flatstrap/responsive.less',
+    '/css/vendor/flatui-icons.less',
     resolve('/css/youtube.less'),
     '/css/views/home/index.less'
 ];

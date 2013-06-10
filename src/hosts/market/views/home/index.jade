@@ -1,4 +1,5 @@
-doctype html
+!= config.site.doctype
+
 html(lang='en')
   head
     include /src/frontend/views/metadata
@@ -8,28 +9,41 @@ html(lang='en')
     link(href='http://fonts.googleapis.com/css?family=Lato|Roboto|Roboto:900', rel='stylesheet')
 
   body
-    div.container-fluid.container-promo
+    div.container-fluid
       div.row-fluid.row-heading
         div.span4
           h1.icon='Pony Foo'
 
         div.span8
           header.title
-            div.title-part
-              h1.title-heading!='Pony&nbsp'
+            h1.title-heading='Pony Foo'
+            p.text-right='The Nerd Blogging Platform'
 
-            div.title-part
-              h1.title-heading='Foo'
-              p.title-caption='The Nerd Blogging Platform'
-
-      div.row-fluid.row-main
-        div.span6.video-wrapper
-          div.video
-            iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
+      div.row-fluid.row-promotional
+        div.span6
+          div.video-wrapper
+            div.video.video-promotional
+              iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
 
         div.span6
-          form
+          div.features
+            p='foo'
+            p='bar'
+            p='baz'
+
+      div.row-fluid
+        div.span12
+          p.lead='We are still '
+          p.text-center='We will let you know when you can grab yours!'
+          form.form-inline.text-center
             input(type='email', placeholder='Email')
-            input.btn.btn-subscribe(type='submit')='Keep me posted!'
+            button.btn.btn-subscribe.fui-mail
+
+      div.row-fluid
+        div.span6.text-left.blog
+          a(href='http://blog.ponyfoo.com')='the original blog'
+
+        div.span6.text-right.tweet
+          a(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
 
     != assetify.js.emit(profile)

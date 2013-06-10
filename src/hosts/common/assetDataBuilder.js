@@ -21,7 +21,7 @@ module.exports = {
             },
             plugins: {
                 jsn: true,
-                forward: [{ extnames: [] }, true]
+                forward: [{ extnames: ['.eot', '.svg', '.ttf', '.woff'] }, true]
             },
             caching: {
                 expiresHeader: function(req){
