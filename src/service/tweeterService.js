@@ -2,12 +2,12 @@
 
 var config = require('../config'),
     Twitter = require('ntwitter'),
-    rhyphens = /-_/g,
+    rhyphens = /[-_]/g,
     rtag = /[a-z0-9]+/i;
 
 function extractStatus(payload){
     var authority = config.server.authority(payload.blog.slug),
-        permalink = authority + payload.blog.permalink,
+        permalink = authority + payload.entry.permalink,
         status = [payload.entry.title, permalink];
 
     payload.entry.tags.forEach(function(tag){
