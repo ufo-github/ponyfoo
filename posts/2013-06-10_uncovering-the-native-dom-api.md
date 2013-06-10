@@ -1,6 +1,6 @@
 # Uncovering the Native DOM API #
 
-JavaScript libraries such as **jQuery** serve a great purpose in enabling and _normalizing cross-browser behaviors_ of the DOM in such a way that it's possible to use the same interface to interact with many different browsers.
+JavaScript libraries such as **jQuery** serve a great purpose in enabling and _normalizing cross-browser behaviors_ of the [DOM](https://developer.mozilla.org/en/docs/DOM "Document Object Model") in such a way that it's possible to use the same interface to interact with many different browsers.
 
 But they do so at a price. And that price, in the case of some developers, is having no idea what the heck the library is actually doing when we use it.
 
@@ -22,7 +22,7 @@ Surely you know how to write AJAX requests, right? Probably something like...
 
 How do we write that with _native browser-level toothless JavaScript_?
 
-We could start by looking it up on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest "XMLHttpRequest - MDN"). It's name is right on _one count_. It's for performing requests. But they can _manipulate any data_, not just XML. They also aren't limited to just the [HTTP protocol](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol "Hyper Text Transfer Protocol").
+We could start by looking it up on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest "XMLHttpRequest - MDN"). XMLHttpRequest is right on _one count_. It's for performing requests. But they can _manipulate any data_, not just XML. They also aren't limited to just the [HTTP protocol](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol "Hyper Text Transfer Protocol").
 
 _XMLHttpRequest_ is what makes AJAX sprinkle magic all over rich internet applications nowadays. They are, admitedly, **kind of hard to get right** without looking it up, or _having prepared to use them for an interview_.
 
@@ -262,13 +262,13 @@ A _better performing_ approach is to add a _super event handler_ on a node which
 
 This is what happens when you bind events using jQuery code such as:
 
-    $('body'.on('click', '.bar', function(){
+    $('body').on('click', '.bar', function(){
         console.log('clicked bar!', $(this));
     });
 
 As opposed to more unfortunate code:
 
-    $(.bar').on('click', function(){
+    $('.bar').on('click', function(){
         console.log('clicked bar!', $(this));
     });
 
@@ -276,7 +276,7 @@ Which would work _pretty much the same way_, except it will create one event han
 
 There is **one crucial difference**. Event handling done directly on a node works for just that node. Forever. Event delegation works on any children that meet the criteria provided, `.bar` in this case. If you were to add more `.bar` elements to your DOM, those would also match the criteria, and therefore be attached to the _super handler_ we created in the past.
 
-I won't be providing an example on raw JavaScript event delegation, but at least you now understand how it works and what it is, and more importantly _why you **need** to use it_.
+I won't be providing an example on raw JavaScript event delegation, but at least you now understand how it works and what it is, and hopefully, you understood _why you **need** to use it_.
 
 We've been mentioning selectors such as `.bar` this whole time, but how does _that_ work?
 
@@ -325,6 +325,6 @@ A couple of years ago I got [introduced to the shadow DOM](http://glazkov.com/20
 
 In short, the shadow DOM is a part of the DOM that's inaccessible for the most part. JavaScript acts as if there's nothing there, and so does CSS. There are a few browser-specific shadow DOM elements you can style (on certain properties), but interaction with the shadow DOM is _very carefully limited_ in general.
 
-If you got this far, and happen to be looking for a job, [this link](https://github.com/bevacqua/frontend-job-listings "Front End Job Listings") might help you in your search.
+If you've gotten this far, and happen to be looking for a job, [this link](https://github.com/bevacqua/frontend-job-listings "Front End Job Listings") might help you in your search.
 
   [1]: http://i.imgur.com/UDGhrLQ.jpg "Well, maybe not that"
