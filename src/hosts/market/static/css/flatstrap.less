@@ -1,3 +1,5 @@
+@import "/src/hosts/market/static/css/colors.less";
+
 //
 // Variables
 // --------------------------------------------------
@@ -32,13 +34,13 @@
 
 // Scaffolding
 // -------------------------
-@bodyBackground:        #ecf0f1;
-@textColor:             @grayDark;
+@bodyBackground:        @clouds;
+@textColor:             @asphalt;
 
 
 // Links
 // -------------------------
-@linkColor:             #08c;
+@linkColor:             @amethyst;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
@@ -47,15 +49,17 @@
 @sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif;
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
+@latoFontFamily:        'Lato', @serifFontFamily;
+@robotoFontFamily:      'Roboto', @serifFontFamily;
 
-@baseFontSize:          14px;
-@baseFontFamily:        @sansFontFamily;
-@baseLineHeight:        20px;
-@altFontFamily:         @serifFontFamily;
+@baseFontSize:          18px;
+@baseFontFamily:        @robotoFontFamily;
+@baseLineHeight:        24px;
+@altFontFamily:         @latoFontFamily;
 
 @headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
 @headingsFontWeight:    bold;    // instead of browser default, bold
-@headingsColor:         inherit; // empty to use BS default, @textColor
+@headingsColor:         @pomegranate; // empty to use BS default, @textColor
 
 
 // Component sizing

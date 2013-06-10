@@ -1,21 +1,35 @@
+doctype html
 html(lang='en')
   head
     include /src/frontend/views/metadata
     title='The Nerd Blogging Platform - Pony Foo'
 
     != assetify.css.emit(profile)
+    link(href='http://fonts.googleapis.com/css?family=Lato|Roboto|Roboto:900', rel='stylesheet')
 
-  body.container
-    div.row
-      div.span12
-        p='Super Easy Blogging'
+  body
+    div.container-fluid.container-promo
+      div.row-fluid.row-heading
+        div.span4
+          h1.icon='Pony Foo'
 
-    div.row
-      div.span6
-        div.video-container
-          iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
+        div.span8
+          header.title
+            div.title-part
+              h1.title-heading!='Pony&nbsp'
 
-      div.span6
-        p='Foo!'
+            div.title-part
+              h1.title-heading='Foo'
+              p.title-caption='The Nerd Blogging Platform'
+
+      div.row-fluid.row-main
+        div.span6.video-wrapper
+          div.video
+            iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
+
+        div.span6
+          form
+            input(type='email', placeholder='Email')
+            input.btn.btn-subscribe(type='submit')='Keep me posted!'
 
     != assetify.js.emit(profile)
