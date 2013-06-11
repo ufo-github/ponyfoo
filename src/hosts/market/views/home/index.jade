@@ -6,7 +6,7 @@ html(lang='en')
     title='The Nerd Blogging Platform - Pony Foo'
 
     != assetify.css.emit(profile)
-    link(href='http://fonts.googleapis.com/css?family=Lato|Roboto|Roboto:900', rel='stylesheet')
+    link(href='http://fonts.googleapis.com/css?family=Roboto|Roboto:300|Roboto:900', rel='stylesheet')
 
   body
     div.container-fluid
@@ -17,21 +17,24 @@ html(lang='en')
         div.span8
           header.title
             h1.title-heading='Pony Foo'
-            p.text-right='The Nerd Blogging Platform'
+            p.title-caption='The Nerd Blogging Platform'
 
-      div.row-fluid.row-promotional
+    div.container-fluid.container-promotional
+      div.row-fluid
         div.span6
           div.video-wrapper
             div.video.video-promotional
               iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
 
         div.span6
-          div.features
-            p.lead='FOO!'
-            p='foo'
-            p='bar'
-            p='baz'
+          div.features-wrapper
+            p.features-lead='Glimpse into the next generation blogging experience'
+            p='This introductory video will let you peek at the features provided by our platform. '
+            
+            ul.features
+              li='We believe in simplicity'
 
+    div.container-fluid
       div.row-fluid
         div.span12
           p.lead='We are still '

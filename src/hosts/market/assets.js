@@ -12,6 +12,7 @@ data.assets.css = [
     '/css/vendor/flatstrap/responsive.less',
     '/css/vendor/flatui-icons.less',
     resolve('/css/youtube.less'),
+    '/css/responsive-fix.less',
     '/css/views/home/index.less'
 ];
 

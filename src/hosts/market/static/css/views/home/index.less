@@ -6,6 +6,12 @@
     text-shadow: 0 1px rgb(0, 0, 0, .2);
 }
 
+body {
+    border-top: 10px solid @pomegranate;
+    border-bottom: 10px solid @pomegranate;
+    padding-top: 10px;
+}
+
 .row-fluid {
     margin-bottom: 20px;
 }
@@ -28,18 +34,36 @@
     font-size: 128px;
 }
 
-.row-promotional {
+.title-caption {
+    text-align: right;
+    font-weight: 300;
+}
+
+.container-promotional {
+    border-top: 10px solid @midnight;
     background-color: @asphalt;
     color: @clouds;
 }
 
-.features {
-    margin: 15px;
+.video-wrapper {
+    margin-top: 20px;
 }
 
 .video-promotional {
     border: 10px solid @pomegranate;
     background-color: @pomegranate;
+}
+
+.features-wrapper {
+    margin-top: 15px;
+    font-weight: 300;
+}
+
+.features-lead {
+    font-size: 48px;
+    line-height: 48px;
+    text-transform: uppercase;
+    color: @emerald;
 }
 
 .btn-subscribe {
