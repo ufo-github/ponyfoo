@@ -214,7 +214,7 @@ If corner cases are in your wheelhouse, we _could_ use a dictionary to keep the 
         };
     }(window);
 
-You can glance at how this can very quickly get out of hand. Remember this was _just in the case of no W3C event model**, and no IE event model_. Fortunately, _this is **largely unnecessary** nowadays_. You can imagine how hacks of this kind are all over your favorite libraries.
+You can glance at how this can very quickly get out of hand. Remember this was _just in the case of **no W3C event model**, and **no IE event model**_. Fortunately, _this is **largely unnecessary** nowadays_. You can imagine how hacks of this kind are all over your favorite libraries.
 
 They have to be, if they want to support the old, decrepit and outdated browsers. Some have been [taking steps back](http://blog.jquery.com/2012/06/28/jquery-core-version-1-9-and-beyond/ "jQuery Version 1.9 and Beyond - jQuery Blog") from the _support every single browser_ philosophy.
 
