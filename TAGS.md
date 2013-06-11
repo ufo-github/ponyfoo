@@ -8,6 +8,12 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (tip)
 ============
 
+- Blogging Standards
+  - Added PingBack functionality
+    - API support
+    - Display PingBacks on each blog entry
+    - Can be disabled on a per-entry basis
+
 - Emailing and email templates
   - Transactional email using [Mandrill](https://mandrillapp.com "Mandrill by MailChimp")
   - Blog post email subscriptions
@@ -18,6 +24,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 - Development Productivity
   - Introduced [dictatorship](https://github.com/bevacqua/dictatorship "dictatorship on GitHub") to bury **EADDRINUSE** issues during continuous development
+
 
 
 0.3 (frozen)

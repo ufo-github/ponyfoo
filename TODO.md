@@ -13,6 +13,10 @@ TODO
 - add pingbacks schema, and pingbacks to entries, pingbackDisabled
 - use pingbackService.scan, add pings schema
 
+- weblog api
+
+
+
 2
 -------
 
