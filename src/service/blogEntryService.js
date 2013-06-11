@@ -1,6 +1,14 @@
 'use strict';
 
-var validation = require('./validationService.js');
+var validation = require('./validationService.js'),
+    Entry = require('../model/Entry.js'),
+    permalink = [
+        '^\/([0-9]{4})\/',
+        '(0[1-9]|1[0-2])\/',
+        '(0[1-9]|[12][0-9]|3[01])\/',
+        '([a-z0-9\\-]+)$'
+    ].join(''),
+    rpermalink = new RegExp(permalink);
 
 function validateEntry(req,res,update){
     var source = req.body.entry || {};
@@ -47,6 +55,33 @@ function validateEntry(req,res,update){
     });
 }
 
+function getDateQuery(date){
+    return {
+        $gte: new Date(date.year, (date.month || 1)-1, date.day || 1),
+        $lt: new Date(date.year, (date.month || 12)-1, date.day || 31, 24)
+    };
+}
+
+function findByPermalink(permalink, blogId, done){
+    var matches = permalink.match(rpermalink);
+    if(!matches){
+        return process.nextTick(function(){
+            done();
+        });
+    }
+
+    Entry.findOne({
+        date:  getDateQuery({
+            year: matches[1],
+            month: matches[2],
+            day: matches[3]
+        }),
+        slug: matches[4],
+        blog: blogId
+    }, done);
+}
+
 module.exports = {
-    validate: validateEntry
+    validate: validateEntry,
+    findByPermalink: findByPermalink
 };

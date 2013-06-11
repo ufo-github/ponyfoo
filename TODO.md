@@ -10,9 +10,8 @@ TODO
 
 - fix nightmares with session, domains, and passports
 
-- add pingback schema, and pingbacks to entries
-- add findByPermalink to entryService
-- use pingbackService.scan
+- add pingbacks schema, and pingbacks to entries, pingbackDisabled
+- use pingbackService.scan, add pings schema
 
 2
 -------
