@@ -115,12 +115,13 @@ var config = {
             to: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : null
         }
     },
-    server: require('./server.js'),
     api: require('./api.js'),
-    twitter: require('./twitter.js'),
-    market: require('./market.js'),
     bin: require('./bin.js'),
+    blog: require('./blog.js'),
     email: require('./email.js'),
+    market: require('./market.js'),
+    server: require('./server.js'),
+    twitter: require('./twitter.js'),
     tokenExpiration: env.TOKEN_EXPIRATION
 };
 

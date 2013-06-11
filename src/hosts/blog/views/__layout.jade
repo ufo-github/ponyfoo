@@ -9,6 +9,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
       link(rel='alternate', type='application/rss+xml', href=blog.social.rssXml)
         
     link(rel='search', type='application/opensearchdescription+xml', title=blog.title, href='/opensearch.xml')
+    link(rel='pingback', href=blog.pingback)
 
     !=assetify.css.emit(profile)
 

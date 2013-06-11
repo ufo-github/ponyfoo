@@ -33,15 +33,18 @@ function hydrate(req, model, done){
     async.waterfall([
         function(next){
             var social = model.blog.social,
-                email = social && social.email ? ' <' + social.email + '>' : '';
+                email = social && social.email ? ' <' + social.email + '>' : '',
+                base = config.server.authority(req.blog.slug);
 
             req.blog = model.blog;
+            req.blog.pingback = base + config.blog.pingback;
+            
             req.blogger = model.blogger;
             req.blogger.meta = req.blogger.displayName + email;
 
             if (social){
                 social.any = utilityService.hasTruthyProperty(social);
-                social.rssXml = config.server.authority(req.blog.slug) + config.feed.relative;
+                social.rssXml = base + config.feed.relative;
             }
 
             next(null, req.user);
