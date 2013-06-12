@@ -82,7 +82,7 @@ module.exports = {
             ],
             options: {
                 interrupt: true
-            }   
+            }
         }
     },
     concurrent: {

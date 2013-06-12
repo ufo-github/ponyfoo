@@ -29,6 +29,10 @@ function configure(server){
     authenticationSetup(server);
     localsSetup(server);
 
+    server.use(function(err, req, res, next){
+        console.log(err);
+    });
+    
     server.use(server.router);
 }
 

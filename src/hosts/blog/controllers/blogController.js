@@ -34,7 +34,7 @@ function hydrate(req, model, done){
         function(next){
             var social = model.blog.social,
                 email = social && social.email ? ' <' + social.email + '>' : '',
-                base = config.server.authority(req.blog.slug);
+                base = config.server.authority(req.slug);
 
             req.blog = model.blog;
             req.blog.pingback = base + config.blog.pingback;

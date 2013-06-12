@@ -2,7 +2,8 @@
 
 var config = require('../config'),
     Pingback = require('pingback'),
-    entryService = require('./blogEntryService.js');
+    entryService = require('./blogEntryService.js'),
+    markdownService = require('./markdownService.js');
 
 function hasPingback(entry, source){
     return (entry.pingbacks || []).some(function(pingback){
@@ -40,9 +41,10 @@ module.exports = {
             article = [
                 entry.brief,
                 entry.text
-            ].join('\n');
+            ].join('\n'),
+            html = markdownService.parse(article);
 
-        Pingback.scan(article, base + entry.permalink, function(err, ping){
+        Pingback.scan(html, base + entry.permalink, function(err, ping){
             if(!err && !(ping.href in entry.pings)){
                 entry.pings.push(ping.href);
                 entry.save();
