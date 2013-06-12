@@ -9,6 +9,13 @@
 body {
     border-top: 10px solid @pomegranate;
     padding-top: 10px;
+    font-weight: 300;
+}
+
+.fui {
+    color: @emerald;
+    float: left;
+    margin-right: 10px;
 }
 
 .row-fluid {
@@ -34,15 +41,10 @@ body {
 .title-heading {
     line-height: 128px;
     font-size: 128px;
-}
-
-.title-caption {
-    text-align: right;
-    font-weight: 300;
+    font-weight: 900;
 }
 
 .super-lead {
-    font-weight: 300;
     font-size: 48px;
     line-height: 48px;
     text-transform: uppercase;
@@ -65,20 +67,29 @@ body {
 
 .video-info-wrapper {
     margin-top: 15px;
-    font-weight: 300;
 }
 
 .video-info-wrapper .super-lead {
     color: @emerald;   
 }
 
-.video-caption {
-    font-size: 20px;
-    line-height: auto;
+.video-info-wrapper a {
+    color: @emerald;
 }
 
-.video-list {
-    font-size: 14px;
+.video-info-wrapper a:hover {
+    color: @greensea;
+}
+
+.video-caption {
+    font-size: 22px;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+.video-notes {
+    margin-bottom: 0;
+    font-size: 18px;
     line-height: 34px;
 }
 
@@ -86,12 +97,52 @@ body {
     border-top: 10px solid @silver;
 }
 
-.subscribe-wrapper {
+.container-subscribe .super-lead {
+    color: @pomegranate;
+}
+
+.row-features-title {
     margin-top: 20px;
 }
 
-.subscribe-wrapper .super-lead {
-    color: @pomegranate;
+.row-features {
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.feature-box {
+    border-top: 10px solid @emerald;
+    background-color: darken(@clouds, 5%);
+    padding: 10px;
+
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.feature-box .fui {
+    color: @greensea;
+}
+
+.feature-box .feature-name {
+    font-size: 22px;
+    font-weight: 200;
+}
+
+.row-subscribe {
+    margin-top: 40px;
+}
+
+.form-inline .subscribe-input {
+    padding: 14px 16px;
+    background-color: darken(@clouds, 5%);
+    color: @asphalt;
+    border: none;
+    vertical-align: top;
+    font-weight: 300;
+}
+
+.subscribe-input.fui-mail {
+    color: @emerald;
 }
 
 .subscribe-email {
@@ -100,12 +151,16 @@ body {
     max-width: 590px;
 }
 
-.btn-subscribe {
+.form-inline .btn-subscribe {
+    background-color: @asphalt;
     color: @emerald;
+    border-right: 10px solid;
+    text-transform: uppercase;
+    text-shadow: none;
 }
 
 .btn-subscribe:hover {
-    color: @nephritis;
+    color: @greensea;
 }
 
 .container-features {
@@ -129,7 +184,23 @@ body {
         font-size: 34px;
     }
 
-    .video-caption {
-        font-size: 18px;
+    .row-features {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .feature-span {
+        overflow: hidden;
+    }
+
+    .feature-box {
+        margin-top: 20px;
+    }
+
+    .form-inline .btn-subscribe {                
+        display: block;
+        margin: 20px auto 0;
+        border-top: 10px solid;
+        border-right: none;
     }
 }
