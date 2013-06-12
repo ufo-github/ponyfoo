@@ -10,11 +10,9 @@ TODO
 
 - fix nightmares with session, domains, and passports
 
-- add pingbacks schema, and pingbacks to entries, pingbackDisabled
-- use pingbackService.scan, add pings schema
-
-- weblog api
-
+- pingbacks
+  - Display PingBacks on each blog entry
+  - Can be disabled on a per-entry basis
 
 
 2

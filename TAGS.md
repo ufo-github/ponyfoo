@@ -10,9 +10,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 - Blogging Standards
   - Added PingBack functionality
-    - API support
-    - Display PingBacks on each blog entry
-    - Can be disabled on a per-entry basis
+    - Basic support
 
 - Emailing and email templates
   - Transactional email using [Mandrill](https://mandrillapp.com "Mandrill by MailChimp")

@@ -4,6 +4,12 @@ var config = require('../config'),
     Pingback = require('pingback'),
     entryService = require('./blogEntryService.js');
 
+function hasPingback(entry, source){
+    return (entry.pingbacks || []).some(function(pingback){
+        return pingback.from === source;
+    });
+}
+
 module.exports = {
     handle: function(blog, pingback, next){
         var source = pingback.source.href,
@@ -13,10 +19,10 @@ module.exports = {
             if(err || !entry){
                 return next(Pingback.TARGET_DOES_NOT_EXIST); 
             }
-            if(entry.pingbacks[source]){ 
+            if(hasPingback(entry, source)){ 
                 return next(Pingback.ALREADY_REGISTERED);
             }
-            if(entry.pingbacksDisabled){
+            if(!entry.pingbacksEnabled){
                 return next(Pingback.TARGET_CANNOT_BE_USED); 
             }
 
@@ -36,9 +42,9 @@ module.exports = {
                 entry.text
             ].join('\n');
 
-        Pingback.scan(article, base + entry.permalink, function(err, pingback){
-            if(!err && !(pingback.href in entry.pings)){
-                entry.pings.push(pingback.href);
+        Pingback.scan(article, base + entry.permalink, function(err, ping){
+            if(!err && !(ping.href in entry.pings)){
+                entry.pings.push(ping.href);
                 entry.save();
             }
         });

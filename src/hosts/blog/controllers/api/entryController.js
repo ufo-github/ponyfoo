@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
     Discussion = require('../../../../model/Discussion.js'),
     Entry = require('../../../../model/Entry.js'),
     entryService = require('../../../../service/blogEntryService.js'),
+    pingbackService = require('../../../../service/pingbackService.js'),
     broadcastService = require('../../../../service/broadcastService.js'),
     assetService = require('../../../../service/assetService.js'),
     rest = require('../../../../service/restService.js'),
@@ -95,17 +96,32 @@ function insert(req,res){
                 entry.slug = text.slug(entry.title);
             },
             then: function(entry){
-                if (previous){
-                    previous.next = entry._id;
-                    previous.save(function(){
+                async.parallel([
+                    function(done){
+                        if (previous){
+                            previous.next = entry._id;
+                            previous.save(function(err){
+                                done(); // swallow err
+                            });
+                        }else{
+                            done();
+                        }
+                    },
+                    function(done){
+                        pingbackService.scan(entry, req.blog);
+                        done();
+                    },
+                    function(done){
                         broadcastService.publish({
                             entry: entry,
                             blog: req.blog
-                        }, function(){
-                            rest.end(res,{});
+                        }, function(err){
+                            done(); // swallow err
                         });
-                    });
-                }
+                    }
+                ], function(err){
+                    rest.end(res,{});
+                });
             }
         });
     });
