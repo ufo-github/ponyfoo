@@ -10,7 +10,7 @@ html(lang='en')
 
   body
     div.container-fluid
-      div.row-fluid.row-heading
+      div.row-fluid.row-push.row-heading
         div.span4
           h1.icon='Pony Foo'
 
@@ -20,34 +20,42 @@ html(lang='en')
             p.title-caption='The Nerd Blogging Platform'
 
     div.container-fluid.container-promotional
-      div.row-fluid
+      div.row-fluid.row-push
         div.span6
           div.video-wrapper
             div.video.video-promotional
               iframe(src='https://www.youtube.com/embed/a5MTWzS8hFw', allowFullScreen)
 
         div.span6
-          div.features-wrapper
-            p.features-lead='Glimpse into the next generation blogging experience'
-            p='This introductory video will let you peek at the features provided by our platform. '
+          div.video-info-wrapper
+            p.super-lead='Glimpse into the next generation blogging experience'
+            p.video-caption='This introductory video will let you peek at the features provided by our platform. We value usability and clean design more than anything else, and we\'re opening our platform to prove it.'
             
-            ul.features
-              li='We believe in simplicity'
+            ul.video-list
+              li='We believe in redundancy'
+              li='We believe in redundancy'
 
-    div.container-fluid
+    div.container-fluid.container-subscribe
+      div.row-fluid.row-push
+        div.span12
+          div.subscribe-wrapper
+            p.super-lead.text-center='We will let you know when you can grab yours!'
+            form.form-inline.text-center
+              input(type='email', placeholder='Email')
+              button.btn.btn-subscribe.fui-mail
+
+    div.container-fluid.container-features
+      div.row-fluid.row-push
+        div.span12
+          div.features-wrapper
+            p.lead='Features'
+            p.lead='Features'
+            p.lead='Features'
+            p.lead='Features'
+
+    div.container-fluid.container-footer
       div.row-fluid
         div.span12
-          p.lead='We are still '
-          p.text-center='We will let you know when you can grab yours!'
-          form.form-inline.text-center
-            input(type='email', placeholder='Email')
-            button.btn.btn-subscribe.fui-mail
-
-      div.row-fluid
-        div.span6.text-left.blog
-          a(href='http://blog.ponyfoo.com')='the original blog'
-
-        div.span6.text-right.tweet
-          a(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
+          a.tweet(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
 
     != assetify.js.emit(profile)

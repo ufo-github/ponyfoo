@@ -4,24 +4,24 @@ TODO
 1
 -------
 
+- email notifications for comments
+
 - redesign market
   - registration?
   - existing bloggers can't claim additional blog slugs
 
 - fix nightmares with session, domains, and passports
 
-- pingbacks
-  - Display PingBacks on each blog entry
-  - Can be disabled on a per-entry basis
-
+- save drafts to localStorage
+- allow storing drafts in backend
+- redesign commenting frontend (which blows)
 
 2
 -------
 
-- save drafts to localStorage
-- allow storing drafts in backend
-- redesign commenting frontend (which blows)
-- email notifications for comments
+- pingbacks
+  - Display PingBacks on each blog entry
+  - Can be disabled on a per-entry basis
 
 - refactor:
     - drop crudService

@@ -44,7 +44,11 @@ module.exports = {
             ].join('\n'),
             html = markdownService.parse(article);
 
+        console.log('scanner!');
+
         Pingback.scan(html, base + entry.permalink, function(err, ping){
+            console.log(JSON.stringify(err));
+            console.log(ping);
             if(!err && !(ping.href in entry.pings)){
                 entry.pings.push(ping.href);
                 entry.save();
