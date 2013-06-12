@@ -7,8 +7,9 @@ TODO
 - email notifications for comments
 
 - redesign market
-  - registration?
-  - existing bloggers can't claim additional blog slugs
+  - docs config urls
+  - video
+  - features red section
 
 - fix nightmares with session, domains, and passports
 
@@ -16,8 +17,13 @@ TODO
 - allow storing drafts in backend
 - redesign commenting frontend (which blows)
 
+
+
 2
 -------
+
+- adaptable design
+- proper api + authentication
 
 - pingbacks
   - Display PingBacks on each blog entry
@@ -35,7 +41,6 @@ TODO
 -------
 
 - client-side caching?
-- proper api authentication?
 
 - partition the build process so that continuous development
   doesn't re-do everything for every single file

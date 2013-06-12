@@ -40,21 +40,21 @@ html(lang='en')
               div.span6
                 span.fui.fui-search
                 span='Well '
-                a(href='docs', target='_blank')='documented'
+                a(href='http://docs.ponyfoo.com', target='_blank')='documented'
 
             div.row-fluid.video-notes
               div.span6
                 span.fui.fui-radio-checked
-                span='Focused in simplicity'
+                span='Focus on simplicity'
                 
               div.span6
                 span.fui.fui-heart
-                span='Built with love'
+                span='Built with love and ponies'
 
     div.container-fluid.container-subscribe
-      div.row-fluid.row-features-title
+      div.row-fluid.row-subscribe
         div.span12
-          p.super-lead.text-center='The Goods!'
+          p.super-lead.text-center='The Good Parts!'
           p.lead.text-center='Learn a bit more about our platform'
 
       div.row-fluid.row-features
@@ -65,7 +65,7 @@ html(lang='en')
             p='We picked Markdown to give format to your articles. Once you learn it, you\'ll fall in love.'
             p
               span='Head over to our '
-              a(href='/docs/markdown', target='_blank')='Markdown documentation'
+              a(href='http://docs.ponyfoo.com/markdown', target='_blank')='Markdown documentation'
               span=' and get started today.'
 
         div.span4.feature-span
@@ -99,18 +99,40 @@ html(lang='en')
 
         div.span4.feature-span
           div.feature-box
+            p.fui.fui-time
+            p.feature-name='Perceived Speed'
+            p='It was about time a blogging platform was built using a more modern approach.'
+            p='Our platform is built on a single page application architecture, providing a leaner experience to your users.'
+
+      div.row-fluid.row-features
+        div.span4.feature-span
+          div.feature-box
+            p.fui.fui-check
+            p.feature-name='The Usual Suspects'
+            p='Powerful editor. Auto-saved drafts. Image uploads. Tagging. Search.'
+            p='Every feature you\'d expect from a blogging experience is already here. And more are coming!'
+
+        div.span4.feature-span
+          div.feature-box
             p.fui.fui-list
             p.feature-name='Metadata By Coincidence'
             p='Your readers will benefit from being able to pick and choose from a wide array of writers.'
             p='You don\'t have to worry about SEO. We take care of that for you.'
+
+        div.span4.feature-span
+          div.feature-box
+            p.fui.fui-mail
+            p.feature-name='Subscriptions'
+            p='Engage your readers by allowing them to subscribe to your content without any third party tools.'
+            p='Options include, twitter broadcasts, email notifications for both new articles and comments, and RSS feeds.'
 
       div.row-fluid.row-subscribe
         div.span12
           p.super-lead.text-center='Subscribe to our newsletter'
           p.lead.text-center='Be the first to know when you can start building a really awesome blog!'
           form.form-inline.text-center
-            span.subscribe-input.fui-mail
-            input.subscribe-input.subscribe-email(type='text', placeholder='Your Email')
+            label(for='email').subscribe-input.fui-mail
+            input#email.subscribe-input.subscribe-email(type='text', placeholder='Your Email')
             button.subscribe-input.btn.btn-subscribe='Subscribe!'
 
     div.container-fluid.container-features
