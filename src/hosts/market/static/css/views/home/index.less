@@ -13,12 +13,9 @@ body {
 
 .row-fluid {
     max-width: 1200px;
+    margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.row-push {
-    margin-bottom: 20px;
 }
 
 .row-heading .icon {
@@ -45,10 +42,10 @@ body {
 }
 
 .super-lead {
+    font-weight: 300;
     font-size: 48px;
     line-height: 48px;
     text-transform: uppercase;
-    color: @emerald;
 }
 
 .container-promotional {
@@ -71,6 +68,10 @@ body {
     font-weight: 300;
 }
 
+.video-info-wrapper .super-lead {
+    color: @emerald;   
+}
+
 .video-caption {
     font-size: 20px;
     line-height: auto;
@@ -89,14 +90,14 @@ body {
     margin-top: 20px;
 }
 
-.container-features {
-    border-top: 10px solid @pomegranate;
-    background-color: @alizarin;
-    color: @clouds;
+.subscribe-wrapper .super-lead {
+    color: @pomegranate;
 }
 
-.features-wrapper {
-    margin-top: 20px;
+.subscribe-email {
+    width: 60%;
+    min-width: 206px;
+    max-width: 590px;
 }
 
 .btn-subscribe {
@@ -107,17 +108,24 @@ body {
     color: @nephritis;
 }
 
-.container-footer {
+.container-features {
+    border-top: 10px solid @pomegranate;
+    background-color: @alizarin;
+    color: @clouds;
 }
 
-.container-footer .tweet {
+.features-wrapper {
+    margin-top: 20px;
+}
+
+.tweet {
     float: right;
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
 @media (max-width: 767px) {
-    .super-lead {
+    .video-info-wrapper .super-lead {
         font-size: 34px;
     }
 

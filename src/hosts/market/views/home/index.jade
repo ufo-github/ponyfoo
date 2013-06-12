@@ -10,7 +10,7 @@ html(lang='en')
 
   body
     div.container-fluid
-      div.row-fluid.row-push.row-heading
+      div.row-fluid.row-heading
         div.span4
           h1.icon='Pony Foo'
 
@@ -20,7 +20,7 @@ html(lang='en')
             p.title-caption='The Nerd Blogging Platform'
 
     div.container-fluid.container-promotional
-      div.row-fluid.row-push
+      div.row-fluid
         div.span6
           div.video-wrapper
             div.video.video-promotional
@@ -36,16 +36,17 @@ html(lang='en')
               li='We believe in redundancy'
 
     div.container-fluid.container-subscribe
-      div.row-fluid.row-push
+      div.row-fluid
         div.span12
           div.subscribe-wrapper
-            p.super-lead.text-center='We will let you know when you can grab yours!'
+            p.super-lead.text-center='Subscribe to our newsletter'
+            p.lead.text-center='Be the first to know when you can start building an awesome blog!'
             form.form-inline.text-center
-              input(type='email', placeholder='Email')
+              input.subscribe-email(type='text', placeholder='Your Email')
               button.btn.btn-subscribe.fui-mail
 
     div.container-fluid.container-features
-      div.row-fluid.row-push
+      div.row-fluid
         div.span12
           div.features-wrapper
             p.lead='Features'
@@ -53,9 +54,6 @@ html(lang='en')
             p.lead='Features'
             p.lead='Features'
 
-    div.container-fluid.container-footer
-      div.row-fluid
-        div.span12
           a.tweet(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
 
     != assetify.js.emit(profile)
