@@ -105,16 +105,7 @@ var config = {
         small: '&s=40',
         regular: '&s=60'
     },
-    contact: {
-        twitter: {
-            handle: env.CONTACT_TWITTER ? '@' + env.CONTACT_TWITTER : null,
-            url: env.CONTACT_TWITTER ? 'https://twitter.com/' + env.CONTACT_TWITTER : null
-        },
-        email: {
-            raw: env.CONTACT_EMAIL,
-            to: env.CONTACT_EMAIL ? 'mailto:' + env.CONTACT_EMAIL : null
-        }
-    },
+    contact: require('./contact.js'),
     api: require('./api.js'),
     bin: require('./bin.js'),
     blog: require('./blog.js'),

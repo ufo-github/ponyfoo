@@ -137,15 +137,18 @@ html(lang='en')
             input#email.subscribe-input.subscribe-email(type='text', placeholder='Your Email')
             button.subscribe-input.btn.btn-subscribe='Subscribe!'
 
-    div.container-fluid.container-features
+    div.container-fluid.container-news
       div.row-fluid
         div.span12
-          div.features-wrapper
-            p.lead='Features'
-            p.lead='Features'
-            p.lead='Features'
-            p.lead='Features'
+          div.news-wrapper
+            p.super-lead.text-center='Hot off the press'
+            p.lead.text-center='Leaf through the latest articles bloggers in our network are publishing!'
 
+            ul
+              li='link 1'
+              li='link 2'
+              li='link 3'
+              
           div.footer-links
             a(href=config.server.authorityBlog, title='Visit our blog, inception!')='blog'
             a(href=config.server.authorityDocs, title='View our documentation')='docs'
@@ -161,5 +164,9 @@ html(lang='en')
               span.version=config.site.version
 
             a.tweet(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
+
+            if config.contact.gittip.widget
+              span.gittip
+                iframe.gittip-frame(src=config.contact.gittip.widget, width='48pt', height='22pt')
 
     != assetify.js.emit(profile)

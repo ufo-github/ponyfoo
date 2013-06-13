@@ -120,3 +120,5 @@ These are used in the market (**semantic root**) to display contact information
 
 - **CONTACT_EMAIL**: Contact email address.
 - **CONTACT_TWITTER**: Twitter username. No 'at' symbol.
+
+- **GITTIP_USER**: Gittip username.

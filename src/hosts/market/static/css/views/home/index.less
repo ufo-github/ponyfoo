@@ -159,14 +159,18 @@ body {
     color: @greensea;
 }
 
-.container-features {
+.container-news {
     border-top: 10px solid @pomegranate;
     background-color: @alizarin;
-    color: @clouds;
+    color: @asphalt;
 }
 
-.features-wrapper {
+.news-wrapper {
     margin-top: 20px;
+}
+
+.news-wrapper .super-lead {
+    color: @clouds;
 }
 
 .footer-links {
@@ -182,8 +186,18 @@ body {
     color: @silver;
 }
 
-.tweet {
+.version {
+    color: @clouds;
+}
+
+.gittip, .tweet {
     float: right;
+}
+
+.gittip-frame {
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 
 @media (max-width: 767px) {
@@ -211,7 +225,7 @@ body {
         border-right: none;
     }
     
-    .tweet {
+    .gittip, .tweet {
         display: none;
     }
 }
