@@ -40,7 +40,7 @@ html(lang='en')
               div.span6
                 span.fui.fui-search
                 span='Well '
-                a(href='http://docs.ponyfoo.com', target='_blank')='documented'
+                a(href=config.server.authorityDocs, target='_blank')='documented'
 
             div.row-fluid.video-notes
               div.span6
@@ -49,7 +49,9 @@ html(lang='en')
                 
               div.span6
                 span.fui.fui-heart
-                span='Built with love and ponies'
+                span='Built with '
+                del='love'
+                span=' ponies'
 
     div.container-fluid.container-subscribe
       div.row-fluid.row-subscribe
@@ -65,7 +67,7 @@ html(lang='en')
             p='We picked Markdown to give format to your articles. Once you learn it, you\'ll fall in love.'
             p
               span='Head over to our '
-              a(href='http://docs.ponyfoo.com/markdown', target='_blank')='Markdown documentation'
+              a(href=config.server.authorityDocs + '/markdown', target='_blank')='Markdown documentation'
               span=' and get started today.'
 
         div.span4.feature-span
@@ -102,7 +104,7 @@ html(lang='en')
             p.fui.fui-time
             p.feature-name='Perceived Speed'
             p='It was about time a blogging platform was built using a more modern approach.'
-            p='Our platform is built on a single page application architecture, providing a leaner experience to your users.'
+            p='Our platform is built on a single page application architecture, providing a leaner experience to our users.'
 
       div.row-fluid.row-features
         div.span4.feature-span
@@ -144,6 +146,19 @@ html(lang='en')
             p.lead='Features'
             p.lead='Features'
 
-          a.tweet(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
+          div
+            a.highlighted-link(href=config.server.authorityBlog, title='Visit our blog, inception!')='blog'
+            a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit ponyfoo on GitHub')='github'
+
+            if config.contact.twitter.url
+              a.highlighted-link(href=config.contact.twitter.url, target='_blank', title=config.contact.twitter.handle + ' on twitter')='twitter'
+
+            if config.contact.email.to
+              a.highlighted-link(href=config.contact.email.to, target='_blank', title='Contact us by email')='email'
+
+            if config.site.displayVersion
+              span.version=config.site.version
+
+            a.tweet(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
 
     != assetify.js.emit(profile)

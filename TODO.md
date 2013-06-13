@@ -7,9 +7,11 @@ TODO
 - email notifications for comments
 
 - redesign market
-  - docs config urls
   - video
   - features red section
+
+- docs
+  - markdown docs
 
 - fix nightmares with session, domains, and passports
 

@@ -15,7 +15,8 @@ function getXml(blogs){
     if(config.market.on){
         blogs.unshift({ slug: config.server.slug.market });
     }
-    
+
+    blogs.unshift({ slug: config.server.slug.docs });
     blogs.forEach(function(blog){
         xml.push('<sitemap><loc>');
         xml.push(config.server.authority(blog.slug) + config.sitemap.relative);

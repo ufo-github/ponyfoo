@@ -21,6 +21,10 @@ module.exports = {
             src: ['./src/hosts/market/**/*.less'],
             options: { strictPropertyOrder: false }
         },
+        docs: {
+            src: ['./src/hosts/docs/**/*.less'],
+            options: { strictPropertyOrder: false }
+        },
         blog: {
             src: ['./src/hosts/blog/**/*.less'],
             options: { strictPropertyOrder: false }
@@ -64,6 +68,7 @@ module.exports = {
     assetify: {
         install: require_cwd('./src/hosts/install/assets.js'),
         market: require_cwd('./src/hosts/market/assets.js'),
+        docs: require_cwd('./src/hosts/docs/assets.js'),
         blog: require_cwd('./src/hosts/blog/assets.js')
     },
     watch: {

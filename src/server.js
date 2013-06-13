@@ -22,6 +22,7 @@ function execute(gruntvars){
                 setup('market');
             }
             
+            setup('docs');
             setup('blog');
             next();
         },

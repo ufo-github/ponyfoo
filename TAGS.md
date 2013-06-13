@@ -8,6 +8,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (tip)
 ============
 
+- Documentation
+  - Added documentation subdomain
+
 - Blogging Standards
   - Added PingBack functionality
     - Basic support

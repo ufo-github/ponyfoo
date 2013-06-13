@@ -5,11 +5,10 @@ var config = require('../../config'),
     data = builder.prepare(__dirname),
     resolve = data.resolveFrontendPath;
 
-data.assets.host = config.server.authorityMarket;
+data.assets.host = config.server.authorityDocs;
 
 data.assets.css = [
     '/css/flatstrap.less',
-    resolve('/css/youtube.less'),
     '/css/views/home/index.less'
 ];
 

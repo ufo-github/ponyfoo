@@ -40,6 +40,8 @@ These variables are usually very important for **deployments**, but the default 
 - **ENABLE_MARKET**: Whether the market vhost is enabled. Defaults to `false`.
 - **HOST_MARKET**: The default `slug` for the site, that is, the **semantic root** of the site. Defaults to `'www'`.
 
+- **HOST_DOCS**: The subdomain used to host the platform documentation.
+
 - **HOST_REGEX**: An optional regex to restrict the host. Useful when your site is accessible through multiple `TLD`s but you only want one to serve responses. When a request doesn't match this regex, it gets permanently redirected to the same url on the default TLD.
 - **PORT**: The actual port where the application will listen on. Defaults to port `8081`.
 - **PUBLIC_PORT**: The public facing port. Sometimes, production environments use architectures set up with load balancers and assign ports arbitrarily to your application, but the domain will still use port `80`, this helps avoid issues when redirecting requests. Defaults to `PORT`.

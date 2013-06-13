@@ -7,6 +7,7 @@ var env = require('./env.js'),
         enabled: env.ENABLE_SLUGGING,
         market: env.HOST_MARKET,
         blog: env.BLOG_DEFAULT,
+        docs: env.HOST_DOCS,
         get landing(){ return market.on && this.enabled ? this.market : this.blog; }
     },
     port = {
@@ -27,6 +28,7 @@ module.exports = {
     authorityLanding: authority(slug.landing),
     authorityMarket: authority(slug.market),
     authorityBlog: authority(slug.blog),
+    authorityDocs: authority(slug.docs),
     tld: tld,
     rtld: env.HOST_REGEX ? new RegExp('^' + env.HOST_REGEX + '$') : undefined,
     rblog: env.BLOG_REGEX ? new RegExp('^' + env.BLOG_REGEX + '$') : undefined,
