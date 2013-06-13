@@ -169,10 +169,21 @@ body {
     margin-top: 20px;
 }
 
+.footer-links {
+    text-align: center;
+}
+
+.footer-links a {
+    margin-right: 12px;
+    color: @clouds;
+}
+
+.footer-links a:hover {
+    color: @silver;
+}
+
 .tweet {
     float: right;
-    padding-top: 15px;
-    padding-bottom: 15px;
 }
 
 @media (max-width: 767px) {
@@ -198,5 +209,9 @@ body {
         margin: 20px auto 0;
         border-top: 10px solid;
         border-right: none;
+    }
+    
+    .tweet {
+        display: none;
     }
 }

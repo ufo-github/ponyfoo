@@ -34,8 +34,8 @@ html(lang='en')
             div.row-fluid.video-notes
               div.span6
                 span.fui.fui-cmd
-                span='Completely '
-                a(href='https://github.com/bevacqua/ponyfoo', target='_blank')='Open Source'
+                span='100% '
+                a(href=config.pkg.homepage, target='_blank')='Open Source'
 
               div.span6
                 span.fui.fui-search
@@ -146,15 +146,16 @@ html(lang='en')
             p.lead='Features'
             p.lead='Features'
 
-          div
-            a.highlighted-link(href=config.server.authorityBlog, title='Visit our blog, inception!')='blog'
-            a.highlighted-link(href=config.pkg.homepage, target='_blank', title='Visit ponyfoo on GitHub')='github'
+          div.footer-links
+            a(href=config.server.authorityBlog, title='Visit our blog, inception!')='blog'
+            a(href=config.server.authorityDocs, title='View our documentation')='docs'
+            a(href=config.pkg.homepage, target='_blank', title='Visit ponyfoo on GitHub')='github'
 
             if config.contact.twitter.url
-              a.highlighted-link(href=config.contact.twitter.url, target='_blank', title=config.contact.twitter.handle + ' on twitter')='twitter'
+              a(href=config.contact.twitter.url, target='_blank', title=config.contact.twitter.handle + ' on twitter')='twitter'
 
             if config.contact.email.to
-              a.highlighted-link(href=config.contact.email.to, target='_blank', title='Contact us by email')='email'
+              a(href=config.contact.email.to, target='_blank', title='Contact us by email')='email'
 
             if config.site.displayVersion
               span.version=config.site.version
