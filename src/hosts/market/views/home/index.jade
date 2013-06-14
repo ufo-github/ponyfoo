@@ -151,23 +151,6 @@ html(lang='en')
               li='title, snip of article, link to blog, tags'
 
           div.footer-links
-            a(href=config.server.authorityBlog, title='Visit our blog, inception!')='blog'
-            a(href=config.server.authorityDocs, title='View our documentation')='docs'
-            a(href=config.pkg.homepage, target='_blank', title='Visit ponyfoo on GitHub')='github'
-
-            if config.contact.twitter.url
-              a(href=config.contact.twitter.url, target='_blank', title=config.contact.twitter.handle + ' on twitter')='twitter'
-
-            if config.contact.email.to
-              a(href=config.contact.email.to, target='_blank', title='Contact us by email')='email'
-
-            if config.site.displayVersion
-              span.version=config.site.version
-
-            a.tweet(href='https://twitter.com/share', class='twitter-share-button', data-via='ponyfoo', data-related='ponyfoo,nzgb')='Tweet'
-
-            if config.contact.gittip.widget
-              span.gittip
-                iframe.gittip-frame(src=config.contact.gittip.widget, width='48pt', height='22pt')
+            include /src/frontend/views/platform-links
 
     != assetify.js.emit(profile)

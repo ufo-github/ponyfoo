@@ -1,3 +1,4 @@
+@import "/src/frontend/css/platform-links.less";
 @import "../../colors.less";
 
 ::selection {
@@ -174,30 +175,7 @@ body {
 }
 
 .footer-links {
-    text-align: center;
-}
-
-.footer-links a {
-    margin-right: 12px;
-    color: @clouds;
-}
-
-.footer-links a:hover {
-    color: @silver;
-}
-
-.version {
-    color: @clouds;
-}
-
-.gittip, .tweet {
-    float: right;
-}
-
-.gittip-frame {
-    border: none;
-    margin: 0;
-    padding: 0;
+    .platform-links(@clouds, @silver);
 }
 
 @media (max-width: 767px) {
@@ -223,9 +201,5 @@ body {
         margin: 20px auto 0;
         border-top: 10px solid;
         border-right: none;
-    }
-    
-    .gittip, .tweet {
-        display: none;
     }
 }

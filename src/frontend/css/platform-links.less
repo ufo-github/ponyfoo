@@ -1,0 +1,32 @@
+.platform-links(@color, @hover){
+    text-align: center;
+
+    a {
+        margin-right: 12px;
+        color: @color;
+    }
+
+    a:hover {
+        color: @hover;
+    }
+
+    .version {
+        color: @color;
+    }
+
+    .gittip, .tweet {
+        float: right;
+    }
+
+    .gittip-frame {
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    @media (max-width: 767px) {
+        .gittip, .tweet {
+            display: none;
+        }
+    }
+}

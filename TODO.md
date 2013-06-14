@@ -11,7 +11,9 @@ TODO
   - features red section
 
 - docs
-  - ngdocs
+  - generator to make only ngdocs and change necessary parts
+  - add scripts/css
+  - customize to look like market
 
 - fix nightmares with session, domains, and passports
 

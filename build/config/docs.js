@@ -9,11 +9,20 @@ var config = require('../../src/config'),
 
 module.exports = {
     options: {
-        dest: '.bin/docs',
+        dest: 'src/hosts/docs/public',
+        title: config.docs.title,
+        analytics: {
+              account: config.tracking.analytics,
+              domainName: config.server.tld
+        },
         discussions: disqus
     },
     markdown: {
         title: 'Markdown',
         src: ['src/docs/markdown/**/*.ngdoc']
+    },
+    api: {
+        title: 'API',
+        src: ['src/docs/test.js']
     }
 };
