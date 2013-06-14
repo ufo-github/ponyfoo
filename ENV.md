@@ -83,6 +83,7 @@ Twitter API isn't supported for authentication, because they don't provide email
 - **MANDRILL_DEBUG_TRAP**: An email address that will receive every email, ignoring the actual recipient.
 - **MANDRILL_SENDER_ADDRESS**: The email from address to use
 
+- **DISQUS_SHORTNAME_DOCS**: The shortname identifier for DISQUS used in the documentation minisite.
 
 
 Miscellaneous

@@ -12,59 +12,14 @@ module.exports = {
     clean: [
         './src/**/.bin'
     ],
-    recess: {
-        install: {
-            src: ['./src/hosts/install/**/*.less'],
-            options: { strictPropertyOrder: false }
-        },
-        market: {
-            src: ['./src/hosts/market/**/*.less'],
-            options: { strictPropertyOrder: false }
-        },
-        docs: {
-            src: ['./src/hosts/docs/**/*.less'],
-            options: { strictPropertyOrder: false }
-        },
-        blog: {
-            src: ['./src/hosts/blog/**/*.less'],
-            options: { strictPropertyOrder: false }
-        }
-    },
-    jshint: {
-        node: {
-            files: {
-                src: [
-                    './Gruntfile.js',
-                    './src/**/*.js',
-                    '!./src/frontend/**/*.js',
-                    '!./src/hosts/**/static/**/*.js',
-                    './test/spec/**/*.js'
-                ]
-            },
-            options: {
-                jshintrc: './.jshintrc'
-            }
-        },
-        browser: {
-            files: {
-                src: [
-                    './src/frontend/**/*.js',
-                    '!./src/frontend/js/vendor/**/*.js',
-                    './src/hosts/**/static/**/*.js',
-                    '!./src/hosts/**/static/.bin/**/*.js',
-                    '!./src/hosts/**/static/js/vendor/**/*.js'
-                ]
-            },
-            options: {
-                jshintrc: './.jshintrc-browser'
-            }
-        }
-    },
+    recess: require('./recess.js'),
+    jshint: require('./jshint.js'),
     jasmine_node: {
         matchall: true,
         forceExit: true,
         projectRoot: './test/spec'
     },
+    ngdocs: require('./docs.js'),
     assetify: {
         install: require_cwd('./src/hosts/install/assets.js'),
         market: require_cwd('./src/hosts/market/assets.js'),

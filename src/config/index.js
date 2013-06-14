@@ -118,6 +118,7 @@ var config = {
     api: require('./api.js'),
     bin: require('./bin.js'),
     blog: require('./blog.js'),
+    docs: require('./docs.js'),
     email: require('./email.js'),
     market: require('./market.js'),
     server: require('./server.js'),
