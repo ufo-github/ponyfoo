@@ -2,7 +2,7 @@
 
 var express = require('express'),
     config = require('../../config'),
-    generated = __dirname + '/generated';
+    generated = __dirname + '/.bin';
 
 module.exports = {
     using: function(vars){

@@ -9,7 +9,7 @@ var config = require('../../src/config'),
 
 module.exports = {
     options: {
-        dest: 'src/hosts/docs/generated',
+        dest: 'src/hosts/docs/.bin',
         startPage: '/getting-started',
         title: config.docs.title,
         analytics: {

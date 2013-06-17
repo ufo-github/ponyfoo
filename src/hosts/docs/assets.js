@@ -16,7 +16,7 @@ data.assets.js = [
     '/js/vendor/angular.min.js',
     '/js/vendor/angular-bootstrap.min.js',
     '/js/vendor/angular-bootstrap-prettify.min.js',
-    '../generated/pages.js',
+    '../.bin/pages.js',
     '/js/app.js',
     '/js/twitter.js'
 ];

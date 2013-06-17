@@ -15,7 +15,6 @@ TODO
   - styles
   - cdn version of packages from angular/googlecode
   - generate sitemap.xml within the gruntpackage
-  - 'generated' folder -> '.bin'
   - fill up!
 
 - fix nightmares with session, domains, and passports

@@ -11,8 +11,7 @@ function require_cwd(module){
 module.exports = {
     clean: [
         '.bin',
-        './src/**/.bin',
-        './src/hosts/docs/generated'
+        './src/**/.bin'
     ],
     recess: require('./recess.js'),
     jshint: require('./jshint.js'),
@@ -40,7 +39,6 @@ module.exports = {
                 './src/**/*.js',
                 './src/**/*.less',
                 '!./src/**/.bin',
-                '!./src/**/generated',
                 './test/**/*.js'
             ],
             options: {
