@@ -62,9 +62,14 @@ function findByUser(user, done){
     Blog.findOne({ owner: user._id }, done);
 }
 
+function findById(id, done){
+    Blog.findOne({ _id: id }, done);
+}
+
 module.exports = {
     create: create,
     validate: validate,
+    findById: findById,
     findBySlug: findBySlug,
     findByUser: findByUser
 };

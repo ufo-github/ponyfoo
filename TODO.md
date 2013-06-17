@@ -7,8 +7,9 @@ TODO
 - email notifications for comments
 
 - redesign market
+  - prettier header
   - video
-  - features red section
+  - subscription implementation
 
 - docs
   - styles

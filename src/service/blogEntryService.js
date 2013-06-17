@@ -71,7 +71,7 @@ function findByPermalink(permalink, blogId, done){
     }
 
     Entry.findOne({
-        date:  getDateQuery({
+        date: getDateQuery({
             year: matches[1],
             month: matches[2],
             day: matches[3]
@@ -81,7 +81,16 @@ function findByPermalink(permalink, blogId, done){
     }, done);
 }
 
+function getLatest(options, done){
+    Entry
+        .find(options.query || {})
+        .sort('-date')
+        .limit(options.limit)
+        .exec(done);
+}
+
 module.exports = {
     validate: validateEntry,
-    findByPermalink: findByPermalink
+    findByPermalink: findByPermalink,
+    getLatest: getLatest
 };

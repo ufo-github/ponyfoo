@@ -2,204 +2,274 @@
 @import "../../colors.less";
 
 ::selection {
-    background: @pomegranate;
-    color: @clouds;
-    text-shadow: 0 1px rgb(0, 0, 0, .2);
+  background: @pomegranate;
+  color: @clouds;
+  text-shadow: 0 1px rgb(0, 0, 0, .2);
 }
 
 body {
-    border-top: 10px solid @pomegranate;
-    padding-top: 10px;
-    font-weight: 300;
+  border-top: 10px solid @pomegranate;
+  padding-top: 10px;
+  font-weight: 300;
+  word-break: break-word;
 }
 
 .fui {
-    color: @emerald;
-    float: left;
-    margin-right: 10px;
+  color: @emerald;
+  margin-right: 10px;
 }
 
 .row-fluid {
-    max-width: 1200px;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
+  max-width: 1200px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .row-heading .icon {
-    background: url('/img/icon-216.png?v=1') no-repeat;
-    height: 216px;
-    max-width: 216px;
-    text-indent: -9999em;
-    border-bottom: 10px solid;
+  background: url('/img/icon-216.png?v=1') no-repeat;
+  height: 216px;
+  max-width: 216px;
+  text-indent: -9999em;
+  border-bottom: 10px solid;
 }
 
 .title {
-    text-align: center;
-    max-width: 600px;
+  text-align: center;
+  max-width: 600px;
 }
 
 .title-heading {
-    line-height: 128px;
-    font-size: 128px;
-    font-weight: 900;
+  line-height: 128px;
+  font-size: 128px;
+  font-weight: 900;
 }
 
 .super-lead {
-    font-size: 48px;
-    line-height: 48px;
-    text-transform: uppercase;
+  font-size: 48px;
+  line-height: 48px;
+  text-transform: uppercase;
 }
 
 .container-promotional {
-    border-top: 10px solid @midnight;
-    background-color: @asphalt;
-    color: @clouds;
+  border-top: 10px solid @midnight;
+  background-color: @asphalt;
+  color: @clouds;
 }
 
 .video-wrapper {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .video-promotional {
-    border: 10px solid @emerald;
-    background-color: @emerald;
+  border: 10px solid @emerald;
+  background-color: @emerald;
 }
 
 .video-info-wrapper {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 .video-info-wrapper .super-lead {
-    color: @emerald;   
+  color: @emerald;   
 }
 
 .video-info-wrapper a {
-    color: @emerald;
+  color: @emerald;
 }
 
 .video-info-wrapper a:hover {
-    color: @greensea;
+  color: @greensea;
 }
 
 .video-caption {
-    font-size: 22px;
-    line-height: 28px;
-    margin-bottom: 20px;
+  font-size: 22px;
+  line-height: 28px;
+  margin-bottom: 20px;
 }
 
 .video-notes {
-    margin-bottom: 0;
-    font-size: 18px;
-    line-height: 34px;
+  margin-bottom: 0;
+  font-size: 18px;
+  line-height: 34px;
 }
 
 .container-subscribe {
-    border-top: 10px solid @silver;
+  border-top: 10px solid @silver;
 }
 
 .container-subscribe .super-lead {
-    color: @pomegranate;
+  color: @pomegranate;
 }
 
 .row-subscribe {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
-.row-features {
-    overflow: hidden;
-    margin-top: 30px;
+.row-features, .row-news {
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.feature-box, .news-box {
+  padding: 10px;
+
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
 }
 
 .feature-box {
-    border-top: 10px solid @emerald;
-    background-color: darken(@clouds, 5%);
-    padding: 10px;
-
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
+  border-top: 10px solid @emerald;
+  background-color: darken(@clouds, 5%);
 }
 
 .feature-box .fui {
-    color: @greensea;
+  color: @greensea;
 }
 
 .feature-box .feature-name {
-    font-size: 22px;
-    font-weight: 200;
+  font-size: 22px;
 }
 
 .form-inline .subscribe-input {
-    padding: 14px 16px;
-    background-color: darken(@clouds, 5%);
-    color: @asphalt;
-    border: none;
-    vertical-align: top;
-    font-weight: 300;
+  padding: 14px 16px;
+  background-color: darken(@clouds, 5%);
+  color: @asphalt;
+  border: none;
+  vertical-align: top;
 }
 
 .subscribe-input.fui-mail {
-    color: @emerald;
+  color: @emerald;
 }
 
 .subscribe-email {
-    width: 60%;
-    min-width: 206px;
-    max-width: 590px;
+  width: 60%;
+  min-width: 185px;
+  max-width: 590px;
 }
 
 .form-inline .btn-subscribe {
-    background-color: @asphalt;
-    color: @emerald;
-    border-right: 10px solid;
-    text-transform: uppercase;
-    text-shadow: none;
+  background-color: @asphalt;
+  color: @emerald;
+  border-right: 10px solid;
+  text-transform: uppercase;
+  text-shadow: none;
 }
 
 .btn-subscribe:hover {
-    color: @greensea;
+  color: @greensea;
 }
 
 .container-news {
-    border-top: 10px solid @pomegranate;
-    background-color: @alizarin;
-    color: @asphalt;
+  border-top: 10px solid @pomegranate;
+  background-color: @alizarin;
+  color: @asphalt;
 }
 
 .news-wrapper {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .news-wrapper .super-lead {
-    color: @clouds;
+  color: @clouds;
+}
+
+.row-news {
+  position: relative;
+}
+
+.news-box {
+  border-top: 10px solid @pomegranate;
+  background-color: darken(@clouds, 5%);
+
+  a {
+    color: @pomegranate;
+
+    &:hover {
+      color: @alizarin;
+    }
+  }
+
+  .fui {
+    color: @pomegranate;
+  }
+
+  .tag {
+    margin-left: 6px;
+  }
 }
 
 .footer-links {
-    .platform-links(@clouds, @silver);
+  margin-top: 40px;
+  .platform-links(@clouds, @silver);
+}
+
+@media (min-width: 768px) {
+  /* push tags and permalink to keep in sync with overflow hack */
+  .news-tags {
+    position: absolute;
+    bottom: 0;
+    z-index: 1; /* place it over the permalink eye */
+  }
+
+  .news-box .news-permalink {
+    position: absolute;
+    bottom: 0;
+    text-align: right;
+    margin-left: -10px;
+    margin-bottom: 0;
+  }
+
+  .news-box-push {
+    margin-top: 40px;
+    height: 24px;
+  }
 }
 
 @media (max-width: 767px) {
-    .video-info-wrapper .super-lead {
-        font-size: 34px;
-    }
+  .title-heading {
+    line-height: 108px;
+    font-size: 108px;
+    word-break: normal;
+  }
 
-    .row-features {
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+  .super-lead {
+    font-size: 44px;
+  }
 
-    .feature-span {
-        overflow: hidden;
-    }
+  .row-features, .row-news {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 
-    .feature-box {
-        margin-top: 20px;
-    }
+  .feature-span, .news-span {
+    overflow: hidden;
+  }
 
-    .form-inline .btn-subscribe {                
-        display: block;
-        margin: 20px auto 0;
-        border-top: 10px solid;
-        border-right: none;
-    }
+  .feature-box, .news-box {
+    margin-top: 20px;
+  }
+
+  .form-inline .btn-subscribe {                
+    display: block;
+    margin: 20px auto 0;
+    border-top: 10px solid;
+    border-right: none;
+  }
+
+  .news-box-footer {
+    margin-top: 30px;
+  }
+  
+  .news-box .news-tags {
+    float: left;
+    margin-bottom: 0;
+  }
+
+  .news-box .news-permalink {
+    float: right;
+    margin-bottom: 0;
+    width: 24px;
+  }
 }

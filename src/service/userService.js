@@ -24,6 +24,9 @@ function create(encryptPassword){
 }
 
 module.exports = {
+    findById: function(id, done){
+        User.findOne({ _id: id }, done);
+    },
     findOne: function(query, done){
         User.findOne(query, done);
     },
