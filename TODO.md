@@ -4,20 +4,22 @@ TODO
 1
 -------
 
-- email notifications for comments
-- tweet button on posts
-- fonts on blog
-
-- redesign market
-  - prettier header
-  - video
-  - subscription implementation
-
 - docs
   - styles
   - cdn version of packages from angular/googlecode
   - generate sitemap.xml within the gruntpackage
   - fill up!
+
+- blog
+  - tweet button on posts
+  - fonts on blog
+  - email notifications for comments
+
+- market
+  - prettier header
+  - video
+  - subscription implementation
+
 
 - fix nightmares with session, domains, and passports
 
