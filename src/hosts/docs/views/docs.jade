@@ -12,6 +12,9 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
     != assetify.css.emit()
     link(href='http://fonts.googleapis.com/css?family=Roboto|Roboto:300|Roboto:900', rel='stylesheet')
 
+    script(src='/js/docs-setup.js')
+    != assetify.js.emit()
+
   body
     header.header
       div.navvar.navvar-fixed.fixed-top
@@ -31,7 +34,8 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
         div.span3
           form.well.form-search(ng-submit='submitForm()')
             div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
-              input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', tabindex='1', accesskey='s', focused)
+              input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', tabindex='1', accesskey='s', focused='focused')
+
               ul.dropdown-menu
                 li
                   a(href='{{bestMatch.page.url}}')='{{bestMatch.page.shortName}}'
@@ -40,7 +44,7 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
             div(ng-show='search')='Filtered results:'
 
             ul.nav.nav-list(ng-hide='page')
-              li.api-list-item(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
+              li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
 
             ul.nav.nav-list.well(ng-repeat='module in modules track by module.url')
               li.nav-header.module
@@ -50,19 +54,19 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
               li.nav-header.section(ng-show='module.directives')
                 a.guide(href='{{URL.directive}}')='directive'
 
-              li.api-list-item(ng-repeat='page in module.directives track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+              li(ng-repeat='page in module.directives track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
                 a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
               li.nav-header.section(ng-show='module.filters')
                 a.guide(href='{{URL.filter}}')='filter'
 
-              li.api-list-item(ng-repeat='page in module.filters track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+              li(ng-repeat='page in module.filters track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
                 a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
               li.nav-header.section(ng-show='module.services')
                 a.guide(href='{{URL.service}}')='service'
 
-              li.api-list-item(ng-repeat='service in module.services track by service.instance.url', ng-class='navClass(service.instance, service.provider)', ng-animate="'expand'")
+              li(ng-repeat='service in module.services track by service.instance.url', ng-class='navClass(service.instance, service.provider)', ng-animate="'expand'")
                 a.pull-right(ng-show='service.provider', href='{{service.provider.url}}', tabindex='2')
                   i.icon-cog
 
@@ -71,13 +75,13 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
               li.nav-header.section(ng-show='module.types')
                 a.guide(href='{{URL.type}}')='Types'
 
-              li.api-list-item(ng-repeat='page in module.types track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+              li(ng-repeat='page in module.types track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
                 a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
               li.nav-header.section(ng-show='module.globals')
                 a.guide.global(href='{{URL.api}}')='global APIs'
 
-              li.api-list-item(ng-repeat='page in module.globals track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+              li(ng-repeat='page in module.globals track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
                 a(href='{{page.url}}', tabindex='2')='{{page.id}}'
 
         div.span9
@@ -96,5 +100,3 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
 
     footer.footer
       include /src/frontend/views/platform-links
-
-    != assetify.js.emit()

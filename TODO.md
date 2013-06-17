@@ -11,9 +11,9 @@ TODO
   - features red section
 
 - docs
-  - generator to make only ngdocs and change necessary parts
-  - add scripts/css
-  - customize to look like market
+  - change generator to make only ngdocs
+  - startPage not getting set
+  - apis: {} ?
 
 - fix nightmares with session, domains, and passports
 

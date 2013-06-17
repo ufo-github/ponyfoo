@@ -12,7 +12,7 @@ module.exports = {
     clean: [
         '.bin',
         './src/**/.bin',
-        './src/hosts/docs/public'
+        './src/hosts/docs/generated'
     ],
     recess: require('./recess.js'),
     jshint: require('./jshint.js'),

@@ -1,6 +1,7 @@
 'use strict';
 
-var config = require('../../config'),
+var express= require('express'),
+    config = require('../../config'),
     defaults = require('../common/routing.js'),
     sitemapController = require('./controllers/sitemapController.js'),
     opensearchController = require('./controllers/opensearchController.js'),
