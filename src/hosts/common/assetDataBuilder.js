@@ -1,9 +1,9 @@
 'use strict';
 
 var config = require('../../config'),
-    path = require('path');
-
-var frontend = path.join(process.cwd(), '/src/frontend');
+    path = require('path'),
+    cwd = process.cwd(),
+    frontend = path.join(cwd, '/src/frontend');
 
 module.exports = {
     prepare: function(base){

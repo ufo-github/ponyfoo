@@ -4,55 +4,6 @@ var docsApp = {
   serviceFactory: {}
 };
 
-docsApp.directive.ngHtmlWrapLoaded = function(reindentCode, templateMerge, loadedUrls) {
-  function escape(text) {
-    return text.
-      replace(/\&/g, '&amp;').
-      replace(/\</g, '&lt;').
-      replace(/\>/g, '&gt;').
-      replace(/"/g, '&quot;');
-  }
-
-  function setHtmlIe8SafeWay(element, html) {
-    var newElement = angular.element('<pre>' + html + '</pre>');
-
-    element.html('');
-    element.append(newElement.contents());
-    return element;
-  }
-
-  return {
-    compile: function(element, attr) {
-      var properties = {
-            head: '',
-            module: '',
-            body: element.text()
-          },
-        html = "<!doctype html>\n<html ng-app{{module}}>\n  <head>\n{{head:4}}  </head>\n  <body>\n{{body:4}}  </body>\n</html>";
-
-      angular.forEach(loadedUrls.base, function(dep) {
-        properties.head += '<script src="' + dep + '"></script>\n';
-      });
-
-      angular.forEach((attr.ngHtmlWrapLoaded || '').split(' '), function(dep) {
-        if (!dep) return;
-        var ext = dep.split(/\./).pop();
-
-        if (ext == 'css') {
-          properties.head += '<link rel="stylesheet" href="' + dep + '" type="text/css">\n';
-        } else if(ext == 'js' && dep !== 'angular.js') {
-          properties.head += '<script src="' + (loadedUrls[dep] || dep) + '"></script>\n';
-        } else if (dep !== 'angular.js') {
-          properties.module = '="' + dep + '"';
-        }
-      });
-
-      setHtmlIe8SafeWay(element, escape(templateMerge(html, properties)));
-    }
-  };
-};
-
-
 docsApp.directive.focused = function($timeout) {
   return function(scope, element, attrs) {
     element[0].focus();
@@ -247,9 +198,6 @@ docsApp.serviceFactory.openJsFiddle = function(templateMerge, formPostData, load
 docsApp.serviceFactory.sections = function serviceFactory() {
   var sections = {
     getPage: function(sectionId, partialId) {
-      console.log(JSON.stringify(sections));
-      console.log("'" + sectionId + "'");
-      console.log("'" + partialId + "'");
       var pages = sections[sectionId];
 
       partialId = partialId || 'index';
@@ -265,15 +213,12 @@ docsApp.serviceFactory.sections = function serviceFactory() {
 
   angular.forEach(NG_DOCS.pages, function(page) {
     var url = page.section + '/' +  page.id;
-    if (page.id == 'angular.Module') {
-      page.partialUrl = 'partials/api/angular.IModule.html';
-    } else {
-      page.partialUrl = 'partials/' + url.replace(':', '.') + '.html';
-    }
+    page.partialUrl = 'partials/' + url.replace(':', '.') + '.html';
     page.url = (NG_DOCS.html5Mode ? '' : '#/') + url;
     if (!sections[page.section]) { sections[page.section] = []; }
     sections[page.section].push(page);
   });
+
   return sections;
 };
 
@@ -317,7 +262,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
   $scope.afterPartialLoaded = function() {
     var currentPageId = $location.path();
-    $scope.partialTitle = $scope.currentPage.shortName;
+    $scope.partialTitle = $scope.currentPage.shortName + ' Documentation';
     $window._gaq && $window._gaq.push(['_trackPageview', currentPageId]);
     loadDisqus(currentPageId);
   };
@@ -331,17 +276,18 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
   angular.forEach(NG_DOCS.sections, function(section, url) {
     $scope.sections[(NG_DOCS.html5Mode ? '' : '#/') + url] = section;
   });
-  $scope.$watch(function docsPathWatch() {return $location.path(); }, function docsPathWatchAction(path) {
+
+  $scope.$watch(function docsPathWatch() {return $location.path(); }, function docsPathWatchAction(path){
     var parts = path.split('/'),
       sectionId = parts[1],
       partialId = parts[2],
-      sectionName = $scope.sections[sectionId] || sectionId,
       page = sections.getPage(sectionId, partialId);
 
-    $scope.currentPage = sections.getPage(sectionId, partialId);
+    $scope.currentPage = page;
+    $scope.notFound = !$scope.currentPage;
 
-    if (!$scope.currentPage) {
-      $scope.partialTitle = 'Error: Page Not Found!';
+    if($scope.notFound) {      
+      $scope.partialTitle = 'Documentation Not Found!';
     }
 
     updateSearch();
@@ -352,7 +298,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
       match, sectionPath = (NG_DOCS.html5Mode ? '' : '#/') +  sectionId;
 
     if (partialId) {
-      breadcrumb.push({ name: NG_DOCS.sections[sectionName], url: sectionPath });
+      breadcrumb.push({ name: NG_DOCS.sections[sectionId], url: sectionPath });
       if (partialId == 'angular.Module') {
         breadcrumb.push({ name: 'angular.Module' });
       } else if (match = partialId.match(GLOBALS)) {
@@ -386,7 +332,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
         breadcrumb.push({ name: page.shortName });
       }
     } else {
-      breadcrumb.push({ name: NG_DOCS.sections[sectionName] });
+      breadcrumb.push({ name: NG_DOCS.sections[sectionId] });
     }
   });
 
@@ -400,21 +346,13 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
   $scope.versionNumber = angular.version.full;
   $scope.version = angular.version.full + "  " + angular.version.codeName;
-  $scope.subpage = false;
   $scope.futurePartialTitle = null;
   $scope.loading = 0;
 
   if (!$location.path() || INDEX_PATH.test($location.path())) {
     $location.path(NG_DOCS.startPage).replace();
   }
-  // bind escape to hash reset callback
-  angular.element(window).bind('keydown', function(e) {
-    if (e.keyCode === 27) {
-      $scope.$apply(function() {
-        $scope.subpage = false;
-      });
-    }
-  });
+
 
   /**********************************
    Private methods
@@ -426,7 +364,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
         modules = $scope.modules = [],
         otherPages = $scope.pages = [],
         search = $scope.search,
-        bestMatch = {page: null, rank:0};
+        bestMatch = {page: {}, rank:0};
 
     angular.forEach(pages, function(page) {
       var match,
@@ -475,7 +413,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
     function module(name, section) {
       var module = cache[name];
-      if (!module) {
+      if(!module) {
         module = cache[name] = {
           name: name,
           url: (NG_DOCS.html5Mode ? '' : '#/') + section + '/' + name,
@@ -511,7 +449,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
           if (keywords.indexOf(term) == -1) {
             ranking = null;
           } else {
-            ranking.rank ++; // one point for each term found
+            ranking.rank++; // one point for each term found
             if ((index = title.indexOf(term)) != -1) {
               ranking.rank += 20 - index; // ten points if you match title
             }
@@ -521,7 +459,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
       return ranking;
     }
   }
-
 
   function loadDisqus(currentPageId) {
     if (!NG_DOCS.discussions) { return; }
@@ -534,7 +471,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
     // http://docs.disqus.com/developers/universal/
     (function() {
       var dsq = document.createElement('script');
-      dsq.type = 'text/javascript';
       dsq.async = true;
       dsq.src = '//' + window.disqus_shortname + '.disqus.com/embed.js';
       (document.getElementsByTagName('head')[0] ||
@@ -545,12 +481,13 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
   }
 };
 
-angular.module('docsApp', ['bootstrap', 'bootstrapPrettify']).
-  config(function($locationProvider) {
-    if (NG_DOCS.html5Mode) {
+angular
+  .module('docsApp', ['bootstrap', 'bootstrapPrettify'])
+  .config(function($locationProvider) {
+    if(NG_DOCS.html5Mode) {
       $locationProvider.html5Mode(true).hashPrefix('!');
     }
-  }).
-  factory(docsApp.serviceFactory).
-  directive(docsApp.directive).
-  controller(docsApp.controller);
+  })
+  .factory(docsApp.serviceFactory)
+  .directive(docsApp.directive)
+  .controller(docsApp.controller);

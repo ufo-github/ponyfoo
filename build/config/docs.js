@@ -16,7 +16,10 @@ module.exports = {
             account: config.tracking.analytics,
             domainName: config.server.tld
         },
-        discussions: disqus
+        discussions: disqus,
+        improve: {
+            repo: config.meta.repo
+        }
     },
     "getting-started": {
         title: 'Getting Started',

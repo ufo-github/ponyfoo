@@ -9,10 +9,13 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
 
     title(ng-bind-template='Pony Foo: {{partialTitle}}')='Pony Foo Documentation'
 
+    // remove if you want angular to get nasty
+    base(href=config.server.authorityDocs)
+
     != assetify.css.emit()
     link(href='http://fonts.googleapis.com/css?family=Roboto|Roboto:300|Roboto:900', rel='stylesheet')
 
-    script(src='/js/docs-setup.js')
+    // if we put this on the bottom, the template will flash
     != assetify.js.emit()
 
   body
@@ -45,6 +48,7 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
 
             ul.nav.nav-list(ng-hide='page')
               li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
+                a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
             ul.nav.nav-list.well(ng-repeat='module in modules track by module.url')
               li.nav-header.module
@@ -92,9 +96,10 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
               span.divider(ng-show='crumb.url')='/'
 
           div#loading(ng-show='loading')='Loading...'
-          div.content(ng-hide='loading', ng-include, src='currentPage.partialUrl', onload='afterPartialLoaded()', autoscroll, ng-animate="{enter: 'slide-reveal'}")
+          div.content(ng-hide='loading || notFound', ng-include, src='currentPage.partialUrl', onload='afterPartialLoaded()', autoscroll, ng-animate="{enter: 'slide-reveal'}")
+          div.notFound(ng-show='notFound && !loading')
 
-          div#disqus.disqus
+          div#disqus.disqus(ng-hide='loading || notFound')
             h2='Discussion'
             div#disqus_thread.content-panel-content
 

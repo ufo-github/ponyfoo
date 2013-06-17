@@ -4,6 +4,7 @@ var path = require('path'),
     env = require('./env.js');
 
 var config = {
+    meta: require('./meta.js'),
     pkg: require(path.join(process.cwd(), '/package.json')),
     env: {
         current: env.NODE_ENV,

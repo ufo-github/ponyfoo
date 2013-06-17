@@ -91,6 +91,8 @@ Miscellaneous
 
 You shouldn't need to touch these, but you can, of course.
 
+- **REPOSITORY**: The repository on GitHub. `'username/repository'`.
+
 - **ENABLE_ZOMBIE_CRAWLER**: Whether or not to configure a headless browser to yield something other than a bunch of templates when a crawler hits the site. By default, this is set to `true`.
 
 - **SALT_WORK_FACTOR**: Your choice of a salt work factor for [**bcrypt**](https://github.com/ncb000gt/node.bcrypt.js) encryption, shouldn't need to edit.
@@ -100,7 +102,6 @@ You shouldn't need to touch these, but you can, of course.
 - **ENABLE_VERSION_DISPLAY**: Whether to display the current version number on a few, discrete places.
 
 - **TOKEN_EXPIRATION**: Time, expressed in seconds, after which tokens such as password reset or email validation expire.
-
 
 
 Analytics
