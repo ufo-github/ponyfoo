@@ -8,7 +8,7 @@ module.exports = function(grunt){
     grunt.registerTask('default', ['test']);
 
     // run tests, compile assets, and listen
-    grunt.registerTask('dev-once', ['test', 'assetify', 'web-server']);
+    grunt.registerTask('dev-once', ['test', 'assets', 'web-server']);
 
     // run the web-server, watch for changes and refresh
     grunt.registerTask('dev', ['concurrent:dev']);

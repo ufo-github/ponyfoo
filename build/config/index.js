@@ -21,7 +21,7 @@ module.exports = {
         forceExit: true,
         projectRoot: './test/spec'
     },
-    ngdocs: require('./docs.js'),
+    ngdoc: require('./docs.js'),
     assetify: {
         install: require_cwd('./src/hosts/install/assets.js'),
         market: require_cwd('./src/hosts/market/assets.js'),
