@@ -9,6 +9,7 @@ data.assets.host = config.server.authorityDocs;
 
 data.assets.css = [
     '/css/flatstrap.less',
+    '/css/angular-animations.less',
     '/css/docs.less'
 ];
 

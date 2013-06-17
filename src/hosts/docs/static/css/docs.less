@@ -1,47 +1,14 @@
-@import "/src/frontend/css/reusable/common.less";
 @import "/src/frontend/css/platform-links.less";
 @import "colors.less";
 @import "variables.less";
 
+body {
+  border-top: 10px solid @pomegranate;
+  padding-top: 10px;
+  font-weight: 300;
+  word-break: break-word;
+}
+
 .footer {
     .platform-links(@linkColor, @linkColorHover);
-}
-
-.slide-reveal {
-  .box-transition(0.3s linear all);
-  opacity:0.5;
-
-  position:relative;
-  opacity:0;
-  left:10px;
-}
-
-.slide-reveal.slide-reveal-active {
-  left:0;
-  opacity:1;
-}
-
-.expand-enter {
-  .box-transition(0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all);
-  opacity:0;
-  max-height:0;
-  overflow:hidden;
-}
-
-.expand-enter.expand-enter-active {
-  opacity:1;
-  max-height:40px;
-}
-
-.expand-leave {
-  .box-transition(0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) all);
-
-  opacity:1;
-  max-height:40px;
-  overflow:hidden;
-}
-
-.expand-leave.expand-leave-active {
-  opacity:0;
-  max-height:0;
 }

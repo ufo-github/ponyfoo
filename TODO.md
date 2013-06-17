@@ -5,6 +5,8 @@ TODO
 -------
 
 - email notifications for comments
+- tweet button on posts
+- fonts on blog
 
 - redesign market
   - prettier header
