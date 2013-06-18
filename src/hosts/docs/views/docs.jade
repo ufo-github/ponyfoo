@@ -31,9 +31,9 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
       div.container-fluid
         div.row-fluid
           div.span3
-            form.well.form-search(ng-submit='submitForm()')
+            form.form-search(ng-submit='submitForm()')
               div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
-                input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', tabindex='1', accesskey='s', focused='focused')
+                input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', accesskey='s', focused='focused')
 
                 ul.dropdown-menu
                   li
@@ -41,9 +41,9 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
 
               ul.nav.nav-list(ng-hide='page')
                 li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
-                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                  a(href='{{page.url}}')='{{page.shortName}}'
 
-              ul.nav.nav-list.well(ng-repeat='module in modules track by module.url')
+              ul.nav.nav-list(ng-repeat='module in modules track by module.url')
                 li.nav-header.module
                   a.guide(href='{{URL.module}}')='module'
                   a.code(href='{{module.url}}')='{{module.name}}'
@@ -52,34 +52,34 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
                   a.guide(href='{{URL.directive}}')='directive'
 
                 li(ng-repeat='page in module.directives track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                  a(href='{{page.url}}')='{{page.shortName}}'
 
                 li.nav-header.section(ng-show='module.filters')
                   a.guide(href='{{URL.filter}}')='filter'
 
                 li(ng-repeat='page in module.filters track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                  a(href='{{page.url}}')='{{page.shortName}}'
 
                 li.nav-header.section(ng-show='module.services')
                   a.guide(href='{{URL.service}}')='service'
 
                 li(ng-repeat='service in module.services track by service.instance.url', ng-class='navClass(service.instance, service.provider)', ng-animate="'expand'")
-                  a.pull-right(ng-show='service.provider', href='{{service.provider.url}}', tabindex='2')
+                  a.pull-right(ng-show='service.provider', href='{{service.provider.url}}')
                     i.icon-cog
 
-                  a(href='{{service.instance.url}}', tabindex='2')='{{service.name}}'
+                  a(href='{{service.instance.url}}')='{{service.name}}'
 
                 li.nav-header.section(ng-show='module.types')
                   a.guide(href='{{URL.type}}')='Types'
 
                 li(ng-repeat='page in module.types track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                  a(href='{{page.url}}')='{{page.shortName}}'
 
                 li.nav-header.section(ng-show='module.globals')
                   a.guide.global(href='{{URL.api}}')='global APIs'
 
                 li(ng-repeat='page in module.globals track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                  a(href='{{page.url}}', tabindex='2')='{{page.id}}'
+                  a(href='{{page.url}}')='{{page.id}}'
 
           div.span9
             ul.breadcrumb
