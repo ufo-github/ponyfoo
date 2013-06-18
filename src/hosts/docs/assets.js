@@ -1,6 +1,7 @@
 'use strict';
 
-var config = require('../../config'),
+var util = require('util'),
+    config = require('../../config'),
     builder = require('../common/assetDataBuilder.js'),
     data = builder.prepare(__dirname),
     resolve = data.resolveFrontendPath;
@@ -14,10 +15,20 @@ data.assets.css = [
     '/css/docs.less'
 ];
 
+function cdn(pkg, goog, v){
+    var version = v || '1.1.4',
+        ext = config.env.development ? '.js' : '.min.js',
+        base = goog !== false ? 
+            '//ajax.googleapis.com/ajax/libs/angularjs/' :
+            'http://code.angularjs.org/';
+
+    return { ext: base + version + '/' + pkg + ext };
+}
+
 data.assets.js = [
-    '/js/vendor/angular.min.js',
-    '/js/vendor/angular-bootstrap.min.js',
-    '/js/vendor/angular-bootstrap-prettify.min.js',
+    cdn('angular'),
+    cdn('angular-bootstrap', false),
+    cdn('angular-bootstrap-prettify', false),
     resolve('/js/social/twitter.js'),
     '../.bin/pages.js',
     '/js/app.js'

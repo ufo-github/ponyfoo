@@ -9,6 +9,7 @@ var path = require('path'),
 module.exports = {
     getOpensearch: function(req, res, next){
         var ctx = {
+                tld: config.server.tld,
                 authority: config.server.authority(req.slug),
                 platform: config.site.name
             };

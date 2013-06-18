@@ -4,5 +4,5 @@
     <Description>Search @platform Documentation</Description>
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">@authority/favicon.ico</Image>
-    <Url type="text/html" method="get" template="@authority/search/{searchTerms}" />
+    <Url type="text/html" method="get" template="http://www.google.com/search?q=site%3A@tld+{searchTerms}&amp;hl=en" />
 </OpenSearchDescription>
