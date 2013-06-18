@@ -33,7 +33,10 @@ TODO
 2
 -------
 
-- adaptable design
+- blog
+  - data-related author's twitter
+
+- adaptable design ?
 - proper api + authentication
 
 - pingbacks

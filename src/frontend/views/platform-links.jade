@@ -13,12 +13,12 @@ if config.site.displayVersion
   span.version=config.site.version
 
 if config.contact.gittip.widget
-  span.gittip
+  span.gittip-btn
     iframe.gittip-frame(src=config.contact.gittip.widget, width='48pt', height='22pt')
 
-a.tweet(
+a.tweet-btn.twitter-share-button(
   href='https://twitter.com/share',
-  class='twitter-share-button',
+  data-count='none',
   data-via='ponyfoo',
   data-related='ponyfoo,nzgb',
   data-align='right')='Tweet'
