@@ -1,5 +1,7 @@
 # Elements of Web Design #
 
+Designing for the web comprehends a lot of moving pieces we need to get right
+
 layout
 design
 css 2.1
