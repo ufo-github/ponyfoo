@@ -15,25 +15,20 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
     != assetify.css.emit()
     link(href='http://fonts.googleapis.com/css?family=Roboto|Roboto:300|Roboto:900', rel='stylesheet')
 
-    // if we put this on the bottom, the template will flash
+    // we don't want to be flashing Angular logic
     != assetify.js.emit()
 
   body
-    header.header
-      div.navvar.navvar-fixed.fixed-top
-        div.navvar-inner
-          div.container
-            a.brand='Pony Foo Documentation'
-
+      div.navbar
+        div.navbar-inner
+          div.row-fluid
             ul.nav
               li(ng-repeat='(url, name) in sections', ng-class='{active: isActivePath(url)}')
                 a(ng-href='{{url}}')
-                  i.icon-book.icon-white
                   span='{{name}}'
 
-    div.container(role='main')
-      div.row.clear-navvar
-      div.row
+    div.container-fluid
+      div.row-fluid
         div.span3
           form.well.form-search(ng-submit='submitForm()')
             div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
@@ -42,9 +37,6 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
               ul.dropdown-menu
                 li
                   a(href='{{bestMatch.page.url}}')='{{bestMatch.page.shortName}}'
-
-            div.spacer
-            div(ng-show='search')='Filtered results:'
 
             ul.nav.nav-list(ng-hide='page')
               li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
@@ -103,5 +95,7 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
             h2='Discussion'
             div#disqus_thread.content-panel-content
 
-    footer.footer
-      include /src/frontend/views/platform-links
+    footer.container-fluid.container-footer
+      div.row-fluid
+        div.span12
+          include /src/frontend/views/platform-links

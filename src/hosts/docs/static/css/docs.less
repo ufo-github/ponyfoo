@@ -2,13 +2,28 @@
 @import "colors.less";
 @import "variables.less";
 
+::selection {
+  background: @pomegranate;
+  color: @clouds;
+  text-shadow: 0 1px rgb(0, 0, 0, .2);
+}
+
 body {
   border-top: 10px solid @pomegranate;
-  padding-top: 10px;
   font-weight: 300;
   word-break: break-word;
 }
 
-.footer {
-    .platform-links(@linkColor, @linkColorHover);
+.row-fluid {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-footer {
+  .platform-links(@clouds, @silver);
+  margin-top: 30px;
+  padding: 8px;
+  border-top: 10px solid @midnight;
+  background-color: @asphalt;
 }

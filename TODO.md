@@ -7,6 +7,7 @@ TODO
 - docs
   - styles
   - cdn version of packages from angular/googlecode
+  - fix bug when reloading
   - generate sitemap.xml within the gruntpackage
   - fill up!
 
