@@ -6,7 +6,6 @@ TODO
 
 - docs
   - styles
-  - fix bug when reloading
   - generate sitemap.xml within the gruntpackage
   - fill up!
 
