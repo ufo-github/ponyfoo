@@ -1,4 +1,3 @@
-@import "/src/frontend/css/platform-links.less";
 @import "colors.less";
 @import "variables.less";
 
@@ -9,21 +8,16 @@
 }
 
 body {
-  border-top: 10px solid @pomegranate;
   font-weight: 300;
   word-break: break-word;
+}
+
+.content-wrapper {
+  border-top: 10px solid @pomegranate;
 }
 
 .row-fluid {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.container-footer {
-  .platform-links(@clouds, @silver);
-  margin-top: 30px;
-  padding: 8px;
-  border-top: 10px solid @midnight;
-  background-color: @asphalt;
 }

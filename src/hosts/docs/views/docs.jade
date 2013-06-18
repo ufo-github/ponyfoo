@@ -19,6 +19,7 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
     != assetify.js.emit()
 
   body
+    div.content-wrapper
       div.navbar
         div.navbar-inner
           div.row-fluid
@@ -27,75 +28,78 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
                 a(ng-href='{{url}}')
                   span='{{name}}'
 
-    div.container-fluid
-      div.row-fluid
-        div.span3
-          form.well.form-search(ng-submit='submitForm()')
-            div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
-              input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', tabindex='1', accesskey='s', focused='focused')
+      div.container-fluid
+        div.row-fluid
+          div.span3
+            form.well.form-search(ng-submit='submitForm()')
+              div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
+                input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', tabindex='1', accesskey='s', focused='focused')
 
-              ul.dropdown-menu
-                li
-                  a(href='{{bestMatch.page.url}}')='{{bestMatch.page.shortName}}'
+                ul.dropdown-menu
+                  li
+                    a(href='{{bestMatch.page.url}}')='{{bestMatch.page.shortName}}'
 
-            ul.nav.nav-list(ng-hide='page')
-              li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
-                a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+              ul.nav.nav-list(ng-hide='page')
+                li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
+                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
-            ul.nav.nav-list.well(ng-repeat='module in modules track by module.url')
-              li.nav-header.module
-                a.guide(href='{{URL.module}}')='module'
-                a.code(href='{{module.url}}')='{{module.name}}'
+              ul.nav.nav-list.well(ng-repeat='module in modules track by module.url')
+                li.nav-header.module
+                  a.guide(href='{{URL.module}}')='module'
+                  a.code(href='{{module.url}}')='{{module.name}}'
 
-              li.nav-header.section(ng-show='module.directives')
-                a.guide(href='{{URL.directive}}')='directive'
+                li.nav-header.section(ng-show='module.directives')
+                  a.guide(href='{{URL.directive}}')='directive'
 
-              li(ng-repeat='page in module.directives track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                li(ng-repeat='page in module.directives track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
-              li.nav-header.section(ng-show='module.filters')
-                a.guide(href='{{URL.filter}}')='filter'
+                li.nav-header.section(ng-show='module.filters')
+                  a.guide(href='{{URL.filter}}')='filter'
 
-              li(ng-repeat='page in module.filters track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                li(ng-repeat='page in module.filters track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
-              li.nav-header.section(ng-show='module.services')
-                a.guide(href='{{URL.service}}')='service'
+                li.nav-header.section(ng-show='module.services')
+                  a.guide(href='{{URL.service}}')='service'
 
-              li(ng-repeat='service in module.services track by service.instance.url', ng-class='navClass(service.instance, service.provider)', ng-animate="'expand'")
-                a.pull-right(ng-show='service.provider', href='{{service.provider.url}}', tabindex='2')
-                  i.icon-cog
+                li(ng-repeat='service in module.services track by service.instance.url', ng-class='navClass(service.instance, service.provider)', ng-animate="'expand'")
+                  a.pull-right(ng-show='service.provider', href='{{service.provider.url}}', tabindex='2')
+                    i.icon-cog
 
-                a(href='{{service.instance.url}}', tabindex='2')='{{service.name}}'
+                  a(href='{{service.instance.url}}', tabindex='2')='{{service.name}}'
 
-              li.nav-header.section(ng-show='module.types')
-                a.guide(href='{{URL.type}}')='Types'
+                li.nav-header.section(ng-show='module.types')
+                  a.guide(href='{{URL.type}}')='Types'
 
-              li(ng-repeat='page in module.types track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
+                li(ng-repeat='page in module.types track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+                  a(href='{{page.url}}', tabindex='2')='{{page.shortName}}'
 
-              li.nav-header.section(ng-show='module.globals')
-                a.guide.global(href='{{URL.api}}')='global APIs'
+                li.nav-header.section(ng-show='module.globals')
+                  a.guide.global(href='{{URL.api}}')='global APIs'
 
-              li(ng-repeat='page in module.globals track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
-                a(href='{{page.url}}', tabindex='2')='{{page.id}}'
+                li(ng-repeat='page in module.globals track by page.url', ng-class='navClass(page)', ng-animate="'expand'")
+                  a(href='{{page.url}}', tabindex='2')='{{page.id}}'
 
-        div.span9
-          ul.breadcrumb
-            li(ng-repeat='crumb in breadcrumb')
-              span(ng-hide='crumb.url')='{{crumb.name}}'
-              a(ng-show='crumb.url', href='{{crumb.url}}')='{{crumb.name}}'
-              span.divider(ng-show='crumb.url')='/'
+          div.span9
+            ul.breadcrumb
+              li(ng-repeat='crumb in breadcrumb')
+                span(ng-hide='crumb.url')='{{crumb.name}}'
+                a(ng-show='crumb.url', href='{{crumb.url}}')='{{crumb.name}}'
+                span.divider(ng-show='crumb.url')='/'
 
-          div#loading(ng-show='loading')='Loading...'
-          div.content(ng-hide='loading || notFound', ng-include, src='currentPage.partialUrl', onload='afterPartialLoaded()', autoscroll, ng-animate="{enter: 'slide-reveal'}")
-          div.notFound(ng-show='notFound && !loading')
+            div#loading(ng-show='loading')='Loading...'
+            div.content(ng-hide='loading || notFound', ng-include, src='currentPage.partialUrl', onload='afterPartialLoaded()', autoscroll, ng-animate="{enter: 'slide-reveal'}")
+            div.notFound(ng-show='notFound && !loading')
 
-          div#disqus.disqus(ng-hide='loading || notFound')
-            h2='Discussion'
-            div#disqus_thread.content-panel-content
+            div#disqus.disqus(ng-hide='loading || notFound')
+              h2='Discussion'
+              div#disqus_thread.content-panel-content
+
+      div.push
 
     footer.container-fluid.container-footer
       div.row-fluid
         div.span12
-          include /src/frontend/views/platform-links
+          div.footer
+            include /src/frontend/views/platform-links
