@@ -32,10 +32,6 @@
   top: 8px;
 }
 
-.blog-entry-legend.reading-label:after {
-  content: ', ';
-}
-
 .blog-entry-brief {
   margin-bottom: 20px;
 }
@@ -44,7 +40,17 @@
   margin-top: 35px;
 }
 
+.blog-entry .social-shares {
+  display: none;
+}
 
+@media only screen and (min-width: 768px) {
+  .blog-entry .social-shares {
+    display: block;
+    float: right;
+    text-align: right;
+  }
+}
 
 /* ENTRY LIST
  **************/

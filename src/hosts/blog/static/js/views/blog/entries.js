@@ -81,6 +81,7 @@
             addSearchShrinkage(container);
         }
         addReadingTime(container);
+        addSocialLinks();
         wireSubscriptionButton();
 
         flashValidation(viewModel, '.blog-entries-wrapper');
@@ -103,6 +104,11 @@
             readingTime = entries.readingTime();
 
         container.data('readingTime', readingTime);
+    }
+
+    function addSocialLinks(){
+        nbrut.social.twitter.reload();
+        nbrut.social.pocket.reload();
     }
 
     function addSingleEntryPartials(viewModel, container, data){

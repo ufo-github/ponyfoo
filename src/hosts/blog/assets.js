@@ -68,6 +68,9 @@ data.assets.js = [
     resolve('/js/ext/jquery.layout.js'),
     resolve('/js/ext/jquery.ui.js'), // not the well known, huge, and hideous, jQuery UI. just a few extensions
     
+    resolve('/js/social/twitter.js'),
+    resolve('/js/social/pocket.js'),
+    
     '/js/nbrut/jquery.nbrut.js',
     '/js/nbrut/nbrut.core.js',
     { file: '/js/nbrut/nbrut.node.jsn', context: { config: config } },

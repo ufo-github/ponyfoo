@@ -3,7 +3,7 @@
 var config = require('../../config'),
     builder = require('../common/assetDataBuilder.js'),
     data = builder.prepare(__dirname),
-    resolve = data.resolveLocalPath;
+    resolve = data.resolveFrontendPath;
 
 data.assets.host = config.server.authorityDocs;
 
@@ -18,9 +18,9 @@ data.assets.js = [
     '/js/vendor/angular.min.js',
     '/js/vendor/angular-bootstrap.min.js',
     '/js/vendor/angular-bootstrap-prettify.min.js',
+    resolve('/js/social/twitter.js'),
     '../.bin/pages.js',
-    '/js/app.js',
-    '/js/twitter.js'
+    '/js/app.js'
 ];
 
 module.exports = builder.complete(data);
