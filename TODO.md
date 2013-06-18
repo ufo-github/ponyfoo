@@ -6,6 +6,7 @@ TODO
 
 - docs
   - styles
+  - footer http://pixelsvsbytes.com/blog/2011/09/sticky-css-footers-the-flexible-way/
   - cdn version of packages from angular/googlecode
   - fix bug when reloading
   - generate sitemap.xml within the gruntpackage
