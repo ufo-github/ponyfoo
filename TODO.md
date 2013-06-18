@@ -5,7 +5,6 @@ TODO
 -------
 
 - docs
-  - styles
   - generate sitemap.xml within the gruntpackage
   - fill up!
 
