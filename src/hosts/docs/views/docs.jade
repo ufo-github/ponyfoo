@@ -31,9 +31,12 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
       div.container-fluid
         div.row-fluid
           div.span3
+            div.search-label='Documentation Topics'
             form.form-search(ng-submit='submitForm()')
               div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
-                input.input-medium.search-query(type='text', ng-model='search', placeholder='search the docs', accesskey='s', focused='focused')
+                p.search-box.clearfix
+                  label.search-icon.fui-search(for='search-input')
+                  input.search-query#search-input(type='text', ng-model='search', placeholder='search the docs', accesskey='s', focused='focused')
 
                 ul.dropdown-menu
                   li
@@ -93,7 +96,7 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
             div.notFound(ng-show='notFound && !loading')
 
             div#disqus.disqus(ng-hide='loading || notFound')
-              h2='Discussion'
+              h2.disqus-title='Discussion'
               div#disqus_thread.content-panel-content
 
       div.push
