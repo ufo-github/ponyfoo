@@ -1,7 +1,8 @@
 !function (window,$,nbrut,moment,undefined) {
     'use strict';
 
-    var html = nbrut.md.html;
+    var html = nbrut.md.html,
+        rtag = /[^a-z0-9]+/ig;
 
     function entryHook(context, data){
         $.each(data.entries || [data.entry], function(){
@@ -31,6 +32,9 @@
             self._tags = tags;
             self.tagged = tags.length ? 'Tagged: ' + self.keywords : '';
             self.tags = tags.join(' ');
+            self.hashtags = tags.map(function(tag){
+                return tag.replace(rtag, '');
+            }).join(', ');
         });
 
         $.each(data.discussions || [], function(){

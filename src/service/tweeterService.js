@@ -2,8 +2,7 @@
 
 var config = require('../config'),
     Twitter = require('ntwitter'),
-    rhyphens = /[-_]/g,
-    rtag = /[a-z0-9]+/i;
+    rtag = /[^a-z0-9]+/ig;
 
 function extractStatus(payload){
     var authority = config.server.authority(payload.blog.slug),
@@ -11,11 +10,8 @@ function extractStatus(payload){
         status = [payload.entry.title, permalink];
 
     payload.entry.tags.forEach(function(tag){
-        tag = tag.replace(rhyphens, '');
-
-        if(rtag.test(tag)){
-            status.push('#' + tag);
-        }
+        tag = tag.replace(rtag, '');
+        status.push('#' + tag);
     });
 
     return status.join(' ');

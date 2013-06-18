@@ -13,7 +13,6 @@ TODO
   - fill up!
 
 - blog
-  - tweet button on posts
   - fonts on blog
   - email notifications for comments
 

@@ -8,18 +8,20 @@ article.blog-entry-section.blog-entry(data-keywords='{{keywords}}', itemscope, i
   section.social-shares
     a.pocket-btn(
       href='https://getpocket.com/save',
-      data-lang='en',
+      data-pocket-count='none',
+      data-pocket-align='right',
       data-save-url=config.server.authority(slug) + '{{permalink}}',
-      data-pocket-count='horizontal',
-      data-pocket-align='right')
+      data-lang='en')
 
-    a.tweet-btn(
+    a.tweet-btn.twitter-share-button(
       href='https://twitter.com/share',
-      class='twitter-share-button',
-      data-url=config.server.authority(slug) + '{{permalink}}'
+      data-count='none',
+      data-align='right'
+      data-url=config.server.authority(slug) + '{{permalink}}',
+      data-hashtags='{{hashtags}}',
+      data-text='{{title}}',
       data-via='ponyfoo',
-      data-related='ponyfoo,nzgb',
-      data-align='right')
+      data-related='nzgb,ponyfoo')
 
   header.blog-entry-title
     h1
