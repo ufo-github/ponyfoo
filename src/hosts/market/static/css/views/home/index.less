@@ -12,6 +12,8 @@ body {
   padding-top: 10px;
   font-weight: 300;
   word-break: break-word;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .fui {
@@ -265,7 +267,8 @@ body {
   }
 
   .form-inline .fui-mail,
-  .form-inline .subscribe-email, {
+  .form-inline .subscribe-email,
+  .form-inline .subscribe-email:focus { /* :focus cancels bootstrap default */
     border-top: 10px solid @pomegranate;
   }
 
