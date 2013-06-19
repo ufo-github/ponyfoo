@@ -7,21 +7,24 @@ Line breaks using [GitHub Flavored Markdown](https://help.github.com/articles/gi
 ```
 Here's a line for us to start with.
 
-This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
+This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
 
 
 
 
 This line is also a separate paragraph, but... _(note how all those spaces still caused just one break)_
-This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
 ```
 
 Here's a line for us to start with.
 
-This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
+This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
+
+
+
 
 This line is also a separate paragraph, but... _(note how all those spaces still caused just one break)_
-This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
 
 # Horizontal Rules
 

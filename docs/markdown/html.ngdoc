@@ -10,7 +10,7 @@ You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It
   <dd>Is something people use sometimes.</dd>
 
   <dt>Markdown in HTML</dt>
-  <dd>Does _not_ work **very** well. Use HTML <em>tags</em> instead.</dd>
+  <dd>Sure, but you _better_ have a **very** good reason. We suggest HTML <em>tags</em> instead.</dd>
 </dl>
 ```
 
@@ -19,7 +19,7 @@ You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It
   <dd>Is something people use sometimes.</dd>
 
   <dt>Markdown in HTML</dt>
-  <dd>Does _not_ work **very** well. Use HTML <em>tags</em> instead.</dd>
+  <dd>Sure, but you _better_ have a **very** good reason. We suggest HTML <em>tags</em> instead.</dd>
 </dl>
 
 <a class='btn btn-large btn-primary' href='/markdown/code' title='Code Blocks'>Code Blocks!</a>

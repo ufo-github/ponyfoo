@@ -36,9 +36,9 @@ module.exports = {
                 './.env.defaults',
                 'Gruntfile.js',
                 './build/**/*.js',
+                './docs/**/*.ngdoc',
                 './src/**/*.js',
                 './src/**/*.less',
-                './src/**/*.ngdoc',
                 '!./src/**/.bin',
                 './test/**/*.js'
             ],

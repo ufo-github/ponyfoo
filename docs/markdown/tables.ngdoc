@@ -17,7 +17,7 @@ The outer pipes are optional, and you don't need to make the raw Markdown line u
 
 Markdown | Less | Pretty
 --- | --- | ---
-*Still* | `renders` | **nicely**
+_Still_ | `renders` | **nicely**
 1 | 2 | 3
 ```
 
@@ -33,7 +33,7 @@ The outer pipes are optional, and you don't need to make the raw Markdown line u
 
 Markdown | Less | Pretty
 --- | --- | ---
-*Still* | `renders` | **nicely**
+_Still_ | `renders` | **nicely**
 1 | 2 | 3
 
 <a class='btn btn-large btn-primary' href='/markdown/html' title='Raw HTML'>Did we mention HTML?</a>

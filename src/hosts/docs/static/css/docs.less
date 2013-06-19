@@ -88,6 +88,44 @@ body {
     border-color: @greensea;
     border-width: 10px;
   }
+
+  pre {
+    border: none; /* reset flatstrap styles */
+    border-top: 10px solid @asphalt;
+    margin: 20px 0;
+  }
+
+  ul li {
+    list-style-type: disc;
+    list-style-type: hiragana-iroha;
+  }
+
+  ul, ol {
+    li > p {
+      margin: 0; /* treat them as breaks rather than paragraphs */
+    }
+  }
+
+  table {
+    border-top: 10px solid @midnight;
+    background-color: @asphalt;
+    color: @clouds;
+    margin: 20px 0;
+
+    thead {
+      background-color: lighten(@asphalt, 5%);
+      color: @sunflower;
+      font-weight: normal;
+    }
+
+    th, td {
+      padding: 8px;
+
+      &:not(:first-child) {
+        border-left: 1px solid lighten(@asphalt, 5%);
+      }
+    }
+  }
 }
 
 .improve-docs {

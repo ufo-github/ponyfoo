@@ -17,6 +17,13 @@ Lists are very straightforward to write, and they can be nested, too!
 * Unordered list can use asterisks
 - Or minuses
 + Or pluses
++ Note that changing notation created new, _separate_, lists
+
+And a really weird example
+
+- # Using a list heading
+  With some more text
+  - And a nested item
 ```
 
 1. First ordered list item
@@ -24,13 +31,20 @@ Lists are very straightforward to write, and they can be nested, too!
   * Unordered sub-list. 
 1. Actual numbers don't matter, just that it's a number
   1. Ordered sub-list
-4. And another item.  
+4. And another item.
    
    Some text that should be aligned with the above item.
 
 * Unordered list can use asterisks
 - Or minuses
 + Or pluses
++ Note that changing notation created new, _separate_, lists
+
+And a really weird example
+
+- # Using a list heading
+  With some more text
+  - And a nested item
 
 <a class='btn btn-large btn-primary' href='/markdown/links' title='Links in Markdown'>Great! Ready for links?</a>
 
