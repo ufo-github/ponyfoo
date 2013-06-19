@@ -11,23 +11,23 @@ Inline `code` has `back-ticks around` it.
 Inline `code` has `back-ticks around` it.
 
 Blocks of code are either fenced by lines with three back-ticks <code>```</code>, or are indented with four spaces. I recommend only using the fenced code blocks -- they're easier and only they support syntax highlighting.
+    
+    ```javascript
+    var s = "JavaScript syntax highlighting";
+    alert(s);
+    ```
 
-```no-highlight
- ```javascript
- var s = "JavaScript syntax highlighting";
- alert(s);
- ```
- 
- ```python
- s = "Python syntax highlighting"
- print s
- ```
- 
- ```
- No language indicated, so no syntax highlighting. 
- But let's throw in a <b>tag</b>.
- ```
-```
+    ```python
+    s = "Python syntax highlighting"
+    print s
+    ```
+
+    ```
+    No language indicated, so no syntax highlighting. 
+    But let's throw in a <b>tag</b>.
+    ```
+
+    var foo = 1; // no syntax highlighting in indented blocks either.
 
 ```javascript
 var s = "JavaScript syntax highlighting";
@@ -44,9 +44,7 @@ No language indicated, so no syntax highlighting in Markdown Here (varies on Git
 But let's throw in a <b>tag</b>.
 ```
 
-(Github Wiki pages don't seem to support syntax highlighting, so the above won't be colourful (the strings are not red, for example). Try it out in a *Markdown Here* email or a Github Markdown README or Github Issue -- you can preview a new Issue without submitting it.)
-
-Again, to see what languages are available for highlighting, and how to write those language names, see the [highlight.js demo page](http://softwaremaniacs.org/media/soft/highlight/test.html).
+    var foo = 1; // no syntax highlighting in indented blocks either.
 
 <a class='btn btn-large btn-primary' href='/markdown/breaks' title='Line Breaks'>Line Breaks</a>
 

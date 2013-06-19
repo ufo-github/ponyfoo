@@ -4,7 +4,7 @@
 
 [Markdown](http://daringfireball.net/projects/markdown/ "Introduction to Markdown") is a _text to HTML_ language designed to be understandable even in its plain text form, before conversion to HTML.
 
-This language is used **pretty heavily** in the Pony Foo platform. You write blog articles in markdown, our readers post comments using markdown, we write our documentation with markdown. **We love markdown**.
+This language is used **pretty heavily** in the Pony Foo platform. You write blog articles in markdown, your readers post comments using markdown, we write our documentation with markdown. **We love markdown**.
 
 With it, you will be able to write HTML _like the very page you are reading_ while keeping the text in human-readable form.
 
