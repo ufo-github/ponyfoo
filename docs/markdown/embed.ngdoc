@@ -13,6 +13,9 @@ Tweets can be embedded effortlessly, just take whatever [Twitter](https://dev.tw
 
 <blockquote class="twitter-tweet"><p>Uncovering the Native DOM API <a href="http://t.co/6x6BqxBFdg">http://t.co/6x6BqxBFdg</a> <a href="https://twitter.com/search?q=%23dom&amp;src=hash">#dom</a> <a href="https://twitter.com/search?q=%23js&amp;src=hash">#js</a> <a href="https://twitter.com/search?q=%23bestpractices&amp;src=hash">#bestpractices</a></p>&mdash; Pony Foo (@ponyfoo) <a href="https://twitter.com/ponyfoo/statuses/344094217620045826">June 10, 2013</a></blockquote>
 
+> Note that you don't need to add the script tag provided by Twitter.
+> If you add it anyway, we'll remove it, because of security issues. This is explained in the [raw HTML section](/markdown/html "Raw HTML").
+
 # YouTube Videos
 
 These can't be added directly but you can add an image with a link to the video. Like this:

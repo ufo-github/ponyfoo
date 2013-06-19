@@ -4,7 +4,7 @@
 
 Tables are built using pipes <kbd>|</kbd> and hyphens <kbd>-</kbd>. They are not the prettiest feature of Markdown, but we've included them to support tabular data display. You really shouldn't be using these for layouting, though.
 
-```no-highlight
+```
 Colons can be used to align columns.
 
 | Tables        | Are           | Cool  |

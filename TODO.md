@@ -5,13 +5,12 @@
 - docs
   - generate sitemap.xml within the gruntpackage
   - use marked over pagedown _everywhere_ in main site
-  - list syntax highlighting language support @ wiki
   - markdown playground.
   - docs about our editor, shortcuts, etc?
 
 - blog
   - fonts on blog
-  - email notifications for comments
+  - email notifications for comments (for both the blog-owner and the commenter)
 
 - market
   - prettier header

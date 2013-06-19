@@ -4,16 +4,18 @@
 
 You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It's there, but try to avoid it unless you really need it!
 
+The reason some HTML tags are disallowed is to provide a **secure browsing experience**, while giving you _as much control as possible_ over your markup.
+
 ```markdown
 <dl>
   <dt class='first-child'>Definition list</dt>
   <dd>Is something people use sometimes.</dd>
 
   <dt>Markdown in HTML</dt>
-  <dd>Sure, but you _better_ have a **very** good reason. We suggest HTML <em>tags</em> instead.</dd>
+  <dd>Sure, but you _should_ have a **good** reason. Consistency in your <em>writing style</em> will **improve readability**!
 </dl>
 
-<p>Some HTML is **forbidden**, `<iframe>` and `<script>`,to name a couple, can't be used. They will be ~~removed~~ from the resulting HTML.</p>
+<p>Some HTML is **forbidden**, `<iframe>` and `<script>`, along with a few other tags and some attributes, can't be used. They will be ~~removed~~ from the resulting HTML.</p>
 
 <iframe src='http://irrelevant-site.com'></iframe>
 
@@ -25,10 +27,10 @@ You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It
   <dd>Is something people use sometimes.</dd>
 
   <dt>Markdown in HTML</dt>
-  <dd>Sure, but you _better_ have a **very** good reason. We suggest HTML <em>tags</em> instead.</dd>
+  <dd>Sure, but you _should_ have a **good** reason. Consistency in your <em>writing style</em> will **improve readability**!
 </dl>
 
-<p>Some HTML is **forbidden**, `<iframe>` and `<script>`,to name a couple, can't be used. They will be ~~removed~~ from the resulting HTML.</p>
+<p>Some HTML is **forbidden**, `<iframe>` and `<script>`, along with a few other tags and some attributes, can't be used. They will be ~~removed~~ from the resulting HTML.</p>
 
 <iframe src='http://irrelevant-site.com'></iframe>
 
