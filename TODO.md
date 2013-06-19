@@ -5,8 +5,6 @@
 - docs
   - generate sitemap.xml within the gruntpackage
   - use marked over pagedown _everywhere_ in main site
-  - sanitize while not breaking raw HTML (laid back sanitizing, like pagedown offers)
-  - syntax highlighting https://github.com/ForbesLindesay/supermarked/blob/master/index.js
   - list syntax highlighting language support @ wiki
   - markdown playground.
   - docs about our editor, shortcuts, etc?

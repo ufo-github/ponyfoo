@@ -12,6 +12,12 @@ You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It
   <dt>Markdown in HTML</dt>
   <dd>Sure, but you _better_ have a **very** good reason. We suggest HTML <em>tags</em> instead.</dd>
 </dl>
+
+<p>Some HTML is **forbidden**, `<iframe>` and `<script>`,to name a couple, can't be used. They will be ~~removed~~ from the resulting HTML.</p>
+
+<iframe src='http://irrelevant-site.com'></iframe>
+
+<script>alert('BOOM!');</script>
 ```
 
 <dl>
@@ -22,8 +28,12 @@ You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It
   <dd>Sure, but you _better_ have a **very** good reason. We suggest HTML <em>tags</em> instead.</dd>
 </dl>
 
-<a class='btn btn-large btn-primary' href='/markdown/code' title='Code Blocks'>Code Blocks!</a>
+<p>Some HTML is **forbidden**, `<iframe>` and `<script>`,to name a couple, can't be used. They will be ~~removed~~ from the resulting HTML.</p>
 
-<iframe src='http://clicky.com/user/#/stats/?site_id=100527664'></iframe>
+<iframe src='http://irrelevant-site.com'></iframe>
+
+<script>alert('BOOM!');</script>
+
+<a class='btn btn-large btn-primary' href='/markdown/code' title='Code Blocks'>Code Blocks!</a>
 
 You can play around with Markdown on our [live playground](/markdown/playground "Markdown Playground").

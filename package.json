@@ -30,7 +30,7 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "0.5.4",
     "grunt-jasmine-node": "0.1.0",
-    "grunt-ngdoc": "0.0.1",
+    "grunt-ngdoc": "0.1.0",
     "grunt-recess": "~0.3.3",
     "imgur": "0.0.3",
     "jade": "0.31.2",
