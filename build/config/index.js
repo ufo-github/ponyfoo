@@ -38,6 +38,7 @@ module.exports = {
                 './build/**/*.js',
                 './src/**/*.js',
                 './src/**/*.less',
+                './src/**/*.ngdoc',
                 '!./src/**/.bin',
                 './test/**/*.js'
             ],

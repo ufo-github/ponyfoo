@@ -1,0 +1,41 @@
+@ngdoc overview
+@name Tables!
+@description
+
+Tables are built using pipes <kbd>|</kbd> and hyphens <kbd>-</kbd>. They are not the prettiest feature of Markdown, but we've included them to support tabular data display. You really shouldn't be using these for layouting, though.
+
+```no-highlight
+Colons can be used to align columns.
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+The outer pipes are optional, and you don't need to make the raw Markdown line up prettily, but _we encourage readability_. You can also use inline Markdown.
+
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3
+```
+
+Colons can be used to align columns.
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+The outer pipes are optional, and you don't need to make the raw Markdown line up prettily, but _we encourage readability_. You can also use inline Markdown.
+
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3
+
+<a class='btn btn-large btn-primary' href='/markdown/html' title='Raw HTML'>Did we mention HTML?</a>
+
+You can play around with Markdown on our [live playground](/markdown/playground "Markdown Playground").

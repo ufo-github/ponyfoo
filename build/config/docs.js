@@ -28,9 +28,5 @@ module.exports = {
     markdown: {
         title: 'Markdown',
         src: ['src/docs/markdown/**/*.ngdoc']
-    },
-    api: {
-        title: 'API',
-        src: ['src/docs/test.js']
     }
 };

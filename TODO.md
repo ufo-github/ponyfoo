@@ -6,7 +6,11 @@ TODO
 
 - docs
   - generate sitemap.xml within the gruntpackage
-  - fill up!
+  - tweak marked implementation, use over pagedown in main site
+  - line breaking feature changes (verify in docs)
+  - tweak lists css
+  - tweak code, syntax highlighting
+  - markdown playground.
 
 - blog
   - fonts on blog

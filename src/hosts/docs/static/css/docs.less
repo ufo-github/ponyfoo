@@ -58,6 +58,11 @@ body {
   height: 20px + 24px; /* same height as icon, 20px for padding, plus 24px for the icon */
 }
 
+.nav-list > :not(.active) > a:hover {
+  background-color: spin(@greensea, 20%);
+  color: @clouds;
+}
+
 .breadcrumb {
   border-top: 10px solid @midnight;
   background-color: @asphalt;
@@ -77,7 +82,12 @@ body {
 .content {
   h1,h2,h3,h4,h5,h6 {
     color: @greensea;  
-  }  
+  }
+
+  blockquote {
+    border-color: @greensea;
+    border-width: 10px;
+  }
 }
 
 .improve-docs {

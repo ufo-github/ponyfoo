@@ -1,0 +1,62 @@
+@ngdoc overview
+@name Line Breaks
+@description
+
+Line breaks using [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown "GitHub Flavored Markdown") are, luckily, _very straightforward_.
+
+```
+Here's a line for us to start with.
+
+This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
+
+
+
+
+This line is also a separate paragraph, but... _(note how all those spaces still caused just one break)_
+This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+```
+
+Here's a line for us to start with.
+
+This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
+
+This line is also a separate paragraph, but... _(note how all those spaces still caused just one break)_
+This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+# Horizontal Rules
+
+Another form of line breaking is using `<hr/>` horizontal rules.
+
+```
+Three or more...
+
+---
+
+Hyphens
+
+***
+
+Asterisks
+
+___
+
+Underscores
+```
+
+Three or more...
+
+---
+
+Hyphens
+
+***
+
+Asterisks
+
+___
+
+Underscores
+
+<a class='btn btn-large btn-primary' href='/markdown/embed' title='Markdown Embeds'>Embedding Widgets</a>
+
+You can play around with Markdown on our [live playground](/markdown/playground "Markdown Playground").

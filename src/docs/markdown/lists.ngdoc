@@ -1,0 +1,37 @@
+@ngdoc overview
+@name Lists
+@description
+
+Lists are very straightforward to write, and they can be nested, too!
+
+```no-highlight
+1. First ordered list item
+2. Another item
+  * Unordered sub-list. 
+1. Actual numbers don't matter, just that it's a number
+  1. Ordered sub-list
+4. And another item.  
+   
+   Some text that should be aligned with the above item.
+
+* Unordered list can use asterisks
+- Or minuses
++ Or pluses
+```
+
+1. First ordered list item
+2. Another item
+  * Unordered sub-list. 
+1. Actual numbers don't matter, just that it's a number
+  1. Ordered sub-list
+4. And another item.  
+   
+   Some text that should be aligned with the above item.
+
+* Unordered list can use asterisks
+- Or minuses
++ Or pluses
+
+<a class='btn btn-large btn-primary' href='/markdown/links' title='Links in Markdown'>Great! Ready for links?</a>
+
+You can play around with Markdown on our [live playground](/markdown/playground "Markdown Playground").

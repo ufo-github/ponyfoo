@@ -1,0 +1,31 @@
+@ngdoc overview
+@name Images
+@description
+
+Images are pretty similar to [links](/markdown/links "Links in Markdown"), _except more awesome_! So they need to be preceded by an exclamation mark to show it. By the way, images are great for diving your articles, but you shouldn't abuse them, or they'll feel _shallow_.
+
+```no-highlight
+Here's our logo (hover to see the title text):
+
+Inline-style: 
+![alt text](http://www.ponyfoo.com/img/thumbnail.png "Inline Title Text")
+
+Reference-style: 
+![alt text][logo]
+
+[logo]: http://www.ponyfoo.com/img/thumbnail.png "Reference Title Text"
+```
+
+Here's our logo (hover to see the title text):
+
+Inline-style: 
+![alt text](http://www.ponyfoo.com/img/thumbnail.png "Inline Title Text")
+
+Reference-style: 
+![alt text][logo]
+
+[logo]: http://www.ponyfoo.com/img/thumbnail.png "Reference Title Text"
+
+<a class='btn btn-large btn-primary' href='/markdown/quotes' title='Markdown Quotes'>Blockquotes are next!</a>
+
+You can play around with Markdown on our [live playground](/markdown/playground "Markdown Playground").

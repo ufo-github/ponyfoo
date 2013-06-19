@@ -31,16 +31,11 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
       div.container-fluid
         div.row-fluid
           div.span3
-            div.search-label='Documentation Topics'
+            div.search-label='Topic Index'
             form.form-search(ng-submit='submitForm()')
-              div.dropdown.search(ng-class='{open: focused && bestMatch.rank > 0 && bestMatch.page != currentPage}')
-                p.search-box.clearfix
-                  label.search-icon.fui-search(for='search-input')
-                  input.search-query#search-input(type='text', ng-model='search', placeholder='search the docs', accesskey='s', focused='focused')
-
-                ul.dropdown-menu
-                  li
-                    a(href='{{bestMatch.page.url}}')='{{bestMatch.page.shortName}}'
+              p.search-box.clearfix
+                label.search-icon.fui-search(for='search-input')
+                input.search-query#search-input(type='text', ng-model='search', placeholder='search the index', accesskey='s', focused='focused')
 
               ul.nav.nav-list(ng-hide='page')
                 li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')

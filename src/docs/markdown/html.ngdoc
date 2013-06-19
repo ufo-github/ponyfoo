@@ -1,0 +1,27 @@
+@ngdoc overview
+@name Raw HTML
+@description
+
+You can use **raw HTML** in your Markdown, and it'll mostly work pretty well. It's there, but try to avoid it unless you really need it!
+
+```no-highlight
+<dl>
+  <dt class='first-child'>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does _not_ work **very** well. Use HTML <em>tags</em> instead.</dd>
+</dl>
+```
+
+<dl>
+  <dt class='first-child'>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does _not_ work **very** well. Use HTML <em>tags</em> instead.</dd>
+</dl>
+
+<a class='btn btn-large btn-primary' href='/markdown/code' title='Code Blocks'>Code Blocks!</a>
+
+You can play around with Markdown on our [live playground](/markdown/playground "Markdown Playground").
