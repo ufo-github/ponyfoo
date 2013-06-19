@@ -23,10 +23,10 @@ module.exports = {
     },
     "getting-started": {
         title: 'Getting Started',
-        src: ['src/docs/getting-started/**/*.ngdoc']
+        src: ['docs/getting-started/**/*.ngdoc']
     },
     markdown: {
         title: 'Markdown',
-        src: ['src/docs/markdown/**/*.ngdoc']
+        src: ['docs/markdown/**/*.ngdoc']
     }
 };
