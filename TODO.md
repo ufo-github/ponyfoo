@@ -11,6 +11,7 @@ TODO
   - tweak lists css
   - tweak code, syntax highlighting
   - markdown playground.
+  - docs about our editor, shortcuts, etc?
 
 - blog
   - fonts on blog
