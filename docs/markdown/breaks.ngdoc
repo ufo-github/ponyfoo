@@ -4,7 +4,7 @@
 
 Line breaks using [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown "GitHub Flavored Markdown") are, luckily, _very straightforward_.
 
-```
+```markdown
 Here's a line for us to start with.
 
 This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
@@ -30,7 +30,7 @@ This line is only separated by a single newline, so it's a separate line in the 
 
 Another form of line breaking is using `<hr/>` horizontal rules.
 
-```
+```markdown
 Three or more...
 
 ---

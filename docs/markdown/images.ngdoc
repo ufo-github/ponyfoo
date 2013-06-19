@@ -4,7 +4,7 @@
 
 Images are pretty similar to [links](/markdown/links "Links in Markdown"), _except more awesome_! So they need to be preceded by an exclamation mark to show it. By the way, images are great for diving your articles, but you shouldn't abuse them, or they'll feel _shallow_.
 
-```no-highlight
+```markdown
 Here's our logo (hover to see the title text):
 
 Inline-style: 

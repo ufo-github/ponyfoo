@@ -4,7 +4,7 @@
 
 Quoting is very useful, although relatively uncommon. You'll generally want to use block quotes to break long structures in your articles, too. That'll help make them more readable.
 
-```no-highlight
+```markdown
 > Blockquotes are very useful when, well, quoting someone. You can quote me on that.
 > This line is part of the same quote.
 

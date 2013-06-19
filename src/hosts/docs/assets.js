@@ -11,6 +11,7 @@ data.assets.host = config.server.authorityDocs;
 data.assets.css = [
     '/css/flatstrap.less',
     '/css/angular-animations.less',
+    { ext: 'http://yandex.st/highlightjs/7.3/styles/default.min.css' },
     '/css/footer.less',
     '/css/docs.less'
 ];

@@ -4,7 +4,7 @@
 
 **Bold**, _italics_, and ~~strikethrough~~ are very easy, and _semantic_, to accomplish using Markdown.
 
-```no-highlight
+```markdown
 Emphasis, aka italics, with *asterisks* or _underscores_.
 
 Strong emphasis, aka bold, with **asterisks** or __underscores__.

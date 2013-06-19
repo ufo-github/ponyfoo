@@ -4,7 +4,7 @@
 
 Links can be either inline, or declared like _foot references_. Note that hover titles are optional and can be omitted.
 
-```no-highlight
+```markdown
 [I'm an inline-style link](https://www.google.com "a hover title")
 
 [I'm a reference-style link][Arbitrary case-insensitive reference text]

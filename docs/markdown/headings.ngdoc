@@ -4,7 +4,7 @@
 
 Headings are straightforward, just add the right amount of hashes <kbd>#</kbd>. You can also underline them with _hyphens_.
 
-```no-highlight
+```markdown
 # H1
 ## H2
 ### H3
