@@ -9,7 +9,7 @@ TODO
   - tweak marked implementation, use over pagedown in main site
   - line breaking feature changes (verify in docs)
   - tweak lists css
-  - tweak code, syntax highlighting
+  - tweak code, syntax highlighting https://github.com/ForbesLindesay/supermarked/blob/master/index.js
   - markdown playground.
   - docs about our editor, shortcuts, etc?
 
