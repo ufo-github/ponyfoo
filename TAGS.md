@@ -8,8 +8,15 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (tip)
 ============
 
+- WWW Root
+  - Flat UI Design
+  - Video Marketing
+  - Email Subscription
+  
 - Documentation
+  - Flat UI Design
   - Added documentation subdomain
+  - Markdown documentation
 
 - Blogging Standards
   - Added PingBack functionality
@@ -18,6 +25,11 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 - Emailing and email templates
   - Transactional email using [Mandrill](https://mandrillapp.com "Mandrill by MailChimp")
   - Blog post email subscriptions
+
+- Social Discovery
+  - Tweet Button
+  - Twitter Embeds
+  - Pocket Button
 
 - Enhanced login process
   - Accounts created with ancient flow require email verification
