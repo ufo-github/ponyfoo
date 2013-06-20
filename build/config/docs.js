@@ -19,7 +19,8 @@ module.exports = {
         discussions: disqus,
         improve: {
             repo: config.meta.repo
-        }
+        },
+        host: config.server.authorityDocs
     },
     "getting-started": {
         title: 'Getting Started',
