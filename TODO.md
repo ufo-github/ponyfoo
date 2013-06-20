@@ -2,33 +2,32 @@
 
 ## 1
 
-- docs
-  - use marked over pagedown _everywhere_ in main site
-  - markdown playground.
-  - docs about our editor, shortcuts, etc?
+- fix nightmares with session, domains, and passports
 
 - blog
-  - fonts on blog
   - email notifications for comments (for both the blog-owner and the commenter)
+  - autosave drafts to localStorage periodically (5s~)
+
+
+
+## 2
 
 - market
   - prettier header
   - video
   - subscription implementation
 
-
-- fix nightmares with session, domains, and passports
-
-- save drafts to localStorage
-- allow storing drafts in backend
-- redesign commenting frontend (which blows)
-
-
-
-## 2
+- docs
+  - use marked over pagedown _everywhere_ in main site
+  - markdown playground.
+  - docs about our editor, shortcuts, etc?
 
 - blog
+  - allow perm. storing drafts in backend
+  - redesign commenting frontend (which blows)
+  - font consistency in blog (mac)
   - data-related author's twitter
+  - users only for back-end people, not any blogger
 
 - adaptable design ?
 - proper api + authentication

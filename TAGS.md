@@ -9,13 +9,13 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 ============
 
 - WWW Root
+  - Email Subscription
   - Flat UI Design
   - Video Marketing
-  - Email Subscription
   
 - Documentation
-  - Flat UI Design
   - Added documentation subdomain
+  - Flat UI Design
   - Markdown documentation
 
 - Blogging Standards
