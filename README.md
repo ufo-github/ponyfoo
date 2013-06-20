@@ -1,5 +1,4 @@
-Pony Foo [![Build Status](https://travis-ci.org/bevacqua/ponyfoo.png?branch=master)](https://travis-ci.org/bevacqua/ponyfoo) [![Dependency Status](https://gemnasium.com/bevacqua/ponyfoo.png)](https://gemnasium.com/bevacqua/ponyfoo)
-========================================================================================================================
+# Pony Foo [![Build Status](https://travis-ci.org/bevacqua/ponyfoo.png?branch=master)](https://travis-ci.org/bevacqua/ponyfoo) [![Dependency Status](https://gemnasium.com/bevacqua/ponyfoo.png)](https://gemnasium.com/bevacqua/ponyfoo)
 
 **Pony Foo** is the open-source blogging platform underlying [**Pony Foo**](http://www.ponyfoo.com "Pony Foo").
 
@@ -13,8 +12,7 @@ Read [**TODO**](/TODO.md) for a roadmap of upcoming changes.
 
 
 
-Setup and Installation
-======================
+## Setup and Installation
 
 To get up and running locally you will need to have installed [**Node.js**](http://nodejs.org/) and [**MongoDB**](http://www.mongodb.org/).
 
