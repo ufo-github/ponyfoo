@@ -1,6 +1,6 @@
 # CSS For Dummies #
 
-Web design today is hard to get right. I've been meaning to talk about front-end design for a while, but I couldn't get the subject _quite right_. Seeing how detailing the [underlying browser technology](/2013/06/10/uncovering-the-native-dom-api "Uncovering the Native DOM API") in JavaScript, I figured I'll do the same for [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets "Cascading Style Sheets").
+Web design today is hard to get right. I've been meaning to talk about front-end design for a while, but I couldn't get the subject _quite right_. Seeing how detailing the [underlying browser technology](/2013/06/10/uncovering-the-native-dom-api "Uncovering the Native DOM API") in JavaScript, I figured I'd do the same for [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets "Cascading Style Sheets").
 
 I'll be taking a different approach, though. Rather than explain what libraries do, I'll try explaining why a need for them was born, and walk you through the most basic stuff, such as selectors, and follow up by tackling complex topics such as fonts, [Bootstrap](http://twitter.github.io/bootstrap/ "Twitter Bootstrap CSS Framework"), pre-processing, and more.
 
@@ -64,7 +64,7 @@ We mentioned _classes_ earlier. Classes can be styled in CSS style sheets by pre
 
 They can be added to DOM elements using the `class` attribute. _Multiple classes_ can be added to each element.
 
-```
+```html
 <body class='my-class'>
 
 <body class='my-class that-one another'>
