@@ -39,7 +39,7 @@ These variables are usually very important for **deployments**, but the default 
 
 - **ENABLE_MARKET**: Whether the market vhost is enabled. Defaults to `false`.
 - **HOST_MARKET**: The default `slug` for the site, that is, the **semantic root** of the site. Defaults to `'www'`.
-- **MARKET_ARTICLE_COUNT**: The amount of articles that should be 
+- **MARKET_ARTICLE_COUNT**: The amount of articles that should be displayed on market's homepage.
 
 - **HOST_DOCS**: The subdomain used to host the platform documentation.
 
