@@ -9,17 +9,19 @@ I'll be taking a different approach, though. Rather than explain what libraries 
 CSS was born out of necessity. The necessity to _separate content from presentation_. The idea was to put behind stuff like `<body bgcolor='black'>`, and work towards a more layered approach. DOM elements would get CSS classes (more on that later), and in our CSS, we would define style rules, such as `background-color`, or `font-size`.
 
 The previous example would be redefined as:
-  
-    <head>
-        <style>
-        body {
-          background-color: black;
-        }
-        </style>
-    </head>
-    
-    <body>
-    
+
+```html
+<head>
+    <style>
+    body {
+      background-color: black;
+    }
+    </style>
+</head>
+
+<body>
+```
+
 The CSS is contained in a `<style>` block, or it can be alternatively be placed in an external stylesheet. Like so:
 
 ```css
