@@ -80,7 +80,6 @@ data.assets.js = [
     '/js/nbrut/nbrut.directives.js',
     '/js/nbrut/nbrut.templates.js',
     '/js/nbrut/nbrut.thin.js',
-    '/js/nbrut/nbrut.analytics.js',
     '/js/nbrut/nbrut.init.js',
     resolve('/js/vendor/Markdown.Editor.js'), // depends on NBrut
 

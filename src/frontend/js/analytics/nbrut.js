@@ -1,9 +1,10 @@
-!function(window, document, nbrut){
+!function(window, document){
     'use strict';
 
     var hooks = [];
 
-    nbrut.analytics = {
+    window.nbrut = window.nbrut || {};
+    window.nbrut.analytics = {
         fetch: function(url){
             var tag = 'script',
                 script = document.createElement(tag);
@@ -24,4 +25,4 @@
             }
         }
     };
-}(window, document, nbrut);
+}(window, document);

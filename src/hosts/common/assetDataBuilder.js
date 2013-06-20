@@ -38,17 +38,18 @@ module.exports = {
             assets = data.assets;
 
         assets.js = assets.js || [];
+        assets.js.push(resolve('/js/analytics/nbrut.js')); // so other code might use it.
 
         if(!!config.tracking.analytics){
             assets.js.push({
-                file: resolve('/js/ext/analytics.jsn'),
+                file: resolve('/js/analytics/google.jsn'),
                 context: { config: config }
             });
         }
 
         if(!!config.tracking.clicky){
             assets.js.push({
-                file: resolve('/js/ext/clicky.jsn'),
+                file: resolve('/js/analytics/clicky.jsn'),
                 context: { config: config }
             });
         }
