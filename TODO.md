@@ -3,6 +3,7 @@
 ## 1
 
 - fix nightmares with session, domains, and passports
+- use marked over pagedown _everywhere_.
 
 - blog
   - email notifications for comments (for both the blog-owner and the commenter)
@@ -18,7 +19,6 @@
   - subscription implementation
 
 - docs
-  - use marked over pagedown _everywhere_ in main site
   - markdown playground.
   - docs about our editor, shortcuts, etc?
 
