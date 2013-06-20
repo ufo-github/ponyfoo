@@ -12,22 +12,20 @@ module.exports = {
         dest: 'src/hosts/docs/.bin',
         startPage: '/getting-started',
         title: config.docs.title,
-        analytics: {
-            account: config.tracking.analytics,
-            domainName: config.server.tld
-        },
         discussions: disqus,
         improve: {
             repo: config.meta.repo
         },
-        host: config.server.authorityDocs
-    },
-    "getting-started": {
-        title: 'Getting Started',
-        src: ['docs/getting-started/**/*.ngdoc']
-    },
-    markdown: {
-        title: 'Markdown',
-        src: ['docs/markdown/**/*.ngdoc']
+        host: config.server.authorityDocs,
+        sections: {
+            'getting-started': {
+                title: 'Getting Started',
+                src: ['docs/getting-started/**/*.ngdoc']
+            },
+            markdown: {
+                title: 'Markdown',
+                src: ['docs/markdown/**/*.ngdoc']
+            }
+        }
     }
 };

@@ -3,10 +3,10 @@
 ## 1
 
 - docs
-  - grunt-ngdoc -> share sitemap among targets.
   - use marked over pagedown _everywhere_ in main site
   - markdown playground.
   - docs about our editor, shortcuts, etc?
+  - analytics
 
 - blog
   - fonts on blog
