@@ -138,26 +138,9 @@
             pager = paging.appendTo(container);
 
         function more(){
-            win.off('scroll.paging');
             pager.off('click.paging');
             pagingEvent(container, identifier, pager, query, page);
         }
-
-        win.on('scroll.paging', function(){
-            setTimeout(function(){ // sanity. allow scrolling event to finish.
-                if(win.width() < nbrut.ui.breaks.medium.width){
-                    return;
-                }
-
-                var allowance = 80,
-                    target = pager.position().top + pager.height() - allowance,
-                    y = win.scrollTop() + win.height();
-
-                if (y > target){
-                    more();
-                }
-            }, 0);
-        });
 
         pager.on('click.paging', more);
     }
