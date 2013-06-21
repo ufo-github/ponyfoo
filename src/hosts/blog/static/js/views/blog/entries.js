@@ -81,7 +81,7 @@
             addSearchShrinkage(container);
         }
         addReadingTime(container);
-        addSocialLinks();
+        reloadSocialLinks();
         wireSubscriptionButton();
 
         flashValidation(viewModel, '.blog-entries-wrapper');
@@ -106,7 +106,7 @@
         container.data('readingTime', readingTime);
     }
 
-    function addSocialLinks(){
+    function reloadSocialLinks(){
         nbrut.social.twitter.reload();
         nbrut.social.pocket.reload();
     }

@@ -25,6 +25,7 @@
 - blog
   - allow perm. storing drafts in backend
   - redesign commenting frontend (which blows)
+  - pocket+tweet links below posts in single view
   - font consistency in blog (mac)
   - data-related author's twitter
   - users only for back-end people, not any blogger

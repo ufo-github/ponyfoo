@@ -1,0 +1,17 @@
+section.social-shares
+  a.pocket-btn(
+    href='https://getpocket.com/save',
+    data-pocket-count='none',
+    data-pocket-align='right',
+    data-save-url=config.server.authority(slug) + '{{permalink}}',
+    data-lang='en')
+
+  a.tweet-btn.twitter-share-button(
+    href='https://twitter.com/share',
+    data-count='none',
+    data-align='right'
+    data-url=config.server.authority(slug) + '{{permalink}}',
+    data-hashtags='{{hashtags}}',
+    data-text='{{title}}',
+    data-via='ponyfoo',
+    data-related='nzgb,ponyfoo')
