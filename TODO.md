@@ -4,15 +4,14 @@
 
 - fix nightmares with session, domains, and passports
 
-- marked
-  - update blog posts to reflect missing line highlight functionality
-  - check CSS classes issues
-  - better css theme
-
 - blog
   - email notifications for comments (for both the blog-owner and the commenter)
   - autosave drafts to localStorage periodically (5s~)
 
+- marked
+  - update blog posts to reflect missing line highlight functionality
+  - better css theme
+  
 
 
 ## 2
