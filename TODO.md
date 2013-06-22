@@ -3,7 +3,10 @@
 ## 1
 
 - fix nightmares with session, domains, and passports
-- use marked over pagedown _everywhere_.
+
+- marked
+  - update blog posts to reflect missing line highlight functionality
+  - better css theme
 
 - blog
   - email notifications for comments (for both the blog-owner and the commenter)

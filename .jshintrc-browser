@@ -13,11 +13,10 @@
   "globals": {
     "jQuery": false,
     "locals": false,
-    "Markdown": false,
     "moment": false,
     "Mustache": false,
     "nbrut": false,
-    "prettyPrint": false,
+    "ultramarked": false,
     "console": false
   }
 }

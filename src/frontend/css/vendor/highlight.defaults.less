@@ -1,0 +1,17 @@
+@import "../reusable/common.less";
+
+@brownish: #2a211c;
+@plaintext: #bdae9d;
+@highlights: #4b3c34;
+
+pre, /* code blocks */
+:not(pre) > code { /* snippets */
+  background-color: @brownish;
+  color: @plaintext;
+  .box-radius(3px);
+  .box-shadow(1px 1px 3px @highlights);
+
+  padding: 0 6px 2px;
+  line-height: 22px;
+  margin: 0 2px;
+}

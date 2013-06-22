@@ -1,5 +1,4 @@
-﻿// needs Markdown.Converter.js at the moment
-!function(window, $, nbrut) {
+﻿!function(window, $, nbrut, ultramarked) {
     var util = {},
         position = {},
         ui = {},
@@ -65,10 +64,10 @@
     // `helpButton.title`. This should be considered legacy.
     //
     // The constructed editor object has the methods:
-    // - getConverter() returns the markdown converter object that was passed to the constructor
     // - run() actually starts the editor; should be called after all necessary plugins are registered. Calling this more than once is a no-op.
     // - refreshPreview() forces the preview to be updated. This method is only available after run() was called.
-    Markdown.Editor = function (markdownConverter, idPostfix, options) {
+    window.Markdown = window.Markdown || {};
+    window.Markdown.Editor = function (idPostfix, options) {
 
         options = options || {};
 
@@ -91,8 +90,6 @@
          * image url (or null if the user cancelled). If this hook returns false, the default dialog will be used.
          */
 
-        this.getConverter = function () { return markdownConverter; }
-
         var that = this,
             panels;
 
@@ -102,7 +99,7 @@
 
             panels = new PanelCollection(idPostfix);
             var commandManager = new CommandManager(hooks, getString);
-            var previewManager = new PreviewManager(markdownConverter, panels, function () { hooks.onPreviewRefresh(); });
+            var previewManager = new PreviewManager(panels, function () { hooks.onPreviewRefresh(); });
             var undoManager, uiManager;
 
             if (!/\?noundo/.test(doc.location.href)) {
@@ -799,7 +796,7 @@
         this.init();
     };
 
-    function PreviewManager(converter, panels, previewRefreshCallback) {
+    function PreviewManager(panels, previewRefreshCallback) {
 
         var managerObj = this;
         var timeout;
@@ -856,7 +853,7 @@
 
             var prevTime = new Date().getTime();
 
-            text = converter.makeHtml(text);
+            text = ultramarked(text);
 
             // Calculate the processing time of the HTML creation.
             // It's used as the delay time in the event listener.
@@ -2032,4 +2029,4 @@
             ta.selectionStart = ta.selectionEnd = start + 4;
         }
     });
-}(window,jQuery,nbrut);
+}(window,jQuery,nbrut,ultramarked);

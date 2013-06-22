@@ -20,10 +20,10 @@ data.assets.css = [
     resolve('/css/defaults/design.less'),
     resolve('/css/defaults/sprite.less'),
 
-    resolve('/css/vendor/markdown.less'),
     resolve('/css/vendor/hint.less'),
+    resolve('/css/vendor/markdown.less'),
     resolve('/css/vendor/markdown.editor.less'),
-    resolve('/css/vendor/prettify.less'),
+    resolve('/css/vendor/highlight.less'),
 
     resolve('/css/plugin/jquery.readingTime.less'),
 
@@ -60,8 +60,6 @@ data.assets.js = [
     resolve('/js/vendor/jquery.fileupload.js'),
     resolve('/js/vendor/jquery.textarearesizer.min.js'),
     resolve('/js/vendor/ultramarked.bin.js'),
-    resolve('/js/vendor/Markdown.Converter.js'),
-    resolve('/js/vendor/Markdown.Sanitizer.js'),
     resolve('/js/vendor/prettify.js'),
     resolve('/js/plugin/jquery.readingTime.js'),
     resolve('/js/ext/String.js'),
@@ -82,6 +80,7 @@ data.assets.js = [
     '/js/nbrut/nbrut.templates.js',
     '/js/nbrut/nbrut.thin.js',
     '/js/nbrut/nbrut.init.js',
+    resolve('/js/vendor/Markdown.Converter.js'),
     resolve('/js/vendor/Markdown.Editor.js'), // depends on NBrut
 
     '/js/hooks/thin.js',
