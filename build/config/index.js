@@ -21,6 +21,12 @@ module.exports = {
         projectRoot: './test/spec'
     },
     ngdoc: require('./docs.js'),
+    browserify: {
+        ultramarked: {
+            src: ['./src/frontend/js/vendor/ultramarked.browserify.js'],
+            output: './src/frontend/js/vendor/ultramarked.bin.js'
+        }
+    },
     assetify: {
         install: require_cwd('./src/hosts/install/assets.js'),
         market: require_cwd('./src/hosts/market/assets.js'),

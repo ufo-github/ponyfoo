@@ -59,6 +59,7 @@ data.assets.js = [
     resolve('/js/vendor/jquery.ui.widget.js'),
     resolve('/js/vendor/jquery.fileupload.js'),
     resolve('/js/vendor/jquery.textarearesizer.min.js'),
+    resolve('/js/vendor/ultramarked.bin.js'),
     resolve('/js/vendor/Markdown.Converter.js'),
     resolve('/js/vendor/Markdown.Sanitizer.js'),
     resolve('/js/vendor/prettify.js'),
