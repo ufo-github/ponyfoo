@@ -6,6 +6,7 @@
 
 - marked
   - update blog posts to reflect missing line highlight functionality
+  - check CSS classes issues
   - better css theme
 
 - blog

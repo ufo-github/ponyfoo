@@ -13,6 +13,8 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
   - Flat UI Design
   - Video Marketing
   
+- Ultramarked everywhere
+
 - Documentation
   - Added documentation subdomain
   - Flat UI Design
