@@ -2,9 +2,6 @@
 
 ## 1
 
-- marked
-  - update blog posts to reflect missing line highlight functionality
-
 - fix nightmares with session, domains, and passports
 
 - blog
