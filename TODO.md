@@ -5,7 +5,7 @@
 - fix nightmares with session, domains, and passports
 
 - blog
-  - email notifications for comments (for both the blog-owner and the commenter)
+  - email notifications for comments (for both the blogger and the commenter)
 
 
 
