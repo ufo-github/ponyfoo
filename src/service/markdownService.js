@@ -5,7 +5,6 @@ var path = require('path'),
     marked = require('ultramarked');
 
 marked.setOptions({
-    breaks: true,
     smartLists: true,
     ultralight: true,
     ultrasanitize: true
