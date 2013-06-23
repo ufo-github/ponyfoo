@@ -2,14 +2,13 @@
 
 ## 1
 
+- marked
+  - update blog posts to reflect missing line highlight functionality
+
 - fix nightmares with session, domains, and passports
 
 - blog
   - email notifications for comments (for both the blog-owner and the commenter)
-
-- marked
-  - update blog posts to reflect missing line highlight functionality
-  - better css theme
 
 
 

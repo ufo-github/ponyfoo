@@ -24,6 +24,7 @@ data.assets.css = [
     resolve('/css/vendor/markdown.less'),
     resolve('/css/vendor/markdown.editor.less'),
     resolve('/css/vendor/highlight.less'),
+    '/css/highlight.less',
 
     resolve('/css/plugin/jquery.readingTime.less'),
 
