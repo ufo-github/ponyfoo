@@ -11,7 +11,7 @@
 - marked
   - update blog posts to reflect missing line highlight functionality
   - better css theme
-  
+
 
 
 ## 2
@@ -30,7 +30,7 @@
   - redesign commenting frontend (which blows)
   - pocket+tweet links below posts in single view
   - font consistency in blog (mac)
-  - data-related author's twitter
+  - data-related author's twitter, take from req.blogger
   - users only for back-end people, not any blogger
 
 - adaptable design ?
