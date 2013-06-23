@@ -63,23 +63,25 @@ There is a very simple convention in JavaScript you should abide by, if you want
 
 > Synchronous code should `throw`, Asynchronous code shouldn't. Ever.
 
-    function sync(){
-        try{
-            return taskThatMayThrow();
-        }catch(e){
-            console.log(e); // handle
+```js
+function sync(){
+    try{
+        return taskThatMayThrow();
+    }catch(e){
+        console.log(e); // handle
+    }
+}
+
+function async(done){
+    operation(function(err, result){
+        if(err){
+            return done(err); // bubble up
         }
-    }
-    
-    function async(done){
-        operation(function(err, result){
-            if(err){
-                return done(err); // bubble up
-            }
-            result += 1; // [...] further processing
-            done(null, result);
-        });
-    }
+        result += 1; // [...] further processing
+        done(null, result);
+    });
+}
+```
 
 Simple enough, when dealing with asynchronous code, you should always _bubble exceptions_ up, so that _the caller can choose_ to either handle them, or bubble them further up the callback chain. This way, your application can handle errors gracefully, rather than quit unexpectedly (or require `process.on('uncaughtException')` in order to survive).
 

@@ -157,11 +157,35 @@ If the reason for this isn't immediately apparent, try thinking about this in a 
 
 Now that we know the basics about _what CSS is_, and how to apply it to _style the web_, lets dive into a **history lesson** for a while. Or, at the very least, a few milestones in CSS history, so that we better understand the current state of the web.
 
--- why css reset
+In the beginning, different kinds of browsers started emerging. [User agent stylesheets](http://www.iecss.com/ "UA Style Sheets"), shipped with each browser, presented different basic styles, and that represented a problem for web designers who wanted their site to look the same on every navigator. As a solution to this problem, the CSS reset concept was conceived.
 
 #### CSS Reset ####
 
--- normalize.css
+The main issue was with paddings, and margins. A first, naive fix for this problem, was to use the star selector, and simply reset padding and margin styles for every single element.
+
+```css
+* {
+    margin: 0;
+    padding: 0;
+}
+```
+
+This, however, raised [_performance concerns_](http://www.stevesouders.com/blog/2009/03/10/performance-impact-of-css-selectors/ "Performance Impact of CSS Selectors"), and imposed unwanted resets on some elements, such as [lists](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Consistent_list_indentation "Consistent List Indentation - MDN").
+
+Thus, a better approach was born, and eventually prevailed. Eric Meyer created the [CSS Reset](http://meyerweb.com/eric/tools/css/reset/ "CSS Reset Stylesheet"), which is an improvement over the former. It resets more than just margins and paddings. It avoids using the star selector, but instead _explicitly declares_ the tags it resets.
+
+In my mind, the main issue with `reset.css`, is the fact that it makes it really hard inspecting an element's styling, since really long reset statements are added on almost every single element, making it hard to read.
+
+A more modern approach exists today.
+
+#### Normalize.css ####
+
+> A modern, HTML5-ready alternative to CSS resets
+
+Rather than reset everything, [Normalize](http://necolas.github.io/normalize.css/ "Normalize.css alternative to resets") resets _specific styles_, in _specific elements_, and is [thoroughly documented](http://necolas.github.io/normalize.css/2.1.2/normalize.css "normalize.css source".
+
+This has the _added advantage_ of avoiding the long lists of CSS reset styles we see in our HTML inspectors when resorting to a CSS reset.
+
 
 
 layout

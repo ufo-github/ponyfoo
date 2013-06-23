@@ -58,26 +58,28 @@ Now **all you have to do** is:
 
 I won't go into the implementation of all of these steps, I'll leave that _up to you_. However, here's a snippet laying out an example of how you could implement the _scrolling_ functionality:
  
-    var win = $(window),
-	    pager = $('.pager');
-        
-    function more(){
-        win.off('scroll.paging');
-        pager.off('click.paging');
-    |   pagingEvent(pager, data);
+ ```js
+var win = $(window),
+    pager = $('.pager');
+    
+function more(){
+    win.off('scroll.paging');
+    pager.off('click.paging');
+    pagingEvent(pager, data);
+}
+
+win.on('scroll.paging', function(){
+    var allowance = 80,
+        target = pager.position().top + pager.height() - allowance,
+        y = win.scrollTop() + win.height();
+
+    if (y > target){
+        more();
     }
+});
 
-    win.on('scroll.paging', function(){
-    |   var allowance = 80,
-            target = pager.position().top + pager.height() - allowance,
-            y = win.scrollTop() + win.height();
-
-        if (y > target){
-            more();
-        }
-    });
-
-    pager.on('click.paging', more);
+pager.on('click.paging', more);
+```
 
 Make sure to set an `allowance` that lets your pager _scroll into view_, but doesn't force the user to go _all the way down_ to the bottom of the page.
 

@@ -32,26 +32,28 @@ Having said that, **the fact that both compilers output pure _JavaScript_ remain
 
 A ["simple" program](http://www.dotnetperls.com/il "Example Source") in _MSIL_ might be:
 
-	.method private hidebysig static void Main() cil managed
-	{
-		.entrypoint
-		.maxstack 2
-		.locals init (
-		[0] int32 num)
-		L_0000: ldc.i4.0
-		L_0001: stloc.0
-		L_0002: br.s L_000e
-		L_0004: ldloc.0
-		L_0005: call void [mscorlib]System.Console::WriteLine(int32)
-		L_000a: ldloc.0
-		L_000b: ldc.i4.1
-		L_000c: add
-		L_000d: stloc.0
-		L_000e: ldloc.0
-		L_000f: ldc.i4.s 10
-		L_0011: blt.s L_0004
-		L_0013: ret
-	}
+```
+.method private hidebysig static void Main() cil managed
+{
+	.entrypoint
+	.maxstack 2
+	.locals init (
+	[0] int32 num)
+	L_0000: ldc.i4.0
+	L_0001: stloc.0
+	L_0002: br.s L_000e
+	L_0004: ldloc.0
+	L_0005: call void [mscorlib]System.Console::WriteLine(int32)
+	L_000a: ldloc.0
+	L_000b: ldc.i4.1
+	L_000c: add
+	L_000d: stloc.0
+	L_000e: ldloc.0
+	L_000f: ldc.i4.s 10
+	L_0011: blt.s L_0004
+	L_0013: ret
+}
+```
 
  _JavaScript_ is not _that_ **obscure**. _JavaScript_ can be learnt. Compilers _hinder_ your ability to do that. You should learn what a _closure_ is. How to extend a _prototype_. How to use _callbacks_ sensibly. There lies the real beauty of _JavaScript_ code.
 
@@ -73,13 +75,15 @@ This one I'll concede. The _equality operators_, `==` and `!=` are a mess.. They
 
 We know how `this` story goes. I'll illustrate with a bad example:
 
-	function Car(opts){
-		this.wheels = opts.axles * 2;
-		return this;
-	}
+```js
+function Car(opts){
+	this.wheels = opts.axles * 2;
+	return this;
+}
 
-	var compact = new Car({axles: 2});
-	var truck = Car({axles: 5 });
+var compact = new Car({axles: 2});
+var truck = Car({axles: 5 });
+```
 
 Now _compact_ is a four-wheel _car_, while our _Window_ became a _truck_, and suddenly has 10 _wheels_. Furthermore, `this` can be chosen through `Function.prototype.apply`, and otherwise changes depending on the **context** it's being _evaluated_ in.
 

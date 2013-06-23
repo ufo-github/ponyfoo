@@ -47,6 +47,7 @@ module.exports = {
                 './src/**/*.js',
                 './src/**/*.less',
                 '!./src/**/.bin',
+                '!./src/**/.bin.js',
                 './test/**/*.js'
             ],
             options: {

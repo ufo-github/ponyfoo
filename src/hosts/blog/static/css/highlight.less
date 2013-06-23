@@ -6,3 +6,10 @@ pre, /* code blocks */
   .box-radius(3px);
   .box-shadow(1px 1px 3px @border);
 }
+
+blockquote {
+  pre, /* code blocks */
+  :not(pre) > code { /* snippets */
+    background-color: darken(@light, 3%);
+  }
+}

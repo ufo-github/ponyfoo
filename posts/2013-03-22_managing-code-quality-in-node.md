@@ -18,17 +18,19 @@ Grunt runs from the command line, and you should install it globally, using `npm
 
 Here's a sample listing that does basically the same as the traditional `node app.js` command used to. Save this as `Gruntfile.js`:
 
-    'use strict';
+```js
+'use strict';
 
-    module.exports = function(grunt) {
-        grunt.initConfig({});
-        grunt.registerTask('app', function(){
-            var done = this.async(),
-                app = require('./app.js');
+module.exports = function(grunt) {
+    grunt.initConfig({});
+    grunt.registerTask('app', function(){
+        var done = this.async(),
+            app = require('./app.js');
 
-            app.start(done);
-        });
-    };
+        app.start(done);
+    });
+};
+```
 
 You should make a very minor change to your `app.js`, and add `app.on('close', done);`. This will signal grunt to shut down when the server is closed, rather than as soon as it's idle.
 
@@ -51,40 +53,42 @@ You can find the GitHub repository to their Grunt plugin [here](https://github.c
 
 Here's how I added it to my `Gruntfile.js` (displaying only the relevant code):
 
-    grunt.initConfig({
-        jshint: {
-    |       node: {
-                files: {
-                    src: [
-                        'gruntfile.js',
-                        'src/**/*.js',
-                        '!src/static/**/*.js',
-                        'test/spec/**/*.js'
-                    ]
-                },
-                options: {
-                    jshintrc: '.jshintrc'
-                }
+```js
+grunt.initConfig({
+    jshint: {
+        node: {
+            files: {
+                src: [
+                    'gruntfile.js',
+                    'src/**/*.js',
+                    '!src/static/**/*.js',
+                    'test/spec/**/*.js'
+                ]
             },
-    |       browser: {
-                files: {
-                    src: [
-                        'src/static/**/*.js',
-                        '!src/static/config/*.js',
-                        '!src/static/.bin/**/*.js',
-                        '!src/static/js/vendor/**/*.js'
-                    ]
-                },
-                options: {
-                    jshintrc: '.jshintrc-browser'
-                }
+            options: {
+                jshintrc: '.jshintrc'
+            }
+        },
+        browser: {
+            files: {
+                src: [
+                    'src/static/**/*.js',
+                    '!src/static/config/*.js',
+                    '!src/static/.bin/**/*.js',
+                    '!src/static/js/vendor/**/*.js'
+                ]
+            },
+            options: {
+                jshintrc: '.jshintrc-browser'
             }
         }
-    });
+    }
+});
+
+grunt.loadNpmTasks('grunt-contrib-jshint');
+```
     
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    
-This brings us to an interesting point about Grunt, which is _targets_. I highlighted a couple of lines, the `node` and `browser` properties are just _targets_, which means that `grunt jshint:node` will run JSHint with the _first set_ of options, and `grunt jshint:browser` will run the _second set_. `grunt jshint` will do _both_ in turn.
+This brings us to an interesting point about Grunt, which is _targets_. The `node` and `browser` properties are just _targets_, which means that `grunt jshint:node` will run JSHint with the _first set_ of options, and `grunt jshint:browser` will run the _second set_. `grunt jshint` will do _both_ in turn.
 
 If you're not _already_ linting your code, it will take you a few moments to make it comply with a default JSHint configuration, but it will be _worth it_.
 

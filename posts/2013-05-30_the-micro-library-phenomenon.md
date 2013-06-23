@@ -23,14 +23,16 @@ ThinDOM is a thin **DOM** wrapper out-classes [jQuery](https://github.com/jquery
 
 Their API is _kind of clunky_. Their example isn't the prettiest.
 
-    var captionDOM = new ThinDOM('div').attr('class', 'caption')
-        .append(new ThinDOM('div').attr('class', 'votes')
-                .append(new ThinDOM('a').attr({'class': 'up', 'href': '#'}))
-                .append(new ThinDOM('a').attr({'class': 'down', 'href': '#'})))
-        .append(new ThinDOM('div').attr('class', 'meta')
-                .append(new ThinDOM('span').text(author + ' - '))
-                .append(new ThinDOM('span').text(points + ' point' + plural)))
-        .append(new ThinDOM('p').html(body)).get();
+```js
+var captionDOM = new ThinDOM('div').attr('class', 'caption')
+    .append(new ThinDOM('div').attr('class', 'votes')
+            .append(new ThinDOM('a').attr({'class': 'up', 'href': '#'}))
+            .append(new ThinDOM('a').attr({'class': 'down', 'href': '#'})))
+    .append(new ThinDOM('div').attr('class', 'meta')
+            .append(new ThinDOM('span').text(author + ' - '))
+            .append(new ThinDOM('span').text(points + ' point' + plural)))
+    .append(new ThinDOM('p').html(body)).get();
+``
 
 But... if _it's performance_ you need, then it definitely wins out.
 

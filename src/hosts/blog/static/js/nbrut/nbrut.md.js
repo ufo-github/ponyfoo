@@ -22,6 +22,7 @@
 
         function postConvert(container){
             container.anchorSEO('a:not(header a)');
+            container.find('ul, ol').addClass('item-list');
         }
 
         function html(md){
