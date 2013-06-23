@@ -6,7 +6,6 @@
 
 - blog
   - email notifications for comments (for both the blog-owner and the commenter)
-  - autosave drafts to localStorage periodically (5s~)
 
 - marked
   - update blog posts to reflect missing line highlight functionality
@@ -32,6 +31,7 @@
   - font consistency in blog (mac)
   - data-related author's twitter, take from req.blogger
   - users only for back-end people, not any blogger
+  - autosave drafts to localStorage periodically (5s~)
 
 - adaptable design ?
 - proper api + authentication

@@ -42,6 +42,7 @@
             blockquote {
                 border-left: 6px solid #cbc5c0;
                 padding-left: 15px;
+                margin-left: 0;
             }
             
             body, #bodyTable{ background-color:#f3f4eb; }
