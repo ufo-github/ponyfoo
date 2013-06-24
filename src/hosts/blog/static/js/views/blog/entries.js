@@ -80,9 +80,8 @@
         if(search){
             addSearchShrinkage(container);
         }
-        addReadingTime(container);
-        reloadSocialLinks();
         wireSubscriptionButton();
+        afterLoad(container);
 
         flashValidation(viewModel, '.blog-entries-wrapper');
     }
@@ -97,6 +96,11 @@
 
             expand.insertBefore(self);
         });
+    }
+
+    function afterLoad(container){
+        addReadingTime(container);
+        reloadSocialLinks();
     }
 
     function addReadingTime(container){
@@ -164,6 +168,7 @@
                 articles.appendTo(container);
                 pager.remove();
                 addPager(it, container, identifier, query);
+                afterLoad(container);
             }
         });
     }
