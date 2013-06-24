@@ -10,10 +10,8 @@
 - posts
   - follow up on "npm sucks"
   - follow up on "learn regex"
-  - follow up to "css for dummies"
-    - bootstrap
-    - media queries
-  - more on bootstrap and design
+  - more on "bootstrap and design"
+    - typefaces
     - flat ui design
 
 
