@@ -61,6 +61,8 @@ SASS used to be regarded as _a superior language_ than LESS. Today, they are _ve
 
 ## Twitter Bootstrap ##
 
+![bootstrap.png][1]
+
 [Bootstrap](http://twitter.github.io/bootstrap/ "Twitter Bootstrap Framework") is a CSS framework, which _encompasses_ a lot of the practices we mentioned earlier. It does:
 
 ##### Rapid Prototyping #####
@@ -100,3 +102,5 @@ You can also nest these columns, and it will still work, just make sure to use _
 ```
 
 picking the right font / pair
+
+  [1]: http://i.imgur.com/TTMpDxW.png "Twitter Bootstrap CSS Framework"
