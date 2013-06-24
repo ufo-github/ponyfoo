@@ -4,7 +4,7 @@
  *****************/
 
 .blog-entry-title {
-  margin-bottom: 35px;
+  margin-bottom: 20px;
   font-size: 2em;
 }
 
@@ -47,8 +47,17 @@
 @media only screen and (min-width: 768px) {
   .blog-entry .social-shares {
     display: block;
-    float: right;
-    text-align: right;
+    float: left;
+    text-align: left;
+
+    .pocket-btn {
+      display: inline-block;
+    }
+
+    .pocket-btn iframe, .tweet-btn {
+      vertical-align: top;
+      margin-right: 4px;
+    }
   }
 }
 

@@ -5,11 +5,11 @@ article.blog-entry-section.blog-entry(data-keywords='{{keywords}}', itemscope, i
   meta(itemprop='discussionUrl', content=config.server.authority(slug) + '{{permalink}}#comments')
   meta(itemprop='interactionCount', content='{{commentCount}} UserComments')
 
-  include _social
-
-  header.blog-entry-title
+  header.blog-entry-title.clearfix
     h1
       a(href='{{permalink}}', data-hint='{{tagged}}', itemprop='headline')='{{title}}'
+
+    include _social
 
     span.blog-entry-legends
       span.blog-entry-legend.reading-label
