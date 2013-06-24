@@ -7,6 +7,9 @@
 - blog
   - email notifications for comments (for both the blogger and the commenter)
 
+- posts
+  - follow up on "npm sucks"
+  - follow up on "learn regex"
 
 
 ## 2
