@@ -31,13 +31,13 @@
   - docs about our editor, shortcuts, etc?
 
 - blog
+  - autosave drafts to localStorage periodically (5s~)
   - allow perm. storing drafts in backend
   - redesign commenting frontend (which blows)
-  - pocket+tweet links below posts in single view
   - font consistency in blog (mac)
   - data-related author's twitter, take from req.blogger
-  - users only for back-end people, not any blogger
-  - autosave drafts to localStorage periodically (5s~)
+  - list users only for back-end people, not any blogger
+  - footer for blog similar to www and docs
 
 - adaptable design ?
 - proper api + authentication
