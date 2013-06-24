@@ -32,7 +32,7 @@ var captionDOM = new ThinDOM('div').attr('class', 'caption')
             .append(new ThinDOM('span').text(author + ' - '))
             .append(new ThinDOM('span').text(points + ' point' + plural)))
     .append(new ThinDOM('p').html(body)).get();
-``
+```
 
 But... if _it's performance_ you need, then it definitely wins out.
 

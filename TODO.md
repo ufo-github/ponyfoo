@@ -10,6 +10,13 @@
 - posts
   - follow up on "npm sucks"
   - follow up on "learn regex"
+  - follow up to "css for dummies"
+    - css organization
+    - pre-processors
+    - bootstrap
+    - media queries
+    - fonts
+    - flat design
 
 
 ## 2
