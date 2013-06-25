@@ -5,6 +5,7 @@ var config = require('../../config'),
     sessionStore = require('connect-mongoose')(express),
     flash = require('./flash.js'),
     passport = require('passport'),
+    cors = require('cors'),
     authenticationService = require('../../service/authenticationService.js'),
     platformService = require('../../service/platformService.js');
 
@@ -25,6 +26,20 @@ function configure(server){
         store: new sessionStore()
     }));
 
+    server.use(cors({
+        origin: true,
+        credentials: true        
+    }));
+
+    server.use(function(req,res,next){
+        if(!!res.header('Access-Control-Allow-Methods')){
+            console.log(JSON.stringify(req.headers || {empty:true}));
+            console.log('\n');
+            console.log(JSON.stringify(res.headers || {empty:true}));
+        }
+        next();
+    });
+
     flash.configure(server);
 
     authenticationSetup(server);
@@ -41,14 +56,6 @@ function authenticationSetup(server){
 }
 
 function localsSetup(server){
-    server.use(function(req, res, next) {
-        res.header('Access-Control-Allow-Credentials', true);
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-        next();
-    });
-    
     server.use(function(req,res,next){
         platformService.hydrate(req);
 
