@@ -5,7 +5,6 @@ var config = require('../../config'),
     sessionStore = require('connect-mongoose')(express),
     flash = require('./flash.js'),
     passport = require('passport'),
-    cors = require('cors'),
     authenticationService = require('../../service/authenticationService.js'),
     platformService = require('../../service/platformService.js');
 
@@ -25,20 +24,6 @@ function configure(server){
         secret: config.security.sessionSecret,
         store: new sessionStore()
     }));
-
-    server.use(cors({
-        origin: true,
-        credentials: true        
-    }));
-
-    server.use(function(req,res,next){
-        if(!!res.header('Access-Control-Allow-Methods')){
-            console.log(JSON.stringify(req.headers || {empty:true}));
-            console.log('\n');
-            console.log(JSON.stringify(res.headers || {empty:true}));
-        }
-        next();
-    });
 
     flash.configure(server);
 
