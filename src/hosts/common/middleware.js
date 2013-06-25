@@ -18,6 +18,7 @@ function configure(server){
 
     server.use(express.session({
         cookie: {
+            path: '/',
             domain: config.server.tld
         },
         secret: config.security.sessionSecret,
@@ -29,10 +30,6 @@ function configure(server){
     authenticationSetup(server);
     localsSetup(server);
 
-    server.use(function(err, req, res, next){
-        console.log(err);
-    });
-    
     server.use(server.router);
 }
 
@@ -44,6 +41,14 @@ function authenticationSetup(server){
 }
 
 function localsSetup(server){
+    server.use(function(req, res, next) {
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+        next();
+    });
+    
     server.use(function(req,res,next){
         platformService.hydrate(req);
 
