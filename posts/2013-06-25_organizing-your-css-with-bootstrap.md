@@ -160,7 +160,7 @@ This may seem like a very subtle difference from traditional web development, an
 
 ### More Bootstrapping ###
 
-It's features don't just end with scaffolding. A comprehensive list of [basic styles](http://twitter.github.io/bootstrap/base-css.html "Fundamental HTML Styles") for tables, forms, buttons, and images, is also included. Right out the box!
+Its features don't just end with scaffolding. A comprehensive list of [basic styles](http://twitter.github.io/bootstrap/base-css.html "Fundamental HTML Styles") for tables, forms, buttons, and images, is also included. Right out the box!
 
 These are _pretty straightforward_, so I won't go into detail, how hard can it be to _create a large button_?
 
@@ -176,7 +176,7 @@ Bootstrap also offers an [icon set](http://twitter.github.io/bootstrap/base-css.
 
 Twitter also offers a decent amount of [components](http://twitter.github.io/bootstrap/components.html "Reusable components in Bootstrap"), and widgets that require just [a little of JavaScript](http://twitter.github.io/bootstrap/javascript.html "JavaScript in Bootstrap") to get them going.
 
-You should _make sure to check those out_ before embarking yourself in a **component-creating fiesta** and not even realizing someone already did all the work for you.
+You should _make sure to check those out_ before embarking yourself in a **component-creating fiesta** and not even realizing someone else _already did all the work for you_.
 
   [1]: http://i.imgur.com/TTMpDxW.png "Twitter Bootstrap CSS Framework"
   [2]: http://i.imgur.com/3hTIoim.png "Different Media Devices"

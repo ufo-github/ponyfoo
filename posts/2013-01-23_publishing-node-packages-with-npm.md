@@ -1,4 +1,4 @@
-# Publishing Node.JS packages with npm #
+# Publishing Node.JS Packages with npm #
 
 Back when I [introduced assetify](/2013/01/18/asset-management-in-node "Asset management in Node"), I mentioned publishing packages on [npm](https://npmjs.org/ "Node Packaged Modules") is _very_ easy.
 
