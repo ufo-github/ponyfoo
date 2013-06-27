@@ -1,8 +1,8 @@
 # Monitoring Production Grade Node Applications #
 
-Catching, or even _tracing_ errors in Node applications can be tricky sometimes. I wanted to share a few practices that can help you keep your application up in most scenarios.
+Catching, or even _tracing_ errors in Node applications can be _tricky sometimes_. I wanted to share a few practices that can help you **keep your application up in most scenarios**.
 
-We shouldn't ever rely on the luxury of _hoping for the best_ when it comes to _production application uptime_. There are a series of steps we can take to _prevent and minimize fatal exceptions_, while maximizing uptime and improving monitoring.
+We shouldn't ever rely on the luxury of _hoping for the best_ when it comes to _production application uptime_. There are a series of steps we can take to _prevent and minimize fatal exceptions_, while **maximizing uptime and improving monitoring**.
 
 ### Log **exceptions** with their _full stack traces_ ###
 
