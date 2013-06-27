@@ -50,12 +50,13 @@
             title = $('#entry-title'),
             brief = $('#wmd-input-brief'),
             text = $('#wmd-input-text'),
-            tags = $('#entry-tags');
+            tags = $('#entry-tags'),
+            id = submit.data('id');
 
         submit.on('click', function(){
             nbrut.ui.disable(submit);
             nbrut.thin.put('entry', {
-                id: submit.data('id'),
+                id: id,
                 data: {
                     entry: {
                         title: title.val(),
@@ -65,8 +66,12 @@
                     }
                 },
                 context: editor,
-                done: function(){
-                    nbrut.tt.activate('entry-review');
+                done: function(res){
+                    nbrut.tt.activate('entry-review', {
+                        data: {
+                            highlightId: id || res.id
+                        }
+                    });
                 },
                 always: function(){
                     nbrut.ui.enable(submit);

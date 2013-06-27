@@ -120,7 +120,13 @@ function insert(req,res){
                         });
                     }
                 ], function(err){
-                    rest.end(res,{});
+                    if(err || !entry){
+                        rest.end(res, {});
+                    }else{
+                        rest.end(res, {
+                            id: entry._id
+                        });                        
+                    }
                 });
             }
         });
