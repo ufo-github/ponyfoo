@@ -7,7 +7,9 @@
 - blog
   - email notifications for comments (for both the blogger and the commenter)
   
-
+- profile edit allows to turn notifications for comments on or off.
+- profile edit allows to subscribe to email
+- profile edit allows to subscribe or unscubscribe from blog
 
 ## 2
 
