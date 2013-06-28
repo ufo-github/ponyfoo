@@ -13,7 +13,7 @@ function notifySubscribers(payload, done){
             _id: {
                 $in: payload.discussion.comments.map(function(comment){
                     return comment.author.id;
-                }).concat([payload.blogger._id])
+                }).concat([payload.blogger._id]) // notify blogger
             },
             commentNotifications: true
         };
@@ -25,13 +25,8 @@ function notifySubscribers(payload, done){
             return done(err);
         }
 
-        var existing = [
-            payload.blogger._id.toString(),
-            payload.comment.author.id.toString()
-        ];
-
-        users.forEach(function(user){
-            if(existing.indexOf(user._id.toString()) === -1){
+        users.forEach(function(user){ // don't notify oneself
+            if(!user._id.equals(payload.comment.author.id)){
                 targets.push(user);
             }
         });
