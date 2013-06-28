@@ -3,12 +3,11 @@
 ## 1
 
 - fix nightmares with session, domains, and passports
-
-- blog
-  - email notifications for comments (for both the blogger and the commenter)
   
 - profile edit allows to turn notifications for comments on or off.
-- profile edit allows to subscribe or unscubscribe from blog
+- profile edit allows to subscribe or unsubscribe from blog
+
+
 
 ## 2
 
