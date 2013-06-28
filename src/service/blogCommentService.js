@@ -26,12 +26,12 @@ function notifySubscribers(payload, done){
         }
 
         var existing = [
-            payload.blogger._id,
-            payload.comment.author.id
+            payload.blogger._id.toString(),
+            payload.comment.author.id.toString()
         ];
 
         users.forEach(function(user){
-            if(existing.indexOf(user._id) === -1){
+            if(existing.indexOf(user._id.toString()) === -1){
                 targets.push(user);
             }
         });
