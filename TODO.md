@@ -10,6 +10,7 @@
 - profile edit allows to turn notifications for comments on or off.
 - profile edit allows to subscribe to email
 - profile edit allows to subscribe or unscubscribe from blog
+- gravatar in comment emails
 
 ## 2
 
