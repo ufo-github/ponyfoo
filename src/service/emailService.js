@@ -95,11 +95,15 @@ function prepareEmailJson(template, model, done){
             next(null, emailModel);
         },
         function(emailModel, next){
-            if(model.merge){
-                emailModel.message.merge = true;
-                emailModel.global_merge_vars = mapMergeHash(model.merge.globals);
-                emailModel.merge_vars = mapMergeLocals(model.merge.locals);
+            if(!model.merge){
+                model.merge = {};
             }
+
+            emailModel.message.merge_vars = mapMergeLocals(model.merge.locals);
+            emailModel.message.global_merge_vars = mapMergeHash(model.merge.globals);
+            emailModel.message.global_merge_vars.push({
+                name: 'unsubscribe_html', content: '' // default
+            });
 
             next(null, emailModel);
         }

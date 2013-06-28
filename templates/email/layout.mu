@@ -242,9 +242,7 @@
                                                 <!-- BEGIN FOOTER // -->
                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
                                                     <tr>
-                                                        <td valign="top" class="footerContent" style='text-align: left;'>
-                                                            *|HTML:unsubscribe_html|*
-                                                        </td>
+                                                        <td valign="top" class="footerContent" style='text-align: left;'>*|HTML:unsubscribe_html|*</td>
                                                         <td valign="top" class="footerContent">
                                                             {{#footer.twitter.url}}
                                                                 <a href="{{{footer.twitter.url}}}">{{footer.twitter.handle}} on Twitter</a>&nbsp;&nbsp;&nbsp;
