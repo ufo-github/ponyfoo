@@ -12,19 +12,19 @@ function notifySubscribers(payload, done){
         query = { 
             _id: {
                 $in: payload.discussion.comments.map(function(comment){
-                    return comment.author.id;// TODO: fix stuff
-                }).concat([payload.blogger._id]) // notify blogger
+                    return comment.author.id;
+                })
             },
             commentNotifications: true
         };
 
-    var targets = [];
+    var targets = payload.comment.author.id.equals(payload.blogger._id) ? [] : [payload.blogger];
 
     User.find(query, function(err, users){
         if(err){
             return done(err);
         }
-// TODO: fix stuff
+
         users.forEach(function(user){ // don't notify oneself
             if(!user._id.equals(payload.comment.author.id)){
                 targets.push(user);
