@@ -9,7 +9,6 @@
   
 - profile edit allows to turn notifications for comments on or off.
 - profile edit allows to subscribe or unscubscribe from blog
-- push unsubscribe links to footer. smaller type
 
 ## 2
 

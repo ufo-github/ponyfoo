@@ -16,6 +16,3 @@
 <p>
     Reply using <a href='{{{thread.permalink}}}'>this link</a>.
 </p>
-<p style='padding-top: 25px;'>
-    Edit your profile <a href='*|profile_edit_link|*'>settings</a> to turn off these notifications.
-</p>

@@ -37,11 +37,13 @@ function notifySubscribers(payload, done){
         });
 
         targets.forEach(function(target){
+            var link = authority + '/user/profile/' + target._id + '/edit';
+            
             recipients.to.push({ email: target.email });
             recipients.merge.push({
                 email: target.email,
                 model: {
-                    profile_edit_link: authority + '/user/profile/' + target._id + '/edit'
+                    unsubscribe_html: "notification <a href='" + link + "'>settings</a>"
                 }
             });
         });
