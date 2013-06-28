@@ -85,10 +85,10 @@ function prepareEmailJson(template, model, done){
                     preserve_recipients: false,
                     tags: model.tags ? model.tags : [template],
                     images: [{
-                        type: 'image/png',
                         name: 'header',
+                        type: 'image/png',
                         content: header
-                    }]
+                    }].concat(model.images || [])
                 }
             };
 

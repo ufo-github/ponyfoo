@@ -3,6 +3,7 @@
 var config = require('../config'),
     markdownService = require('./markdownService.js'),
     emailService = require('./emailService.js'),
+    userService = require('./userService.js'),
     User = require('../model/User.js');
 
 function notifySubscribers(payload, done){
@@ -45,11 +46,17 @@ function notifySubscribers(payload, done){
             });
         });
 
-        sendNotification(payload, recipients, done);
+        userService.getGravatar(payload.comment.author.id, function(err, gravatar){
+            if(err){
+                return done(err);
+            }
+
+            sendNotification(payload, gravatar, recipients, done);
+        });
     });
 }
 
-function sendNotification(payload, recipients, done){
+function sendNotification(payload, gravatar, recipients, done){
     var authority = config.server.authority(payload.blog.slug),
         permalink = authority + payload.entry.permalink,
         model = {
@@ -68,7 +75,12 @@ function sendNotification(payload, recipients, done){
             entry: {
                 title: payload.entry.title,
                 permalink: permalink
-            }
+            },
+            images: [{
+                name: 'gravatar',
+                type: gravatar.mime,
+                content: gravatar.data.toString('base64')
+            }]
         };
 
     emailService.send('notification/blog_comment', model, done);

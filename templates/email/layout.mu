@@ -224,7 +224,7 @@
                                                             {{#trapped}}
                                                             <div style='margin-top: 20px; padding: 10px; border: 3px solid #412917; background-color: #ffd2d2; color: #384c53;'>
                                                                 <div>
-                                                                    <b>Trapped Recipients</b>
+                                                                    <b>Recipients</b>
                                                                 </div>
                                                                 <pre>
                                                                     <code>{{trapped}}</code>
