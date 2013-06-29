@@ -13,12 +13,12 @@ function notifySubscribers(payload, done){
             _id: {
                 $in: payload.discussion.comments.map(function(comment){
                     return comment.author.id;
-                })
+                }).concat([payload.blogger._id]) // notify the blogger
             },
             commentNotifications: true
         };
 
-    var targets = payload.comment.author.id.equals(payload.blogger._id) ? [] : [payload.blogger];
+    var targets = [];
 
     User.find(query, function(err, users){
         if(err){
