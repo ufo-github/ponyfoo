@@ -11,14 +11,7 @@
 
 ## 2
 
-- market
-  - prettier header
-  - video
-  - subscription implementation
-
-- docs
-  - markdown playground.
-  - docs about our editor, shortcuts, etc?
+- re-do REST api. add oauth
 
 - blog
   - autosave drafts to localStorage periodically (5s~)
@@ -28,9 +21,16 @@
   - data-related author's twitter, take from req.blogger
   - list users only for back-end people, not any blogger
   - footer for blog similar to www and docs
+  - adaptable design ?
 
-- adaptable design ?
-- proper api + authentication
+- market
+  - prettier header
+  - video
+  - subscription implementation
+
+- docs
+  - markdown playground.
+  - docs about our editor, shortcuts, etc?
 
 - pingbacks
   - Display PingBacks on each blog entry

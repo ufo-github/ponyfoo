@@ -19,4 +19,4 @@ That being said, you should probably support a few versions of IE you're _not pa
 > Do you have any analytics telling you a significant portion of your customer-base runs around in naked browsers with no JavaScript?  
 > _Analize your audience_, and figure out _their_ needs.
 
-The problem with progressive enhancement, is that, even though it looks good on paper, it doesn't really provide much added value to your solutions. Unless you really have _a need_ for progressive enhancement, I'd tell you to take it with a pinch of salt.
+The problem with progressive enhancement, is that, even though it looks good on paper, it doesn't really provide much added value to your solutions. Unless you really have _a need_ for progressive enhancement, I'd tell you to take it _with a pinch of salt_.
