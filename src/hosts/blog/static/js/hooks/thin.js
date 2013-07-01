@@ -91,7 +91,8 @@
             }
             var created = user.created,
                 m = moment(created),
-                me = user._id === window.locals.id;
+                me = user._id === window.locals.id,
+                rprotocol = /^https?:\/\/(www\.)?/;
 
             user.me = me;
             user.created = new Date(created);
@@ -100,8 +101,12 @@
             user.timeAgo = m.fromNow();
             user.duration = m.fromNow(true);
 
-            if (user.website.title === undefined || user.website.url === undefined){
+            if(!user.website || !user.website.url){
                 user.website = undefined; // normalize
+            }else if(!user.website.title){
+                user.website.titleText = user.website.url.replace(rprotocol, '');
+            }else{
+                user.website.titleText = user.website.title;
             }
 
             user.profileTitle = me ? 'My Profile' : user.displayName;

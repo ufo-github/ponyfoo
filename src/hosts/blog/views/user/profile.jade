@@ -14,14 +14,11 @@ section#user-profile-template.template
         span.label='member for'
         span(data-hint='registered on {{createdText}}')='{{duration}}'
 
+      // {{#website}}
       p
         span.label='website'
-        // {{#website}}
-        a.highlighted-link(href='{{website.url}}', data-hint='{{website.title}}', rel='nofollow')='{{website.title}}'
-        // {{/website}}
-        // {{^website}}
-        span='(none)'
-        // {{/website}}
+        a.highlighted-link(href='{{website.url}}', data-hint='{{website.titleText}}', rel='nofollow')='{{website.titleText}}'
+      // {{/website}}
 
   // {{#bioHtml}}
   article.user-profile-bio

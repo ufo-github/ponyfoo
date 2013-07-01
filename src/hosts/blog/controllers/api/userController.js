@@ -58,8 +58,14 @@ function validate(req,res){
     var source = req.body.user,
         site = source.website;
 
-    if(!!site && !!site.url && site.url.search(/https?:\/\//i) === -1){
-        site.url = 'http://' + site.url;
+    if(site){
+        if (site.url && site.url.search(/https?:\/\//i) === -1){
+            site.url = 'http://' + site.url;
+        }
+
+        if(!site.title && !site.url){
+            site = undefined;
+        }
     }
 
     return validation.validate(req,res, {
@@ -69,15 +75,7 @@ function validate(req,res){
             bio: source.bio,
             commentNotifications: source.commentNotifications
         },
-        rules: [{
-            all: {
-                message: 'A website needs both a title and a url',
-                rules: [
-                    { field: 'website.title' },
-                    { field: 'website.url' }
-                ]
-            }
-        }]
+        rules: []
     });
 }
 
