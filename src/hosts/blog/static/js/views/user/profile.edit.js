@@ -32,6 +32,7 @@
                         title: $('.website-title').val(),
                         url: $('.website-url').val()
                     },
+                    commentNotifications: $('.comment-notifications').is(':checked'),
                     bio: $('#wmd-input-bio').val()
                 };
 

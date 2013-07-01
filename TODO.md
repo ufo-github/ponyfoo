@@ -33,6 +33,12 @@
   - markdown playground.
   - docs about our editor, shortcuts, etc?
 
+- server
+  - basic auth
+  - clustered domains
+  - port watch
+  - persistent logging
+
 - pingbacks
   - Display PingBacks on each blog entry
   - Can be disabled on a per-entry basis

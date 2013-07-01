@@ -7,16 +7,21 @@ section#user-profile-edit-template.template
 
     section.user-profile-info
       p
-        span.label='password'
-        input.user-password(type='password', placeholder='{{passwordPlaceholder}}')
+        label.label(for='user-password')='password'
+        input.user-password#user-password(type='password', placeholder='{{passwordPlaceholder}}')
 
       p
-        span.label='website title'
-        input.website-title(placeholder='Your site title', value='{{website.title}}')
+        label.label(for='website-title')='website title'
+        input.website-title#website-title(placeholder='Your site title', value='{{website.title}}')
 
       p
-        span.label='website url'
-        input.website-url(placeholder='Your site url', value='{{website.url}}')
+        label.label(for='website-url')='website url'
+        input.website-url#website-url(placeholder='Your site url', value='{{website.url}}')
+
+      p
+        label.label(for='comment-notifications')='comment notifications'
+        input.checkbox-input#comment-notifications.comment-notifications(type='checkbox', checked='{{commentNotifications}}')
+        label.checkbox(for='comment-notifications')='Enable'
 
   div#wmd-button-bar-bio.wmd-button-bar
   div

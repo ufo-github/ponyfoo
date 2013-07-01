@@ -66,7 +66,8 @@ function validate(req,res){
         document: {
             password: source.title,
             website: site,
-            bio: source.bio
+            bio: source.bio,
+            commentNotifications: source.commentNotifications
         },
         rules: [{
             all: {
@@ -104,6 +105,7 @@ function upd(req,res){
 
         user.website = changes.website;
         user.bio = changes.bio;
+        user.commentNotifications = changes.commentNotifications;
         user.save(function (err){
             rest.resHandler(err,{res:res});
         });
