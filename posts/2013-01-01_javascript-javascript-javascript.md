@@ -31,75 +31,89 @@ Node.JS has a cute way of separating concerns in what's called _modules_. A modu
 
 Here's an example **dependency.js**:
 
-	var uid = 0; // local
-	
-	module.exports.startsWith = function(str, text){
-		return str.indexOf(text) === 0;
-	};
-	
-	module.exports.uid = function(){
-		return ++uid;
-	};
-	
+```js
+var uid = 0; // local
+
+module.exports.startsWith = function(str, text){
+    return str.indexOf(text) === 0;
+};
+
+module.exports.uid = function(){
+    return ++uid;
+};
+```
+
 In your **server.js**, you would reference it like this:
 
-	var dep = require('./dependency.js'),
-		model = {
-    		sn: dep.uid();
-	    	text: 'dependency flavored model'		
-	    };
+```js
+var dep = require('./dependency.js'),
+    model = {
+        sn: dep.uid();
+        text: 'dependency flavored model'
+    };
 
-	// ...
-	
+// ...
+```
+
 Not the best of examples, but you get the idea.  
 
 ## Routing and Controller Actions ##
 
 Lets examine a more practical example, I want to have my routing defined somewhere else, rather than directly on **server.js**, so I'll replace my routes declaration with the following call, and _defer_ the implementation to another file:
 
-	require('/routing/core.js')(server);
-   
+```js
+require('/routing/core.js')(server);
+```
+
 With that simple statement I can pass the `server` object, and handle any routing directly in my self-contained module.
 
-	module.exports = function(server){
-		server.get('/*', function(req,res){
-			res.render('site.jade');
-		});
+```js
+module.exports = function(server){
+    server.get('/*', function(req,res){
+        res.render('site.jade');
+    });
 
-		server.post('/write-entry', function(req,res){
-			console.log(req.body.entry);
-			res.end();
-		});
-	};
+    server.post('/write-entry', function(req,res){
+        console.log(req.body.entry);
+        res.end();
+    });
+};
+```
 
 This is pretty awesome, but all I really want from my routes is to _juggle request parameters around_, and I'll leave any real processing to the _controllers_. The `main` controller will be a really thin one:
 
-	module.exports = {
-		get: function(req,res){
-			res.render('site.jade');
-		}
-	};
-	
+```js
+module.exports = {
+    get: function(req,res){
+        res.render('site.jade');
+    }
+};
+```
+    
 For the endpoint previously referred to as `POST /write-entry`, I'll favor a more [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer "REST API definition") approach this time. The controller pretty much will remain unchanged:
 
-	module.exports = {
-		put: function(req,res){
-			console.log(req.body.entry);
-			res.end();
-		}
-	};
+```js
+module.exports = {
+    put: function(req,res){
+        console.log(req.body.entry);
+        res.end();
+    }
+};
+```
 
 The routing module ends up being:
 
-	var main = require('../controllers/main.js');
-	var entry = require('../controllers/entry.js');
+```js
+var main = require('../controllers/main.js');
+var entry = require('../controllers/entry.js');
 
-	module.exports = function(server){
-		server.get('/*', main.get);
+module.exports = function(server){
+    server.get('/*', main.get);
 
-		server.put('/entry', entry.put);
-	};
-	
+    server.put('/entry', entry.put);
+};
+```
+    
 All this code might seem redundant at first, but it will gain value as our application grows.
 
 > As you might have noticed, my attempt at being RESTful is hindered by the rich application structure where all `GET` requests serve the same `text/html` response. This could be easily be mitigated in the future by considering some other endpoint for any **non-static** resource, such as:
@@ -118,16 +132,20 @@ So far we've covered _views_, _controllers_, _routes_, but we haven't actually d
 
 Install the mongoose package through [npm](https://npmjs.org/).
 
-	npm install mongoose
+```bash
+$ npm install mongoose
+```
 
 Then we need a little initialization code to get things going:
 
-	var mongoose = require('mongoose');
+```js
+var mongoose = require('mongoose');
 
-	mongoose.connect(config.db.uri); // configured in config.json
-	mongoose.connection.on('open', function() {
-		console.log('Connected to Mongoose');
-	});
+mongoose.connect(config.db.uri); // configured in config.json
+mongoose.connection.on('open', function() {
+    console.log('Connected to Mongoose');
+});
+```
 
 I set up a tentative `config.db.uri = mongodb://localhost/ponyfoo`. This code will _blatantly fail upon execution_, due to the simple fact that _we didn't fire up MongoDB yet_, so we'll go ahead and do that now.
 
@@ -135,12 +153,16 @@ I set up a tentative `config.db.uri = mongodb://localhost/ponyfoo`. This code wi
 
 > I set up **MongoDB** on my development hard drive, sitting at `f:\mongodb`, I configured the data folder within in a `\data` sub-directory, and I also created a succint batch file to fire up **MongoDB** from my project root:
 
-    f:\mongodb\bin\mongod.exe --config f:\mongodb\mongod.conf
-	
+```bash
+$ f:\mongodb\bin\mongod.exe --config f:\mongodb\mongod.conf
+```
+    
 The batch file just starts the _MongoDB_ database server the configuration file I created for specifying the `data` folder directly in the _MongoDB_ installation folder. It specifies a  `data` folder:
 
-	dbpath = f:\mongodb\data
-	
+```
+dbpath = f:\mongodb\data
+```
+
 That's **it**, you should be able to establish a connection through **mongoose**. Try it now.
 
 Coming from the _Microsoft stack_ and particularly **SQL Server**, I must admit I feel incredibly good about _MongoDB_, and I really appreciate being _this easy_ to set up.
@@ -149,54 +171,62 @@ Coming from the _Microsoft stack_ and particularly **SQL Server**, I must admit 
 
 I will **maintain a modular approach** to models as well, thus, anywhere I need them, I'll just `require` my models module:
 
-	var models = require('./models/all.js');
-	
+```js
+var models = require('./models/all.js');
+```
+    
 This module will, in turn, provide a list of _MongoDB_ **document** models we can use:
 
-	var entry = require('./entry.js');
+```js
+var entry = require('./entry.js');
 
-	module.exports = {
-	  entry: entry.model
-	};
-	
+module.exports = {
+  entry: entry.model
+};
+```
+    
 And lastly, each model should expose its schema:
 
-	var mongoose = require('mongoose'),
-		schema = new mongoose.Schema({
-			title: String,
-			brief: String,
-			text: String,
-			date: Date
-		});
+```js
+var mongoose = require('mongoose'),
+    schema = new mongoose.Schema({
+        title: String,
+        brief: String,
+        text: String,
+        date: Date
+    });
 
-	module.exports.model = mongoose.model('entry', schema);
+module.exports.model = mongoose.model('entry', schema);
+```
 
-###	Upsert world ###
-	
+### Upsert world ###
+    
 This [upsert command](http://mongoosejs.com/docs/api.html) is all that's left between our UI and the _MongoDB_ database:
 
-	var mongoose = require('mongoose'),
-		models = require('../models/all.js');
+```js
+var mongoose = require('mongoose'),
+    models = require('../models/all.js');
 
-	module.exports = {
-		put: function(req,res){
-			var collection = models.entry,
-				document = req.body.entry,
-				query = { date: document.date },
-				opts = { upsert: true },
-				done = function(err){
-					res.end();
-				};
+module.exports = {
+    put: function(req,res){
+        var collection = models.entry,
+            document = req.body.entry,
+            query = { date: document.date },
+            opts = { upsert: true },
+            done = function(err){
+                res.end();
+            };
 
-			collection.findOneAndUpdate(query, document, opts, done);
-			collection.save();
-		}
-	};
-	
+        collection.findOneAndUpdate(query, document, opts, done);
+        collection.save();
+    }
+};
+```
+    
 The last little detail would be updating the UI to actually provide a `date` for our _entries_. We'll deal with that soon enough.
 
 Thus far, this will create an _entry_ the first time, and overwrite it in every subsequent request. This makes the method _ideal_ for easily editing our blog post _entries_, we would just need to wire the UI to provide the identifier we're using for the **upserts**.
-	
+    
 ### MongoDB document identifiers ###
 
 At a glance, you better have a [damn good reason](http://docs.mongodb.org/manual/tutorial/create-an-auto-incrementing-field/) for having an auto-increment _id field. Every single blog post or [Stack Overflow](http://stackoverflow.com "Stack Overflow") [answer](http://stackoverflow.com/q/8384029/389745 "Auto increment in MongoDB") that tells you how to implement an auto-incrementing field _also tries to persuade you **not to do it**_.
@@ -208,11 +238,11 @@ However, considering all the **evidence against this kind of fields**, I came up
 I'll simplify it to be:
 
 > [/2013/01/01/javascript-javascript-javascript](/2013/01/01/javascript-javascript-javascript)
-	
+    
 Now my only constraint is not writing two separate entries with the exact same title and assign them the exact same date.
 
-> **/:yyyy[/:mm[/:dd[/:slug]]]**
-	
-This approach makes _url hacking_ so easy even a zombie could try it.
+> **`/:yyyy[/:mm[/:dd[/:slug]]]`**
+
+This approach makes _url hacking_ so easy even a zombie could try to do it.
 
 So there we have a drastically basic _Node.JS_ application that allows us to `PUT` a _MongoDB_ document, and does nothing much besides that, but we did set up a _solid working base_ for code to come.

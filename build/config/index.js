@@ -11,7 +11,8 @@ function require_cwd(module){
 module.exports = {
     clean: [
         '.bin',
-        './src/**/.bin'
+        './src/**/.bin',
+        '**/*.bin.js'
     ],
     recess: require('./recess.js'),
     jshint: require('./jshint.js'),
@@ -21,6 +22,12 @@ module.exports = {
         projectRoot: './test/spec'
     },
     ngdoc: require('./docs.js'),
+    browserify: {
+        ultramarked: {
+            src: ['./src/frontend/js/vendor/ultramarked.browserify.js'],
+            output: './src/frontend/js/vendor/ultramarked.bin.js'
+        }
+    },
     assetify: {
         install: require_cwd('./src/hosts/install/assets.js'),
         market: require_cwd('./src/hosts/market/assets.js'),
@@ -40,6 +47,7 @@ module.exports = {
                 './src/**/*.js',
                 './src/**/*.less',
                 '!./src/**/.bin',
+                '!./src/**/*.bin.js',
                 './test/**/*.js'
             ],
             options: {

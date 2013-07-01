@@ -2,9 +2,9 @@
 @name Line Breaks
 @description
 
-Line breaks using [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown "GitHub Flavored Markdown") are, luckily, _very straightforward_.
+Line breaks are pretty straightforward. Just separate paragraphs, or _force line breaks_ using two spaces at the end of the line.
 
-```markdown
+```md
 Here's a line for us to start with.
 
 This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
@@ -12,7 +12,7 @@ This line is separated from the one above by two newlines, so it will be a _sepa
 
 
 
-This line is also a separate paragraph, but... _(note how all those spaces still caused just one break)_
+Note how all those spaces still caused _just one break_. Two spaces will cause another.  
 This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
 ```
 
@@ -23,14 +23,14 @@ This line is separated from the one above by two newlines, so it will be a _sepa
 
 
 
-This line is also a separate paragraph, but... _(note how all those spaces still caused just one break)_
+Note how all those spaces still caused _just one break_. Two spaces will cause another.  
 This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
 
 # Horizontal Rules
 
 Another form of line breaking is using `<hr/>` horizontal rules.
 
-```markdown
+```md
 Three or more...
 
 ---

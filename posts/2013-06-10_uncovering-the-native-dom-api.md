@@ -12,13 +12,15 @@ I'll help you explore some of the parts of the **DOM API** that are usually abst
 
 Surely you know how to write AJAX requests, right? Probably something like...
 
-    $.ajax({
-        url: '/endpoint'
-    }).done(function(data){
-        // do something awesome
-    }).fail(function(xhr){
-        // sad little dance
-    });
+```js
+$.ajax({
+    url: '/endpoint'
+}).done(function(data){
+    // do something awesome
+}).fail(function(xhr){
+    // sad little dance
+});
+```
 
 How do we write that with _native browser-level toothless JavaScript_?
 
@@ -28,19 +30,21 @@ _XMLHttpRequest_ is what makes AJAX sprinkle magic all over rich internet applic
 
 Lets give it _a first try_:
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        var completed = 4;
-        if(xhr.readyState === completed){
-            if(xhr.status === 200){
-                // do something with xhr.responseText
-            }else{
-                // handle the error
-            }
+```js
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function(){
+    var completed = 4;
+    if(xhr.readyState === completed){
+        if(xhr.status === 200){
+            // do something with xhr.responseText
+        }else{
+            // handle the error
         }
-    };
-    xhr.open('GET', '/endpoint', true);
-    xhr.send(null);
+    }
+};
+xhr.open('GET', '/endpoint', true);
+xhr.send(null);
+```
 
 You can try this in a pen I made [here](http://cdpn.io/ycgzo "Bare XMLHttpRequest"). Before we get into what I actually did in the pen, we should go over the snippet I wrote here, making sure we didn't miss anything.
 
@@ -52,44 +56,48 @@ Lastly, when you know the `status` of your XHR request, you can do something abo
 
 The request is prepared using `xhr.open`, passing the [HTTP method](http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html "HTTP/1.1 Method Definitions") in the first parameter, the resource to query in the second parameter, and a third parameter to decide whether the request should be asynchronous (`true`), or block the UI thread and make everyone cry (`false`).
 
-If you also want to send some data, you should pass that to the `xhr.send`. This function actually [sends the request](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#send() "XMLHttpRequest send - MDN") and it supports all the signatures below.
+If you also want to send some data, you should pass that to the `xhr.send`. This function actually [sends the request][xhrsend] and it supports all the signatures below.
 
-    void send();
-    void send(ArrayBuffer data);
-    void send(Blob data);
-    void send(Document data);
-    void send(DOMString? data);
-    void send(FormData data);
+```
+void send();
+void send(ArrayBuffer data);
+void send(Blob data);
+void send(Document data);
+void send(DOMString? data);
+void send(FormData data);
+```
 
 I won't go into detail, but you'd use those signatures to send data to the server.
 
 A sensible way to wrap our native XHR call in a reusable function might be the following:
 
-    function ajax(url, opts){
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-            var completed = 4;
-            if(xhr.readyState === completed){
-                if(xhr.status === 200){
-                    opts.success(xhr.responseText, xhr);
-                }else{
-                    opts.error(xhr.responseText, xhr);
-                }
+```js
+function ajax(url, opts){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        var completed = 4;
+        if(xhr.readyState === completed){
+            if(xhr.status === 200){
+                opts.success(xhr.responseText, xhr);
+            }else{
+                opts.error(xhr.responseText, xhr);
             }
-        };
-        xhr.open(opts.method, url, true);
-        xhr.send(opts.data);
-    }
-
-    ajax('/foo', { // usage
-        method: 'GET',
-        success: function(response){
-            console.log(response);
-        },
-        error: function(response){
-            console.log(response);
         }
-    });
+    };
+    xhr.open(opts.method, url, true);
+    xhr.send(opts.data);
+}
+
+ajax('/foo', { // usage
+    method: 'GET',
+    success: function(response){
+        console.log(response);
+    },
+    error: function(response){
+        console.log(response);
+    }
+});
+```
 
 You might want to add _default values_ to the `method`, `success` and `error` options, maybe even use [promises](/2013/05/08/taming-asynchronous-javascript "Taming Asynchronous JavaScript"), but it should be enough to _get you going_.
 
@@ -99,120 +107,126 @@ Next up, events!
 
 Lets say you now want to attach that awesome AJAX call to one your DOM elements, that's ridiculously easy!
 
-    $('button').on('click', function(){
-        ajax( ... );
-    });
+```js
+$('button').on('click', function(){
+    ajax( ... );
+});
+```
 
 Sure, you could use jQuery like your life depended on it, but this one is pretty simple to do with 'pure' JS. Lets try a reusable function from the get-go.
 
-    function add(element, type, handler){
-        if (element.addEventListener){
-            element.addEventListener(type, handler, false);
-        }else if (element.attachEvent){
-            element.attachEvent('on' + type, handler); 
-        }else{
-            // more on this later
-        }
+```js
+function add(element, type, handler){
+    if (element.addEventListener){
+        element.addEventListener(type, handler, false);
+    }else if (element.attachEvent){
+        element.attachEvent('on' + type, handler); 
+    }else{
+        // more on this later
     }
+}
 
-    function remove(element, type, handler){
-        if (element.removeEventListener){
-            element.removeEventListener(type, handler);
-        }else if (element.detachEvent){
-            element.detachEvent(type, handler);
-        }else{
-            // more on this later
-        }
+function remove(element, type, handler){
+    if (element.removeEventListener){
+        element.removeEventListener(type, handler);
+    }else if (element.detachEvent){
+        element.detachEvent(type, handler);
+    }else{
+        // more on this later
     }
+}
+```
 
-This one is pretty straightforward, you just add events with either the [W3C event model](http://www.w3.org/TR/DOM-Level-2-Events/events.html "DOM Events - W3C"), or the [IE event model](http://msdn.microsoft.com/en-us/library/ie/ms536343(v=vs.85).aspx "IE Events - MSDN").
+This one is pretty straightforward, you just add events with either the [W3C event model](http://www.w3.org/TR/DOM-Level-2-Events/events.html "DOM Events - W3C"), or the [IE event model][iemodel].
 
-The [last resort](http://msdn.microsoft.com/en-us/library/ms533023(v=vs.85).aspx "'Understanding' the Event Model - MSDN") would be to use `element['on' + type] = handler`, but this would be very bad because we wouldn't be able to attach more than one event to each DOM element.
+The [last resort][understandingie] would be to use `element['on' + type] = handler`, but this would be very bad because we wouldn't be able to attach more than one event to each DOM element.
 
 If corner cases are in your wheelhouse, we _could_ use a dictionary to keep the handlers in a way that they are easy to add and remove. Then it would be just a matter of calling all of these handlers when an event is fired. This brings a **whole host of complications**, though:
 
-    !function(window){
-        var events = {}, map = [];
+```js
+!function(window){
+    var events = {}, map = [];
 
-        function add(element, type, handler){
-            var key = 'on' + type,
-                id = uid(element),
-                e = events[id];
+    function add(element, type, handler){
+        var key = 'on' + type,
+            id = uid(element),
+            e = events[id];
 
-            element[key] = eventStorm(element, type);
+        element[key] = eventStorm(element, type);
 
-            if(!e){
-                e = events[id] = { handlers: {} };
-            }
-
-            if(!e.handlers[type]){
-                e.handlers[type] = [];
-                e.handlers[type].active = 0;
-            }
-
-            e.handlers[type].push(handler);
-            e.handlers[type].active++;
+        if(!e){
+            e = events[id] = { handlers: {} };
         }
 
-        function remove(element, type, handler){
-            var key = 'on' + type,
-                e = events[uid(element)];
+        if(!e.handlers[type]){
+            e.handlers[type] = [];
+            e.handlers[type].active = 0;
+        }
 
+        e.handlers[type].push(handler);
+        e.handlers[type].active++;
+    }
+
+    function remove(element, type, handler){
+        var key = 'on' + type,
+            e = events[uid(element)];
+
+        if(!e || !e.handlers[type]){
+            return;
+        }
+        
+        var handlers = e.handlers[type],
+            index = handlers.indexOf(handler);
+
+        // delete it in place to avoid ordering issues
+        delete handlers[index];
+        handlers.active--;
+
+        if (handlers.active === 0){
+            if (element[key]){
+                element[key] = null;
+                e.handlers[type] = [];
+            }
+        }
+    }
+
+    function eventStorm(element, type){
+        return function(){
+            var e = events[uid(element)];
             if(!e || !e.handlers[type]){
                 return;
             }
             
             var handlers = e.handlers[type],
-                index = handlers.indexOf(handler);
+                len = handlers.length,
+                i;
 
-            // delete it in place to avoid ordering issues
-            delete handlers[index];
-            handlers.active--;
-
-            if (handlers.active === 0){
-                if (element[key]){
-                    element[key] = null;
-                    e.handlers[type] = [];
+            for(i = 0; i < len; i++){
+                // check the handler wasn't removed
+                if (handlers[i]){
+                    handlers[i].apply(this, arguments);
                 }
             }
-        }
-
-        function eventStorm(element, type){
-            return function(){
-                var e = events[uid(element)];
-                if(!e || !e.handlers[type]){
-                    return;
-                }
-                
-                var handlers = e.handlers[type],
-                    len = handlers.length,
-                    i;
-
-                for(i = 0; i < len; i++){
-                    // check the handler wasn't removed
-                    if (handlers[i]){
-                        handlers[i].apply(this, arguments);
-                    }
-                }
-            };
-        }
-
-        // this is a fast way to identify our elements
-        // .. at the expense of our memory, though.
-        function uid(element){
-            var index = map.indexOf(element);
-            if (index === -1){
-                map.push(element);
-                index = map.length - 1;
-            }
-            return index;
-        }
-
-        window.events = {
-            add: add,
-            remove: remove
         };
-    }(window);
+    }
+
+    // this is a fast way to identify our elements
+    // .. at the expense of our memory, though.
+    function uid(element){
+        var index = map.indexOf(element);
+        if (index === -1){
+            map.push(element);
+            index = map.length - 1;
+        }
+        return index;
+    }
+
+    window.events = {
+        add: add,
+        remove: remove
+    };
+}(window);
+```
 
 You can glance at how this can very quickly get out of hand. Remember this was _just in the case of **no W3C event model**, and **no IE event model**_. Fortunately, _this is **largely unnecessary** nowadays_. You can imagine how hacks of this kind are all over your favorite libraries.
 
@@ -238,18 +252,20 @@ Event delegation is what you have to do when you have many elements which need t
 
 Lets look at a use case. I'll use the [Jade](http://jade-lang.com/ "Jade template engine") syntax.
 
-    body
-        ul.foo
-            li.bar
-            li.bar
-            li.bar
-            li.bar
+```jade
+body
+    ul.foo
+        li.bar
+        li.bar
+        li.bar
+        li.bar
 
-        ul.foo
-            li.bar
-            li.bar
-            li.bar
-            li.bar
+    ul.foo
+        li.bar
+        li.bar
+        li.bar
+        li.bar
+```
 
 We want, for whatever reason, to attach an event handler to each `.foo` element. The problem is that event listening is resource consuming. It's _lighter_ to attach a single event than thousands. Yet, it's surprisingly common to work in codebases with _little to no event delegation_.
 
@@ -262,15 +278,19 @@ A _better performing_ approach is to add a _super event handler_ on a node which
 
 This is what happens when you bind events using jQuery code such as:
 
-    $('body').on('click', '.bar', function(){
-        console.log('clicked bar!', $(this));
-    });
+```js
+$('body').on('click', '.bar', function(){
+    console.log('clicked bar!', $(this));
+});
+```
 
 As opposed to more unfortunate code:
 
-    $('.bar').on('click', function(){
-        console.log('clicked bar!', $(this));
-    });
+```js
+$('.bar').on('click', function(){
+    console.log('clicked bar!', $(this));
+});
+```
 
 Which would work _pretty much the same way_, except it will create one event handler for each `.bar` element, hindering performance.
 
@@ -302,16 +322,18 @@ Everyone knows how to add nodes to the DOM, so I won't waste my time on that. In
 
 Once our tree fragment is ready, we can attach it to the DOM. When we do, all the child nodes in the fragment are attached to the specified node.
 
-    var somewhere = document.getElementById('here'),
-        fragment = document.createDocumentFragment(),
-        i, foo;
+```js
+var somewhere = document.getElementById('here'),
+    fragment = document.createDocumentFragment(),
+    i, foo;
 
-    for(i = 0, i < 1000; i++){
-        foo = document.createElement('div');
-        foo.innerText = i;
-        fragment.appendChild(foo);
-    }
-    somewhere.appendChild(fragment);
+for(i = 0, i < 1000; i++){
+    foo = document.createElement('div');
+    foo.innerText = i;
+    fragment.appendChild(foo);
+}
+somewhere.appendChild(fragment);
+```
 
 [Pen here](http://cdpn.io/sweoB "Document Fragment Usage")
 
@@ -328,3 +350,6 @@ In short, the shadow DOM is a part of the DOM that's inaccessible for the most p
 If you've gotten this far, and happen to be looking for a job, [this link](https://github.com/bevacqua/frontend-job-listings "Front End Job Listings") might help you in your search.
 
   [1]: http://i.imgur.com/UDGhrLQ.jpg "Well, maybe not that"
+  [xhrsend]: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#send() "XMLHttpRequest send - MDN"
+  [iemodel]: http://msdn.microsoft.com/en-us/library/ie/ms536343(v=vs.85).aspx "IE Events - MSDN"
+  [understandingie]: http://msdn.microsoft.com/en-us/library/ms533023(v=vs.85).aspx "'Understanding' the Event Model - MSDN"

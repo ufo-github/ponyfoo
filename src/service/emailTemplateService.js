@@ -31,6 +31,7 @@ module.exports = {
                     generated: moment().format('YYYY/MM/DD HH:mm, UTC Z')
                 },
                 body: html,
+                trapped: model.trapped,
                 footer: {
                     twitter: config.contact.twitter,
                     landing: {

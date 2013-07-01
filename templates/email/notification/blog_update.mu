@@ -11,6 +11,3 @@
 <div style='padding: 20px; background-color: #efefef;'>
     {{{entry.brief}}}
 </div>
-<p style='padding-top: 25px;'>
-    Use the following link to <a href='*|unsubscribe_link|*'>unsubscribe</a>.
-</p>

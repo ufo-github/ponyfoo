@@ -35,28 +35,33 @@ if(!config.email.apiKey){
     };
 })();
 
-function getRecipients(recipients){
-    if(typeof recipients === 'string'){
-        return recipients;
-    }
+function fixRecipients(model){
+    model.to = typeof model.to === 'string' ? [{
+        email: model.to
+    }] : model.to || [];
+}
+
+function getRecipientsTitle(recipients){
     if(!recipients.length){
         return 'nobody!';
     }
     if(recipients.length === 1){
         return recipients[0].email;
     }
-
     return recipients.length + ' recipients';
 }
 
 function prepareEmailJson(template, model, done){
+    fixRecipients(model);
+
     if(config.email.trap){
-        model.subject += ' - to: ' + getRecipients(model.to);
-        model.to = config.email.trap;
+        model.subject += ' - to: ' + getRecipientsTitle(model.to);
+        model.trapped = JSON.stringify({
+            to: model.to || [],
+            merge: model.merge || []
+        }, null, 2);
+        model.to = [{ email: config.email.trap }];
     }
-    var recipients = typeof model.to === 'string' ? [{
-        email: model.to
-    }] : model.to;
 
     async.waterfall([
         function(next){
@@ -74,27 +79,31 @@ function prepareEmailJson(template, model, done){
                     subject: model.subject,
                     from_email: config.email.sender,
                     from_name: config.site.name,
-                    to: recipients,
+                    to: model.to,
                     auto_text: true,
                     inline_css: true,
                     preserve_recipients: false,
                     tags: model.tags ? model.tags : [template],
                     images: [{
-                        type: 'image/png',
                         name: 'header',
+                        type: 'image/png',
                         content: header
-                    }]
+                    }].concat(model.images || [])
                 }
             };
 
             next(null, emailModel);
         },
         function(emailModel, next){
-            if(model.merge){
-                emailModel.message.merge = true;
-                emailModel.global_merge_vars = mapMergeHash(model.merge.globals);
-                emailModel.merge_vars = mapMergeLocals(model.merge.locals);
+            if(!model.merge){
+                model.merge = {};
             }
+
+            emailModel.message.merge_vars = mapMergeLocals(model.merge.locals);
+            emailModel.message.global_merge_vars = mapMergeHash(model.merge.globals);
+            emailModel.message.global_merge_vars.push({
+                name: 'unsubscribe_html', content: '' // default
+            });
 
             next(null, emailModel);
         }

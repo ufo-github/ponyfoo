@@ -85,25 +85,48 @@ Selectors are what we use in CSS to identify the elements we want to style with 
 A quick overview of selectors:
 
 ```css
-// basic selectors
+/* elements with the given id */
+#element-id /* matches <anything id='element-id' /> */
 
-#element-id // elements with the given id
-.class-name // elements with the given class name
-span // span DOM elements
-[href] // elements with an href attribute
-[data-foo=bar] // data-foo property with value equal to 'bar'
-* // 'star selector', matches everything
-:focus // the currently focused element
-:hover // elements under the mouse pointer
+/* elements with the given class name */
+.class-name /* matches <anything class='class-name' /> */
 
-// selectors can be chained using spaces or special 
+/* span DOM elements */
+span /* matches <span/> */
 
-span strong // strong tag, one of its parents is an span
-span > strong // strong tag, its immediate parent is an span
-.title + span // span tag immediately following a .title element
+/* elements with an href attribute */
+[href] /* matches <anything href /> */
+
+/* data-foo property with value equal to 'bar' */
+[data-foo=bar] /* matches <anything data-foo='bar' /> */
+
+/* 'star selector', matches everything */
+* /* matches <anything /> */
+
+/* the currently focused element */
+:focus /* matches <anything />, when active */
+
+/* elements that are under your mouse pointer */
+:hover /* matches <anything />, when you mouse over it */
+
+/* selectors can be chained using spaces or special characters */
+
+/* strong tag, one of its parents is an span */
+span strong
+
+/* strong tag, its immediate parent is an span */
+span > strong
+
+/* span tag immediately following a .title element */
+.title + span 
 ```
 
-You can go deeper into selectors looking at the [W3 recommendation](http://www.w3.org/TR/CSS21/selector.html "CSS 2.1 Selectors - W3").
+You can go deeper into selectors looking at the [W3 recommendation](http://www.w3.org/TR/CSS21/selector.html "CSS 2.1 Selectors - W3"), but these should be more than enough to get you going.
+
+- Keep your selectors as simple as possible. This will make them easy to read and interpret later on
+- You'll want to use _classes_ to style your elements
+- Try and _avoid nesting styles too deeply_
+- Following an [style guide](http://css-tricks.com/css-style-guides/ "CSS Style Guides - CSS-Tricks") might prove useful
 
 #### CSS Properties ####
 
@@ -113,7 +136,9 @@ If you want to learn the different CSS properties you can apply, I'll recommend 
 - [css3files.com](http://www.css3files.com/ "CSS3 Files") explains what's new in CSS 3
 - [css3please.com](http://css3please.com/ "CSS3 Please!") contains some cross-browser CSS rules
 
-You can always learn more about CSS by subscribing to sites such as [css-tricks.com](http://css-tricks.com/ "CSS Tricks by Chris Coyier")
+Honestly, _the best way to learn CSS from scratch_, other than the fundamentals I describe in this blog post, is **by googling**. You want to style something in a particular way? Just google it. In all likelyhood, someone _had_ that question before, and someone else _answered it_.
+
+You can always learn more about CSS by subscribing to sites such as [css-tricks.com](http://css-tricks.com/ "CSS Tricks by Chris Coyier").
 
 #### Cascading Issues ####
 
@@ -157,20 +182,95 @@ If the reason for this isn't immediately apparent, try thinking about this in a 
 
 Now that we know the basics about _what CSS is_, and how to apply it to _style the web_, lets dive into a **history lesson** for a while. Or, at the very least, a few milestones in CSS history, so that we better understand the current state of the web.
 
--- why css reset
+In the beginning, different kinds of browsers started emerging. [User agent stylesheets](http://www.iecss.com/ "UA Style Sheets"), shipped with each browser, presented different basic styles, and that represented a problem for web designers who wanted their site to look the same on every navigator. As a solution to this problem, the CSS reset concept was conceived.
 
 #### CSS Reset ####
 
--- normalize.css
+The main issue was with paddings, and margins. A first, naive fix for this problem, was to use the star selector, and simply reset padding and margin styles for every single element.
 
+```css
+* {
+    margin: 0;
+    padding: 0;
+}
+```
 
-layout
-design
-css 2.1
-css 3
-media queries
-css reset + css normalize
-css grids
-fonts
-bootstrap
-pre-processors
+This, however, raised [_performance concerns_](http://www.stevesouders.com/blog/2009/03/10/performance-impact-of-css-selectors/ "Performance Impact of CSS Selectors"), and imposed unwanted resets on some elements, such as [lists](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Consistent_list_indentation "Consistent List Indentation - MDN").
+
+Thus, a better approach was born, and eventually prevailed. Eric Meyer created the [CSS Reset](http://meyerweb.com/eric/tools/css/reset/ "CSS Reset Stylesheet"), which is an improvement over the former. It resets more than just margins and paddings. It avoids using the star selector, but instead _explicitly declares_ the tags it resets.
+
+![reset.png][1]
+
+In my mind, the main issue with `reset.css`, is the fact that it makes it really hard inspecting an element's styling, since really long reset statements are added on almost every single element, making it hard to read.
+
+A more modern approach exists today.
+
+#### Normalize.css ####
+
+> A modern, HTML5-ready alternative to CSS resets
+
+Rather than reset everything, [Normalize](http://necolas.github.io/normalize.css/ "Normalize.css alternative to resets") resets _specific styles_, in _specific elements_, and is [thoroughly documented](http://necolas.github.io/normalize.css/2.1.2/normalize.css "normalize.css source").
+
+![normalize.png][2]
+
+This has the _added advantage_ of avoiding the long lists of CSS reset styles we see in our HTML inspectors when resorting to a CSS reset. As you can see, normalize offers _a cleaner approach_.
+
+#### Browser inconsistencies ####
+
+As you might know from JavaScript, browsers don't always implement things the same way, or at the same time. This is _particularly nefarious_ when it comes to CSS 3 properties. As a result, some rules have to be written in several different ways if we want to maximize our [browser support](http://caniuse.com/ "Can I Use"). For example, we might need to write `border-radius`, to give a rounded border to an element, like this:
+
+```css
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+```
+
+We should avoid doing this kind of repetitive, and _error-prone_ task by hand, and resort to a _pre-processor_ such as [SASS](http://sass-lang.com/ "SASS pre-processor"), or [LESS](http://lesscss.org/ "LESS pre-processor"), to help us keep our code DRY and concise. We'll go deeper into these topics in a later post.
+
+#### CSS Grids ####
+
+On another level, frameworks have been looming over CSS for a while now _(more on frameworks in a future post!)_, with different end goals.
+
+There are quite a few different _grid systems_ such as [960.gs](http://960.gs/ "960 Grid System") and [semantic.gs](http://semantic.gs/ "Semantic Grid System"), to name a few.
+
+Grid systems basically consist of a bundle of classes that help you rapidly prototype a website's layout using the classes provided by the framework. These classes help you define how many columns each element takes up in a grid's row. Here's an example taken from the [960.gs](http://960.gs/ "960 Grid System") site:
+
+```html
+<div class="container_12">
+  <div class="grid_7 prefix_1">
+      <div class="grid_2 alpha">
+          ...
+      </div>
+      <div class="grid_3">
+          ...
+      </div>
+      <div class="grid_2 omega">
+          ...
+      </div>
+  </div>
+  <div class="grid_3 suffix_1">
+      ...
+  </div>
+</div>
+```
+
+Before you jump on the grid system bandwagon, I'd advise you to check out [Twitter Bootstrap](http://twitter.github.io/bootstrap/ "Twitter Bootstrap"). Bootstrap is a _comprehensive_ rapid prototyping solution for the front-end.
+
+I'll write more on bootstrap in a future post, but I wanted to introduce you to the magic world of CSS first.
+
+The next article regarding CSS will include topics such as:
+
+- Intelligent ways to organize your CSS
+- CSS pre-processor options available (what, and why _included_)
+- A guide on what [Bootstrap](http://twitter.github.io/bootstrap/ "Twitter Bootstrap") is, how to _use it_, and why it rocks
+
+Later on, I intend to write about more advanced topics
+
+- Picking the right typeface for your site
+- Responsive web design and mobile first
+- Flat design!
+
+If you're interested in these topics, make sure you _subscribe_ via [RSS feed](http://blog.ponyfoo.com/rss/latest.xml "RSS Feed for blog.ponyfoo.com") or through _email notifications_!
+
+  [1]: http://i.imgur.com/IlF1a3X.png "reset.css in web dev tools"
+  [2]: http://i.imgur.com/ePrmACd.png "normalize.css in web dev tools"

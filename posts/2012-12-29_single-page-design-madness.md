@@ -43,9 +43,11 @@ For example, lets talk about the template to post a new blog entry. **entry.jade
 
 In the page, I include the template as such:
 
-    include templates/entry
+```jade
+include templates/entry
 
-	script(src='/js/entry.js')
+script(src='/js/entry.js')
+```
 
 This is of course, not as scalable as I'd like it to be, but I didn't take the time, _yet_, to search for and implement a proper _asset management system_, which would be the appropriate solution to keep view templates _self contained_.
 
@@ -53,123 +55,139 @@ I'm not exactly sure going forward how I'm going to handle templates that actual
 
 This is, as of right now, **entry.jade**:
 
-	section#entry-template.template(data-class='entry-writing')
-		form#entry-editor(method='POST',action='/write-entry')
-		  div#entry-title-editor
-			label(for='entry-title')='Title'
-			input#entry-title(type='text',name='entry.title')
+```jade
+section#entry-template.template(data-class='entry-writing')
+  form#entry-editor(method='POST',action='/write-entry')
+    div#entry-title-editor
+      label(for='entry-title')='Title'
+      input#entry-title(type='text',name='entry.title')
 
-		  div#wmd-button-bar-brief.wmd-button-bar
-		  div
-			textarea#wmd-input-brief.wmd-input.entry-brief(name='entry.brief')
+    div#wmd-button-bar-brief.wmd-button-bar
+    div
+      textarea#wmd-input-brief.wmd-input.entry-brief(name='entry.brief')
 
-		  div#wmd-button-bar-text.wmd-button-bar
-		  div
-			textarea#wmd-input-text.wmd-input.entry-text(name='entry.text')
+    div#wmd-button-bar-text.wmd-button-bar
+    div
+      textarea#wmd-input-text.wmd-input.entry-text(name='entry.text')
 
-		  article.blog-entry
-			header.blog-entry-title
-			section#wmd-preview-brief.blog-entry-brief
-			section#wmd-preview-text.blog-entry-text
+    article.blog-entry
+      header.blog-entry-title
+      section#wmd-preview-brief.blog-entry-brief
+      section#wmd-preview-text.blog-entry-text
 
-		  div#entry-editor-buttons
-			input(type='submit',value='Post')
+    div#entry-editor-buttons
+      input(type='submit',value='Post')
+```
 
 My templating engine will have to deal with _displaying_ or _hiding_ the template as required, through a simple yet powerful system I defined.
 
 The client-side **markdown** implementation is not the topic in discussion, so I'll refrain from posting the entire **entry.js** for now, this is the snippet that registers the template with the templating engine.
 
-    nbrut.tt.add({
-        key: 'entry-editor',
-        alias: '/write-entry',
-        trigger: '#write-entry',
-        source: '#entry-template',
-        title: { value: 'New Post', formatted: true },
-        onAfterActivate: onAfterActivate
-    });
+```js
+nbrut.tt.add({
+    key: 'entry-editor',
+    alias: '/write-entry',
+    trigger: '#write-entry',
+    source: '#entry-template',
+    title: { value: 'New Post', formatted: true },
+    onAfterActivate: onAfterActivate
+});
+```
 
 This seemingly innocent function call does a few things. The most important of them are parsing the **DOM** for the template and storing it in a key value dictionary, alongside the provided settings.
 
-	function read(template) {
-		var s = $(template.source);
-		if (s.length !== 1){
-			throw new Error('template source not unique.');
-		}
-		var css = s.data('class');
-		var html = s.remove().html();
+```js
+function read(template) {
+    var s = $(template.source);
+    if (s.length !== 1){
+        throw new Error('template source not unique.');
+    }
+    var css = s.data('class');
+    var html = s.remove().html();
 
-		template.dom = {
-			html: html,
-			css: css
-		};
-	}
+    template.dom = {
+        html: html,
+        css: css
+    };
+}
+```
 
 Then it's simply stored in the dictionary:
 
-    templates[settings.key] = settings;
-	
+```js
+templates[settings.key] = settings;
+```
+
 And now we can _activate_ the template at any time, making it visible:
 
-    nbrut.tt.activate('entry-editor');
+```js
+nbrut.tt.activate('entry-editor');
+```
 
 Forcing people to use the _Javascript_ console isn't what I had in mind, so I naturally added a click handler to _activate_ the template:
 
-	trigger.on('click', function(e){
-		if (e.which === 1){ // left-click
-			activate(settings.key);
-			return false;
-		}
-	});
+```js
+trigger.on('click', function(e){
+    if (e.which === 1){ // left-click
+        activate(settings.key);
+        return false;
+    }
+});
+```
 
 The point of using the `which` property is that I'm a _huge_ fan of opening new tabs for just about anything using my mouse wheel, and it infuriates me when I can't do that.
 
 Ultimately, when you click on the button, and a template is to be _activated_, a few things happen.
 
-	function activate(key) {
-		var template = templates[key];
-		if (template === undefined) {
-			template = templates['404']; // fall back to 404.
-		}
+```js
+function activate(key) {
+    var template = templates[key];
+    if (template === undefined) {
+        template = templates['404']; // fall back to 404.
+    }
 
-		if(!template.initialized){
-			template.initialized = true;
-			template.initialize();
-		}
+    if(!template.initialized){
+        template.initialized = true;
+        template.initialize();
+    }
 
-		if(template.container in active) {
-			if(active[template.container] === template && !template.selfCleanup) {
-				return; // already active.
-			} else {
-				deactivateContainer(template.container); // clean-up.
-			}
-		}
+    if(template.container in active) {
+        if(active[template.container] === template && !template.selfCleanup) {
+            return; // already active.
+        } else {
+            deactivateContainer(template.container); // clean-up.
+        }
+    }
 
-		activateTemplate(template); // set-up.
+    activateTemplate(template); // set-up.
 
-		template.onAfterActivate();
-	}
+    template.onAfterActivate();
+}
+```
 
 We'll come back to the first if clause later. The template initialization is going to prove useful when some sort of one-time preparation for a particular template is required.
 
 The third if clause introduces a new dictionary, the `active` dictionary. This one keeps track of which template is _active_ in each container managed by the templating engine. If the container is _active_, then it gets deactivated, which is a glorified way of saying the container is emptied.
 
 If the template doesn't need to refresh itself when it's already active, we don't need to do anything.
-	
+    
 Once the template is defined, initialized, and the container is ready, the template is set up in `activateTemplate`, and then any _post-activation callback_ that has been provided, executes.
 
-	function activateTemplate(template){
-		var c = $(template.container);
-		if (c.length !== 1){
-			throw new Error('template container not unique.');
-		}
-		c.html(template.dom.html);
-		c.attr('class',template.dom.css);
-		active[template.container] = template;
+```js
+function activateTemplate(template){
+    var c = $(template.container);
+    if (c.length !== 1){
+        throw new Error('template container not unique.');
+    }
+    c.html(template.dom.html);
+    c.attr('class',template.dom.css);
+    active[template.container] = template;
 
-		if (template.container === defaults.container){
-			var title = setTitle(template.title);
-		}
-	}
+    if (template.container === defaults.container){
+        var title = setTitle(template.title);
+    }
+}
+```
 
 There isn't a lot to mention about `activateTemplate`, except perhaps that the document title is only updated if `template.container === defaults.container`, which means a full _view render_ took place, instead of just a _partial render_.
 
@@ -179,9 +197,11 @@ Now we have a _templating system_ to go back and forth between our different vie
 
 There are a couple of aspects to this. First of all, since we are already _switching views_ on the _client side_, rather on the _server side_, we might as well do the routing on the client side:
 
-	server.get('/*', function(req,res){
-		res.render('index.jade');
-	});
+```js
+server.get('/*', function(req,res){
+    res.render('index.jade');
+});
+```
 
 > It's not like I'm going to get to [20 million monthly page views](http://theoatmeal.com/ "The Oatmeal") anytime soon, but that's **no excuse** for not improving the experience of the few adventuring ones that _dare navigate_ my site.
 
@@ -193,43 +213,49 @@ So now every single `GET` request that hits my site receives the same response. 
 
 To keep track of a user's navigation history, lets go back to the way in which we registered a view template:
 
-    nbrut.tt.add({
-        key: 'entry-editor',
-    |   alias: '/write-entry',
-        trigger: '#write-entry',
-        source: '#entry-template',
-        title: { value: 'New Post', formatted: true },
-        onAfterActivate: onAfterActivate
-    });
+```js
+nbrut.tt.add({
+    key: 'entry-editor',
+    alias: '/write-entry',
+    trigger: '#write-entry',
+    source: '#entry-template',
+    title: { value: 'New Post', formatted: true },
+    onAfterActivate: onAfterActivate
+});
+```
 
 I explained all of those properties, except for the _alias_. The alias would be the _route_ that we register with the HTML 5 [history](https://developer.mozilla.org/en-US/docs/DOM/Manipulating_the_browser_history "Manipulating the browser history") API.
 
 So now we'll need to make a couple of subtle changes to the `activateTemplate` function. The first is adding an optional parameter I called `soft`. The second is:
    
-	if (template.container === defaults.container){
-		var title = setTitle(template.title);
+```js
+if (template.container === defaults.container){
+    var title = setTitle(template.title);
 
-	|	if(!soft){
-	|		history.pushState(template.key, title, template.alias);
-	|	}
-	}
+    if(!soft){
+        history.pushState(template.key, title, template.alias);
+    }
+}
+```
 
 We didn't change anything else, thus `!soft` will always be _truthy_. Each template activation will change the _navigation history_ with the _route sugar_ defined in `template.alias`.
 
 In order to **preserve navigation**, since we're manipulating `history` with `history.pushState` we need to handle the `popstate` event, this encompasses two steps. The first is to handle `popstate`, so we'll go ahead and do that:
 
-	$(function(){
-		$(window).on('popstate', function(e){
-			if (e.originalEvent === undefined || e.originalEvent.state === null){
-				key = keys[document.location.pathname];
-			} else {
-				key = e.originalEvent.state;
-			}
-			activate(key, true);
-		});
+```js
+$(function(){
+    $(window).on('popstate', function(e){
+        if (e.originalEvent === undefined || e.originalEvent.state === null){
+            key = keys[document.location.pathname];
+        } else {
+            key = e.originalEvent.state;
+        }
+        activate(key, true);
+    });
 
-		$(window).trigger('popstate'); // manual trigger fixes an issue in Firefox.
-	});
+    $(window).trigger('popstate'); // manual trigger fixes an issue in Firefox.
+});
+```
 
 Here we simply take the key from data passed to the `state`, or from the `document.location`, and pass that along to `activate`, with `soft = true`, meaning we won't be _pushing_ a new `state` this time.
 
@@ -237,31 +263,35 @@ The manual trigger fixes an [issue in Firefox](http://hacks.mozilla.org/2011/03/
 
 The second and last step was to add the `soft` parameter to `activate` as well, and to _prevent  identical_ `state` objects to be pushed.
 
-    // ...
-	
-	if(template.container in active) {
-		if(active[template.container] === template) {
-	|		if(!template.selfCleanup){
-				return;
-	|		}
-	|		soft = true;
-		} else {
+```js
+// ...
 
-	// ...
+if(template.container in active) {
+    if(active[template.container] === template) {
+        if(!template.selfCleanup){
+            return;
+        }
+        soft = true;
+    } else {
+
+// ...
+```
 
 And regarding the **HTTP 404** status error code won't really be ever happening in our application. That's fine, but we do need to _alert our users_ of the fact that a particular endpoint doesn't match any of the view templates that we can render. For this purpose, I created a very minimal **404** template:
 
-	section#not-found-template.template
-		h1='Not Found'
-	    div='Sorry, the page you are looking for does not exist in the Matrix.'
+    section#not-found-template.template
+        h1='Not Found'
+        div='Sorry, the page you are looking for does not exist in the Matrix.'
 
 Now I just need to _register_ this template in my engine, like so:
 
-    nbrut.tt.add({
-        key: '404',
-        source: '#not-found-template'
-    });
-	
+```js
+nbrut.tt.add({
+    key: '404',
+    source: '#not-found-template'
+});
+```
+
 And _that's it_. Remember there was a _fallback_ to `template = templates['404'];`, that's all we'll ever need to deal with **404** issues.
 
 # Coming Up #

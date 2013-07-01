@@ -22,12 +22,16 @@ Regex is a _scaringly powerful_ tool, when applied properly. That doesn't mean y
 
 A regular expression denotes a **pattern** you want to _match_ in a particular string. Lets look at an example:
 
-    |/my ca[rt] ate? (the|[2-4]) [sp]lums?/
+```js
+var test = /my ca[rt] ate? (the|[2-4]) [sp]lums?/;
 
-    // the above regex matches all strings below
+// the above regex matches all strings below
+var strings = [
     'my cat ate the plum',
     'my cat ate 3 plums',
     'my car at the slums'
+];
+```
 
 Think of regex as _regular strings_. If a character isn't a _special marker_, it will match that _character_. Therefore, the `/my ca/` regex, will match the `'my ca'` sub-string.
 
@@ -97,28 +101,32 @@ In these cases, we'll want to use the _non-capturing_ group syntax. This means a
 
 To replace a string using a regex in JS, we can use `String.prototype.replace`, [passing a regex](https://developer.mozilla.org/en/docs/JavaScript/Reference/Global_Objects/String/replace "replace - MDN") in the first parameter. Lets do an example.
 
-    // a pretty non-sensical example
-    'the cow is a cow, but the cat is not a cow.'.replace(/cow/, 'dog');
+```js
+// a pretty non-sensical example
+'the cow is a cow, but the cat is not a cow.'.replace(/cow/, 'dog');
 
-    // the result is
-    'the dog is a cow, but the cat is not a cow.'
+// the result is
+'the dog is a cow, but the cat is not a cow.'
 
-    // not quite what we wanted, we forgot to add the g modifier.
-    'the cow is a cow, but the cat is not a cow.'.replace(/cow/g, 'dog');
+// not quite what we wanted, we forgot to add the g modifier.
+'the cow is a cow, but the cat is not a cow.'.replace(/cow/g, 'dog');
 
-    // the result now is
-    'the dog is a dog, but the cat is not a dog.'
+// the result now is
+'the dog is a dog, but the cat is not a dog.'
+```
 
 You could also use `$1`, `$2`, and so on, in the replacement string. These will get replaced with the group captured when matching your regex. Another example!
 
-    // more non-sense please
-    var rimportant = /(\d+|boss)/g,
-        remphasize = '<em>$1</em>';
+```js
+// more non-sense please
+var rimportant = /(\d+|boss)/g,
+    remphasize = '<em>$1</em>';
 
-    'build 102 errored... tell the boss it failed!'.replace(rimportant, remphasize);
+'build 102 errored... tell the boss it failed!'.replace(rimportant, remphasize);
 
-    // results in
-    'build <em>102</em> errored... tell the <em>boss</em> it failed!'
+// results in
+'build <em>102</em> errored... tell the <em>boss</em> it failed!'
+```
 
 Alternatively, you could provide a function callback as a replacement parameter, and it will be invoked once for each match. You can find more info on that on [MDN](https://developer.mozilla.org/en/docs/JavaScript/Reference/Global_Objects/String/replace "replace - MDN").
 

@@ -1,0 +1,27 @@
+section#about-blog.blog-sidebar-item
+  header
+    h5.underline='About'
+
+  section.blogger-description.markdown!=blog.descriptionHtml
+
+  if blog.social.any
+    footer.social-links
+      header='Stalk me all over the Internet!'
+
+      if blog.social.github
+        a.social.github(title='Stalk me on GitHub', target='_blank', href=blog.social.github)='GitHub'
+
+      if blog.social.stackoverflow
+        a.social.stackoverflow(title='Stalk me on Stack Overflow', target='_blank', href=blog.social.stackoverflow)='Stack Overflow'
+
+      if blog.social.careers
+        a.social.careers(title='Stalk me on Careers', target='_blank', href=blog.social.careers)='Careers'
+
+      if blog.social.linkedin
+        a.social.linkedin(title='Stalk me on LinkedIn', target='_blank', href=blog.social.linkedin)='LinkedIn'
+
+      if blog.social.twitter
+        a.social.twitter(title='Stalk me on Twitter', target='_blank', href=blog.social.twitter)='Twitter'
+
+      if blog.social.email
+        a.social.email(title='Stalk me via email', target='_blank', href='mailto:' + blog.social.email)='Email'

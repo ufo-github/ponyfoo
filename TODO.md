@@ -3,15 +3,26 @@
 ## 1
 
 - fix nightmares with session, domains, and passports
-- use marked over pagedown _everywhere_.
 
-- blog
-  - email notifications for comments (for both the blog-owner and the commenter)
-  - autosave drafts to localStorage periodically (5s~)
-  - anon commenting option.
+- profile edit allows to turn notifications for comments on or off.
+- profile edit allows to subscribe or unsubscribe from blog
+
 
 
 ## 2
+
+- re-do REST api. add oauth
+
+- blog
+  - autosave drafts to localStorage periodically (5s~)
+  - allow perm. storing drafts in backend
+  - redesign commenting frontend (which blows)
+  - anon commenting option.
+  - font consistency in blog (mac)
+  - data-related author's twitter, take from req.blogger
+  - list users only for back-end people, not any blogger
+  - footer for blog similar to www and docs
+  - adaptable design ?
 
 - market
   - prettier header
@@ -21,16 +32,6 @@
 - docs
   - markdown playground.
   - docs about our editor, shortcuts, etc?
-
-- blog
-  - allow perm. storing drafts in backend
-  - redesign commenting frontend (which blows)
-  - font consistency in blog (mac)
-  - data-related author's twitter
-  - users only for back-end people, not any blogger
-
-- adaptable design ?
-- proper api + authentication
 
 - pingbacks
   - Display PingBacks on each blog entry

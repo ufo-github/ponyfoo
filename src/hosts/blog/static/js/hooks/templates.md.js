@@ -17,6 +17,6 @@
         });
 
         var md = container.find('.markdown');
-        nbrut.md.prettify(md);
+        nbrut.md.postConvert(md);
     });
 }(window,jQuery,nbrut);

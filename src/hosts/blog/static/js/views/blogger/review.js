@@ -27,6 +27,10 @@
                     }
                 });
 			});
+
+            if(data.highlightId && data.highlightId === id){
+                row.flash('#ffc');
+            }
 		});
 
         nbrut.ui.pagedTable({

@@ -28,21 +28,24 @@ It wasn't that long ago [CommonJS and RequireJS](http://blog.millermedeiros.com/
 
 Modules, as defined by the CommonJS spec, the so-called _Node way_, are directly related to the files that contain them, and can be included using `require`. A module will contain all properties published in the public interface defined in `module.exports`.
 
-	// util.js
+```js
+// util.js
 
-	module.exports = {
-		public_api: true,
-		log_message: function(message){
-			console.log(message);
-		}
-	};
+module.exports = {
+	public_api: true,
+	log_message: function(message){
+		console.log(message);
+	}
+};
 
-	// main.js
+// main.js
 
-	|var util = require('./util.js');
-	expect(util.public_api).toBeTruthy();
-	util.log_message('foo');
-	// > foo
+var util = require('./util.js');
+expect(util.public_api).toBeTruthy();
+util.log_message('foo');
+
+// > foo
+```
 
 This pattern is _very good for Node_.
 
@@ -83,9 +86,11 @@ You need a lot of boilerplate code in order to get **AMD** working, and _it shou
 
 Besides that, there are some _unwanted complications_. The example above won't work when the JS is _minified_, because the arguments on the anonymous function will get renamed to something like `a, b`, meaning they won't be able to infer the names of the modules anymore. The solution, is **even more verbose**.
 
-	define('module', ['dep1', 'dep2'], function(dep1, dep2){
-		return function(){};
-	});
+```js
+define('module', ['dep1', 'dep2'], function(dep1, dep2){
+	return function(){};
+});
+```
 
 This leaves you wondering why they try so hard to provide **something that just won't work in production environments**. And why does everyone have to modify their code to comply with yours? That's _just not right_.
 
@@ -104,7 +109,7 @@ For now it doesn't even have an API, it's just _an idea_. And I want to spend so
 
 Suppose you want it to "become" **CJS**, then you should reference a bundle, disable AJAX calls, and let it resolve everything on its own before, synchronously, giving you a result back.
 
-Similarly, you can leave it pretty much on its [current state](https://github.com/bevacqua/lazyjs/tree/9d3c3173ec067a83f5e4afafc29b9e195ef05798 "LazyJS on GitHub, as of 2013-05-10"), expose the `.lookup(url, done)` [function](https://github.com/bevacqua/lazyjs/blob/9d3c3173ec067a83f5e4afafc29b9e195ef05798/src/lazy-loader.js#L112), and voilá, you've got RequireJS. Sort of.
+Similarly, you can leave it pretty much on its [current state](https://github.com/bevacqua/lazyjs/tree/9d3c3173ec067a83f5e4afafc29b9e195ef05798 "LazyJS on GitHub"), expose the `.lookup(url, done)` [function](https://github.com/bevacqua/lazyjs/blob/9d3c3173ec067a83f5e4afafc29b9e195ef05798/src/lazy-loader.js#L112 "LazyJS on GitHub"), and voilá, you've got RequireJS. Sort of.
 
 Feedback regarding [LazyJS](http://bevacqua.github.io/lazyjs/ "LazyJS: The minimalist JS loader") is welcome, and I promise to try my best to leave it _as agnostic and unopinionated as possible_.
 

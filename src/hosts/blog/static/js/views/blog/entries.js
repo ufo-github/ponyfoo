@@ -80,9 +80,8 @@
         if(search){
             addSearchShrinkage(container);
         }
-        addReadingTime(container);
-        addSocialLinks();
         wireSubscriptionButton();
+        afterLoad(container);
 
         flashValidation(viewModel, '.blog-entries-wrapper');
     }
@@ -99,6 +98,11 @@
         });
     }
 
+    function afterLoad(container){
+        addReadingTime(container);
+        reloadSocialLinks();
+    }
+
     function addReadingTime(container){
         var entries = container.find('.blog-entry'),
             readingTime = entries.readingTime();
@@ -106,7 +110,7 @@
         container.data('readingTime', readingTime);
     }
 
-    function addSocialLinks(){
+    function reloadSocialLinks(){
         nbrut.social.twitter.reload();
         nbrut.social.pocket.reload();
     }
@@ -164,6 +168,7 @@
                 articles.appendTo(container);
                 pager.remove();
                 addPager(it, container, identifier, query);
+                afterLoad(container);
             }
         });
     }

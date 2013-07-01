@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>{{header.intro}}</title>
-        <style type="text/css">#outlook a{padding:0;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} img{-ms-interpolation-mode:bicubic;} body{margin:0; padding:0;} img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;} table{border-collapse:collapse !important;} body, #bodyTable, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;} #bodyCell{padding:20px;} #templateContainer{width:600px;}
+        <style type="text/css">#outlook a{padding:0;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} body, table, td, p, a, li, blockquote{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} img{-ms-interpolation-mode:bicubic;} body{margin:0; padding:0;} img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;} table{border-collapse:collapse !important;} body, #bodyTable, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;} #bodyCell{padding:20px;} #templateContainer{width:600px;}code{font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;}
 
             h1, h2, h3, h4 {
                 color:#412917 !important;
@@ -42,6 +42,7 @@
             blockquote {
                 border-left: 6px solid #cbc5c0;
                 padding-left: 15px;
+                margin-left: 0;
             }
             
             body, #bodyTable{ background-color:#f3f4eb; }
@@ -220,6 +221,16 @@
                                                     <tr>
                                                         <td valign="top" class="bodyContent">
                                                             {{{body}}}
+                                                            {{#trapped}}
+                                                            <div style='margin-top: 20px; padding: 10px; border: 3px solid #412917; background-color: #ffd2d2; color: #384c53;'>
+                                                                <div>
+                                                                    <b>Recipients</b>
+                                                                </div>
+                                                                <pre>
+                                                                    <code>{{trapped}}</code>
+                                                                </pre>
+                                                            </div>
+                                                            {{/trapped}}
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -231,6 +242,7 @@
                                                 <!-- BEGIN FOOTER // -->
                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
                                                     <tr>
+                                                        <td valign="top" class="footerContent" style='text-align: left;'>*|HTML:unsubscribe_html|*</td>
                                                         <td valign="top" class="footerContent">
                                                             {{#footer.twitter.url}}
                                                                 <a href="{{{footer.twitter.url}}}">{{footer.twitter.handle}} on Twitter</a>&nbsp;&nbsp;&nbsp;

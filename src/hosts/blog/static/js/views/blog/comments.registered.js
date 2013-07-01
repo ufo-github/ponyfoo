@@ -38,7 +38,7 @@
 
                         edits[edit.id] = comment;
                         target.html(commentHtml);
-                        nbrut.md.prettify(target);
+                        nbrut.md.postConvert(target);
                     }
 
                     button.trigger('edit-exit');

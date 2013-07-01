@@ -3,11 +3,11 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     jsdom = require('jsdom'),
-    pagedown = require('pagedown'),
     api = require('../../../../config').api,
     Discussion = require('../../../../model/Discussion.js'),
     Entry = require('../../../../model/Entry.js'),
     entryService = require('../../../../service/blogEntryService.js'),
+    markdownService = require('../../../../service/markdownService.js'),
     pingbackService = require('../../../../service/pingbackService.js'),
     broadcastService = require('../../../../service/broadcastService.js'),
     assetService = require('../../../../service/assetService.js'),
@@ -120,7 +120,13 @@ function insert(req,res){
                         });
                     }
                 ], function(err){
-                    rest.end(res,{});
+                    if(err || !entry){
+                        rest.end(res, {});
+                    }else{
+                        rest.end(res, {
+                            id: entry._id
+                        });                        
+                    }
                 });
             }
         });
@@ -265,8 +271,7 @@ function tagged(req,res){
 }
 
 function getPlainTextBrief(entry, done) {
-    var converter = new pagedown.getSanitizingConverter(),
-        html = converter.makeHtml(entry.brief);
+    var html = markdownService.parse(entry.brief);
 
     jsdom.env({
         html: '<foo>' + html + '</foo>', // empty and <HTML> tags throw, for some obscure reason.

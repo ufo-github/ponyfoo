@@ -17,7 +17,8 @@ var mongoose = require('mongoose'),
             title: { type: String },
             url: { type: String }
         },
-        bio: { type: String }
+        bio: { type: String },
+        commentNotifications: { type: Boolean, default: true }
     },{ id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatar').get(function(){

@@ -18,6 +18,7 @@ function configure(server){
 
     server.use(express.session({
         cookie: {
+            path: '/',
             domain: config.server.tld
         },
         secret: config.security.sessionSecret,
@@ -29,10 +30,6 @@ function configure(server){
     authenticationSetup(server);
     localsSetup(server);
 
-    server.use(function(err, req, res, next){
-        console.log(err);
-    });
-    
     server.use(server.router);
 }
 

@@ -30,63 +30,69 @@ I think another important factor in testing is _visbility_. In statically typed 
 
 There are no _statically defined interfaces_. You might be used to interfaces such as:
 
-    public interface ITrackable
-    {
-        int TrackingNumber { get; }
-        void Track();
-        bool Untrack();
-        bool IsBeingTracked { get; }
-    }
+```cs
+public interface ITrackable
+{
+    int TrackingNumber { get; }
+    void Track();
+    bool Untrack();
+    bool IsBeingTracked { get; }
+}
+```
 
 Bear with me for this small example of a testable class, written in C#:
 
-    public class Testable
+```cs
+public class Testable
+{
+    private readonly ITrackable _trackable;
+    
+    public Testable(ITrackable trackable)
     {
-        private readonly ITrackable _trackable;
-        
-        public Testable(ITrackable trackable)
-        {
-            _trackable = trackable;
-        }
-        
-        public bool CallMeTracy()
-        {
-            _trackable.Track();
-            return true;
-        }
+        _trackable = trackable;
     }
+    
+    public bool CallMeTracy()
+    {
+        _trackable.Track();
+        return true;
+    }
+}
+```
 
 The code doesn't make any sense. I know. The case in point is that, using [Dependency Injection](http://www.amazon.com/dp/1935182501 "Dependency Injection in .NET"), `Testable` becomes very easily testable. Here's a sample test:
 
-    [TestCase]
-    public class TestableTests
+```cs
+[TestCase]
+public class TestableTests
+{
+    private Testable testable;
+    
+    [SetUp]
+    public void Setup()
     {
-        private Testable testable;
+        var mock = new FakeTrackable();
+        testable = new Testable(mock);
+    }
+    
+    [Test]
+    public void should_call_me_tracy_and_return_true()
+    {
+        bool result = testable.CallMeTracy();
         
-        [SetUp]
-        public void Setup()
-        {
-    |       var mock = new FakeTrackable();
-            testable = new Testable(mock);
-        }
-        
-        [Test]
-        public void should_call_me_tracy_and_return_true()
-        {
-            bool result = testable.CallMeTracy();
-            
-            Assert.IsTrue(result, "Expected CallMeTracy to return true.");
-        }
+        Assert.IsTrue(result, "Expected CallMeTracy to return true.");
+    }
+}
+
+public class FakeTrackable : ITrackable
+{
+    public void Track()
+    {
     }
 
-    public class FakeTrackable : ITrackable
-    {
-        public void Track()
-        {
-        }
-
-        // ... other implementation stubs ...
-    }
+    // ... other implementation stubs ...
+}
+```
 
 How do we reach a similar state of affairs in JavaScript? We simply can't. We must _adapt to the dynamism_, embrace it.
     
@@ -98,27 +104,31 @@ JavaScript testing needs to be _even more thorough_. Your code can't statically 
 
 Lets refer to a similar example in JavaScript
 
-    function Testable(trackable){
-        this.callMeTracy = function(){
-            trackable.track();
-            return true;
-        };
-    }
+```js
+function Testable(trackable){
+    this.callMeTracy = function(){
+        trackable.track();
+        return true;
+    };
+}
+```
 
 And the test, which might be something like this
 
-    describe('Testable', function(){
-        it('should return true when calling him Tracy', function(){
-            var him = new Testable({
-                track: function(){
-                    // this is just a mock
-                }
-            });
-            
-            expect(him.callMeTracy).toBeDefined();
-            expect(him.callMeTracy()).toBeTruthy();
+```js
+describe('Testable', function(){
+    it('should return true when calling him Tracy', function(){
+        var him = new Testable({
+            track: function(){
+                // this is just a mock
+            }
         });
+        
+        expect(him.callMeTracy).toBeDefined();
+        expect(him.callMeTracy()).toBeTruthy();
     });
+});
+```
     
 Obviously, a clear difference here is that `trackable` can be _anything_, unless it's constrained by _guard clauses_. But, that's generally something that JavaScript developers shy away from, given the _sheer power_ it provides.
 
@@ -130,24 +140,28 @@ If you are writing tests for **Node.JS** code, you might be in luck. I have been
 
 **Browser code** is _a different story_, it often follows patterns similar to this:
 
-    !function(window, $){
-        window.myThing = {
-            annoy: function(){
-                alert('about to become very annoying!');
-                $('a, span, b, em').wrap('<marquee/>');
-            }
-        };
-    }(window, jQuery);
+```js
+!function(window, $){
+    window.myThing = {
+        annoy: function(){
+            alert('about to become very annoying!');
+            $('a, span, b, em').wrap('<marquee/>');
+        }
+    };
+}(window, jQuery);
+```
 
 This kind of code is indeed hard to test, but you could always just load the affected JS file in isolation, after creating stubs for the global objects you need. An example would be:
 
-    var window = {},
-        jQuery = function(){
-            return {
-                wrap: function(){
-                }
-            };
+```
+var window = {},
+    jQuery = function(){
+        return {
+            wrap: function(){
+            }
         };
+    };
+```
         
 Once you get tired of helplessly mocking your way out of trouble, you should use a real stubbing and mocking framework, such as [Sinon.JS](http://sinonjs.org/ "Standalone test spies, stubs and mocks"). Also, remember that using spies to verify that callbacks (such as `callMeTracy`, and `wrap`) are invoked, and passed _the correct parameters_!
 
@@ -159,37 +173,39 @@ Once you realize that testing in JavaScript is _not that bad_, and look at it fr
 
 A pattern I commonly use when defining unit tests in Jasmine, is to prepare a list of test cases (expected input and output), and then run them all at once. Here's an example taken directly from [one of my GitHub repositories](https://github.com/bevacqua/jsn/blob/29384246d28d688475669375423568c54439feed/test/spec/text.js "jsn GitHub repository"):
 
-    describe('test cases', function(){
-        var cases = [],
-            context = {
-                plain: 'plain',
-                foo: {
-                    bar: 'baz',
-                    undef: undefined,
-                    nil: null,
-                    num: 12
-                },
-                color: 'red',
-                how: { awesome: 'very' }
-            };
+```js
+describe('test cases', function(){
+    var cases = [],
+        context = {
+            plain: 'plain',
+            foo: {
+                bar: 'baz',
+                undef: undefined,
+                nil: null,
+                num: 12
+            },
+            color: 'red',
+            how: { awesome: 'very' }
+        };
 
-        function include(input,output){ cases.push({ input: input, output: output }); }
+    function include(input,output){ cases.push({ input: input, output: output }); }
 
-        include('@plain','plain');
-        include('@foo.bar','baz');
-        include('@foo.undef',undefined);
-        include('@foo.nil',null);
-        include('@foo.num',12);
-        include('@@foo.bar','@foo.bar');
+    include('@plain','plain');
+    include('@foo.bar','baz');
+    include('@foo.undef',undefined);
+    include('@foo.nil',null);
+    include('@foo.num',12);
+    include('@@foo.bar','@foo.bar');
 
-        cases.forEach(function(testCase,i){
-            var replace = text.replace(Object.create(context));
+    cases.forEach(function(testCase,i){
+        var replace = text.replace(Object.create(context));
 
-            it('should return expected output for case #' + (i+1), function(){
-                expect(replace(testCase.input)).toEqual(testCase.output);
-            });
+        it('should return expected output for case #' + (i+1), function(){
+            expect(replace(testCase.input)).toEqual(testCase.output);
         });
     });
+});
+```
     
 This is something that _simply cannot be accomplished statically_. You could get here with reflection, but it's just unnatural to static languages.
 

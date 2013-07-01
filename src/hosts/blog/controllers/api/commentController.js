@@ -6,24 +6,25 @@ var async = require('async'),
     Comment = require('../../../../model/Comment.js'),
     Entry = require('../../../../model/Entry.js'),
     validation = require('../../../../service/validationService.js'),
+    commentService = require('../../../../service/blogCommentService.js'),
     rest = require('../../../../service/restService.js'),
     crud = require('../../../../service/crudService.js')(Discussion);
 
 function discuss(req,res){
-    var document = new Discussion({
+    var discussion = new Discussion({
         entry: req.params.entryId,
         blog: req.blog._id
     });
 
-    add(req,res,document,true);
+    add(req,res,discussion,true);
 }
 
 function reply(req,res){
-    Discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, document){
+    Discussion.findOne({ _id: req.params.id, blog: req.blog._id }, function(err, discussion){
         if(err){
             throw err;
         }
-        add(req,res,document,false);
+        add(req,res,discussion,false);
     });
 }
 
@@ -37,7 +38,7 @@ function validate(req,res){
     });
 }
 
-function add(req,res,document,root){
+function add(req,res,discussion,root){
     if(!validate(req,res)){
         return;
     }
@@ -54,14 +55,32 @@ function add(req,res,document,root){
         root: root
     });
 
-    document.comments.push(model);
-    document.save(function(err){
+    discussion.comments.push(model);
+    discussion.save(function(err){
         rest.resHandler(err,{
             res: res,
             then: function(){
                 rest.end(res, {
-                    discussion: document._id,
+                    discussion: discussion._id,
                     comment: actionMapper(req)(model)
+                });
+
+                Entry.findOne({ _id: discussion.entry }, function(err, entry){
+                    if(err){
+                        return console.error(err);
+                    }
+
+                    commentService.notifySubscribers({
+                        blog: req.blog,
+                        blogger: req.blogger,
+                        discussion: discussion,
+                        comment: model,
+                        entry: entry
+                    }, function(err){
+                        if(err){
+                            console.error(err);
+                        }
+                    });
                 });
             }
         });

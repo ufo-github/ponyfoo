@@ -120,11 +120,13 @@ module.exports = {
                 });
 
                 function complete(email){
+                    var link = authority + '/email/unsubscribe/' + subscriber._id;
+
                     recipients.to.push({ email: email });
                     recipients.merge.push({
                         email: email,
                         model: {
-                            unsubscribe_link: authority + '/email/unsubscribe/' + subscriber._id
+                            unsubscribe_html: "<a href='" + link + "'>unsubscribe</a>"
                         }
                     });
                     done();

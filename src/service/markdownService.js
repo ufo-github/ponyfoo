@@ -2,11 +2,16 @@
 
 var path = require('path'),
     fs = require('fs'),
-    pagedown = require('pagedown');
+    marked = require('ultramarked');
+
+marked.setOptions({
+    smartLists: true,
+    ultralight: true,
+    ultrasanitize: true
+});
 
 function parse(markdown){
-    var pd = new pagedown.getSanitizingConverter();
-    return pd.makeHtml(markdown);
+    return marked(markdown);
 }
 
 module.exports = {

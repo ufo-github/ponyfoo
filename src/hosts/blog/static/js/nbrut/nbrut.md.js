@@ -1,26 +1,14 @@
-!function (window, $, nbrut, Markdown, prettyPrint, undefined) {
+!function (window, $, nbrut, ultramarked, undefined) {
     'use strict';
 
     var md = function(){
-        function getConverter() {
-            return Markdown.getSanitizingConverter();
-        }
-
-        function getEditor(converter, postfix){
-            return new Markdown.Editor(converter, postfix);
-        }
-
-        function reformatMarkdown(container){
-            container.anchorSEO('a:not(header a)');
-            container.find('pre, code:not(pre code)').addClass('prettyprint');
-            container.find('ul, ol:not(.linenums)').addClass('item-list');
-            prettyPrint();
+        function getEditor(postfix){
+            return new window.Markdown.Editor(postfix);
         }
 
         function runEditor(postfix) {
-            var converter = getConverter(),
-                editorSelector = '#wmd-input' + postfix,
-                editor = getEditor(converter, postfix),
+            var editorSelector = '#wmd-input' + postfix,
+                editor = getEditor(postfix),
                 previewSelector = '#wmd-preview' + postfix,
                 preview = $(previewSelector);
 
@@ -28,22 +16,25 @@
 
             editor.run();
             editor.hooks.chain('onPreviewRefresh', function(){
-                reformatMarkdown(preview);
+                postConvert(preview);
             });
         }
 
+        function postConvert(container){
+            container.anchorSEO('a:not(header a)');
+            container.find('ul, ol').addClass('item-list');
+        }
+
         function html(md){
-            var converter = getConverter();
-            var result = converter.makeHtml(md || '');
-            return result;
+            return ultramarked(md || '');
         }
 
         return {
             runEditor: runEditor,
             html: html,
-            prettify: reformatMarkdown
+            postConvert: postConvert
         };
     }();
 
     nbrut.md = md;
-}(window, jQuery, nbrut, Markdown, prettyPrint);
+}(window, jQuery, nbrut, ultramarked);

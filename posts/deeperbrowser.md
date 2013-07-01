@@ -1,0 +1,1 @@
+- go deeper into browser native APIs, investigate new options in html5 apis such as localStorage and web workers.

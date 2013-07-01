@@ -8,5 +8,5 @@ module.exports = function(grunt){
     grunt.registerTask('default', ['test']);
     
     // generate documentation and compile assetify assets
-    grunt.registerTask('assets', ['ngdoc', 'assetify']);
+    grunt.registerTask('assets', ['ngdoc', 'browserify', 'assetify']);
 };

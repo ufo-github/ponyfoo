@@ -1,7 +1,9 @@
 'use strict';
 
-var User = require('../model/User.js'),
-    blogService = require('./blogService.js');
+var request = require('request'),
+    config = require('../config'),
+    blogService = require('./blogService.js'),
+    User = require('../model/User.js');
 
 function getModel(email, password, encryptPassword){
     return {
@@ -45,6 +47,27 @@ module.exports = {
 
             user.password = password;
             user.save(done);
+        });
+    },
+    getGravatar: function(userId, done){
+        User.findOne({ _id: userId }, function(err, user){
+            if(err || !user){
+                return done(err, user);
+            }
+
+            request({
+                url: user.gravatar + config.avatar.tiny,
+                encoding: 'binary'
+            }, function(err, res, body){
+                if(err || !body){
+                    return done(err);
+                }
+
+                done(null, {
+                    mime: res.type,
+                    data: new Buffer(body, 'binary').toString('base64')
+                });
+            });
         });
     }
 };
