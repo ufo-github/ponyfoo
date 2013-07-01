@@ -8,7 +8,7 @@
 - blog
   - email notifications for comments (for both the blog-owner and the commenter)
   - autosave drafts to localStorage periodically (5s~)
-
+  - anon commenting option.
 
 
 ## 2
