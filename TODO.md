@@ -4,9 +4,6 @@
 
 - fix nightmares with session, domains, and passports
 
-- profile edit allows to turn notifications for comments on or off.
-- profile edit allows to subscribe or unsubscribe from blog
-
 
 
 ## 2

@@ -8,10 +8,10 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (tip)
 ============
 
-- WWW Root
+- Marketing Minisite
   - Email Subscription
   - Flat UI Design
-  - Video Marketing
+  - Video Presentation
   
 - Ultramarked everywhere
 
@@ -27,6 +27,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 - Emailing and email templates
   - Transactional email using [Mandrill](https://mandrillapp.com "Mandrill by MailChimp")
   - Blog post email subscriptions
+  - Blog comment email notifications
 
 - Social Discovery
   - Tweet Button
