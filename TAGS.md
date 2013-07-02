@@ -5,8 +5,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 
-0.4 (sturdy-lad)
-============
+# 0.4 (sturdy-lad) wip
 
 **Email notifications**, _at last!_ Marketing Site. Documentation Site.
 
