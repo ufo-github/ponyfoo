@@ -17,6 +17,7 @@ data.assets.css = [
     resolve('/css/defaults/controls.less'),
     resolve('/css/defaults/controls.spinner.less'),
     resolve('/css/defaults/layout.less'),
+    resolve('/css/defaults/layout-footer.less'),
     resolve('/css/defaults/design.less'),
     resolve('/css/defaults/sprite.less'),
 

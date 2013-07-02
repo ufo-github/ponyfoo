@@ -1,0 +1,42 @@
+@import "/src/frontend/css/reusable/common.less";
+
+@media (min-width: 500px) {
+  html, body {
+    height: 100%;
+  }
+
+  @height: 70px;
+
+  .content-wrapper {
+    .box-sizing();
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -@height; /* the bottom margin is the negative value of the footer's height */
+    padding: 6px 0;
+  }
+
+  .push {
+    height: @height; /* .push must be the same height as .footer */
+  }
+
+  .layout-footer {
+    .box-sizing();
+    height: @height - 20px;
+  }
+}
+
+.layout-footer {
+  a {
+      margin-right: 12px;
+  }
+
+  margin-top: 20px;
+}
+
+.layout-footer .footer-inner:not(:empty) {
+  .box-radius(4px);
+  background-color: @moderate;
+  border: 1px solid @grayish;
+  padding: 8px;
+}

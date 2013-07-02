@@ -4,8 +4,6 @@
 
 - fix nightmares with session, domains, and passports
 
-- footer for blog similar to www and docs
-
 - market
   - prettier header
   - video

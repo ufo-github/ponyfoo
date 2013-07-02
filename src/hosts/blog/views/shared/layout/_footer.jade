@@ -1,0 +1,8 @@
+footer.layout-footer
+  p.footer-inner
+    if config.market.on
+      span='powered by '
+      a.highlighted-link(href=config.server.authorityMarket, title='Learn about Pony Foo')='ponyfoo'
+
+    if config.site.displayVersion
+      span.version=config.site.version

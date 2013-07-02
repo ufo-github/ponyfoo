@@ -14,10 +14,15 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     !=assetify.css.emit(profile)
 
   body
-    include shared/layout/_header
+    div.content-wrapper
+      include shared/layout/_header
 
-    main.spinner-container(data-flash=flash.json)
-      include shared/_spinner
+      main.spinner-container(data-flash=flash.json)
+        include shared/_spinner
+
+      div.push
+        
+    include shared/layout/_footer
 
     include shared/404
     include shared/metadata
