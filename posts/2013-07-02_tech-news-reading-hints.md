@@ -40,24 +40,26 @@ I went a tad further, and created a [IFTTT](http://ifttt.com/ "If This Then That
 
 # Keep Up! #
 
-Keeping up with tech news isn't that hard, really. If the web is your `127.0.0.1`, then you're in luck. Here are a few links that should get you bootstrapped.
+###### # Getting Bootstrapped! ######
+
+Keeping up with tech news isn't that hard, really. If the web is your `127.0.0.1`, then you're in luck.  
 
 - [Front-end Rescue](http://uptodate.frontendrescue.org/ "Guide on keeping up to date")
 - [@nzgb/followers](https://twitter.com/nzgb/following "Me on Twitter")
-- [Huge Link Dumps](https://github.com/bevacqua/frontend-job-listings/blob/master/README.md#recommended-reading "Recommended Reading on frontend-job-listings")
+- [Huge Link Dump](https://github.com/ponyfoo/linkdump "ponyfoo/linkdump on GitHub")
 
-#### Tech News ####
+###### # Tech News ######
 
 - [Hacker News](https://news.ycombinator.com/ "news.ycombinator.com") has hottest news about the tech world
 - [Reddit: The Good Parts](http://www.reddit.com/r/somethingimade+longtext+programming+PhilosophyofScience+cogsci+startups+math+compsci+SomebodyMakeThis+browsers+gamedev+shamelessplug+Freethought+reverseengineering+netsec "Tech subreditts selection")
 
-#### Web Development ####
+###### # Web Development ######
 
 - [Web Platform Daily](http://webplatformdaily.org/ "Open Web Platform Daily Digest")
 - [HTML5Rocks](http://www.html5rocks.com/ "HTML5 Rocks")
 - [Echo JS](http://www.echojs.com/ "Echo JS JavaScript News")
 
-#### Email Subscriptions ####
+###### # Email Subscriptions ######
 
 - [JavaScript Weekly](http://javascriptweekly.com/ "JavaScript Weekly")
 - [HTML5 Weekly](http://html5weekly.com/ "HTML5 Weekly")

@@ -5,7 +5,9 @@ section#blog-subscriptions.blog-sidebar-item
   if !user || !user.subscribed
     section
       p
-        span='Receive ' + blog.title + ' updates directly in your email! '
+        span='Receive '
+        strong=blog.title
+        span=' updates directly in your email! '
         em='No spam.'
 
       p='Unsubscribe at any time.'
