@@ -8,15 +8,17 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 0.4 (sturdy-lad)
 ============
 
-- Marketing Minisite
+**Email notifications**, _at last!_ Marketing Site. Documentation Site.
+
+- Marketing Site
   - Email Subscription
   - Flat UI Design
   - Video Presentation
   
 - Ultramarked everywhere
 
-- Documentation
-  - Added documentation subdomain
+- Documentation Site
+  - DISQUS comments
   - Flat UI Design
   - Markdown documentation
 
@@ -44,6 +46,8 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 # 0.3 (mutant)
+
+**Sharding**, now a _true blogging engine_. Better _documentation_.
 
 - Documentation
   - Improved [**README**](/README.md) with setup and installation steps to get started
@@ -96,6 +100,8 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 # 0.2 (baby-steps)
 
+**User-friendlier** design, _metadata and SEO_ treated with more respect.
+
 - Design
   - Responsive Web Design
   - Improved Markdown Editor
@@ -131,7 +137,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 # 0.1 (toddler)
 
-- Basic working version of the blog engine
+Basic, _working_, blogging engine.
 
 - Entry writer
   - Markdown
