@@ -1,0 +1,17 @@
+header.layout-header.clearfix
+  section.layout-heading
+    h1.layout-title
+      a#home(href='/')=blog.title
+
+    if blog.legend
+      h2.layout-legend=blog.legend
+
+  aside#menu
+    nav
+      block menu
+
+    span.search-area
+      input.search-input(type='text', placeholder='search')
+
+      a.search-button(title='Search')
+        span.action.search

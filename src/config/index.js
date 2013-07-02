@@ -60,7 +60,7 @@ var config = {
             thumbnail: this.server.host + '/img/thumbnail.png',
             displayVersion: env.ENABLE_VERSION_DISPLAY,
             version: 'v' + this.pkg.version,
-            get versionString(){ return '<!-- engine: ' + this.version + ' -->'; },
+            get versionComment(){ return '<!-- engine ' + this.version + ' -->'; },
             name: env.PLATFORM_NAME
         };
     },

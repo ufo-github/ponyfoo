@@ -6,6 +6,15 @@
 
 - footer for blog similar to www and docs
 
+- market
+  - prettier header
+  - video
+  - subscription implementation
+
+- docs
+  - markdown playground.
+  - docs about our editor, shortcuts, etc?
+
 
 
 ## 2
@@ -30,15 +39,6 @@
 
   - list users only for back-end people, not any blogger
   - adaptable design ?
-
-- market
-  - prettier header
-  - video
-  - subscription implementation
-
-- docs
-  - markdown playground.
-  - docs about our editor, shortcuts, etc?
 
 - server
   - basic auth
