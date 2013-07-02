@@ -5,10 +5,6 @@
 - fix nightmares with session, domains, and passports
 
 - footer for blog similar to www and docs
-- configure which buttons to use per blog
-- buffer button option
-- data-related author's twitter, take from req.blogger
-- font consistency in blog (mac)
 
 
 
@@ -17,6 +13,12 @@
 - re-do REST api. add oauth
 
 - blog
+  + ui/ux
+    - configure which buttons to use per blog
+    - buffer button option
+    - data-related author's twitter, take from req.blogger
+    - font consistency in blog (mac)
+
   + editor    
     - autosave drafts to localStorage periodically (5s~)
     - allow perm. storing drafts in backend
@@ -25,7 +27,7 @@
   + comments
     - redesign commenting frontend (which blows)
     - anon commenting option.
-    
+
   - list users only for back-end people, not any blogger
   - adaptable design ?
 

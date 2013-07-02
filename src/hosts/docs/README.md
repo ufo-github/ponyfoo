@@ -1,4 +1,4 @@
-# Blog Marketplace #
+# Documentation Site #
 
 This vhost is in charge of the platform's documentation. The minisite is entirely generated.
 
