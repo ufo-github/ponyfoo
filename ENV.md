@@ -42,6 +42,7 @@ These variables are usually very important for **deployments**, but the default 
 - **MARKET_ARTICLE_COUNT**: The amount of articles that should be displayed on market's homepage.
 
 - **HOST_DOCS**: The subdomain used to host the platform documentation.
+- **DOCS_GSID**: The Google Custom Search ID used in the Documentation site.
 
 - **HOST_REGEX**: An optional regex to restrict the host. Useful when your site is accessible through multiple `TLD`s but you only want one to serve responses. When a request doesn't match this regex, it gets permanently redirected to the same url on the default TLD.
 - **PORT**: The actual port where the application will listen on. Defaults to port `8081`.

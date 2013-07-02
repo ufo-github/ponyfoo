@@ -5,5 +5,6 @@ var env = require('./env.js');
 module.exports = {
     disqus: {
         id: env.DISQUS_SHORTNAME_DOCS
-    }
+    },
+    gsid: env.DOCS_GSID
 };

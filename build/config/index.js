@@ -45,6 +45,7 @@ module.exports = {
                 './build/**/*.js',
                 './docs/**/*.ngdoc',
                 './src/**/*.js',
+                './src/**/*.jsn',
                 './src/**/*.less',
                 '!./src/**/.bin',
                 '!./src/**/*.bin.js',

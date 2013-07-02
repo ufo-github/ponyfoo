@@ -18,8 +18,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 - Documentation Site
   - DISQUS comments
+  - Google Custom Search
   - Flat UI Design
-  - Markdown documentation
+  - Markdown Documentation
 
 - Blogging Standards
   - Added PingBack functionality

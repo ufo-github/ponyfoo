@@ -1,0 +1,18 @@
+!function(document, $) {
+    'use strict';
+
+    var gcse = document.createElement('script');
+    gcse.async = true;
+    gcse.src = (document.location.protocol === 'https:' ? 'https:' : 'http:') +
+    '//www.google.com/cse/cse.js?cx=@gsid';
+    
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+
+    $(document).on('keyup.googlesearch', function(e){
+        if(e.keyCode === 27){ // esc
+            $('.gsc-results-close-btn-visible').trigger('click');
+            $('.gsc-input').focus();
+        }
+    });
+}(document, jQuery);

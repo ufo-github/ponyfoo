@@ -148,3 +148,20 @@ body {
   color: @asphalt;
   margin: 0 0 30px 0;
 }
+
+.row-googlesearch {
+  border-left: 10px solid @alizarin;
+  background-color: @asphalt;
+  margin-bottom: 30px;
+}
+
+.row-googlesearch,
+.gsc-control-cse {
+  .box-sizing();
+  height: 65px; /* prevent flicker */
+}
+
+/* google custom search style overrides */
+.gsc-control-cse { border: none !important; }
+.gsc-input-box { height: inherit !important; }
+.gsc-input { padding-bottom: 3px !important; }

@@ -26,6 +26,7 @@ function cdn(pkg, goog, v){
     return { ext: base + version + '/' + pkg + ext };
 }
 
+data.assets.jQuery = { version: '1.9.1' };
 data.assets.js = [
     cdn('angular'),
     cdn('angular-bootstrap', false),
@@ -34,5 +35,12 @@ data.assets.js = [
     '../.bin/pages.js',
     '/js/app.js'
 ];
+
+if(!!config.docs.gsid){
+    data.assets.js.push({
+        file: resolve('/js/analytics/googlesearch.jsn'),
+        context: { gsid: config.docs.gsid }
+    });
+}
 
 module.exports = builder.complete(data);

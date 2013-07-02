@@ -28,6 +28,11 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
                 a(ng-href='{{url}}')
                   span='{{name}}'
 
+      if config.docs.gsid
+        div.container-fluid
+          div.row-fluid.row-googlesearch
+            gcse:search
+
       div.container-fluid
         div.row-fluid
           div.span3
@@ -35,7 +40,7 @@ html(lang='en', ng-app='docsApp', ng-controller='DocsController')
             form.form-search(ng-submit='submitForm()')
               p.search-box.clearfix
                 label.search-icon.fui-search(for='search-input')
-                input.search-query#search-input(type='text', ng-model='search', placeholder='search the index', accesskey='s', focused='focused')
+                input.search-query#search-input(type='text', ng-model='search', placeholder='filter topics', focused='focused')
 
               ul.nav.nav-list(ng-hide='page')
                 li(ng-repeat='page in pages track by page.url', ng-class='navClass(page)')
