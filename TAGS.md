@@ -1,11 +1,11 @@
-Changes by tag
-==============
+# Changes by Tag
+
 
 Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 
-0.4 (tip)
+0.4 (sturdy-lad)
 ============
 
 - Marketing Minisite
@@ -31,7 +31,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 - Social Discovery
   - Tweet Button
-  - Twitter Embeds
+  - Tweet Embeds
   - Pocket Button
 
 - Enhanced login process
@@ -43,8 +43,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 
-0.3 (frozen)
-============
+# 0.3 (mutant)
 
 - Documentation
   - Improved [**README**](/README.md) with setup and installation steps to get started
@@ -95,8 +94,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 
-0.2 (frozen)
-============
+# 0.2 (baby-steps)
 
 - Design
   - Responsive Web Design
@@ -131,8 +129,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 
 
-0.1 (frozen)
-============
+# 0.1 (toddler)
 
 - Basic working version of the blog engine
 
