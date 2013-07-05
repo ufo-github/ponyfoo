@@ -4,7 +4,7 @@ We've looked at doing some of the things that you can do in native code. So far,
 
 Why do we _really_ use jQuery? Sure, it simplifies things. But do we really need _all those abstractions_? Can't we get away with just a few of _the most basic abstractions_?
 
-![jquery.jpg][1]
+![jquery.jpg][jquery]
 
 If we look at their [API documentation](http://api.jquery.com/ "jQuery API Documentation"), we can _quickly categorize_ the features we use most frequently.
 
@@ -150,7 +150,28 @@ function removeClass(element, className){
 }
 ```
 
-That wasn't that hard, either. Before we move forward, we have one last attribute helper jQuery provides. The `.data` API. Similarly to `.prop`, they probe the value in your `data-*` attribute, parsing `true`, `false`, numbers, and JSON `object`s, or just returning a string. The other _big_ difference here, is that _jQuery sets up a cache_ for these values. This helps prevent querying the DOM time and again for stuff that _isn't going to change_. Under the assumption that _we are manipulating data attributes solely using their API_, that is.
+That wasn't that hard, either. As we are on the subject, let me give you some _added value_, and talk about [getComputedStyle](https://developer.mozilla.org/en-US/docs/Web/API/window.getComputedStyle "window.getComputedStyle - MDN"). Supported in every browser [except](http://caniuse.com/getcomputedstyle "Can I Use getComputedStyle?") for `IE < 9`, `getComputedStyle` returns the resulting value of _applying every style on an element_. The coolest feature of this method, though, is that it enables us to grab the computed _pseudo-element styles. For example, we could grab the `::after` styles on a `<blockquote>` element.
+
+Here you have an example taken from **MDN**:
+
+```html
+<style>
+    h3:after {
+        content: ' rocks!';
+    }
+</style>
+
+<h3>generated content</h3> 
+
+<script>
+    var h3 = document.querySelector('h3');
+    var result = getComputedStyle(h3, ':after').content;
+
+    console.log('the generated content is: ', result); // returns ' rocks!'
+</script>
+```
+
+Before we move forward, there's _one more attribute accessor_ we might want to talk about. The `.data` API. Similarly to `.prop`, it works by probing the value in your `data-*` attributes, parsing `true`, `false`, numbers, and JSON `object`s, or just returning a `String`. One important difference here, is that _jQuery sets up a cache_ for these values. This helps prevent querying the DOM time and again for stuff that _isn't going to change_. Under the assumption that _we are manipulating data attributes solely through their API_, that is.
 
 ## Effects, Animations
 
@@ -213,6 +234,8 @@ function step(timestamp) {
 requestAnimationFrame(step);
 ```
 
+**Chris Coyier** also provides a few, [nice usage examples](http://css-tricks.com/using-requestanimationframe/ "Using requestAnimationFrame"), on his blog.
+
 ## Events
 
 _A lot has changed_ in the jQuery **event API** over time. It used to be all over the place, nowadays we mostly have the `.on` and `.off` methods, and those handle _pretty much everything_ we need.
@@ -248,32 +271,29 @@ Concise enough.
 
 ## DOM Querying, Selectors
 
---
+> One of the most important mechanisms in browsers is querying the DOM to obtain a reference to HTML nodes. Yet, `querySelector`, by far the best option to perform such requests, is relatively unknown to the average developer. It's as if we're stuck with either `getElementById`, or _using jQuery_.
 
+Truth is, `querySelector` and `querySelectorAll` are [broadly](http://caniuse.com/queryselector "Can I Use querySelector?") supported in all major browsers, with the exception of `IE < 8`. That is _really good_ browser support. That is, in fact, one of the major reasons jQuery decided to _drop support_ for `IE < 9` in [their v2 branch](http://blog.jquery.com/2013/04/18/jquery-2-0-released/ "jQuery 2.0 Released").
 
-
-
-
+With `querySelector` being implemented across all browsers, the novelty in jQuery is reduced to _the ability to extend the selector engine_ by adding your own, _custom selectors_. This just adds to the confusion and isn't really necessary. _I'd recommend staying away from [that](http://james.padolsey.com/javascript/extending-jquerys-selector-capabilities/ "Extending jQuery's Selector Capabilities")_.
 
 ## DOM Manipulation
 
---
+There isn't a lot left to cover about DOM manipulation that wasn't covered in the other topics we've been discussing. If we look at the [API documentation](http://api.jquery.com/category/manipulation/ "Manipulation - jQuery API Documentation") once again, you'll notice we've accounted for most of the methods in the category. The ones we didn't mention are mostly measure computations, DOM altering methods, or methods such as `.val()`, `.text()` and `.html()`, which _don't really abstract any cross-browser limitations away_.
 
-
-
-
-
+When it comes to altering the DOM, the native methods can be [found on MDN][dom]. Once we know about those, all jQuery really does is _build on top_ of the `Node` API, providing us with some [syntactic sugar](http://en.wikipedia.org/wiki/Syntactic_sugar "Syntactic Sugar"), such as `insertAfter`.
 
 ## **Plugins**
 
---
+![plugins.jpg][1]
 
+Ah, plugins! Do we really need _everything_ to be a [jQuery plugin](http://net.tutsplus.com/tutorials/javascript-ajax/14-reason-why-nobody-used-your-jquery-plugin/ "14 Reasons Why Nobody Used Your jQuery Plugin")? I get _ecstatic_ whenever I find a small library, which performs its intended objectives really well, has a _succint API_, and **doesn't freaking depend on jQuery for _absolutely no reason_**.
 
+I guess my point is, make it a _conscious decision_. Don't mindlessly turn your _ten line miracle worker_ into a jQuery plugin just because you want to use `.hide()` and `.show()`. Write native code instead. You'll probably learn to _write better code_ while at it, and more people will be able to use it, _to boot_.
 
+> Oh, and **stay the hell away from [jQuery UI](http://jqueryui.com "jQuery User Interface")**, too. Thank you.
 
-
-
-
+Unless you are really _using it extensively_. If you only need the dialogs, you can get away with [just a few lines](http://raventools.com/blog/create-a-modal-dialog-using-css-and-javascript/ "Create a Modal Dialog Using CSS and Javascript") of CSS code!
 
 ##### Need a Talk?
 
@@ -289,5 +309,11 @@ And it's not _jQuery's fault_, but rather, we should be _complimenting the brows
 
 Now that all major browsers offer automatic updates, jQuery will _steadily decline in value_. The very purpose of the library, dealing with the **multitude of cross browser issues** present in older browsers are _subsiding_.
 
-  [1]: http://i.imgur.com/8wWcU19.jpg "jQuery"
+> If you think there is a topic I didn't uncover, please _let me know_, and I'll consider it for a future blog post.
+
+Happy experimenting!
+
+  [jquery]: http://i.imgur.com/8wWcU19.jpg "jQuery"
+  [plugins]: http://i.imgur.com/rl2URLW.jpg "Sad, sad plugins"
   [xhr]: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#responseType "responseType values - MDN"
+  [dom]: https://developer.mozilla.org/en-US/docs/Web/API/Node#Methods "Node Methods - MDN"
