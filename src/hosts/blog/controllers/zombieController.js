@@ -19,7 +19,9 @@ module.exports = {
                 /bingbot/i, // Bing
                 /slurp/i, // Yahoo!
                 /LinkedInBot/i, // LinkedIn
-                /Twitterbot/i // Twitter
+                /Twitterbot/i, // Twitter
+                /Instapaper/i, // Instapaper
+                /diffbot/i // Diffbot
             ],
             zombieService = require('../../../service/zombieService.js'),
             zombie = zombieService.setup(server, userAgents, loaded);
