@@ -218,13 +218,24 @@ a.button {
 ----------------------------------------------------------*/
 
 thead th {
-  border-bottom: 1px solid @moderate * 0.87;
+  background-color: darken(@moderate, 9%);
 }
 
 tbody tr:nth-child(even) {
-  background-color: @moderate * 0.97;
+  background-color: darken(@moderate, 6%);
 }
 
 tbody tr:nth-child(odd) {
-  background-color: @moderate * 0.95;
+  background-color: darken(@moderate, 3%);
+}
+
+tr {
+  border-width: 3px;
+  border-style: solid;
+  border-color: @moderate;
+  border-top: none;
+}
+
+thead tr {
+  border-top: 3px solid @moderate;
 }

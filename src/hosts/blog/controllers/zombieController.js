@@ -14,11 +14,14 @@ function loaded(window) {
 module.exports = {
     configure: function(server){
         var userAgents = [
-                /Googlebot/i, // google
-                /facebookexternalhit/i, // facebook
-                /bingbot/i, // bing
-                /slurp/i, // yahoo slurp
-                /LinkedInBot/i // linkedin
+                /Googlebot/i, // Google
+                /facebookexternalhit/i, // Facebook
+                /bingbot/i, // Bing
+                /slurp/i, // Yahoo!
+                /LinkedInBot/i, // LinkedIn
+                /Twitterbot/i, // Twitter
+                /Instapaper/i, // Instapaper
+                /diffbot/i // Diffbot
             ],
             zombieService = require('../../../service/zombieService.js'),
             zombie = zombieService.setup(server, userAgents, loaded);
