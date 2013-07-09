@@ -2,7 +2,7 @@
 
 We've looked at doing some of the things that you can do in native code. So far, we've covered AJAX, event handling, event delegation, DOM querying, and DOM manipulation. If you haven't _already_ read that, you [_probably should_](/2013/06/10/uncovering-the-native-dom-api "Uncovering the Native DOM API").
 
-Why do we _really_ use jQuery? Sure, it simplifies things. But do we really need _all those abstractions_? Can't we get away with just a few of _the most basic abstractions_?
+Why do we _really_ use jQuery? Sure, it simplifies things. But do we really need _all those abstractions_? Can't we get away with just a few of _the most basic of them_? In this article I'll examine the most frequently used portions of its API, and look at the different ways we can _rewrite_ those everyday utilities _using **plain JavaScript**_.
 
 ![jquery.jpg][jquery]
 
@@ -22,9 +22,9 @@ That certainly _looks like_ a lot. Lets break it down, and attempt to arrive at 
 
 I previously mentioned the [micro library movement](http://microjs.com "Fantastic Micro Frameworks and Libraries"), which is awesome, too. Here, though, we will _pick a few battles_ of our own, and have a shot at resolving them without resorting to external dependencies. Other than _what browsers provide_, that is.
 
-Keep in mind, also, browser versions. In each of my solutions, I'll tell you what the browser support is for that particular approach. I will mostly speak about _future-proof solutions_, but most of what I talk about will _probably not work in IE 6_. So keep an eye on that.
+Keep browser support in mind. In each of my solutions, I'll tell you what the browser support is for that particular approach. I will mostly speak about _future-proof solutions_, but most of what I'll be talking about _probably won't work in IE 6_. So keep an eye on that.
 
-Even if you are working in a project that must support older browsers, for whatever reason, I think you'll still find value in these excerpts. Maybe they aren't that useful to you _today_, maybe they are. One thing is certain though, _these APIs won't be going away anytime soon_.
+> Even if you are working in a project that must support older browsers, for whatever reason, I think you'll still find value in these excerpts. Maybe they aren't that useful to you _today_, maybe they are. One thing is certain though, _the benefit of learning the underlying browser API won't be going away anytime soon_.
 
 ## AJAX
 
@@ -140,17 +140,41 @@ element.style.display = 'none';
 When it comes to the latter, we can use [classList](https://developer.mozilla.org/en-US/docs/Web/API/element.classList "element.classList - MDN"), which doesn't have [great support](http://caniuse.com/classlist "Can I Use classList?"), or we can simply use `className`. If we find ourselves in need to add or remove classes, then we will have to resort to using [regular expressions](/2013/05/27/learn-regular-expressions "Learn Regular Expressions") to figure out how to remove classes from our elements.
 
 ```js
-function addClass(element, className){
-    element.className += ' ' + className;
-}
+!function(exports){
+    var class_list = !!document.body.classList;
+    var s = '(\\s|^)'; // space or start
+    var e = '(\\s|$)'; // space or end
 
-function removeClass(element, className){
-    var s = '(?:^|\s)'; // start of string or a space
-    var e = '(?!\S)/'; // negative lookahead for a non-space
-    var r = new RegExp(s + className + e, 'g');
+    function getRegex(className){
+        return new RegExp(s + className + e, 'g');
+    }
 
-    element.className.replace(r, '');
-}
+    exports.addClass = function(element, className){
+        if(class_list){
+            element.classList.add(className);
+        }else{
+            element.className += ' ' + className;
+        }
+    };
+
+    exports.removeClass = function(element, className){
+        if(class_list){
+            element.classList.remove(className);
+        }else{
+            var rclass = getRegex(className);
+            element.className = element.className.replace(rclass, '');
+        }
+    };
+
+    exports.hasClass = function(element, className){
+        if(class_list){
+            return element.classList.contains(className);
+        }else{
+            var rclass = getRegex(className);
+            return element.className.match(rclass);
+        }
+    };
+}(window);
 ```
 
 That wasn't that hard, either. As we are on the subject, let me give you some _added value_, and talk about [getComputedStyle](https://developer.mozilla.org/en-US/docs/Web/API/window.getComputedStyle "window.getComputedStyle - MDN"). Supported in every browser [except](http://caniuse.com/getcomputedstyle "Can I Use getComputedStyle?") for `IE < 9`, `getComputedStyle` returns the resulting value of _applying every style on an element_. The coolest feature of this method, though, is that it enables us to grab the computed _pseudo-element styles. For example, we could grab the `::after` styles on a `<blockquote>` element.
@@ -170,11 +194,29 @@ Here you have an example taken from **MDN**:
     var h3 = document.querySelector('h3');
     var result = getComputedStyle(h3, ':after').content;
 
-    console.log('the generated content is: ', result); // returns ' rocks!'
+    // > ' rocks!'
+    console.log('the generated content is: ', result);
 </script>
 ```
 
 Before we move forward, there's _one more attribute accessor_ we might want to talk about. The `.data` API. Similarly to `.prop`, it works by probing the value in your `data-*` attributes, parsing `true`, `false`, numbers, and JSON `object`s, or just returning a `String`. One important difference here, is that _jQuery sets up a cache_ for these values. This helps prevent querying the DOM time and again for stuff that _isn't going to change_. Under the assumption that _we are manipulating data attributes solely through their API_, that is.
+
+Other than that, a simplified data API might look like:
+
+```js
+function data(element, name, value){
+    if (value === undefined){
+        value = element.getAttribute('data-' + name);
+        return JSON.parse(value);
+    }else{
+        element.setAttribute('data-' + name, JSON.stringify(value));
+    }
+}
+```
+
+Keep in mind you might also want to use the [dataset API](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement.dataset "Element.dataset - MDN"), but `IE < 11` doesn't support it.
+
+If you were to add a little cache to reduce DOM querying, you'd have your own little awesome `.data` API!
 
 ## Effects, Animations
 
@@ -188,7 +230,7 @@ setInterval(function(){
 }, delay);
 ```
 
-I always had problems with `setTimeout`, personal problems. You see, the delay you apply as the second argument counts from the moment the function triggers, not the moment the execution ends. As a result, if your function takes `400`, and you've set a delay of `600`, The calls will eventually overlap so much, making a mess of everything. For that reason, I prefer doing a bit of extra work.
+I always had problems with `setTimeout`, personal problems. You see, the delay you apply as the second argument counts from the moment the function triggers, not the moment the execution ends. As a result, if your function takes `400`, and you've set a delay of `600`, The calls will eventually overlap so much, making a mess of everything. For that reason, I prefer doing _a bit of extra work_.
 
 ```js
 function loop(fn, interval){
@@ -241,7 +283,7 @@ requestAnimationFrame(step);
 
 ## Events
 
-_A lot has changed_ in the jQuery **event API** over time. It used to be all over the place, nowadays we mostly have the `.on` and `.off` methods, and those handle _pretty much everything_ we need.
+_A lot has improved_ in the jQuery **event API** over time. It used to be all over the place, nowadays we mostly have the `.on` and `.off` methods, and those handle _pretty much everything_ we need.
 
 So what are the strong points for jQuery in event handling? Well, they make it really easy to perform _event delegation_.
 
@@ -274,7 +316,7 @@ Concise enough.
 
 ## DOM Querying, Selectors
 
-> One of the most important mechanisms in browsers is querying the DOM to obtain a reference to HTML nodes. Yet, `querySelector`, by far the best option to perform such requests, is relatively unknown to the average developer. It's as if we're stuck with either `getElementById`, or _using jQuery_.
+> One of the most important mechanisms in browsers is querying the DOM to obtain a reference to HTML nodes. Yet, `querySelector`, by far the best option to perform such requests, is relatively unknown to the average developer. It's as if they're stuck with either `getElementById`, or _using jQuery_.
 
 Truth is, `querySelector` and `querySelectorAll` are [broadly](http://caniuse.com/queryselector "Can I Use querySelector?") supported in all major browsers, with the exception of `IE < 8`. That is _really good_ browser support. That is, in fact, one of the major reasons jQuery decided to _drop support_ for `IE < 9` in [their v2 branch](http://blog.jquery.com/2013/04/18/jquery-2-0-released/ "jQuery 2.0 Released").
 
@@ -284,23 +326,23 @@ With `querySelector` being implemented across all browsers, the novelty in jQuer
 
 There isn't a lot left to cover about DOM manipulation that wasn't covered in the other topics we've been discussing. If we look at the [API documentation](http://api.jquery.com/category/manipulation/ "Manipulation - jQuery API Documentation") once again, you'll notice we've accounted for most of the methods in the category. The ones we didn't mention are mostly measure computations, DOM altering methods, or methods such as `.val()`, `.text()` and `.html()`, which _don't really abstract any cross-browser limitations away_.
 
-When it comes to altering the DOM, the native methods can be [found on MDN][dom]. Once we know about those, all jQuery really does is _build on top_ of the `Node` API, providing us with some [syntactic sugar](http://en.wikipedia.org/wiki/Syntactic_sugar "Syntactic Sugar"), such as `insertAfter`.
+When it comes to altering the DOM, the native methods can be [found on MDN][dom]. Once we know about those, all jQuery really does is _build on top_ of the `Node` API, providing us with some [syntactic sugar](http://en.wikipedia.org/wiki/Syntactic_sugar "Syntactic Sugar"), such as `insertAfter` does.
 
 ## **Plugins**
 
-![plugins.jpg][1]
+![plugins.jpg][plugins]
 
 Ah, plugins! Do we really need _everything_ to be a [jQuery plugin](http://net.tutsplus.com/tutorials/javascript-ajax/14-reason-why-nobody-used-your-jquery-plugin/ "14 Reasons Why Nobody Used Your jQuery Plugin")? I get _ecstatic_ whenever I find a small library, which performs its intended objectives really well, has a _succint API_, and **doesn't freaking depend on jQuery for _absolutely no reason_**.
 
 I guess my point is, make it a _conscious decision_. Don't mindlessly turn your _ten line miracle worker_ into a jQuery plugin just because you want to use `.hide()` and `.show()`. Write native code instead. You'll probably learn to _write better code_ while at it, and more people will be able to use it, _to boot_.
 
-> Oh, and **stay the hell away from [jQuery UI](http://jqueryui.com "jQuery User Interface")**, too. Thank you.
+> Oh, and **stay the hell away from [jQuery UI](http://jqueryui.com "jQuery User Interface")**, too. _Thank you_.
 
-Unless you are really _using it extensively_. If you only need the dialogs, you can get away with [just a few lines](http://raventools.com/blog/create-a-modal-dialog-using-css-and-javascript/ "Create a Modal Dialog Using CSS and Javascript") of CSS code!
+Unless you are really _using it extensively_. If you only need the dialogs, you can get away with [just a few lines](http://raventools.com/blog/create-a-modal-dialog-using-css-and-javascript/ "Create a Modal Dialog Using CSS and JavaScript") of CSS code!
 
 ##### Need a Talk?
 
-Below is an excellent talk on jQuery, by Remy Sharp. He addresses a lot of important points, and raises some very good questions. He also presents a minimal library called [min.js](github.com/remy/min.js "min.js on GitHub"), which I think shows _a lot_ of promise. In this half hour _ish_ talk, you'll learn how you can actually write native BOM pretty effortlessly, without having to resort to a jQuery-like library.
+Below is an excellent talk on jQuery, by [Remy Sharp](http://remysharp.com/ "Remy Sharp's Blog"). He addresses a lot of important points, and raises some very good questions. He also presents a minimal library called [min.js](github.com/remy/min.js "min.js on GitHub"), which I think shows _a lot_ of promise. In this half hour _ish_ talk, you'll learn how you can actually write native BOM pretty effortlessly, without having to resort to a jQuery-like library.
 
 [![remy-on-jquery](http://i.imgur.com/nORxT86.jpg)](http://vimeo.com/68910118 "So you know jQuery. Now what?")
 
@@ -308,13 +350,13 @@ Below is an excellent talk on jQuery, by Remy Sharp. He addresses a lot of impor
 
 > I don't expect you to _shelf_ jQuery right away. I'm just attempting to enlighten you, _there is another way to do things_. jQuery is great and all, but it's been around for _almost ten years_, so it's _understandable_ that it lost some value along the way. It is good if you are actually using many of its features, but _you should ponder_ about whether this is a fact for you, or if you are simply using it because, _hey, it's already there_.
 
-And it's not _jQuery's fault_, but rather, we should be _complimenting the browsers_ for this change. Going forward, IE11 is finally [putting an end](http://www.nczonline.net/blog/2013/07/02/internet-explorer-11-dont-call-me-ie/ "Internet Explorer 11: Don't call me IE") to all the non-sense set forth by it's predecessors, and they're really trying this time.
+And it's not _jQuery's fault_, but rather, we should be _complimenting the browsers_ for this change. Going forward, IE11 is finally [putting an end](http://www.nczonline.net/blog/2013/07/02/internet-explorer-11-dont-call-me-ie/ "Internet Explorer 11: Don't call me IE") to all the non-sense set forth by it's predecessors. They're really trying hard this time to set it apart from "old IE" distributions.
 
-Now that all major browsers offer automatic updates, jQuery will _steadily decline in value_. The very purpose of the library, dealing with the **multitude of cross browser issues** present in older browsers are _subsiding_.
+Now that all major browsers offer automatic updates, jQuery will _steadily decline in value_. The ultimate purpose of the library, dealing with the **multitude of cross browser issues** present in older browsers, is _subsiding_. In its current state, jQuery will eventually become a library that just provides a somewhat nicer API than native browser JavaScript does.
 
 > If you think there is a topic I didn't uncover, please _let me know_, and I'll consider it for a future blog post.
 
-Happy experimenting!
+**Happy experimenting!**
 
   [jquery]: http://i.imgur.com/8wWcU19.jpg "jQuery"
   [plugins]: http://i.imgur.com/rl2URLW.jpg "Sad, sad plugins"
