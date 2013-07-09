@@ -104,15 +104,18 @@ function sendForm(form) {
 
     return false; // we're already submitting the form through AJAX.
 }
+
+var form = document.querySelector('#registration');
+sendForm(form);
 ```
 
-Similarly, `.send()` supports `Blob` data, if we need to perform _asynchronous file uploads_.
+Similarly to responses, `.send()` supports passing `Blob` data, if we need to perform _asynchronous file uploads_.
 
-In older browsers, though, lots of different methods are used to upload files asynchronously. Flash, `iframe`s, anything goes. Other than file uploads or otherwise _using form data directly_, though, we are just fine doing AJAX in older browsers, as long as we don't pretend to use the **XHR2 API**.
+In older browsers, lots of different methods are used to upload files asynchronously. Flash, `iframe`s, anything goes. Other than file uploads or otherwise _using form data directly_, though, we are just fine doing AJAX in older browsers, as long as we don't pretend to use the **XHR2 API**. This API mostly improves our asynchronous file upload capabilities, but we are otherwise fine without it.
 
 ## Attributes, CSS, and `.data`
 
-Not everything has to be as complicated as AJAX is, and `Element` attributes are never reason enough to warrant the inclusion of a heavy-weight library such as jQuery.
+Not everything has to be as complicated as AJAX is, and `Element` attributes are never _reason enough_ to warrant the inclusion of a heavy-weight library such as jQuery.
 
 Lets look at all of these in turn.
 
