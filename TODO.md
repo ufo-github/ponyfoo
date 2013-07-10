@@ -13,6 +13,26 @@
   - markdown playground.
   - docs about our editor, shortcuts, etc?
 
+- bugs and features
+  - email brief relative links should be absolutized
+  - rss feed should have better excerpts
+  - comment review ordering
+  - pingback issue: Error: Can't set headers after they are sent. 
+    at ServerResponse.OutgoingMessage.setHeader (http.js:704:11)
+    at ServerResponse.res.setHeader (/app/node_modules/connect/lib/patch.js:59:22) 
+    at null._fault (/app/node_modules/pingback/lib/pingback.js:97:14) 
+    at /app/node_modules/pingback/lib/pingback.js:274:19
+    at end (/app/node_modules/pingback/lib/pingback.js:467:7) 
+    at IncomingMessage.<anonymous> (/app/node_modules/pingback/lib/pingback.js:475:9)
+    at IncomingMessage.EventEmitter.emit (events.js:95:17) 
+    at IncomingMessage.<anonymous> (_stream_readable.js:736:14) at IncomingMessage.EventEmitter.emit (events.js:92:17) 
+    at emitReadable_ (_stream_readable.js:408:10) at emitReadable (_stream_readable.js:404:5) 
+    at readableAddChunk (_stream_readable.js:165:9) at IncomingMessage.Readable.push (_stream_readable.js:127:10) 
+    at HTTPParser.parserOnBody [as onBody] (http.js:140:22) 
+    at Socket.socketOnData [as ondata] (http.js:1535:20) 
+    at TCP.onread (net.js:510:27) EXCEPT Context
+
+
 
 
 ## 2
