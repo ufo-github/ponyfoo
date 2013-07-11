@@ -21,7 +21,8 @@ module.exports = {
                 /LinkedInBot/i, // LinkedIn
                 /Twitterbot/i, // Twitter
                 /Instapaper/i, // Instapaper
-                /diffbot/i // Diffbot
+                /diffbot/i, // Diffbot
+                /pear\.php\.net/i // pocket uses HTTP_Request2/2.1.1 (http://pear.php.net/package/http_request2) PHP/X
             ],
             zombieService = require('../../../service/zombieService.js'),
             zombie = zombieService.setup(server, userAgents, loaded);
