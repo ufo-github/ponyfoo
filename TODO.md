@@ -34,7 +34,7 @@
 
 - cluster
 
-
+- related articles @ `blogEntryService.js#getRelated`
 
 ## 2
 

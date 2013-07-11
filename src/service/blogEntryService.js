@@ -89,6 +89,35 @@ function getLatest(options, done){
         .exec(done);
 }
 
+function getRelated(entry, done){
+    // TODO, build index, assign indices to the model
+    //       update index 
+    // TODO make standalone so EntryIndex has naturalIndex, entryId
+    // fetch entry natural index from the db.
+
+    var terms = index.listTerms(entry.naturalIndex).slice(0, 10).join(entry.tags),
+        related = [],
+        total = 6; // TODO: config.something.related
+
+    index.tfidfs(terms, function(i, weight){
+        if(i !== entry.naturalIndex){ // dont relate to ourselves
+            related.push({
+                index: i,
+                weight: weight
+            });
+        }
+    });
+
+    related.sort(function(a, b){
+        return a.weight - b.weight;
+    });
+    related.splice(total);
+
+    return related.map(function(){
+        // TODO map to entry where naturalIndex === related.index
+    });
+}
+
 module.exports = {
     validate: validateEntry,
     findByPermalink: findByPermalink,
