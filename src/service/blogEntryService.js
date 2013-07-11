@@ -90,10 +90,14 @@ function getLatest(options, done){
 }
 
 function getRelated(entry, done){
+    var natural = require('natural'),
+        index = new natural.TfIdf();
+
     // TODO, build index, assign indices to the model
     //       update index 
     // TODO make standalone so EntryIndex has naturalIndex, entryId
     // fetch entry natural index from the db.
+    // serialize and deserialize index instead of recreating every time.
 
     var terms = index.listTerms(entry.naturalIndex).slice(0, 10).join(entry.tags),
         related = [],
