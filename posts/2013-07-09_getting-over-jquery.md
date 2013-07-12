@@ -342,7 +342,7 @@ Unless you are really _using it extensively_. If you only need the dialogs, you 
 
 ##### Need a Talk?
 
-Below is an excellent talk on jQuery, by [Remy Sharp](http://remysharp.com/ "Remy Sharp's Blog"). He addresses a lot of important points, and raises some very good questions. He also presents a minimal library called [min.js](github.com/remy/min.js "min.js on GitHub"), which I think shows _a lot_ of promise. In this half hour _ish_ talk, you'll learn how you can actually write native BOM pretty effortlessly, without having to resort to a jQuery-like library.
+Below is an excellent talk on jQuery, by [Remy Sharp](http://remysharp.com/ "Remy Sharp's Blog"). He addresses a lot of important points, and raises some very good questions. He also presents a minimal library called [min.js](https://github.com/remy/min.js "min.js on GitHub"), which I think shows _a lot_ of promise. In this half hour _ish_ talk, you'll learn how you can actually write native BOM pretty effortlessly, without having to resort to a jQuery-like library.
 
 [![remy-on-jquery](http://i.imgur.com/nORxT86.jpg)](http://vimeo.com/68910118 "So you know jQuery. Now what?")
 
