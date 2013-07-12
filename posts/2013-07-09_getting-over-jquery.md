@@ -230,7 +230,7 @@ setInterval(function(){
 }, delay);
 ```
 
-I always had problems with `setTimeout`, personal problems. You see, the delay you apply as the second argument counts from the moment the function triggers, not the moment the execution ends. As a result, if your function takes `400`, and you've set a delay of `600`, The calls will eventually overlap so much, making a mess of everything. For that reason, I prefer doing _a bit of extra work_.
+I always had problems with `setInterval`. **Personal problems**. You see, the delay you apply as the second argument counts from the moment the function triggers, not the moment the execution ends. As a result, if your function takes `400`, and you've set a delay of `600`, The calls will eventually overlap so much, making a mess of everything. For that reason, I prefer doing _a bit of extra work_.
 
 ```js
 function loop(fn, interval){
