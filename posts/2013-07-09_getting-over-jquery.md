@@ -230,7 +230,7 @@ setInterval(function(){
 }, delay);
 ```
 
-I always had problems with `setTimeout`, personal problems. You see, the delay you apply as the second argument counts from the moment the function triggers, not the moment the execution ends. As a result, if your function takes `400`, and you've set a delay of `600`, The calls will eventually overlap so much, making a mess of everything. For that reason, I prefer doing _a bit of extra work_.
+I always had problems with `setInterval`. **Personal problems**. You see, the delay you apply as the second argument counts from the moment the function triggers, not the moment the execution ends. As a result, if your function takes `400`, and you've set a delay of `600`, The calls will eventually overlap so much, making a mess of everything. For that reason, I prefer doing _a bit of extra work_.
 
 ```js
 function loop(fn, interval){
@@ -342,7 +342,7 @@ Unless you are really _using it extensively_. If you only need the dialogs, you 
 
 ##### Need a Talk?
 
-Below is an excellent talk on jQuery, by [Remy Sharp](http://remysharp.com/ "Remy Sharp's Blog"). He addresses a lot of important points, and raises some very good questions. He also presents a minimal library called [min.js](github.com/remy/min.js "min.js on GitHub"), which I think shows _a lot_ of promise. In this half hour _ish_ talk, you'll learn how you can actually write native BOM pretty effortlessly, without having to resort to a jQuery-like library.
+Below is an excellent talk on jQuery, by [Remy Sharp](http://remysharp.com/ "Remy Sharp's Blog"). He addresses a lot of important points, and raises some very good questions. He also presents a minimal library called [min.js](https://github.com/remy/min.js "min.js on GitHub"), which I think shows _a lot_ of promise. In this half hour _ish_ talk, you'll learn how you can actually write native BOM pretty effortlessly, without having to resort to a jQuery-like library.
 
 [![remy-on-jquery](http://i.imgur.com/nORxT86.jpg)](http://vimeo.com/68910118 "So you know jQuery. Now what?")
 

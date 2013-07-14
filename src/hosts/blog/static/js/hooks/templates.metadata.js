@@ -30,7 +30,7 @@
 
     // open graph micro data (mostly for feeding our zombie-crawler)
     nbrut.tt.hook('activated', function(template, container, viewModel, settings){
-        var head = $('head'), metaModel, meta;
+        var head = $('head'), metaModel, meta, removables, selector;
 
         metaModel = {
             title: viewModel.title,
@@ -55,7 +55,15 @@
         meta = nbrut.tt.partial('metadata', metaModel);
 
         // refresh micro data
-        head.find('meta[name=keywords], meta[property^="og:"], meta[itemprop], link[rel=canonical]').remove();
+        removables = [
+            'meta[name=keywords]',
+            'meta[property^="og:"]',
+            'meta[name^="twitter:"]',
+            'meta[itemprop]',
+            'link[rel=canonical]'
+        ];
+        selector = removables.join(', ');
+        head.find(selector).remove();
         meta.appendTo(head);
     });
 }(window,jQuery,nbrut);
