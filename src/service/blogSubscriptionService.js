@@ -83,7 +83,7 @@ module.exports = {
     subscribeEmail: function(email, blog, done){
         update({
             blogId: blog._id,
-            email: email
+            email: email.toLowerCase()
         }, false, function(err, subscriber){
             if(err){
                 return done(err);
