@@ -11,6 +11,7 @@
 
     function unsafeInsert(id, src){
         var js = document.createElement('script');
+        js.async = true;
         js.id = id;
         js.src = src;
         fjs.parentNode.insertBefore(js, fjs);

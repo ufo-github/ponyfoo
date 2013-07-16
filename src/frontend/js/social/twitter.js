@@ -6,6 +6,7 @@
     function insert(id, src){
         if (!document.getElementById(id)) {
             var js = document.createElement('script');
+            js.async = true;
             js.id = id;
             js.src = src;
             fjs.parentNode.insertBefore(js, fjs);
