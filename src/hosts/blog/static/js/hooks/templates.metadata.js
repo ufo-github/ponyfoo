@@ -30,7 +30,7 @@
 
     // open graph micro data (mostly for feeding our zombie-crawler)
     nbrut.tt.hook('activated', function(template, container, viewModel, settings){
-        var head = $('head'), metaModel, meta, removables, selector;
+        var head, metaModel, meta, removables, selector;
 
         metaModel = {
             title: viewModel.title,
@@ -63,6 +63,8 @@
             'link[rel=canonical]'
         ];
         selector = removables.join(', ');
+        
+        head = $('head');
         head.find(selector).remove();
         meta.appendTo(head);
     });
