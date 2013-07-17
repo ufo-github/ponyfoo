@@ -13,5 +13,7 @@ I made some comments about `npm` back then, namely:
 
 I've been meaning to update my insights into the matter, as my previous post no longer reflects my thoughts on `npm`. Recently, I read [this post](http://blog.nodejitsu.com/npm-innovation-through-modularity "npm: innovation through modularity") on **nodejitsu**, and I've been meaning to come back to the subject since then.
 
-
-
+http://blog.nodejitsu.com/npm-innovation-through-modularity
+http://dontkry.com/posts/code/browserify-and-the-universal-module-definition.html
+http://dontkry.com/posts/code/using-npm-on-the-client-side.html
+http://www.futurealoof.com/posts/nodemodules-in-git.html
