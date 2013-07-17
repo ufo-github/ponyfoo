@@ -34,8 +34,9 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 - Social Discovery
   - Tweet Button
   - Tweet Embeds
+  - Twitter Cards
   - Pocket Button
-  - Twitter card metadata
+  - Buffer Button
 
 - Enhanced login process
   - Accounts created with ancient flow require email verification

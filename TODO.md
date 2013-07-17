@@ -43,7 +43,6 @@
 - blog
   + ui/ux
     - configure which buttons to use per blog
-    - buffer button option
     - pdf
     - data-related author's twitter, take from req.blogger
     - font consistency in blog (mac)
