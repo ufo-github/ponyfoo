@@ -112,6 +112,7 @@
 
     function reloadSocialLinks(){
         nbrut.social.twitter.reload();
+        nbrut.social.buffer.reload();
         nbrut.social.pocket.reload();
     }
 

@@ -31,7 +31,7 @@ data.assets.js = [
     cdn('angular'),
     cdn('angular-bootstrap', false),
     cdn('angular-bootstrap-prettify', false),
-    resolve('/js/social/twitter.js'),
+    { ext: '//platform.twitter.com/widgets.js' },
     '../.bin/pages.js',
     '/js/app.js'
 ];

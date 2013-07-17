@@ -7,7 +7,7 @@ var config = require('../config'),
 function extractStatus(payload){
     var authority = config.server.authority(payload.blog.slug),
         permalink = authority + payload.entry.permalink,
-        status = [payload.entry.title, permalink];
+        status = [payload.entry.title, 'by @nzgb', permalink];
 
     payload.entry.tags.forEach(function(tag){
         tag = tag.replace(rtag, '');

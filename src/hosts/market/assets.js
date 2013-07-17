@@ -15,7 +15,7 @@ data.assets.css = [
 
 data.assets.jQuery = { version: '1.9.1' };
 data.assets.js = [
-    resolve('/js/social/twitter.js')
+    { ext: '//platform.twitter.com/widgets.js' }
 ];
 
 module.exports = builder.complete(data);

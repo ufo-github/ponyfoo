@@ -11,7 +11,7 @@ I made some comments about `npm` back then, namely:
 > - Publishing packages on [npm](https://npmjs.org/ "npmjs.org") is astonishingly easy
 > - Large amounts of packages are available
 
-I've been meaning to update my insights in the matter, as my previous post no longer reflects my thoughts on `npm`. Recently, I read [this post](http://blog.nodejitsu.com/npm-innovation-through-modularity "npm: innovation through modularity") on **nodejitsu**'s blog, and I've been meaning to come back to the subject since then.
+I've been meaning to update my insights into the matter, as my previous post no longer reflects my thoughts on `npm`. Recently, I read [this post](http://blog.nodejitsu.com/npm-innovation-through-modularity "npm: innovation through modularity") on **nodejitsu**, and I've been meaning to come back to the subject since then.
 
 
 

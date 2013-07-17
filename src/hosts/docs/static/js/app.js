@@ -270,7 +270,7 @@
         var currentPageId = $location.path();
         $scope.partialTitle = $scope.currentPage.shortName + ' Documentation';
         $window._gaq && $window._gaq.push(['_trackPageview', currentPageId]);
-        $window.nbrut.social.twitter.reload();
+        $window.twttr && $window.twttr.widgets.load();
         loadDisqus(currentPageId);
       };
 

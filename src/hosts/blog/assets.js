@@ -68,10 +68,7 @@ data.assets.js = [
     resolve('/js/ext/prettify.js'),
     resolve('/js/ext/jquery.layout.js'),
     resolve('/js/ext/jquery.ui.js'), // not the well known, huge, and hideous, jQuery UI. just a few extensions
-    
-    resolve('/js/social/twitter.js'),
-    resolve('/js/social/pocket.js'),
-    
+        
     '/js/nbrut/jquery.nbrut.js',
     '/js/nbrut/nbrut.core.js',
     { file: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
@@ -84,6 +81,11 @@ data.assets.js = [
     '/js/nbrut/nbrut.init.js',
     resolve('/js/vendor/Markdown.Converter.js'),
     resolve('/js/vendor/Markdown.Editor.js'), // depends on NBrut
+
+    '/js/social/index.js',
+    '/js/social/twitter.js',
+    '/js/social/buffer.js',
+    '/js/social/pocket.js',
 
     '/js/hooks/thin.js',
     '/js/hooks/thin.validation.js',
