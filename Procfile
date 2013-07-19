@@ -1,1 +1,1 @@
-web: grunt production --stack --no-color
+web: grunt production --stack --no-color; node src/app.js
