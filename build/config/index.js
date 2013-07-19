@@ -38,7 +38,6 @@ module.exports = {
         dev: {
             tasks: ['dev-once'],
             files: [
-                './.buildwatch',
                 './.env',
                 './.env.defaults',
                 'Gruntfile.js',
@@ -58,7 +57,7 @@ module.exports = {
     },
     concurrent: {
         dev: {
-            tasks: ['watch:dev', 'dev-trigger'],
+            tasks: ['watch:dev', 'dev-once'],
             options: {
                 logConcurrentOutput: true
             }

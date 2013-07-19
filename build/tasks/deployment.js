@@ -5,5 +5,5 @@ module.exports = function(grunt){
     grunt.registerTask('travis', ['test', 'assets']);
     
     // in production we cleanup, compile assets, and listen
-    grunt.registerTask('production', ['clean', 'assets', 'web-server']);
+    grunt.registerTask('production', ['clean', 'assets']);
 };
