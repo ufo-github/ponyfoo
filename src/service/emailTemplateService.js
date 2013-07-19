@@ -23,8 +23,8 @@ module.exports = {
 
             var message = {
                 subject: model.subject,
+                intro: model.intro,
                 header: {
-                    intro: model.intro,
                     image: {
                         alt: config.site.name
                     },

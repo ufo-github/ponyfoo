@@ -1,5 +1,6 @@
-<div>
-    <a href='{{{entry.permalink}}}'>
+<div itemprop='action' itemscope itemtype='http://schema.org/ViewAction'>
+    <meta itemprop='name' content='View Comment'/>
+    <a itemprop='url' href='{{{entry.permalink}}}'>
         <h1>{{entry.title}}</h1>
     </a>
 </div>
