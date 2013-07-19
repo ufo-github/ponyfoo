@@ -44,6 +44,7 @@ Brief list of changes implemented in each tagged version of **Pony Foo**
 
 - Development Productivity
   - Introduced [dictatorship](https://github.com/bevacqua/dictatorship "dictatorship on GitHub") to bury **EADDRINUSE** issues during continuous development
+  - Strict separation of assetify build and middleware flows
 
 
 

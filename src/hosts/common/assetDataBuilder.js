@@ -39,14 +39,14 @@ module.exports = {
         if(!!config.tracking.analytics){
             assets.js.push({
                 file: resolve('/js/analytics/google.jsn'),
-                context: { config: config }
+                context: { tracking: config.tracking }
             });
         }
 
         if(!!config.tracking.clicky){
             assets.js.push({
                 file: resolve('/js/analytics/clicky.jsn'),
-                context: { config: config }
+                context: { tracking: config.tracking }
             });
         }
 

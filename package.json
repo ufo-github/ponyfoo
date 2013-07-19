@@ -56,7 +56,8 @@
     "sitemap": "0.6.0",
     "ultramarked": "0.5.4",
     "walk": "~2.2.1",
-    "zombie": "~1.4.1"
+    "zombie": "~1.4.1",
+    "assetify": "~0.8.1"
   },
   "devDependencies": {
     "dictatorship": "0.1.1",

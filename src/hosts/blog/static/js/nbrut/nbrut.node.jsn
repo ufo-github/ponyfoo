@@ -2,8 +2,8 @@
     'use strict';
 
     nbrut.avatar = {
-        tiny: '@config.avatar.tiny',
-        small: '@config.avatar.small',
-        regular: '@config.avatar.regular'
+        tiny: '@avatar.tiny',
+        small: '@avatar.small',
+        regular: '@avatar.regular'
     };
 }(nbrut);

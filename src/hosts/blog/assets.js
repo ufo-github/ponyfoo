@@ -71,7 +71,7 @@ data.assets.js = [
         
     '/js/nbrut/jquery.nbrut.js',
     '/js/nbrut/nbrut.core.js',
-    { file: '/js/nbrut/nbrut.node.jsn', context: { config: config } },
+    { file: '/js/nbrut/nbrut.node.jsn', context: { avatar: config.avatar } },
     '/js/nbrut/nbrut.pluginFactory.js',
     '/js/nbrut/nbrut.md.js',
     '/js/nbrut/nbrut.ui.js',
