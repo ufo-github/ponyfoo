@@ -23,11 +23,7 @@ module.exports = {
                 jsn: true,
                 forward: [{ extnames: ['.eot', '.svg', '.ttf', '.woff'] }, true]
             },
-            caching: {
-                expiresHeader: function(req){
-                    return req.url.indexOf('/img/') === 0;
-                }
-            },
+            expires: /^img/i,
             resolveFrontendPath: function(file){
                 return path.join(relative, file);
             }
