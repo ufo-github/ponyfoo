@@ -47,7 +47,8 @@ async.waterfall([
 });
 
 function setup(name){
-    var vhost = require('./hosts/' + name + '/vhost.js').setup();
+    var vhost = require('./hosts/' + name + '/vhost.js'),
+        middleware = vhost.setup();
 
-    server.use(vhost);
+    server.use(middleware);
 }
