@@ -25,7 +25,7 @@ module.exports = {
             },
             compress: true,
             fingerprint: true,
-            expires: /^img/i,
+            expires: /^\/img\//i,
             resolveFrontendPath: function(file){
                 return path.join(relative, file);
             }
