@@ -16,7 +16,7 @@
     "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
   "dependencies": {
-    "assetify": "0.8.1",
+    "assetify": "0.8.2",
     "async": "0.2.9",
     "bcrypt": "0.7.6",
     "browserify": "~2.18.1",
@@ -27,7 +27,7 @@
     "express": "3.2.6",
     "fs-extra": "~0.6.1",
     "grunt": "~0.4.1",
-    "grunt-assetify": "0.9.0",
+    "grunt-assetify": "0.9.1",
     "grunt-cli": "~0.1.6",
     "grunt-concurrent": "0.3.0",
     "grunt-contrib-clean": "~0.4.0",

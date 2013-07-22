@@ -23,6 +23,8 @@ module.exports = {
                 jsn: true,
                 forward: [{ extnames: ['.eot', '.svg', '.ttf', '.woff'] }, true]
             },
+            compress: true,
+            fingerprint: true,
             expires: /^img/i,
             resolveFrontendPath: function(file){
                 return path.join(relative, file);
