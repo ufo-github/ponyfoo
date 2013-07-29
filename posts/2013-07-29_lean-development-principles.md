@@ -52,4 +52,6 @@ The book suggests setting the project up with someone in charge of root cause an
 
 But don't take my word for it, **read the book instead**.
 
+P.S Kanban, [on the other hand](http://blog.aha.io/index.php/kanban-the-secret-engineer-killer/ "Kanban - The Secret Engineer Killer"), should be taken with a pinch of salt.
+
   [1]: http://i.imgur.com/9wRlDts.jpg
