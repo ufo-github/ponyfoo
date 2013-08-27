@@ -21,7 +21,7 @@ Similarly, we tacked a description onto these shortcuts (which are registered th
 
 Honestly, it's as if we weren't writing a web application anymore. The web is just the medium. As we improve our understanding of Angular, the code gets more modular, more self-contained, and yet... more inter-connected. It is simply becoming **more Angular**.
 
-And by Angular I mean the highly interactive rich application development phylosophy behind Angular.js, the same one that's enabled us to develop a piece of software that I wouldn't have thought possible a while back.
+And by Angular I mean the highly interactive rich application development philosophy behind Angular.js, the same one that's enabled us to develop a piece of software that I wouldn't have thought possible a while back.
 
 [![app-press-canvas.png][1]](http://i.imgur.com/RSqiAkS.png "Click to enlarge")
 
