@@ -16,7 +16,7 @@ I believe [AngularJS](http://angularjs.org/ "Angular Model-View-Whatever Framewo
 
 However, it won't enjoy the _widespread adoption_ that **jQuery** has. **jQuery** is, ultimately, a utility library that's meant to be _auxiliary_ to your application, **AngularJS** is an integral solution, and it restricts how you can organize your front end architecture.
 
-Lets get into [RequireJS](http://requirejs.org/ "RequireJS script loader"), the script loader that enables **AngularJS** to provide [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection "Dependency Injection").
+Lets get into [RequireJS](http://requirejs.org/ "RequireJS script loader"), a script loader that resembles the **AngularJS** [dependency injection](http://en.wikipedia.org/wiki/Dependency_injection "Dependency Injection") mechanism.
 
 ## A little background history ##
 
