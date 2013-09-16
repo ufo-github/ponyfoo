@@ -61,7 +61,8 @@
   },
   "devDependencies": {
     "dictatorship": "0.1.1",
-    "grunt-contrib-watch": "~0.4.3"
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-pemcrypt": "0.0.1"
   },
   "engines": {
     "node": "0.10.6",
