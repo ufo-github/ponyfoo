@@ -246,3 +246,7 @@ exec('aws ec2 terminate-instances --instance-ids %s', [id], done);
 ```
 
 One caveat you might've realized, is that this command uses the instance ID, which we don't want to provide by hand, since that's messy. Remember the first task we wrote to find instances tagged with a name? Well, that's what we're using to find the `InstanceId`!
+
+# To `ssh`, and beyond!
+
+We're _more or less_ done with the hard part.
