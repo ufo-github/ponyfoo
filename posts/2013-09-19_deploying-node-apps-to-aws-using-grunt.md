@@ -9,20 +9,29 @@ To summarize, I've been toying with **AWS** for a few days now, and I wanted to 
 - Creating [SSH](http://en.wikipedia.org/wiki/Secure_Shell#Version_2.x "Secure Shell 2") key-pairs and uploading their public key to AWS
 - Launching EC2 _micro_ instance with an [_Ubuntu AMI_](http://cloud-images.ubuntu.com/releases/raring/release-20130423/ "Ubuntu 13.04 (Raring Ringtail)")
 - `ssh` into the instance using the private key associated with an instance, and get it set up for future deploys:
-  - Install Node.js
-  - Install something like upstart, forever, or pm2 to keep our web application alive
+  - Install **Node.js**, duh
+  - Install [pm2](https://github.com/Unitech/pm2 "pm2 on GitHub") to keep our application alive
 - Shut down instances with the same ease as we can launch them, deleting key-pairs
 - Get a list of EC2 instances
 - Get a command to SSH myself to an instance, in case I want to do some heavy lifting myself
 - Deploy to our instance using `rsync`, for [blisteringly fast data transfers](https://help.ubuntu.com/community/rsync "rsync, an article by the Ubuntu Community"), then:
   - Copy the files somewhere else
   - Install npm packages using `npm install --production`
-  - Restart our Node application or cluster
+  - Restart our Node application using `pm2 reload all`
 - Refer to instances by a name tag like `'bambi'`, rather than an ID such as `i-he11f00ba4`
 
 If this sounds like something you'd be interested in learning about, read on.
 
   [1]: http://i.imgur.com/Yya9AIy.png "Amazon Web Services"
+
+##### What is missing in this installment?
+
+- In the future, I'd also like to install [nginx](http://nginx.com/ "nginx HTTP proxy server")
+- I'm not creating individual users for `rsync`, `node`, as I'm not entirely sure of how to manage that
+- I'm not setting up port forwarding, not giving my instance a public IP
+- I didn't establish a sensible way to swap configuration based on the environment, yet
+
+**Yet...** This is a _work in progress_, and I expect to do all of the above, soon. I'll write a follow-up article to keep you updated.
 
 ## Introduction
 
@@ -145,6 +154,10 @@ module.exports = function (grunt) {
 
 Sweet, huh? That's really concise! Now we can run `grunt ec2_lookup:foobar` and get some JSON describing the metadata for an EC2 instance tagged with the name `foobar`. That's nice syntactic sugar, but barely any better than using the `aws` CLI tool directly. Well, the power of this approach reveals itself when we start combining different commands in new and useful ways. Let's start heading in the direction of launching a new EC2 instance. That's pretty easy to do using their [web interface](https://console.aws.amazon.com/console/home "Amazon Web Services Console Home"), but we can spend a bunch of time typing away at our terminal and it'll be pretty hard to get it right, besides: we came for the automation.
 
+Here's a similar task in action, which allows us to look up instances based on their state:
+
+![ec2-list.png][1]
+
 ## Launching an EC2 instance
 
 The first step we have to take for launching an EC2 instance, is generating an SSH key-pair so that we can access it from the command-line. Then we have to actually run the instance, providing a bunch of parameters to the CLI. Our launch task looks pretty simple:
@@ -159,13 +172,13 @@ module.exports = function(grunt){
         grunt.task.run([
             'ec2_create_keypair:' + name,
             'ec2_run_instance:' + name,
-            'ssh_setup:' + name
+            'ec2_setup:' + name
         ]);
     });
 };
 ```
 
-We'll get into the `ssh_setup` task later on. For now, let's focus on creating a key pair.
+We'll get into the `ec2_setup` task later on. For now, let's focus on creating a key pair.
 
 ## The `ec2_create_keypair` Task
 
@@ -249,4 +262,141 @@ One caveat you might've realized, is that this command uses the instance ID, whi
 
 # To `ssh`, and beyond!
 
-We're _more or less_ done with the hard part.
+After our instance is up, and tagged, we have to wait a bit before we can access its DNS, and then we have to wait a bit more to be able to make an SSH connection. I didn't want to wait myself, so I wrote a task to wait for me.
+
+```js
+function waitForDNS () {
+    getCredentials(name, function (c) {
+        if (!c) {
+            grunt.log.writeln('DNS still cold, retrying...');
+            wait(waitForDNS);
+            return;
+        }
+        grunt.log.ok('Instance accessible at: %s', c.host);
+        waitForSSH();
+    });
+}
+
+function waitForSSH () {
+    grunt.log.writeln('attempting to connect...');
+    var connection = ssh([], name, function(){}, false);
+
+    connection.on('error', function () {
+        grunt.log.writeln('connection refused, retrying');
+        wait(waitForSSH);
+    });
+
+    connection.on('ready', function () {
+        grunt.log.ok('success, proceeding in 10s');
+        wait(done, 10); // apt-get failed if we didn't wait a bit.
+    });
+}
+waitForDNS(); // first attempt
+```
+
+Let me explain the two functions that are not described here, `getCredentials` and `ssh`. The former just uses a command similar to our `ec2_lookup` from earlier, and checks whether the public DNS field is set. The latter is a little more complicated, it queues commands to be executed over SSH, but since we're passing an empty array of commands, we're just testing if it can make a connection. When we're done, we wait a few seconds for good measure, because otherwise the system might not be _entirely_ operational. Before adding that 10 second wait there, my following task was consistently failing to install anything using [apt-get](https://help.ubuntu.com/community/AptGet/Howto "Package Management with APT"). After the wait, the problem evaporated.
+
+## Installing things in our new instance!
+
+Now that the wait is finally over, we can start using our instance. Yeah, about that... we need to install things first, it's a brand new machine! _(well, sort of)_
+
+Using the same `ssh` queueing mechanism I talked about in the last section _(fine! I'll show it to you in a minute, hang on)_, I set up a bunch of things on the new box, over SSH.
+
+```js
+var project = conf('PROJECT_ID');
+var tasks = [[ // rsync
+    util.format('sudo mkdir -p /srv/rsync/%s/latest', project),
+    util.format('sudo mkdir -p /srv/apps/%s/v', project),
+    util.format('sudo chown ubuntu /srv/rsync/%s/latest', project)
+], [ // node.js
+    'sudo apt-get install python-software-properties',
+    'sudo add-apt-repository ppa:chris-lea/node.js -y',
+    'sudo apt-get update',
+    'sudo apt-get install nodejs -y'
+], [ // pm2
+    'sudo apt-get install make g++ -y',
+    'sudo npm install -g pm2',
+    'sudo pm2 startup'
+]];
+
+var commands = _.flatten(tasks);
+ssh(commands, name, done);
+```
+
+All I'm really doing is installing `node`, `npm`, and `pm2`. After this, all that remains is deploying through `rsync`, and using `pm2` to load our changes on each deploy. Let's stand back for a minute and look at the `ssh.js` module I wrote.
+
+```js
+var Connection = require('ssh2');
+
+function(commands, name, done){
+    var c = new Connection();
+
+    c.on('ready', next);
+    c.on('close', done);
+    c.on('error', grunt.fatal);
+
+    getCredentials(name, c.connect);
+
+    function next () {
+        if (commands.length === 0) {
+            done();
+        } else {
+            var command = commands.shift();
+
+            grunt.log.writeln(command);
+
+            c.exec(command, function (err, stream) {
+                if (err) { grunt.fatal(err); }
+
+                stream.on('data', function (data, extended) {
+                    grunt.log.write(String(data));
+                });
+
+                stream.on('exit', function (code) {
+                    if (code === 0) { next(); }
+                    grunt.fatal(command, chalk.red('exit code ' + code));
+                });
+            });
+        }
+    }
+    return c;
+}
+```
+
+See? not that complicated, just some sort of asynchronous queue. A fancy way of running commands over SSH.
+
+## Deploying with `rsync` and `pm2`
+
+Lastly we'll use [rsync](https://help.ubuntu.com/community/rsync "rsync, an article by the Ubuntu Community") over SSH to push our current version to the **AWS EC2** instance. We'll then _copy_ with `cp` to a folder named using the current build version; we don't use `mv`: we want it to stay there to be able to exploit the benefits of `rsync` in the future. Then, we just update a symbolic link on the `current` folder, to make sure it maps to the last deployed version of our code, and lastly, we reload our `node` process using `pm2`. Done!
+
+```js
+exec('rsync -vaz --stats --progress --delete %s -e "ssh -o StrictHostKeyChecking=no -i %s" %s %s@%s:%s', [
+    excludeFrom, c.privateKeyFile, local, user, c.host, remote
+], deploy);
+
+function deploy () {
+    var dest = util.format('/srv/apps/%s/v/%s', project, v);
+    var target = util.format('/srv/apps/%s/current', project);
+    var commands = [
+        util.format('sudo cp -r %s %s', remoteSync, dest),
+        util.format('sudo npm --prefix %s install --production', dest),
+        util.format('sudo ln -sfn %s %s', dest, target), [
+            util.format('sudo pm2 start %s/%s -i 2 --name %s', target, conf('NODE_SCRIPT'), name),
+            'sudo pm2 reload all'
+        ].join(' || ') // start or reload
+    ];
+    ssh(commands, name, done);
+}
+```
+
+This works the same for the first deploy, where it'll short-circuit on `pm2 start /srv/apps/example/current/app.js -i 2 --name staging`, rather than reloading.
+
+# Conclusions and a Repository
+
+I polished what I wrote about in the article and separated it from my original code-base, making it into [a reusable grunt plugin I called grunt-ec2](https://github.com/bevacqua/grunt-ec2 "grunt-ec2 on GitHub"), it's pretty easy to set up, and it doesn't pollute the global namespace or any of that, you simply have to pass a few configuration variables through Grunt as usual. You can read it's documentation on GitHub.
+
+I also added some pretty screenshots I took for that repository.
+
+Lastly, please **let me know if this article sounded like a lot of gibberish glued together**, or if you _actually learned anything_ from it.
+
+  [1]: http://i.imgur.com/ecFsa4b.png
