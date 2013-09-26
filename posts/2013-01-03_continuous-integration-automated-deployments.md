@@ -27,7 +27,7 @@ _I didn't actually write any tests just yet_, but I will once I get more comfort
 [Heroku](http://www.heroku.com/ "Heroku Cloud Application Platform") is an scalable web platform. You can get set up in _a few seconds_, and all you really need to do to configure your application is create what they call a [Procfile](https://devcenter.heroku.com/articles/procfile "Heroku Documentation"), mine is simply:
 
     web: node src/server.js
-    
+
 This configures my **Heroku** application to host a _web process_ and employ `src/server.js` as the **Node.JS** web server. I followed [this guide](https://devcenter.heroku.com/articles/nodejs "Getting Started with Node.JS on Heroku") to great success. And now, _whenever I want to deploy_, I can just issue the following _git command_:
 
 ```bash

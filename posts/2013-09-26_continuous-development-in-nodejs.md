@@ -151,21 +151,29 @@ watch: {
 
 No more <kbd>F5</kbd>? Sign me up!
 
-## Unbox it
+# Unbox it
+
+![unbox-256.png][4]
 
 I iterate over my build processes a lot, and now I finally put it together in a project that's ready to clone and work on. I didn't want to spend a bunch of time copying and pasting every time, and I figured it'd be useful to you too. Without further ado, I present [unbox](https://github.com/bevacqua/unbox "unbox on GitHub") to you. Clone using the command below:
 
 ```shell
-curl https://github.com/bevacqua/unbox/tree/master/clone.sh | sh
+git clone https://github.com/bevacqua/unbox my-repo
+cd my-repo
+cat unbox.sh | sh
 ```
 
-That `curl` command will:
+Doing that will:
 
 - `git clone` the latest version of `unbox`
 - Remove the `.git` folder to avoid confusion
+- `npm install`
+- `bower install`
 - **Profit!**
 
-Let me know if you find this kind of module useful, I sure do!
+> It doesn't just provide a build process, but an opinionated way to lay out the architecture, build process, and folder structure of any new application you want to develop with Node.
+
+Let me know if you find this kind of module to be _useful_, I sure do!
 
 # Updated `grunt-ec2`!
 
@@ -185,3 +193,4 @@ Oh, I didn't see you there! You see, I'm _writing a book_ on this kind of things
   [1]: http://i.imgur.com/EyXjS8r.png "Grunt! JavaScript Task Runner"
   [2]: http://i.imgur.com/LkMiobQ.jpg "Ain't nobody got time fo dat!"
   [3]: http://i.imgur.com/AAQ9riH.jpg "Automate all the things!"
+  [4]: http://i.imgur.com/5EwdJvU.png "unbox-256.png"
