@@ -25,11 +25,13 @@ In this article I'll go over a few of the methods on the `Array` prototype, and 
 
 This is one of the simplest methods in a native JavaScript Array. [Unsurprisingly unsupported™](http://kangax.github.io/es5-compat-table/#Array.prototype.forEach "ECMAScript 5 compatibility table") in IE7 and IE8.
 
-`forEach` takes a callback which is invoked once for each element in the array, and passed three arguments.
+`forEach` takes a callback which is invoked once for each element in the array, and gets passed three arguments.
 
 - `value` containing the current array element
 - `index` is the element's position in the array
-- array is a reference to the array
+- `array` is a reference to the array
+
+Furthermore, we could pass an optional second parameter which will become the context (`this`) for each function call.
 
 ```js
 ['_', 't', 'a', 'n', 'i', 'f', ']'].forEach(function (value, index, array) {
@@ -40,7 +42,7 @@ out.join('')
 // <- 'awesome'
 ```
 
-We can't break `forEach` loops, and throwing exceptions wouldn't be very sensible. Luckily, we have other options available to us in those cases where we might want to short-circuit a loop.
+I cheated with `.join` which we didn't cover _yet_, but we'll look at it soon. We **can't break `forEach` loops**, and throwing exceptions wouldn't be very sensible. Luckily, we have other options available to us in those cases where we might want to short-circuit a loop.
 
 ### Asserting with `.some` and `.every`
 
