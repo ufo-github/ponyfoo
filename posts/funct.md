@@ -31,7 +31,7 @@ This is one of the simplest methods in a native JavaScript Array. [Unsurprisingl
 - `index` is the element's position in the array
 - `array` is a reference to the array
 
-Furthermore, we could pass an optional second parameter which will become the context (`this`) for each function call.
+Furthermore, we could pass an optional second argument which will become the context (`this`) for each function call.
 
 ```js
 ['_', 't', 'a', 'n', 'i', 'f', ']'].forEach(function (value, index, array) {
@@ -46,7 +46,9 @@ I cheated with `.join` which we didn't cover _yet_, but we'll look at it soon. W
 
 ### Asserting with `.some` and `.every`
 
+If you've ever worked with .NET's enumerables, these methods are the _poorly named_ cousins of [`.Any(x => x.IsAwesome)`](http://msdn.microsoft.com/en-us/library/bb534972(v=vs.110).aspx "IEnumerable.Any<TSource> in .NET 4.5") and [`.All(x => x.IsAwesome)`](http://msdn.microsoft.com/en-us/library/bb548541(v=vs.110).aspx "IEnumerable.All<TSource> in .NET 4.5").
 
+These methods are similar to `.forEach` in that they also take a callback with `value`, `index`, and `array`, which can be context-bound passing a second `thisArgument` argument to them.
 
 
 
