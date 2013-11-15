@@ -191,5 +191,23 @@ Same as usual: `.filter(fn(value, index, array), thisArgument)`. Think of it as 
 
 > If `compareFunction` is not supplied, elements are sorted by converting them to strings and comparing strings in lexicographic ("dictionary" or "telephone book," not numerical) order. For example, "80" comes before "9" in lexicographic order, but in a numeric sort 9 comes before 80.
 
+Like most sorting functions, `Array.prototype.sort(fn(a,b))` takes a callback which tests two elements, and should produce one of three return values:
+
+- return value `< 0` if `a` comes before `b`
+- return value `=== 0` if both `a` and `b` are considered equivalent
+- return value `> 0` if `a` comes after `b`
+
+[examples!]
+
+[...]
+
+- Computing with `.reduce`, `.reduceRight`
+- Copying a `.slice`
+- The power of `.splice`
+- Lookups with `indexOf`
+- The `in` operator
+- Going in `.reverse`
+- Subtleties in `.join` and `.concat`
+- Memoization
 
   [1]: http://i.imgur.com/z0Hun2i.png
