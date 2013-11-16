@@ -197,6 +197,7 @@ Like most sorting functions, `Array.prototype.sort(fn(a,b))` takes a callback wh
 - return value `=== 0` if both `a` and `b` are considered equivalent
 - return value `> 0` if `a` comes after `b`
 
+Sorting is pretty straightforward
 [examples!]
 
 [...]
