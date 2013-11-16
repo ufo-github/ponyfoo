@@ -197,18 +197,41 @@ Like most sorting functions, `Array.prototype.sort(fn(a,b))` takes a callback wh
 - return value `=== 0` if both `a` and `b` are considered equivalent
 - return value `> 0` if `a` comes after `b`
 
-Sorting is pretty straightforward
-[examples!]
+```js
+[9,80,3,10,5,6].sort()
+// <- [10, 3, 5, 6, 80, 9]
 
-[...]
+[9,80,3,10,5,6].sort(function (a, b) {
+	return a - b
+})
+// <- [3, 5, 6, 9, 10, 80]
+```
 
-- Computing with `.reduce`, `.reduceRight`
-- Copying a `.slice`
-- The power of `.splice`
-- Lookups with `indexOf`
-- The `in` operator
-- Going in `.reverse`
-- Subtleties in `.join` and `.concat`
-- Memoization
+### Computing with `.reduce`, `.reduceRight`
+
+Reduce functions are, at first, hard to wrap our heads around. These functions loop through the array, from left-to-right _(`.reduce`)_ or right-to-left _(`.reduceRight`)_, each invocation receives the partial result so far, and the operation results in a single aggregated return value.
+
+Both methods have the following signature: `.reduce(callback(previousValue, currentValue, index, array), initialValue)`.
+
+The `previousValue` will be the value returned in the last callback invocation, or `initialValue` the first time around. `currentValue` contains the current element, while `index` indicates the array position for the element. `array` is simply a reference to the array `.reduce` was called on.
+
+```js
+Array.prototype.sum = function () {
+	return this.reduce(function (partial, value) {
+		return partial + value
+	}, 0)
+};
+
+[3,4,5,6,10].sum()
+// <- 28
+```
+
+### Copying a `.slice`
+### The power of `.splice`
+### Lookups with `indexOf`
+### The `in` operator
+### Going in `.reverse`
+### Subtleties in `.join` and `.concat`
+### Memoization
 
   [1]: http://i.imgur.com/z0Hun2i.png
