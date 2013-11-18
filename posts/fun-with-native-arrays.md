@@ -343,7 +343,65 @@ console.log(source)
 
 With `.indexOf`, we can look up array element positions. If it can't find a match, `-1` is returned. A pattern I find myself using a lot, is when I have comparisons such as `a === 'a' || a === 'b' || a === 'c'`, or even with just two comparsions. You could just use `.indexOf`, like so: `['a', 'b', 'c'].indexOf(a) !== -1`.
 
+Note that objects will be found only if the same reference is provided. A second argument can provide the start index at which to begin searching.
+
+```js
+var a = { foo: 'bar' }
+var b = [a, 2]
+
+console.log(b.indexOf(1))
+// <- -1
+
+console.log(b.indexOf({ foo: 'bar' }))
+// <- -1
+
+console.log(b.indexOf(a))
+// <- 0
+
+console.log(b.indexOf(a, 1))
+// <- -1
+
+b.indexOf(2, 1)
+// <- 1
+```
+
+If you want to go in the reverse direction, `.lastIndexOf` will do the trick.
+
 ### The `in` operator
+
+A common rookie mistake during interviews is to confuse `.indexOf` with the `in` operator, and hand-scribbling things such as:
+
+```js
+var a = [1, 2, 5]
+
+1 in a
+// <- true, but because of the 2!
+
+5 in a
+// <- false
+```
+
+The problem here was that the `in` operator checks the object key for a value, rather than searching for values. This is, of course, much faster than using `.indexOf`.
+
+```js
+var a = [3, 7, 6]
+
+1 in a === !!a[1]
+// <- true
+
+The `in` operator is similar to casting the value at the provided key to a boolean value. The `!!` expression is used by some developers to negate a value, and then negate it again. _Effectively casting to boolean_ any truthy value to `true`, and any falsy value to `false`.
+
 ### Going in `.reverse`
+
+This method will take the elements in an array and reverse them in place.
+
+```js
+var a = [1, 1, 7, 8]
+
+a.reverse()
+// [8, 7, 1, 1]
+```
+
+Rather than a copy, the array itself is modified. In a future article we'll expand on these concepts to see how we could create _an `_`-like library_, such as [Underscore](http://underscorejs.org/ "Underscore.js utility belt") or [Lo-Dash](http://lodash.com/ "Lo-Dash utility library").
 
   [1]: http://i.imgur.com/z0Hun2i.png
