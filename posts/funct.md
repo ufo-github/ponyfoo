@@ -72,7 +72,9 @@ Note that the function stopped looping after it hit the first item which satisfi
 
 ### Subtleties in `.join` and `.concat`
 
+The `.join` method is often confused with `.concat`. `.join(separator)` creates a string, resulting of taking every element in the array and separating them by `separator`. If no `separator` is provided, it'll default to a comma `','`. `.concat` works by creating new arrays which are shallow copies of the source arrays.
 
+- `.join`
 
 ### Stacks and queues with `.pop`, `.push`, `.shift`, and `.unshift`
 
