@@ -215,6 +215,8 @@ Both methods have the following signature: `.reduce(callback(previousValue, curr
 
 The `previousValue` will be the value returned in the last callback invocation, or `initialValue` the first time around. `currentValue` contains the current element, while `index` indicates the array position for the element. `array` is simply a reference to the array `.reduce` was called on.
 
+One of the typical use cases for `.reduce` is the sum function.
+
 ```js
 Array.prototype.sum = function () {
 	return this.reduce(function (partial, value) {
@@ -225,6 +227,28 @@ Array.prototype.sum = function () {
 [3,4,5,6,10].sum()
 // <- 28
 ```
+
+Say we wanted to join a few strings together. We could use `.join` to that purpose. In the case of objects, though, `.join` wouldn't work as we expected, unless the objects had a reasonable `valueOf` or `toString` representation. However, we might use `.reduce` as a string builder for those objects.
+
+```js
+function concat (input) {
+	return input.reduce(function (partial, value) {
+		if (partial) {
+			partial += ', ';
+		}
+		return partial + value;
+	}, '');
+}
+
+concat([
+	{ name: 'George' },
+	{ name: 'Sam' },
+	{ name: 'Pear' }
+]);
+// <- 'George, Sam, Pear'
+```
+
+........
 
 ### Copying a `.slice`
 ### The power of `.splice`
