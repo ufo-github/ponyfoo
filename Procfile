@@ -1,1 +1,1 @@
-web: node src/app.js --stack --no-color
+web: grunt heroku --stack --no-color; node src/app.js --stack --no-color

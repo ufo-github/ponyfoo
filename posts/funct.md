@@ -1,4 +1,4 @@
-# Working with Native Arrays
+# Fun with Native Arrays
 
 In JavaScript, arrays can be created with the `Array` constructor, or using the `[]` convenience shortcut, which is also the preferred approach. Arrays inherit from the `Object` prototype and they haven't a special value for `typeof`, they return `'object'` too. Using `[] instanceof Array`, however, returns true. That being said, there are also _Array-like objects_ which complicate matters, [such as strings, or the `arguments` object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/arguments "The arguments object - MDN"). The `arguments` object is not an instance of `Array`, but it still has a `length` property, and its values are indexed, so it can be looped like any Array.
 
@@ -307,7 +307,42 @@ format('some%sthing%s %s', true, 'some', 'other', 'things')
 ```
 
 ### The power of `.splice`
+
+`.splice` is one of my favorite native array functions. It allows you to remove elements, insert new ones, and to do both in the same position, using just one function call. Note that this function alters the source array, unlike `.concat` or `.slice`.
+
+```js
+var source = [1,2,3,8,8,8,8,8,9,10,11,12,13]
+var spliced = source.splice(3, 4, 4, 5, 6, 7)
+
+console.log(source)
+// <- [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13]
+
+spliced
+// <- [8, 8, 8, 8]
+```
+
+As you might've noted, it also returns the removed elements. This might come in handy if you want to loop a section of the array and then forget about it.
+
+```js
+var source = [1,2,3,8,8,8,8,8,9,10,11,12,13]
+var spliced = source.splice(9)
+
+spliced.forEach(function (value) {
+	console.log('removed', value)
+})
+// <- removed 10
+// <- removed 11
+// <- removed 12
+// <- removed 13
+
+console.log(source)
+// <- [1, 2, 3, 8, 8, 8, 8, 8, 9]
+```
+
 ### Lookups with `indexOf`
+
+With `.indexOf`, we can look up array element positions. If it can't find a match, `-1` is returned. A pattern I find myself using a lot, is when I have comparisons such as `a === 'a' || a === 'b' || a === 'c'`, or even with just two comparsions. You could just use `.indexOf`, like so: `['a', 'b', 'c'].indexOf(a) !== -1`.
+
 ### The `in` operator
 ### Going in `.reverse`
 
