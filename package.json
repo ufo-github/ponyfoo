@@ -54,7 +54,7 @@
     "dictatorship": "0.1.1",
     "grunt": "~0.4.1",
     "grunt-assetify": "0.9.3",
-    "grunt-cli": "~0.1.6",
+    "grunt-cli": "~0.1.11",
     "grunt-concurrent": "0.3.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "0.5.4",

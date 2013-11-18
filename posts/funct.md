@@ -74,7 +74,23 @@ Note that the function stopped looping after it hit the first item which satisfi
 
 The `.join` method is often confused with `.concat`. `.join(separator)` creates a string, resulting of taking every element in the array and separating them by `separator`. If no `separator` is provided, it'll default to a comma `','`. `.concat` works by creating new arrays which are shallow copies of the source arrays.
 
-- `.join`
+- `.concat` has the signature: `array.concat(val, val2, val3, valn)`
+- `.concat` returns a new array
+- `array.concat()` with no arguments returns a shallow copy of the array
+
+Shallow copy means that the copy will hold the same object references as the source array, which is generally a good thing. For example:
+
+```js
+var a = { foo: 'bar' }
+var b = [1, 2, 3, a]
+var c = b.concat()
+
+console.log(b === c)
+// <- false
+
+b[3] === a && c[3] === a
+// <- true
+```
 
 ### Stacks and queues with `.pop`, `.push`, `.shift`, and `.unshift`
 
@@ -240,23 +256,56 @@ Say we wanted to join a few strings together. We could use `.join` to that purpo
 function concat (input) {
 	return input.reduce(function (partial, value) {
 		if (partial) {
-			partial += ', ';
+			partial += ', '
 		}
-		return partial + value;
-	}, '');
+		return partial + value
+	}, '')
 }
 
 concat([
 	{ name: 'George' },
 	{ name: 'Sam' },
 	{ name: 'Pear' }
-]);
+])
 // <- 'George, Sam, Pear'
 ```
 
-........
-
 ### Copying a `.slice`
+
+Similarly to `.concat`, calls to `.slice` without any arguments produce a shallow copy of the source array. Slice takes two arguments, a `begin` and an `end` position. `Array.prototype.slice` can be used to convert array-like objects into real arrays.
+
+```js
+Array.prototype.slice.call({ 0: 'a', 1: 'b', length: 2 })
+// <- ['a', 'b']
+```
+
+This won't work with `.concat`, because it'll wrap the array-like object in a real array, instead.
+
+```js
+Array.prototype.concat.call({ 0: 'a', 1: 'b', length: 2 })
+// <- [{ 0: 'a', 1: 'b', length: 2 }]
+```
+
+Other than that, another common use for `.slice` is _removing the first few elements_ from a list of arguments (an array-like object, which we could cast to a real array).
+
+```js
+function format (text, bold) {
+	if (bold) {
+		text = '<b>' + text + '</b>'
+	}
+	var values = Array.prototype.slice.call(arguments, 2)
+
+	values.forEach(function (value) {
+		text = text.replace('%s', value)
+	})
+
+	return text
+}
+
+format('some%sthing%s %s', true, 'some', 'other', 'things')
+// <- <b>somesomethingother things</b>
+```
+
 ### The power of `.splice`
 ### Lookups with `indexOf`
 ### The `in` operator

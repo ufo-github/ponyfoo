@@ -6,7 +6,7 @@ module.exports = function(grunt){
 
     // the default is an alias of the test task
     grunt.registerTask('default', ['test']);
-    
+
     // generate documentation and compile assetify assets
     grunt.registerTask('assets', ['ngdoc', 'browserify', 'assetify']);
 };
