@@ -7,6 +7,6 @@ module.exports = function(grunt) {
 
     grunt.initConfig(opts);
     grunt.loadTasks('./build/tasks');
-    
+
     require('load-grunt-tasks')(grunt);
 };
