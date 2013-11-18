@@ -7,5 +7,6 @@ module.exports = function(grunt){
     // in production we cleanup, compile assets, and listen
     grunt.registerTask('production', ['clean', 'assets']);
 
+    // in heroku use a production build
     grunt.registerTask('heroku', ['production'])
 };

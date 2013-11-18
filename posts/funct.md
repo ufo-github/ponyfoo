@@ -70,6 +70,10 @@ satisfied
 
 Note that the function stopped looping after it hit the first item which satisfied the callback's condition `value < 10`. `.every` works in the same way, but short-circuits happen when your callback returns `false`, rather than `true`.
 
+### Subtleties in `.join` and `.concat`
+
+
+
 ### Stacks and queues with `.pop`, `.push`, `.shift`, and `.unshift`
 
 Nowadays, everyone knows that _adding elements to the end of an array_ is done using `.push`. Did you know that you can push many elements at once using `[].push('a', 'b', 'c', 'd', 'z')`?
@@ -255,7 +259,5 @@ concat([
 ### Lookups with `indexOf`
 ### The `in` operator
 ### Going in `.reverse`
-### Subtleties in `.join` and `.concat`
-### Memoization
 
   [1]: http://i.imgur.com/z0Hun2i.png
