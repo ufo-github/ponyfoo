@@ -6,6 +6,7 @@ In this article I'll go over a few of the methods on the `Array` prototype, and 
 
 - Looping with `.forEach`
 - Asserting with `.some` and `.every`
+- Subtleties in `.join` and `.concat`
 - Stacks and queues with `.pop`, `.push`, `.shift`, and `.unshift`
 - Model mapping with `.map`
 - Querying with `.filter`
@@ -13,11 +14,9 @@ In this article I'll go over a few of the methods on the `Array` prototype, and 
 - Computing with `.reduce`, `.reduceRight`
 - Copying a `.slice`
 - The power of `.splice`
-- Lookups with `indexOf`
+- Lookups with `.indexOf`
 - The `in` operator
 - Going in `.reverse`
-- Subtleties in `.join` and `.concat`
-- Memoization
 
 ![console.png][1]
 
@@ -339,7 +338,7 @@ console.log(source)
 // <- [1, 2, 3, 8, 8, 8, 8, 8, 9]
 ```
 
-### Lookups with `indexOf`
+### Lookups with `.indexOf`
 
 With `.indexOf`, we can look up array element positions. If it can't find a match, `-1` is returned. A pattern I find myself using a lot, is when I have comparisons such as `a === 'a' || a === 'b' || a === 'c'`, or even with just two comparsions. You could just use `.indexOf`, like so: `['a', 'b', 'c'].indexOf(a) !== -1`.
 
@@ -388,6 +387,7 @@ var a = [3, 7, 6]
 
 1 in a === !!a[1]
 // <- true
+```
 
 The `in` operator is similar to casting the value at the provided key to a boolean value. The `!!` expression is used by some developers to negate a value, and then negate it again. _Effectively casting to boolean_ any truthy value to `true`, and any falsy value to `false`.
 
@@ -402,6 +402,6 @@ a.reverse()
 // [8, 7, 1, 1]
 ```
 
-Rather than a copy, the array itself is modified. In a future article we'll expand on these concepts to see how we could create _an `_`-like library_, such as [Underscore](http://underscorejs.org/ "Underscore.js utility belt") or [Lo-Dash](http://lodash.com/ "Lo-Dash utility library").
+Rather than a copy, the array itself is modified. In a future article we'll expand on these concepts to see how we could create an `_`-like library, such as [Underscore](http://underscorejs.org/ "Underscore.js utility belt") or [Lo-Dash](http://lodash.com/ "Lo-Dash utility library").
 
   [1]: http://i.imgur.com/z0Hun2i.png
