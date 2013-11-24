@@ -1,4 +1,4 @@
-  # Package Authoring with Paqui
+# Package Authoring with Paqui
 
 Creating client-side JavaScript packages is increasingly becoming a painful endeavor. We need to publish our package to different repositories such as [bower](http://bower.io/ "Bower: A Package Manager for the Web"), [component](http://component.io/ "Component: Modular JavaScript Framework"), and [npm](https://npmjs.org/ "Node Packaged Modules"), and there are others! Crazy. People might be using [volo](http://volojs.org/ "volo"), [jam](http://jamjs.org/ "jam"), or [Ender](http://ender.jit.su/ "Ender")... _Have I named enough yet?_
 
@@ -81,9 +81,9 @@ Paqui conveniently packages `bump`, `build`, and `publish` in another command: `
 
 - Create a repo on GitHub
 - `paqui init -r username/project`
-- `paqui bump`, then verify generated files such as `package.json`, or `bower.json`_*_
+- `paqui bump`, then verify generated files such as `package.json`, or `bower.json` _*_
 - Work on your client-side package
-- `paqui build`, validate build results, located in the `bin` directory_*_
+- `paqui build`, validate build results, located in the `bin` directory _*_
 - `paqui deploy`
 
 _* (optional steps)_
