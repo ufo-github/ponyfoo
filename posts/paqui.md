@@ -1,4 +1,4 @@
-# Package Authoring with Paqui
+  # Package Authoring with Paqui
 
 Creating client-side JavaScript packages is increasingly becoming a painful endeavor. We need to publish our package to different repositories such as [bower](http://bower.io/ "Bower: A Package Manager for the Web"), [component](http://component.io/ "Component: Modular JavaScript Framework"), and [npm](https://npmjs.org/ "Node Packaged Modules"), and there are others! Crazy. People might be using [volo](http://volojs.org/ "volo"), [jam](http://jamjs.org/ "jam"), or [Ender](http://ender.jit.su/ "Ender")... _Have I named enough yet?_
 
@@ -71,11 +71,22 @@ Paqui also _does a little more_ when we call bump the first time around. It will
 
 ![bump.png][5]
 
-Those files _might be incomplete_, for example, the `main` script reference some package managers require is completed during the _build_ step. However, you don't need to worry about that, since `paqui deploy` will always run `bump` _before_ it builds. So you'll have everything you need when time comes to deploy. It is always worth checking out what Paqui has generated, at least until you get the gist of how it works.
+Missing information, such as the `main` script reference some package managers require, is added during the _build_ step. However, you don't need to worry about that, since `paqui deploy` will always run `bump` _before_ it builds. It is always worth checking out what Paqui has generated, though. At least until you get the gist of how it works.
 
 ## Publishing
 
+The last step Paqui takes care of is publishing to the various package managers we opt to use. With Paqui, this can be done simply executing `paqui publish` in our command line.
 
+Paqui conveniently packages `bump`, `build`, and `publish` in another command: `paqui deploy`. The flow I suggest would be:
+
+- Create a repo on GitHub
+- `paqui init -r username/project`
+- `paqui bump`, then verify generated files such as `package.json`, or `bower.json`_*_
+- Work on your client-side package
+- `paqui build`, validate build results, located in the `bin` directory_*_
+- `paqui deploy`
+
+_* (optional steps)_
 
   [1]: http://i.imgur.com/XAlzQ8V.png "Creating the repository on GitHub"
   [2]: http://i.imgur.com/i0grZjO.png "Initializing a component with Paqui"
