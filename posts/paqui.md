@@ -88,6 +88,8 @@ Paqui conveniently packages `bump`, `build`, and `publish` in another command: `
 
 _* (optional steps)_
 
+## Extending Paqui
+
   [1]: http://i.imgur.com/XAlzQ8V.png "Creating the repository on GitHub"
   [2]: http://i.imgur.com/i0grZjO.png "Initializing a component with Paqui"
   [3]: http://i.imgur.com/Tx6ehpE.png "The .paquirc configuration file"
