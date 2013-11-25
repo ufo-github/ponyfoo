@@ -125,13 +125,40 @@ The four options which might be unclear at this point are: `transform`, `transpo
 
 The three remaning options are _extendable_. The `transform` extensions govern _how your project is compiled_. These can be chained, and each transformer's output is piped onto the next one. By default, Paqui projects are compiled using the `universal` and `banner` extensions. The former wraps our code in a UMD definition, using Browserify. Then, `banner` prepends a comment with author information, such as the version number, license type, or package name.
 
+To illustrate, let's examine the function exported by `banner.js`, the file which defines its namesake extension. This function takes a `paqui` argument, which is a succint API helper provided by Paqui. The function should return an object, and in this case, that object should have a `transform` property, as _a function with three arguments_:
 
+- `pkg`: a read-only copy of the contents of `.paquirc`
+- `model`: an empty object which can be useful to communicate among different extensions
+- `done`: callback to be executed when the extension's work is over, passing an optional error and the resulting code
 
+The current implementation is below.
 
+```js
+function (paqui) {
+    return {
+        transform: function (pkg, model, done) {
+            var main = path.join(paqui.wd, pkg.main);
+            var raw = '';
+            var b = browserify(main);
+            var stream = b.bundle({
+                standalone: pkg.name
+            });
 
+            stream.on('data', function (data) {
+                raw += data;
+            });
 
+            stream.on('end', function () {
+                done(null, raw);
+            });
+        }
+    };
+};
+```
 
+As you can see, all this does is take the `main` path specified in `.paquirc`, join it with the working directory provided by the Paqui API, and turn it into an UMD module, before passing it to `done(null, raw)`. Using this micro-framework we'll be able to put together any kind of build step we want in just a few lines of code. The difference is that there's almost no configuration after that: we just provide the names to the plugins we want to use.
 
+For more information on the Paqui API and to learn how to extend its functionality, [visit its GitHub repository](https://github.com/bevacqua/paqui).
 
   [1]: http://i.imgur.com/XAlzQ8V.png "Creating the repository on GitHub"
   [2]: http://i.imgur.com/i0grZjO.png "Initializing a component with Paqui"
