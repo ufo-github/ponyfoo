@@ -88,6 +88,37 @@ Paqui conveniently packages `bump`, `build`, and `publish` in another command: `
 
 _* (optional steps)_
 
+So we have scaffolding, version bumping, a build step, and publishing. How can we configure these things?
+
+## Configuring `paqui init`
+
+The following table shows data requested by `init`, as well as its defaults.
+
+Property|Description|Defaults
+---:|----|----
+_name_|Package name|Directory name
+_description_|Pretty self explanatory|Awesome package
+_author_|Package author|Info from `git config --global --get`
+_version_|Package version|`0.0.1`
+_transform_|Build steps|`['universal', 'banner']`
+_transport_|Build results|`['file']`
+_pm_|Package Managers|`['npm', 'bower']`
+_license_|License under which we release the package|**MIT**
+_remote_|The git remote we will be pushing to|`origin`
+_main_|The path to the entry point for our source code|`'src/main.js'`
+
+The relevant command-line options are:
+
+Option|Description
+---:|---
+`--remote <url>`|Provide a link to the remote, then init will automatically push to it after creating the local repository
+`--no-git`|Paqui won't create a git repository using `git init`, nor attempt to push anything
+`--existing`|Creates a `.paquirc` for an existing project
+
+> Using `paqui init --existing` is useful to integrate existing projects into Paqui.
+
+The four options which might be unclear at this point are: `transform`, `transport`, `pm`, and `license`. In the case of the last one, I decided not to make licesing extendable. At this point you can pick one of: [Apache](http://choosealicense.com/licenses/apache/ "Apache v2 License on ChooseALicense.com"), [GPL](http://choosealicense.com/licenses/gpl-v3/ "GPL v3 License on ChooseALicense.com"), or [MIT](http://choosealicense.com/licenses/mit/ "MIT License on ChooseALicense.com"). If you'd like to pick another license from Paqui, you're welcome to [open a pull request](https://github.com/bevacqua/paqui/pulls/ "Pull Requests on Paqui") with more templates.
+
 ## Extending Paqui
 
   [1]: http://i.imgur.com/XAlzQ8V.png "Creating the repository on GitHub"
