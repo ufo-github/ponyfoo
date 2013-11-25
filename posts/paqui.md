@@ -158,7 +158,9 @@ function (paqui) {
 
 As you can see, all this does is take the `main` path specified in `.paquirc`, join it with the working directory provided by the Paqui API, and turn it into an UMD module, before passing it to `done(null, raw)`. Using this micro-framework we'll be able to put together any kind of build step we want in just a few lines of code. The difference is that there's almost no configuration after that: we just provide the names to the plugins we want to use.
 
-For more information on the Paqui API and to learn how to extend its functionality, [visit its GitHub repository](https://github.com/bevacqua/paqui).
+These plugins are also available to extend what's done after builds, enabling us to do simple things such as writing to a file, or maybe we want to get creative and send an email, or print a report to the standard output. Similarly, we're able to add more package management systems on top of the ones provided by default, which are `npm`, `bower`, and `component`.
+
+For more information on the **Paqui API** and to learn how to _extend its functionality_, [visit its GitHub repository](https://github.com/bevacqua/paqui).
 
   [1]: http://i.imgur.com/XAlzQ8V.png "Creating the repository on GitHub"
   [2]: http://i.imgur.com/i0grZjO.png "Initializing a component with Paqui"
