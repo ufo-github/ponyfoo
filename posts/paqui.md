@@ -96,7 +96,7 @@ The following table shows data requested by `init`, as well as its defaults.
 
 Property|Description|Defaults
 ---:|----|----
-_name_|Package name|Directory name
+_name_|Package name|Project directory name
 _description_|Pretty self explanatory|Awesome package
 _author_|Package author|Info from `git config --global --get`
 _version_|Package version|`0.0.1`
@@ -106,6 +106,8 @@ _pm_|Package Managers|`['npm', 'bower']`
 _license_|License under which we release the package|**MIT**
 _remote_|The git remote we will be pushing to|`origin`
 _main_|The path to the entry point for our source code|`'src/main.js'`
+
+The results from these questions asked by Paqui, will be dumped into a JSON file called `.paquirc`, where Paqui keeps everything needed to help you build and release your project.
 
 The relevant command-line options are:
 
@@ -120,6 +122,16 @@ Option|Description
 The four options which might be unclear at this point are: `transform`, `transport`, `pm`, and `license`. In the case of the last one, I decided not to make licesing extendable. At this point you can pick one of: [Apache](http://choosealicense.com/licenses/apache/ "Apache v2 License on ChooseALicense.com"), [GPL](http://choosealicense.com/licenses/gpl-v3/ "GPL v3 License on ChooseALicense.com"), or [MIT](http://choosealicense.com/licenses/mit/ "MIT License on ChooseALicense.com"). If you'd like to pick another license from Paqui, you're welcome to [open a pull request](https://github.com/bevacqua/paqui/pulls/ "Pull Requests on Paqui") with more templates.
 
 ## Extending Paqui
+
+The three remaning options are _extendable_. The `transform` extensions govern _how your project is compiled_. These can be chained, and each transformer's output is piped onto the next one. By default, Paqui projects are compiled using the `universal` and `banner` extensions. The former wraps our code in a UMD definition, using Browserify. Then, `banner` prepends a comment with author information, such as the version number, license type, or package name.
+
+
+
+
+
+
+
+
 
   [1]: http://i.imgur.com/XAlzQ8V.png "Creating the repository on GitHub"
   [2]: http://i.imgur.com/i0grZjO.png "Initializing a component with Paqui"
