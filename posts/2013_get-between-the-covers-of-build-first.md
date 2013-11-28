@@ -48,24 +48,9 @@ You are probably going to **need a build process** at some point, regardless. Ev
 
 > Aren't you just tired of adding icons to that spritesheet and updating the relevant CSS all by yourself? You [should automate those things!](/2013/10/16/spritesheets-grunt-and-you "Spritesheets, Grunt, and You")
 
-The other side to _Build First_ is actually building out the application. Not everything is in the process, obviously. A modular architecture with good separation of concerns is also key in keeping your code testable, and **easily understandable** across your team. Together, we'll explore different frameworks that can help us build a cleanly structured application, while staying away from _tightly coupled_, jQuery-intensive code.
+The other side to _Build First_ is concerned with actually building out the application. Not everything is in the process, obviously. A modular architecture with good separation of concerns is also key in keeping your code testable, and **easily understandable** across your team. Together, we'll explore different frameworks that can help us build a cleanly structured application, while staying away from _tightly coupled_, jQuery-intensive code. Dependency resolution, asynchronous or otherwise, also gets covered.
 
-
-
-
-
-
-
-// MODULARITY, DI, PM
-// ASYNC
-// FN JS
-
-
-
-
-
-
-
+Asynchronous flows might represent a problem if you're not that well versed in JavaScript programming, other than your first-level callback. I invite you to explore different approaches to tackle this problem, such as Promises, the [async](https://github.com/caolan/async "caolan/async on GitHub") control flow library, and [ES6 Harmony generator functions](http://wiki.ecmascript.org/doku.php?id=harmony:generators "harmony:generators on ES6 wiki").
 
 ### Reference Links
 
@@ -82,8 +67,8 @@ I'm really happy with the effort I've poured into developing documentation for t
 Here's a few other ones I had fun coding and documenting:
 
 - [Encrypt your configuration with RSA keys](https://github.com/bevacqua/buildfirst/tree/master/ch03/02_rsa-config-encryption "RSA Config Encryption Code Sample"), easter egg included!
-- [_Build First_, Deploy, Build Again](https://github.com/buildfirst/heroku-grunt)
-- [Deploying to Amazon EC2](https://github.com/bevacqua/buildfirst/tree/master/ch04/07_aws-deployments)
+- [_Build First_, Deploy, Build Again](https://github.com/buildfirst/heroku-grunt "Grunt-aware Heroku Deployments")
+- [Deploying to Amazon EC2](https://github.com/bevacqua/buildfirst/tree/master/ch04/07_aws-deployments "Deploying to Amazon Web Services")
 
 # Trivia you probably don't care about
 
