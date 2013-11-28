@@ -14,6 +14,8 @@ In this article I'll be describing some of the concepts which I explain in the b
 >
 > The Build First philosophy will help you approach application building in a more disciplined way. Adopting a build-oriented mentality, designing large but maintainable JavaScript applications, and deploying from the command line are some of the key take-aways in the book.
 
+### _Build First_ In a Pinch
+
 As you might've read, this is a book about designing JavaScript applications in a build-oriented manner. To get a hint about the contents of Part I, on build processes, I've compiled a list with a few articles on the subject you can peek at. Part I is dedicated entirely to the build and deployment processes. You'll learn how to automate integration testing, deployments, builds, and even development. Grunt _(as a tool)_ is taught from scratch, but the concepts should stick with you even if you part ways with Grunt.
 
 - [Deploying Node Apps to AWS Using Grunt](/2013/09/19/deploying-node-apps-to-aws-using-grunt "Deploying Node Apps to AWS Using Grunt on Pony Foo")
@@ -33,6 +35,18 @@ Part II is dedicated to complexity management in JavaScript applications. Here, 
 - [Taming Asynchronous JavaScript](/2013/05/08/taming-asynchronous-javascript "Taming Asynchronous JavaScript on Pony Foo")
 - [Pragmatic Unit Testing in JavaScript](/2013/03/28/pragmatic-unit-testing-in-javascript "Pragmatic Unit Testing in JavaScript on Pony Foo")
 - [Information Hiding in JavaScript](/2013/02/21/information-hiding-in-javascript "Information Hiding in JavaScript on Pony Foo")
+
+### _Build First_ In a Nutshell
+
+> **Build First** is all about keeping a maintainable, modular code-base that can be continuously delivered in a consistent manner, from the very beginning.
+
+The importance of [#buildfirst](https://twitter.com/#buildfirst "Hashtag #buildfirst on Twitter") stems from the fact that plugging a build process into an existing project is **so hard**. Some things just have to be baked into a project starting with its inception, if they are to succeed. Have you tried refactoring a website written without a client-side MVC framework, entirely dependant on jQuery, into using Angular.js? It's **an extremely hard thing to do**. It's even harder to do it right, not leaving the project as a half-baked zombie which is _really just jQuery with cream on top_, turning it into the awful kind of dessert you most definitely don't want to be eating.
+
+The absence of build processes presents _similar complications_. If we abstain from implementing an automated build and deployment process, **we might be putting our business at risk**. I can't really come up with _a reason not to_ implement one, other than [dramatic attempts to attain _"gold sinking powerhouse"_ status](http://bevacqua.io/bf/knight "How to lose $172,222 a second for 45 minutes"). Regrettably, _not all_ of us are [playing an RPG](http://www.mine-control.com/zack/uoecon/uoecon.html "The In-game Economics of Ultima Online") with our business, some of us can't have the luxury of that kind of risk.
+
+You are probably going to **need a build process** at some point, regardless. Even if you argue your way out of automated, one step deployments, you are still going to need to do simply things such as bundling and minifying your static assets, or more advanced stuff like _cache busting_, appending hashes to your filenames (e.g: `/js/ad161513.all.js`) so that you can set far-future `Expires` headers.
+
+Aren't you just tired of adding icons to that spritesheet and updating the relevant CSS all by yourself? You [should automate those things!](/2013/10/16/spritesheets-grunt-and-you "Spritesheets, Grunt, and You")
 
 ### Reference Links
 
@@ -84,7 +98,7 @@ The book was originally named _Build-First JavaScript Applications_, which was p
 
 The table of contents has been reworked quite a bit by now. Node has been relayed to the background, mostly regarded as a dependency for Grunt. However, parts of the book which require a back-end use Node for that. Deployments are also explained using Node. Testing, however, is mostly dedicated to front-end efforts.
 
-> There's a lot more coming, and I couldn't be more thrilled to see this project moving forward!
+There's a lot more coming, and I couldn't be more thrilled to see this project moving forward! I'm sure I'll write an update about the book as I make progress through parts II and III in the book.
 
   [1]: http://i.imgur.com/idiCvhM.jpg
 
