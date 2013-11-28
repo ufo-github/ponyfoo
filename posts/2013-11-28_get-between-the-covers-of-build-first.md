@@ -34,7 +34,23 @@ Part II is dedicated to complexity management in JavaScript applications. Here, 
 - [Pragmatic Unit Testing in JavaScript](/2013/03/28/pragmatic-unit-testing-in-javascript "Pragmatic Unit Testing in JavaScript on Pony Foo")
 - [Information Hiding in JavaScript](/2013/02/21/information-hiding-in-javascript "Information Hiding in JavaScript on Pony Foo")
 
+### Reference Links
 
+In the book there are various places where I reference articles _other authors_ have written, and this presented two problems. Links are hard to type if you are holding in your hands a print copy of a book. I know because I've been there. I was also worried about link rot (links no longer working, [_because Internet_](http://www.theatlantic.com/technology/archive/2013/11/english-has-a-new-preposition-because-internet/281601/ "English has a new proposition, because Internet")). These are the reasons why [bevacqua.io](http://bevacqua.io "bevacqua.io is my personal website"), the website that hosts the promotional landing page for the book, was originally conceived. It started out with a small JSON file with all the links referenced in the book, and a short identifier which you could actually type into the browser by hand.
+
+For example, one of the first links that appear on the book is [bevacqua.io/bf/knight](http://bevacqua.io/bf/knight "Knight Capital's Downfall"), which is way more convenient to type by hand than, say, [_pythonsweetness.tumblr.com/post/64740079543/how-to-lose-172-222-a-second-for-45-minutes_](http://pythonsweetness.tumblr.com/post/64740079543/how-to-lose-172-222-a-second-for-45-minutes "How to lose $172,222 a second for 45 minutes"). Later on, I figured I could put all of that **relevant material regarding topics that are at the core of my book** to good use. So, the site slowly started progressing, and with a few descriptions and icons, [the #buildfirst Resources page](http://bevacqua.io/buildfirst/resources "Reference Links for the JavaScript Application Design book") was born.
+
+### Companion Code
+
+**Good companion code makes a world of difference** when it comes to technical books that are supposed to be teaching you how to write better code. I've spent enough time reading books to know just how _important good quality code samples_ can be. Quality code samples should be properly documented, [available online on a GitHub repository](https://github.com/bevacqua/buildfirst "Accompanying code samples and snippets for the JavaScript Application Design book") which is periodically updated, and sufficiently structured so it isn't unthinkable to look up a particular snippet of code.
+
+I'm really happy with the effort I've poured into developing documentation for these code samples. For instance, [this code sample, showing how to automate database related tasks](https://github.com/bevacqua/buildfirst/tree/master/ch02/09_mysql-tasks "MySQL Database Tasks") is barely mentioned in the book, because the content isn't really relevant to the context where it is mentioned in. Still, the code sample fills the content gap, connecting the sample with what's discussed in the book, and highlighting aspects that are not discussed elsewhere.
+
+Here's a few other ones I had fun coding and documenting:
+
+- [Encrypt your configuration with RSA keys](https://github.com/bevacqua/buildfirst/tree/master/ch03/02_rsa-config-encryption "RSA Config Encryption Code Sample"), easter egg included!
+- [_Build First_, Deploy, Build Again](https://github.com/buildfirst/heroku-grunt)
+- [Deploying to Amazon EC2](https://github.com/bevacqua/buildfirst/tree/master/ch04/07_aws-deployments)
 
 # Trivia you probably don't care about
 
