@@ -84,6 +84,8 @@ The book was originally named _Build-First JavaScript Applications_, which was p
 
 The table of contents has been reworked quite a bit by now. Node has been relayed to the background, mostly regarded as a dependency for Grunt. However, parts of the book which require a back-end use Node for that. Deployments are also explained using Node. Testing, however, is mostly dedicated to front-end efforts.
 
+There's a lot more coming, and I couldn't be more thrilled to see this project moving forward!
+
   [1]: http://i.imgur.com/idiCvhM.jpg
 
 TAGS: buildfirst book recommended-reading build front-end
