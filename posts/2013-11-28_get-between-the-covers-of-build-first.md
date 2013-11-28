@@ -14,7 +14,27 @@ In this article I'll be describing some of the concepts which I explain in the b
 >
 > The Build First philosophy will help you approach application building in a more disciplined way. Adopting a build-oriented mentality, designing large but maintainable JavaScript applications, and deploying from the command line are some of the key take-aways in the book.
 
-This is a book about application design.
+As you might've read, this is a book about designing JavaScript applications in a build-oriented manner. To get a hint about the contents of Part I, on build processes, I've compiled a list with a few articles on the subject you can peek at. Part I is dedicated entirely to the build and deployment processes. You'll learn how to automate integration testing, deployments, builds, and even development. Grunt _(as a tool)_ is taught from scratch, but the concepts should stick with you even if you part ways with Grunt.
+
+- [Deploying Node Apps to AWS Using Grunt](/2013/09/19/deploying-node-apps-to-aws-using-grunt "Deploying Node Apps to AWS Using Grunt on Pony Foo")
+- [Continuous Development in Node.js](/2013/09/26/continuous-development-in-nodejs "Continuous Development in Node.js on Pony Foo")
+- [Grunt Tips and Tricks](/2013/11/13/grunt-tips-and-tricks "Grunt Tips and Tricks on Pony Foo")
+- [Understanding Build Processes](/2013/05/22/understanding-build-processes "Understanding Build Processes on Pony Foo")
+- [Managing Code Quality in Node.js](/2013/03/22/managing-code-quality-in-nodejs)
+- [Upgraded Asset Management](/2013/07/22/upgraded-asset-management "Upgraded Asset Management on Pony Foo")
+
+Part II is dedicated to complexity management in JavaScript applications. Here, chapters cover topics such as modularity and package management, asynchronous programming styles, unit and integration testing _(again, in JavaScript)_. Solid JavaScript programming in general. I've also written a few relevant articles on the subject as well.
+
+- [The Angular Way](/2013/08/27/the-angular-way "The Angular Way on Pony Foo")
+- [Uncovering the Native DOM API](/2013/06/10/uncovering-the-native-dom-api "Uncovering the Native DOM API on Pony Foo")
+- [Getting Over jQuery](/2013/07/09/getting-over-jquery "Getting Over jQuery on Pony Foo")
+- [Fun with Native Arrays](/2013/11/19/fun-with-native-arrays "Fun with Native Arrays on Pony Foo")
+- [The Web Wars](/2013/05/13/the-web-wars "The Web Wars on Pony Foo")
+- [Taming Asynchronous JavaScript](/2013/05/08/taming-asynchronous-javascript "Taming Asynchronous JavaScript on Pony Foo")
+- [Pragmatic Unit Testing in JavaScript](/2013/03/28/pragmatic-unit-testing-in-javascript "Pragmatic Unit Testing in JavaScript on Pony Foo")
+- [Information Hiding in JavaScript](/2013/02/21/information-hiding-in-javascript "Information Hiding in JavaScript on Pony Foo")
+
+
 
 # Trivia you probably don't care about
 
