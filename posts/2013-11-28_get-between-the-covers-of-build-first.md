@@ -46,7 +46,26 @@ The absence of build processes presents _similar complications_. If we abstain f
 
 You are probably going to **need a build process** at some point, regardless. Even if you argue your way out of automated, one step deployments, you are still going to need to do simply things such as bundling and minifying your static assets, or more advanced stuff like _cache busting_, appending hashes to your filenames (e.g: `/js/ad161513.all.js`) so that you can set far-future `Expires` headers.
 
-Aren't you just tired of adding icons to that spritesheet and updating the relevant CSS all by yourself? You [should automate those things!](/2013/10/16/spritesheets-grunt-and-you "Spritesheets, Grunt, and You")
+> Aren't you just tired of adding icons to that spritesheet and updating the relevant CSS all by yourself? You [should automate those things!](/2013/10/16/spritesheets-grunt-and-you "Spritesheets, Grunt, and You")
+
+The other side to _Build First_ is actually building out the application. Not everything is in the process, obviously. A modular architecture with good separation of concerns is also key in keeping your code testable, and **easily understandable** across your team. Together, we'll explore different frameworks that can help us build a cleanly structured application, while staying away from _tightly coupled_, jQuery-intensive code.
+
+
+
+
+
+
+
+// MODULARITY, DI, PM
+// ASYNC
+// FN JS
+
+
+
+
+
+
+
 
 ### Reference Links
 
@@ -98,7 +117,11 @@ The book was originally named _Build-First JavaScript Applications_, which was p
 
 The table of contents has been reworked quite a bit by now. Node has been relayed to the background, mostly regarded as a dependency for Grunt. However, parts of the book which require a back-end use Node for that. Deployments are also explained using Node. Testing, however, is mostly dedicated to front-end efforts.
 
-There's a lot more coming, and I couldn't be more thrilled to see this project moving forward! I'm sure I'll write an update about the book as I make progress through parts II and III in the book.
+# Etcetera
+
+There's a lot more coming, and I couldn't be more thrilled to see this project moving forward! I'm sure I'll write an update about the book as I make progress through parts II and III in the book. I'm really happy with the feedback I've read so far on Twitter, HN, et al. I hope the feedback keeps pouring in!
+
+If you want to comment on anything related to this project, you can email me at [buildfirst@bevacqua.io](mailto:buildfirst@bevacqua.io "Send me an email about #buildfirst"), or just drop a comment here.
 
   [1]: http://i.imgur.com/idiCvhM.jpg
 
