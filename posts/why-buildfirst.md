@@ -14,7 +14,7 @@ Build First is also influenced by the [12 Factor App Manifest](http://12factor.n
 
 That is, don't assume the closed-source nature of your project to be secure enough for you to place sensitive data such as API credentials or email authentication information directly in the project. Instead, keep private data in environment variables, or use encryption if you want to keep it in the repository safely. This won't only help you write code that's safer, but it'll also make the code easier to scale, too!
 
-Then there's the [Pragmatic Programmer](http://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X "Find it in Amazon"), this is a book [I've recommended in the past](/2013/05/21/recommended-reading "Recommended Reading"), ...
+Then there's the [Pragmatic Programmer](http://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X "Find it in Amazon"), this is a book [I've recommended in the past](/2013/05/21/recommended-reading "Recommended Reading"), ... (ref. other mentions of pragprog)
 
 - automate everything, right off the bat
 - less headaches, leaner process
