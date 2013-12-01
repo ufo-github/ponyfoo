@@ -8,7 +8,13 @@ Build First is a set of principles I've collected over the years and influenced 
 - Hot fixes can be pushes through the ranks immediately
 - Recently introduced bugs can be quickly identified because features are released in short bursts, rather than commiting huge change lists to each individual release
 
-Build First is also influenced by the [12 Factor App Manifest](http://12factor.net "Heroku's 12 Factor App manifest"), written by one of Heroku's co-founders. In this document, Wiggins details their approach to application architecture, configuration, scaling, and deployment. **This is a read I could not recommend more often.** 
+Build First is also influenced by the [12 Factor App Manifest](http://12factor.net "Heroku's 12 Factor App manifest"), written by one of Heroku's co-founders. In this document, Wiggins details their approach to application architecture, configuration, scaling, and deployment. **This is a read I could not recommend more often.** Granted, working in Node.js and open-source projects had already taught me a lot about the topic, but it helped me further advance my treatment of secure configuration and scalable application design. Below is one of the subtle (yet, _key_) take-aways I came up with, after working in the open-source JavaScript community for a while, reading and following Heroku's _12 Factor App_ manifest.
+
+> Write closed source projects as if they might be open-sourced overnight
+
+That is, don't assume the closed-source nature of your project to be secure enough for you to place sensitive data such as API credentials or email authentication information directly in the project. Instead, keep private data in environment variables, or use encryption if you want to keep it in the repository safely. This won't only help you write code that's safer, but it'll also make the code easier to scale, too!
+
+Then there's the [Pragmatic Programmer](http://www.amazon.com/Pragmatic-Programmer-Journeyman-Master/dp/020161622X "Find it in Amazon"), this is a book [I've recommended in the past](/2013/05/21/recommended-reading "Recommended Reading"), ...
 
 - automate everything, right off the bat
 - less headaches, leaner process
