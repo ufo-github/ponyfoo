@@ -16,7 +16,7 @@ function test () {
 }
 ```
 
-Enter [JavaScript variable hoisting](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Scope_Cheatsheet#Hoisting "Variable Hosting on MDN"), and your code will actually end up looking like below.
+Enter [JavaScript variable hoisting](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Scope_Cheatsheet#Hoisting "Variable Hosting on MDN"), and your code will actually end up looking like below. Hoisting _basically moves variable declarations_ to the top of the scope those variables belong to. However, assignments stay where they are! Function declarations are hoisted only if they're not part of an assignment statement.
 
 ```js
 var value;
