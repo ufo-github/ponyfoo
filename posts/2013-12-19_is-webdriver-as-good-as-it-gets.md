@@ -166,13 +166,48 @@ this.browser
 
 Obviously, though, when you go for something like `.text().then(function (value) {})`, you're pretty much screwed because you don't have a reference to the element anymore, unless you've previously persisted it to a variable.
 
+### Capturing Page Load Errors
+
+You'd think capturing page load errors is something that anyone would like to use. That is, logging errors that happen right after a request completes, during interpretation or execution of a piece of code. Well, if you google around, the only real solution to this problem is using client-side JavaScript, and patching [onerror][13] so that you can keep track of errors.
+
+```js
+window.__wd_errors = [];
+window.onerror = function (message, url, ln) {
+  window.__wd_errors.push({
+    message: message,
+    url: url,
+    ln: ln
+  });
+};
+```
+
+As WebDriver doesn't really provide a mechanism to inject into the response stream, or manipulate it in any way _(that I could find, anyways)_, you're stuck with patching the application if a `TEST_INTEGRATION` environment variable or similar is turned on. On the testing side of things, you could augment the promise chain prototype to print the list of errors, after navigating to a page.
+
+```js
+wd.PromiseChainWebdriver.prototype.throwIfJsErrors = function () {
+  return this
+    .safeEval('window.__wd_errors')
+    .then(function (errors) {
+      if (errors && errors.length) {
+        console.log('Detected %s Error(s)', errors.length);
+
+        errors.forEach(function (error) {
+          console.log('%s\nAt %s, File %s', error.message, error.ln, error.url);
+        });
+      }
+    });
+};
+```
+
+This helped me catch an unexpected issue. Phantom doesn't have `Function.prototype.bind`, and [it won't get included until `2.0.0`][14], which _doesn't seem to be happenning any time soon_. Temporarily, I added a polyfill for `Function.prototype.bind` to the file which had the the page load error capturing.
+
 ### File Uploading _is a Nightmare_
 
-To me, the worst offender of all, was file uploading. Of course, documentation would've helped. It's like nobody wants to talk about integration testing anyways, so googling around doesn't do you a lot of good either. The best I could come up with was finding some information on [GitHub issue discussions][8], or maybe look at questions about the WebDriver implementation in Java, and _trying to mirror that_.
+The worst offender of all, was file uploading. Of course, _documentation would've helped_. It's like nobody wants to talk about integration testing anyways, so googling around doesn't do you a lot of good either. The best I could come up with was some information on [a discussion on an issue on GitHub][8], and maybe questions about the WebDriver implementation in Java, which _I attempted to mirror_.
 
-I tried everything. At first, I went with the API: find the element, `.sendKeys(<path>)`. Nope, that won't work. Okay, maybe it was just `.type`? No. Need a `.click` in between? Wrong again. You see, the lack of documentation makes it very hard for the consumer to know exactly how wrong their approach is. That represents a huge problem, because you can keep trying things that just don't make any sense, hoping to eventually get it right. You won't.
+I tried everything. At first, I went with the API: find the element, then use `.sendKeys(<path>)`. Nope, that won't work. Okay, maybe it was just `.type(<path>)`? No. Need a `.click()` in between? Wrong again. You see, the lack of documentation makes it very hard for the consumer to know exactly how wrong their approach is. That represents a huge problem, because **you'll keep on trying things out blindly**, hoping to eventually get it right. **You won't.**
 
-After lots of googling and desperate measures, I stumbled upon a snippet of the internet where I read that this functionality [wasn't implemented a few months ago][8], sure [this pull request][9] sounds like it should be working, but [this issue on GhostDriver suggests otherwise][10], and I got tired of sifting through issue lists figuring out whether what I was trying to do was even supported.
+After lots of googling and a some desperate attempts, I stumbled upon a corner of the internet where I read that this functionality [wasn't implemented a few months ago][8], sure [this pull request][9] sounds like it should be working, but [this issue on GhostDriver suggests otherwise][10], and I got tired of sifting through issue lists figuring out whether what I was trying to do was even supported.
 
 Okay, great, so I decided to try something else. I know! I'm fine not testing the button click itself, **that's something a unit test could do**. I care about the grand scheme of things. I _need to upload the file_, though. There's no getting around that. Luckily, the page I was testing wasn't submitting the form directly. It creates a [FormData][11] object, and places the files there, and then it sends that. All I need is to `eval` the right string, and it'll all be over!
 
@@ -203,7 +238,29 @@ wd.PromiseChainWebdriver.prototype.uploadSomething = function (file, scope) {
 };
 ```
 
-Feeling _great!_ Let's do this! ...nope, _not working_. [Blob is unsupported in Phantom < `2.0.0`][12].
+Feeling _great!_ Let's do this! ...nope, _not working_. [Blob is unsupported in Phantom < `2.0.0`][12], just like [`Function.prototype.bind`][15]. The [polyfill][16] I tried out didn't work either, and I simply moved on to Chrome.
+
+### Moving to Chrome
+
+Okay, fine. Rather than using the unreliable Ghost browser, I needed the real thing, and so I went with Chrome. To run tests with Chrome, I needed to change things up quite a bit. First off, I found a [really simple selenium server installer][17] which did the trick of firing up a Selenium server for me.
+
+```shell
+npm install -g selenium-standalone
+```
+
+Now I could fire up an instance in my command line. _By the way, it requires Java!_
+
+```shell
+start-selenium
+```
+
+Wait a minute... that's too easy! Oh yeah, that's right, `grunt-mocha-webdriver` doesn't run against local selenium instances, even though [a pull request][18], which adds that functionality, **is already a month old**. I went ahead and [created a package][19] out of the pull request, using that I could test against the local selenium instance created by `start-selenium`.
+
+I really wanted to keep the selenium instance contained in the Grunt task, as well, so I went ahead and [cloned that as well][20], adding a programmatic API. After that, it was just a matter of pulling it into a new Grunt task, which spawned a selenium server instance called the one you've read about earlier.
+
+### Introducing `grunt-integration`
+
+I built a tool specifically to deal with the issues I went through
 
   [1]: https://github.com/admc/wd "admc/wd on GitHub"
   [2]: https://github.com/jmreidy/grunt-mocha-webdriver "jmreidy/grunt-mocha-webdriver on GitHub"
@@ -217,5 +274,13 @@ Feeling _great!_ Let's do this! ...nope, _not working_. [Blob is unsupported in 
   [10]: https://github.com/detro/ghostdriver/issues/155 "Problem with file upload test"
   [11]: https://developer.mozilla.org/en-US/docs/Web/API/FormData "FormData in XMLHttpRequest 2 on MDN"
   [12]: https://github.com/ariya/phantomjs/issues/11013 "new Blob() throws error"
+  [13]: https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers.onerror "GlobalEventHandlers.onerror on MDN"
+  [14]: https://github.com/ariya/phantomjs/issues/10522 "Function.prototype.bind is undefined"
+  [15]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind "Function.prototype.bind on MDN"
+  [16]: https://github.com/eligrey/Blob.js "eligrey/Blob.js on GitHub"
+  [17]: https://github.com/vvo/selenium-standalone "vvo/selenium-standalone on GitHub"
+  [18]: https://github.com/jmreidy/grunt-mocha-webdriver/pull/18 "Run against local selenium instances"
+  [19]: https://github.com/bevacqua/grunt-mocha-webdriver-painful "bevacqua/grunt-mocha-webdriver-painful on GitHub"
+  [20]: https://github.com/bevacqua/selenium-standalone-painful "bevacqua/selenium-standalone-painful on GitHub"
 
-Tagged: integration-testing selenium webdriver rant
+Tags: integration-testing selenium webdriver rant
