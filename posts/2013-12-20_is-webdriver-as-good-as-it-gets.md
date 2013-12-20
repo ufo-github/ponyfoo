@@ -19,7 +19,7 @@ I wish I had the time to invest effort in a Kickstarter project to improve the c
   [3]: https://github.com/admc/wd "admc/wd on GitHub"
   [4]: http://i.imgur.com/T5uFEMC.png
   [5]: http://docs.seleniumhq.org/projects/webdriver/ "Selenium WebDriver"
-  
+
 ### A Safety Net
 
 I was to automate a testing process we were doing, where we basically had a checklist of items that needed to be validated, before we could sign off on a deployment for production. The list looked sort of like this:
@@ -282,7 +282,17 @@ That's it! Then I decided to improve the reusability by pulling it out of its ho
 
 ### Introducing `grunt-integration`
 
-I built a tool specifically to deal with the issues I went through
+I built a tool specifically to deal with the <del>issues</del> <ins>ordeal</ins> I went through while ramping up on my integration testing experience on Node applications. Concretely, these are the features I want in an integration testing module, and also the goals of [`grunt-integration`][21]:
+
+- Start a local selenium server instance
+- Start a local program, such as `node` application
+- Wait for the program to listen on a specific port
+- Execute integration tests using [Mocha][22] and [WebDriver][1]
+- Using real browsers, such as Chrome
+- Automatically, in one command
+- Less painful installation process, please!
+
+I'm considering adding some extensions to `wd` so that dealing with some of the issues I've described here is not so painful. The `wd` API could definitely get some love, but you can't do a lot better than what it currently has. HTTP injection would be something that I'd love to see there, but I don't think its even possible with Selenium.
 
   [1]: https://github.com/admc/wd "admc/wd on GitHub"
   [2]: https://github.com/jmreidy/grunt-mocha-webdriver "jmreidy/grunt-mocha-webdriver on GitHub"
@@ -304,3 +314,5 @@ I built a tool specifically to deal with the issues I went through
   [18]: https://github.com/jmreidy/grunt-mocha-webdriver/pull/18 "Run against local selenium instances"
   [19]: https://github.com/bevacqua/grunt-mocha-webdriver-painful "bevacqua/grunt-mocha-webdriver-painful on GitHub"
   [20]: https://github.com/bevacqua/selenium-standalone-painful "bevacqua/selenium-standalone-painful on GitHub"
+  [21]: https://github.com/bevacqua/grunt-integration "bevacqua/grunt-integration on GitHub"
+  [22]: https://github.com/visionmedia/mocha "visionmedia/mocha on GitHub"
