@@ -19,7 +19,7 @@ I wish I had the time to invest effort in a Kickstarter project to improve the c
   [3]: https://github.com/admc/wd "admc/wd on GitHub"
   [4]: http://i.imgur.com/T5uFEMC.png
   [5]: http://docs.seleniumhq.org/projects/webdriver/ "Selenium WebDriver"
-
+  
 ### A Safety Net
 
 I was to automate a testing process we were doing, where we basically had a checklist of items that needed to be validated, before we could sign off on a deployment for production. The list looked sort of like this:
@@ -256,7 +256,29 @@ start-selenium
 
 Wait a minute... that's too easy! Oh yeah, that's right, `grunt-mocha-webdriver` doesn't run against local selenium instances, even though [a pull request][18], which adds that functionality, **is already a month old**. I went ahead and [created a package][19] out of the pull request, using that I could test against the local selenium instance created by `start-selenium`.
 
-I really wanted to keep the selenium instance contained in the Grunt task, as well, so I went ahead and [cloned that as well][20], adding a programmatic API. After that, it was just a matter of pulling it into a new Grunt task, which spawned a selenium server instance called the one you've read about earlier.
+I really wanted to keep the selenium instance contained in the Grunt task, as well, so I went ahead and [cloned `selenium-standalone`][20], adding a programmatic API. After that, it was just a matter of pulling it into a new Grunt task. That task would spawn a selenium server instance consuming the API I've just written.
+
+```js
+var selenium = require('selenium-standalone-painful').start({
+  stdio: 'pipe'
+});
+
+var ready = /Started org\.openqa\.jetty\.jetty\.Server/i;
+
+selenium.stdout.on('data', function () {
+  if (ready.test(data.toString())) {
+    grunt.task.run('the-next-one');
+  }
+});
+
+process.on('exit', function () {
+  if (selenium) {
+    selenium.kill('SIGHUP');
+  }
+});
+```
+
+That's it! Then I decided to improve the reusability by pulling it out of its host project.
 
 ### Introducing `grunt-integration`
 
@@ -282,5 +304,3 @@ I built a tool specifically to deal with the issues I went through
   [18]: https://github.com/jmreidy/grunt-mocha-webdriver/pull/18 "Run against local selenium instances"
   [19]: https://github.com/bevacqua/grunt-mocha-webdriver-painful "bevacqua/grunt-mocha-webdriver-painful on GitHub"
   [20]: https://github.com/bevacqua/selenium-standalone-painful "bevacqua/selenium-standalone-painful on GitHub"
-
-Tags: integration-testing selenium webdriver rant
