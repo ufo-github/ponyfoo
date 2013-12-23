@@ -48,9 +48,8 @@
     "sitemap": "0.6.0",
     "ultramarked": "0.5.4",
     "walk": "~2.2.1",
-    "zombie": "~1.4.1"
-  },
-  "devDependencies": {
+    "zombie": "~1.4.1",
+
     "dictatorship": "0.1.1",
     "grunt": "~0.4.1",
     "grunt-assetify": "0.9.3",
@@ -63,7 +62,7 @@
     "grunt-recess": "~0.3.3",
     "grunt-contrib-watch": "~0.4.3",
     "grunt-pemcrypt": "0.0.1",
-    "load-grunt-tasks": "0.1.0"
+    "load-grunt-tasks": "0.2.1"
   },
   "engines": {
     "node": "0.10.6",
