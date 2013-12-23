@@ -8,5 +8,6 @@ module.exports = function(grunt){
     grunt.registerTask('production', ['clean', 'assets']);
 
     // in heroku use a production build
-    grunt.registerTask('heroku', ['production'])
+    grunt.registerTask('heroku:staging', ['production']);
+    grunt.registerTask('heroku:production', ['production']);
 };
