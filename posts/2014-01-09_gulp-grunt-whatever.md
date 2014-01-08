@@ -121,12 +121,12 @@ Furthermore, Gulp **doesn't solve any new problems** really. The API is awesome 
 
 ![regex.png][13]
 
-However, there's also _speed_. I'll leave the merits of such speed gains for you to weigh.
+There's also a _speed factor_ involved. I'll leave the merits of such speed gains for you to mull over. The important take-away here should be that there isn't a one-size-fits-all answer. Gulp might be faster, Grunt might be more "all-encompassing", but at the end of the day, you'll have to choose one over the other. Don't use both in the same application. Don't be _that guy_.
 
 <blockquote class="twitter-tweet" lang="en"><p>just switched a project from <a href="https://twitter.com/search?q=%23gruntjs&amp;src=hash">#gruntjs</a> to <a href="https://twitter.com/search?q=%23gulpjs&amp;src=hash">#gulpjs</a> - simpler code, &amp; build time on save during watch from 3-5sec to 10-20ms. I kid you not.</p>&mdash; Andy Joslin (@andytjoslin) <a href="https://twitter.com/andytjoslin/statuses/416424985662468097">December 27, 2013</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Something else we might need to factor in is the case of _Grunt not really grunting_ that much these days.
+Something else we might need to factor in is the case of _Grunt not really grunting_ all that much these days. This is a worrysome factor you should also be taking into account.
 
 ## The boar is becoming kind of stale
 
