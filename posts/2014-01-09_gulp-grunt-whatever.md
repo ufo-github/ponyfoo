@@ -117,22 +117,39 @@ This might come as news, but it shouldn't come as a surprise. A lot of effort we
 
 Secondly, like I've mentioned earlier, **Gulp introduces a barrier of entry that doesn't exist in Grunt**, non-Noders will have a hard time dealing with streams, pipes, buffers, asynchronous JavaScript in general _(promises, callbacks, whatever)_, and I just don't see how it can strive amongst non-Noders looking for a front-end build system, considering those conditions.
 
-Furthermore, Gulp **doesn't solve any new problems** really. The API is awesome and straightforward, but it does complicate non-build tasks, and Grunt has the upper hand in this one. It boasts [over 2000 plugins][11] registered on `npm`, against the [~100 ones][12] going for Gulp. That being said, it'd be interesting to see the ability to straight up run Grunt tasks in Gulp, but I don't think it would ever stick. I doubt using `/Gr?u(nt|lp)/` would make your life any easier, no matter what. If you need both, that's _probably a sign that you should just stick with Grunt_.
+Furthermore, Gulp **doesn't solve any new problems** really. The API is awesome and straightforward, but it does complicate non-build tasks, and Grunt has the upper hand in this one. It boasts [over 2000 plugins][11] registered on `npm`, against the [~200-ish][12] going for Gulp. That being said, it'd be interesting to see the ability to straight up run Grunt tasks in Gulp, but I don't think it would ever stick. I doubt using `/Gr?u(nt|lp)/` would make your life any easier, no matter what. If you need both, that's _probably a sign that you should just stick with Grunt_.
 
 ![regex.png][13]
 
-Something else we might need to factor in is the case of Grunt 
+Something else we might need to factor in is the case of _Grunt not really grunting_ that much these days.
 
-## The boar isn't grunting as hard, though
+## The boar is becoming kind of stale
 
-Grunt, however, might _drown on its own_. It sit on `0.4.1` for ages, before moving to an unimpressive `0.4.2` release, and it doesn't seem to be going places now, either. Activity on the [@gruntjs][14] Twitter account is kind of flat-lining these days, and that's not a good sign, either.
+Grunt might _drown on its own_. It sat on `0.4.1` for ages, before moving to an unimpressive `0.4.2` release, and it doesn't seem to be going places now, either. Activity on the [@gruntjs][14] Twitter account is kind of flat-lining these days, and that's not a good sign, either.
+
+I'm really hoping this is just transitional as planning for `0.5.0` is underway, but I feel like the team moved on to other projects. While I wouldn't consider it abandoned, it's a concern that I haven't seen raised yet. What I'd love to see is an eventual `1.0.0` release with a re-imagined configuration structure that deals with _the problems we've experimented thus far_. Easier plugin loading, a watch mechanism in core similar to what Gulp did, simpler file description semantics, and a reduced overhead for configuring tasks in general.
+
+Of course, it's easy to _want_ those things, but it's hard to implement them without breaking most of the existing 2000 plugins. Considering the plugin ecosystem is one of Grunt's most valuable assets, it'll be hard to get right a release plan that's both sensible and meaningful. We'll just have to sit and wait, or you might want to [go ahead and propose something][17] to be implemented in `0.5.0`.
 
 ## The case for doing nothing
 
+Right wing UNIX extremists have [time][18] and [again][19] suggested doing nothing. Forget about Gulp, Grunt, whatever. Just do nothing. I don't agree with this sort of extremism, you might just be more comfortable writing everything in JavaScript. It does, however, hold some merit in its premise. In the case of Gulp, I do consider the `npm run` approach as a valid questioning of its purpose. 
+
+Gulp is pretty close to doing "nothing", a la `npm run`, while at the same time it kind of does "something", like Grunt does. I think Gulp provides value in providing Windows support, but it does introduce a certain amount of complexity, so it's really a trade-off. You need to ask yourself what you're looking for. If it's just the simplicity, you might be better off just using `npm run`!
+
+The case for Windows support might not hold a lot of meaning within the Node community itself, since most of us seem to be working on _*nix_, but it does become a factor in other communities, which Grunt [seems to be penetrating][20]. I agree you should use some flavor of `bash` for Windows, it's still a pain doing just about anything in the command-line, and there isn't really much to say in favor of _not using_ Grunt on Windows.
+
 [![nothing.png][15]][16]
-- https://gist.github.com/substack/8313379
 
+So use Gulp, use Grunt, _whatever_.
 
+## Whatever, _But_
+
+Make a choice by yourself, don't just pick something _because XYZ said so_. Pick the tool which works for you. The one you understand, are comfortable with. Above all, the one **that fits your needs**. Don't go blindly chasing the latest fad because someone else tells you to. Similarly, don't get stuck with monolithic jQuery applications _(just to give out an example)_, try something else. Innovate. Be the change you want to see in the world.
+
+> **Be the change you want to see in the world.**
+
+I need a drink.
 
   [1]: http://gulpjs.com/ "Gulp Streaming Build System"
   [2]: https://github.com/gulpjs/gulp/ "gulpjs/gulp on GitHub"
@@ -146,7 +163,13 @@ Grunt, however, might _drown on its own_. It sit on `0.4.1` for ages, before mov
   [10]: https://github.com/bevacqua/grunt-ec2 "grunt-ec2 creates, deploys to, and shuts down Amazon EC2 instances"
   [11]: https://npmjs.org/browse/keyword/gruntplugin/20/ "Packages tagged 'gruntplugin', page 20"
   [12]: http://gratimax.github.io/search-gulp-plugins/ "Search for Gulp Plugins"
-  [13]: http://i.imgur.com/Ih0Y1Zw.png "perl_problems.png"
+  [13]: http://i.imgur.com/Ih0Y1Zw.png "To generate #1 albums, 'jay --help' recommends the -z flag."
   [14]: https://twitter.com/gruntjs "@gruntjs on Twitter"
   [15]: http://img.youtube.com/vi/EQnaRtNMGMI/0.jpg
   [16]: http://www.youtube.com/watch?v=EQnaRtNMGMI "The Nothing Pitch"
+  [17]: https://github.com/gruntjs/grunt/issues?milestone=7 "Grunt issues for the 0.5.0 milestone"
+  [18]: http://substack.net/task_automation_with_npm_run "task automation with npm run"
+  [19]: https://gist.github.com/substack/8313379 "introducing ./task.js, THE new javascript task runner automation framework"
+  [20]: https://npmjs.org/search?q=grunt-php "although I've no factual information to support that claim"
+
+[build grunt gulp]
