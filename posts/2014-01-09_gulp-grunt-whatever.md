@@ -121,6 +121,11 @@ Furthermore, Gulp **doesn't solve any new problems** really. The API is awesome 
 
 ![regex.png][13]
 
+However, there's also _speed_. I'll leave the merits of such speed gains for you to weigh.
+
+<blockquote class="twitter-tweet" lang="en"><p>just switched a project from <a href="https://twitter.com/search?q=%23gruntjs&amp;src=hash">#gruntjs</a> to <a href="https://twitter.com/search?q=%23gulpjs&amp;src=hash">#gulpjs</a> - simpler code, &amp; build time on save during watch from 3-5sec to 10-20ms. I kid you not.</p>&mdash; Andy Joslin (@andytjoslin) <a href="https://twitter.com/andytjoslin/statuses/416424985662468097">December 27, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 Something else we might need to factor in is the case of _Grunt not really grunting_ that much these days.
 
 ## The boar is becoming kind of stale
