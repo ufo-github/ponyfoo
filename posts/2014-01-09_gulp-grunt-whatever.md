@@ -150,6 +150,8 @@ So use Gulp, use Grunt, _whatever_.
 
 ## Whatever, _But_
 
+Grunt wins at teaching people how to do builds, and even then, it's pretty hard to put it [in terms anyone can understand][21], but it fails at keeping it short. Gulp wins at being terse and having a gorgeous API, but it fails at the entry level, because of streams being hard to grasp at first. In the low-risk low-gain corner we have `npm run`. It wins at not doing anything, resulting in no overhead, but it fails at being cross-platform, if that's something that worries you.
+
 Make a choice by yourself, don't just pick something _because XYZ said so_. Pick the tool which works for you. The one you understand, are comfortable with. Above all, the one **that fits your needs**. Don't go blindly chasing the latest fad because someone else tells you to. Similarly, don't get stuck with monolithic jQuery applications _(just to give out an example)_, try something else. Innovate. Be the change you want to see in the world.
 
 > **Be the change you want to see in the world.**
@@ -166,7 +168,7 @@ I need a drink.
   [8]: http://www.youtube.com/watch?v=lQAV3bPOYHo "Harnessing the awesome power of streams"
   [9]: https://npmjs.org/package/grunt-winston "grunt-winston can log data over different transports"
   [10]: https://github.com/bevacqua/grunt-ec2 "grunt-ec2 creates, deploys to, and shuts down Amazon EC2 instances"
-  [11]: https://npmjs.org/browse/keyword/gruntplugin/20/ "Packages tagged 'gruntplugin', page 20"
+  [11]: http://gruntjs.com/plugins "Grunt Plugin Listing"
   [12]: http://gratimax.github.io/search-gulp-plugins/ "Search for Gulp Plugins"
   [13]: http://i.imgur.com/Ih0Y1Zw.png "To generate #1 albums, 'jay --help' recommends the -z flag."
   [14]: https://twitter.com/gruntjs "@gruntjs on Twitter"
@@ -176,5 +178,6 @@ I need a drink.
   [18]: http://substack.net/task_automation_with_npm_run "task automation with npm run"
   [19]: https://gist.github.com/substack/8313379 "introducing ./task.js, THE new javascript task runner automation framework"
   [20]: https://npmjs.org/search?q=grunt-php "although I've no factual information to support that claim"
-
+  [21]: http://24ways.org/2013/grunt-is-not-weird-and-hard/ "Grunt for People Who Think Things Like Grunt are Weird and Hard"
+  
 [build grunt gulp]
