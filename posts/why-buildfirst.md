@@ -2,6 +2,10 @@
 
 _Build First_ is a set of principles I've collected over the years and which is influenced by several sources. This article aims to explain the driving principles behind the [JavaScript Application Design][1] book, the authors and resources which influenced its creation, and detail the benefits of taking _Build First_ for a spin.
 
+In this article, my aim is to help you discover the _Build First_ paradigm, its applications, strengths, and pitfalls.
+
+...
+
 [1]: http://bevacqua.io/buildfirst "JavaScript Application Design: A Build First Approach"
 
 
@@ -29,6 +33,14 @@ There's also the [Pragmatic Programmer][4], this is a book I've [recommended][5]
 > If you read a single programming book in your lifetime, make that the [Pragmatic Programmer][4].
 
 One of my favorite parts of the book talks about **broken windows**. It explains how seemingly _innocent, quick fixes_, when left unrepaired, can spell the demise of a code-base. It explains the phenomenon comparing it to a building with a broken window. If that window isn't repaired, then other windows will get smashed, maybe a car's window. Abandoned cars and buildings start setting a different environment in the neighborhood. Before long, theft and pillaging start making appearances, and soon the neighborhood becomes impossible to live in.
+
+Armed with these teachings, _Build First_ is a mixture between solid application design principles and the added twist of putting together a build process right off the bat, **rather than waiting for a disaster to happen**.
+
+# Driving Principles
+
+
+...
+
 
 - automate everything, right off the bat
 - less headaches, leaner process
