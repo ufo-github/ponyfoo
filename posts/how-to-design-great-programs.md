@@ -1,6 +1,6 @@
 # How to Design Great Programs
 
-This article is a recollection of application design best practices I've accrued over the years. I felt like documenting these practices in a blog post, for future reference. I'll talk not so much about implementation, but more about **program design theory**.
+This article is a recollection of application design practices I've accrued over the years. I felt like grouping them together in a blog post, for future reference. I'll talk not so much about implementation, but more about **program design theory**.
 
 Below are the central arguments I'll touch on in the article.
 
