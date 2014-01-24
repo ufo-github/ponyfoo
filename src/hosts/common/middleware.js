@@ -1,6 +1,7 @@
 'use strict';
 
 var config = require('../../config'),
+    path = require('path'),
     express = require('express'),
     sessionStore = require('connect-mongoose')(express),
     flash = require('./flash.js'),
@@ -31,6 +32,7 @@ function configure(server){
     localsSetup(server);
 
     server.use(server.router);
+    server.use(express.favicon(path.resolve(__dirname, '../../frontend/favicon.ico')));
 }
 
 function authenticationSetup(server){

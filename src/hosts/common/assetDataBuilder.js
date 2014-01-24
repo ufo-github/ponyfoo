@@ -14,7 +14,6 @@ module.exports = {
         return {
             production: config.env.production,
             assets:  {
-                favicon: config.statics.faviconSource,
                 source: source,
                 bin: config.statics.bin(base),
                 roots: [pub]
