@@ -31,8 +31,8 @@ function configure(server){
     authenticationSetup(server);
     localsSetup(server);
 
-    server.use(server.router);
     server.use(express.favicon(path.resolve(__dirname, '../../frontend/favicon.ico')));
+    server.use(server.router);
 }
 
 function authenticationSetup(server){
