@@ -25,7 +25,7 @@ function setup(server){
     server.get('/rss/latest.xml', feedController.getFeed);
     server.get('/sitemap.xml', sitemapController.getSitemap);
     server.get('/opensearch.xml', opensearchController.getOpensearch);
-    server.use(config.blog.pingback, pingbackController.receive);
+    // server.use(config.blog.pingback, pingbackController.receive);
 
     defaults.configure(server);
 
