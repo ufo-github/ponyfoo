@@ -361,7 +361,7 @@ You can also [check out the latest version][15] here.
 
 You just neeed to install `gulp` in the `before_install` section of your `.travis.yml` manifest.
 
-```yaml
+```yml
 language: node_js
 
 node_js:
@@ -375,7 +375,7 @@ script:
   - gulp ci
 ```
 
-Then, have a `'ci'` task dedicated to your CI platform, for example.
+Then, have a litte `ci` task alias dedicated to your Continuous Integration platform, for example.
 
 ```js
 gulp.task('ci', ['lint', 'mocha', 'build']);
