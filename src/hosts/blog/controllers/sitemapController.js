@@ -16,26 +16,6 @@ function statics(done){
     });
 }
 
-function profiles(done){
-    var result = [];
-
-    User.find({}, '_id' , function(err, users){
-        if(err){
-            done(err);
-            return;
-        }
-
-        users.forEach(function(user){
-            result.push({
-                url: '/user/profile/' + user._id,
-                changefreq: 'daily'
-            });
-        });
-
-        done(err, result);
-    });
-}
-
 function posts(req, done){
     var result = [{ url: '/', changefreq: 'hourly', priority: 1 }];
 
@@ -60,8 +40,7 @@ function posts(req, done){
 function setup(req,done){
     async.parallel([
         async.apply(posts, req),
-        statics,
-        profiles
+        statics
     ], merge(req,done));
 }
 
