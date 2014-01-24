@@ -10,8 +10,29 @@ var async = require('async'),
 function statics(done){
     process.nextTick(function(){
         done(null, [
-            { url: '/rss/latest.xml', changefreq: 'hourly',  priority: 1 }
+            { url: '/rss/latest.xml', changefreq: 'hourly',  priority: 1 },
+            { url: '/user/login', changefreq: 'monthly',  priority: 0.3 }
         ]);
+    });
+}
+
+function profiles(done){
+    var result = [];
+
+    User.find({}, '_id' , function(err, users){
+        if(err){
+            done(err);
+            return;
+        }
+
+        users.forEach(function(user){
+            result.push({
+                url: '/user/profile/' + user._id,
+                changefreq: 'daily'
+            });
+        });
+
+        done(err, result);
     });
 }
 
@@ -39,7 +60,8 @@ function posts(req, done){
 function setup(req,done){
     async.parallel([
         async.apply(posts, req),
-        statics
+        statics,
+        profiles
     ], merge(req,done));
 }
 

@@ -20,34 +20,18 @@ function setup(server, userAgents, loaded){
 
         uri = config.server.authority(opts.resource.slug) + opts.resource.url;
         browser.visit(uri, function(){
-            var complete = false;
-            async.until(test, function (testagain) {
+            browser.wait(loaded, function(){
+                var html = config.site.doctype + browser.html();
 
-                browser.wait(loaded, function(){
-                    console.log('\nIndexing Result..');
-                    console.log(browser.statusCode);
-                    console.log(browser.success);
-                    console.log(JSON.stringify(browser.errors||[],null,2));
-                    var didload = !!browser.query('main');
-                    if (!didload) {
-                        testagain(); return;
+                writeFile(opts.file, html, function(err){
+                    if(err){
+                        done(err);
+                        return;
                     }
-                    var html = config.site.doctype + browser.html();
-                    writeFile(opts.file, html, function(err){
-                        complete = true;
-                        if(err){
-                            done(err);
-                            testagain();
-                            return;
-                        }
-                        done(err, html);
-                        testagain();
-                    });
+
+                    done(err, html);
                 });
-            }, function (err) {
-                if (!complete) { done(err); console.log('Indexing failed.', err); }
             });
-            function test(){return complete;}
         });
     }
 

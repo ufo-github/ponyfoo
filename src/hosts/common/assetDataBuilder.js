@@ -14,6 +14,7 @@ module.exports = {
         return {
             production: config.env.production,
             assets:  {
+                favicon: config.statics.faviconSource,
                 source: source,
                 bin: config.statics.bin(base),
                 roots: [pub]
@@ -22,7 +23,11 @@ module.exports = {
                 jsn: true,
                 forward: [{ extnames: ['.eot', '.svg', '.ttf', '.woff'] }, true]
             },
-            expires: /^\/img\//i,
+            caching: {
+                expiresHeader: function(req){
+                    return req.url.indexOf('/img/') === 0;
+                }
+            },
             resolveFrontendPath: function(file){
                 return path.join(relative, file);
             }
@@ -38,14 +43,14 @@ module.exports = {
         if(!!config.tracking.analytics){
             assets.js.push({
                 file: resolve('/js/analytics/google.jsn'),
-                context: { tracking: config.tracking }
+                context: { config: config }
             });
         }
 
         if(!!config.tracking.clicky){
             assets.js.push({
                 file: resolve('/js/analytics/clicky.jsn'),
-                context: { tracking: config.tracking }
+                context: { config: config }
             });
         }
 

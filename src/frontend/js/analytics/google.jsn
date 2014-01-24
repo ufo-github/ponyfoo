@@ -9,7 +9,7 @@ function trackReadTime(seconds){
 !function(document,nbrut) {
     'use strict';
 
-	_gaq.push(['_setAccount', '@tracking.analytics']);
+	_gaq.push(['_setAccount', '@config.tracking.analytics']);
 	_gaq.push(['_trackPageview']);
 
 	trackReadTime(10);

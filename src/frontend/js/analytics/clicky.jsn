@@ -1,17 +1,17 @@
 var clicky_site_ids = clicky_site_ids || [],
-    clicky_custom = clicky_custom || {};
+	clicky_custom = clicky_custom || {};
 
 !function(window,nbrut) {
     'use strict';
 
-    clicky_site_ids.push(@tracking.clicky);
-    clicky_custom.timer = 0; // non-sense
+	clicky_site_ids.push(@config.tracking.clicky);
+	clicky_custom.timer = 0; // non-sense
 
     nbrut.analytics.fetch('//static.getclicky.com/js');
     nbrut.analytics.onHistoryChange(function(data){
         var clicky = window.clicky;
-        if (clicky){ // sanity
-            clicky.log(data.url);
-        }
+    	if (clicky){ // sanity
+			clicky.log(data.url);
+    	}
     });
 }(window,nbrut);

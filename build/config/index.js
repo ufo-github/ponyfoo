@@ -12,7 +12,7 @@ module.exports = {
     clean: [
         '.bin',
         './src/**/.bin',
-        './src/**/*.bin.js'
+        '**/*.bin.js'
     ],
     recess: require('./recess.js'),
     jshint: require('./jshint.js'),
@@ -38,6 +38,7 @@ module.exports = {
         dev: {
             tasks: ['dev-once'],
             files: [
+                './.buildwatch',
                 './.env',
                 './.env.defaults',
                 'Gruntfile.js',
@@ -57,7 +58,7 @@ module.exports = {
     },
     concurrent: {
         dev: {
-            tasks: ['watch:dev', 'dev-once'],
+            tasks: ['watch:dev', 'dev-trigger'],
             options: {
                 logConcurrentOutput: true
             }

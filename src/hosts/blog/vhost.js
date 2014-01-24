@@ -1,18 +1,14 @@
 'use strict';
 
-var express = require('express'),
-    assetify = require('assetify').instance(),
-    config = require('../../config');
+var express = require('express');
 
 module.exports = {
-    setup: function(){
+    using: function(vars){
         var factory = require('../common/vserver.js'),
             vserver = factory('*', __dirname),
-            routing = require('./routing'),
-            bin = config.statics.bin(__dirname);
+            routing = require('./routing');
 
-        assetify(vserver.express, express, bin);
-
+        vars.assetifySetup(vserver.express, express);
         vserver.setup();
         routing.setup(vserver.express);
 

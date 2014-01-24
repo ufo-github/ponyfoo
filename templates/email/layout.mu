@@ -174,9 +174,7 @@
             }
         </style>
     </head>
-    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" itemscope itemtype="http://schema.org/EmailMessage">
-        <meta itemprop="description" content="{{intro}}"/>
-
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
         <center>
             <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
                 <tr>
@@ -189,9 +187,9 @@
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templatePreheader">
                                         <tr>
                                             <td valign="top" class="preheaderContent" style="padding-top:10px; padding-right:20px; padding-bottom:10px; padding-left:20px;">
-                                                {{intro}}
+                                                {{header.intro}}
                                             </td>
-                                            <td valign="top" width="180" class="preheaderContent" style="padding-top:10px; padding-right:20px; padding-bottom:10px; padding-left:0; text-align:right;">
+                                            <td valign="top" width="180" class="preheaderContent" style="padding-top:10px; padding-right:20px; padding-bottom:10px; padding-left:0;">
                                                 sent {{header.generated}}
                                             </td>
                                         </tr>
