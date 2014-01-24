@@ -22,7 +22,7 @@ function setup(server, userAgents, loaded){
         browser.visit(uri, function(){
             browser.wait(loaded, function(){
                 var html = config.site.doctype + browser.html();
-
+                console.log('\n\n\n'+html+'\n\n\n');
                 writeFile(opts.file, html, function(err){
                     if(err){
                         done(err);
