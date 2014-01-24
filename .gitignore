@@ -3,6 +3,7 @@
 .env
 .bin
 *.bin.js
+.buildwatch
 Thumbs.db
 *.sublime-*
 node_modules
