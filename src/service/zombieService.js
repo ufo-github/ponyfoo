@@ -21,6 +21,9 @@ function setup(server, userAgents, loaded){
         uri = config.server.authority(opts.resource.slug) + opts.resource.url;
         browser.visit(uri, function(){
             browser.wait(loaded, function(){
+                console.log('\nIndexing Result..');
+                console.log(browser.statusCode);
+                console.log(JSON.stringify(browser.errors||[],null,2));
                 var html = config.site.doctype + browser.html();
                 writeFile(opts.file, html, function(err){
                     if(err){
