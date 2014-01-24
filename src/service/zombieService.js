@@ -21,9 +21,9 @@ function setup(server, userAgents, loaded){
         uri = config.server.authority(opts.resource.slug) + opts.resource.url;
         browser.visit(uri, function(){
             var complete = false;
-            async.until(test, function () {
+            async.until(test, function (testagain) {
 
-                browser.wait(loaded, function(testagain){
+                browser.wait(loaded, function(){
                     console.log('\nIndexing Result..');
                     console.log(browser.statusCode);
                     console.log(browser.success);
