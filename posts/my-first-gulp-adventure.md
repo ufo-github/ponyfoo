@@ -214,7 +214,7 @@ Imagine if I were able to just do `gulp release` and have all of that happen. Ac
 
 ## Bumping packages
 
-...
+Bumping the package version is pretty straightforward, and we can use [`gulp-bump`][10], which does that, and only that.
 
 ```js
 gulp.task('bump', function () {
@@ -224,9 +224,23 @@ gulp.task('bump', function () {
 });
 ```
 
+I don't even have to decompose that one, you just tell Gulp to read from `package.json` and `bower.json`, or whichever versioned JSON manifests you have, and pipe that through `bump()` and into the `dest` write stream. Easy peasy!
+
+Just remember to install and `require` [gulp-bump][11].
+
+```shell
+npm i -D gulp-bump
+```
+
+```js
+var bump = require('gulp-bump');
+```
+
 ## Tagging on `git`
 
-...
+There's an awesome `git` package for Gulp in [`gulp-git`][11]. It does everything. It commits, it tags, it pushes, and everything else. Seriously, [go look at it's documentation][11]. Terrific! The author [documented it like a gentleman][12], good stuff.
+
+In this particular task, I chose to use the `package.json` data again. I use it to sign my commit with the release number. Then I push the `master` branch to the `origin` remote, and I include the `--tags`, so that I don't have to do that by hand either.
 
 ```js
 gulp.task('tag', function () {
@@ -242,9 +256,18 @@ gulp.task('tag', function () {
 });
 ```
 
+Being able to release just like that is pretty awesome. However, this task depends directly on the bump task in order to succeed, as it'll use the version number to create the tag. We'll get into the flow later, for now this just works if we run them like below.
+
+```shell
+gulp bump
+gulp tag
+```
+
+Soon we'll check out how these dependencies can be sorted out.
+
 ## Publishing on `npm`
 
-...
+I couldn't find a `gulp-npm` package for my `npm publish` purposes, so I just created my own task, without developing a full-fledged plugin.
 
 ```js
 gulp.task('npm', function (done) {
@@ -253,13 +276,114 @@ gulp.task('npm', function (done) {
 });
 ```
 
-# Putting it all together
+In case you've never seen it before, setting `{ stdio: 'inherit' }` when spawning a child process, then the child will use your standard input, output, and error. In other words, `npm publish` will be able to print its output on your terminal when you run `gulp npm`.
 
-...
+### Putting it all together
+
+To put it all together, all that's required is adding an array with the dependencies to each task. Here's is [contra][9]'s complete Gulpfile.
+
+```js
+var gulp = require('gulp');
+var bump = require('gulp-bump');
+var git = require('gulp-git');
+var jshint = require('gulp-jshint');
+var mocha = require('gulp-mocha');
+var clean = require('gulp-clean');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var size = require('gulp-size');
+
+gulp.task('lint', function () {
+  return gulp.src('./src/*.js')
+    .pipe(jshint('.jshintrc'))
+    .pipe(jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('mocha', function () {
+  gulp.src('./test/*.js')
+    .pipe(mocha({ reporter: 'list' }));
+});
+
+gulp.task('clean', function () {
+  return gulp.src('./dist', { read: false })
+    .pipe(clean());
+});
+
+gulp.task('build', ['test', 'clean'], function () {
+  return gulp.src('./src/contra.js')
+    .pipe(gulp.dest('./dist'))
+    .pipe(rename('contra.min.js'))
+    .pipe(uglify())
+    .pipe(size())
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build-shim', ['build'], function () {
+  return gulp.src('./src/contra.shim.js')
+    .pipe(gulp.dest('./dist'))
+    .pipe(rename('contra.shim.min.js'))
+    .pipe(uglify())
+    .pipe(size())
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('bump', ['build-shim'], function () {
+  return gulp.src(['./package.json', './bower.json'])
+    .pipe(bump())
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('tag', ['bump'], function () {
+  var pkg = require('./package.json');
+  var v = 'v' + pkg.version;
+  var message = 'Release ' + v;
+
+  return gulp.src('./')
+    .pipe(git.commit(message))
+    .pipe(git.tag(v, message))
+    .pipe(git.push('origin', 'master', '--tags'))
+    .pipe(gulp.dest('./'));
+});
+
+gulp.task('npm', ['tag'], function (done) {
+  require('child_process').spawn('npm', ['publish'], { stdio: 'inherit' })
+    .on('close', done);
+});
+
+gulp.task('test', ['lint', 'mocha']);
+gulp.task('ci', ['build']);
+gulp.task('release', ['npm']);
+```
+
+You can also [check out the latest version][15] here.
 
 # Bonus Track: Integrating Gulp with Travis-CI
 
-...
+You just neeed to install `gulp` in the `before_install` section of your `.travis.yml` manifest.
+
+```yaml
+language: node_js
+
+node_js:
+  - 0.10
+  - 0.11
+
+before_install:
+  - npm install -g gulp
+
+script:
+  - gulp ci
+```
+
+Then, have a `'ci'` task dedicated to your CI platform, for example.
+
+```js
+gulp.task('ci', ['lint', 'mocha', 'build']);
+```
+
+If you've never set up CI on Travis before, [this short guide should help you][14], even though it explains how to set it up with Grunt, the difference is really just in the `.travis.yml` manifest contents.
+
+You can check out [contra][9], which is the package I've been talking about in this article, for a working Gulpfile and integrated Travis-CI workflow.
 
   [1]: https://github.com/gulpjs/gulp/issues/96 "'Support running task synchronously' - issue on GitHub"
   [2]: http://wiki.commonjs.org/wiki/Modules/1.1 "Common.JS modules"
@@ -270,6 +394,9 @@ gulp.task('npm', function (done) {
   [7]: https://github.com/gulpjs/gulp/blob/aea0f93eaae9204a0a42e8e83372266915b089b5/CHANGELOG.md#35 "Gulp Changes in v3.5"
   [8]: https://github.com/gulpjs/gulp/blob/aea0f93eaae9204a0a42e8e83372266915b089b5/index.js#L16 "gulp.run removal in v4"
   [9]: https://github.com/bevacqua/contra "bevacqua/contra on GitHub"
-
-
-- + write a short post about testling integration
+  [10]: https://github.com/stevelacy/gulp-bump "stevelacy/gulp-bump on GitHub"
+  [11]: https://github.com/stevelacy/gulp-git "stevelacy/gulp-git on GitHub"
+  [12]: /2014/01/20/how-to-design-great-programs "How to Design Great Programs"
+  [13]: http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options "child_process.spawn(command, [args], [options])"
+  [14]: https://github.com/buildfirst/ci-by-example "buildfirst/ci-by-example on GitHub"
+  [15]: https://github.com/bevacqua/contra/blob/master/gulpfile.js "gulpfile.js for bevacqua/contra on GitHub"
