@@ -1,9 +1,0 @@
-!function(nbrut){
-    'use strict';
-
-    nbrut.avatar = {
-        tiny: '@config.avatar.tiny',
-        small: '@config.avatar.small',
-        regular: '@config.avatar.regular'
-    };
-}(nbrut);

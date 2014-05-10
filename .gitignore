@@ -1,11 +1,6 @@
 .DS_Store
-.idea
 .env
 .bin
-*.bin.js
-.buildwatch
 Thumbs.db
-*.sublime-*
 node_modules
-local
 npm-debug.log
