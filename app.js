@@ -1,9 +1,10 @@
 var express = require('express');
 var winston = require('winston');
 var routing = require('./controllers/routing');
+var env = require('./lib/env');
 var db = require('./lib/db');
 var app = express();
-var port = process.env.PORT || 3000;
+var port = env('PORT');
 
 db(function () {
   routing(app);
