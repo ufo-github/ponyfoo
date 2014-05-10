@@ -10,10 +10,9 @@ var port = env('PORT');
 
 app.set('view engine', 'jade');
 
-devenv();
-
 db(function () {
   routing(app);
+  devenv();
   app.listen(port, listening);
 });
 

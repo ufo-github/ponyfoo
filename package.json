@@ -16,7 +16,8 @@
     "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
   "scripts": {
-    "test": "tape test/**/*"
+    "test": "tape test/**/*",
+    "views": "jade views --out .bin/views --client --no-debug"
   },
   "dependencies": {
     "contra": "^1.5.6",
