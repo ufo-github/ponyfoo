@@ -1,0 +1,26 @@
+each article in articles
+  article(itemscope, itemtype='http://schema.org/BlogPosting')
+    meta(itemprop='dateCreated', content=article.dateText)
+    meta(itemprop='keywords', content=article.tags.csv)
+    //- meta(itemprop='discussionUrl', content=config.server.authority(slug) + '{{permalink}}#comments')
+    //- meta(itemprop='interactionCount', content='{{commentCount}} UserComments')
+
+    header
+      h1
+        a(href=article.permalink, data-hint=article.tags.hint, itemprop='headline')=article.title
+
+      //- include _social
+
+      span(data-hint='posted ' + article.dateText)='posted ' + article.timeAgo
+
+    section(itemprop='articleBody')
+      section(itemprop='about')=article.introductionHtml
+      section=article.bodyHtml
+
+    footer
+      //- section.comment-count
+      //-  a.highlighted-link.hint-before(href='{{commentsLink}}', data-hint='Visit the discussion section')='{{commentsText}}'
+
+      section
+        each tag in article.tags.raw
+          a(href='/search/tagged/' + tag, data-hint='Find posts tagged "' + tag + '"')=tag
