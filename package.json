@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "tape test/**/*",
-    "views": "jade views --out .bin/views --client --no-debug"
+    "views": "jade views --out .bin/views --client --commonjs --no-debug"
   },
   "dependencies": {
     "contra": "^1.5.6",
