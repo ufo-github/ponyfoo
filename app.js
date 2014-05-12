@@ -29,7 +29,7 @@ function listening () {
 function statics () {
   var serveStatic = require('serve-static');
   app.use(serveStatic('.bin/public'));
-};
+}
 
 function prettify () {
   var errorHandler = require('errorhandler');
