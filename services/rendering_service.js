@@ -13,7 +13,7 @@ var defaults = {
     cover: '',
     list: []
   },
-  partial: null
+  partial: 'error/not-found'
 };
 
 module.exports = {
@@ -26,11 +26,8 @@ module.exports = {
     if (!data) {
       next();
     } else if (~accept.indexOf('html')) {
-      if (data.partial) {
-        template = path.join('../.bin/views', data.partial);
-        data.partial = require(template)(data);
-      }
-
+      template = path.join('../.bin/views', data.partial);
+      data.partial = require(template)(data);
       res.render('__layout', data);
     } else if (~accept.indexOf('json')) {
       res.json(data);
