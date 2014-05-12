@@ -1,0 +1,21 @@
+{
+  "name": "ponyfoo",
+  "description": "Micro-blogging platform",
+  "version": "0.5.0",
+  "homepage": "https://github.com/bevacqua/ponyfoo",
+  "authors": [
+    "Nicolas Bevacqua <nicolasbevacqua@gmail.com>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bevacqua/ponyfoo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bevacqua/ponyfoo/issues"
+  },
+  "private": true,
+  "dependencies": {
+    "normalize.styl": "~3.0.0"
+  }
+}

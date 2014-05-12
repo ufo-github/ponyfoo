@@ -1,13 +1,12 @@
 {
   "name": "ponyfoo",
   "description": "Micro-blogging platform",
-  "homepage": "https://github.com/bevacqua/ponyfoo",
   "version": "0.5.0",
-  "author": {
-    "name": "Nicolas Bevacqua",
-    "email": "hello@bevacqua.io",
-    "url": "http://ponyfoo.com"
-  },
+  "homepage": "https://github.com/bevacqua/ponyfoo",
+  "authors": [
+    "Nicolas Bevacqua <nicolasbevacqua@gmail.com>"
+  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/bevacqua/ponyfoo.git"
@@ -25,7 +24,7 @@
   "dependencies": {
     "contra": "^1.5.6",
     "express": "^4.1.2",
-    "jade": "^1.3.1",
+    "jade": "git+https://github.com/bevacqua/jade.git#patch-2",
     "lodash": "^2.4.1",
     "mongoose": "^3.8.9",
     "nconf": "^0.6.9",
