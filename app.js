@@ -7,23 +7,33 @@ var env = require('./lib/env');
 var db = require('./lib/db');
 var app = express();
 var port = env('PORT');
+var devenv = env('NODE_ENV') === 'development';
+
+function noop () {}
+function dev (fn) { (devenv ? fn : noop)(); }
 
 app.set('view engine', 'jade');
+app.locals.settings['x-powered-by'] = false;
 
-db(function () {
+dev(statics);
+db(function connected () {
   routing(app);
-  devenv();
+  dev(prettify);
   app.listen(port, listening);
 });
 
 function listening () {
   winston.info('app listening on port %s', port);
+}
+
+function statics () {
+  var serveStatic = require('serve-static');
+  app.use(serveStatic('.bin/public'));
 };
 
-function devenv () {
-  var dev = env('NODE_ENV') === 'development';
-  if (dev) {
-    app.use(require('errorhandler')());
-    app.locals.pretty = true;
-  }
+function prettify () {
+  var errorHandler = require('errorhandler');
+  app.set('json spaces', 2);
+  app.use(errorHandler());
+  app.locals.pretty = true;
 }

@@ -3,7 +3,7 @@
 var Article = require('../models/Article');
 
 module.exports = {
-  list: function (req, res, err) {
+  list: function (req, res, next) {
     var query = {};
 
     Article.find(query).lean().exec(handle);

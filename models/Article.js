@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
+// var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
   // author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
   // blog: { type: ObjectId, index: { unique: false }, require: true, ref: 'Blog' },
