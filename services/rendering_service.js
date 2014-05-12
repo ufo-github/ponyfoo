@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var path = require('path');
 var defaults = {
   title: 'Pony Foo',
   description: '',
@@ -17,17 +18,19 @@ var defaults = {
 
 module.exports = {
   respond: function (req, res, next) {
+    var vm = res.viewModel;
     var accept = req.headers.accept || '';
-    var data = _.extend({}, defaults, res.viewModel);
+    var data = _.extend({}, defaults, vm);
+    var template;
 
     if (!data) {
       next();
     } else if (~accept.indexOf('html')) {
       if (data.partial) {
-        // render partial fn, passing `data`. then render
-        //res.partial = {result};
+        template = path.join('../.bin/views', data.partial);
+        data.partial = require(template)(data);
       }
-      // then always:
+
       res.render('__layout', data);
     } else if (~accept.indexOf('json')) {
       res.json(data);

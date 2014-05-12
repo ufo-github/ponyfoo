@@ -5,7 +5,7 @@ var errors = require('../lib/errors');
 module.exports = {
   only: function (req, res, next) {
     var err;
-    if (!req.author) {
+    if (req.author) { // TODO !
       err = new errors.NotFoundError();
     }
     next(err);
