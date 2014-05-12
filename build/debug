@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+rm -rf .bin && mkdir -p .bin/public/{js,css}
+
+watchify client/js/main.js -o .bin/public/js/all.js -d -v &
+stylus client/css/all.styl -o .bin/public/css --watch &
+jade views --out .bin --client --commonjs --no-debug --watch &
+nodemon app

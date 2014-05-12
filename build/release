@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+rm -rf .bin && mkdir -p .bin/public/{js,css}
+
+browserify client/js/main.js -o .bin/public/js/all.js -t uglifyify
+stylus client/css/all.styl -o .bin/public/css --compress
+jade views --out .bin --client --commonjs --no-debug

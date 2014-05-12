@@ -19,14 +19,8 @@
     "lint": "jshint . --reporter node_modules/jshint-stylish/stylish.js",
     "tape": "tape test/**/*",
     "test": "npm run lint && npm run tape",
-    "mkdirs": "mkdir -p .bin/public/{js,css}",
-    "browserify": "browserify client/js/main.js -o .bin/public/js/all.js &",
-    "watchify": "watchify client/js/main.js -o .bin/public/js/all.js -d &",
-    "styles": "stylus client/css/all.styl -o .bin/public/css",
-    "views": "jade views --out .bin --client --commonjs --no-debug",
-    "build-debug": "npm run mkdirs && npm run watchify && npm run views",
-    "build": "npm run mkdirs && npm run browserify && npm run views",
-    "start": "npm run build-debug && open http://localhost:3000 && nodemon app"
+    "build": "build/release",
+    "start": "build/debug"
   },
   "dependencies": {
     "contra": "^1.5.6",
@@ -48,6 +42,7 @@
     "sinon": "^1.9.1",
     "stylus": "^0.45.0",
     "tape": "^2.12.3",
+    "uglifyify": "^2.1.1",
     "watchify": "^0.9.0"
   }
 }
