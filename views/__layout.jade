@@ -26,7 +26,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     each image in images.list
       meta(property='og:image', content=image)
 
-    //- twitter uses the last meta image, so we need to be after og:image tags
+    //- twitter only cares about the last meta image, repeat the cover
     meta(name='twitter:image:src', content=images.cover)
 
   body

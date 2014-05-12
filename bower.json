@@ -16,6 +16,7 @@
   },
   "private": true,
   "dependencies": {
-    "normalize.styl": "~3.0.0"
+    "normalize.styl": "~3.0.0",
+    "nib": "~1.0.2"
   }
 }
