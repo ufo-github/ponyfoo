@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var path = require('path');
 var defaults = {
-  title: 'Pony Foo',
   description: '',
   author: {
     meta: 'Nicolas Bevacqua <foo@bevacqua.io>',
@@ -13,7 +12,10 @@ var defaults = {
     cover: '',
     list: []
   },
-  partial: 'error/not-found'
+  partial: 'error/not-found',
+  model: {
+    title: 'Pony Foo'
+  }
 };
 
 module.exports = {
@@ -27,7 +29,7 @@ module.exports = {
       next();
     } else if (~accept.indexOf('html')) {
       template = path.join('../.bin/views', data.partial);
-      data.partial = require(template)(data);
+      data.partial = require(template)(data.model);
       res.render('__layout', data);
     } else if (~accept.indexOf('json')) {
       res.json(data);

@@ -2,7 +2,7 @@ doctype html
 html(lang='en', itemscope, itemtype='http://schema.org/Blog')
   head
     meta(charset='utf-8')
-    title=title
+    title=model.title
     link(rel='shortcut icon', href='/favicon.ico')
     link(rel='alternate', type='application/rss+xml', href='/feed')
     link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href='/opensearch.xml')
@@ -30,5 +30,5 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     meta(name='twitter:image:src', content=images.cover)
 
   body
-    main!=partial
+    main.ly-main(data-ponymoo=JSON.stringify(model))!=partial
     script(src='/js/all.js')
