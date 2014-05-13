@@ -12,6 +12,6 @@ jade views/**/* --out .bin --client --commonjs --pretty --no-debug --watch &
 watchify client/js/main.js -o .bin/public/js/all.js -d -v &
 
 # start nodemon, wait for app.listen, run browser-sync
-nodemon app &
+nodemon app --watch .bin/views/**/* &
 procfinder --wait --port $PORT
-browser-sync start --files ".bin/public/**/*" --proxy localhost:$PORT --no-open
+browser-sync start --files ".bin/**/*" --proxy localhost:$PORT --no-open
