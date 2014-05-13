@@ -5,4 +5,6 @@ rm -rf .bin && mkdir -p .bin/public/{js,css}
 stylus client/css/all.styl -o .bin/public/css --include client/css --watch &
 jade views --out .bin --client --commonjs --no-debug --watch &
 watchify client/js/main.js -o .bin/public/js/all.js -d -v &
-nodemon app
+nodemon app &
+
+(procfinder --wait --port 3000 && browser-sync start --files ".bin/public/**/*" --proxy localhost:$PORT) &
