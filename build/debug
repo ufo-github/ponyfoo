@@ -3,7 +3,8 @@
 : ${PORT:="3000"}
 
 # cleanup
-rm -rf .bin && mkdir -p .bin/public/{js,css}
+npm run clean
+mkdir -p .bin/public/{js,css}
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include client/css --watch &
