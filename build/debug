@@ -1,5 +1,7 @@
 #!/bin/bash
 
+: ${PORT:="3000"}
+
 rm -rf .bin && mkdir -p .bin/public/{js,css}
 
 stylus client/css/all.styl -o .bin/public/css --include client/css --watch &
