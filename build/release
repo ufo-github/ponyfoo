@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# cleanup
 rm -rf .bin && mkdir -p .bin/public/{js,css}
 
+# compile
 stylus client/css/all.styl -o .bin/public/css --include client/css --compress
 jade views --out .bin --client --commonjs --no-debug
 browserify client/js/main.js -o .bin/public/js/all.js -t uglifyify
