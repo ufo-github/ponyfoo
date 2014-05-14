@@ -1,6 +1,6 @@
 'use strict';
 
-var Article = require('../models/Article');
+var Article = require('../../models/Article');
 
 module.exports = function (req, res, next) {
   var query = {};

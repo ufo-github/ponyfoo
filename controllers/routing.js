@@ -2,12 +2,12 @@
 
 var taunus = require('taunus');
 var routes = require('./routes');
-var article = require('./article');
+var articleList = require('./article/list');
 var errors = require('../lib/errors');
 
 module.exports = function (app) {
-  app.get('/api/articles', article.list);
+  app.get('/api/articles', articleList);
 
-  taunus.mount(app, c);
+  taunus.mount(app, routes);
   app.use(errors.handler);
 };

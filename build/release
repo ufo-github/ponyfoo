@@ -3,10 +3,12 @@
 # cleanup
 npm run clean
 mkdir -p .bin/public/{js,css}
+mkdir -p .bin/lib
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include client/css --compress
 jade views/**/* --out .bin --client --commonjs --no-debug
+taunus -o
 browserify client/js/main.js -o .bin/public/js/all.js -t uglifyify
 
 # revving
