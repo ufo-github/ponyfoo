@@ -12,7 +12,6 @@ module.exports = {
   },
   compose: function (req, res, next) {
     res.viewModel = {
-      partial: 'author/compose',
       model: {
         title: 'Article Composer'
       }

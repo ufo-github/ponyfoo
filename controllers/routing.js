@@ -1,17 +1,28 @@
 'use strict';
 
-var article = require('./article_controller');
-var home = require('./home_controller');
-var author = require('./author_controller');
-var view = require('./view_controller');
+var taunus = require('taunus');
+var routes = require('./routes');
+var article = require('./article');
 var errors = require('../lib/errors');
+var defaults = {
+  description: '',
+  author: {
+    meta: 'Nicolas Bevacqua <foo@bevacqua.io>',
+    twitter: '@nzgb'
+  },
+  images: {
+    cover: '',
+    list: []
+  },
+  partial: 'error/not-found',
+  model: {
+    title: 'Pony Foo'
+  }
+};
 
 module.exports = function (app) {
   app.get('/api/articles', article.list);
 
-  app.get('/', home.index);
-  app.get('/author/compose', author.only, author.compose);
-  app.get('/*', view.render);
-
+  taunus.mount(app, routes);
   app.use(errors.handler);
 };
