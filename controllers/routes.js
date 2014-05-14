@@ -1,8 +1,8 @@
 'use strict';
 
-var author = require('./author');
+var authorOnly = require('./author/only');
 
 module.exports = [
   { route: '/', action: 'home/index' },
-  { route: '/author/compose', action: 'author/compose', middleware: author.only }
+  { route: '/author/compose', action: 'author/compose', middleware: authorOnly }
 ];

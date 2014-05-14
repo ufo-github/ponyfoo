@@ -8,6 +8,6 @@ var errors = require('../lib/errors');
 module.exports = function (app) {
   app.get('/api/articles', article.list);
 
-  taunus.mount(app, routes);
+  taunus.mount(app, c);
   app.use(errors.handler);
 };
