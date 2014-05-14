@@ -15,6 +15,5 @@
     }
   },
   "views": ".bin/views",
-  "client_controllers": "client/js/controllers",
   "client_routes": ".bin/lib/routes"
 }
