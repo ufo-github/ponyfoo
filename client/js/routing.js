@@ -1,6 +1,7 @@
 'use strict';
 
 // this file should be auto-generated.
+// https://gist.github.com/bevacqua/00ba92b3f1886b2f9576
 
 module.exports = [{
   route: '/',
