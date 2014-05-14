@@ -23,6 +23,9 @@ var defaults = {
 module.exports = function (app) {
   app.get('/api/articles', article.list);
 
-  taunus.mount(app, routes);
+  taunus.mount(app, routes, {
+    defaults: defaults,
+    views: '.bin/views'
+  });
   app.use(errors.handler);
 };
