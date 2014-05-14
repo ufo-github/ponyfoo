@@ -1,6 +1,6 @@
 {
   "defaults": {
-    description: "",
+    "description": "",
     "author": {
       "meta": "Nicolas Bevacqua <foo@bevacqua.io>",
       "twitter": "@nzgb"
