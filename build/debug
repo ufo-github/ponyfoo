@@ -9,8 +9,8 @@ mkdir -p .bin/lib
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include client/css --watch &
-jade views/**/*.jade -o .bin --client --commonjs --pretty
-jade views/**/*.jade -o .bin --client --commonjs --pretty --watch &
+jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug
+jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --watch &
 taunus -o
 # taunus -o --watch &
 watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
