@@ -13,7 +13,7 @@ jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --watch &
 taunus -o
 # taunus -o --watch &
-watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
+watchify client/js/main.js -o .bin/public/js/all.js --verbose &
 
 # start nodemon, wait for app.listen, run browser-sync
 nodemon app --watch .bin/views/**/* &
