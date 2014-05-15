@@ -1,8 +1,10 @@
 'use strict';
 
+var doc = document;
+
 module.exports = function (textarea) {
-  var wrapper = document.createElement('div');
-  var grip = document.createElement('div');
+  var wrapper = doc.createElement('div');
+  var grip = doc.createElement('div');
   var min = 32;
   var offset;
   var position;
@@ -16,14 +18,13 @@ module.exports = function (textarea) {
   grip.addEventListener('mousedown', start);
   grip.style.marginRight = (grip.offsetWidth - textarea.offsetWidth) + 'px';
 
-
   function start (e) {
     textarea.blur();
     textarea.classList.add('fa-textarea-resizing');
     position = getPosition(e).y;
     offset = textarea.style.height - position;
-    document.addEventListener('mousemove', move);
-    document.addEventListener('mouseup', end);
+    doc.addEventListener('mousemove', move);
+    doc.addEventListener('mouseup', end);
     return false;
   }
 
@@ -43,16 +44,16 @@ module.exports = function (textarea) {
   }
 
   function end (e) {
-    document.removeEventListener('mousemove', move);
-    document.removeEventListener('mouseup', end);
+    doc.removeEventListener('mousemove', move);
+    doc.removeEventListener('mouseup', end);
     textarea.classList.remove('fa-textarea-resizing');
     textarea.focus();
   }
 
   function getPosition (e) {
     return {
-      x: e.clientX + document.documentElement.scrollLeft,
-      y: e.clientY + document.documentElement.scrollTop
+      x: e.clientX + doc.documentElement.scrollLeft,
+      y: e.clientY + doc.documentElement.scrollTop
     };
   }
 };
