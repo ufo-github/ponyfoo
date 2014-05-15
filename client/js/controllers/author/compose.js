@@ -1,6 +1,6 @@
 'use strict';
 
-var flexarea = require('./flexarea'); // require('flexarea');
+var flexarea = require('flexarea');
 
 module.exports = function () {
   console.log('compose controller');
