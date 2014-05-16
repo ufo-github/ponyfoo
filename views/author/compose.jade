@@ -5,6 +5,6 @@ section.ac-container
   textarea.ac-textarea.ac-introduction(placeholder='Introduction to your article. Captivate your readers by explaining the purpose, and maybe show an interesting graphic. This piece will be used to introduce the article to the world, through emails or on your blog.')
   textarea.ac-textarea.ac-body(placeholder='Main body of your article')
   input.ac-tags(placeholder='Enter a list of tags relevant to this article')
-  a.ac-cancel(href='/') Cancel
-  button.ac-draft Save Draft
-  button.ac-publish Publish Article
+  a.ac-discard(href='/', data-hint='The draft will be deleted') Discard Draft
+  button.ac-draft(data-hint='You can access your drafts at any time') Save Draft
+  button.ac-publish(data-hint='Make the content immediately accessible!') Publish Article
