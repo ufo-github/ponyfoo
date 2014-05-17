@@ -8,7 +8,7 @@ mkdir -p .bin/public/{js,css}
 mkdir -p .bin/lib
 
 # compile
-stylus client/css/all.styl -o .bin/public/css --include client/css --watch &
+stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --watch &
 taunus -o
