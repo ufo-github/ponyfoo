@@ -23,7 +23,7 @@
     "start": "sh build/debug"
   },
   "dependencies": {
-    "contra": "^1.6.2",
+    "contra": "^1.6.3",
     "express": "^4.1.2",
     "flexarea": "^1.0.25",
     "hint": "^1.0.2",
