@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require('domu');
+var $ = require('dominus');
 var flexarea = require('flexarea');
 
 module.exports = function () {

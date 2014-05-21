@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require('domu');
+var $ = require('dominus');
 var taunus = require('taunus');
 var routes = require('./routes');
 var main = $.one('.ly-main');
