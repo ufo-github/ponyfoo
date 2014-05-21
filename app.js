@@ -2,9 +2,10 @@
 
 var express = require('express');
 var winston = require('winston');
-var routing = require('./controllers/routing');
 var env = require('./lib/env');
 var db = require('./lib/db');
+var middleware = require('./lib/middleware');
+var routing = require('./controllers/routing');
 var app = express();
 var port = env('PORT');
 var devenv = env('NODE_ENV') === 'development';
@@ -17,6 +18,7 @@ app.locals.settings['x-powered-by'] = false;
 
 dev(statics);
 db(function connected () {
+  middleware(app);
   routing(app);
   dev(prettify);
   app.listen(port, listening);
