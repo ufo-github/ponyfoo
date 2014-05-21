@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "contra": "^1.6.3",
+    "domu": "^1.0.1",
     "express": "^4.1.2",
     "flexarea": "^1.0.25",
     "hint": "^1.0.2",
