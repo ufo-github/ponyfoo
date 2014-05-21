@@ -1,39 +1,37 @@
 'use strict';
 
-var passport = require('passport'),
-  config = require('../config'),
-  User = require('../model/User.js'),
-  LocalStrategy = require('passport-local').Strategy,
-  FacebookStrategy = require('passport-facebook').Strategy,
-  GoogleStrategy = require('passport-google').Strategy,
-  GitHubStrategy = require('passport-github').Strategy,
-  LinkedInStrategy = require('passport-linkedin').Strategy;
+var passport = require('passport');
+var config = require('../config');
+var User = require('../models/User.js');
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
+var LinkedInStrategy = require('passport-linkedin').Strategy;
 
-function setupLocal(){
-  passport.use(new LocalStrategy({
-      usernameField: 'email'
-    },
-    function(email, password, done) {
-      User.findOne({ email: email }, function (err, user) {
-        if (err) {
+function setupLocal () {
+  setupProvider(LocalStrategy, { usernameField: 'email' }, cb);
+
+  function cb (email, password, done) {
+    User.findOne({ email: email }, function (err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user || !user.password) {
+        return done(null, false, 'Invalid login credentials');
+      }
+
+      user.validatePassword(password, function(err, isMatch) {
+        if (err){
           return done(err);
         }
-        if (!user || !user.password) {
+        if(!isMatch){
           return done(null, false, 'Invalid login credentials');
         }
-
-        user.validatePassword(password, function(err, isMatch) {
-          if (err){
-            return done(err);
-          }
-          if(!isMatch){
-            return done(null, false, 'Invalid login credentials');
-          }
-          return done(null, user.toObject());
-        });
+        return done(null, user.toObject());
       });
-    }
-  ));
+    });
+  }
 }
 
 function setupOAuth1(name, Strategy, fields){
@@ -54,7 +52,7 @@ function setupOAuth1(name, Strategy, fields){
   });
 }
 
-function setupOAuth2(name, Strategy){
+function setupOAuth2 (name, Strategy) {
   if(!config.auth[name].enabled){
     return;
   }
@@ -72,7 +70,7 @@ function setupOAuth2(name, Strategy){
   });
 }
 
-function setupOpenId(name, Strategy){
+function setupOpenId (name, Strategy){
   var opts = {
     returnURL: config.server.authorityBlog + config.auth[name].callback,
     realm: config.server.authorityBlog
@@ -85,11 +83,11 @@ function setupOpenId(name, Strategy){
   });
 }
 
-function setupProvider(Strategy, config, cb){
+function setupProvider (Strategy, config, cb) {
   passport.use(new Strategy(config, cb));
 }
 
-function callback(query, profile, done) {
+function callback (query, profile, done) {
   var email = profile.emails ? profile.emails[0].value : undefined;
   if(!email){
     return done(null,false,'Unable to fetch email address');
@@ -128,7 +126,7 @@ function callback(query, profile, done) {
   });
 }
 
-function configure(){
+function configure () {
   passport.serializeUser(function(user, done) {
     done(null, user._id);
   });
