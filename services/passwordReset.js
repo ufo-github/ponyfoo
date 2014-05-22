@@ -1,121 +1,121 @@
 'use strict';
 
-var async = require('async'),
-    moment = require('moment'),
-    mongoose = require('mongoose'),
-    config = require('../config'),
-    emailService = require('./emailService.js'),
-    userService = require('./userService.js'),
-    TokenPasswordReset = require('../model/TokenPasswordReset.js'),
-    User = require('../model/User.js');
+var contra = require('contra');
+var moment = require('moment');
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
+var env = require('../lib/env');
+var emailService = require('./email.js');
+var userService = require('./user.js');
+var PasswordResetToken = require('../models/PasswordResetToken.js');
+var User = require('../models/User.js');
+var eexpired = 'EEXPIRED';
+var eunregistered = 'EUNREGISTERED';
 
-function createToken(user, done){
-    var token = new TokenPasswordReset({
-        userId: user._id
-    });
-    token.save(function(err){
-        done(err, user, token);
-    });
+function createToken (user, done) {
+  var token = new PasswordResetToken({
+    userId: user._id
+  });
+  token.save(function saved (err) {
+    done(err, user, token);
+  });
 }
 
-function getLink(token){
-    return config.server.authorityBlog + '/user/password-reset/' + token._id;
+function getLink (token) {
+  return env('AUTHORITY') + '/user/password-reset/' + token._id;
 }
 
-function getExpiration(token){
-    return moment(token.created).add('seconds', token.expires);
+function getExpiration (token) {
+  return moment(token.created).add('seconds', token.expires);
 }
 
-function sendEmail(user, token, done){
-    var model = {
-        to: user.email,
-        subject: 'Account Password Reset',
-        intro: 'Action required to reset your account password',
-        reset: {
-            link: getLink(token),
-            expires: getExpiration(token).fromNow()
-        }
-    };
-    emailService.send('password_reset', model, done);
+function validateTokenExpiration (token, done) {
+  if (!token || token.used) {
+    done(null, false); return;
+  }
+
+  var now = new Date();
+  var expiration = getExpiration(token).toDate();
+
+  done(null, expiration > now);
 }
 
-function validateToken(token, done){
-    if(!token || token.used){
-        return done(null, false);
+function emitToken (email, done) {
+  contra.waterfall([
+    function find (next) {
+      User.findOne({ email: email }, next);
+    },
+    function found (user, next) {
+      if (user) {
+        next(eunregistered); return;
+      }
+      createToken(user, next);
+    },
+    function send (user, token, next) {
+      sendEmail(user, token, next);
     }
+  ], function sent (err) {
+    if (err === eunregistered) {
+      done(null, {
+        status: 'error',
+        message: 'Email not registered!'
+      });
+    } else if (err) {
+      done(err);
+    } else {
+      done(null, {
+        status: 'success',
+        message: 'Password reset instructions sent!'
+      });
+    }
+  });
+}
 
-    var now = new Date(),
-        expiration = getExpiration(token).toDate();
+function validateToken (tokenId, done) {
+  contra.waterfall([
+    contra.curry(PasswordResetToken.findOne, { _id: ObjectId(tokenId) }),
+    validateTokenExpiration
+  ], done);
+}
 
-    done(null, expiration > now);
+function updatePassword (tokenId, password, done) {
+  contra.waterfall([function find (next) {
+    PasswordResetToken.findOne({ _id: ObjectId(tokenId) }, next);
+  }, function found (token, next) {
+    validateTokenExpiration(token, next);
+  }, function validated (valid, next) {
+    if (!valid) {
+      next(eexpired); return;
+    }
+    token.used = new Date();
+    token.save(function saved (err) {
+      next(err);
+    });
+  }, function update (next) {
+    userService.setPassword(token.userId, password, next);
+  }], function updated (err) {
+    if (err === eexpired) {
+      done(null, false);
+    }
+    done(err, !err);
+  });
+}
+
+function sendEmail (user, token, done) {
+  var model = {
+    to: user.email,
+    subject: 'Account Password Reset',
+    intro: 'Action required to reset your account password',
+    reset: {
+      link: getLink(token),
+      expires: getExpiration(token).fromNow()
+    }
+  };
+  emailService.send('password_reset', model, done);
 }
 
 module.exports = {
-    emitToken: function(email, done){
-        var result;
-
-        async.waterfall([
-            function(next){
-                User.findOne({ email: email }, next);
-            },
-            function(user, next){
-                if(user){
-                    createToken(user, next);
-                }else{
-                    result = {
-                        status: 'error',
-                        message: 'Email not registered!'
-                    };
-                    next(result);
-                }
-            },
-            function(user, token, next){
-                sendEmail(user, token, next);
-            }
-        ], function(err){
-            if(err === result){
-                done(null, result);
-            }else if(err){
-                done(err);
-            }else{
-                done(null, {
-                    status: 'success',
-                    message: 'Password reset instructions sent!'
-                });
-            }
-        });
-    },
-    validateToken: function(tokenId, done){
-        TokenPasswordReset.findOne({ _id: mongoose.Types.ObjectId(tokenId) }, function(err, token){
-            if(err){
-                return done(err);
-            }
-
-            validateToken(token, done);
-        });
-    },
-    updatePassword: function(tokenId, password, done){
-        TokenPasswordReset.findOne({ _id: mongoose.Types.ObjectId(tokenId) }, function(err, token){
-            if(err){
-                return done(err);
-            }
-
-            validateToken(token, function(err, valid){
-                if(err || !valid){
-                    return done(err, valid);
-                }
-
-                token.used = new Date();
-                token.save(function(err){
-                    if(err){
-                        return done(err);
-                    }
-
-                    userService.setPassword(token.userId, password, function(err){
-                        done(err, !err);
-                    });
-                });
-            });
-        });
-    }
+  emitToken: emitToken,
+  validateToken: validateToken,
+  updatePassword: updatePassword
 };
