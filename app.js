@@ -4,6 +4,7 @@ var express = require('express');
 var winston = require('winston');
 var env = require('./lib/env');
 var db = require('./lib/db');
+var models = require('./models');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
 var app = express();
@@ -18,6 +19,7 @@ app.locals.settings['x-powered-by'] = false;
 
 dev(statics);
 db(function connected () {
+  models();
   middleware(app);
   routing(app);
   dev(prettify);

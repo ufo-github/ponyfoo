@@ -1,15 +1,17 @@
 'use strict';
 
+var env = require('../../lib/env');
+var data = require('./data');
 var providerHandler = require('./providerHandler');
 
-module.exports = function (name, Strategy) {
-  if(!config.auth[name].enabled){
+module.exports = function oauthTwo (name, Strategy) {
+  if (!data[name].enabled) {
     return;
   }
   var opts = {
-    clientID: config.auth[name].id,
-    clientSecret: config.auth[name].secret,
-    callbackURL: config.server.authorityBlog + config.auth[name].callback
+    clientID: data[name].id,
+    clientSecret: data[name].secret,
+    callbackURL: env('AUTHORITY') + data[name].callback
   };
 
   passport.use(new Strategy(opts, oauthTwoHandler));

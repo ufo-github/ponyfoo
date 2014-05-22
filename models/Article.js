@@ -21,8 +21,10 @@ var schema = new mongoose.Schema({
   // comments: [{ type: ObjectId, ref: 'Comment' }]
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-schema.virtual('permalink').get(function () {
+schema.virtual('permalink').get(computePermalink);
+
+function computePermalink () {
   return '/' + this.slug;
-});
+}
 
 module.exports = mongoose.model('Article', schema);

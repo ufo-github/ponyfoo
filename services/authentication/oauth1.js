@@ -1,15 +1,17 @@
 'use strict';
 
+var env = require('../../lib/env');
+var data = require('./data');
 var providerHandler = require('./providerHandler');
 
-module.exports = function (name, Strategy, fields) {
-  if(!config.auth[name].enabled){
+module.exports = function oauthOne (name, Strategy, fields) {
+  if (!data[name].enabled) {
     return;
   }
   var opts = {
-    consumerKey: config.auth[name].id,
-    consumerSecret: config.auth[name].secret,
-    callbackURL: config.server.authorityBlog + config.auth[name].callback,
+    consumerKey: data[name].id,
+    consumerSecret: data[name].secret,
+    callbackURL: env('AUTHORITY') + data[name].callback,
     profileFields: fields
   };
 

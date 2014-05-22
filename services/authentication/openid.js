@@ -1,11 +1,14 @@
 'use strict';
 
+var env = require('../../lib/env');
+var data = require('./data');
 var providerHandler = require('./providerHandler');
+var authority = env('AUTHORITY');
 
-module.exports = function (name, Strategy) {
+module.exports = function openid (name, Strategy) {
   var opts = {
-    returnURL: config.server.authorityBlog + config.auth[name].callback,
-    realm: config.server.authorityBlog
+    returnURL: authority + data[name].callback,
+    realm: authority
   };
 
   passport.use(new Strategy(opts, openidHandler));
