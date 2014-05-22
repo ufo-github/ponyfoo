@@ -1,5 +1,6 @@
 'use strict';
 
+var passport = require('passport');
 var env = require('../../lib/env');
 var data = require('./data');
 var providerHandler = require('./providerHandler');
