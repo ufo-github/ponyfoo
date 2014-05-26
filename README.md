@@ -5,6 +5,6 @@
 
 TODO
 
-services/user
+services/email
 services/authcontroller
-services/verification
+services/blog
