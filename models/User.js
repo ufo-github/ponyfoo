@@ -6,7 +6,7 @@ var cryptoService = require('../services/crypto');
 var schema = new mongoose.Schema({
   email: { type: String, require: true, index: { unique: true }, trim: true },
   password: { type: String, require: true },
-  passwordEncryption: { type: Boolean, 'default': true },
+  bypassEncryption: { type: Boolean, 'default': true },
   created: { type: Date, require: true, 'default': Date.now },
   displayName: { type: String },
   facebookId: { type: String },
@@ -34,12 +34,17 @@ function computeGravatar () {
 
 function beforeSave (done) {
   var user = this;
-
-  if (!user.passwordEncryption || !user.isModified('password')) {
-    user.passwordEncryption = true;
+  if (user.bypassEncryption) { // password already encrypted, we shouldn't re-encrypt it
+    user.bypassEncryption = false;
     done(); return;
   }
+  if (!user.isModified('password') {
+    done(); return;
+  }
+  encryptPassword(user, done);
+}
 
+function encryptPassword (user, done) {
   cryptoService.encrypt(user.password, function encrypted (err, hash) {
     if (err) {
       done(err); return;

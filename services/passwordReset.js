@@ -5,10 +5,10 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var env = require('../lib/env');
-var emailService = require('./email.js');
-var userService = require('./user.js');
-var PasswordResetToken = require('../models/PasswordResetToken.js');
-var User = require('../models/User.js');
+var emailService = require('./email');
+var userService = require('./user');
+var PasswordResetToken = require('../models/PasswordResetToken');
+var User = require('../models/User');
 var eexpired = 'EEXPIRED';
 var eunregistered = 'EUNREGISTERED';
 

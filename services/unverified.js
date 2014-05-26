@@ -2,9 +2,9 @@
 
 var async = require('async');
 var config = require('../config');
-var userService = require('./user.js');
-var verificationService = require('./verification.js');
-var UnverifiedUser = require('../model/UnverifiedUser.js');
+var userService = require('./user');
+var verificationService = require('./verification');
+var UnverifiedUser = require('../models/UnverifiedUser');
 
 function validate (input, done) {
   var email = input.email;

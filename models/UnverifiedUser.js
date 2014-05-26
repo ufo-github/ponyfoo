@@ -15,7 +15,10 @@ function beforeSave (done) {
   if (!user.isModified('password')) {
     done(); return;
   }
+  encryptPassword(user, done);
+}
 
+function encryptPassword (user, done) {
   cryptoService.encrypt(user.password, function encrypted (err, hash) {
     if (err) {
       done(err); return;
@@ -24,5 +27,6 @@ function beforeSave (done) {
     done();
   });
 }
+
 
 module.exports = mongoose.model('unverifiedUser', schema);
