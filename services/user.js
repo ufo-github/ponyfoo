@@ -33,12 +33,12 @@ module.exports = {
   create: create(false),
   createUsingEncryptedPassword: create(true),
   hasBlog: function (user, done) {
-    blogService.findByUser(user, function (err, blog) {
+    blogService.findByUser(user, function found (err, blog) {
       done(err, !!blog);
     });
   },
   setPassword: function (userId, password, done) {
-    User.findOne({ _id: userId }, function (err, user) {
+    User.findOne({ _id: userId }, function found (err, user) {
       if(err || !user){
         return done(err, false);
       }

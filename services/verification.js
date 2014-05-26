@@ -1,128 +1,130 @@
 'use strict';
 
-var async = require('async'),
-    moment = require('moment'),
-    mongoose = require('mongoose'),
-    config = require('../config'),
-    emailService = require('./emailService.js'),
-    userService = require('./userService.js'),
-    TokenUserVerification = require('../model/TokenUserVerification.js'),
-    UserUnverified = require('../model/UserUnverified.js'),
-    User = require('../model/User.js');
+var contra = require('contra');
+var moment = require('moment');
+var mongoose = require('mongoose');
+var env = require('../lib/env');
+var emailService = require('./email');
+var userService = require('./user');
+var UnverifiedUser = require('../models/UnverifiedUser');
+var UserVerificationToken = require('../models/UserVerificationToken');
+var User = require('../models/User');
+var ObjectId = mongoose.Types.ObjectId;
 
-function createToken(user, done){
-    var token = new TokenUserVerification({
-        unverifiedId: user._id
-    });
-    token.save(function(err){
-        done(err, token);
-    });
+function createToken (user, done) {
+  var token = new UserVerificationToken({
+    unverifiedId: user._id
+  });
+  token.save(function saved (err) {
+    done(err, token);
+  });
 }
 
-function getLink(token){
-    return config.server.authorityBlog + '/user/verify-email/' + token._id;
+function getLink (token) {
+  return env('AUTHORITY') + '/user/verify-email/' + token._id;
 }
 
-function getExpiration(token){
-    return moment(token.created).add('seconds', token.expires);
+function getExpiration (token) {
+  return moment(token.created).add('seconds', token.expires);
 }
 
-function sendEmail(user, token, done){
-    var model = {
-        to: user.email,
-        subject: 'Account Email Verification',
-        intro: 'Action required to complete your account registration',
-        validation: {
-            link: getLink(token),
-            expires: getExpiration(token).fromNow()
+function sendEmail (user, token, done) {
+  var model = {
+    to: user.email,
+    subject: 'Account Email Verification',
+    intro: 'Action required to complete your account registration',
+    validation: {
+      link: getLink(token),
+      expires: getExpiration(token).fromNow()
+    }
+  };
+  emailService.send('verify_address', model, done);
+}
+
+function emitToken (user, done) {
+  contra.waterfall([
+    function creation (next) {
+      createToken(user, next);
+    },
+    function notification (token, next) {
+      sendEmail(user, token, next);
+    }
+  ], done);
+}
+
+function verifyToken (tokenId, done) {
+  var result;
+
+  contra.waterfall([
+    function find (next) {
+      UserVerificationToken.findOne({ _id: ObjectId(tokenId) }, next);
+    },
+    function validateToken (token, next) {
+      if (!token || token.used) {
+        expired(next);
+      } else {
+        next(null, token);
+      }
+    },
+    function validateExpiration (token, next) {
+      var now = new Date();
+      var expiration = getExpiration(token).toDate();
+
+      if (now > expiration) {
+        expired(next);
+      } else {
+        next(null, token);
+      }
+    },
+    function lookupUnverified (token, next) {
+      UnverifiedUser.findOne({ _id: token.unverifiedId }, function found (err, unverified) {
+        next(err, token, unverified);
+      });
+    },
+    function lookupVerified (token, unverified, next) {
+      User.findOne({ email: unverified.email }, function found (err, user) {
+        if (err) {
+          next(err); return;
         }
+        if (user) { // someone took the email address already.
+          expired(next); return;
+        }
+        next(null, token, unverified);
+      });
+    },
+    function useToken (token, unverified, next) {
+      token.used = new Date();
+      token.save(function saved (err) {
+        next(err, unverified);
+      });
+    },
+    function createUser (unverified, next) {
+      userService.createUsingEncryptedPassword(unverified.email, unverified.password, next);
+    },
+    function created (user, next) {
+      next(null, {
+        status: 'success',
+        message: 'Thanks for validating your email address!',
+        user: user
+      });
+    }
+  ], function respond (err, user) {
+    if(err === result) {
+      return done(null, result);
+    }
+    done(err, user);
+  });
+
+  function expired (next) {
+    result = {
+      status: 'error',
+      message: 'This validation token has expired'
     };
-    emailService.send('verify_address', model, done);
+    next(result);
+  }
 }
 
 module.exports = {
-    emitToken: function(user, done){
-        async.waterfall([
-            function(next){
-                createToken(user, next);
-            },
-            function(token, next){
-                sendEmail(user, token, next);
-            }
-        ], done);
-    },
-    verifyToken: function(tokenId, done){
-        var result;
-
-        async.waterfall([
-            function(next){
-                TokenUserVerification.findOne({ _id: mongoose.Types.ObjectId(tokenId) }, next);
-            },
-            function(token, next){
-                if(!token || token.used){
-                    expired(next);
-                }else{
-                    next(null, token);
-                }
-            },
-            function(token, next){
-                var now = new Date(),
-                    expiration = getExpiration(token).toDate();
-
-                if(now > expiration){
-                    expired(next);
-                }else{
-                    next(null, token);
-                }
-            },
-            function(token, next){
-                UserUnverified.findOne({ _id: token.unverifiedId }, function(err, unverified){
-                    if(err){
-                        return next(err);
-                    }
-                    next(null, token, unverified);
-                });
-            },
-            function(token, unverified, next){
-                User.findOne({ email: unverified.email }, function(err, user){
-                    if(err){
-                        return next(err);
-                    }
-                    if(user){ // someone took the email address already.
-                        return expired(next);
-                    }
-                    next(null, token, unverified);
-                });
-            },
-            function(token, unverified, next){
-                token.used = new Date();
-                token.save(function(err){
-                    next(err, unverified);
-                });
-            },
-            function(unverified, next){
-                userService.createUsingEncryptedPassword(unverified.email, unverified.password, next);
-            },
-            function(user, next){
-                next(null, {
-                    status: 'success',
-                    message: 'Thanks for validating your email address!',
-                    user: user
-                });
-            }
-        ], function(err, user){
-            if(err === result){
-                return done(null, result);
-            }
-            done(err, user);
-        });
-
-        function expired(next){
-            result = {
-                status: 'error',
-                message: 'This validation token has expired'
-            };
-            next(result);
-        }
-    }
+  emitToken: emitToken,
+  verifyToken: verifyToken
 };

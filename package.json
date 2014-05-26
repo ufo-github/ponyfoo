@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "bcrypt": "^0.7.8",
+    "campaign": "^1.2.1",
     "connect-mongo": "^0.4.1",
     "contra": "^1.6.3",
     "dominus": "^1.0.2",
@@ -46,6 +47,7 @@
     "passport-linkedin": "^0.1.3",
     "passport-local": "^1.0.0",
     "taunus": "^0.1.6",
+    "validator": "^3.12.0",
     "winston": "^0.7.3"
   },
   "devDependencies": {

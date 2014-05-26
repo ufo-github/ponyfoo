@@ -1,10 +1,11 @@
 'use strict';
 
-var async = require('async');
-var config = require('../config');
+var validator = require('validator');
+var env = require('../lib/env');
 var userService = require('./user');
 var verificationService = require('./verification');
 var UnverifiedUser = require('../models/UnverifiedUser');
+var development = env('NODE_ENV') === 'development';
 
 function validate (input, done) {
   var email = input.email;
@@ -13,7 +14,7 @@ function validate (input, done) {
 
   if (typeof email !== 'string' || email.length === 0) {
     messages.push('The email address can\'t be empty');
-  } else if (!config.env.development && !config.remail.test(email)) {
+  } else if (!development && !validator.isEmail(email)) {
     messages.push('You must provide a valid email address');
   } else {
     input.email = email.trim().toLowerCase(); // ignore case
@@ -40,7 +41,6 @@ function create (email, password, done) {
 function register (input, done) {
   var messages;
 
-  async.waterfall([
     function validation (next) {
       validate(input, function validated (err, result){
         messages = result;
