@@ -2,9 +2,9 @@
 
 var async = require('async');
 var config = require('../config');
-var userService = require('./userService.js');
-var userVerificationService = require('./userVerificationService.js');
-var UserUnverified = require('../model/UserUnverified.js');
+var userService = require('./user.js');
+var verificationService = require('./verification.js');
+var UnverifiedUser = require('../model/UnverifiedUser.js');
 
 function validate (input, done) {
   var email = input.email;
@@ -14,7 +14,7 @@ function validate (input, done) {
   if (typeof email !== 'string' || email.length === 0) {
     messages.push('The email address can\'t be empty');
   } else if (!config.env.development && !config.remail.test(email)) {
-    messages.push('You must pick a valid email address');
+    messages.push('You must provide a valid email address');
   } else {
     input.email = email.trim().toLowerCase(); // ignore case
   }
@@ -27,50 +27,43 @@ function validate (input, done) {
 }
 
 function create (email, password, done) {
-  var user = new UserUnverified({
+  var user = new UnverifiedUser({
     email: email,
     displayName: email.split('@')[0],
     password: password
   });
-  user.save(function (err) {
+  user.save(function saved (err) {
     done(err, user);
   });
 }
 
-function register(input, done){
+function register (input, done) {
   var messages;
 
   async.waterfall([
-    function(next){
-      validate(input, function(err, result){
+    function validation (next) {
+      validate(input, function validated (err, result){
         messages = result;
         next(err);
       });
     },
-    function(next){
-      userService.findOne({ email: input.email }, function(err, user){
-        next(err, user);
-      });
+    function find (next) {
+      userService.findOne({ email: input.email }, next);
     },
-    function(user, next){
-      if(user !== null){
+    function availability (user, next) {
+      if (user !== null) {
         messages.unshift('That email address is unavailable');
       }
-
-      if (messages.length){
-        next(messages);
-      }else{
-        next();
-      }
+      next(messages.length ? messages : null);
     },
-    function(next){
+    function creation (next) {
       create(input.email, input.password, next);
     },
-    function(user, next){
-      userVerificationService.emitToken(user, next);
+    function emit (user, next) {
+      verificationService.emitToken(user, next);
     }
-  ], function(err){
-    if(err === messages){ // just validation issues, not a 'real' error.
+  ], function respond (err) {
+    if (err === messages) { // just validation issues, not a 'real' error.
       return done(null, messages);
     }
     done(err);

@@ -52,7 +52,7 @@ function emitToken (email, done) {
       createToken(user, next);
     },
     function send (user, token, next) {
-      sendEmail(user, token, next);
+      emailToken(user, token, next);
     }
   ], function sent (err) {
     if (err === eunregistered) {
@@ -101,7 +101,7 @@ function updatePassword (tokenId, password, done) {
   });
 }
 
-function sendEmail (user, token, done) {
+function emailToken (user, token, done) {
   var model = {
     to: user.email,
     subject: 'Account Password Reset',
