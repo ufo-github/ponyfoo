@@ -9,9 +9,9 @@ var client = createClient();
 
 function createClient () {
   if (production) { // in production, send emails
-    return campaign();
+    return campaign({ provider: require('campaign-jade') });
   } else if (staging) { // staging environments should trap emails
-    return campaign({ trap: true });
+    return campaign({ provider: require('campaign-jade'), trap: true });
   } else { // during development, there's no reason to send any emails
     return campaign({ provider: campaign.providers.terminal() });
   }
