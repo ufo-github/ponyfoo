@@ -5,6 +5,4 @@
 
 TODO
 
-services/email
-services/authcontroller
-services/blog
+- no-flash

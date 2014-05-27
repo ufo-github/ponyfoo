@@ -3,7 +3,7 @@
 var contra = require('contra');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../../models/User.js');
+var User = require('../../models/User');
 var elogin = 'Invalid login credentials';
 
 function localSetup () {

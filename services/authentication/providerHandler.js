@@ -1,7 +1,7 @@
 'use strict';
 
 var contra = require('contra');
-var User = require('../../models/User.js');
+var User = require('../../models/User');
 
 module.exports = function providerHandler (query, profile, done) {
   var email = profile.emails ? profile.emails[0].value : false;

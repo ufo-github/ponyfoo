@@ -25,6 +25,7 @@
   "dependencies": {
     "bcrypt": "^0.7.8",
     "campaign": "^1.2.1",
+    "campaign-jade": "^1.0.0",
     "connect-mongo": "^0.4.1",
     "contra": "^1.6.3",
     "dominus": "^1.0.2",
