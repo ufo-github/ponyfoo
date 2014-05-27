@@ -2,6 +2,7 @@
 
 var path = require('path');
 var campaign = require('campaign');
+var winston = require('winston');
 var env = require('../lib/env');
 var production = env('NODE_ENV') === 'production';
 var staging = env('NODE_ENV') === 'staging';
@@ -23,7 +24,14 @@ function send (type, model, done) {
 }
 
 function logger (err) {
-
+  if (err) {
+    winston.error('Email sending failed', {
+      err: err,
+      args: arguments
+    });
+  } else {
+    winston.debug('Email sent');
+  }
 }
 
 module.exports = {
