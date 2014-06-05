@@ -1,0 +1,4 @@
+#!/bin/bash
+
+jshint . --reporter node_modules/jshint-stylish/stylish.js
+tape test/**/*

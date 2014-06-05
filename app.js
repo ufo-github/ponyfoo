@@ -9,35 +9,19 @@ var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
 var app = express();
 var port = env('PORT');
-var devenv = env('NODE_ENV') === 'development';
-
-function noop () {}
-function dev (fn) { (devenv ? fn : noop)(); }
+var development = require('./lib/development');
 
 app.set('view engine', 'jade');
 app.locals.settings['x-powered-by'] = false;
 
-dev(statics);
 db(function connected () {
   models();
   middleware(app);
   routing(app);
-  dev(prettify);
+  development(app); // only enabled in non-production environments
   app.listen(port, listening);
 });
 
 function listening () {
   winston.info('app listening on port %s', port);
-}
-
-function statics () {
-  var serveStatic = require('serve-static');
-  app.use(serveStatic('.bin/public'));
-}
-
-function prettify () {
-  var errorHandler = require('errorhandler');
-  app.set('json spaces', 2);
-  app.use(errorHandler());
-  app.locals.pretty = true;
 }
