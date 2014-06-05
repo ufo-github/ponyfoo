@@ -19,4 +19,4 @@ module.exports = function openid (name, Strategy) {
     query[name + 'Id'] = identifier;
     providerHandler(query, profile, done);
   }
-}
+};

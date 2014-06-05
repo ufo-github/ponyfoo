@@ -1,5 +1,6 @@
 'use strict';
 
+var contra = require('contra');
 var validator = require('validator');
 var env = require('../lib/env');
 var userService = require('./user');
@@ -41,8 +42,9 @@ function create (email, password, done) {
 function register (input, done) {
   var messages;
 
+  contra.waterfall([
     function validation (next) {
-      validate(input, function validated (err, result){
+      validate(input, function validated (err, result) {
         messages = result;
         next(err);
       });

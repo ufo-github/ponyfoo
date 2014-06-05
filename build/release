@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# cleanup
 npm run clean
-mkdir -p .bin/public/{js,css}
-mkdir -p .bin/lib
+npm test
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --compress

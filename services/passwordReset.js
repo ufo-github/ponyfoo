@@ -73,15 +73,18 @@ function emitToken (email, done) {
 
 function validateToken (tokenId, done) {
   contra.waterfall([
-    contra.curry(PasswordResetToken.findOne, { _id: ObjectId(tokenId) }),
+    contra.curry(PasswordResetToken.findOne, { _id: new ObjectId(tokenId) }),
     validateTokenExpiration
   ], done);
 }
 
 function updatePassword (tokenId, password, done) {
+  var token;
+
   contra.waterfall([function find (next) {
-    PasswordResetToken.findOne({ _id: ObjectId(tokenId) }, next);
-  }, function found (token, next) {
+    PasswordResetToken.findOne({ _id: new ObjectId(tokenId) }, next);
+  }, function found (_token, next) {
+    token = _token;
     validateTokenExpiration(token, next);
   }, function validated (valid, next) {
     if (!valid) {

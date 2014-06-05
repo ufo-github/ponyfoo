@@ -58,7 +58,7 @@ function verifyToken (tokenId, done) {
 
   contra.waterfall([
     function find (next) {
-      UserVerificationToken.findOne({ _id: ObjectId(tokenId) }, next);
+      UserVerificationToken.findOne({ _id: new ObjectId(tokenId) }, next);
     },
     function validateToken (token, next) {
       if (!token || token.used) {

@@ -15,10 +15,8 @@
     "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
   "scripts": {
-    "lint": "jshint . --reporter node_modules/jshint-stylish/stylish.js",
-    "tape": "tape test/**/*",
-    "test": "npm run lint && npm run tape",
-    "clean": "rm -rf .bin",
+    "test": "sh build/test",
+    "clean": "sh build/clean",
     "build": "sh build/release",
     "start": "sh build/debug"
   },

@@ -38,7 +38,7 @@ function beforeSave (done) {
     user.bypassEncryption = false;
     done(); return;
   }
-  if (!user.isModified('password') {
+  if (!user.isModified('password')) {
     done(); return;
   }
   encryptPassword(user, done);

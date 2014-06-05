@@ -45,4 +45,4 @@ module.exports = function providerHandler (query, profile, done) {
       }
     }
   }
-}
+};

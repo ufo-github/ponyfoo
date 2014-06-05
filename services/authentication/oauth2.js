@@ -22,4 +22,4 @@ module.exports = function oauthTwo (name, Strategy) {
     query[name + 'Id'] = profile.id;
     providerHandler(query, profile, done);
   }
-}
+};

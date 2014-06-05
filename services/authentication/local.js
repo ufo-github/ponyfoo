@@ -17,10 +17,12 @@ function localHandler (email, password, done) {
       if (!user || !user.password) {
         next(elogin); return;
       }
-      user.validatePassword(password, next);
+      user.validatePassword(password, function validatedPassword (err, valid) {
+        next(err, user, valid);
+      });
     },
-    function validateCredentials (isMatch, next) {
-      if(!isMatch){
+    function validateCredentials (user, valid, next) {
+      if (!valid) {
         next(elogin); return;
       }
       next(null, user.toObject());
