@@ -2,8 +2,11 @@
 
 var $ = require('dominus');
 var flexarea = require('flexarea');
+var ponymark = require('ponymark');
 
 module.exports = function () {
-  var ta = $('.ac-textarea');
-  Array.prototype.forEach.call(ta, flexarea);
+  var texts = $('.ac-text');
+
+  texts.forEach(ponymark);
+  texts.find('.pmk-input').forEach(flexarea);
 };
