@@ -9,7 +9,7 @@ var main = $.findOne('.ly-main');
 global.$ = $;
 
 ponymark.configure({
-  imageUploads: '/api/markdown-images'
+  imageUploads: '/api/markdown/images'
 });
 
 taunus.mount(main, routes);
