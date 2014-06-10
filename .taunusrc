@@ -15,5 +15,5 @@
     }
   },
   "views": ".bin/views",
-  "client_routes": ".bin/lib/routes.js"
+  "client_wiring": ".bin/lib/wiring.js"
 }

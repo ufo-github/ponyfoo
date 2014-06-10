@@ -3,7 +3,7 @@
 var $ = require('dominus');
 var ponymark = require('ponymark');
 var taunus = require('taunus');
-var routes = require('./routes');
+var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
 
 global.$ = $;
@@ -12,4 +12,4 @@ ponymark.configure({
   imageUploads: '/api/markdown/images'
 });
 
-taunus.mount(main, routes);
+taunus.mount(main, wiring);
