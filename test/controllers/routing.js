@@ -15,8 +15,8 @@ test('routes should match expectation', function (t) {
   var images = sinon.stub();
   var errors = sinon.stub();
   var routing = proxyquire('../../controllers/routing', {
-    './markdown/images': images,
-    './article/list': list,
+    './api/markdown/images': images,
+    './api/article/list': list,
     '../lib/errors': errors
   });
 
@@ -24,10 +24,14 @@ test('routes should match expectation', function (t) {
   routing(app);
 
   // assert
-  t.plan(5);
+  t.plan(9);
   t.ok(app.put.calledWith('/api/markdown/images', images));
   t.ok(app.get.calledWith('/api/articles', list));
-  t.equal(app.get.callCount, 3);
+  t.ok(app.get.calledWith('/'));
+  t.ok(app.get.calledWith('/account/login'));
+  t.ok(app.get.calledWith('/author/compose'));
   t.ok(app.use.calledWith(errors.handler));
+  t.equal(app.put.callCount, 1);
+  t.equal(app.get.callCount, 4);
   t.equal(app.use.callCount, 1);
 });

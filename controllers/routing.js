@@ -3,7 +3,7 @@
 var taunus = require('taunus');
 var routes = require('./routes');
 var markdownImageUpload = require('./api/markdown/images');
-var articleList = require('./article/list');
+var articleList = require('./api/article/list');
 var errors = require('../lib/errors');
 
 module.exports = function (app) {
