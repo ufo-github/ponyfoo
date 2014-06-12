@@ -6,7 +6,7 @@ var ponymark = require('ponymark');
 
 module.exports = function () {
   var texts = $('.ac-text');
-  var preview = $('.ac-preview');
+  var preview = $.findOne('.ac-preview');
 
   texts.forEach(function (text) {
     ponymark({ buttons: text, input: text, preview: preview });
