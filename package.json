@@ -28,7 +28,7 @@
     "connect-mongo": "^0.4.1",
     "contra": "^1.6.3",
     "cookie-parser": "^1.1.0",
-    "dominus": "^1.1.0",
+    "dominus": "^1.1.2",
     "express": "^4.1.2",
     "express-session": "^1.2.0",
     "flexarea": "^1.0.25",
