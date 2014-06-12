@@ -4,3 +4,8 @@
 [2]: https://travis-ci.org/ponyfoo/ponyfoo
 
 Supported Browsers: IE 10+
+
+TODO
+
+  - flash intro page
+  - flash intro DAY!
