@@ -48,7 +48,7 @@ function slug (text) {
   return slugify(text)
     .replace(rinvalid, '') // remove invalid chars
     .replace(/\s+/g, '-') // collapse whitespace and replace by '-'
-    .replace(/-+/g, '-') // collapse dashes
+    .replace(/[-_]+/g, '-') // collapse dashes
     .replace(/^-|-$/g, '') // remove leading or trailing dashes
     .trim()
     .toLowerCase();
