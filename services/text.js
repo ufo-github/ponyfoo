@@ -1,5 +1,6 @@
 'use strict';
 
+var rspaces = /\s+/g;
 var rinvalid = /[^\x20\x2D0-9A-Z\x5Fa-z\xC0-\xD6\xD8-\xF6\xF8-\xFF]/g;
 var raccents = /[\xC0-\xFF]/g;
 var accents = [
@@ -68,7 +69,12 @@ function truncate (source, cap) {
   return text;
 }
 
+function splitTags (text) {
+  return text.trim().split(rspaces);
+}
+
 module.exports = {
  slug: slug,
- truncate: truncate
+ truncate: truncate,
+ splitTags: splitTags
 };
