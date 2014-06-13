@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var flexarea = require('flexarea');
 var ponymark = require('ponymark');
+var textService = require('../../../../services/text');
 
 module.exports = function () {
   var title = $('.ac-title');
@@ -15,16 +16,13 @@ module.exports = function () {
     ponymark({ buttons: text, input: text, preview: preview });
   });
   texts.find('.pmk-input').forEach(flexarea);
-  title.on('keypress paste', bindSlug);
-  slug.on('keypress', unbindSlug);
+  title.on('keypress keydown paste', bindSlug);
+  slug.on('keypress keydown', unbindSlug);
 
-  function bindSlug () {
-    if (boundSlug) {
-      slug.value(title.value());
-    }
-  }
+  function bindSlug () { setTimeout(boundSlug ? updateSlug : Function, 0); }
+  function unbindSlug () { boundSlug = false; }
 
-  function unbindSlug () {
-    boundSlug = false;
+  function updateSlug () {
+    slug.value(textService.slug(title.value()));
   }
 };
