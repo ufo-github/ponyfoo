@@ -70,7 +70,7 @@ function truncate (source, cap) {
 }
 
 function splitTags (text) {
-  return text.trim().split(rspaces);
+  return text.trim().toLowerCase().split(rspaces);
 }
 
 module.exports = {
