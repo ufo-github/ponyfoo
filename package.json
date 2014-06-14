@@ -1,6 +1,6 @@
 {
   "name": "ponyfoo",
-  "description": "Micro-blogging platform",
+  "description": "Blogging micro-engine for developers",
   "version": "0.5.0",
   "homepage": "https://github.com/bevacqua/ponyfoo",
   "authors": [
@@ -36,7 +36,7 @@
     "hint": "^1.0.2",
     "jade": "git+https://github.com/bevacqua/jade.git#patch-2",
     "lodash": "^2.4.1",
-    "moment": "^2.6.0",
+    "moment": "^2.7.0",
     "mongoose": "^3.8.9",
     "multer": "^0.1.0",
     "nconf": "^0.6.9",

@@ -1,8 +1,9 @@
 'use strict';
 
+var _ = require('lodash');
 var passport = require('passport');
-var unverifiedService = require('../../../service/unverified');
-var data = require('../../services/authentication/data');
+var unverifiedService = require('../services/unverified');
+var data = require('../services/authentication/data');
 var authenticationOptions = {
   failureRedirect: data.login,
   failureFlash: true // TODO no-flash
@@ -67,19 +68,33 @@ function logout (req, res) {
   res.redirect('/');
 }
 
-module.exports = {
-  requireAnonymous: requireAnonymous,
-
-  rememberReturnUrl: rememberReturnUrl,
-  redirect: redirect,
-
-  login: login,
-  local: local,
-
+var providers = {
   facebook: provider('facebook', { scope: 'email' }),
   github: provider('github'),
   google: provider('google'),
   linkedin: provider('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }),
+};
 
-  logout: logout
+function routing (app) {
+  app.get(data.logout, logout);
+  app.get(data.login, requireAnonymous);
+
+  app.post(data.login, requireAnonymous, login, redirect);
+  app.post(data.local, requireAnonymous, local, redirect);
+
+  _.keys(providers).forEach(setup);
+
+  function setup (name) {
+    var provider = providers[name];
+    var meta = data[name];
+    if (!meta.enabled) {
+      return;
+    }
+    app.get(meta.link, rememberReturnUrl, provider.auth);
+    app.get(meta.callback, provider.callback, redirect);
+  }
+}
+
+module.exports = {
+  routing: routing
 };

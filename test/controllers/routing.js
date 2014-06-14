@@ -9,6 +9,7 @@ test('routes should match expectation', function (t) {
   var app = {
     get: sinon.spy(),
     put: sinon.spy(),
+    post: sinon.spy(),
     use: sinon.spy()
   };
   var list = sinon.stub();
@@ -24,14 +25,11 @@ test('routes should match expectation', function (t) {
   routing(app);
 
   // assert
-  t.plan(9);
+  t.plan(6);
   t.ok(app.put.calledWith('/api/markdown/images', images));
   t.ok(app.get.calledWith('/api/articles', list));
   t.ok(app.get.calledWith('/'));
   t.ok(app.get.calledWith('/account/login'));
   t.ok(app.get.calledWith('/author/compose'));
   t.ok(app.use.calledWith(errors.handler));
-  t.equal(app.put.callCount, 1);
-  t.equal(app.get.callCount, 4);
-  t.equal(app.use.callCount, 1);
 });

@@ -1,9 +1,11 @@
 # Pony Foo [![Build Status][1]][2]
 
+> Blogging micro-engine for developers
+
 [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
 [2]: https://travis-ci.org/ponyfoo/ponyfoo
 
-Supported Browsers: IE 10+
+Supported Browsers: IE 10+, Chrome, Safari, Firefox
 
 TODO
 
