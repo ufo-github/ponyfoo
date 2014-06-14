@@ -6,7 +6,7 @@ var unverifiedService = require('../services/unverified');
 var data = require('../services/authentication/data');
 var authenticationOptions = {
   failureRedirect: data.login,
-  failureFlash: true // TODO no-flash
+  failureFlash: true
 };
 var login = passport.authenticate('local', authenticationOptions);
 
@@ -29,12 +29,17 @@ function register (req, res, next) {
       next(err); return;
     }
 
+// TODO
+// enable flash through taunus:
+// if xhr return the extra data,
+// if not then add that to the model the next time
+
     if (validation) {
       req.flash('error', validation);
     } else {
       req.flash('success', 'Activation instructions sent to your email!');
     }
-    return res.redirect(data.login);
+    res.redirect(data.login);
   }
 }
 
@@ -57,7 +62,7 @@ function redirect (req, res) {
 }
 
 function requireAnonymous (req, res, next) {
-  if (!!req.user) {
+  if (req.user) {
     redirect(req,res);
   }
   next();
