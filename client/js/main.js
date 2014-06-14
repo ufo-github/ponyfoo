@@ -7,8 +7,8 @@ var taunus = require('taunus');
 var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
 
-global.$ = $;
-global.jade = jade;
+global.$ = $; // merely for debugging convenience
+global.jade = jade; // let jade have it their way
 
 ponymark.configure({
   imageUploads: '/api/markdown/images'
