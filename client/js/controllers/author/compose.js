@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
+var raf = require('raf');
 var taunus = require('taunus');
 var flexarea = require('flexarea');
 var ponymark = require('ponymark');
@@ -21,9 +22,9 @@ module.exports = function () {
   });
   texts.find('.pmk-input').forEach(flexarea);
 
-  title.on('keypress keydown paste', bindTitle, { debounce: true });
+  tags.on('keypress keydown paste', raf.bind(null, updateTags));
+  title.on('keypress keydown paste', raf.bind(null, bindTitle));
   slug.on('keypress keydown', unbindSlug);
-  tags.on('keypress keydown paste', updateTags, { debounce: true });
 
   function bindTitle () {
     updatePreviewTitle();

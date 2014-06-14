@@ -55,22 +55,23 @@ function slug (text) {
     .toLowerCase();
 }
 
-function truncate (source, cap) {
-  var text = source.trim(), index;
-  if (text.length > cap) {
-    text = text.substr(0, cap);
-    index = text.lastIndexOf(' ');
+function truncate (text, cap) {
+  var i;
+  var result = text.trim();
+  if (result.length > cap) {
+    result = result.substr(0, cap);
+    i = result.lastIndexOf(' ');
 
-    if (index !== -1) { // truncate the last word, which might have been trimmed
-      text = text.substr(0, index);
+    if (i !== -1) { // truncate the last word, which may have been trimmed
+      result = result.substr(0, i);
     }
-    text += ' [...]';
+    result += ' [...]';
   }
-  return text;
+  return result;
 }
 
 function splitTags (text) {
-  return text.trim().toLowerCase().split(rspaces);
+  return text.trim().toLowerCase().split(rspaces).filter(function (i) { return i; });
 }
 
 module.exports = {
