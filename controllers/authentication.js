@@ -30,7 +30,7 @@ p
 }
 
 function routing (app) {
-  authenticationService.routing(app, register);
+  authenticationService.routing(data, app, register);
 }
 
 module.exports = {
