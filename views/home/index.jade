@@ -2,7 +2,7 @@ each article in articles
   article(itemscope, itemtype='http://schema.org/BlogPosting')
     meta(itemprop='dateCreated', content=article.dateText)
     meta(itemprop='keywords', content=article.tags.csv)
-    //- meta(itemprop='discussionUrl', content=config.server.authority(slug) + '{{permalink}}#comments')
+    //- meta(itemprop='discussionUrl', content=env('AUTHORITY') + '{{permalink}}#comments')
     //- meta(itemprop='interactionCount', content='{{commentCount}} UserComments')
 
     header
@@ -19,7 +19,7 @@ each article in articles
 
     footer
       //- section.comment-count
-      //-  a.highlighted-link.hint-before(href='{{commentsLink}}', data-hint='Visit the discussion section')='{{commentsText}}'
+      //-  a.hint-before(href='{{commentsLink}}', data-hint='Visit the discussion section')='{{commentsText}}'
 
       section
         each tag in article.tags.raw
