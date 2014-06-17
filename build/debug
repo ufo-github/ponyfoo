@@ -6,6 +6,8 @@ npm run clean
 npm test
 
 # compile
+cp -r client/img .bin/public/img
+cp client/{favicon.ico,robots.txt,humans.txt} .bin/public
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --watch &

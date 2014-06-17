@@ -1,0 +1,10 @@
+/* TEAM */
+    Chef: Nicolas Bevacqua
+    Contact: hello@bevacqua.io
+    Twitter: @nzgb
+    GitHub: bevacqua
+    From: Buenos Aires, Argentina
+
+/* TOOLS */
+    Ingredients: Sublime Text, zsh, git, JavaScript, love
+    Sauce: https://github.com/ponyfoo/ponyfoo
