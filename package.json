@@ -17,6 +17,7 @@
   "scripts": {
     "test": "sh build/test",
     "clean": "sh build/clean",
+    "copy": "sh build/copy",
     "build": "sh build/release",
     "start": "sh build/debug"
   },

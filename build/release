@@ -1,6 +1,7 @@
 #!/bin/bash
 
 npm run clean
+npm run copy
 npm test
 
 # compile

@@ -1,0 +1,7 @@
+<OpenSearchDescription xmlns='http://a9.com/-/spec/opensearch/1.1/' xmlns:moz='http://www.mozilla.org/2006/browser/search/'>
+  <ShortName>Pony Foo</ShortName>
+  <Description>Search Pony Foo: Ramblings of a degenerate coder</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image height='16' width='16' type='image/x-icon'>http://ponyfoo.com/favicon.ico</Image>
+  <Url type='text/html' method='get' template='http://ponyfoo.com/search/{searchTerms}' />
+</OpenSearchDescription>
