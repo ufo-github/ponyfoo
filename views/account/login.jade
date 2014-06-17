@@ -1,17 +1,22 @@
 h1.vw-title Sign In
 
+if flash.error
+  ul
+    each err in flash.error
+      li=err
+
 section.al-providers
-  a.ic-google(href='/authentication/login/google', title='Authenticate with Google') Authenticate with Google
-  a.ic-github(href='/authentication/login/github', title='Authenticate with GitHub') Authenticate with GitHub
-  a.ic-facebook(href='/authentication/login/facebook', title='Authenticate with Facebook') Authenticate with Facebook
-  a.ic-linkedin(href='/authentication/login/linkedin', title='Authenticate with LinkedIn') Authenticate with LinkedIn
+  a.ic-google(href='/account/login/google', title='Authenticate with Google') Authenticate with Google
+  a.ic-github(href='/account/login/github', title='Authenticate with GitHub') Authenticate with GitHub
+  a.ic-facebook(href='/account/login/facebook', title='Authenticate with Facebook') Authenticate with Facebook
+  a.ic-linkedin(href='/account/login/linkedin', title='Authenticate with LinkedIn') Authenticate with LinkedIn
 
 p.al-separator
  span='- or the '
  i old fashioned
  span=' way -'
 
-form.al-form(method='post', action='/authentication/login/local')
+form.al-form(method='post', action='/account/login/local')
   input(type='hidden', name='redirect', value=previousUrl)
 
   fieldset
