@@ -1,6 +1,10 @@
 'use strict';
 
 module.exports = function (req, res, next) {
-  res.viewModel = {};
+  res.viewModel = {
+    model: {
+      articles: []
+    }
+  };
   next();
 };
