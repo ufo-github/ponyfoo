@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp -r client/img .bin/public/img
+cp client/{favicon.ico,robots.txt,humans.txt,opensearch.xml} .bin/public
