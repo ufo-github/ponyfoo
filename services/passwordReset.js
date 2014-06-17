@@ -114,7 +114,7 @@ function emailToken (user, token, done) {
       expires: getExpiration(token).fromNow()
     }
   };
-  emailService.send('password_reset', model, emailService.logger);
+  emailService.send('password-reset', model, emailService.logger);
   done();
 }
 

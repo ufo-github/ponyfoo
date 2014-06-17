@@ -38,7 +38,7 @@ function sendEmail (user, token, done) {
       expires: getExpiration(token).fromNow()
     }
   };
-  emailService.send('verify_address', model, emailService.logger);
+  emailService.send('verify-address', model, emailService.logger);
   done();
 }
 

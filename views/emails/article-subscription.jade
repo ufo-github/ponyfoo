@@ -1,0 +1,27 @@
+h1 Pony Foo Subscription
+
+p
+  span='You are subscribing to '
+  a(href!=blog.authority) Pony Foo
+
+p
+  span='Follow '
+  a(href!=confirm.link) this link
+  span=' to confirm your email address subscription.'
+
+p(style='padding-top: 15px;')
+  a(href!=confirm.link)=confirm.link
+
+p
+  span='With this subscription you\'ll receive an email every time '
+  a(href!=blog.authority) Pony Foo
+  span=' is updated with a new article. We vow to '
+  i never send you spam
+  span . Promise!
+
+p(style='padding-top: 25px;')
+  span='Use the following link to '
+  a(href!=unsubscribe) unsubscribe
+  span=' at any time.'
+
+p No further action is required to ignore this request

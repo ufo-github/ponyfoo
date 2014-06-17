@@ -1,0 +1,17 @@
+div
+  a(href!=entry.permalink)
+    h1=entry.title
+
+p(style='background-color: #fff; padding: 8px; border-bottom: 2px solid #e92c6c;')
+  a(href!=commenter.profile)
+    img(src='cid:gravatar', alt='', style='vertical-align: middle;')
+    span=' ' + commenter.displayName
+
+  span=' added a comment!'
+
+div(style='padding: 20px; background-color: #efefef;')!=comment
+
+p
+  span='Reply using '
+  a(href!=thread.permalink) this link
+  span .

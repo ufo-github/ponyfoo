@@ -1,0 +1,15 @@
+p
+  span='An article has been published at '
+  a(href!=blog.authority)=blog.title
+  span='. You can feast your eyes on it by following this link: '
+  a(href!=entry.permalink)=entry.title
+
+h1(style='padding-top: 25px;')=entry.title
+
+p
+  span(style='padding-right:4px;') Tags:
+
+  each tag in entry.tags
+    a(href!=blog.authority + '/search/tagged/' + tag, style='padding-right: 4px;')=tag
+
+div(style='padding: 20px; background-color: #efefef;')=entry.brief
