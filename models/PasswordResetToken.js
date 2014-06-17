@@ -2,4 +2,4 @@
 
 var token = require('./lib/token');
 
-module.exports = token.model('passwordResetToken');
+module.exports = token.model('PasswordResetToken');

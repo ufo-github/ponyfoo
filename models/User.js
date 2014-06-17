@@ -58,4 +58,4 @@ function validatePassword (input, cb) {
   cryptoService.test.bind(this.password, input, cb);
 }
 
-module.exports = mongoose.model('user', schema);
+module.exports = mongoose.model('User', schema);

@@ -2,4 +2,4 @@
 
 var token = require('./lib/token');
 
-module.exports = token.model('userVerificationToken');
+module.exports = token.model('UserVerificationToken');

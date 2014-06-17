@@ -29,4 +29,4 @@ function encryptPassword (user, done) {
 }
 
 
-module.exports = mongoose.model('unverifiedUser', schema);
+module.exports = mongoose.model('UnverifiedUser', schema);
