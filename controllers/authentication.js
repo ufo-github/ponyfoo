@@ -15,11 +15,6 @@ function register (req, res, next) {
       next(err); return;
     }
 
-// TODO
-// enable flash through taunus:
-// if xhr return the extra data,
-// if not then add that to the model the next time
-
     if (validation) {
       req.flash('error', validation);
     } else {

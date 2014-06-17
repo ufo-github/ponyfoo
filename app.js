@@ -13,7 +13,7 @@ var port = env('PORT');
 var development = require('./lib/development');
 
 logging.configure();
-development.patchExpress(app);
+development.patch(app);
 
 app.set('view engine', 'jade');
 app.locals.settings['x-powered-by'] = false;
