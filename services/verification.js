@@ -21,7 +21,7 @@ function createToken (user, done) {
 }
 
 function getLink (token) {
-  return env('AUTHORITY') + '/user/verify-email/' + token._id;
+  return env('AUTHORITY') + '/account/verify-email/' + token._id;
 }
 
 function getExpiration (token) {
