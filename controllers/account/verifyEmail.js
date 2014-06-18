@@ -1,7 +1,7 @@
 'use strict';
 
 var contra = require('contra');
-var verificationService = require('../../services/verification'),
+var verificationService = require('../../services/verification');
 
 module.exports = function (req, res, next) {
   contra.waterfall([
