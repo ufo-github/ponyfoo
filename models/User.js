@@ -55,7 +55,7 @@ function encryptPassword (user, done) {
 }
 
 function validatePassword (input, cb) {
-  cryptoService.test.bind(this.password, input, cb);
+  cryptoService.test(this.password, input, cb);
 }
 
 module.exports = mongoose.model('User', schema);

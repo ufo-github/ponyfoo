@@ -1,8 +1,7 @@
 'use strict';
 
-var unverifiedService = require('../services/unverified');
-var authentication = require('../lib/authentication');
-var data = require('../lib/authentication/data');
+var unverifiedService = require('../../services/unverified');
+var data = require('../../lib/authentication/data');
 
 function register (req, res, next) {
   unverifiedService.register({
@@ -24,10 +23,4 @@ function register (req, res, next) {
   }
 }
 
-function routing (app) {
-  authentication.routing(app, register);
-}
-
-module.exports = {
-  routing: routing
-};
+module.exports = register;

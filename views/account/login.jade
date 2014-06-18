@@ -1,9 +1,6 @@
 h1.vw-title Sign In
 
-if flash.error
-  ul
-    each err in flash.error
-      li=err
+include /_flash
 
 section.al-providers
   a.ic-google(href='/account/login/google', title='Authenticate with Google') Authenticate with Google

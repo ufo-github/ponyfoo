@@ -14,7 +14,7 @@ var eunregistered = 'EUNREGISTERED';
 
 function createToken (user, done) {
   var token = new PasswordResetToken({
-    userId: user._id
+    targetId: user._id
   });
   token.save(function saved (err) {
     done(err, user, token);
@@ -95,7 +95,7 @@ function updatePassword (tokenId, password, done) {
       next(err);
     });
   }, function update (next) {
-    userService.setPassword(token.userId, password, next);
+    userService.setPassword(token.targetId, password, next);
   }], function updated (err) {
     if (err === eexpired) {
       done(null, false);

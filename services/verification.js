@@ -13,7 +13,7 @@ var ObjectId = mongoose.Types.ObjectId;
 
 function createToken (user, done) {
   var token = new UserVerificationToken({
-    unverifiedId: user._id
+    targetId: user._id
   });
   token.save(function saved (err) {
     done(err, token);
@@ -78,7 +78,7 @@ function verifyToken (tokenId, done) {
       }
     },
     function lookupUnverified (token, next) {
-      UnverifiedUser.findOne({ _id: token.unverifiedId }, function found (err, unverified) {
+      UnverifiedUser.findOne({ _id: token.targetId }, function found (err, unverified) {
         next(err, token, unverified);
       });
     },

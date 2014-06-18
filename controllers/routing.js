@@ -2,9 +2,10 @@
 
 var jade = require('jade/runtime');
 var taunus = require('taunus');
+var transports = require('transports');
 var routes = require('./routes');
-var authenticationController = require('./authentication');
 var verifyAccountEmail = require('./account/verifyEmail');
+var registerAccount = require('./account/register');
 var markdownImageUpload = require('./api/markdown/images');
 var articleList = require('./api/article/list');
 var errors = require('../lib/errors');
@@ -20,7 +21,7 @@ module.exports = function (app) {
   // app.get('/account/password-reset/:token([a-f0-9]{24})', passwordResetController.validateToken);
   // app.post('/account/reset-password/:token([a-f0-9]{24})', passwordResetController.resetPassword);
 
-  authenticationController.routing(app);
+  transports.routing(app, registerAccount);
 
   taunus.mount(app, routes);
   app.use(errors.handler);
