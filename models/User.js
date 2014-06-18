@@ -8,6 +8,7 @@ var schema = new mongoose.Schema({
   password: { type: String, require: true },
   bypassEncryption: { type: Boolean, 'default': true },
   created: { type: Date, require: true, 'default': Date.now },
+  author: { type: String },
   displayName: { type: String },
   facebookId: { type: String },
   githubId: { type: String },
