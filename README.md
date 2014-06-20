@@ -1,6 +1,6 @@
 # Pony Foo [![Build Status][1]][2]
 
-> Blogging micro-engine for developers
+> Open-source blogging platform
 
 [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
 [2]: https://travis-ci.org/ponyfoo/ponyfoo
