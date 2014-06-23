@@ -30,5 +30,14 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     meta(name='twitter:image:src', content=images.cover)
 
   body
+    header.ly-header
+      h1 Pony Foo
+      nav
+        ul
+          li
+            a(href='/account/login') Login
+          li
+            a(href='/account/logout') Logout
+
     main.ly-main(data-taunus=JSON.stringify(model))!=partial
     script(src='/js/all.js')
