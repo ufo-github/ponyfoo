@@ -9,11 +9,11 @@ each article in articles
 
     header
       h1
-        a(href=article.permalink, data-hint=article.tags.hint, itemprop='headline')=article.title
+        a(href=article.permalink, aria-label=article.tags.hint, itemprop='headline')=article.title
 
       //- include _social
 
-      span(data-hint='posted ' + article.dateText)='posted ' + article.timeAgo
+      span(aria-label='posted ' + article.dateText)='posted ' + article.timeAgo
 
     section(itemprop='articleBody')
       section(itemprop='about')=article.introductionHtml
@@ -21,8 +21,8 @@ each article in articles
 
     footer
       //- section.comment-count
-      //-  a.hint-before(href!=article.commentsLink, data-hint='Visit the discussion section')=article.commentsText
+      //-  a.hint-before(href!=article.commentsLink, aria-label='Visit the discussion section')=article.commentsText
 
       section
         each tag in article.tags.raw
-          a(href='/search/tagged/' + tag, data-hint='Find posts tagged "' + tag + '"')=tag
+          a(href='/search/tagged/' + tag, aria-label='Find posts tagged "' + tag + '"')=tag
