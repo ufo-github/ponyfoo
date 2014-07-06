@@ -1,7 +1,7 @@
 .ck-input
   position absolute
-  top -9999px
-  left -9999px
+  visibility hidden
+  pointer-events none
   opacity 0
 
 .ck-checkbox
@@ -13,24 +13,24 @@
   content '\2713'
   margin-right 5px
   padding 3px 5px 4px 5px
-  background-color strong
+  background-color c-strong
   border-radius 6px
-  border 1px solid grayish
-  border-top 2px solid light
-  border-left 2px solid light
+  border 1px solid c-grayish
+  border-top 2px solid c-light
+  border-left 2px solid c-light
   color transparent
   text-shadow none
 
 .ck-checkbox:hover:before
-  background-color strong_hover
-  color blue_hover
+  background-color c-strong-hover
+  color c-blue-hover
 
 .ck-input:checked ~ .ck-checkbox:before
   color #fff
-  text-shadow 1px 1px 1px moderate
+  text-shadow 1px 1px 1px c-moderate
 
 .ck-checkbox:hover:before,
 .ck-input:checked ~ .ck-checkbox:before
-  border 1px solid grayish
-  border-top 2px solid border
-  border-left 2px solid border
+  border 1px solid c-grayish
+  border-top 2px solid c-border
+  border-left 2px solid c-border

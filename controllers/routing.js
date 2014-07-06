@@ -8,13 +8,18 @@ var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var markdownImageUpload = require('./api/markdown/images');
 var articleList = require('./api/article/list');
+var articleInsert = require('./api/article/insert');
+var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 
 global.jade = jade; // let jade have it their way
 
 module.exports = function (app) {
   app.put('/api/markdown/images', markdownImageUpload);
+
   app.get('/api/articles', articleList);
+  app.put('/api/articles', authorOnly, articleInsert);
+
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 
   // app.post('/account/request-password-reset', passwordResetController.requestPasswordReset);
