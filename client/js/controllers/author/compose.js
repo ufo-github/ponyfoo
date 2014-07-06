@@ -20,8 +20,7 @@ module.exports = function () {
   var previewTitle = $('.ac-preview-title');
   var previewTags = $.findOne('.ac-preview-tags');
   var discardButton = $('.ac-discard');
-  var publishButton = $('.ac-publish');
-  var draftButton = $('.ac-draft');
+  var saveButton = $('.ac-save');
   var boundSlug = true;
 
   texts.forEach(function (text) {
@@ -33,8 +32,7 @@ module.exports = function () {
   title.on('keypress keydown paste', raf.bind(null, bindTitle));
   slug.on('keypress keydown', unbindSlug);
   discardButton.on('click', discard);
-  publishButton.on('click', publish);
-  draftButton.on('click', draft);
+  saveButton.on('click', save);
 
   function bindTitle () {
     updatePreviewTitle();
@@ -63,9 +61,10 @@ module.exports = function () {
     taunus.partial(previewTags, 'partials/tags', model);
   }
 
-  function getRequestBody (status) {
+  function getRequestBody () {
     var scheduled = schedule.value();
     var tags = textService.splitTags(tags.value());
+    var status = $('.ac-status:checked').value();
     var body = {
       title: title.value(),
       slug: slug.value(),
@@ -74,26 +73,15 @@ module.exports = function () {
       tags: tags,
       status: status
     };
-    if (status !== 'draft' && scheduled) {
+    if (scheduled) {
       body.publication = publication.value();
     }
     return body;
   }
 
-  function getPublicationBody () {
-    var scheduled = schedule.value();
-    if (scheduled) {
-      return getRequestBody('scheduled');
-    }
-    return getRequestBody('published');
-  }
-
-  function draft () {
-    send(getRequestBody('draft'));
-  }
-
-  function publish () {
-    send(getPublicationBody());
+  function save () {
+    var body = getRequestBody();
+    send(body);
   }
 
   function send (body) {

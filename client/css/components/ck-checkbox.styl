@@ -4,33 +4,37 @@
   pointer-events none
   opacity 0
 
-.ck-checkbox
+.ck-checkbox,
+.ck-radio
   display inline-block
   cursor pointer
 
-.ck-checkbox:before
+.ck-checkbox:before,
+.ck-radio:before
   display inline-block
-  content '\2713'
   margin-right 5px
-  padding 3px 5px 4px 5px
   background-color c-strong
-  border-radius 6px
   border 1px solid c-grayish
-  border-top 2px solid c-light
-  border-left 2px solid c-light
   color transparent
   text-shadow none
 
-.ck-checkbox:hover:before
+.ck-checkbox:before
+  padding 3px 5px 4px 5px
+  border-radius 6px
+  content '\2713'
+
+.ck-radio:before
+  padding 4px 8px
+  border-radius 600px
+  content '\25CF'
+
+.ck-checkbox:hover:before,
+.ck-radio:hover:before
   background-color c-strong-hover
   color c-blue-hover
 
-.ck-input:checked ~ .ck-checkbox:before
+.ck-input:checked ~ .ck-checkbox:before,
+.ck-input:checked ~ .ck-radio:before
   color #fff
   text-shadow 1px 1px 1px c-moderate
 
-.ck-checkbox:hover:before,
-.ck-input:checked ~ .ck-checkbox:before
-  border 1px solid c-grayish
-  border-top 2px solid c-border
-  border-left 2px solid c-border

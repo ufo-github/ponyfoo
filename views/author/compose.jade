@@ -9,10 +9,14 @@ section.ac-container
     h1.ac-preview-title
   section.ac-preview-tags
   section.ac-timing
+    input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish')
+    label.ck-radio(for='ac-publish-radio') Publish
+    input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft')
+    label.ck-radio(for='ac-draft-radio') Draft
     input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox')
     label.ck-checkbox(for='ac-schedule-checkbox') Schedule
     input.ac-publication(type='datetime')
   footer.ac-actions
     a.ac-discard(aria-label='The draft will be deleted') Discard Draft
     button.ac-draft(aria-label='You can access your drafts at any time') Save Draft
-    button.ac-publish(aria-label='Make the content immediately accessible!') Publish Article
+    button.ac-save(aria-label='Make the content immediately accessible!') Save
