@@ -5,6 +5,7 @@ var raf = require('raf');
 var taunus = require('taunus');
 var flexarea = require('flexarea');
 var ponymark = require('ponymark');
+var rome = require('rome');
 var textService = require('../../../../services/text');
 
 module.exports = function () {
@@ -27,7 +28,7 @@ module.exports = function () {
     ponymark({ buttons: text, input: text, preview: preview });
   });
   texts.find('.pmk-input').forEach(flexarea);
-
+  rome(publication[0], { appendTo: 'parent' });
   tags.on('keypress keydown paste', raf.bind(null, updateTags));
   title.on('keypress keydown paste', raf.bind(null, bindTitle));
   slug.on('keypress keydown', unbindSlug);
