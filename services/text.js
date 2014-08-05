@@ -47,7 +47,7 @@ function translate (text, translations) {
 
 function slug (text) {
   return slugify(text)
-    .replace(rinvalid, '') // remove invalid chars
+    .replace(rinvalid, '-') // remove invalid chars
     .replace(/\s+/g, '-') // collapse whitespace and replace by '-'
     .replace(/[-_]+/g, '-') // collapse dashes
     .replace(/^-|-$/g, '') // remove leading or trailing dashes

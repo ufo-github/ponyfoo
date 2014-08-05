@@ -8,13 +8,11 @@ npm test
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
-jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --obj '{"basedir":"views"}'
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --obj '{"basedir":"views"}' --watch &
-taunus -o
 taunus -o --watch &
 watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
 
 # start nodemon, wait for app.listen, run browser-sync
-nodemon app.js &
+node app.js &
 procfinder --wait --port $PORT
 browser-sync start --files ".bin/**/*" --proxy localhost:$PORT --no-open

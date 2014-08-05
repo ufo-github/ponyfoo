@@ -52,7 +52,7 @@
     "passport-local": "^1.0.0",
     "ponymark": "^1.1.7",
     "raf": "^2.0.1",
-    "rome": "^1.0.1",
+    "rome": "^1.0.2",
     "taunus": "^0.3.3",
     "transports": "^0.2.2",
     "ultramarked": "^0.8.0",

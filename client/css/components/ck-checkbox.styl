@@ -15,7 +15,7 @@
   margin-right 5px
   background-color c-strong
   border 1px solid c-grayish
-  color transparent
+  color lighten(c-strong, 20%)
   text-shadow none
 
 .ck-checkbox:before
@@ -30,8 +30,7 @@
 
 .ck-checkbox:hover:before,
 .ck-radio:hover:before
-  background-color c-strong-hover
-  color c-blue-hover
+  color lighten(c-strong, 30%)
 
 .ck-input:checked + .ck-checkbox:before,
 .ck-input:checked + .ck-radio:before
