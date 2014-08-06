@@ -12,7 +12,7 @@ jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --obj '{"ba
 taunus -o --watch &
 watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
 
-# start nodemon, wait for app.listen, run browser-sync
+# start node, wait for app.listen, run browser-sync
 node app.js &
 procfinder --wait --port $PORT
 browser-sync start --files ".bin/**/*" --proxy localhost:$PORT --no-open
