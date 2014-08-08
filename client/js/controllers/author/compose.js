@@ -34,6 +34,16 @@ module.exports = function () {
   slug.on('keypress keydown', unbindSlug);
   discardButton.on('click', discard);
   saveButton.on('click', save);
+  //asd.on('change', updateSaveButton);
+
+  function updateSaveButton () {
+    saveButton.text('Save Draft');
+    saveButton.attr('aria-label', 'You can access your drafts at any time');
+    saveButton.text('Publish');
+    saveButton.attr('aria-label', 'Make the content immediately accessible!');
+    saveButton.text('Schedule');
+    saveButton.attr('aria-label', 'Schedule this article for publication');
+  }
 
   function bindTitle () {
     updatePreviewTitle();
@@ -63,15 +73,15 @@ module.exports = function () {
   }
 
   function getRequestBody () {
+    var individualTags = textService.splitTags(tags.value());
     var scheduled = schedule.value();
-    var tags = textService.splitTags(tags.value());
     var status = $('.ac-status:checked').value();
     var body = {
       title: title.value(),
       slug: slug.value(),
       introduction: introduction.value(),
       body: body.value(),
-      tags: tags,
+      tags: individualTags,
       status: status
     };
     if (scheduled) {

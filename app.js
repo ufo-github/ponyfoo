@@ -22,10 +22,11 @@ db(function connected () {
   models();
   middleware(app);
   routing(app);
-  development(app); // only enabled in non-production environments
+  development.middleware(app);
   app.listen(port, listening);
 });
 
 function listening () {
   winston.info('app listening on port %s', port);
+  development.browserSync();
 }

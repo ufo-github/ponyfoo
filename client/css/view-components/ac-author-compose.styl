@@ -1,7 +1,3 @@
-.ac-container
-  padding 20px
-  width 900px
-
 .ac-title,
 .ac-slug,
 .ac-introduction,
@@ -19,5 +15,23 @@
   display none
 
 .ac-schedule:checked ~ .ac-publication
+  display block
+  margin-top 15px
+
+.ac-preview-title:empty:before
+  content 'Article Preview'
+
+.ac-container,
+.ac-timing
+  vertical-align top
   display inline-block
-  margin-left 5px
+
+.ac-container
+  width calc(100% - 224px)
+  margin-right 20px
+
+.ac-timing
+  width 200px
+
+.ac-timing-draft
+  margin-top 0
