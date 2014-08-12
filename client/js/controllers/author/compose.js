@@ -1,11 +1,12 @@
 'use strict';
 
 var $ = require('dominus');
+var moment = require('moment');
 var raf = require('raf');
 var taunus = require('taunus');
 var flexarea = require('flexarea');
 var ponymark = require('ponymark');
-var rome = require('rome');
+var rome = require('rome/src/rome.standalone');
 var textService = require('../../../../services/text');
 
 module.exports = function () {
@@ -22,27 +23,40 @@ module.exports = function () {
   var previewTags = $.findOne('.ac-preview-tags');
   var discardButton = $('.ac-discard');
   var saveButton = $('.ac-save');
+  var status = $('.ac-status');
   var boundSlug = true;
 
   texts.forEach(function (text) {
     ponymark({ buttons: text, input: text, preview: preview });
   });
   texts.find('.pmk-input').forEach(flexarea);
-  rome(publication[0], { appendTo: 'parent' });
+  rome(publication[0], {
+    appendTo: 'parent',
+    initialValue: moment().weekday(7)
+  });
   tags.on('keypress keydown paste', raf.bind(null, updateTags));
   title.on('keypress keydown paste', raf.bind(null, bindTitle));
   slug.on('keypress keydown', unbindSlug);
   discardButton.on('click', discard);
   saveButton.on('click', save);
-  //asd.on('change', updateSaveButton);
+  status.on('change', updateSaveButton);
+  schedule.on('change', updateSaveButton);
 
   function updateSaveButton () {
-    saveButton.text('Save Draft');
-    saveButton.attr('aria-label', 'You can access your drafts at any time');
-    saveButton.text('Publish');
-    saveButton.attr('aria-label', 'Make the content immediately accessible!');
-    saveButton.text('Schedule');
-    saveButton.attr('aria-label', 'Schedule this article for publication');
+    var scheduled = schedule.value();
+    if (scheduled) {
+      saveButton.text('Schedule');
+      saveButton.attr('aria-label', 'Schedule this article for publication');
+      return;
+    }
+    var selection = status.where(':checked').text();
+    if (selection === 'draft') {
+      saveButton.text('Save Draft');
+      saveButton.attr('aria-label', 'You can access your drafts at any time');
+    } else if (selection === 'publish') {
+      saveButton.text('Publish');
+      saveButton.attr('aria-label', 'Make the content immediately accessible!');
+    }
   }
 
   function bindTitle () {
