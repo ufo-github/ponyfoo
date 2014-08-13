@@ -33,6 +33,10 @@ var replacements = [
   [/f#/ig, 'fsharp']
 ];
 
+function truthy (value) {
+  return !!value;
+}
+
 function slugify (text) {
   var partial = translate(text, replacements);
   if (partial.search(accentCodePoints) === -1) {
@@ -73,7 +77,7 @@ function truncate (text, cap) {
 }
 
 function splitTags (text) {
-  return text.trim().toLowerCase().split(spaces).filter(function (i) { return i; });
+  return text.trim().toLowerCase().split(spaces).filter(truthy);
 }
 
 module.exports = {
