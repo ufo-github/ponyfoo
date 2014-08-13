@@ -11,7 +11,7 @@ stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --obj '{"basedir":"views"}' --watch &
 taunus -o # required
 taunus -o --watch &
-watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
+watchify client/js/main.js -o .bin/public/js/all.js --basedir client/js --debug --verbose &
 
 # start app
 nodemon app.js

@@ -11,6 +11,6 @@ stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 cleancss .bin/public/css/all.css -o .bin/public/css/all.css --s0
 jade views/**/* --out .bin --client --commonjs --no-debug --obj '{"basedir":"views"}'
 taunus -o
-browserify client/js/main.js -o .bin/public/js/all.js -t uglifyify
+browserify client/js/main.js -o .bin/public/js/all.js --basedir client/js -t uglifyify
 
 # revving
