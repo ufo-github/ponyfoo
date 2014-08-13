@@ -13,8 +13,6 @@ module.exports = function () {
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
-  var introduction = $('.ac-introduction');
-  var body = $('.ac-body');
   var tags = $('.ac-tags');
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
@@ -41,6 +39,9 @@ module.exports = function () {
   saveButton.on('click', save);
   status.on('change', updateSaveButton);
   schedule.on('change', updateSaveButton);
+
+  var intro = $('.ac-introduction .pmk-input');
+  var body = $('.ac-body .pmk-input');
 
   function updateSaveButton () {
     var scheduled = schedule.value();
@@ -86,31 +87,31 @@ module.exports = function () {
     taunus.partial(previewTags, 'partials/tags', model);
   }
 
-  function getRequestBody () {
+  function getRequestData () {
     var individualTags = textService.splitTags(tags.value());
     var scheduled = schedule.value();
     var state = status.where(':checked').value();
     var body = {
       title: title.value(),
       slug: slug.value(),
-      introduction: introduction.value(),
+      introduction: intro.value(),
       body: body.value(),
       tags: individualTags,
       status: state
     };
     if (scheduled) {
-      body.publication = publication.value();
+      data.publication = publication.value();
     }
-    return body;
+    return data;
   }
 
   function save () {
-    var body = getRequestBody();
-    send(body);
+    var data = getRequestData();
+    send(data);
   }
 
-  function send (body) {
-    console.log('I should put', body);
+  function send (data) {
+    console.log('I should put', data);
   }
 
   function discard () {
