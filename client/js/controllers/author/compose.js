@@ -49,11 +49,11 @@ module.exports = function () {
       saveButton.attr('aria-label', 'Schedule this article for publication');
       return;
     }
-    var selection = status.where(':checked').text();
-    if (selection === 'draft') {
+    var state = status.where(':checked').text();
+    if (state === 'draft') {
       saveButton.text('Save Draft');
       saveButton.attr('aria-label', 'You can access your drafts at any time');
-    } else if (selection === 'publish') {
+    } else if (state === 'publish') {
       saveButton.text('Publish');
       saveButton.attr('aria-label', 'Make the content immediately accessible!');
     }
@@ -89,14 +89,14 @@ module.exports = function () {
   function getRequestBody () {
     var individualTags = textService.splitTags(tags.value());
     var scheduled = schedule.value();
-    var status = $('.ac-status:checked').value();
+    var state = status.where(':checked').value();
     var body = {
       title: title.value(),
       slug: slug.value(),
       introduction: introduction.value(),
       body: body.value(),
       tags: individualTags,
-      status: status
+      status: state
     };
     if (scheduled) {
       body.publication = publication.value();
