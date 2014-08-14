@@ -49,7 +49,7 @@ module.exports = function () {
   intro = $('.ac-introduction .pmk-input');
   body = $('.ac-body .pmk-input');
 
-  deserialize(storage.get(key));
+  deserialize();
 
   publicationCal = rome(publication[0], {
     appendTo: 'parent',
@@ -103,32 +103,43 @@ module.exports = function () {
   }
 
   function typingTags () {
+    updatePreviewTags();
+    serializeSlowly();
+  }
+
+  function updatePreviewTags () {
     var individualTags = textService.splitTags(tags.value());
     var model = {
       tags: individualTags
     };
     taunus.partial(previewTags, 'partials/tags', model);
-    serializeSlowly();
+  }
+
+  function updatePreviewMarkdown () {
+    // TODO update markdown with ponymark
   }
 
   function serialize () { storage.set(key, getRequestData()); console.log('saved!'); }
-  function clear () { storage.set(key, null); }
+  function clear () { storage.set(key, {}); }
 
-  function deserialize (data) {
-    if (!data) {
-      return;
-    }
-    title.value(data.title);
-    slug.value(data.slug);
-    intro.value(data.introduction);
-    body.value(data.body);
-    tags.value(data.tags.join(' '));
-    statusRadio[data.status].value(true);
+  function deserialize () {
+    var data = storage.get(key) || {};
+
+    title.value(data.title || '');
+    slug.value(data.slug || '');
+    intro.value(data.introduction || '');
+    body.value(data.body || '');
+    tags.value(data.tags ? data.tags.join(' ') : '');
+    statusRadio[data.status || 'publish'].value(true);
 
     if ('publication' in data) {
       schedule.value(true);
       initialDate = moment(data.publication);
     }
+
+    updatePreviewTitle();
+    updatePreviewTags();
+    updatePreviewMarkdown();
   }
 
   function getRequestData () {
@@ -167,5 +178,6 @@ module.exports = function () {
   function discard () {
     console.log('I should discard the draft and redirect. Or just redirect if not stored in server');
     clear();
+    deserialize();
   }
 };
