@@ -1,5 +1,7 @@
 'use strict';
 
+var localStorage = global.localStorage;
+
 function get (key) {
   var data = localStorage.getItem(key);
   if (data) {
