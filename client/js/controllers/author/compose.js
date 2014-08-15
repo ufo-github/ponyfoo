@@ -29,6 +29,7 @@ module.exports = function () {
     draft: $('#ac-draft-radio'),
     publish: $('#ac-publish-radio')
   };
+  var ponies = [];
   var boundSlug = true;
   var intro;
   var body;
@@ -59,7 +60,8 @@ module.exports = function () {
   publicationCal.on('data', serializeSlowly);
 
   function convertToPonyEditor (text) {
-    ponymark({ buttons: text, input: text, preview: preview });
+    var pony = ponymark({ buttons: text, input: text, preview: preview });
+    ponies.push(pony);
     flexarea($(text).findOne('.pmk-input'));
   }
 
@@ -116,11 +118,13 @@ module.exports = function () {
   }
 
   function updatePreviewMarkdown () {
-    // TODO update markdown with ponymark
+    ponies.forEach(function refresh (pony) {
+      pony.refresh();
+    });
   }
 
-  function serialize () { storage.set(key, getRequestData()); console.log('saved!'); }
-  function clear () { storage.set(key, {}); }
+  function serialize () { storage.set(key, getRequestData()); }
+  function clear () { storage.remove(key); }
 
   function deserialize () {
     var data = storage.get(key) || {};
@@ -129,7 +133,7 @@ module.exports = function () {
     slug.value(data.slug || '');
     intro.value(data.introduction || '');
     body.value(data.body || '');
-    tags.value(data.tags ? data.tags.join(' ') : '');
+    tags.value((data.tags || []).join(' '));
     statusRadio[data.status || 'publish'].value(true);
 
     if ('publication' in data) {
@@ -171,6 +175,7 @@ module.exports = function () {
   }
 
   function send (data) {
+    // measly?(endpoint, { data: data });
     console.log('I should put', data);
     clear();
   }

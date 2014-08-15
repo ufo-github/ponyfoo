@@ -12,7 +12,12 @@ function set (key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+function remove (key) {
+  localStorage.removeItem(key);
+}
+
 module.exports = {
   get: get,
-  set: set
+  set: set,
+  remove: remove
 };
