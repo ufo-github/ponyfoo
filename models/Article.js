@@ -28,3 +28,4 @@ function computePermalink () {
 }
 
 module.exports = mongoose.model('Article', schema);
+module.exports.validStatuses = ['draft', 'scheduled', 'publish', 'published'];

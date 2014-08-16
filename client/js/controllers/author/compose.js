@@ -12,7 +12,7 @@ var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
 var key = 'author-unsaved-draft';
 
-module.exports = function () {
+module.exports = function (viewModel) {
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
@@ -175,9 +175,10 @@ module.exports = function () {
   }
 
   function send (data) {
-    // measly?(endpoint, { data: data });
-    console.log('I should put', data);
-    clear();
+    var req = viewModel.measly.put('/api/articles', { json: data });
+
+    // req.on('data', );
+    // TODO clear();
   }
 
   function discard () {

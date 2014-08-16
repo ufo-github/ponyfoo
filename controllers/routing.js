@@ -7,8 +7,8 @@ var routes = require('./routes');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var markdownImageUpload = require('./api/markdown/images');
-var articleList = require('./api/article/list');
-var articleInsert = require('./api/article/insert');
+var articleList = require('./api/articles/list');
+var articleInsert = require('./api/articles/insert');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 
