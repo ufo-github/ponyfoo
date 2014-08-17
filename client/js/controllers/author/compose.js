@@ -176,7 +176,6 @@ module.exports = function (viewModel) {
 
   function send (data) {
     var req = viewModel.measly.put('/api/articles', { json: data });
-
     // req.on('data', );
     // TODO clear();
   }

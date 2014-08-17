@@ -22,3 +22,8 @@ taunus.on('render', function (container, viewModel) {
   viewModel.measly = measly.layer({ context: container });
 });
 taunus.mount(main, wiring);
+
+measly.on(400, function (err, body) {
+  console.log(body.messages);
+  console.log(this.context);
+});
