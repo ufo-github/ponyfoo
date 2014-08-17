@@ -39,7 +39,7 @@
     "jade": "git+https://github.com/bevacqua/jade.git#patch-2",
     "lodash": "^2.4.1",
     "lodash.throttle": "^2.4.1",
-    "measly": "^1.2.6",
+    "measly": "^1.2.7",
     "moment": "^2.7.0",
     "mongoose": "^3.8.12",
     "multer": "^0.1.0",
