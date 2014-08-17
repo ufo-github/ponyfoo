@@ -149,13 +149,8 @@ module.exports = function (viewModel) {
   function getRequestData () {
     var individualTags = textService.splitTags(tags.value());
     var scheduled = schedule.value();
-<<<<<<< HEAD
     var state = status.where(':checked').value();
-    var body = {
-=======
-    var status = $('.ac-status:checked').text();
     var data = {
->>>>>>> persist drafts locally to prevent data loss
       title: title.value(),
       slug: slug.value(),
       introduction: intro.value(),
