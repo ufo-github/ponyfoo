@@ -24,6 +24,15 @@ taunus.on('render', function (container, viewModel) {
 taunus.mount(main, wiring);
 
 measly.on(400, function (err, body) {
-  console.log(body.messages);
-  console.log(this.context);
+  throw new Error('TODO: implement this API on dominus!');
+  var container = 'vw-validation';
+  var context = $(this.context);
+  var messages = $('<div/>').addClass(container);
+
+  body.messages.map(dom).appendTo(messages);
+  context.find(container).remove().prepend(messages);
+
+  function dom (message) {
+    return $('<p/>').text(message).addClass('vw-validation-message');
+  }
 });
