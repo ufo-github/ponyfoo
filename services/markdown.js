@@ -8,4 +8,6 @@ ultramarked.setOptions({
   ultrasanitize: true
 });
 
-module.exports = {};
+module.exports = function (text) {
+  return ultramarked(text);
+};

@@ -128,13 +128,16 @@ module.exports = function (viewModel) {
 
   function deserialize () {
     var data = storage.get(key) || {};
+    var titleText = data.title || '';
+    var slugText = data.slug || '';
 
-    title.value(data.title || '');
-    slug.value(data.slug || '');
+    title.value(titleText);
+    slug.value(slugText);
     intro.value(data.introduction || '');
     body.value(data.body || '');
     tags.value((data.tags || []).join(' '));
     statusRadio[data.status || 'publish'].value(true);
+    boundSlug = textService.slug(titleText) === slugText;
 
     if ('publication' in data) {
       schedule.value(true);
@@ -149,7 +152,7 @@ module.exports = function (viewModel) {
   function getRequestData () {
     var individualTags = textService.splitTags(tags.value());
     var scheduled = schedule.value();
-    var state = status.where(':checked').value();
+    var state = status.where(':checked').text();
     var data = {
       title: title.value(),
       slug: slug.value(),

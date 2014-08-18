@@ -1,5 +1,6 @@
 'use strict';
 
+var contra = require('contra');
 var util = require('util');
 var moment = require('moment');
 var validator = require('validator');
@@ -9,30 +10,61 @@ var statuses = Article.validStatuses;
 
 module.exports = function (req, res, next) {
   var body = req.body;
-  if (!body || typeof body !== 'object') {
-    res.json(400, { messages: ['Invalid request'] }); return;
-  }
   var validation = [];
-  var model = {
-    publication: getPublicationDate(body).zone(0).format(),
-    status: getStatus(),
-    title: getTitle(),
-    slug: getSlug(),
-    introduction: getContent('introduction'),
-    body: getContent('body'),
-    tags: getTags()
-  };
-  if (validation.length) {
-    res.json(400, { messages: validation }); return;
-  }
-  res.json(200, model);
+  var model = validateRequest(req, res, next);
 
-  // TODO other fields?
-  // TODO validate slug
-  // TODO compute HTML
-  // TODO insert
-  // TODO prev, next
-  // TODO compute related
+  if (validation.length) {
+    invalid(); return;
+  }
+
+  contra.waterfall([
+    function lookupSlug (next) {
+      Article.findOne({ slug: model.slug }, next);
+    },
+    function validateSlug (existing, next) {
+      if (existing) {
+        validation.push('The slug you provided is already in use. Please change it.');
+      }
+      next(validation.length);
+    },
+    function statusRouter (next) {
+      if (model.status === 'publish') {
+        publish(next);
+      } else {
+        new Article(model).save(next);
+      }
+    }
+  ], respond);
+
+  function respond (err) {
+    if (err) {
+      if (validation.length) {
+        invalid();
+      } else {
+        next(err);
+      }
+    }
+    res.json(200, model);
+  }
+
+  function invalid () {
+    res.json(400, { messages: validation });
+  }
+
+  function validateRequest () {
+    if (!body || typeof body !== 'object') {
+      validation.push('Invalid request.'); return;
+    }
+    return {
+      publication: getPublicationDate(body).zone(0).format(),
+      status: getStatus(),
+      title: getTitle(),
+      slug: getSlug(),
+      introduction: getContent('introduction'),
+      body: getContent('body'),
+      tags: getTags()
+    };
+  }
 
   function getPublicationDate () {
     var when;
@@ -79,9 +111,38 @@ module.exports = function (req, res, next) {
   function getTags () {
     var input = Array.isArray(body.tags) ? body.tags.join(' ') : validator.toString(body.tags);
     var tags = textService.splitTags(input);
-    if (tags.length > 0) {
-      return tags;
+    if (tags.length > 6) {
+      validation.push('You can choose 6 categories at most.'); return;
     }
-    validation.push('The article must be tagged under at least one category.');
+    if (tags.length === 0) {
+      validation.push('The article must be tagged under at least one category.'); return;
+    }
+    return tags;
+  }
+
+  function publish (done) {
+    contra.waterfall([
+      function lookupPrevious (next) {
+        Article.findOne({ status: 'published' }).sort('-publication').exec(next);
+      },
+      function insertArticle (prev, next) {
+        if (prev) {
+          model.prev = prev._id;
+        }
+        model.publication = Date.now;
+        model.status = 'published';
+
+        new Article(model).save(function inserted (err) {
+          next(err, prev, this);
+        });
+      },
+      function updatePrevious (prev, current, next) {
+        if (!prev) {
+          next(); return;
+        }
+        prev.next = current._id;
+        prev.save(next);
+      }
+    ], done);
   }
 };

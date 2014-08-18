@@ -5,7 +5,7 @@ var jade = require('jade/runtime');
 var ponymark = require('ponymark');
 var taunus = require('taunus');
 var moment = require('moment');
-var measly = require('measly');
+var setupMeasly = require('./setupMeasly');
 
 global.$ = $; // merely for debugging convenience
 global.jade = jade; // let jade have it their way
@@ -18,21 +18,6 @@ ponymark.configure({
   imageUploads: '/api/markdown/images'
 });
 
-taunus.on('render', function (container, viewModel) {
-  viewModel.measly = measly.layer({ context: container });
-});
+setupMeasly();
+
 taunus.mount(main, wiring);
-
-measly.on(400, function (err, body) {
-  throw new Error('TODO: implement this API on dominus!');
-  var container = 'vw-validation';
-  var context = $(this.context);
-  var messages = $('<div/>').addClass(container);
-
-  body.messages.map(dom).appendTo(messages);
-  context.find(container).remove().prepend(messages);
-
-  function dom (message) {
-    return $('<p/>').text(message).addClass('vw-validation-message');
-  }
-});
