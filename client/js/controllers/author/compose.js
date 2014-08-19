@@ -44,8 +44,8 @@ module.exports = function (viewModel) {
   slug.on('keypress keydown paste', typingSlug);
   discardButton.on('click', discard);
   saveButton.on('click', save);
-  status.on('change', changePublication);
-  schedule.on('change', changePublication);
+  status.on('change', updatePublication);
+  schedule.on('change', updatePublication);
 
   intro = $('.ac-introduction .pmk-input');
   body = $('.ac-body .pmk-input');
@@ -65,7 +65,7 @@ module.exports = function (viewModel) {
     flexarea($(text).findOne('.pmk-input'));
   }
 
-  function changePublication () {
+  function updatePublication () {
     var scheduled = schedule.value();
     if (scheduled) {
       saveButton.text('Schedule');
@@ -147,6 +147,7 @@ module.exports = function (viewModel) {
     updatePreviewTitle();
     updatePreviewTags();
     updatePreviewMarkdown();
+    updatePublication();
   }
 
   function getRequestData () {

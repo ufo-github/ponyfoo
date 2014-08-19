@@ -43,8 +43,9 @@ module.exports = function (req, res, next) {
       } else {
         next(err);
       }
+    } else {
+      res.json(200, model);
     }
-    res.json(200, model);
   }
 
   function invalid () {
@@ -62,7 +63,9 @@ module.exports = function (req, res, next) {
       slug: getSlug(),
       introduction: getContent('introduction'),
       body: getContent('body'),
-      tags: getTags()
+      tags: getTags(),
+      comments: [],
+      related: []
     };
   }
 
@@ -88,7 +91,7 @@ module.exports = function (req, res, next) {
     if (validator.isLength(body.title, 6)) {
       return validator.toString(body.title);
     }
-    validation.push('The title must be at least 6 characters long.');
+    validation.push('The title must be at least 2 characters long.');
   }
 
   function getSlug () {
@@ -97,15 +100,17 @@ module.exports = function (req, res, next) {
     if (validator.isLength(slug, 6)) {
       return slug;
     }
-    validation.push('The article slug must be at least 6 characters long.');
+    validation.push('The article slug must be at least 2 characters long.');
   }
 
   function getContent (prop) {
+    var length = 3;
     var input = validator.toString(body[prop]);
-    if (validator.isLength(input, 30)) {
+    if (validator.isLength(input, length)) {
       return input;
     }
-    validation.push(util.format('The article %s must be at least 30 characters long.', prop));
+    var message = util.format('The article %s must be at least %s characters long.', prop, length);
+    validation.push(message);
   }
 
   function getTags () {

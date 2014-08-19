@@ -58,19 +58,26 @@ function computeFor (article, done) {
 }
 
 function rebuild (done) {
-  Article.find({}, function (err, articles) {
+  Article.find({ status: 'published' }, function (err, articles) {
     if (err) {
       done(err); return;
     }
-    articles.forEach(include);
+    articles.forEach(function (article) {
+      include(article, true);
+    });
+    serialize();
+    done();
   });
 }
 
-function include (article) {
+function include (article, quiet) {
   winston.debug('Natural index processing "%s"...', article.title);
   _.remove(index.documents, { __key: article._id });
   index.addDocument(article, article._id);
-  process.nextTick(serialize);
+
+  if (quiet !== false) {
+    process.nextTick(serialize);
+  }
 }
 
 function serialize () {

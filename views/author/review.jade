@@ -1,0 +1,21 @@
+h1.vw-title Article Review
+section.ar-container
+  table
+    thead
+      tr
+        th Title
+        th Tags
+        th Status
+        th Actions
+    tbody
+      each article in articles
+        tr
+          td
+            a(href=article.permalink)=article.title
+          td
+            each tag in article.tags
+              a.tg-tag(href='/articles/tagged/' + tag)=tag
+          td(title=article.status, class='ar-status ar-status-' + article.status)
+          td
+            a.ar-edit(href='/author/compose/' + article.slug) Edit
+            a.ar-remove Remove
