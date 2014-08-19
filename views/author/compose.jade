@@ -21,9 +21,10 @@ aside.ac-timing
       label.ck-checkbox(for='ac-schedule-checkbox') Schedule
       input.ac-publication(value=article.publication)
   else
-    p='This article was published ' + require('moment')(new Date(article.publication)).fromNow()
-    p You can update it or remove it entirely. Unpublishing articles might affect SEO
+    p='Published ' + require('moment')(+article.publication).fromNow()
 
 footer.ac-actions
+  if editing
+    a.ac-cancel(aria-label='Back to Author Review', href='/author/review') Cancel
   a.ac-discard(aria-label='Your draft will be permanently deleted') Discard Draft
   button.ac-save(aria-label='Make the content immediately accessible!') Publish

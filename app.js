@@ -17,7 +17,7 @@ development.patch(app);
 
 app.set('view engine', 'jade');
 app.set('view options', {
- globals: ['moment']
+  globals: ['moment']
 });
 app.locals.settings['x-powered-by'] = false;
 

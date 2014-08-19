@@ -14,8 +14,7 @@ section.ar-container
           td
             a(href=article.permalink, aria-label='Navigate to full article')=article.title
           td
-            each tag in article.tags
-              a.tg-tag(href='/articles/tagged/' + tag, aria-label='Find articles tagged "' + tag + '"')=tag
+            include ../partials/tags
           td(class='ar-status ar-status-' + article.status)=article.status[0].toUpperCase() + article.status.substr(1)
           td
             a.ic-icon.ic-edit(href='/author/compose/' + article.slug, aria-label='Edit')

@@ -14,7 +14,7 @@ var key = 'author-unsaved-draft';
 
 module.exports = function (viewModel, route) {
   var article = viewModel.article;
-  var editing = 'slug' in route.params;
+  var editing = viewModel.editing;
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
@@ -37,7 +37,7 @@ module.exports = function (viewModel, route) {
   var body;
   var publicationCal;
   var initialDate;
-  var serializeSlowly = throttle(serialize, 200);
+  var serializeSlowly = editing ? Function() : throttle(serialize, 200);
 
   texts.forEach(convertToPonyEditor);
   texts.on('keypress keydown paste', serializeSlowly);
@@ -52,7 +52,7 @@ module.exports = function (viewModel, route) {
   intro = $('.ac-introduction .pmk-input');
   body = $('.ac-body .pmk-input');
 
-  deserialize(editing === false ? null : viewModel.article);
+  deserialize(editing ? viewModel.article : null);
 
   if (article.status !== 'published') {
     publicationCal = rome(publication[0], {
@@ -126,7 +126,7 @@ module.exports = function (viewModel, route) {
   function updatePreviewTags () {
     var individualTags = textService.splitTags(tags.value());
     var model = {
-      tags: individualTags
+      article: { tags: individualTags }
     };
     taunus.partial(previewTags, 'partials/tags', model);
   }

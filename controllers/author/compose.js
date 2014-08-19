@@ -4,15 +4,18 @@ var contra = require('contra');
 var Article = require('../../models/Article');
 
 module.exports = function (req, res, next) {
+  var slug = req.params.slug;
+
   res.viewModel = {
     model: {
       title: 'Article Composer',
-      article: { tags: [] }
+      article: { tags: [] },
+      editing: !!slug
     }
   };
 
-  if (req.params.slug) {
-    Article.findOne({ slug: req.params.slug }, populate);
+  if (slug) {
+    Article.findOne({ slug: slug }, populate);
   } else {
     next();
   }

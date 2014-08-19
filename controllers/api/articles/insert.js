@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
       next(validation.length);
     },
     function statusUpdate (next) {
-      if (model.status === 'publish') {
+      if (model.status === 'publish' && model.publication === void 0) {
         publish(model, next);
       } else {
         next();

@@ -1,6 +1,8 @@
 include /_flash
 
 each article in articles
+  - when = require('moment')(+article.publication);
+
   article(itemscope, itemtype='http://schema.org/BlogPosting')
     meta(itemprop='dateCreated', content=article.dateText)
     meta(itemprop='keywords', content=article.tags.csv)
@@ -9,20 +11,19 @@ each article in articles
 
     header
       h1
-        a(href=article.permalink, aria-label=article.tags.hint, itemprop='headline')=article.title
+        a(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
 
       //- include _social
 
-      span(aria-label='posted ' + article.dateText)='posted ' + article.timeAgo
+      span(aria-label='Published ' + when.format('dddd Do, MMMM YYYY [at] HH:mm'))='Published ' + when.fromNow()
+//- total reading time
 
     section(itemprop='articleBody')
-      section(itemprop='about')=article.introductionHtml
-      section=article.bodyHtml
+      section(itemprop='about')!=article.introductionHtml
+      section!=article.bodyHtml
 
     footer
       //- section.comment-count
       //-  a.hint-before(href!=article.commentsLink, aria-label='Visit the discussion section')=article.commentsText
 
-      section
-        each tag in article.tags.raw
-          a(href='/search/tagged/' + tag, aria-label='Find posts tagged "' + tag + '"')=tag
+      include ../partials/tags

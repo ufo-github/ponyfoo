@@ -28,7 +28,7 @@ schema.virtual('permalink').get(computePermalink);
 schema.pre('save', recompute);
 
 function computePermalink () {
-  return '/' + this.slug;
+  return '/articles/' + this.slug;
 }
 
 function articleSignature (a) {
@@ -42,9 +42,9 @@ function recompute (next) {
   this.sign = articleSignature(this);
   this.introductionHtml = markdownService.compile(this.introduction);
   this.bodyHtml = markdownService.compile(this.body);
-  this.updated = Date.now;
+  this.updated = Date.now();
 
-  if (oldSign !== this.sign) {
+  if (oldSign !== this.sign && this.status === 'published') {
     relationshipService.computeFor(this, next);
   } else {
     next();

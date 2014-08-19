@@ -12,7 +12,7 @@ function publish (model, done) {
       if (prev) {
         model.prev = prev._id;
       }
-      model.publication = Date.now;
+      model.publication = Date.now();
       model.status = 'published';
 
       next(null, prev);
