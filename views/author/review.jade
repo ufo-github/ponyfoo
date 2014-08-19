@@ -1,6 +1,6 @@
 h1.vw-title Article Review
 section.ar-container
-  table
+  table.ar-table
     thead
       tr
         th Title
@@ -11,11 +11,11 @@ section.ar-container
       each article in articles
         tr
           td
-            a(href=article.permalink)=article.title
+            a(href=article.permalink, aria-label='Navigate to full article')=article.title
           td
             each tag in article.tags
-              a.tg-tag(href='/articles/tagged/' + tag)=tag
+              a.tg-tag(href='/articles/tagged/' + tag, aria-label='Find articles tagged "' + tag + '"')=tag
           td(title=article.status, class='ar-status ar-status-' + article.status)
           td
-            a.ar-edit(href='/author/compose/' + article.slug) Edit
-            a.ar-remove Remove
+            a.ic-icon.ic-edit(href='/author/compose/' + article.slug, aria-label='Edit')
+            a.ic-icon.ic-remove(aria-label='Remove')
