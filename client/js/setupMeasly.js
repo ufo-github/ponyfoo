@@ -9,18 +9,21 @@ function setupMeasly () {
     viewModel.measly = measly.layer({ context: container });
   });
 
-  measly.on(400, function (err, body) {
-    var context = $(this.context);
-    var messages = $('<ul>').addClass('vw-validation');
+  measly.on(400, render);
+  measly.on(404, render);
+}
 
-    $(body.messages.map(dom)).appendTo(messages);
+function render (err, body) {
+  var context = $(this.context);
+  var messages = $('<ul>').addClass('vw-validation');
 
-    context.find('.vw-validation').remove();
-    context.find('.vw-title').after(messages);
-    messages[0].scrollIntoView();
+  $(body.messages.map(dom)).appendTo(messages);
 
-    global.scrollBy(0, -100);
-  });
+  context.find('.vw-validation').remove();
+  context.find('.vw-title').after(messages);
+  messages[0].scrollIntoView();
+
+  global.scrollBy(0, -100);
 }
 
 function dom (message) {

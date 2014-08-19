@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
-  publication: { type: Date, 'default': Date.now },
+  publication: { type: String, require: false },
   status: { type: String, require: true },
   title: String,
   slug: { type: String, index: { unique: true }, require: true },
@@ -52,4 +52,4 @@ function recompute (next) {
 }
 
 module.exports = mongoose.model('Article', schema);
-module.exports.validStatuses = ['draft', 'scheduled', 'publish', 'published'];
+module.exports.validStatuses = ['draft', 'publish', 'published'];

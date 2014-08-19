@@ -11,6 +11,6 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.json({ articles: articles });
+    res.json(200, { articles: articles });
   }
 };

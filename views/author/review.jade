@@ -18,4 +18,4 @@ section.ar-container
           td(title=article.status, class='ar-status ar-status-' + article.status)
           td
             a.ic-icon.ic-edit(href='/author/compose/' + article.slug, aria-label='Edit')
-            a.ic-icon.ic-remove(aria-label='Remove')
+            a.ic-icon.ic-remove(aria-label='Remove', data-id=article._id.toString())

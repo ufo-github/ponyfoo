@@ -57,7 +57,7 @@ module.exports = function (req, res, next) {
       validation.push('Invalid request.'); return;
     }
     return {
-      publication: getPublicationDate(body).zone(0).format(),
+      publication: getPublicationDate(body),
       status: getStatus(),
       title: getTitle(),
       slug: getSlug(),
@@ -70,14 +70,11 @@ module.exports = function (req, res, next) {
   }
 
   function getPublicationDate () {
-    var when;
-    if (body.publication) {
-      when = moment(body.publication);
-      if (when.isValid()) {
-        return when;
-      }
+    var when = moment(body.publication);
+    if (!when.isValid()) {
+      validation.push('The publication date is invalid.');
     }
-    return moment();
+    return when.zone(0).format();
   }
 
   function getStatus () {

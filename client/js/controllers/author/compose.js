@@ -12,7 +12,8 @@ var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
 var key = 'author-unsaved-draft';
 
-module.exports = function (viewModel) {
+module.exports = function (viewModel, route) {
+  var editing = 'slug' in route.params;
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
@@ -50,22 +51,35 @@ module.exports = function (viewModel) {
   intro = $('.ac-introduction .pmk-input');
   body = $('.ac-body .pmk-input');
 
-  deserialize();
+  if (editing === false) {
+    deserialize();
+  }
 
-  publicationCal = rome(publication[0], {
-    appendTo: 'parent',
-    initialValue: initialDate || moment().weekday(7),
-    required: true
-  });
-  publicationCal.on('data', serializeSlowly);
+  if (viewModel.article.status !== 'published') {
+    publicationCal = rome(publication[0], {
+      appendTo: 'parent',
+      initialValue: initialDate || moment().weekday(7),
+      required: true
+    });
+    publicationCal.on('data', serializeSlowly);
+  }
 
-  function convertToPonyEditor (text) {
-    var pony = ponymark({ buttons: text, input: text, preview: preview });
+  function convertToPonyEditor (elem) {
+    var container = $(elem);
+    var pony = ponymark({ buttons: elem, input: elem, preview: preview });
     ponies.push(pony);
-    flexarea($(text).findOne('.pmk-input'));
+    container.value(container.attr('data-text'));
+    flexarea(container.findOne('.pmk-input'));
   }
 
   function updatePublication () {
+    if (editing && article.status === 'published') {
+      saveButton.text('Save Changes');
+      saveButton.attr('aria-label', 'Make your modifications immediately accessible!');
+      discardButton.text('Delete Article');
+      discardButton.attr('aria-label', 'Permanently delete this article');
+      return;
+    }
     var scheduled = schedule.value();
     if (scheduled) {
       saveButton.text('Schedule');
@@ -152,7 +166,6 @@ module.exports = function (viewModel) {
 
   function getRequestData () {
     var individualTags = textService.splitTags(tags.value());
-    var scheduled = schedule.value();
     var state = status.where(':checked').text();
     var data = {
       title: title.value(),
@@ -162,6 +175,7 @@ module.exports = function (viewModel) {
       tags: individualTags,
       status: state
     };
+    var scheduled = schedule.value();
     if (scheduled) {
       data.publication = publicationCal.getMoment().zone(0).format();
     }
@@ -174,14 +188,30 @@ module.exports = function (viewModel) {
   }
 
   function send (data) {
-    var req = viewModel.measly.put('/api/articles', { json: data });
-    // req.on('data', );
-    // TODO clear();
+    var req;
+
+    if (editing) {
+      req = viewModel.measly.patch('/api/articles/' + route.params.slug, { json: data });
+    } else {
+      req = viewModel.measly.put('/api/articles', { json: data });
+    }
+    req.on('data', done);
+
+    function done () {
+      clear();
+    }
   }
 
   function discard () {
-    console.log('I should discard the draft and redirect. Or just redirect if not stored in server');
-    clear();
-    deserialize();
+    if (editing) {
+      viewModel.measly.delete('/api/articles/' + route.params.slug).on('data', done);
+    } else {
+      done();
+    }
+
+    function done () {
+      clear();
+      deserialize();
+    }
   }
 };
