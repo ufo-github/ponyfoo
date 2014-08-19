@@ -1,7 +1,8 @@
 .DS_Store
+Thumbs.db
 .env
 .bin
-Thumbs.db
 node_modules
 npm-debug.log
 temp
+generated
