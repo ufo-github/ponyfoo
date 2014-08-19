@@ -3,6 +3,7 @@
 var util = require('util');
 
 module.exports = [{
+  src: 'client/img/icons/**/*.{png,gif,jpg}',
   destImage: '.bin/public/img/icons.png',
   destCSS: 'client/css/generated/icons.css',
   imgPath: '/img/icons.png',

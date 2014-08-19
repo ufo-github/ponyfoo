@@ -75,6 +75,7 @@
     "serve-favicon": "^2.0.1",
     "serve-static": "^1.1.0",
     "sinon": "^1.9.1",
+    "spritesmith-cli": "^1.0.1",
     "stylus": "^0.45.0",
     "tape": "^2.12.3",
     "uglifyify": "^2.1.1",
