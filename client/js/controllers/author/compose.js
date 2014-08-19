@@ -150,12 +150,16 @@ module.exports = function (viewModel, route) {
     intro.value(data.introduction || '');
     body.value(data.body || '');
     tags.value((data.tags || []).join(' '));
-    statusRadio[data.status || 'publish'].value(true);
+
     boundSlug = textService.slug(titleText) === slugText;
 
-    if ('publication' in data) {
-      schedule.value(true);
-      initialDate = moment(new Date(data.publication));
+    if (data.status !== 'published') {
+      statusRadio[data.status || 'publish'].value(true);
+
+      if ('publication' in data) {
+        schedule.value(true);
+        initialDate = moment(new Date(data.publication));
+      }
     }
 
     updatePreviewTitle();
@@ -195,23 +199,19 @@ module.exports = function (viewModel, route) {
     } else {
       req = viewModel.measly.put('/api/articles', { json: data });
     }
-    req.on('data', done);
-
-    function done () {
-      clear();
-    }
+    req.on('data', leave);
   }
 
   function discard () {
     if (editing) {
-      viewModel.measly.delete('/api/articles/' + route.params.slug).on('data', done);
+      viewModel.measly.delete('/api/articles/' + route.params.slug).on('data', leave);
     } else {
-      done();
+      leave();
     }
+  }
 
-    function done () {
-      clear();
-      deserialize();
-    }
+  function leave () {
+    clear();
+    taunus.navigate('/author/review');
   }
 };

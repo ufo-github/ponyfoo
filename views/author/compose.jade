@@ -21,7 +21,7 @@ aside.ac-timing
       label.ck-checkbox(for='ac-schedule-checkbox') Schedule
       input.ac-publication(value=article.publication)
   else
-    p='This article was published ' + moment(article.publication).fromNow()
+    p='This article was published ' + require('moment')(new Date(article.publication)).fromNow()
     p You can update it or remove it entirely. Unpublishing articles might affect SEO
 
 footer.ac-actions

@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
     respond.invalid(res, validation); return;
   }
   var model = validation.model;
-console.log(req.params.slug, model);
+
   contra.waterfall([
     function statusUpdate (next) {
       if (model.status === 'publish') {
