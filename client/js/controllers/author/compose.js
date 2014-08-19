@@ -13,6 +13,7 @@ var storage = require('../../lib/storage');
 var key = 'author-unsaved-draft';
 
 module.exports = function (viewModel, route) {
+  var article = viewModel.article;
   var editing = 'slug' in route.params;
   var title = $('.ac-title');
   var slug = $('.ac-slug');
@@ -51,11 +52,9 @@ module.exports = function (viewModel, route) {
   intro = $('.ac-introduction .pmk-input');
   body = $('.ac-body .pmk-input');
 
-  if (editing === false) {
-    deserialize();
-  }
+  deserialize(editing === false ? null : viewModel.article);
 
-  if (viewModel.article.status !== 'published') {
+  if (article.status !== 'published') {
     publicationCal = rome(publication[0], {
       appendTo: 'parent',
       initialValue: initialDate || moment().weekday(7),
@@ -67,9 +66,10 @@ module.exports = function (viewModel, route) {
   function convertToPonyEditor (elem) {
     var container = $(elem);
     var pony = ponymark({ buttons: elem, input: elem, preview: preview });
+    var editor = container.find('.pmk-input');
+    editor.value(container.attr('data-markdown'));
+    flexarea(editor[0]);
     ponies.push(pony);
-    container.value(container.attr('data-text'));
-    flexarea(container.findOne('.pmk-input'));
   }
 
   function updatePublication () {
@@ -140,8 +140,8 @@ module.exports = function (viewModel, route) {
   function serialize () { storage.set(key, getRequestData()); }
   function clear () { storage.remove(key); }
 
-  function deserialize () {
-    var data = storage.get(key) || {};
+  function deserialize (source) {
+    var data = source || storage.get(key) || {};
     var titleText = data.title || '';
     var slugText = data.slug || '';
 
@@ -155,7 +155,7 @@ module.exports = function (viewModel, route) {
 
     if ('publication' in data) {
       schedule.value(true);
-      initialDate = moment(data.publication);
+      initialDate = moment(new Date(data.publication));
     }
 
     updatePreviewTitle();

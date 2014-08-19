@@ -8,8 +8,8 @@ module.exports = function (viewModel) {
   container.on('click', '.ic-remove', remove);
 
   function remove (e) {
-    var id = $(e.target).attr('data-id');
+    var slug = $(e.target).attr('data-slug');
 
-    viewModel.measly.delete('/api/articles/' + id);
+    viewModel.measly.delete('/api/articles/' + slug);
   }
 };

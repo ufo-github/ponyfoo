@@ -4,7 +4,7 @@ var contra = require('contra');
 var Article = require('../../../models/Article');
 
 module.exports = function (req, res, next) {
-  var query = { _id: req.params.id };
+  var query = { slug: req.params.slug };
 
   contra.waterfall([
     function lookupArticle (next) {

@@ -1,5 +1,6 @@
 h1.vw-title Article Review
 section.ar-container
+  a(href='/author/compose') Compose
   table.ar-table
     thead
       tr
@@ -15,7 +16,7 @@ section.ar-container
           td
             each tag in article.tags
               a.tg-tag(href='/articles/tagged/' + tag, aria-label='Find articles tagged "' + tag + '"')=tag
-          td(title=article.status, class='ar-status ar-status-' + article.status)
+          td(class='ar-status ar-status-' + article.status)=article.status[0].toUpperCase() + article.status.substr(1)
           td
             a.ic-icon.ic-edit(href='/author/compose/' + article.slug, aria-label='Edit')
-            a.ic-icon.ic-remove(aria-label='Remove', data-id=article._id.toString())
+            a.ic-icon.ic-remove(aria-label='Remove', data-slug=article.slug)

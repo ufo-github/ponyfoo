@@ -9,6 +9,7 @@ var registerAccount = require('./account/register');
 var markdownImageUpload = require('./api/markdown/images');
 var articleList = require('./api/articles/list');
 var articleInsert = require('./api/articles/insert');
+var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
@@ -20,7 +21,8 @@ module.exports = function (app) {
 
   app.get('/api/articles', articleList);
   app.put('/api/articles', authorOnly, articleInsert);
-  app.delete('/api/articles/:id', articleRemove);
+  app.patch('/api/articles/:slug', authorOnly, articleUpdate);
+  app.delete('/api/articles/:slug', authorOnly, articleRemove);
 
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 
