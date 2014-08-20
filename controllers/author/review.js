@@ -21,7 +21,9 @@ module.exports = function (req, res, next) {
   }
 };
 
-function hydrate (article) {
+function hydrate (document) {
+  var article = document.toJSON();
+
   article._ = {};
 
   var when = moment(article.publication);

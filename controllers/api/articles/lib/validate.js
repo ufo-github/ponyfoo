@@ -40,7 +40,7 @@ function validate (model) {
       if (when.isBefore(moment())) {
         validation.push('Pick a publication date in the future. I don\'t have superpowers.');
       }
-      return when.zone(0).format();
+      return when.toDate();
     }
   }
 
@@ -52,19 +52,23 @@ function validate (model) {
   }
 
   function getTitle () {
-    if (validator.isLength(model.title, 6)) {
+    var length = 3;
+    if (validator.isLength(model.title, length)) {
       return validator.toString(model.title);
     }
-    validation.push('The title must be at least 2 characters long.');
+    var message = util.format('The title must be at least %s characters long.', length);
+    validation.push(message);
   }
 
   function getSlug () {
+    var length = 3;
     var input = validator.toString(model.slug);
     var slug = textService.slug(input);
-    if (validator.isLength(slug, 6)) {
+    if (validator.isLength(slug, length)) {
       return slug;
     }
-    validation.push('The article slug must be at least 2 characters long.');
+    var message = util.format('The article slug must be at least %s characters long.', length);
+    validation.push(message);
   }
 
   function getContent (prop) {

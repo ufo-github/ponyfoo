@@ -21,7 +21,7 @@ aside.ac-timing
       label.ck-checkbox(for='ac-schedule-checkbox') Schedule
       input.ac-publication(value=article.publication)
   else
-    p='Published ' + require('moment')(+article.publication).fromNow()
+    p='Published ' + require('moment')(article.publication).fromNow()
 
 footer.ac-actions
   if editing

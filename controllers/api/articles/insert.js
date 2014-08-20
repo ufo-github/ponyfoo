@@ -29,14 +29,16 @@ module.exports = function (req, res, next) {
       next(validation.length);
     },
     function statusUpdate (next) {
-      if (model.status === 'publish' && model.publication === void 0) {
+      if (model.status === 'publish' && !model.publication) {
         publish(model, next);
       } else {
         next();
       }
     },
     function insert (next) {
-      model.save(next);
+      model.save(function saved (err) {
+        next(err);
+      });
     }
   ], respond(res, validation, next));
 };

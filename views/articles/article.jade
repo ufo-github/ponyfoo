@@ -1,0 +1,30 @@
+- longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
+- when = require('moment')(article.publication)
+- whenText = when.format(longDate)
+
+article(itemscope, itemtype='http://schema.org/BlogPosting')
+  meta(itemprop='dateCreated', content=whenText)
+  meta(itemprop='keywords', content=article.tags.csv)
+  //- meta(itemprop='discussionUrl', content=env('AUTHORITY') + article.permalink + '#comments')
+  //- meta(itemprop='interactionCount', content=article.commentCount + ' UserComments')
+
+  header
+    h1
+      a(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
+
+    //- include _social
+
+    span(aria-label='Published ' + whenText)='Published ' + when.fromNow()
+
+  //- total reading time
+  //- just the intro in this case
+
+  section(itemprop='articleBody')
+    section(itemprop='about')!=article.introductionHtml
+    section!=article.bodyHtml
+
+  footer
+    //- section.comment-count
+    //-  a.hint-before(href!=article.commentsLink, aria-label='Visit the discussion section')=article.commentsText
+
+    include ../partials/tags

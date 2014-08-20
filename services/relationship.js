@@ -17,19 +17,16 @@ function computeFor (article, done) {
   var related = [];
   var max = 6;
 
-  if (state.deserializing) {
-    state.once('deserialized', compute);
-  } else {
-    compute();
-  }
+  rebuild(compute);
 
   function compute () {
-    index.tfidfs(terms, function (key, weight) {
-      if (key === article._id) {
+    index.tfidfs(terms, function (i, weight) {
+      var doc = index.documents[i];
+      if (doc._id === article._id) {
         return;
       }
       related.push({
-        key: key,
+        doc: doc,
         weight: weight
       });
     });
@@ -45,80 +42,44 @@ function computeFor (article, done) {
   }
 
   function expand (item, next) {
-    Article.findOne({ _id: item.key }, next);
+    Article.findOne({ _id: item.doc._id }, next);
   }
 
-  function computed (err, related) {
+  function computed (err) {
     if (err) {
       done(err); return;
     }
-    article.related = related;
+    article.related = related.map(id);
+    winston.debug('Natural relationship computed. %s match(es) found.', related.length);
     done();
   }
 }
 
+function id (item) {
+  return item.doc._id;
+}
+
 function rebuild (done) {
+  var start = moment();
+  winston.debug('Natural index rebuilding...');
+  index = new natural.TfIdf();
   Article.find({ status: 'published' }, function (err, articles) {
     if (err) {
       done(err); return;
     }
-    articles.forEach(function (article) {
-      include(article, true);
-    });
-    serialize();
+    articles.forEach(include);
+    var end = moment().subtract(start).format('mm:ss.SSS');
+    winston.debug('Natural index rebuilt in %s', end);
     done();
   });
 }
 
-function include (article, quiet) {
+function include (article) {
   winston.debug('Natural index processing "%s"...', article.title);
-  _.remove(index.documents, { __key: article._id });
-  index.addDocument(article, article._id);
-
-  if (quiet !== false) {
-    process.nextTick(serialize);
-  }
+  _.remove(index.documents, { _id: article._id });
+  index.addDocument(article);
 }
-
-function serialize () {
-  var json = JSON.stringify(index);
-  fs.writeFile(store, json, { encoding: 'utf8' });
-}
-
-function deserialize () {
-  var start = moment();
-
-  state.deserializing = true;
-  winston.debug('Natural index processing...');
-  fs.readFile(store, { encoding: 'utf8' }, initialize);
-
-  function initialize (err, data) {
-    var serialized = err ? null : JSON.parse(data);
-
-    index = new natural.TfIdf(serialized);
-
-    if (index.documents.length === 0) {
-      winston.debug('Natural index rebuilding...');
-      rebuild(deserialized);
-    } else {
-      deserialized();
-    }
-  }
-
-  function deserialized (err) {
-    if (err) {
-      winston.info('Natural index deserialization error\n%s', err); return;
-    }
-    var end = moment().subtract(start).format('mm:ss.SSS');
-    winston.debug('Natural index deserialization took %s', end);
-    state.emit('deserialized');
-    state.deserializing = false;
-  }
-}
-
-deserialize();
 
 module.exports = {
-  computeFor: computeFor,
-  include: include
+  computeFor: computeFor
 };

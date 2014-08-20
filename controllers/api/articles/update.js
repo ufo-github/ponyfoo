@@ -16,17 +16,7 @@ module.exports = function (req, res, next) {
 
   contra.waterfall([
     function statusUpdate (next) {
-
-
-
-
-// TODO: model.publication issues?
-// unlikely, issue probably in natural index processor
-
-
-
-
-      if (model.status === 'publish' && model.publication === void 0) {
+      if (model.status === 'publish' && !model.publication) {
         publish(model, next);
       } else {
         next();

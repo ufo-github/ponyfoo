@@ -11,7 +11,9 @@ function get (key) {
 }
 
 function set (key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  setTimeout(function setter () { // no reason to block the thread
+    localStorage.setItem(key, JSON.stringify(value));
+  }, 0);
 }
 
 function remove (key) {

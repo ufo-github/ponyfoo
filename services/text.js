@@ -76,8 +76,15 @@ function truncate (text, cap) {
   return result;
 }
 
+function unique (results, item) {
+  if (results.indexOf(item) === -1) {
+    results.push(item);
+  }
+  return results;
+}
+
 function splitTags (text) {
-  return text.trim().toLowerCase().split(spaces).filter(truthy);
+  return text.trim().toLowerCase().split(spaces).filter(truthy).reduce(unique, []);
 }
 
 module.exports = {

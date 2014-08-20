@@ -8,13 +8,35 @@ module.exports = function (req, res, next) {
 
   contra.waterfall([
     function lookupArticle (next) {
-      Article.findOne(query, next);
+      Article.findOne(query).populate('prev next').exec(next);
     },
-    function handle (article, next) {
+    function found (article, next) {
       if (!article) {
         res.json(404, { messages: ['Article not found'] }); return;
       }
-      article.remove(next);
+      contra.concurrent([
+        function (next) {
+          article.remove(next);
+        },
+        function (next) {
+          if (!article.prev) {
+            next(); return;
+          }
+          article.prev.next = article.next;
+          article.prev.save(function saved (err) {
+            next(err);
+          });
+        },
+        function (next) {
+          if (!article.next) {
+            next(); return;
+          }
+          article.next.prev = article.prev;
+          article.next.save(function saved (err) {
+            next(err);
+          });
+        }
+      ], next);
     }
   ], handle);
 

@@ -17,6 +17,7 @@ function noop () {}
 module.exports = function (viewModel, route) {
   var article = viewModel.article;
   var editing = viewModel.editing;
+  var published = editing && article.status === 'published';
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
@@ -38,7 +39,7 @@ module.exports = function (viewModel, route) {
   var intro;
   var body;
   var publicationCal;
-  var initialDate;
+  var initialDate = moment().weekday(7);
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
 
   texts.forEach(convertToPonyEditor);
@@ -54,15 +55,26 @@ module.exports = function (viewModel, route) {
   intro = $('.ac-introduction .pmk-input');
   body = $('.ac-body .pmk-input');
 
-  deserialize(editing ? viewModel.article : null);
+  if (published) {
+    deserialize(article);
+  } else {
+    initializeCalendar();
+  }
 
-  if (article.status !== 'published') {
+  function initializeCalendar () {
     publicationCal = rome(publication[0], {
       appendTo: 'parent',
-      initialValue: initialDate || moment().weekday(7),
       required: true
     });
-    publicationCal.on('data', serializeSlowly);
+    publicationCal.on('data', serializeSlowly).on('ready', function () {
+      if (editing) {
+        deserialize(article);
+      } else {
+        deserialize();
+        publicationCal.setValue(initialDate);
+        publicationCal.emitValues();
+      }
+    });
   }
 
   function convertToPonyEditor (elem) {
@@ -77,7 +89,7 @@ module.exports = function (viewModel, route) {
   function updatePublication () {
     serializeSlowly();
 
-    if (editing && article.status === 'published') {
+    if (published) {
       saveButton.text('Save Changes');
       saveButton.attr('aria-label', 'Make your modifications immediately accessible!');
       discardButton.text('Delete Article');
@@ -185,7 +197,7 @@ module.exports = function (viewModel, route) {
       status: state
     };
     var scheduled = schedule.value();
-    if (scheduled) {
+    if (scheduled && !published) {
       data.publication = publicationCal.getMoment().zone(0).format();
     }
     return data;

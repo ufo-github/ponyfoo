@@ -6,7 +6,7 @@ var glob = require('glob');
 
 function load () {
   var modules = glob.sync('*.js', { cwd: __dirname });
-  var index = modules.indexOf('index.js');
+  var index = modules.indexOf(path.basename(__filename));
   modules.splice(index, 1);
   return modules.map(unwrap);
 }

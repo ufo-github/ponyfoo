@@ -22,7 +22,9 @@ function publish (model, done) {
         next(); return;
       }
       prev.next = model._id;
-      prev.save(next);
+      prev.save(function saved (err) {
+        next(err);
+      });
     }
   ], done);
 }
