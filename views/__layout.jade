@@ -31,14 +31,16 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
   body
     header.ly-header
-      h1 Pony Foo
-      nav
+      h1.ly-title
+        a.ly-title-anchor(href='/', aria-label='Go to home') Pony Foo
+      h2.ly-legend Ramblings of a degenerate coder
+      nav.ly-navigation
         ul
-          li
+          li.ly-navigation-item
             a(href='/account/login') Login
-          li
+          li.ly-navigation-item
             a(href='/account/logout') Logout
-          li
+          li.ly-navigation-item
             a(href='/author/review') Review
 
     main.ly-main(data-taunus=JSON.stringify(model))!=partial

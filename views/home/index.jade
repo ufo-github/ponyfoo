@@ -1,7 +1,8 @@
 include /_flash
 
 each article in articles
-  - when = require('moment')(+article.publication);
+  - when = require('moment')(+article.publication)
+  - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
 
   article(itemscope, itemtype='http://schema.org/BlogPosting')
     meta(itemprop='dateCreated', content=article.dateText)
@@ -15,7 +16,7 @@ each article in articles
 
       //- include _social
 
-      span(aria-label='Published ' + when.format('dddd Do, MMMM YYYY [at] HH:mm'))='Published ' + when.fromNow()
+      span(aria-label='Published ' + when.format(longDate))='Published ' + when.fromNow()
 //- total reading time
 
     section(itemprop='articleBody')

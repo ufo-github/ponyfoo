@@ -12,6 +12,8 @@ var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
 var key = 'author-unsaved-draft';
 
+function noop () {}
+
 module.exports = function (viewModel, route) {
   var article = viewModel.article;
   var editing = viewModel.editing;
@@ -37,7 +39,7 @@ module.exports = function (viewModel, route) {
   var body;
   var publicationCal;
   var initialDate;
-  var serializeSlowly = editing ? Function() : throttle(serialize, 200);
+  var serializeSlowly = editing ? noop : throttle(serialize, 200);
 
   texts.forEach(convertToPonyEditor);
   texts.on('keypress keydown paste', serializeSlowly);
@@ -73,11 +75,19 @@ module.exports = function (viewModel, route) {
   }
 
   function updatePublication () {
+    serializeSlowly();
+
     if (editing && article.status === 'published') {
       saveButton.text('Save Changes');
       saveButton.attr('aria-label', 'Make your modifications immediately accessible!');
       discardButton.text('Delete Article');
       discardButton.attr('aria-label', 'Permanently delete this article');
+      return;
+    }
+    var state = status.where(':checked').text();
+    if (state === 'draft') {
+      saveButton.text('Save Draft');
+      saveButton.attr('aria-label', 'You can access your drafts at any time');
       return;
     }
     var scheduled = schedule.value();
@@ -86,15 +96,10 @@ module.exports = function (viewModel, route) {
       saveButton.attr('aria-label', 'Schedule this article for publication');
       return;
     }
-    var state = status.where(':checked').text();
-    if (state === 'draft') {
-      saveButton.text('Save Draft');
-      saveButton.attr('aria-label', 'You can access your drafts at any time');
-    } else if (state === 'publish') {
+    if (state === 'publish') {
       saveButton.text('Publish');
       saveButton.attr('aria-label', 'Make the content immediately accessible!');
     }
-    serializeSlowly();
   }
 
   function typingTitle () {
