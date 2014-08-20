@@ -10,6 +10,6 @@ p
   span(style='padding-right:4px;') Tags:
 
   each tag in entry.tags
-    a(href!=blog.authority + '/search/tagged/' + tag, style='padding-right: 4px;')=tag
+    a(href!=blog.authority + '/articles/tagged/' + tag, style='padding-right: 4px;')=tag
 
 div(style='padding: 20px; background-color: #efefef;')=entry.brief
