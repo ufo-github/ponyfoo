@@ -21,7 +21,12 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
 
   section(itemprop='articleBody')
     section(itemprop='about')!=article.introductionHtml
-    section!=article.bodyHtml
+
+    if full
+      section!=article.bodyHtml
+    else
+      section
+        a(href=article.permalink) Read the full article
 
   footer
     //- section.comment-count

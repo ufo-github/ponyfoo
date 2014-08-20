@@ -19,7 +19,8 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         title: article.title,
-        article: article
+        article: article,
+        full: true
       }
     };
     next();
