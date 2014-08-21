@@ -7,10 +7,7 @@ var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
 
 function similar (article, done) {
-  fulltext.insert(indexable(article));
-  var terms = fulltext.listTerms(article._id);
-  // TODO article._id isn't set?.. figure out some other way.
-  console.log(terms);
+  var terms = fulltext.terms(indexable(article));
   query(terms, done);
 }
 
