@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
     status: 'published',
     slug: req.params.slug
   };
-  Article.findOne(query).lean().exec(handle);
+  Article.findOne(query).populate('prev next related').exec(handle);
 
   function handle (err, article) {
     if (err) {
