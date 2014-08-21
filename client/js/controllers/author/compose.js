@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var throttle = require('lodash.throttle');
 var moment = require('moment');
+var estimate = require('estimate');
 var raf = require('raf');
 var taunus = require('taunus');
 var flexarea = require('flexarea');
@@ -27,6 +28,7 @@ module.exports = function (viewModel, route) {
   var preview = $.findOne('.ac-preview');
   var previewTitle = $('.ac-preview-title');
   var previewTags = $.findOne('.ac-preview-tags');
+  var previewRead = $('.ac-preview-read');
   var discardButton = $('.ac-discard');
   var saveButton = $('.ac-save');
   var status = $('.ac-status');
@@ -43,7 +45,7 @@ module.exports = function (viewModel, route) {
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
 
   texts.forEach(convertToPonyEditor);
-  texts.on('keypress keydown paste', serializeSlowly);
+  texts.on('keypress keydown paste', typingText);
   tags.on('keypress keydown paste', raf.bind(null, typingTags));
   title.on('keypress keydown paste', raf.bind(null, typingTitle));
   slug.on('keypress keydown paste', typingSlug);
@@ -112,6 +114,12 @@ module.exports = function (viewModel, route) {
       saveButton.text('Publish');
       saveButton.attr('aria-label', 'Make the content immediately accessible!');
     }
+  }
+
+  function typingText () {
+    console.log(estimate.element(preview));
+    // TODO show on view
+    serializeSlowly();
   }
 
   function typingTitle () {

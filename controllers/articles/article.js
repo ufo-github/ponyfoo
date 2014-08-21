@@ -1,28 +1,16 @@
 'use strict';
 
 var Article = require('../../models/Article');
+var listOrSingle = require('./lib/listOrSingle');
 
 module.exports = function (req, res, next) {
+  var handle = listOrSingle(res, next);
   var query = {
     status: 'published',
     slug: req.params.slug
   };
-  Article.findOne(query).populate('prev next related').exec(handle);
 
-  function handle (err, article) {
-    if (err) {
-      next(err); return;
-    }
-    if (!article) {
-      res.json(404, { messages: ['Article not found'] }); return;
-    }
-    res.viewModel = {
-      model: {
-        title: article.title,
-        article: article,
-        full: true
-      }
-    };
-    next();
-  }
+  res.viewModel = { model: { title: 'Pony Foo' } };
+
+  Article.find(query).populate('prev next related').exec(handle);
 };

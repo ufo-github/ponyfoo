@@ -29,7 +29,7 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
   footer
     //- section.comment-count
     //-  a.hint-before(href!=article.commentsLink, aria-label='Visit the discussion section')=article.commentsText
-    if full
+    if full && article.related.length
       section.at-related
         p Read also...
         ul

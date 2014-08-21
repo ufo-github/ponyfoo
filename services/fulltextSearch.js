@@ -37,13 +37,13 @@ function factory () {
 
     results.sort(diff);
 
-    var fmt = 'Natural relationship computed. %s match(es) found in %s';
+    var fmt = 'Natural index computed. %s match(es) found in %s';
     var end = moment().subtract(start).format('mm:ss.SSS');
     winston.debug(fmt, results.length, end);
     done(null, _.pluck(results, 'item'));
 
     function diff (a, b) {
-      return a.weight - b.weight;
+      return b.weight - a.weight;
     }
   }
 

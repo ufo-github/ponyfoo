@@ -5,11 +5,19 @@ function factory (res, next) {
     if (err) {
       next(err); return;
     }
+    var model = res.viewModel.model;
     var single = articles.length === 1;
     var key = single ? 'article' : 'articles';
-    res.viewModel.model.action = 'articles/' + key;
-    res.viewModel.model.full = single;
-    res.viewModel.model[key] = single ? articles[0] : articles;
+
+    model.action = 'articles/' + key;
+
+    if (single) {
+      model.full = true;
+      model.title = articles[0].title;
+      model[key] = articles[0];
+    } else {
+      model[key] = articles;
+    }
     next();
   };
 }

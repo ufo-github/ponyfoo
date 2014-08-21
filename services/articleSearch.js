@@ -11,8 +11,16 @@ var emitter = contra.emitter();
 function similar (article, done) {
   rebuildOnce(function built () {
     var terms = fulltext.terms(indexable(article));
-    query(terms, done);
+    query(terms, filtered);
   });
+
+  function filtered (err, articles) {
+    done(err, articles ? articles.filter(strangers) : articles);
+  }
+
+  function strangers (a) { // makes no sense to suggest a sibling
+    return !a._id.equals(article.prev) && !a._id.equals(article.next);
+  }
 }
 
 function query (terms, done) {
@@ -22,8 +30,7 @@ function query (terms, done) {
         fulltext.compute(terms, next);
       },
       function expand (matches, next) {
-        var query = { _id: { $in: matches } };
-        Article.find(query, next);
+        Article.find({ _id: { $in: matches } }, next);
       }
     ], done);
   });

@@ -12,10 +12,10 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-
 - consistent treatment across different actions (unroll .permalinks, populate, etc)
 - verify links work on both ajax and first load
 - use estimate
+- views that respond with json e.g 404, should prob use a taunus method?
 - prettify css
 - add search input box
 - construct sitemap.xml
