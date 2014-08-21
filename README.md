@@ -11,3 +11,14 @@ TODO
 
   - flash intro page
   - flash intro DAY!
+
+
+- consistent treatment across different actions (unroll .permalinks, populate, etc)
+- use estimate
+- prettify css
+- add search input box
+- construct sitemap.xml
+- latest posts sidebar
+- revisit authentication
+- comments
+- redirects for old site compat
