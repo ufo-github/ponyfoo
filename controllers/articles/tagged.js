@@ -16,16 +16,16 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
+    var article = articles.length === 1 ? articles[0] : false;
     var lastTag = tags.pop();
     var suffix = lastTag ? util.format('" and "%s', lastTag) : '';
     var tagNames = tags.join('", "') + suffix;
-    res.viewModel = {
-      model: {
-        action: 'articles/list',
-        title: util.format('Articles tagged "%s"', tagNames),
-        articles: articles
-      }
+    var model = {
+      action: article ? 'articles/article' : 'articles/list',
+      title: util.format('Articles tagged "%s"', tagNames)
     };
+    model[data] = article || articles;
+    res.viewModel = { model: model };
     next();
   }
 };

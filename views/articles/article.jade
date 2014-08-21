@@ -10,7 +10,7 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
 
   header
     h1
-      a(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
+      a(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
 
     //- include _social
 
@@ -26,7 +26,7 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
       section!=article.bodyHtml
     else
       section
-        a(href=article.permalink) Read the full article
+        a(href!=article.permalink) Read the full article
 
   footer
     //- section.comment-count
