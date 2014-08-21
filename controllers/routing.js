@@ -13,6 +13,7 @@ var articleRemove = require('./api/articles/remove');
 var articleRecompute = require('./api/articles/recompute');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
+var redirects = require('./redirects');
 
 module.exports = function (app) {
   app.put('/api/markdown/images', markdownImageUpload);
@@ -32,5 +33,6 @@ module.exports = function (app) {
   transports.routing(app, registerAccount);
 
   taunus.mount(app, routes);
+  redirects.setup(app);
   app.use(errors.handler);
 };

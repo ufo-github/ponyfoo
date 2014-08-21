@@ -12,12 +12,11 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-- add search input box
 - prettify css
 - use estimate
 - construct sitemap.xml
 - latest posts sidebar
-- redirects for old site compat
-- revisit authentication
 - views that respond with json e.g 404, should prob use a taunus method?
+- revisit authentication
+- add search input box
 - comments
