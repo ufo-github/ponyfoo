@@ -61,6 +61,7 @@ function beforeSave (next) {
     article.related = _(articles)
       .reject({ _id: article._id })
       .pluck('_id')
+      .first(6)
       .value();
 
     next();

@@ -4,38 +4,40 @@ var _ = require('lodash');
 var moment = require('moment');
 var winston = require('winston');
 var natural = require('natural');
+var separator = '; ';
 
 function factory () {
   var index;
 
-  function insert (item, prop) {
-    winston.debug('Natural index processing "%s"...', item[prop]);
-    index.addDocument(item);
+  function insert (item) {
+    var parts = item.split(separator);
+    var key = parts[0];
+    var value = parts[1];
+    winston.debug('Natural index processing "%s"...', key);
+    index.addDocument(value, key);
   }
 
-  function compute (terms, options, done) {
+  function compute (terms, done) {
     var start = moment();
+    var results = [];
 
     winston.debug('Natural index computing "%s"...', terms.join(', '));
 
-    var results = [];
-    var o = options || {};
-    if (o.max === void 0) { o.max = 6; }
-
     index.tfidfs(terms, function (i, weight) {
+      if (global.isNaN(weight)) {
+        return;
+      }
       results.push({
-        doc: index.documents[i],
+        doc: index.documents[i].__key,
         weight: weight
       });
     });
 
     results.sort(diff);
-    results.splice(o.max);
 
     var fmt = 'Natural relationship computed. %s match(es) found in %s';
     var end = moment().subtract(start).format('mm:ss.SSS');
     winston.debug(fmt, results.length, end);
-
     done(null, _.pluck(results, 'doc'));
 
     function diff (a, b) {
@@ -55,7 +57,8 @@ function factory () {
 
   return {
     insert: insert,
-    compute: compute
+    compute: compute,
+    rebuild: rebuild
   };
 }
 

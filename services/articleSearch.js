@@ -19,8 +19,7 @@ function query (terms, done) {
       fulltext.compute(terms, next);
     },
     function expand (matches, next) {
-      var ids = _.pluck(matches, '_id');
-      var query = { _id: { $in: ids } };
+      var query = { _id: { $in: matches } };
       Article.find(query, next);
     }
   ], done);
@@ -34,7 +33,19 @@ function rebuild (done) {
     if (err) {
       done(err); return;
     }
-    fulltext.rebuild(articles, done);
+    fulltext.rebuild(articles.map(indexable), done);
+  }
+
+  function indexable (article) {
+    var fields = ['title', 'tags', 'body', 'introduction', 'slug'];
+    var important = _(article)
+      .pick(fields)
+      .toArray()
+      .flatten()
+      .value()
+      .join(' ');
+
+    return article._id + '; ' + important;
   }
 }
 
