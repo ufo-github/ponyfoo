@@ -3,7 +3,6 @@
 var markdownService = require('../../services/markdown');
 var cryptoService = require('../../services/crypto');
 var articleSearch = require('../../services/articleSearch');
-var articleService = require('../../services/article');
 var Article = require('../Article');
 
 Article.schema.virtual('permalink').get(computePermalink);
@@ -28,7 +27,7 @@ function beforeSave (next) {
   article.updated = Date.now();
 
   if (oldSign !== article.sign && article.status === 'published') {
-    articleService.addRelated(article, next);
+    articleSearch.addRelated(article, next);
   } else {
     next();
   }

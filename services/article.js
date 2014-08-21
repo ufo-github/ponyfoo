@@ -1,44 +1,25 @@
 'use strict';
 
-var _ = require('lodash');
-var contra = require('contra');
-var articleSearch = require('./articleSearch');
 var Article = require('../models/Article');
 
-function addRelated (article, done) {
-  articleSearch.similar(article, related);
-
-  function related (err, articles) {
-    if (err) {
-      done(err); return;
-    }
-    article.related = _(articles)
-      .reject({ _id: article._id })
-      .pluck('_id')
-      .first(6)
-      .value();
-
-    done();
+function find (query, options, next) {
+  if (next === void 0) {
+    next = options; options = {};
   }
-}
+  if (!options.populate) { options.populate = 'prev next related'; }
+  if (!options.sort) { options.sort = '-publication'; }
 
-function addRelatedThenSave (article, done) {
-  contra.series([
-    contra.curry(addRelated, article),
-    article.save.bind(article)
-  ], done);
-}
+  var cursor = Article.find(query);
 
-function refreshRelated (done) {
-  Article.find({ status: 'published' }, function (err, articles) {
-    if (err) {
-      done(err); return;
-    }
-    contra.each(articles, addRelatedThenSave, done);
-  });
+  if (options.populate) {
+    cursor = cursor.populate(options.populate);
+  }
+  if (options.sort) {
+    cursor = cursor.sort(options.sort);
+  }
+  cursor.exec(next);
 }
 
 module.exports = {
-  addRelated: addRelated,
-  refreshRelated: refreshRelated
+  find: find
 };

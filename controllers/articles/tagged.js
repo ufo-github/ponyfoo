@@ -1,7 +1,7 @@
 'use strict';
 
 var util = require('util');
-var Article = require('../../models/Article');
+var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
 var separator = /[+/,_: -]+/ig;
 
@@ -19,5 +19,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  Article.find(query).populate('prev next related').sort('-publication').exec(handle);
+  articleService.find(query, handle);
 };

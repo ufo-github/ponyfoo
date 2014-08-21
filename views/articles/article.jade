@@ -16,7 +16,6 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
 
     span(aria-label='Published ' + whenText)='Published ' + when.fromNow()
 
-
   section(itemprop='articleBody')
     section(itemprop='about')!=article.introductionHtml
 
@@ -31,7 +30,7 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
     //-  a.hint-before(href!=article.commentsLink, aria-label='Visit the discussion section')=article.commentsText
     if full && article.related.length
       section.at-related
-        p Read also...
+        p Related articles
         ul
           each related in article.related
             li

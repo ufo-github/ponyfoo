@@ -4,6 +4,7 @@ var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
 var Article = require('../models/Article');
+var articleService = require('./article');
 var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
 var emitter = contra.emitter();
@@ -31,10 +32,10 @@ function query (terms, done) {
       },
       function expand (matches, next) {
         var query = {
-          _id: { $in: matches },
-          status: 'published'
+          status: 'published',
+          _id: { $in: matches }
         };
-        Article.find(query).populate('prev next related').exec(next);
+        articleService.find(query, next);
       }
     ], done);
   });
@@ -89,8 +90,44 @@ function indexable (article) {
   return util.format('%s; %s', article._id, important);
 }
 
+function addRelated (article, done) {
+  similar(article, related);
+
+  function related (err, articles) {
+    if (err) {
+      done(err); return;
+    }
+    article.related = _(articles)
+      .reject({ _id: article._id })
+      .pluck('_id')
+      .first(6)
+      .value();
+
+    done();
+  }
+}
+
+function addRelatedThenSave (article, done) {
+  contra.series([
+    contra.curry(addRelated, article),
+    article.save.bind(article)
+  ], done);
+}
+
+function refreshRelated (done) {
+  Article.find({ status: 'published' }, function (err, articles) {
+    if (err) {
+      done(err); return;
+    }
+    contra.each(articles, addRelatedThenSave, done);
+  });
+}
+
 module.exports = {
   similar: similar,
   query: query,
-  insert: insert
+  insert: insert,
+  addRelated: addRelated,
+  addRelatedThenSave: addRelatedThenSave,
+  refreshRelated: refreshRelated
 };

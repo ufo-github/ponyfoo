@@ -1,9 +1,9 @@
 'use strict';
 
-var articleService = require('../../../services/article');
+var articleSearch = require('../../../services/articleSearch');
 
 module.exports = function (req, res, next) {
-  articleService.refreshRelated(respond);
+  articleSearch.refreshRelated(respond);
 
   function respond (err) {
     if (err) {

@@ -12,11 +12,9 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-- load articles through a service, avoid having to WET population.
-- use estimate
-
-- prettify css
 - add search input box
+- prettify css
+- use estimate
 - construct sitemap.xml
 - latest posts sidebar
 - redirects for old site compat

@@ -1,6 +1,6 @@
 'use strict';
 
-var Article = require('../../models/Article');
+var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
 
 module.exports = function (req, res, next) {
@@ -9,5 +9,5 @@ module.exports = function (req, res, next) {
 
   res.viewModel = { model: { title: 'Pony Foo' } };
 
-  Article.find(query).populate('prev next related').sort('-publication').exec(handle);
+  articleService.find(query, handle);
 };
