@@ -24,7 +24,9 @@ function factory () {
     winston.debug('Natural index computing "%s"...', terms.join(', '));
 
     index.tfidfs(terms, function (i, weight) {
-      if (global.isNaN(weight)) {
+      console.log(terms);
+      console.log(weight);
+      if (!weight) {
         return;
       }
       results.push({
@@ -55,10 +57,20 @@ function factory () {
     done();
   }
 
+  function listTerms (key) {
+    var doc = _.find(index.documents, { __key: key });
+    var i = index.documents.indexOf(doc);
+    console.log(index.documents);
+  console.log(doc);
+  console.log(i);
+    return index.listTerms(i);
+  }
+
   return {
     insert: insert,
     compute: compute,
-    rebuild: rebuild
+    rebuild: _.debounce(rebuild, 2000),
+    listTerms: listTerms
   };
 }
 

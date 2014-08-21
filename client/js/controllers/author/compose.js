@@ -187,7 +187,7 @@ module.exports = function (viewModel, route) {
 
   function getRequestData () {
     var individualTags = textService.splitTags(tags.value());
-    var state = status.where(':checked').text();
+    var state = published ? article.status : status.where(':checked').text();
     var data = {
       title: title.value(),
       slug: slug.value(),

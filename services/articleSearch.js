@@ -2,14 +2,15 @@
 
 var _ = require('lodash');
 var contra = require('contra');
-var moment = require('moment');
-var winston = require('winston');
 var Article;
 var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
 
 function similar (article, done) {
-  var terms = article.slug.split(' ').join(article.tags);
+  fulltext.insert(indexable(article));
+  var terms = fulltext.listTerms(article._id);
+  // TODO article._id isn't set?.. figure out some other way.
+  console.log(terms);
   query(terms, done);
 }
 
@@ -35,22 +36,22 @@ function rebuild (done) {
     }
     fulltext.rebuild(articles.map(indexable), done);
   }
+}
 
-  function indexable (article) {
-    var fields = ['title', 'tags', 'body', 'introduction', 'slug'];
-    var important = _(article)
-      .pick(fields)
-      .toArray()
-      .flatten()
-      .value()
-      .join(' ');
+function indexable (article) {
+  var fields = ['title', 'tags', 'body', 'introduction', 'slug'];
+  var important = _(article)
+    .pick(fields)
+    .toArray()
+    .flatten()
+    .value()
+    .join(' ');
 
-    return article._id + '; ' + important;
-  }
+  return article._id + '; ' + important;
 }
 
 module.exports = {
   similar: similar,
   query: query,
-  rebuild: rebuild
+  rebuild: _.debounce(rebuild, 2000)
 };
