@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var markdownService = require('../services/markdown');
 var cryptoService = require('../services/crypto');
 var articleSearch = require('../services/articleSearch');
+var articleService = require('../services/article');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
@@ -49,31 +50,14 @@ function beforeSave (next) {
   article.updated = Date.now();
 
   if (oldSign !== article.sign && article.status === 'published') {
-    articleSearch.similar(article, related);
+    articleService.addRelated(article, next);
   } else {
-    next();
-  }
-
-  function related (err, articles) {
-    if (err) {
-      next(err); return;
-    }
-    article.related = _(articles)
-      .reject({ _id: article._id })
-      .pluck('_id')
-      .first(6)
-      .value();
-
     next();
   }
 }
 
 function afterSave () {
-  articleSearch.rebuild(function (err) {
-    if (err) {
-      winston.info('Error rebuilding article search index', err);
-    }
-  });
+  articleSearch.insert(this, this._id);
 }
 
 module.exports = mongoose.model('Article', schema);

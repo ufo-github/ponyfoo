@@ -11,6 +11,7 @@ var articleList = require('./api/articles/list');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
+var articleRecompute = require('./api/articles/recompute')
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 
@@ -23,6 +24,7 @@ module.exports = function (app) {
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
+  app.post('/api/articles/compute-relationships', authorOnly, articleRecompute);
 
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 

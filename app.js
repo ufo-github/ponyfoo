@@ -11,7 +11,6 @@ var routing = require('./controllers/routing');
 var app = express();
 var port = env('PORT');
 var development = require('./lib/development');
-var articleSearch = require('./services/articleSearch');
 
 logging.configure();
 development.patch(app);
@@ -29,13 +28,6 @@ function operational () {
   middleware(app);
   routing(app);
   development.middleware(app);
-  articleSearch.rebuild(ready);
-}
-
-function ready (err) {
-  if (err) {
-    throw err;
-  }
   app.listen(port, listening);
 }
 

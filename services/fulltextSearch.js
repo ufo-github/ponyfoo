@@ -9,6 +9,7 @@ var separator = '; ';
 
 function factory () {
   var index;
+  var api;
 
   function insert (item) {
     var parts = item.split(separator);
@@ -53,6 +54,7 @@ function factory () {
     documents.forEach(insert);
     var end = moment().subtract(start).format('mm:ss.SSS');
     winston.debug('Natural index rebuilt in %s', end);
+    api.built = true;
     done();
   }
 
@@ -69,12 +71,15 @@ function factory () {
     return _(result).sortBy('tfidf').pluck('term').value().slice(0, 4);
   }
 
-  return {
+  api = {
     insert: insert,
     compute: compute,
-    rebuild: _.debounce(rebuild, 2000),
-    terms: terms
+    rebuild: rebuild,
+    terms: terms,
+    built: false
   };
+
+  return api;
 }
 
 module.exports = factory;
