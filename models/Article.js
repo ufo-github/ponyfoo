@@ -1,8 +1,11 @@
 'use strict';
 
+var _ = require('lodash');
+var winston = require('winston');
 var mongoose = require('mongoose');
 var markdownService = require('../services/markdown');
 var cryptoService = require('../services/crypto');
+var articleSearch = require('../services/articleSearch');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
@@ -25,30 +28,51 @@ var schema = new mongoose.Schema({
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('permalink').get(computePermalink);
-schema.pre('save', recompute);
+schema.pre('save', beforeSave);
+schema.post('save', afterSave);
 
 function computePermalink () {
   return '/articles/' + this.slug;
 }
 
-function articleSignature (a) {
+function computeSignature (a) {
   return cryptoService.md5([a.title, a.status, a.introduction, a.body].concat(a.tags).join(' '));
 }
 
-function recompute (next) {
-  var relationshipService = require('../services/relationship');
-  var oldSign = this.sign;
+function beforeSave (next) {
+  var article = this;
+  var oldSign = article.sign;
 
-  this.sign = articleSignature(this);
-  this.introductionHtml = markdownService.compile(this.introduction);
-  this.bodyHtml = markdownService.compile(this.body);
-  this.updated = Date.now();
+  article.sign = computeSignature(article);
+  article.introductionHtml = markdownService.compile(article.introduction);
+  article.bodyHtml = markdownService.compile(article.body);
+  article.updated = Date.now();
 
-  if (oldSign !== this.sign && this.status === 'published') {
-    relationshipService.computeFor(this, next);
+  if (oldSign !== article.sign && article.status === 'published') {
+    articleSearch.similar(article, related);
   } else {
     next();
   }
+
+  function related (err, articles) {
+    if (err) {
+      next(err); return;
+    }
+    article.related = _(articles)
+      .reject({ _id: article._id })
+      .pluck('_id')
+      .value();
+
+    next();
+  }
+}
+
+function afterSave () {
+  articleSearch.rebuild(function (err) {
+    if (err) {
+      winston.info('Error rebuilding article search index', err);
+    }
+  });
 }
 
 module.exports = mongoose.model('Article', schema);

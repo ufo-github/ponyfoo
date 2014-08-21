@@ -2,6 +2,7 @@
 
 var util = require('util');
 var Article = require('../../models/Article');
+var listOrSingle = require('./listOrSingle');
 var separator = /[+/,_:-]+/ig;
 
 module.exports = function (req, res, next) {
@@ -10,22 +11,16 @@ module.exports = function (req, res, next) {
     status: 'published',
     tags: { $all: tags }
   };
-  Article.find(query).sort('-publication').exec(handle);
+  var lastTag = tags.pop();
+  var suffix = lastTag ? util.format('" and "%s', lastTag) : '';
+  var tagNames = tags.join('", "') + suffix;
+  var handle = listOrSingle(res, next);
 
-  function handle (err, articles) {
-    if (err) {
-      next(err); return;
-    }
-    var article = articles.length === 1 ? articles[0] : false;
-    var lastTag = tags.pop();
-    var suffix = lastTag ? util.format('" and "%s', lastTag) : '';
-    var tagNames = tags.join('", "') + suffix;
-    var model = {
-      action: article ? 'articles/article' : 'articles/list',
+  res.viewModel = {
+    model: {
       title: util.format('Articles tagged "%s"', tagNames)
-    };
-    model[data] = article || articles;
-    res.viewModel = { model: model };
-    next();
-  }
+    }
+  };
+
+  Article.find(query).sort('-publication').exec(handle);
 };

@@ -1,12 +1,12 @@
 'use strict';
 
-var Article = require('../../models/Article');
+var util = require('util');
+var articleSearch = require('../../services/articleSearch');
 
 module.exports = function (req, res, next) {
-  var query = {
-    status: 'published'
-  };
-  Article.find(query).sort('-publication').exec(handle);
+  var terms = req.params.terms;
+
+  articleSearch.query(terms, handle);
 
   function handle (err, articles) {
     if (err) {
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         action: 'articles/list',
-        title: 'Pony Foo',
+        title: util.format('Search results for "%s"', terms),
         articles: articles
       }
     };

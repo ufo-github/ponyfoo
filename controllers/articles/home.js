@@ -1,24 +1,15 @@
 'use strict';
 
 var Article = require('../../models/Article');
+var listOrSingle = require('./listOrSingle');
 
 module.exports = function (req, res, next) {
   var query = {
     status: 'published'
   };
-  Article.find(query).sort('-publication').exec(handle);
+  var handle = listOrSingle(res, next);
 
-  function handle (err, articles) {
-    if (err) {
-      next(err); return;
-    }
-    res.viewModel = {
-      model: {
-        action: 'articles/list',
-        title: 'Pony Foo',
-        articles: articles
-      }
-    };
-    next();
-  }
+  res.viewModel = { model: {} };
+
+  Article.find(query).sort('-publication').exec(handle);
 };
