@@ -30,7 +30,11 @@ function query (terms, done) {
         fulltext.compute(terms, next);
       },
       function expand (matches, next) {
-        Article.find({ _id: { $in: matches } }, next);
+        var query = {
+          _id: { $in: matches },
+          status: 'published'
+        };
+        Article.find(query).populate('prev next related').exec(next);
       }
     ], done);
   });

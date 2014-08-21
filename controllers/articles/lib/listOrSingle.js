@@ -14,12 +14,16 @@ function factory (res, next) {
     if (single) {
       model.full = true;
       model.title = articles[0].title;
-      model[key] = articles[0];
+      model[key] = articles[0].toJSON();
     } else {
-      model[key] = articles;
+      model[key] = articles.map(toJSON);
     }
     next();
   };
+}
+
+function toJSON (article) {
+  return article.toJSON();
 }
 
 module.exports = factory;

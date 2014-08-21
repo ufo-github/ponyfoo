@@ -56,5 +56,5 @@ module.exports = function (req, res, next) {
       $lt: parsed.end
     }
   };
-  Article.find(query).sort('-publication').exec(handle);
+  Article.find(query).populate('prev next related').sort('-publication').exec(handle);
 };

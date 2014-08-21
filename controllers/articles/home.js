@@ -9,5 +9,5 @@ module.exports = function (req, res, next) {
 
   res.viewModel = { model: { title: 'Pony Foo' } };
 
-  Article.find(query).sort('-publication').exec(handle);
+  Article.find(query).populate('prev next related').sort('-publication').exec(handle);
 };

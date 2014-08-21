@@ -12,9 +12,7 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-- consistent treatment across different actions (unroll .permalinks, populate, etc)
-- verify links work on both ajax and first load
-
+- load articles through a service, avoid having to WET population.
 - use estimate
 
 - prettify css
