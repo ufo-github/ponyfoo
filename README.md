@@ -14,6 +14,7 @@ TODO
 
 
 - consistent treatment across different actions (unroll .permalinks, populate, etc)
+- verify links work on both ajax and first load
 - use estimate
 - prettify css
 - add search input box

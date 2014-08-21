@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
   var query = { status: 'published' };
   var handle = listOrSingle(res, next);
 
-  res.viewModel = { model: {} };
+  res.viewModel = { model: { title: 'Pony Foo' } };
 
   Article.find(query).sort('-publication').exec(handle);
 };
