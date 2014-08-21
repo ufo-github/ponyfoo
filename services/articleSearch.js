@@ -3,9 +3,10 @@
 var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
-var Article;
+var Article = require('../models/Article');
 var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
+var emitter = contra.emitter();
 
 function similar (article, done) {
   rebuildOnce(function built () {
@@ -37,16 +38,24 @@ function insert (article, done) {
 function rebuildOnce (done) {
   if (fulltext.built) {
     done();
+  } else if (emitter.rebuilding) {
+    emitter.once('rebuilt', done);
   } else {
-    Article = require('../models/Article');
+    emitter.rebuilding = true;
     Article.find({ status: 'published' }, fill);
   }
 
   function fill (err, articles) {
     if (err) {
-      done(err); return;
+      done(err); emitter.rebuilding = false; return;
     }
-    fulltext.rebuild(articles.map(indexable), done);
+    fulltext.rebuild(articles.map(indexable), emitThenEnd);
+  }
+
+  function emitThenEnd () {
+    emitter.rebuilding = false;
+    emitter.emit('rebuilt');
+    done();
   }
 }
 
@@ -69,8 +78,8 @@ function indexable (article) {
   return util.format('%s; %s', article._id, important);
 }
 
-
 module.exports = {
   similar: similar,
-  query: query
+  query: query,
+  insert: insert
 };

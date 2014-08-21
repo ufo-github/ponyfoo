@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var jade = require('jade/runtime');
 var winston = require('winston');
 var logging = require('./lib/logging');
 var env = require('./lib/env');
@@ -14,6 +15,8 @@ var development = require('./lib/development');
 
 logging.configure();
 development.patch(app);
+
+global.jade = jade; // let jade have it their way
 
 app.set('view engine', 'jade');
 app.set('view options', {

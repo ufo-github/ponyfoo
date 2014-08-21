@@ -68,7 +68,12 @@ function factory () {
     index.addDocument(value, key);
     result = index.listTerms(i);
 
-    return _(result).sortBy('tfidf').pluck('term').value().slice(0, 4);
+    var gram = gramophone.extract(item, { limit: 5 });
+    if (gram.length) {
+      return gram;
+    }
+    var tfidf = _(result).sortBy('tfidf').pluck('term').value().slice(0, 5);
+    return tfidf;
   }
 
   api = {

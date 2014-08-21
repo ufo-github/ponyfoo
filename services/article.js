@@ -25,12 +25,12 @@ function addRelated (article, done) {
 function addRelatedThenSave (article, done) {
   contra.series([
     contra.curry(addRelated, article),
-    contra.curry(article.save)
+    article.save.bind(article)
   ], done);
 }
 
 function refreshRelated (done) {
-  Article.find({ published: true }, function (err, articles) {
+  Article.find({ status: 'published' }, function (err, articles) {
     if (err) {
       done(err); return;
     }

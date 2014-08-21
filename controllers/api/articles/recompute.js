@@ -3,7 +3,7 @@
 var articleService = require('../../../services/article');
 
 module.exports = function (req, res, next) {
-  refreshRelated(respond);
+  articleService.refreshRelated(respond);
 
   function respond (err) {
     if (err) {
