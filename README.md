@@ -15,6 +15,8 @@ TODO
 - prettify css
 - use estimate
 - construct sitemap.xml
+- build rss feed using feedService after app starts, save to .bin
+- build rss feed using feedService after articles are saved, save to .bin
 - latest posts sidebar
 - views that respond with json e.g 404, should prob use a taunus method?
 - revisit authentication
