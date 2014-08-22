@@ -45,6 +45,7 @@ function generate (articles, done) {
         done(err); return;
       }
       absolutes[article._id] = html;
+      done();
     });
   }
 
