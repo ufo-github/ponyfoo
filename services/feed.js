@@ -73,7 +73,7 @@ function rebuild () {
   contra.waterfall([fetch, generate, persist], done);
 
   function fetch (next) {
-    Article.find({ status: 'published' }).sort('-publication').exec(next);
+    Article.find({ status: 'published' }).sort('-publication').limit(20).exec(next);
   }
 
   function persist (xml, next) {
