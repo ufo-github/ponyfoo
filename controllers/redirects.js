@@ -8,6 +8,9 @@ function setup (app) {
   app.get('/search/tagged/:tags', redirect('/articles/tagged/:tags'));
   app.get('/search/:terms', redirect('/articles/search/:terms'));
   app.get('/rss/latest.xml', redirect('/articles/feed'));
+  app.get('/rss', redirect('/articles/feed'));
+  app.get('/feed', redirect('/articles/feed'));
+  app.get('/articles/rss', redirect('/articles/feed'));
   app.get('/user/profile/:id', redirect('/'));
 }
 
@@ -19,7 +22,7 @@ function redirect (template) {
     function map (endpoint, prop) {
       return endpoint.replace(':' + prop, req.params[prop]);
     }
-  }
+  };
 }
 
 module.exports = {

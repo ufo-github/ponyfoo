@@ -3,6 +3,7 @@
 var markdownService = require('../../services/markdown');
 var cryptoService = require('../../services/crypto');
 var articleSearch = require('../../services/articleSearch');
+var feedService = require('../../services/feed');
 var Article = require('../Article');
 
 Article.schema.virtual('permalink').get(computePermalink);
@@ -35,6 +36,7 @@ function beforeSave (next) {
 
 function afterSave () {
   articleSearch.insert(this, this._id);
+  feedService.rebuild();
 }
 
 module.exports = Article;

@@ -6,9 +6,9 @@ var env = require('../lib/env');
 var authority = env('AUTHORITY');
 
 function absolutize (html, done) {
-  jsdom.env(html, absolutize);
+  jsdom.env(html, ready);
 
-  function absolutize (err, window) {
+  function ready (err, window) {
     if (err) {
       done(err); return;
     }

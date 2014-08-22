@@ -1,13 +1,20 @@
 'use strict';
 
 var _ = require('lodash');
+var fs = require('fs');
+var path = require('path');
+var mkdirp = require('mkdirp');
 var RSS = require('rss');
 var contra = require('contra');
+var winston = require('winston');
 var util = require('util');
 var moment = require('moment');
+var Article = require('../models/Article');
 var env = require('../lib/env');
+var htmlService = require('./html');
 var authority = env('AUTHORITY');
 var contact = 'Nicolas Bevacqua <nico@bevacqua.io>';
+var location = path.join(__dirname, '../.bin/static/feed.xml');
 
 function generate (articles, done) {
   var absolutes = {};
@@ -27,7 +34,7 @@ function generate (articles, done) {
     language: 'en',
     categories: tags,
     pubDate: now.clone().toDate(),
-    ttl: 20,
+    ttl: 15,
   });
 
   contra.each(articles, absolutize, fill);
@@ -46,21 +53,41 @@ function generate (articles, done) {
       done(err); return;
     }
 
-    _.sort(articles, 'publication').reverse().forEach(function (article) {
+    articles.forEach(function insert (article) {
       feed.item({
         title: article.title,
         description: absolutes[article._id],
         url: authority + article.permalink,
         categories: article.tags,
-        author: contact
+        author: contact,
         date: moment(article.publication).toDate()
       });
     });
 
-    var xml = feed.xml();
-
-    console.log(xml);
+    done(null, feed.xml());
   }
 }
 
-module.exports = {};
+function rebuild () {
+  contra.waterfall([fetch, generate, persist], done);
+
+  function fetch (next) {
+    Article.find({ status: 'published' }).sort('-publication').exec(next);
+  }
+
+  function persist (xml, next) {
+    mkdirp.sync(path.dirname(location));
+    fs.writeFile(location, xml, next);
+  }
+
+  function done (err) {
+    if (err) {
+      winston.warn('Error trying to regenerate RSS feed', err); return;
+    }
+    winston.debug('Regenerated RSS feed');
+  }
+}
+
+module.exports = {
+  rebuild: rebuild
+};

@@ -12,6 +12,7 @@ var routing = require('./controllers/routing');
 var app = express();
 var port = env('PORT');
 var development = require('./lib/development');
+var feedService = require('./services/feed');
 
 logging.configure();
 development.patch(app);
@@ -37,4 +38,5 @@ function operational () {
 function listening () {
   winston.info('app listening on port %s', port);
   development.browserSync();
+  feedService.rebuild();
 }
