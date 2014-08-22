@@ -13,6 +13,7 @@ var app = express();
 var port = env('PORT');
 var development = require('./lib/development');
 var feedService = require('./services/feed');
+var sitemapService = require('./services/sitemap');
 
 logging.configure();
 development.patch(app);
@@ -39,4 +40,5 @@ function listening () {
   winston.info('app listening on port %s', port);
   development.browserSync();
   feedService.rebuild();
+  sitemapService.rebuild();
 }

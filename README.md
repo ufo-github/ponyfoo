@@ -12,8 +12,6 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-- construct sitemap service
-- build sitemap when app start, and after articles are saved.
 - prettify css
 - use estimate
 - latest posts sidebar

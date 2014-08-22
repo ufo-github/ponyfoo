@@ -12,12 +12,15 @@ var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
 var articleFeed = require('./api/articles/feed');
 var articleRecompute = require('./api/articles/recompute');
+var sitemap = require('./sitemap/sitemap');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 var redirects = require('./redirects');
 
 module.exports = function (app) {
   app.get('/articles/feed', articleFeed);
+  app.get('/sitemap.xml', sitemap);
+
   app.put('/api/markdown/images', markdownImageUpload);
 
   app.get('/api/articles', authorOnly, articleList);
