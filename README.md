@@ -12,10 +12,15 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-- prettify css
-- use estimate
-- latest posts sidebar
+- css more like existing
 - views that respond with json e.g 404, should prob use a taunus method?
 - revisit authentication
+- comment system
+- migration script
+
+POST-redeploy
+- use estimate
+- latest posts sidebar
+- iframes (just for articles, not in comments)
+- running twitter for links on articles
 - add search input box
-- comments
