@@ -87,8 +87,19 @@ function splitTags (text) {
   return text.trim().toLowerCase().split(spaces).filter(truthy).reduce(unique, []);
 }
 
+function format () {
+  var args = Array.prototype.slice.call(arguments);
+  var initial = args.shift();
+
+  function replacer (text, replacement) {
+    return text.replace('%s', replacement);
+  }
+  return args.reduce(replacer, initial);
+}
+
 module.exports = {
  slug: slug,
  truncate: truncate,
- splitTags: splitTags
+ splitTags: splitTags,
+ format: format
 };
