@@ -3,7 +3,6 @@
 var $ = require('dominus');
 var throttle = require('lodash.throttle');
 var moment = require('moment');
-var estimate = require('estimate');
 var raf = require('raf');
 var taunus = require('taunus');
 var flexarea = require('flexarea');
@@ -123,8 +122,6 @@ module.exports = function (viewModel, route) {
   }
 
   function typingText () {
-    // console.log(estimate.element(preview));
-    // TODO show on view
     serializeSlowly();
   }
 
