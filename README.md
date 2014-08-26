@@ -24,3 +24,4 @@ POST-redeploy
 - add search input box
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
+- subscriptions?
