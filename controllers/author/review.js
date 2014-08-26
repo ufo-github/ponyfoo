@@ -5,7 +5,7 @@ var Article = require('../../models/Article');
 var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 
 module.exports = function (req, res, next) {
-  Article.find({}, respond);
+  Article.find({}).sort('-created').exec(respond);
 
   function respond (err, articles) {
     if (err) {

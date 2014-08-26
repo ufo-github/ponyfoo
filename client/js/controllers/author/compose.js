@@ -10,6 +10,7 @@ var flexarea = require('flexarea');
 var ponymark = require('ponymark');
 var rome = require('rome/src/rome.standalone');
 var textService = require('../../../../services/text');
+var twitterService = require('../../lib/twitter');
 var storage = require('../../lib/storage');
 var key = 'author-unsaved-draft';
 
@@ -86,6 +87,11 @@ module.exports = function (viewModel, route) {
     editor.value(container.attr('data-markdown'));
     flexarea(editor[0]);
     ponies.push(pony);
+    pony.on('refresh', tweets);
+
+    function tweets () {
+      twitterService.updateView(preview);
+    }
   }
 
   function updatePublication () {
@@ -117,7 +123,7 @@ module.exports = function (viewModel, route) {
   }
 
   function typingText () {
-    console.log(estimate.element(preview));
+    // console.log(estimate.element(preview));
     // TODO show on view
     serializeSlowly();
   }

@@ -4,14 +4,14 @@ var ultramarked = require('ultramarked');
 var textService = require('./text');
 
 function getLabel (title) {
-  var trimmedTitle = title.trim();
+  var trimmedTitle = title ? title.trim() : '';
   if (trimmedTitle) {
     return textService.format(' aria-label="%s"', trimmedTitle);
   }
   return '';
 }
 
-ultramarked.setOptions({
+var options = {
   smartLists: true,
   ultralight: true,
   ultrasanitize: true,
@@ -24,10 +24,10 @@ ultramarked.setOptions({
     }
   }),
   iframes: []
-});
+};
 
 module.exports = {
   compile: function (text) {
-    return ultramarked(text);
+    return ultramarked(text, options);
   }
 };
