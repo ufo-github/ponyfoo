@@ -6,7 +6,7 @@ var validator = require('validator');
 var Article = require('../../../../models/Article');
 var textService = require('../../../../services/text');
 var statuses = Article.validStatuses;
-var forbidden = /^feed|archive$/ig;
+var forbidden = /^feed|archives$/ig;
 
 function validate (model, update) {
   var validation = [];

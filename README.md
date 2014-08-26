@@ -21,8 +21,10 @@ POST-redeploy
 - views that respond with json e.g 404, should prob use a taunus method?
 - use estimate
 - latest posts sidebar
-  - add a button to '/articles/archive', listing just headlines and dates, for all articles.
+  - add a button to '/articles/archives'
 
 - iframes (just for articles, not in comments)
 - running twitter for links on articles
 - add search input box
+- flash should be in layout really?
+- cmd + enter look up a lib that has simple api

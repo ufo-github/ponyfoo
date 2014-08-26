@@ -1,9 +1,13 @@
 - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
-- when = require('moment')(article.publication)
+- when = moment(article.publication)
 - whenText = when.format(longDate)
+- modified = moment(article.updated)
+- created = moment(article.created)
 
 article(itemscope, itemtype='http://schema.org/BlogPosting')
-  meta(itemprop='dateCreated', content=whenText)
+  meta(itemprop='dateCreated', content=created.format())
+  meta(itemprop='datePublished', content=when.format())
+  meta(itemprop='dateModified', content=modified.format())
   meta(itemprop='keywords', content=article.tags.csv)
   //- meta(itemprop='discussionUrl', content=env('AUTHORITY') + article.permalink + '#comments')
   //- meta(itemprop='interactionCount', content=article.commentCount + ' UserComments')
@@ -14,7 +18,11 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
 
     //- include _social
 
-    span(aria-label='Published ' + whenText)='Published ' + when.fromNow()
+    span
+      span='reading time: '
+      time(aria-label='Estimated reading time')=moment.duration(article.readingTime, 'seconds').humanize()
+      span=', published '
+      time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 
   section(itemprop='articleBody')
     section(itemprop='about')!=article.introductionHtml

@@ -5,6 +5,7 @@ var authorOnly = require('./author/only');
 module.exports = [
   { route: '/', action: 'articles/home' },
   { route: '/articles', action: 'articles/redirectHome' },
+  { route: '/articles/archives', action: 'articles/archives' },
   { route: '/articles/tagged/:tags', action: 'articles/tagged' },
   { route: '/articles/search/:terms', action: 'articles/search' },
   { route: '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', action: 'articles/dated' },

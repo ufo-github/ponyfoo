@@ -1,12 +1,13 @@
 'use strict';
 
 var express = require('express');
+var moment = require('moment');
 var jade = require('jade/runtime');
 var winston = require('winston');
+var models = require('./models');
 var logging = require('./lib/logging');
 var env = require('./lib/env');
 var db = require('./lib/db');
-var models = require('./models');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
 var app = express();
@@ -18,12 +19,11 @@ var sitemapService = require('./services/sitemap');
 logging.configure();
 development.patch(app);
 
-global.jade = jade; // let jade have it their way
+// these globals are used in jade templates
+global.jade = jade;
+global.moment = moment;
 
 app.set('view engine', 'jade');
-app.set('view options', {
-  globals: ['moment']
-});
 app.locals.settings['x-powered-by'] = false;
 
 db(operational);
