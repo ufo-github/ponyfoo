@@ -8,7 +8,7 @@ var textService = require('../../../../services/text');
 var statuses = Article.validStatuses;
 var forbidden = /^feed|archive$/ig;
 
-function validate (model) {
+function validate (model, update) {
   var validation = [];
   if (!model || typeof model !== 'object') {
     validation.push('Invalid request.');
@@ -29,6 +29,11 @@ function validate (model) {
     sanitized.publication = publication;
   }
   validation.model = sanitized;
+
+  if (update) {
+    delete sanitized.comments;
+    delete sanitized.related;
+  }
 
   return validation;
 
