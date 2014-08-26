@@ -10,6 +10,8 @@ test('routes should match expectation', function (t) {
     get: sinon.spy(),
     put: sinon.spy(),
     post: sinon.spy(),
+    patch: sinon.spy(),
+    delete: sinon.spy(),
     use: sinon.spy()
   };
   var list = sinon.stub();
