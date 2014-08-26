@@ -1,8 +1,8 @@
 'use strict';
 
 function updateView (elem) {
-  if (window.twttr.widgets) {
-    window.twttr.widgets.load(elem);
+  if (global.twttr.widgets) {
+    global.twttr.widgets.load(elem);
   }
 }
 
