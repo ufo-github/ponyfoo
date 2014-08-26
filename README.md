@@ -12,9 +12,8 @@ TODO
   - flash intro page
   - flash intro DAY!
 
-- css more like existing
-- revisit authentication
 - comment system
+- revisit authentication
 - migration script
 
 POST-redeploy
