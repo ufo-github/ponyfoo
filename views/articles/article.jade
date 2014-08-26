@@ -12,13 +12,11 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
   //- meta(itemprop='discussionUrl', content=env('AUTHORITY') + article.permalink + '#comments')
   //- meta(itemprop='interactionCount', content=article.commentCount + ' UserComments')
 
-  header
-    h1
-      a(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
+  header.uv-clearfix
+    h1.at-title
+      a.at-title-link(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
 
-    //- include _social
-
-    span
+    span.at-meta
       span='reading time: '
       time(aria-label='Estimated reading time')=moment.duration(article.readingTime, 'seconds').humanize()
       span=', published '
@@ -34,8 +32,6 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
         a(href=article.permalink) Read the full article
 
   footer
-    //- section.comment-count
-    //-  a.hint-before(href!=article.commentsLink, aria-label='Visit the discussion section')=article.commentsText
     if full && article.related.length
       section.at-related
         p Related articles
