@@ -8,10 +8,7 @@ ol.av-container
 
     li.av-article
       a(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))=article.title
-      span.av-duration
-        span=' ['
-        time=moment.duration(article.readingTime, 'seconds').humanize()
-        span=']'
+      time.av-duration=' [' + moment.duration(article.readingTime, 'seconds').humanize() + '] '
       span=' published '
       time.av-publication(datetime=pub.format(), aria-label=pub.format(longDate))=pub.fromNow()
       span=' under '
