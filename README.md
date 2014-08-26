@@ -25,3 +25,5 @@ POST-redeploy
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
 - subscriptions?
+
+- undefined is not a function when going back to `/`?
