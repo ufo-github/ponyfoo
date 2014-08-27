@@ -9,6 +9,9 @@ var production = env('NODE_ENV') === 'production';
 var staging = env('NODE_ENV') === 'staging';
 var client = createClient();
 var defaults = {
+  domain: {
+    authority: env('AUTHORITY')
+  },
   social: {
     twitter: {
       url: 'https://twitter.com/ponyfoo',
@@ -39,14 +42,16 @@ function send (type, model, done) {
   client.send(template, extended, done);
 }
 
-function logger (err) {
+function logger () {
+  var args = Array.prototype.slice.call(arguments);
+  var err = args.shift();
   if (err) {
     winston.error('Email sending failed', {
       err: err,
-      args: arguments
+      args: args
     });
   } else {
-    winston.debug('Email sent');
+    winston.debug('Email sent!');
   }
 }
 

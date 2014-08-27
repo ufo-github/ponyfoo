@@ -20,7 +20,14 @@ function render (err, body) {
   $(body.messages.map(dom)).appendTo(messages);
 
   context.find('.vw-validation').remove();
-  context.find('.vw-title').after(messages);
+
+  var title = context.find('.vw-title');
+  if (title.length) {
+    title.after(messages);
+  } else {
+    context.prepend(messages);
+  }
+
   messages[0].scrollIntoView();
 
   global.scrollBy(0, -100);

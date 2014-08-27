@@ -7,23 +7,29 @@
 
 Supported Browsers: IE 10+, Chrome, Safari, Firefox
 
+LAUNCH
+
+- migration script
+- flash intro page
+
 TODO
 
-  - flash intro page
-  - flash intro DAY!
+- tweet about articles
+
+- figure out partial cookie cutter
+  - add search input box
+  - latest posts sidebar
+    - add a button to '/articles/archives'
+    - add a button to subscribe
 
 - comment system
 - revisit authentication
-- migration script
+
 
 POST-redeploy
 - views that respond with json e.g 404, should prob use a taunus method?
-- latest posts sidebar
-  - add a button to '/articles/archives'
-
-- add search input box
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
-- subscriptions?
+
 
 - undefined is not a function when going back to `/`?

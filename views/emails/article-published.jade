@@ -1,15 +1,15 @@
 p
   span='An article has been published at '
-  a(href!=blog.authority)=blog.title
+  a(href!=domain.authority) Pony Foo
   span='. You can feast your eyes on it by following this link: '
-  a(href!=entry.permalink)=entry.title
+  a(href!=article.permalink)=article.title
 
-h1(style='padding-top: 25px;')=entry.title
+h1(style='padding-top: 25px;')=article.title
 
 p
   span(style='padding-right:4px;') Tags:
 
-  each tag in entry.tags
-    a(href!=blog.authority + '/articles/tagged/' + tag, style='padding-right: 4px;')=tag
+  each tag in article.tags
+    a(href!=domain.authority + '/articles/tagged/' + tag, style='padding-right: 4px;')=tag
 
-div(style='padding: 20px; background-color: #efefef;')=entry.brief
+div(style='padding: 20px; background-color: #efefef;')!=article.introductionHtml

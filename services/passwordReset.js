@@ -34,7 +34,7 @@ function validateTokenExpiration (token, done) {
     done(null, false); return;
   }
 
-  var now = new Date();
+  var now = Date.now();
   var expiration = getExpiration(token).toDate();
 
   done(null, expiration > now);
@@ -90,7 +90,7 @@ function updatePassword (tokenId, password, done) {
     if (!valid) {
       next(eexpired); return;
     }
-    token.used = new Date();
+    token.used = Date.now();
     token.save(function saved (err) {
       next(err);
     });

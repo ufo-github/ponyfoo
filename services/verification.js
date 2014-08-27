@@ -68,7 +68,7 @@ function verifyToken (tokenId, done) {
       }
     },
     function validateExpiration (token, next) {
-      var now = new Date();
+      var now = Date.now();
       var expiration = getExpiration(token).toDate();
 
       if (now > expiration) {
@@ -94,7 +94,7 @@ function verifyToken (tokenId, done) {
       });
     },
     function useToken (token, unverified, next) {
-      token.used = new Date();
+      token.used = Date.now();
       token.save(function saved (err) {
         next(err, unverified);
       });

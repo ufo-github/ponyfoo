@@ -3,42 +3,44 @@
 var contra = require('contra');
 var Article = require('../../../models/Article');
 
-module.exports = function (req, res, next) {
-  var query = { slug: req.params.slug };
+function remove (req, res, next) {
+  contra.waterfall([lookupArticle, found], handle);
 
-  contra.waterfall([
-    function lookupArticle (next) {
-      Article.findOne(query).populate('prev next').exec(next);
-    },
-    function found (article, next) {
-      if (!article) {
-        res.json(404, { messages: ['Article not found'] }); return;
-      }
-      contra.concurrent([
-        function (next) {
-          article.remove(next);
-        },
-        function (next) {
-          if (!article.prev) {
-            next(); return;
-          }
-          article.prev.next = article.next;
-          article.prev.save(function saved (err) {
-            next(err);
-          });
-        },
-        function (next) {
-          if (!article.next) {
-            next(); return;
-          }
-          article.next.prev = article.prev;
-          article.next.save(function saved (err) {
-            next(err);
-          });
-        }
-      ], next);
+  function lookupArticle (next) {
+    var query = { slug: req.params.slug };
+    Article.findOne(query).populate('prev next').exec(next);
+  }
+
+  function found (article, next) {
+    if (!article) {
+      res.json(404, { messages: ['Article not found'] }); return;
     }
-  ], handle);
+    contra.concurrent([removal, unlinkLeft, unlinkRight], next);
+
+    function removal (next) {
+      article.remove(next);
+    }
+
+    function unlinkLeft (next) {
+      if (!article.prev) {
+        next(); return;
+      }
+      article.prev.next = article.next;
+      article.prev.save(function saved (err) {
+        next(err);
+      });
+    }
+
+    function unlinkRight (next) {
+      if (!article.next) {
+        next(); return;
+      }
+      article.next.prev = article.prev;
+      article.next.save(function saved (err) {
+        next(err);
+      });
+    }
+  }
 
   function handle (err) {
     if (err) {
@@ -46,4 +48,6 @@ module.exports = function (req, res, next) {
     }
     res.json(200, {});
   }
-};
+}
+
+module.exports = remove;

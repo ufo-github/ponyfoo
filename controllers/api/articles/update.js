@@ -2,6 +2,7 @@
 
 var contra = require('contra');
 var Article = require('../../../models/Article');
+var articleService = require('../../../services/article');
 var respond = require('../lib/respond');
 var validate = require('./lib/validate');
 var publish = require('./lib/publish');
@@ -13,26 +14,31 @@ module.exports = function (req, res, next) {
     respond.invalid(res, validation); return;
   }
   var model = validation.model;
+  var emailBroadcast = false;
 
   contra.waterfall([
     function statusUpdate (next) {
-      if (model.status === 'publish' && !model.publication) {
-        publish(model, next);
-      } else {
-        next();
-      }
+      publish(model, next);
     },
-    function lookup (next) {
+    function lookup (published, next) {
+      emailBroadcast = published;
       Article.findOne({ slug: req.params.slug }, next);
     },
-    function (article, next) {
+    function found (article, next) {
       if (!article) {
         res.json(404, { messages: ['Article not found'] }); return;
       }
       Object.keys(model).forEach(function (key) {
         article[key] = model[key];
       });
-      article.save(next);
+      article.save(function saved (err) {
+        if (!err && emailBroadcast) {
+          articleService.campaign(article);
+        }
+        next(err);
+      });
     }
-  ], respond(res, validation, next));
+  ], function response (err) {
+    respond(err, res, next, validation);
+  });
 };

@@ -5,6 +5,7 @@ var util = require('util');
 var moment = require('moment');
 var validator = require('validator');
 var Article = require('../../../models/Article');
+var articleService = require('../../../services/article');
 var textService = require('../../../services/text');
 var respond = require('../lib/respond');
 var validate = require('./lib/validate');
@@ -29,16 +30,17 @@ module.exports = function (req, res, next) {
       next(validation.length);
     },
     function statusUpdate (next) {
-      if (model.status === 'publish' && !model.publication) {
-        publish(model, next);
-      } else {
-        next();
-      }
+      publish(model, next);
     },
-    function insert (next) {
+    function insert (published, next) {
       model.save(function saved (err) {
+        if (!err && published) {
+          articleService.campaign(model);
+        }
         next(err);
       });
     }
-  ], respond(res, validation, next));
+  ], function response (err) {
+    respond(err, res, next, validation);
+  });
 };
