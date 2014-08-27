@@ -16,6 +16,7 @@ TODO
 
 - tweet about articles
 
+- undefined is not a function when going back to `/`?
 - figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
@@ -30,6 +31,3 @@ POST-redeploy
 - views that respond with json e.g 404, should prob use a taunus method?
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
-
-
-- undefined is not a function when going back to `/`?
