@@ -31,19 +31,19 @@ test('routes should match expectation', function (t) {
 
   plan('get', '/articles/feed', './articles/feed');
 
-  // plan('get', '/', './articles/home');
-  // plan('get', '/articles', './articles/redirectHome');
-  // plan('get', '/articles/archives', './articles/archives');
-  plan('get', '/articles/tagged/:tags', './articles/tagged');
-  // plan('get', '/articles/search/:terms', './articles/search');
-  // plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', './articles/dated');
-  // plan('get', '/articles/:year(\\d{4})/:month([01]\\d)', './articles/dated');
-  // plan('get', '/articles/:year(\\d{4})', './articles/dated');
-  // plan('get', '/articles/:slug', './articles/article');
-  // plan('get', '/account/login', './account/login');
-  // plan('get', '/author/compose', './author/only', './author/compose');
-  // plan('get', '/author/compose/:slug', './author/only', './author/compose');
-  // plan('get', '/author/review', './author/only', './author/review');
+  // plan('get', '/', path.resolve('./articles/home'));
+  // plan('get', '/articles', path.resolve('./articles/redirectHome'));
+  // plan('get', '/articles/archives', path.resolve('./articles/archives'));
+  // plan('get', '/articles/tagged/:tags', path.resolve('./controllers/articles/tagged'));
+  // plan('get', '/articles/search/:terms', path.resolve('./articles/search'));
+  // plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', path.resolve('./articles/dated'));
+  // plan('get', '/articles/:year(\\d{4})/:month([01]\\d)', path.resolve('./articles/dated'));
+  // plan('get', '/articles/:year(\\d{4})', path.resolve('./articles/dated'));
+  // plan('get', '/articles/:slug', path.resolve('./articles/article'));
+  // plan('get', '/account/login', path.resolve('./account/login'));
+  // plan('get', '/author/compose', path.resolve('./author/only'), path.resolve('./author/compose'));
+  // plan('get', '/author/compose/:slug', path.resolve('./author/only'), path.resolve('./author/compose'));
+  // plan('get', '/author/review', path.resolve('./author/only'), path.resolve('./author/review'));
 
   run();
 
@@ -60,7 +60,7 @@ test('routes should match expectation', function (t) {
     });
   }
 
-  function toStubs (key) {
+  function toStubs (key) {console.log(key);
     if (!stubs[key]) {
       stubs[key] = sinon.spy();
       stubs[key].location = key;
