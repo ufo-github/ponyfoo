@@ -4,10 +4,10 @@ var $ = require('dominus');
 
 module.exports = function (viewModel) {
   var container = $('.ar-container');
-  var recompute = $('.ar-recompute');
+  var compute = $('.ar-compute');
 
   container.on('click', '.ic-remove', remove);
-  recompute.on('click', recomputeRelated);
+  compute.on('click', computeRelated);
 
   function remove (e) {
     var target = $(e.target);
@@ -21,15 +21,15 @@ module.exports = function (viewModel) {
     }
   }
 
-  function recomputeRelated () {
-    recompute.attr('disabled', true);
+  function computeRelated () {
+    compute.attr('disabled', true);
 
     viewModel.measly
       .post('/api/articles/compute-relationships')
       .on('data', enable);
 
     function enable () {
-      recompute.attr('disabled', false);
+      compute.attr('disabled', false);
     }
   }
 };
