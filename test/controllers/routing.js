@@ -31,20 +31,6 @@ test('routes should match expectation', function (t) {
 
   plan('get', '/articles/feed', './articles/feed');
 
-  // plan('get', '/', path.resolve('./articles/home'));
-  // plan('get', '/articles', path.resolve('./articles/redirectHome'));
-  // plan('get', '/articles/archives', path.resolve('./articles/archives'));
-  // plan('get', '/articles/tagged/:tags', path.resolve('./controllers/articles/tagged'));
-  // plan('get', '/articles/search/:terms', path.resolve('./articles/search'));
-  // plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', path.resolve('./articles/dated'));
-  // plan('get', '/articles/:year(\\d{4})/:month([01]\\d)', path.resolve('./articles/dated'));
-  // plan('get', '/articles/:year(\\d{4})', path.resolve('./articles/dated'));
-  // plan('get', '/articles/:slug', path.resolve('./articles/article'));
-  // plan('get', '/account/login', path.resolve('./account/login'));
-  // plan('get', '/author/compose', path.resolve('./author/only'), path.resolve('./author/compose'));
-  // plan('get', '/author/compose/:slug', path.resolve('./author/only'), path.resolve('./author/compose'));
-  // plan('get', '/author/review', path.resolve('./author/only'), path.resolve('./author/review'));
-
   run();
 
   function plan () {
@@ -60,7 +46,7 @@ test('routes should match expectation', function (t) {
     });
   }
 
-  function toStubs (key) {console.log(key);
+  function toStubs (key) {
     if (!stubs[key]) {
       stubs[key] = sinon.spy();
       stubs[key].location = key;
