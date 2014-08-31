@@ -49,6 +49,7 @@ test('routes should match expectation', function (t) {
       routing: sinon.spy()
     };
     mockery.enable();
+    mockery.warnOnUnregistered(false);
     mockery.registerMock('transports', transports);
     mockery.registerMock('../lib/errors', sinon.stub());
   }
