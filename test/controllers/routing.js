@@ -4,18 +4,13 @@ var test = require('tape');
 var sinon = require('sinon');
 var path = require('path');
 var util = require('util');
-var proxyquire = require('proxyquire').noCallThru();
+var mockery = require('mockery');
 
 test('routes should match expectation', function (t) {
-  var errors = sinon.stub();
-  var transports = {
-    routing: sinon.spy()
-  };
-  var stubs = {
-    'transports': transports,
-    '../lib/errors': errors
-  };
+  var stubs = {};
   var routes = [];
+
+  setup();
 
   plan('get', '/sitemap.xml', './sitemap/sitemap');
 
@@ -31,7 +26,36 @@ test('routes should match expectation', function (t) {
 
   plan('get', '/articles/feed', './articles/feed');
 
+  plan('get', '/', '../../../controllers/articles/home');
+  plan('get', '/articles', '../../../controllers/articles/redirectHome');
+  plan('get', '/articles/archives', '../../../controllers/articles/archives');
+  plan('get', '/articles/tagged/:tags', '../../../controllers/articles/tagged');
+  plan('get', '/articles/search/:terms', '../../../controllers/articles/search');
+  plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', '../../../controllers/articles/dated');
+  plan('get', '/articles/:year(\\d{4})/:month([01]\\d)', '../../../controllers/articles/dated');
+  plan('get', '/articles/:year(\\d{4})', '../../../controllers/articles/dated');
+  plan('get', '/articles/:slug', '../../../controllers/articles/article');
+  plan('get', '/account/login', '../../../controllers/account/login');
+  plan('get', '/author/compose', './author/only', '../../../controllers/author/compose');
+  plan('get', '/author/compose/:slug', './author/only', '../../../controllers/author/compose');
+  plan('get', '/author/review', './author/only', '../../../controllers/author/review');
+
   run();
+  teardown();
+
+  function setup () {
+    var errors = sinon.stub();
+    var transports = {
+      routing: sinon.spy()
+    };
+    mockery.enable();
+    mockery.registerMock('transports', transports);
+    mockery.registerMock('../lib/errors', sinon.stub());
+  }
+
+  function teardown () {
+    mockery.disable();
+  }
 
   function plan () {
     // arrange
@@ -49,7 +73,7 @@ test('routes should match expectation', function (t) {
   function toStubs (key) {
     if (!stubs[key]) {
       stubs[key] = sinon.spy();
-      stubs[key].location = key;
+      mockery.registerMock(key, stubs[key]);
     }
     return stubs[key];
   }
@@ -64,7 +88,8 @@ test('routes should match expectation', function (t) {
       delete: sinon.spy(),
       use: sinon.spy()
     };
-    var routing = proxyquire('../../controllers/routing', stubs);
+
+    var routing = require('../../controllers/routing');
 
     // act
     routing(app);
