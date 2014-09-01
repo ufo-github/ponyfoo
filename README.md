@@ -2,9 +2,6 @@
 
 > Open-source blogging platform
 
-[1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
-[2]: https://travis-ci.org/ponyfoo/ponyfoo
-
 Supported Browsers: IE 10+, Chrome, Safari, Firefox
 
 LAUNCH
@@ -31,3 +28,6 @@ POST-redeploy
 - views that respond with json e.g 404, should prob use a taunus method?
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
+
+  [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
+  [2]: https://travis-ci.org/ponyfoo/ponyfoo
