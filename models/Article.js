@@ -6,7 +6,7 @@ var schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
-  publication: { type: Date, require: false },
+  publication: Date,
   status: { type: String, require: true },
   title: String,
   slug: { type: String, index: { unique: true }, require: true },

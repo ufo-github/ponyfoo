@@ -3,10 +3,13 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
+  created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
+  author: String,
   email: String,
-  comment: String,
-  commentHtml: String,
-  website: String
+  content: String,
+  contentHtml: String,
+  website: String,
+  parent: { type: ObjectId, index: { unique: false }, ref: 'Comment' }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 module.exports = mongoose.model('Comment', schema);

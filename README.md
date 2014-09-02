@@ -10,7 +10,6 @@ LAUNCH
 
 TODO
 
-- undefined is not a function when going back to `/`?
 - comments partial
 - figure out partial cookie cutter
   - add search input box

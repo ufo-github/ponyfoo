@@ -8,20 +8,12 @@ var schema = new mongoose.Schema({
   password: { type: String, require: true },
   bypassEncryption: { type: Boolean, 'default': true },
   created: { type: Date, require: true, 'default': Date.now },
-  author: { type: String },
   displayName: { type: String },
   facebookId: { type: String },
   githubId: { type: String },
   googleId: { type: String },
   linkedinId: { type: String },
-  website: {
-    title: { type: String },
-    url: { type: String }
-  },
-  bio: { type: String },
-  notifications: {
-    comment: { type: Boolean, 'default': true }
-  }
+  bio: { type: String }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatar').get(computeGravatar);
