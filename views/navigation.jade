@@ -1,10 +1,10 @@
 nav.ly-navigation
   ul
     if model.user !== undefined
-      li.ly-navigation-item
-        a(href='/account/logout') Logout
+      li.ly-navigation-item.ly-logon
+        a.ly-logon-anchor(href='/account/logout') Logout
       li.ly-navigation-item
         a(href='/author/review') Review
     else
-      li.ly-navigation-item
-        a(href='/account/login') Login
+      li.ly-navigation-item.ly-logon
+        a.ly-logon-anchor(href='/account/login') Login

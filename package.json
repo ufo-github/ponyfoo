@@ -37,7 +37,7 @@
     "flexarea": "^1.0.25",
     "glob": "^4.0.0",
     "gramophone": "0.0.3",
-    "hint": "^1.2.0",
+    "hint": "^1.2.1",
     "jade": "git+https://github.com/bevacqua/jade.git#patch-2",
     "jsdom": "^1.0.0-pre.1",
     "lodash": "^2.4.1",

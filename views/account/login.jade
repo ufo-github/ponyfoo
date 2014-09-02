@@ -26,9 +26,10 @@ form.al-form(method='post', action='/account/login/local')
     p.uv-right
       a.alf-reset(aria-label='Lost your password?') password reset
 
-    p
-      input.ck-input.alf-create#alf-create-checkbox(type='checkbox', name='create')
-      label.ck-checkbox(for='alf-create-checkbox') New Account
+    if registration
+      p
+        input.ck-input.alf-create#alf-create-checkbox(type='checkbox', name='create')
+        label.ck-checkbox(for='alf-create-checkbox') New Account
 
   p.alf-buttons
     input.uv-button.alf-login(type='submit', value='Login')

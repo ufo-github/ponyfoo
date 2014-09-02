@@ -4,7 +4,7 @@
 
 .ly-title-anchor:active,
 .ly-title-anchor:visited
-  color c-brown
+  color c-strong
 
 .ly-title-anchor
   transition text-shadow 0.2s ease-in-out
@@ -27,3 +27,18 @@
 
 .ly-navigation-item
   display inline-block
+
+.ly-logon-anchor
+  position absolute
+  top 0
+  right 0
+  padding 10px
+  opacity 0
+  color #fff
+  transition all 0.2s ease-in-out
+
+  &:hover
+    text-decoration none
+    opacity 1
+    color #fff
+    background-color c-pink
