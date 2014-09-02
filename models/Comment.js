@@ -3,8 +3,10 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
-  email: { type: String, require: true, index: { unique: true }, trim: true },
-  verified: { type: Boolean, 'default': false }
+  email: String,
+  comment: String,
+  commentHtml: String,
+  website: String
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-module.exports = mongoose.model('Subscriber', schema);
+module.exports = mongoose.model('Comment', schema);

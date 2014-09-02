@@ -1,10 +1,16 @@
 'use strict';
 
+var _ = require('lodash');
+var util = require('util');
 var contra = require('contra');
+var env = require('../lib/env');
 var Article = require('../models/Article');
 var Subscriber = require('../models/Subscriber');
+var cryptoService = require('./crypto');
 var emailService = require('./email');
+var twitterService = require('./twitter');
 var htmlService = require('./html');
+var authority = env('AUTHORITY');
 
 function noop () {}
 
@@ -43,7 +49,7 @@ function email (article, done) {
   }, send);
 
   function findSubscribers (next) {
-    Subscriber.find({}, next);
+    Subscriber.find({ verified: true }, next);
   }
 
   function absolutizeHtml (next) {
@@ -55,7 +61,7 @@ function email (article, done) {
       done(err); return;
     }
     var model = {
-      to: data.subscribers,
+      to: _.pluck(data.subscribers, 'email'),
       subject: article.title,
       intro: 'Hot off the press article on Pony Foo!',
       article: {
@@ -63,15 +69,41 @@ function email (article, done) {
         permalink: article.permalink,
         tags: article.tags,
         introductionHtml: data.html
+      },
+      mandrill: {
+        locals: data.subscribers.map(subscriberLocals)
       }
     };
-    emailService.send('verify-address', model, emailService.logger);
+    emailService.send('article-published', model, emailService.logger);
     done();
   }
 }
 
+function subscriberLocals (subscriber) {
+  var hash = subscriber._id.toString() + cryptoService.md5(subscriber.email);
+  return {
+    email: subscriber.email,
+    model: {
+      unsubscribe: util.format('%s/api/subscribers/%s/unsubscribe', authority, hash)
+    }
+  };
+}
+
 function tweet (article, done) {
-  console.log('TODO: tweet about article');
+  var formats = [
+    'Published: "%s" %s',
+    'Fresh content!  "%s" %s',
+    '"%s" contains crisp new words! %s',
+    '"%s" is hot off the press! %s',
+    'Extra! Extra! "%s" has just come out! %s',
+    '"%s" has just been published %s',
+    'Just out! "%s" %s'
+  ];
+  var fmt = _.sample(formats);
+  var tag = article.tags[0].replace(/-/g, '');
+  var links = util.format('%s%s #%s', authority, article.permalink, tag);
+  var status = util.format(fmt, article.title, links);
+  twitterService.tweet(status, done);
   done();
 }
 

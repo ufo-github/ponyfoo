@@ -62,8 +62,9 @@
     "rome": "^1.1.2",
     "rss": "^0.3.2",
     "sitemap": "^0.7.4",
-    "taunus": "^0.4.2",
+    "taunus": "^0.4.3",
     "transports": "^0.2.2",
+    "twit": "^1.1.18",
     "ultramarked": "^1.0.4",
     "validator": "^3.12.0",
     "winston": "^0.7.3"

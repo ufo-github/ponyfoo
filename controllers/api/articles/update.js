@@ -14,14 +14,14 @@ module.exports = function (req, res, next) {
     respond.invalid(res, validation); return;
   }
   var model = validation.model;
-  var emailBroadcast = false;
+  var broadcast = false;
 
   contra.waterfall([
     function statusUpdate (next) {
       publish(model, next);
     },
     function lookup (published, next) {
-      emailBroadcast = published;
+      broadcast = published;
       Article.findOne({ slug: req.params.slug }, next);
     },
     function found (article, next) {
@@ -31,12 +31,14 @@ module.exports = function (req, res, next) {
       Object.keys(model).forEach(function (key) {
         article[key] = model[key];
       });
-      article.save(function saved (err) {
-        if (!err && emailBroadcast) {
+      article.save(saved);
+
+      function saved (err) {
+        if (!err && broadcast) {
           articleService.campaign(article);
         }
         next(err);
-      });
+      }
     }
   ], function response (err) {
     respond(err, res, next, validation);

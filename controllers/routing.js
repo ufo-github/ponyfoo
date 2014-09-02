@@ -12,6 +12,9 @@ var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
 var articleCompute = require('./api/articles/compute');
 var articleFeed = require('./articles/feed');
+var subscriberInsert = require('./api/subscribers/insert');
+var subscriberConfirm = require('./api/subscribers/confirm');
+var subscriberRemove = require('./api/subscribers/remove');
 var sitemap = require('./sitemap/sitemap');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
@@ -29,11 +32,15 @@ module.exports = function (app) {
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
   app.post('/api/articles/compute-relationships', authorOnly, articleCompute);
 
+  app.put('/api/subscribers', subscriberInsert);
+  app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
+  app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
+
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 
-  // app.post('/account/request-password-reset', passwordResetController.requestPasswordReset);
-  // app.get('/account/password-reset/:token([a-f0-9]{24})', passwordResetController.validateToken);
-  // app.post('/account/reset-password/:token([a-f0-9]{24})', passwordResetController.resetPassword);
+  // app.post('/account/password-reset', requestPasswordReset);
+  // app.get('/account/password-reset/:token([a-f0-9]{24})', validateToken);
+  // app.post('/account/password-reset/:token([a-f0-9]{24})', resetPassword);
 
   transports.routing(app, registerAccount);
 
