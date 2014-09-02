@@ -4,7 +4,9 @@ nav.ly-navigation
       li.ly-navigation-item.ly-logon
         a.ly-logon-anchor(href='/account/logout') Logout
       li.ly-navigation-item
-        a(href='/author/review') Review
+        a(href='/author/compose', aria-label='Prepare a fresh draft') Compose
+      li.ly-navigation-item
+        a(href='/author/review', aria-label='Review articles and drafts') Review
     else
       li.ly-navigation-item.ly-logon
         a.ly-logon-anchor(href='/account/login') Login
