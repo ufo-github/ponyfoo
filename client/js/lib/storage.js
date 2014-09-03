@@ -1,5 +1,6 @@
 'use strict';
 
+var raf = require('raf');
 var localStorage = global.localStorage;
 
 function get (key) {
@@ -11,9 +12,9 @@ function get (key) {
 }
 
 function set (key, value) {
-  setTimeout(function setter () { // no reason to block the thread
+  raf(function setter () { // no reason to block the thread
     localStorage.setItem(key, JSON.stringify(value));
-  }, 0);
+  });
 }
 
 function remove (key) {
