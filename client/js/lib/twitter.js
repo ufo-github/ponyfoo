@@ -3,8 +3,9 @@
 var taunus = require('taunus');
 
 function updateView (elem) {
-  if (global.twttr.widgets) {
-    global.twttr.widgets.load(elem);
+  var twitter = global.twttr;
+  if (twitter && twitter.widgets) {
+    twitter.widgets.load(elem);
   }
 }
 
