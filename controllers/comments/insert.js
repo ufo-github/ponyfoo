@@ -4,10 +4,16 @@ var _ = require('lodash');
 var contra = require('contra');
 var Article = require('../../models/Article');
 var Comment = require('../../models/Comment');
+var validate = require('./lib/validate');
 
 module.exports = function (req, res, next) {
-  var model = validate(req);
-
+  var body = req.body;
+  var validation = validate(body);
+  if (validation.length) {
+    res.json(400, { messages: validation }); return;
+  }
+  var model = validation.model;
+console.log(model);
   contra.waterfall([findArticle, decisionTree, create], respond);
 
   function findArticle (next) {
