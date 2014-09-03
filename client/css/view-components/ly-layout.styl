@@ -1,19 +1,17 @@
 .ly-title
-  font-size 4.5em
+  margin-top 5px
   border-bottom 4px solid c-strongish
+  font-size 2.5em
 
 .ly-title-anchor:active,
 .ly-title-anchor:visited
   color c-strong
 
-.ly-title-anchor
-  transition text-shadow 0.2s ease-in-out
-
 .ly-title-anchor:hover
   text-decoration none
-  text-shadow 2px 2px 1px c-pink
 
 .ly-legend
+  display none
   color c-blue-light
   font-size 1.2em
   font-weight 400
@@ -23,6 +21,7 @@
   border-bottom 0
 
 .ly-navigation
+  display none
   list-style none
 
 .ly-navigation-item
@@ -42,3 +41,17 @@
     opacity 1
     color #fff
     background-color c-pink
+
+@media screen and (min-width: 768px)
+  .ly-title
+    margin-top 15px
+    font-size 4.5em
+
+  .ly-title-anchor
+    transition text-shadow 0.2s ease-in-out
+
+  .ly-title-anchor:hover
+    text-shadow 2px 2px 1px c-pink
+
+  .ly-legend
+    display block

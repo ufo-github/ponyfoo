@@ -1,15 +1,28 @@
 .tg-tags
   cursor default
-  display inline-block
+  display block
+  margin-top 10px
 
 .tg-tag-item
   display inline-block
   list-style none
+  line-height 40px
 
 .tg-tag
   padding 2px 4px
   background-color c-strongish
   box-shadow 1px 1px 1px c-border
+  margin-right 10px
 
   &:hover
     background-color c-pink-light
+
+@media screen and (min-width: 768px)
+  .tg-tags
+    display inline-block
+
+  .tg-tag
+    margin 0
+
+  .tg-tag-item
+    line-height inherit

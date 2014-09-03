@@ -23,6 +23,7 @@ TODO
 - not ALL the fields
 - migration script
 
+
 POST-redeployment
 
 - revving
@@ -31,7 +32,7 @@ POST-redeployment
 - views that respond with json e.g 404, should prob use a taunus method?
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
-- fill metadata (see defaultRequestModel.js)
+- canonical, etc: fill metadata (see defaultRequestModel.js)
 
   [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
   [2]: https://travis-ci.org/ponyfoo/ponyfoo

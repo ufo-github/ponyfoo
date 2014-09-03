@@ -1,10 +1,29 @@
-.at-title .at-title-link,
-.at-title .at-title-link:hover,
-.at-title .at-title-link:active
-  color c-strong
-  text-decoration none
+.at-header
+  margin-bottom 15px
+
+.at-title
+  margin-top 0
+  text-align center
+
+  .at-title-link,
+  .at-title-link:hover,
+  .at-title-link:active
+    color c-strong
+    text-decoration none
 
 .at-meta
+  display none
   float right
   font-style italic
   color c-red-shadow
+
+.at-tags-label
+  display none
+
+@media screen and (min-width: 768px)
+  .at-title
+    text-align inherit
+
+  .at-meta,
+  .at-tags-label
+    display inherit

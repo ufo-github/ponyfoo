@@ -12,7 +12,7 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
   meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
   meta(itemprop='interactionCount', content=article.comments.length + ' UserComments')
 
-  header.uv-clearfix
+  header.at-header.uv-clearfix
     h1.at-title
       a.at-title-link(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
 
@@ -40,7 +40,7 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
             li
               a(href=related.permalink, data-hint='Navigate to related article!')=related.title
 
-    span='Tagged: '
+    span.at-tags-label='Tagged: '
     include ../partials/tags
 
     if full
