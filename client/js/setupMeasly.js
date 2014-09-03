@@ -9,8 +9,13 @@ function setupMeasly () {
     viewModel.measly = measly.layer({ context: container });
   });
 
+  measly.on('data', clean);
   measly.on(400, render);
   measly.on(404, render);
+}
+
+function clean () {
+  $(this.context).find('.vw-validation').remove();
 }
 
 function render (err, body) {

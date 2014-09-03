@@ -3,8 +3,8 @@
     Contact: hello@bevacqua.io
     Twitter: @nzgb
     GitHub: bevacqua
-    From: Buenos Aires, Argentina
+    Origin: Buenos Aires, Argentina
 
 /* TOOLS */
-    Ingredients: Sublime Text, zsh, git, JavaScript, love
+    Ingredients: JavaScript, CSS, HTML, zsh, git, love
     Sauce: https://github.com/ponyfoo/ponyfoo

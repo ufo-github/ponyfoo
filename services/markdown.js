@@ -11,19 +11,27 @@ function getLabel (title) {
   return '';
 }
 
+function link (href, title, text) {
+  return textService.format('<a href="%s"%s>%s</a>', href, getLabel(title), text);
+}
+
+function image (href, title, text) {
+  return textService.format('<img src="%s"%s alt="%s" />', href, getLabel(title), text);
+}
+
+var iframes = [
+  'http://codepen.io/',
+  'http://jsbin.com/',
+  'http://jsfiddle.net/',
+  'http://embed.plnkr.co/'
+];
+var filters = { link: link, image: image };
 var options = {
   smartLists: true,
   ultralight: true,
   ultrasanitize: true,
-  renderer: ultramarked.renderer({
-    link: function (href, title, text) {
-      return textService.format('<a href="%s"%s>%s</a>', href, getLabel(title), text);
-    },
-    image: function (href, title, text) {
-      return textService.format('<img src="%s"%s alt="%s" />', href, getLabel(title), text);
-    }
-  }),
-  iframes: []
+  renderer: ultramarked.renderer(filters),
+  iframes: iframes
 };
 
 module.exports = {

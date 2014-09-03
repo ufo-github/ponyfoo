@@ -16,6 +16,7 @@ TODO
     - add a button to '/articles/archives'
     - add a button to subscribe
 
+- not ALL the fields
 - migration script
 
 POST-redeployment

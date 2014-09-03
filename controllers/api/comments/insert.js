@@ -2,9 +2,11 @@
 
 var _ = require('lodash');
 var contra = require('contra');
-var Article = require('../../models/Article');
-var Comment = require('../../models/Comment');
+var Article = require('../../../models/Article');
+var Comment = require('../../../models/Comment');
 var validate = require('./lib/validate');
+var respond = require('../lib/respond');
+var markdownService = require('../../../services/markdown');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -13,11 +15,11 @@ module.exports = function (req, res, next) {
     res.json(400, { messages: validation }); return;
   }
   var model = validation.model;
-console.log(model);
-  contra.waterfall([findArticle, decisionTree, create], respond);
+
+  contra.waterfall([findArticle, decisionTree, create], response);
 
   function findArticle (next) {
-    Article.findOne(req.params.slug).populate('comments').exec(next);
+    Article.findOne({ slug: req.params.slug }).populate('comments').exec(next);
   }
 
   function decisionTree (article, next) {
@@ -36,6 +38,7 @@ console.log(model);
         res.json(400, { messages: ['Comments can\'t be nested that deep!'] }); return;
       }
     }
+    model.contentHtml = markdownService.compile(model.content);
     article.comments.push(model);
     article.save(saved);
 
@@ -44,9 +47,7 @@ console.log(model);
     }
   }
 
-  function respond (err) {
-    if (err) {
-      next(err); return;
-    }
+  function response (err) {
+    respond(err, res, next, validation);
   }
 };

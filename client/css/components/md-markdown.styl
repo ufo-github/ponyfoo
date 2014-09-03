@@ -1,0 +1,28 @@
+c-github-code = #f8f8f8
+
+.md-markdown
+  pre
+    background-color c-github-code
+
+  blockquote
+    position relative
+    margin 0
+    padding 12px 12px 12px 52px
+    border-radius 5px
+
+    &:before
+      position absolute
+      left 12px
+      content '“'
+      color c-pink
+      text-shadow 0 1px c-strong
+      font-size 65px
+      font-weight 700
+      line-height 40px
+      margin-right 10px
+
+  p:first-child
+    margin-top 0
+
+.at-title
+  font-size 3em

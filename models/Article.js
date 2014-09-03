@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var commentSchema = require('./schemas/comment');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
@@ -19,7 +20,7 @@ var schema = new mongoose.Schema({
   prev: { type: ObjectId, index: { unique: false }, ref: 'Article' },
   next: { type: ObjectId, index: { unique: false }, ref: 'Article' },
   related: [{ type: ObjectId, ref: 'Article' }],
-  comments: [{ type: ObjectId, ref: 'Comment' }]
+  comments: [commentSchema]
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 var api = mongoose.model('Article', schema);

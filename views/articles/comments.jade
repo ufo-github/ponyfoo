@@ -1,6 +1,7 @@
 section.mm-comments
   each comment in article.comments
-    section.mm-comment
+    article.mm-comment
+      section.mm-content.md-markdown!=comment.contentHtml
 
   footer
     section.mc-container
@@ -8,5 +9,5 @@ section.mm-comments
       input.mc-email(placeholder='hello@johndoe.io')
       input.mc-site(placeholder='johndoe.io (optional)')
       div.mc-content
-      article.mc-preview
+      article.mc-preview.md-markdown
       button.mc-send Comment

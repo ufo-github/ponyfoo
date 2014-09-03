@@ -23,10 +23,10 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
       time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 
   section(itemprop='articleBody')
-    section(itemprop='about')!=article.introductionHtml
+    section.md-markdown(itemprop='about')!=article.introductionHtml
 
     if full
-      section!=article.bodyHtml
+      section.md-markdown!=article.bodyHtml
     else
       section
         a(href=article.permalink) Read the full article
