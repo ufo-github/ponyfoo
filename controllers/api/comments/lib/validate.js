@@ -40,9 +40,14 @@ function validate (model) {
 
   function getContent () {
     var length = 10;
+    var max = 60000;
     var valid = validator.isLength(model.content, length);
     if (valid === false) {
-      validation.push(util.format('Your comment must be at least %s characters long', length));
+      validation.push(util.format('Comments must be at least %s characters long', length));
+    }
+    var bound = validator.isLength(model.content, 0, max);
+    if (bound === false) {
+      validation.push(util.format('Comments can have at most %s characters!', length));
     }
     return model.content;
   }
@@ -50,7 +55,7 @@ function validate (model) {
   function getSite () {
     var scheme = /^https?:\/\//i;
     var input = validator.toString(model.site).trim();
-    if (!validator.isURL(input)) {
+    if (input && !validator.isURL(input)) {
       validation.push('The site is optional, but it should be an URL');
     }
     return scheme.test(input) ? input : 'http://' + input;

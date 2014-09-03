@@ -10,6 +10,10 @@ LAUNCH
 
 TODO
 
+- RWD
+- reply to comments
+- comment emails
+- emails?
 - figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
