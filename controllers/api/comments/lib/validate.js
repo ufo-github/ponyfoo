@@ -2,7 +2,6 @@
 
 var util = require('util');
 var mongoose = require('mongoose');
-var util = require('util');
 var validator = require('validator');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -49,11 +48,16 @@ function validate (model) {
   }
 
   function getSite () {
-    return validator.toString(model.site).trim() || null;
+    var scheme = /^https?:\/\//i;
+    var input = validator.toString(model.site).trim();
+    if (!validator.isURL(input)) {
+      validation.push('The site is optional, but it should be an URL');
+    }
+    return scheme.test(input) ? input : 'http://' + input;
   }
 
   function getParent () {
-    return model.parent ? ObjectId(model.parent) : null;
+    return model.parent ? new ObjectId(model.parent) : null;
   }
 }
 

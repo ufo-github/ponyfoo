@@ -28,9 +28,10 @@ console.log(model);
   }
 
   function create (article, next) {
+    var parentId = model.parent;
     var parent;
-    if (model.parent) {
-      var parent = _.find(article.comments, { _id: model.parent });
+    if (parentId) {
+      parent = _.find(article.comments, { _id: parentId });
       if (parent.parent) {
         res.json(400, { messages: ['Comments can\'t be nested that deep!'] }); return;
       }
