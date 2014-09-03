@@ -1,3 +1,5 @@
 #!/bin/bash
 
 browserify client/js/main.js --basedir client/js --full-paths | discify --open
+
+# browserify client/js/main.js --basedir client/js --full-paths -t uglifyify | discify --open
