@@ -11,7 +11,8 @@
     },
     "model": {
       "title": "Pony Foo"
-    }
+    },
+    "keywords": []
   },
   "views": ".bin/views",
   "client_wiring": ".bin/lib/wiring.js"

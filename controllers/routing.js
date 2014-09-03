@@ -19,6 +19,7 @@ var sitemap = require('./sitemap/sitemap');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 var redirects = require('./redirects');
+var defaultRequestModel = require('./defaultRequestModel');
 
 module.exports = function (app) {
   app.get('/articles/feed', articleFeed);
@@ -44,7 +45,9 @@ module.exports = function (app) {
 
   transports.routing(app, registerAccount);
 
-  taunus.mount(app, routes);
+  taunus.mount(app, routes, {
+    defaultRequestModel: defaultRequestModel
+  });
   redirects.setup(app);
   app.use(errors.handler);
 };

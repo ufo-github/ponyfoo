@@ -8,9 +8,9 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
   meta(itemprop='dateCreated', content=created.format())
   meta(itemprop='datePublished', content=when.format())
   meta(itemprop='dateModified', content=modified.format())
-  meta(itemprop='keywords', content=article.tags.csv)
-  //- meta(itemprop='discussionUrl', content=env('AUTHORITY') + article.permalink + '#comments')
-  //- meta(itemprop='interactionCount', content=article.commentCount + ' UserComments')
+  meta(itemprop='keywords', content=article.tags.join(','))
+  meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
+  meta(itemprop='interactionCount', content=article.comments.length + ' UserComments')
 
   header.uv-clearfix
     h1.at-title
@@ -50,3 +50,6 @@ article(itemscope, itemtype='http://schema.org/BlogPosting')
 
         if article.next
           a.at-next(href=article.next.permalink, rel='next', data-hint='Navigate to next article!')=article.next.title
+
+if full
+  include comments
