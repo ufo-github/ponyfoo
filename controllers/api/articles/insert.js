@@ -13,7 +13,7 @@ var publish = require('./lib/publish');
 
 module.exports = function (req, res, next) {
   var body = req.body;
-  var validation = validate(req.body);
+  var validation = validate(body);
   if (validation.length) {
     respond.invalid(res, validation); return;
   }

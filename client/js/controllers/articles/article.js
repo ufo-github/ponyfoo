@@ -55,6 +55,7 @@ module.exports = function (viewModel, route) {
     var model = {
       json: getCommentData()
     };
+    model.json.parent = null;
     viewModel.measly.put(endpoint, model).on('data', clear);
   }
 };
