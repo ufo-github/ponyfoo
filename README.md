@@ -21,6 +21,8 @@ TODO
 
 POST-redeployment
 
+- revving
+- unbloat all.js
 - json when navigating back is SUPER AWKWARD!
 - views that respond with json e.g 404, should prob use a taunus method?
 - flash should be in layout really?
