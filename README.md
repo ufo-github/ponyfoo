@@ -10,7 +10,6 @@ LAUNCH
 
 TODO
 
-- comments partial
 - figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
@@ -22,11 +21,12 @@ TODO
 POST-redeployment
 
 - revving
-- unbloat all.js
+- further unbloat all.js
 - json when navigating back is SUPER AWKWARD!
 - views that respond with json e.g 404, should prob use a taunus method?
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
+- fill metadata (see defaultRequestModel.js)
 
   [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
   [2]: https://travis-ci.org/ponyfoo/ponyfoo

@@ -18,7 +18,7 @@ function find (query, options, done) {
   if (done === void 0) {
     done = options; options = {};
   }
-  if (!options.populate) { options.populate = 'prev next related'; }
+  if (!options.populate) { options.populate = 'prev next related comments'; }
   if (!options.sort) { options.sort = '-publication'; }
 
   var cursor = Article.find(query);

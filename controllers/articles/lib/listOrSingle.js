@@ -8,15 +8,15 @@ function factory (res, next) {
       next(err); return;
     }
     var model = res.viewModel.model;
-    var single = articles.length === 1;
-    var key = single ? 'article' : 'articles';
+    var article = articles.length === 1 && articles[0];
+    var key = article ? 'article' : 'articles';
 
     model.action = 'articles/' + key;
 
-    if (single) {
+    if (article) {
       model.full = true;
-      model.title = articles[0].title;
-      model[key] = toJSON(articles[0]);
+      model.title = article.title;
+      model[key] = toJSON(article);
     } else {
       model[key] = articles.map(toJSON);
     }
