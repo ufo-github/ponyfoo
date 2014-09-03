@@ -5,12 +5,10 @@ var throttle = require('lodash.throttle');
 var moment = require('moment');
 var raf = require('raf');
 var taunus = require('taunus');
-var flexarea = require('flexarea');
-var ponymark = require('ponymark');
 var rome = require('rome/src/rome.standalone');
 var textService = require('../../../../services/text');
-var twitterService = require('../../lib/twitter');
 var storage = require('../../lib/storage');
+var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var key = 'author-unsaved-draft';
 
 function noop () {}
@@ -36,15 +34,14 @@ module.exports = function (viewModel, route) {
     draft: $('#ac-draft-radio'),
     publish: $('#ac-publish-radio')
   };
-  var ponies = [];
   var boundSlug = true;
   var intro;
   var body;
   var publicationCal;
   var initialDate = moment().weekday(7);
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
+  var ponies = texts.map(convert);
 
-  texts.forEach(convertToPonyEditor);
   texts.on('keypress keydown paste', typingText);
   tags.on('keypress keydown paste', raf.bind(null, typingTags));
   title.on('keypress keydown paste', raf.bind(null, typingTitle));
@@ -63,6 +60,10 @@ module.exports = function (viewModel, route) {
     initializeCalendar();
   }
 
+  function convert (text) {
+    return convertToPonyEditor(text, preview);
+  }
+
   function initializeCalendar () {
     publicationCal = rome(publication[0], {
       appendTo: 'parent',
@@ -77,20 +78,6 @@ module.exports = function (viewModel, route) {
         publicationCal.emitValues();
       }
     });
-  }
-
-  function convertToPonyEditor (elem) {
-    var container = $(elem);
-    var pony = ponymark({ buttons: elem, input: elem, preview: preview });
-    var editor = container.find('.pmk-input');
-    editor.value(container.attr('data-markdown'));
-    flexarea(editor[0]);
-    ponies.push(pony);
-    pony.on('refresh', tweets);
-
-    function tweets () {
-      twitterService.updateView(preview);
-    }
   }
 
   function updatePublication () {

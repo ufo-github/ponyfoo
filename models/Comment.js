@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
   email: String,
   content: String,
   contentHtml: String,
-  website: String,
+  site: String,
   parent: { type: ObjectId, index: { unique: false }, ref: 'Comment' }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
