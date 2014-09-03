@@ -10,7 +10,7 @@ LAUNCH
 
 TODO
 
-- RWD
+- RWD. mobile first!!!
 - reply to comments
 - comment emails
 - emails?
