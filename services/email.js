@@ -9,6 +9,7 @@ var env = require('../lib/env');
 var mode = env('MANDRILL_MODE');
 var apiKey = env('MANDRILL_API_KEY');
 var from = env('MANDRILL_SENDER');
+var trap = env('MANDRILL_TRAP')
 var client = createClient();
 var defaults = {
   domain: {
@@ -33,8 +34,8 @@ function createClient () {
     from: from
   };
   if (mode === 'trap') { // staging environments should trap emails
-    options.trap = true;
-  } else if (mode === 'test') { // during development, there's no reason to send any emails
+    options.trap = trap;
+  } else if (mode === 'debug') { // no reason to send any emails
     options.provider = campaign.providers.terminal();
   }
   return campaign(options);
