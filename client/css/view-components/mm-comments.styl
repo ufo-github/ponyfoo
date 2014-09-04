@@ -13,9 +13,13 @@
 
 .mm-author
   float right
-  margin-top -15px
-  margin-right -15px
-  padding-left 10px
+  margin-top -25px
+  margin-right -25px
+  padding 6px
+  background-color c-strongish
+  box-shadow -1px 1px 1px c-border
+  margin-left 6px
+  margin-bottom 6px
 
 .mm-author-name
   vertical-align super
@@ -27,8 +31,11 @@
   border-radius 6px
   transition box-shadow 0.5s ease-in-out
 
-.mm-author-site:hover .mm-gravatar
-  box-shadow 1px 2px 1px c-pink
+.mm-author-site
+  display block
+
+  &:hover .mm-gravatar
+    box-shadow 1px 2px 1px c-pink
 
 @media screen and (min-width: 768px)
   .mm-comments
