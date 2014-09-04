@@ -1,35 +1,36 @@
-h1.vw-title Sign In
+article.ly-section
+  h1.vw-title Sign In
 
-include /_flash
+  include /_flash
 
-section.al-providers
-  a.ic-google(href='/account/login/google', title='Authenticate with Google') Authenticate with Google
-  a.ic-github(href='/account/login/github', title='Authenticate with GitHub') Authenticate with GitHub
-  a.ic-facebook(href='/account/login/facebook', title='Authenticate with Facebook') Authenticate with Facebook
-  a.ic-linkedin(href='/account/login/linkedin', title='Authenticate with LinkedIn') Authenticate with LinkedIn
+  section.al-providers
+    a.al-provider(href='/account/login/google', title='Authenticate with Google') Authenticate with Google
+    a.al-provider(href='/account/login/github', title='Authenticate with GitHub') Authenticate with GitHub
+    a.al-provider(href='/account/login/facebook', title='Authenticate with Facebook') Authenticate with Facebook
+    a.al-provider(href='/account/login/linkedin', title='Authenticate with LinkedIn') Authenticate with LinkedIn
 
-p.al-separator
- span='- or the '
- i old fashioned
- span=' way -'
+  p.al-separator
+   span='- or the '
+   i old fashioned
+   span=' way -'
 
-form.al-form(method='post', action='/account/login/local')
-  input(type='hidden', name='redirect', value=previousUrl)
+  form.al-form(method='post', action='/account/login/local')
+    input(type='hidden', name='redirect', value=previousUrl)
 
-  fieldset
-    p
-      input.alf-input.alf-email(type='text', name='email', placeholder='Input your email')
-
-    p
-      input.alf-input.alf-password(type='password', name='password', placeholder='Input your password')
-
-    p.uv-right
-      a.alf-reset(aria-label='Lost your password?') password reset
-
-    if registration
+    fieldset
       p
-        input.ck-input.alf-create#alf-create-checkbox(type='checkbox', name='create')
-        label.ck-checkbox(for='alf-create-checkbox') New Account
+        input.alf-input.alf-email(type='text', name='email', placeholder='Input your email')
 
-  p.alf-buttons
-    input.uv-button.alf-login(type='submit', value='Login')
+      p
+        input.alf-input.alf-password(type='password', name='password', placeholder='Input your password')
+
+      p.uv-right
+        a.alf-reset(aria-label='Lost your password?') password reset
+
+      if registration
+        p
+          input.ck-input.alf-create#alf-create-checkbox(type='checkbox', name='create')
+          label.ck-checkbox(for='alf-create-checkbox') New Account
+
+    p.alf-buttons
+      input.uv-button.alf-login(type='submit', value='Login')

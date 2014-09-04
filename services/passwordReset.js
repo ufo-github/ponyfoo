@@ -26,7 +26,7 @@ function getLink (token) {
 }
 
 function getExpiration (token) {
-  return moment(token.created).add('seconds', token.expires);
+  return moment(token.created).add(token.expires, 'seconds');
 }
 
 function validateTokenExpiration (token, done) {
