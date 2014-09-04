@@ -18,7 +18,7 @@ article.at-article(itemscope, itemtype='http://schema.org/BlogPosting')
 
     span.at-meta
       span='reading time: '
-      time(aria-label='Estimated reading time')=moment.duration(article.readingTime, 'seconds').humanize()
+      time(aria-label='Estimated, you\'re probably faster than that!')=moment.duration(article.readingTime, 'seconds').humanize()
       span=', published '
       time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 

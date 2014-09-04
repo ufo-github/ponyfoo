@@ -1,7 +1,6 @@
 'use strict';
 
 var articleService = require('../../services/article');
-var toJSON = require('./lib/toJSON');
 
 module.exports = function (req, res, next) {
   var query = { status: 'published' };
@@ -13,7 +12,7 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         title: 'Archives',
-        articles: articles.map(toJSON)
+        articles: articles.map(articleService.toJSON)
       }
     };
     next();

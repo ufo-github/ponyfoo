@@ -8,7 +8,7 @@ function respond (err, res, next, validation) {
       next(err);
     }
   } else {
-    res.json(200, validation.model);
+    res.json(200, {});
   }
 }
 

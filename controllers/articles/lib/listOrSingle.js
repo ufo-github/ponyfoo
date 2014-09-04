@@ -1,6 +1,6 @@
 'use strict';
 
-var toJSON = require('./toJSON');
+var articleService = require('../../../services/article');
 
 function factory (res, next) {
   return function listOrSingle (err, articles) {
@@ -16,9 +16,9 @@ function factory (res, next) {
     if (article) {
       model.full = true;
       model.title = article.title;
-      model[key] = toJSON(article);
+      model[key] = articleService.toJSON(article);
     } else {
-      model[key] = articles.map(toJSON);
+      model[key] = articles.map(articleService.toJSON);
     }
     next();
   };

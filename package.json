@@ -33,7 +33,7 @@
     "contra": "^1.6.10",
     "cookie-parser": "^1.1.0",
     "dominus": "^2.0.6",
-    "estimate": "^0.1.22",
+    "estimate": "^1.0.0",
     "express": "^4.1.2",
     "express-session": "^1.2.0",
     "flexarea": "^1.0.25",

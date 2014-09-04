@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
+var estimate = require('estimate');
 var env = require('../lib/env');
 var Article = require('../models/Article');
 var Subscriber = require('../models/Subscriber');
@@ -107,7 +108,17 @@ function tweet (article, done) {
   done();
 }
 
+function toJSON (article) {
+  var text = [article.introductionHtml, article.bodyHtml].join(' ');
+  var json = article.toJSON();
+
+  json.readingTime = estimate.text(text);
+
+  return json;
+}
+
 module.exports = {
   find: find,
-  campaign: campaign
+  campaign: campaign,
+  toJSON: toJSON
 };

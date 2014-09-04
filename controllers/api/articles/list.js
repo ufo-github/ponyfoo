@@ -1,6 +1,7 @@
 'use strict';
 
 var Article = require('../../../models/Article');
+var articleService = require('../../../services/article');
 
 module.exports = function (req, res, next) {
   var query = {};
@@ -11,6 +12,6 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.json(200, { articles: articles });
+    res.json(200, { articles: articles.map(articleService.toJSON) });
   }
 };

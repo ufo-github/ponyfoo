@@ -13,7 +13,6 @@ TODO
 - reply to comments
 - comment emails
 - emails?
-- reading time estimate
 - figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
