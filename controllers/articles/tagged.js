@@ -3,7 +3,7 @@
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
-var separator = /[+/,_: -]+/ig;
+var separator = /[+/,_: ]+/ig;
 
 module.exports = function (req, res, next) {
   var tags = req.params.tags.split(separator);

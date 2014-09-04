@@ -1,9 +1,18 @@
 .mc-name,
 .mc-email,
 .mc-site
-  display inline-block
+  display block
   padding 10px 8px
-  width 300px
+  margin-bottom 15px
+  width 100%
 
 .mc-preview
   margin 20px 0
+
+@media screen and (min-width: 768px)
+  .mc-name,
+  .mc-email,
+  .mc-site
+    display inline-block
+    width 300px
+    margin-bottom 0

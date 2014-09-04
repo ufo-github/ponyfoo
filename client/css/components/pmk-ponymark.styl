@@ -1,0 +1,35 @@
+@import 'node_modules/ponymark/src/ponymark'
+@import 'node_modules/ponymark/src/highlight'
+
+.pmk-buttons
+  text-align center
+
+.pmk-button
+  padding 10px
+
+.pmk-spacer,
+.pmk-image-button,
+.pmk-olist-button,
+.pmk-ulist-button,
+.pmk-heading-button,
+.pmk-hr-button,
+.pmk-undo-button,
+.pmk-redo-button
+  display none
+
+@media screen and (min-width: 768px)
+  .pmk-buttons
+    text-align inherit
+
+  .pmk-button
+    padding 2px
+
+  .pmk-spacer,
+  .pmk-image-button,
+  .pmk-olist-button,
+  .pmk-ulist-button,
+  .pmk-heading-button,
+  .pmk-hr-button,
+  .pmk-undo-button,
+  .pmk-redo-button
+    display inline-block

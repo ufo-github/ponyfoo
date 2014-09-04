@@ -1,6 +1,6 @@
 .mm-comments
-  margin 0 -25px
-  padding 25px 0
+  margin 0 -10px -10px
+  padding-top 25px
   background-color c-background
 
 .mm-comment,
@@ -13,6 +13,9 @@
 
 .mm-author
   float right
+  margin-top -15px
+  margin-right -15px
+  padding-left 10px
 
 .mm-author-name
   vertical-align super
@@ -24,10 +27,9 @@
   border-radius 6px
   transition box-shadow 0.5s ease-in-out
 
-a:hover .mm-gravatar
+.mm-author-site:hover .mm-gravatar
   box-shadow 1px 2px 1px c-pink
-
 
 @media screen and (min-width: 768px)
   .mm-comments
-    font-size inherit
+    margin 0 -25px -25px
