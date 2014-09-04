@@ -2,7 +2,7 @@
 
 var moment = require('moment');
 var Article = require('../../models/Article');
-var articleService = require('../../models/article');
+var articleService = require('../../services/article');
 var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 
 module.exports = function (req, res, next) {
