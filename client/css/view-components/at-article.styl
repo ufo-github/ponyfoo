@@ -17,9 +17,6 @@
   font-style italic
   color c-red-shadow
 
-.at-tags-label
-  display none
-
 .at-full
   text-align center
 
@@ -34,48 +31,77 @@
     color #fff
 
 .at-siblings
+  margin-top 20px
   text-align center
+
+.at-prev,
+.at-next
+  display block
   margin-bottom 20px
 
-.at-prev-container,
-.at-next-container
-  margin-top 20px
+  &:hover span
+    text-decoration underline
+
+.at-prev-anchor
+  margin-right 4px
+
+.at-next-anchor
+  margin-left 4px
+
+.at-prev-anchor,
+.at-next-anchor
+  display inline-block
+  vertical-align middle
+  user-select none
+  white-space nowrap
 
 .at-prev-text,
 .at-next-text
-  max-width 100%
-  display block
-  text-overflow ellipsis
+  display inline-block
+  vertical-align middle
   white-space nowrap
   overflow hidden
 
-.at-prev:before
-  content '« '
+.at-related
+  padding 15px
+  margin-top 20px
+  background-color c-strongish
+  box-shadow 1px 1px 1px c-border
 
-.at-next:after
-  content ' »'
+.at-related-item
+  margin-top 20px
+
+  &:first-child
+    margin-top 0
+
+.at-related-header
+  margin-top 0
+  display none
 
 @media screen and (min-width: 768px)
   .at-title
     text-align inherit
 
-  .at-meta,
-  .at-tags-label
+  .at-meta
     display inherit
 
-  .at-prev-container
+  .at-prev
+    float left
     text-align left
     margin-right 10px
 
-  .at-next-container
+  .at-next
+    float right
     text-align right
-
-  .at-prev-container,
-  .at-next-container
-    vertical-align top
-    display inline-block
-    max-width 48%
 
   .at-prev,
   .at-next
-    max-width 100%
+    display inline-block
+    margin-bottom 0
+    max-width calc(50% - 5px)
+
+  .at-next-text
+    text-align right
+
+  .at-related-header
+    display block

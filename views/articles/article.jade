@@ -32,28 +32,27 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
         a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article
 
   footer
-    if full && article.related.length
-      section.at-related
-        p Related articles
-        ul
-          each related in article.related
-            li
-              a(href=related.permalink, aria-label='Read the article!')=related.title
-
-    span.at-tags-label='Tagged: '
     include ../partials/tags
 
     if full
-      section.at-siblings
-        div.at-prev-container
-          if article.prev
-            a.at-prev(href=article.prev.permalink, rel='prev', aria-label='Read the previous article!')
-              span.at-prev-text=article.prev.title
+      if article.related.length
+        section.at-related
+          p.at-related-header Browse related articles!
+          ul
+            each related in article.related
+              li.at-related-item
+                a(href=related.permalink, aria-label='Read the article!')=related.title
 
-        div.at-next-container
-          if article.next
-            a.at-next.hint-before(href=article.next.permalink, rel='next', aria-label='Read the next article!')
-              span.at-next-text=article.next.title
+      section.at-siblings.uv-clearfix
+        if article.prev
+          a.at-prev(href=article.prev.permalink, rel='prev', aria-label='Read the previous article!')
+            span.at-prev-anchor «
+            span.at-prev-text=article.prev.title
+
+        if article.next
+          a.at-next.hint-before(href=article.next.permalink, rel='next', aria-label='Read the next article!')
+            span.at-next-text=article.next.title
+            span.at-next-anchor »
 
 if full
   include comments
