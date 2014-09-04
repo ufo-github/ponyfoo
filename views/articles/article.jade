@@ -4,7 +4,7 @@
 - modified = moment(article.updated)
 - created = moment(article.created)
 
-article.at-article(itemscope, itemtype='http://schema.org/BlogPosting')
+article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting')
   meta(itemprop='dateCreated', content=created.format())
   meta(itemprop='datePublished', content=when.format())
   meta(itemprop='dateModified', content=modified.format())
@@ -28,8 +28,8 @@ article.at-article(itemscope, itemtype='http://schema.org/BlogPosting')
     if full
       section.md-markdown!=article.bodyHtml
     else
-      section
-        a(href=article.permalink) Read the full article
+      section.at-full
+        a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article
 
   footer
     if full && article.related.length
@@ -38,18 +38,20 @@ article.at-article(itemscope, itemtype='http://schema.org/BlogPosting')
         ul
           each related in article.related
             li
-              a(href=related.permalink, data-hint='Navigate to related article!')=related.title
+              a(href=related.permalink, aria-label='Read the article!')=related.title
 
     span.at-tags-label='Tagged: '
     include ../partials/tags
 
     if full
       section.at-siblings
-        if article.prev
-          a.at-prev(href=article.prev.permalink, rel='prev', data-hint='Navigate to previous article!')=article.prev.title
+        div.at-prev-container
+          if article.prev
+            a.at-prev(href=article.prev.permalink, rel='prev', aria-label='Read the previous article!')=article.prev.title
 
-        if article.next
-          a.at-next(href=article.next.permalink, rel='next', data-hint='Navigate to next article!')=article.next.title
+        div.at-next-container
+          if article.next
+            a.at-next.hint-before(href=article.next.permalink, rel='next', aria-label='Read the next article!')=article.next.title
 
 if full
   include comments

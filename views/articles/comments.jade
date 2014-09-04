@@ -1,6 +1,6 @@
 section#comments.mm-comments
   each comment in article.comments
-    article.mm-comment
+    article.mm-comment.ly-section
       header.mm-author
         if comment.site
           a.mm-author-site(href!=comment.site, aria-label=comment.site.replace(/https?:\/\//, ''))
@@ -12,7 +12,7 @@ section#comments.mm-comments
 
       section.mm-content.md-markdown!=comment.contentHtml
 
-  footer.mm-comment-create
+  footer.mm-comment-create.ly-section
     section.mc-container
       div.mc-author
         input.mc-name(placeholder='John Doe')

@@ -1,6 +1,3 @@
-.at-article
-  margin-bottom 25px
-
 .at-header
   margin-bottom 15px
 
@@ -23,6 +20,37 @@
 .at-tags-label
   display none
 
+.at-full
+  text-align center
+
+.at-full-button
+  display inline-block
+  padding 16px
+  background-color c-pink
+  box-shadow 1px 1px 1px c-border
+  color #fff
+
+  &:visited
+    color #fff
+
+.at-siblings
+  text-align center
+  margin-bottom 20px
+
+.at-prev-container,
+.at-next-container
+  margin-top 20px
+
+.at-prev,
+.at-next
+  display inline-block
+
+.at-prev:before
+  content '« '
+
+.at-next:after
+  content ' »'
+
 @media screen and (min-width: 768px)
   .at-title
     text-align inherit
@@ -30,3 +58,14 @@
   .at-meta,
   .at-tags-label
     display inherit
+
+  .at-prev-container
+    text-align left
+    margin-right 10px
+
+  .at-next-container
+    text-align right
+
+  .at-prev-container,
+  .at-next-container
+    width calc(50% - 5px)
