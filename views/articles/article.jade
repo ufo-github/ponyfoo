@@ -4,7 +4,7 @@
 - modified = moment(article.updated)
 - created = moment(article.created)
 
-article(itemscope, itemtype='http://schema.org/BlogPosting')
+article.at-article(itemscope, itemtype='http://schema.org/BlogPosting')
   meta(itemprop='dateCreated', content=created.format())
   meta(itemprop='datePublished', content=when.format())
   meta(itemprop='dateModified', content=modified.format())

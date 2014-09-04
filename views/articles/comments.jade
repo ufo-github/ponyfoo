@@ -1,9 +1,18 @@
-section.mm-comments
+section#comments.mm-comments
   each comment in article.comments
     article.mm-comment
+      header.mm-author
+        if comment.site
+          a(href!=comment.site, aria-label=comment.site.replace(/https?:\/\//, ''))
+            span.mm-author-name=comment.author
+            img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+        else
+          span.mm-author-name=comment.author
+          img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+
       section.mm-content.md-markdown!=comment.contentHtml
 
-  footer
+  footer.mm-comment-create
     section.mc-container
       input.mc-name(placeholder='John Doe')
       input.mc-email(placeholder='hello@johndoe.io')
