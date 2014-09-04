@@ -7,13 +7,8 @@ var feedService = require('../../services/feed');
 var sitemapService = require('../../services/sitemap');
 var Article = require('../Article');
 
-Article.schema.virtual('permalink').get(computePermalink);
 Article.schema.pre('save', beforeSave);
 Article.schema.post('save', afterSave);
-
-function computePermalink () {
-  return '/articles/' + this.slug;
-}
 
 function computeSignature (a) {
   return cryptoService.md5([a.title, a.status, a.introduction, a.body].concat(a.tags).join(' '));

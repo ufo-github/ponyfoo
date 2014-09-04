@@ -2,6 +2,7 @@
 
 var moment = require('moment');
 var Article = require('../../models/Article');
+var articleService = require('../../models/article');
 var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 
 module.exports = function (req, res, next) {
@@ -14,16 +15,14 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         title: 'Article Review',
-        articles: articles.map(hydrate)
+        articles: articles.map(articleService.toJSON).map(hydrate)
       }
     };
     next();
   }
 };
 
-function hydrate (document) {
-  var article = document.toJSON();
-
+function hydrate (article) {
   article._ = {};
 
   var when = moment(article.publication);

@@ -67,7 +67,7 @@ function email (article, done) {
       intro: 'Hot off the press article on Pony Foo!',
       article: {
         title: article.title,
-        permalink: article.permalink,
+        permalink: '/' + article.slug,
         tags: article.tags,
         introductionHtml: data.html
       },
@@ -97,26 +97,27 @@ function tweet (article, done) {
     '"%s" contains crisp new words! %s',
     '"%s" is hot off the press! %s',
     'Extra! Extra! "%s" has just come out! %s',
-    '"%s" has just been published %s',
-    'Just out! "%s" %s'
+    '"%s" has just been published! %s',
+    'This just out! "%s" %s'
   ];
   var fmt = _.sample(formats);
   var tag = article.tags[0].replace(/-/g, '');
-  var links = util.format('%s%s #%s', authority, article.permalink, tag);
+  var links = util.format('%s/%s #%s', authority, article.slug, tag);
   var status = util.format(fmt, article.title, links);
   twitterService.tweet(status, done);
   done();
 }
 
-function toJSON (article) {
-  var text = [article.introductionHtml, article.bodyHtml].join(' ');
-  var json = article.toJSON();
+function toJSON (source) {
+  var text = [source.introductionHtml, source.bodyHtml].join(' ');
+  var article = source.toJSON();
 
-  json.readingTime = estimate.text(text);
+  article.readingTime = estimate.text(text);
+  article.permalink = '/' + article.slug;
 
   // TODO arrange comments in reasonable model view org.
 
-  return json;
+  return article;
 }
 
 module.exports = {

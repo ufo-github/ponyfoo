@@ -58,7 +58,7 @@ function generate (articles, done) {
       feed.item({
         title: article.title,
         description: absolutes[article._id],
-        url: authority + article.permalink,
+        url: authority + '/' + article.slug,
         categories: article.tags,
         author: contact,
         date: moment(article.publication).toDate()

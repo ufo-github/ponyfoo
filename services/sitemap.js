@@ -42,7 +42,7 @@ function tagUrl (tag) {
 }
 
 function articleUrl (article) {
-  return { url: article.permalink, changeFreq:' weekly', priority: 1, lastmod: toLastMod(article.updated) };
+  return { url: '/' + article.slug, changeFreq:' weekly', priority: 1, lastmod: toLastMod(article.updated) };
 }
 
 function toObject (article) {

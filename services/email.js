@@ -5,8 +5,7 @@ var path = require('path');
 var campaign = require('campaign');
 var winston = require('winston');
 var env = require('../lib/env');
-var production = env('NODE_ENV') === 'production';
-var staging = env('NODE_ENV') === 'staging';
+var mode = env('MANDRILL_MODE');
 var client = createClient();
 var defaults = {
   domain: {
@@ -28,9 +27,9 @@ function createClient () {
   var options = {
     templateEngine: require('campaign-jade')
   };
-  if (staging) { // staging environments should trap emails
+  if (mode === 'trap') { // staging environments should trap emails
     options.trap = true;
-  } else if (!production) { // during development, there's no reason to send any emails
+  } else if (mode !== 'send') { // during development, there's no reason to send any emails
     options.provider = campaign.providers.terminal();
   }
   return campaign(options);
