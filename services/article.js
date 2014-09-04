@@ -114,6 +114,8 @@ function toJSON (article) {
 
   json.readingTime = estimate.text(text);
 
+  // TODO arrange comments in reasonable model view org.
+
   return json;
 }
 
