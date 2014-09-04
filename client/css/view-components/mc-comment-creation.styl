@@ -9,10 +9,18 @@
 .mc-preview
   margin 20px 0
 
+.mc-author
+  font-size 0
+
 @media screen and (min-width: 768px)
+  .mc-name,
+  .mc-email
+    margin-right 15px
+
   .mc-name,
   .mc-email,
   .mc-site
     display inline-block
-    width 300px
     margin-bottom 0
+    font-size initial
+    width calc((100% / 3) - 10px)
