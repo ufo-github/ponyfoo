@@ -6,6 +6,7 @@ var campaign = require('campaign');
 var winston = require('winston');
 var env = require('../lib/env');
 var mode = env('MANDRILL_MODE');
+var apiKey = env('MANDRILL_API_KEY');
 var client = createClient();
 var defaults = {
   domain: {
@@ -25,6 +26,9 @@ var defaults = {
 
 function createClient () {
   var options = {
+    mandrill: {
+      apiKey: apiKey
+    },
     templateEngine: require('campaign-jade')
   };
   if (mode === 'trap') { // staging environments should trap emails
