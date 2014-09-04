@@ -47,11 +47,13 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
       section.at-siblings
         div.at-prev-container
           if article.prev
-            a.at-prev(href=article.prev.permalink, rel='prev', aria-label='Read the previous article!')=article.prev.title
+            a.at-prev(href=article.prev.permalink, rel='prev', aria-label='Read the previous article!')
+              span.at-prev-text=article.prev.title
 
         div.at-next-container
           if article.next
-            a.at-next.hint-before(href=article.next.permalink, rel='next', aria-label='Read the next article!')=article.next.title
+            a.at-next.hint-before(href=article.next.permalink, rel='next', aria-label='Read the next article!')
+              span.at-next-text=article.next.title
 
 if full
   include comments

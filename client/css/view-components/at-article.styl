@@ -41,9 +41,13 @@
 .at-next-container
   margin-top 20px
 
-.at-prev,
-.at-next
-  display inline-block
+.at-prev-text,
+.at-next-text
+  max-width 100%
+  display block
+  text-overflow ellipsis
+  white-space nowrap
+  overflow hidden
 
 .at-prev:before
   content '« '
@@ -68,4 +72,10 @@
 
   .at-prev-container,
   .at-next-container
-    width calc(50% - 5px)
+    vertical-align top
+    display inline-block
+    max-width 48%
+
+  .at-prev,
+  .at-next
+    max-width 100%
