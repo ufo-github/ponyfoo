@@ -1,28 +1,31 @@
 section#comments.mm-comments
   each thread in article.commentThreads
-    article.mm-thread.ly-section
-      each comment in thread
-        section.mm-comment
-          header.mm-author
-            if comment.site
-              a.mm-author-site(href!=comment.site, aria-label=comment.site.replace(/https?:\/\//, '') || false)
+    article.mm-thread
+      section.ly-section
+        each comment in thread
+          section.mm-comment
+            header.mm-author
+              -  site = comment.site.replace(/https?:\/\//, '');
+              if site
+                a.mm-author-site(href!=comment.site, aria-label=site)
+                  span.mm-author-name=comment.author
+                  img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+              else
                 span.mm-author-name=comment.author
                 img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
-            else
-              span.mm-author-name=comment.author
-              img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
 
-          section.mm-content.md-markdown!=comment.contentHtml
+            section.mm-content.md-markdown!=comment.contentHtml
 
-    footer.mm-thread-actions
-      button.mm-thread-reply Reply to Thread
+      footer.mm-thread-actions
+        button.mm-thread-reply(aria-label='Add your comment to this discussion thread') Reply to Thread
 
-  footer.mm-comment-create.ly-section
-    section.mc-container
+  footer.mm-footer
+    section.mc-composer.ly-section
       div.mc-author
         input.mc-name(placeholder='John Doe')
         input.mc-email(placeholder='hello@johndoe.io')
         input.mc-site(placeholder='johndoe.io (optional)')
       div.mc-content
       article.mc-preview.md-markdown
-      button.mc-send Publish Comment
+      button.mc-send(aria-label='Make your comment immediately available!') Publish Comment
+      a.mc-cancel-reply.uv-hidden(aria-label='Start a new discussion instead!') Cancel

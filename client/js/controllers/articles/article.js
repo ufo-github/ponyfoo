@@ -4,11 +4,11 @@ var $ = require('dominus');
 var comments = require('./comments');
 
 module.exports = function (viewModel) {
-  var container = $('.mc-container');
+  var composer = $('.mc-composer');
   var commentsModel = {
     article: viewModel.article,
     measly: viewModel.measly.layer({
-      context: container
+      context: composer
     })
   };
   comments(commentsModel);

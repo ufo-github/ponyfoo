@@ -8,7 +8,7 @@ var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var key = 'comment-draft';
 
 module.exports = function (viewModel) {
-  var container = $('.mc-container');
+  var composer = $('.mc-composer');
   var name = $('.mc-name');
   var email = $('.mc-email');
   var site = $('.mc-site');
@@ -18,10 +18,14 @@ module.exports = function (viewModel) {
   var serializeSlowly = throttle(serialize, 200);
   var pony = convertToPonyEditor(content, preview);
   var body = $('.pmk-input', content);
+  var comments = $('.mm-comments');
+  var cancelReply = $('.mc-cancel-reply');
+  var footer = $('.mm-footer');
 
-  container.on('keypress keydown keyup paste', serializeSlowly);
+  composer.on('keypress keydown keyup paste', serializeSlowly);
   send.on('click', comment);
-
+  comments.on('click', '.mm-thread-reply', attach);
+  cancelReply.on('click', detach);
   deserialize();
 
   function deserialize () {
@@ -48,6 +52,24 @@ module.exports = function (viewModel) {
     body.value('');
     serialize();
     raf(deserialize);
+  }
+
+  function attach (e) {
+    var button = $(e.target);
+    var thread = button.parents('.mm-thread');
+    var reply = thread.find('.mm-thread-reply');
+    var replies = $('.mm-thread-reply').but(reply);
+    thread.append(composer);
+    replies.removeClass('uv-hidden');
+    reply.addClass('uv-hidden');
+    cancelReply.removeClass('uv-hidden');
+  }
+
+  function detach () {
+    var replies = $('.mm-thread-reply');
+    footer.append(composer);
+    replies.removeClass('uv-hidden');
+    cancelReply.addClass('uv-hidden');
   }
 
   function comment () {

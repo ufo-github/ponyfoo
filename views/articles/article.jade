@@ -24,7 +24,7 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
       span=', published '
       time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 
-  section(itemprop='articleBody')
+  section.at-body(itemprop='articleBody')
     section.md-markdown(itemprop='about')!=article.introductionHtml
 
     if full
@@ -43,16 +43,16 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
           ul
             each related in article.related
               li.at-related-item
-                a(href=related.permalink, aria-label='Read the article!')=related.title
+                a(href='/articles/' + related.slug, aria-label='Read the article!')=related.title
 
       section.at-siblings.uv-clearfix
         if article.prev
-          a.at-prev(href=article.prev.permalink, rel='prev', aria-label='Read the previous article!')
+          a.at-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')
             span.at-prev-anchor «
             span.at-prev-text=article.prev.title
 
         if article.next
-          a.at-next.hint-before(href=article.next.permalink, rel='next', aria-label='Read the next article!')
+          a.at-next.hint-before(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')
             span.at-next-text=article.next.title
             span.at-next-anchor »
 
