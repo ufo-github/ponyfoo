@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
   var body = req.body;
   var validation = validate(body);
   if (validation.length) {
-    res.json(400, { messages: validation }); return;
+    res.status(400).json({ messages: validation }); return;
   }
   var model = validation.model;
 
@@ -24,18 +24,21 @@ module.exports = function (req, res, next) {
 
   function decisionTree (article, next) {
     if (!article) {
-      res.json(404, { messages: ['Article not found'] }); return;
+      res.status(404).json({ messages: ['Article not found'] }); return;
     }
     next(null, article);
   }
 
   function create (article, next) {
-    var parentId = model.parent;
     var parent;
+    var parentId = model.parent;
     if (parentId) {
-      parent = _.find(article.comments, { _id: parentId });
+      parent = article.comments.id(parentId);
+      if (!parent) {
+        res.status(404).json({ messages: ['The comment thread has been deleted!'] }); return;
+      }
       if (parent.parent) {
-        res.json(400, { messages: ['Comments can\'t be nested that deep!'] }); return;
+        res.status(400).json({ messages: ['Comments can\'t be nested that deep!'] }); return;
       }
     }
     model.contentHtml = markdownService.compile(model.content);

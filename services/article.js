@@ -123,10 +123,10 @@ function toJSON (source) {
 function threads (accumulator, comment) {
   var thread;
   if (comment.parent) {
-    thread = _.find(accumulator, { _id: comment.parent });
-    thread.push(comment);
+    thread = _.find(accumulator, { id: comment.parent });
+    thread.comments.push(comment);
   } else {
-    thread = [comment];
+    thread = { id: comment._id, comments: [comment] };
     accumulator.push(thread);
   }
   return accumulator;

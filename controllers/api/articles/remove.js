@@ -13,7 +13,7 @@ function remove (req, res, next) {
 
   function found (article, next) {
     if (!article) {
-      res.json(404, { messages: ['Article not found'] }); return;
+      res.status(404).json({ messages: ['Article not found'] }); return;
     }
     contra.concurrent([removal, unlinkLeft, unlinkRight], next);
 
@@ -46,7 +46,7 @@ function remove (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.json(200, {});
+    res.json({});
   }
 }
 

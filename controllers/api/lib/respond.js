@@ -8,12 +8,12 @@ function respond (err, res, next, validation) {
       next(err);
     }
   } else {
-    res.json(200, {});
+    res.json({});
   }
 }
 
 function invalid (res, validation) {
-  res.json(400, { messages: validation });
+  res.status(400).json({ messages: validation });
 }
 
 module.exports = respond;

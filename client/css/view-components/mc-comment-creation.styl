@@ -14,6 +14,9 @@
   font-size 14px
   margin-left 8px
 
+.mc-cancel-detail
+  display none
+
 @media screen and (min-width: 768px)
   .mc-author
     font-size 0
@@ -29,3 +32,10 @@
     font-size initial
     margin-bottom 0
     width calc((100% / 3) - 10px)
+
+  .mc-cancel-detail
+    display inline-block
+    margin-left 6px
+
+  .mc-cancel-reply:hover .mc-cancel-detail
+    text-decoration underline

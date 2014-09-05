@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!article) {
-      res.json(404, { messages: ['Article not found'] }); return;
+      res.status(404).json({ messages: ['Article not found'] }); return;
     }
     res.viewModel.model.article = article;
     next();

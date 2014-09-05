@@ -26,7 +26,7 @@ module.exports = function (req, res, next) {
     },
     function found (article, next) {
       if (!article) {
-        res.json(404, { messages: ['Article not found'] }); return;
+        res.status(404).json({ messages: ['Article not found'] }); return;
       }
       Object.keys(model).forEach(function (key) {
         article[key] = model[key];

@@ -1,8 +1,8 @@
 section#comments.mm-comments
   each thread in article.commentThreads
-    article.mm-thread
+    article.mm-thread(data-thread=thread.id.toString())
       section.ly-section
-        each comment in thread
+        each comment in thread.comments
           section.mm-comment
             header.mm-author
               -  site = comment.site.replace(/https?:\/\//, '');
@@ -28,4 +28,6 @@ section#comments.mm-comments
       div.mc-content
       article.mc-preview.md-markdown
       button.mc-send(aria-label='Make your comment immediately available!') Publish Comment
-      a.mc-cancel-reply.uv-hidden(aria-label='Start a new discussion instead!') Cancel
+      a.mc-cancel-reply.uv-hidden(aria-label='Start a new discussion instead!')
+        span Cancel Reply
+        em.mc-cancel-detail (creates a new thread)

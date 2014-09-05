@@ -62,7 +62,7 @@ function validate (model) {
   }
 
   function getParent () {
-    return model.parent ? new ObjectId(model.parent) : null;
+    return model.parent;
   }
 }
 

@@ -9,6 +9,6 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.json(200, {});
+    res.json({});
   }
 };

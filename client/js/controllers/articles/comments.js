@@ -77,7 +77,7 @@ module.exports = function (viewModel) {
     var model = {
       json: getCommentData()
     };
-    model.json.parent = null;
+    model.json.parent = send.parents('.mm-thread').attr('data-thread');
     viewModel.measly.put(endpoint, model).on('data', clear);
   }
 };

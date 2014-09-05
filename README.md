@@ -10,7 +10,8 @@ LAUNCH
 
 TODO
 
-- reply to comments
+- render comments immediately!
+- (css) render threads properly
 - comment emails
 - subscribe commenters
 - figure out partial cookie cutter
