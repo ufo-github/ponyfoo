@@ -12,7 +12,7 @@ TODO
 
 - reply to comments
 - comment emails
-- emails?
+- subscribe commenters
 - figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
