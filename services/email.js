@@ -9,7 +9,7 @@ var env = require('../lib/env');
 var mode = env('MANDRILL_MODE');
 var apiKey = env('MANDRILL_API_KEY');
 var from = env('MANDRILL_SENDER');
-var trap = env('MANDRILL_TRAP')
+var trap = env('MANDRILL_TRAP');
 var client = createClient();
 var defaults = {
   domain: {

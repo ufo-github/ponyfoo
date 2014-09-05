@@ -101,7 +101,7 @@ function tweet (article, done) {
     'This just out! "%s" %s'
   ];
   var fmt = _.sample(formats);
-  var tag = article.tags[0].replace(/-/g, '');
+  var tag = article.tags.slice(0, 2).join(' #').replace(/-/g, '');
   var links = util.format('%s/articles/%s #%s', authority, article.slug, tag);
   var status = util.format(fmt, article.title, links);
   twitterService.tweet(status, done);
@@ -115,9 +115,25 @@ function toJSON (source) {
   article.readingTime = estimate.text(text);
   article.permalink = '/articles/' + article.slug;
 
-  // TODO arrange comments in reasonable model view org.
+  article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);
 
   return article;
+}
+
+function threads (accumulator, comment) {
+  var thread;
+  if (comment.parent) {
+    thread = _.find(accumulator, { _id: comment.parent });
+    thread.push(comment);
+  } else {
+    thread = [comment];
+    accumulator.push(thread);
+  }
+  return accumulator;
+}
+
+function byPublication (a, b) {
+  return a.created - b.created;
 }
 
 module.exports = {

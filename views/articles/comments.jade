@@ -1,16 +1,21 @@
 section#comments.mm-comments
-  each comment in article.comments
-    article.mm-comment.ly-section
-      header.mm-author
-        if comment.site
-          a.mm-author-site(href!=comment.site, aria-label=comment.site.replace(/https?:\/\//, ''))
-            span.mm-author-name=comment.author
-            img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
-        else
-          span.mm-author-name=comment.author
-          img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+  each thread in article.commentThreads
+    article.mm-thread.ly-section
+      each comment in thread
+        section.mm-comment
+          header.mm-author
+            if comment.site
+              a.mm-author-site(href!=comment.site, aria-label=comment.site.replace(/https?:\/\//, '') || false)
+                span.mm-author-name=comment.author
+                img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+            else
+              span.mm-author-name=comment.author
+              img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
 
-      section.mm-content.md-markdown!=comment.contentHtml
+          section.mm-content.md-markdown!=comment.contentHtml
+
+    footer.mm-thread-actions
+      button.mm-thread-reply Reply to Thread
 
   footer.mm-comment-create.ly-section
     section.mc-container

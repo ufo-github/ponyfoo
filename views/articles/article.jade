@@ -10,7 +10,9 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
   meta(itemprop='dateModified', content=modified.format())
   meta(itemprop='keywords', content=article.tags.join(','))
   meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
-  meta(itemprop='interactionCount', content=article.comments.length + ' UserComments')
+
+  if article.comments && article.comments.length
+    meta(itemprop='interactionCount', content=article.comments.length + ' UserComments')
 
   header.at-header.uv-clearfix
     h1.at-title
