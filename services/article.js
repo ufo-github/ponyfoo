@@ -67,7 +67,7 @@ function email (article, done) {
       intro: 'Hot off the press article on Pony Foo!',
       article: {
         title: article.title,
-        permalink: '/' + article.slug,
+        permalink: '/articles/' + article.slug,
         tags: article.tags,
         introductionHtml: data.html
       },
@@ -102,7 +102,7 @@ function tweet (article, done) {
   ];
   var fmt = _.sample(formats);
   var tag = article.tags[0].replace(/-/g, '');
-  var links = util.format('%s/%s #%s', authority, article.slug, tag);
+  var links = util.format('%s/articles/%s #%s', authority, article.slug, tag);
   var status = util.format(fmt, article.title, links);
   twitterService.tweet(status, done);
   done();
@@ -113,7 +113,7 @@ function toJSON (source) {
   var article = source.toJSON();
 
   article.readingTime = estimate.text(text);
-  article.permalink = '/' + article.slug;
+  article.permalink = '/articles/' + article.slug;
 
   // TODO arrange comments in reasonable model view org.
 
