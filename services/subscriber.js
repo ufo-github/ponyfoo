@@ -19,9 +19,9 @@ function add (email, done) {
       if (existing) {
         next(); return;
       }
-      var subscriber = new Subscriber({ email: email }).save(saved);
+      new Subscriber({ email: email }).save(saved);
 
-      function saved (err) {
+      function saved (err, subscriber) {
         if (err) {
           next(err);
         } else {

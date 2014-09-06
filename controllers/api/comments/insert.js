@@ -4,6 +4,7 @@ var _ = require('lodash');
 var contra = require('contra');
 var Article = require('../../../models/Article');
 var Comment = require('../../../models/Comment');
+var User = require('../../../models/User');
 var validate = require('./lib/validate');
 var respond = require('../lib/respond');
 var markdownFatService = require('../../../services/markdownFat');
@@ -49,9 +50,38 @@ module.exports = function (req, res, next) {
     function saved (err) {
       if (!err) {
         subscriberService.add(model.email);
+        notify(article);
       }
       next(err);
     }
+  }
+
+  function getRecipients (article) {
+    var emails = [article.author.email];
+    var thread, op;
+    var parentId = model.parent;
+    if (parentId) {
+      op = article.comments.id(parentId);
+      thread = article.comments.filter(sameThread);
+      thread.unshift(op);
+      emails = emails.concat(_.pluck(thread, 'email'));
+    }
+    function sameThread (comment) {
+      return comment.parent && comment.parent.equals(parentId);
+    }
+    return _(emails).uniq().without(model.email).value();
+  }
+
+  function notify (article) {
+    contra.waterfall([
+      function (next) {
+        article.populate('author', next);
+      },
+      function (article, next) {
+        var emails = getRecipients(article);
+        console.log(emails);
+      }
+    ]);
   }
 
   function response (err) {

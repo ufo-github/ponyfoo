@@ -10,8 +10,9 @@ LAUNCH
 
 TODO
 
+- (mkt) send comment emails [not sending yet, just compiling recipients]
+- (mkt) since always sending out subscription invitations, make them nicer, add feature list.
 - (ux) render comments immediately!
-- (mkt) send comment emails
 - (astro) figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
@@ -20,6 +21,7 @@ TODO
 
 - not ALL the fields
 - migration script
+- (author) email composer with subject, intro, and markdown body
 
 
 POST-redeployment
