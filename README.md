@@ -10,11 +10,10 @@ LAUNCH
 
 TODO
 
-- render comments immediately!
-- (css) render threads properly
-- comment emails
-- subscribe commenters
-- figure out partial cookie cutter
+- (ux) render comments immediately!
+- (mkt) send comment emails
+- (mkt) subscribe commenters
+- (astro) figure out partial cookie cutter
   - add search input box
   - latest posts sidebar
     - add a button to '/articles/archives'

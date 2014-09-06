@@ -1,20 +1,19 @@
 section#comments.mm-comments
   each thread in article.commentThreads
     article.mm-thread(data-thread=thread.id.toString())
-      section.ly-section
-        each comment in thread.comments
-          section.mm-comment
-            header.mm-author
-              -  site = comment.site.replace(/https?:\/\//, '');
-              if site
-                a.mm-author-site(href!=comment.site, aria-label=site)
-                  span.mm-author-name=comment.author
-                  img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
-              else
+      each comment in thread.comments
+        section.mm-comment.ly-section
+          header.mm-author
+            -  site = comment.site.replace(/https?:\/\//, '');
+            if site
+              a.mm-author-site(href!=comment.site, aria-label=site, rel='nofollow', target='_blank')
                 span.mm-author-name=comment.author
                 img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+            else
+              span.mm-author-name=comment.author
+              img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
 
-            section.mm-content.md-markdown!=comment.contentHtml
+          section.mm-content.md-markdown!=comment.contentHtml
 
       footer.mm-thread-actions
         button.mm-thread-reply(aria-label='Add your comment to this discussion thread') Reply to Thread

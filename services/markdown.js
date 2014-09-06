@@ -25,13 +25,16 @@ var iframes = [
   'http://jsfiddle.net/',
   'http://embed.plnkr.co/'
 ];
-var filters = { link: link, image: image };
+
 var options = {
   smartLists: true,
   ultralight: true,
   ultrasanitize: true,
-  renderer: ultramarked.renderer(filters),
-  iframes: iframes
+  iframes: iframes,
+  renderer: ultramarked.renderer({
+    link: link,
+    image: image
+  })
 };
 
 module.exports = {

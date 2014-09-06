@@ -6,7 +6,7 @@ var Article = require('../../../models/Article');
 var Comment = require('../../../models/Comment');
 var validate = require('./lib/validate');
 var respond = require('../lib/respond');
-var markdownService = require('../../../services/markdown');
+var markdownFatService = require('../../../services/markdownFat');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -41,7 +41,7 @@ module.exports = function (req, res, next) {
         res.status(400).json({ messages: ['Comments can\'t be nested that deep!'] }); return;
       }
     }
-    model.contentHtml = markdownService.compile(model.content);
+    model.contentHtml = markdownFatService.compileExternalizeLinks(model.content);
     article.comments.push(model);
     article.save(saved);
 

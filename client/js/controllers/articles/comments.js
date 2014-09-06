@@ -59,9 +59,8 @@ module.exports = function (viewModel) {
     var thread = button.parents('.mm-thread');
     var reply = thread.find('.mm-thread-reply');
     var replies = $('.mm-thread-reply').but(reply);
-    thread.append(composer);
     replies.removeClass('uv-hidden');
-    reply.addClass('uv-hidden');
+    reply.addClass('uv-hidden').parent().before(composer);
     cancelReply.removeClass('uv-hidden');
   }
 
@@ -70,6 +69,7 @@ module.exports = function (viewModel) {
     footer.append(composer);
     replies.removeClass('uv-hidden');
     cancelReply.addClass('uv-hidden');
+    composer.find('.vw-validation').remove();
   }
 
   function comment () {

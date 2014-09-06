@@ -1,39 +1,28 @@
 'use strict';
 
 var url = require('url');
-var jsdom = require('jsdom');
+var cheerio = require('cheerio');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
 
 function absolutize (html, done) {
-  jsdom.env(html, ready);
+  var $ = cheerio.load(html);
 
-  function ready (err, window) {
-    if (err) {
-      done(err); return;
-    }
-    var doc = window.document;
-    absolutizeOn(doc.querySelectorAll('a[href]'), 'href');
-    absolutizeOn(doc.querySelectorAll('img[src]'), 'src');
-    absolutizeOn(doc.querySelectorAll('iframe[src]'), 'src');
-    absolutizeOn(doc.querySelectorAll('script[src]'), 'src');
-    absolutizeOn(doc.querySelectorAll('link[href]'), 'href');
-    done(null, doc.body.innerHTML);
-    window.close();
-  }
-}
+  $('a[href]').each(resolve('href'));
+  $('img[src]').each(resolve('src'));
+  $('iframe[src]').each(resolve('src'));
+  $('script[src]').each(resolve('src'));
+  $('link[href]').each(resolve('href'));
 
-function absolutizeOn (elements, prop) {
-  var i;
-  var href;
-  var absolute;
+  done(null, $.html());
 
-  for (i = 0; i < elements.length; i++) {
-    href = elements[i].getAttribute(prop);
-    if (href) {
-      absolute = url.resolve(authority, href);
-      elements[i].setAttribute(prop, absolute);
-    }
+  function resolve (prop) {
+    return function each () {
+      var elem = $(this);
+      var href = elem.attr(prop);
+      var absolute = url.resolve(authority, href);
+      elem.attr(prop, absolute);
+    };
   }
 }
 
