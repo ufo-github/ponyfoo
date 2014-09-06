@@ -23,7 +23,8 @@ var defaults = {
     landing: {
       url: 'http://ponyfoo.com',
       name: 'Pony Foo'
-    }
+    },
+    name: 'Pony Foo'
   }
 };
 

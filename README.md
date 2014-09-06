@@ -12,7 +12,6 @@ TODO
 
 - (ux) render comments immediately!
 - (mkt) send comment emails
-- (mkt) subscribe commenters
 - (astro) figure out partial cookie cutter
   - add search input box
   - latest posts sidebar

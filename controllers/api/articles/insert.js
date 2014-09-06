@@ -1,12 +1,8 @@
 'use strict';
 
 var contra = require('contra');
-var util = require('util');
-var moment = require('moment');
-var validator = require('validator');
 var Article = require('../../../models/Article');
 var articleService = require('../../../services/article');
-var textService = require('../../../services/text');
 var respond = require('../lib/respond');
 var validate = require('./lib/validate');
 var publish = require('./lib/publish');

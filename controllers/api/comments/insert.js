@@ -7,6 +7,7 @@ var Comment = require('../../../models/Comment');
 var validate = require('./lib/validate');
 var respond = require('../lib/respond');
 var markdownFatService = require('../../../services/markdownFat');
+var subscriberService = require('../../../services/subscriber');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -46,6 +47,9 @@ module.exports = function (req, res, next) {
     article.save(saved);
 
     function saved (err) {
+      if (!err) {
+        subscriberService.add(model.email);
+      }
       next(err);
     }
   }

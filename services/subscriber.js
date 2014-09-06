@@ -8,6 +8,8 @@ var Subscriber = require('../models/Subscriber');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
 
+function noop () {}
+
 function add (email, done) {
   contra.waterfall([
     function findExisting (next) {
@@ -27,7 +29,7 @@ function add (email, done) {
         }
       }
     }
-  ], done);
+  ], done || noop);
 }
 
 function confirmation (subscriber, done) {
