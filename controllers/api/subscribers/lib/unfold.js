@@ -8,13 +8,13 @@ var Subscriber = require('../../../../models/Subscriber');
 var cryptoService = require('../../../../services/crypto');
 
 function unfold (req, res, done) {
-  var id = _.first(req.params.hash, 24);
-  var email = _.rest(req.params.hash, 24);
+  var id = _.first(req.params.hash, 24).join('');
+  var email = _.rest(req.params.hash, 24).join('');
 
   contra.waterfall([findExisting, validateThenRemove], done);
 
   function findExisting (next) {
-    Subscriber.findOne({ _id: new ObjectId(id) }, next);
+    Subscriber.findOne({ _id: id }, next);
   }
 
   function validateThenRemove (subscriber, next) {

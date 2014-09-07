@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var util = require('util');
 var path = require('path');
 var campaign = require('campaign');
 var jade = require('campaign-jade');
@@ -43,16 +44,17 @@ function createClient () {
 }
 
 function send (type, model, done) {
-  var extended = _.assign({}, defaults, model);
+  var extended = _.merge({}, defaults, model);
   var template = path.resolve('views/emails', type);
   client.send(template, extended, done);
 }
 
 function logger () {
   var args = Array.prototype.slice.call(arguments);
-  var err = args.shift();
+  var err = args.shift(), message;
   if (err) {
-    winston.error('Email sending failed', {
+    message = util.format('Email sending failed: %s', err.message || '\n' + err.stack);
+    winston.error(message, {
       err: err,
       args: args
     });

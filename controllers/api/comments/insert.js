@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var util = require('util');
 var contra = require('contra');
 var winston = require('winston');
 var Article = require('../../../models/Article');
@@ -19,6 +20,7 @@ module.exports = function (req, res, next) {
     res.status(400).json({ messages: validation }); return;
   }
   var model = validation.model;
+  var comment;
 
   contra.waterfall([findArticle, decisionTree, create], response);
 
@@ -46,12 +48,13 @@ module.exports = function (req, res, next) {
       }
     }
     model.contentHtml = markdownFatService.compileExternalizeLinks(model.content);
-    article.comments.push(model);
+    comment = article.comments.create(model);
+    article.comments.push(comment);
     article.save(saved);
 
     function saved (err) {
       if (!err) {
-        subscriberService.add(model.email);
+        subscriberService.add(comment.email);
         notify(article);
       }
       next(err);
@@ -78,7 +81,7 @@ module.exports = function (req, res, next) {
     function calculate (article, next) {
       var emails = [article.author.email];
       var thread, op;
-      var parentId = model.parent;
+      var parentId = comment.parent;
       if (parentId) {
         op = article.comments.id(parentId);
         thread = article.comments.filter(sameThread);
@@ -88,12 +91,12 @@ module.exports = function (req, res, next) {
       function sameThread (comment) {
         return comment.parent && comment.parent.equals(parentId);
       }
-      next(null, _(emails).uniq().without(model.email).value());
+      next(null, _(emails).uniq().without(comment.email).value());
     }
   }
 
   function absolutizeHtml (next) {
-    htmlService.absolutize(model.contentHtml, next);
+    htmlService.absolutize(comment.contentHtml, next);
   }
 
   function send (err, data) {
@@ -101,18 +104,22 @@ module.exports = function (req, res, next) {
       winston.info('An error occurred when preparing comment email notifications', err);
       return;
     }
-    var model = {
+    var permalinkToArticle =  '/articles/' + data.article.slug;
+    var email = {
+      subject: util.format('Fresh comments on "%s"!', data.article.title),
+      intro: 'Someone posted a comment on a thread you\'re watching!',
       comment: {
-        author: model.author,
+        author: comment.author,
         content: data.html,
-        site: model.site
+        site: comment.site,
+        permalink: permalinkToArticle + '#comment-' + comment._id
       },
       article: {
         title: data.article.title,
-        permalink: '/articles/' + data.article.slug
+        permalink: permalinkToArticle
       }
     };
-    subscriberService.send(data.recipients, 'comment-published', model);
+    subscriberService.send(data.recipients, 'comment-published', email);
   }
 
   function response (err) {
