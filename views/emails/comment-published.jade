@@ -1,11 +1,11 @@
 div
-  a(href!=article.permalink)
+  a(href!=domain.authority + article.permalink)
     h1=article.title
 
 p(style='background-color: #fff; padding: 8px; border-bottom: 2px solid #e92c6c;')
   -  site = comment.site.replace(/https?:\/\//, '');
   if site
-    a(href!=site)
+    a(href!=comment.site)
       img(src='cid:gravatar', alt='', style='vertical-align: middle;')
       span=' ' + comment.author
   else

@@ -31,6 +31,7 @@ var defaults = {
 
 function createClient () {
   var options = {
+    headerImage: path.resolve('./resources/emails/header.png'),
     templateEngine: jade,
     mandrill: { apiKey: apiKey },
     from: from

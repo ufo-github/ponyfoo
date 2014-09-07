@@ -29,12 +29,14 @@ module.exports = function (viewModel) {
   deserialize();
 
   function deserialize () {
-    var data = storage.get(key) || {};
-    name.value(data.name);
-    email.value(data.email);
-    site.value(data.site);
-    body.value(data.content);
-    pony.refresh();
+    var data = storage.get(key);
+    if (data) {
+      name.value(data.name);
+      email.value(data.email);
+      site.value(data.site);
+      body.value(data.content);
+      pony.refresh();
+    }
   }
 
   function serialize () { storage.set(key, getCommentData()); }

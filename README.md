@@ -10,7 +10,12 @@ LAUNCH
 
 TODO
 
-- (mkt) since always sending out subscription invitations, make them nicer, add feature list.
+- emails
+  - header
+  - gravatars
+  - unsubscribe on all emails
+  - (mkt) since always sending out subscription invitations, make them nicer, add feature list.
+
 - (ux) render comments immediately!
 - (astro) figure out partial cookie cutter
   - add search input box
