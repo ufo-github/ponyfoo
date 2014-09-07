@@ -11,8 +11,7 @@ LAUNCH
 TODO
 
 - emails
-  - header
-  - gravatars
+  - fix base64 embedded images!
   - (mkt) since always sending out subscription invitations, make them nicer, add feature list.
 
 - (ux) render comments immediately!
