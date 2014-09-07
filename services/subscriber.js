@@ -71,7 +71,11 @@ function send (recipients, template, partialModel, done) {
     function patchModel (documents, next) {
       var subscribers = recipients ? documents.filter(isRecipient) : documents;
       var to = _.pluck(subscribers, 'email');
-      var mandrill = { locals: subscribers.map(locals) };
+      var mandrill = {
+        merge: {
+          locals: subscribers.map(locals)
+        }
+      };
       var model = _.merge({}, partialModel, { to: to, mandrill: mandrill });
       emailService.send(template, model, next);
     }
@@ -90,11 +94,15 @@ function locals (subscriber) {
   return {
     email: subscriber.email,
     model: {
-      unsubscribe: util.format('%s/api/subscribers/%s/unsubscribe', authority, getHash(subscriber))
+      unsubscribe_html: getUnsubscribeHtml(subscriber)
     }
   };
 }
 
+function getUnsubscribeHtml (subscriber) {
+  var href = util.format('%s/api/subscribers/%s/unsubscribe', authority, getHash(subscriber));
+  return util.format('<a href="%s">unsubscribe</a>', href);
+}
 
 module.exports = {
   add: add,

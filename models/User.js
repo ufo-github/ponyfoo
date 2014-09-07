@@ -3,6 +3,7 @@
 var util = require('util');
 var mongoose = require('mongoose');
 var cryptoService = require('../services/crypto');
+var gravatarService = require('../services/gravatar');
 var schema = new mongoose.Schema({
   email: { type: String, require: true, index: { unique: true }, trim: true },
   password: { type: String, require: true },
@@ -21,8 +22,7 @@ schema.pre('save', beforeSave);
 schema.methods.validatePassword = validatePassword;
 
 function computeGravatar () {
-  var hash = cryptoService.md5(this.email);
-  return util.format('http://www.gravatar.com/avatar/%s?d=identicon&r=PG', hash);
+  return gravatarService.format(this.email);
 }
 
 function beforeSave (done) {

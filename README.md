@@ -13,7 +13,6 @@ TODO
 - emails
   - header
   - gravatars
-  - unsubscribe on all emails
   - (mkt) since always sending out subscription invitations, make them nicer, add feature list.
 
 - (ux) render comments immediately!
@@ -23,6 +22,7 @@ TODO
     - add a button to '/articles/archives'
     - add a button to subscribe
 
+- (taunus) support #hash in URL + historyAPI, ignore when talking to router
 - not ALL the fields
 - migration script
 - (author) email composer with subject, intro, and markdown body

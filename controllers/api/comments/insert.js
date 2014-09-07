@@ -9,9 +9,10 @@ var Comment = require('../../../models/Comment');
 var User = require('../../../models/User');
 var validate = require('./lib/validate');
 var respond = require('../lib/respond');
+var htmlService = require('../../../services/html');
+var gravatarService = require('../../../services/gravatar');
 var subscriberService = require('../../../services/subscriber');
 var markdownFatService = require('../../../services/markdownFat');
-var htmlService = require('../../../services/html');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -64,7 +65,8 @@ module.exports = function (req, res, next) {
   function notify (article) {
     contra.concurrent({
       recipients: contra.curry(findRecipients, article),
-      html: absolutizeHtml
+      html: absolutizeHtml,
+      gravatar: fetchGravatar
     }, function prepare (err, data) {
       data.article = article;
       send(err, data);
@@ -99,6 +101,16 @@ module.exports = function (req, res, next) {
     htmlService.absolutize(comment.contentHtml, next);
   }
 
+  function fetchGravatar (next) {
+    gravatarService.fetch(comment.email, function (err, gravatar) {
+      if (err) {
+        next(err); return;
+      }
+      gravatar.name = 'gravatar';
+      next(null, gravatar);
+    });
+  }
+
   function send (err, data) {
     if (err) {
       winston.info('An error occurred when preparing comment email notifications', err);
@@ -117,7 +129,8 @@ module.exports = function (req, res, next) {
       article: {
         title: data.article.title,
         permalink: permalinkToArticle
-      }
+      },
+      images: [data.gravatar]
     };
     subscriberService.send(data.recipients, 'comment-published', email);
   }

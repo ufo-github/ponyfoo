@@ -1,8 +1,7 @@
 'use strict';
 
-var util = require('util');
 var mongoose = require('mongoose');
-var cryptoService = require('../../services/crypto');
+var gravatarService = require('../../services/gravatar');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
@@ -17,9 +16,7 @@ var schema = new mongoose.Schema({
 schema.virtual('gravatar').get(computeGravatar);
 
 function computeGravatar () {
-  var fmt = 'http://www.gravatar.com/avatar/%s?d=identicon&r=PG';
-  var hash = cryptoService.md5(this.email);
-  return util.format(fmt, hash);
+  return gravatarService.format(this.email);
 }
 
 module.exports = schema;
