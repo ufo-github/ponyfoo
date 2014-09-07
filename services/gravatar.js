@@ -26,7 +26,7 @@ function fetch (email, done) {
     }
 
     done(null, {
-      mime: res.type,
+      mime: res.headers['content-type'],
       data: new Buffer(body, 'binary').toString('base64')
     });
   }
@@ -34,5 +34,6 @@ function fetch (email, done) {
 
 
 module.exports = {
-  fetch: fetch
+  fetch: fetch,
+  format: format
 };
