@@ -2,7 +2,7 @@ section#comments.mm-comments
   each thread in article.commentThreads
     article.mm-thread(data-thread=thread.id.toString())
       each comment in thread.comments
-        section.mm-comment.ly-section
+        section.mm-comment.ly-section(id='comment-' + comment._id.toString())
           header.mm-author
             -  site = comment.site.replace(/https?:\/\//, '');
             if site

@@ -10,7 +10,6 @@ LAUNCH
 
 TODO
 
-- (mkt) send comment emails [not sending yet, just compiling recipients]
 - (mkt) since always sending out subscription invitations, make them nicer, add feature list.
 - (ux) render comments immediately!
 - (astro) figure out partial cookie cutter

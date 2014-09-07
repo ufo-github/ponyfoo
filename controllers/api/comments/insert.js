@@ -8,9 +8,10 @@ var Comment = require('../../../models/Comment');
 var User = require('../../../models/User');
 var validate = require('./lib/validate');
 var respond = require('../lib/respond');
+var subscriberService = require('../../../services/subscriber');
 var markdownFatService = require('../../../services/markdownFat');
 var htmlService = require('../../../services/html');
-var subscriberService = require('../../../services/subscriber');
+var emailService = require('../../../services/email');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -62,7 +63,10 @@ module.exports = function (req, res, next) {
     contra.concurrent({
       recipients: contra.curry(findRecipients, article),
       html: absolutizeHtml
-    }, send);
+    }, function prepare (err, data) {
+      data.article = article;
+      send(err, data);
+    });
   }
 
   function findRecipients (article, next) {
@@ -92,7 +96,7 @@ module.exports = function (req, res, next) {
   function absolutizeHtml (next) {
     htmlService.absolutize(model.contentHtml, next);
   }
-TODO: populate model.
+
   function send (err, data) {
     if (err) {
       winston.info('An error occurred when preparing comment email notifications', err);
@@ -100,7 +104,15 @@ TODO: populate model.
     }
     var model = {
       to: data.recipients,
-      comment: data.html
+      comment: {
+        author: model.author,
+        content: data.html,
+        site: model.site
+      },
+      article: {
+        title: data.article.title,
+        permalink: '/articles/' + data.article.slug
+      }
     };
     emailService.send('comment-published', model, emailService.logger);
   }

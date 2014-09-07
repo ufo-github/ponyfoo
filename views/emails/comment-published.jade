@@ -1,17 +1,21 @@
 div
-  a(href!=entry.permalink)
-    h1=entry.title
+  a(href!=article.permalink)
+    h1=article.title
 
 p(style='background-color: #fff; padding: 8px; border-bottom: 2px solid #e92c6c;')
-  a(href!=commenter.profile)
+  -  site = comment.site.replace(/https?:\/\//, '');
+  if site
+    a(href!=site)
+      img(src='cid:gravatar', alt='', style='vertical-align: middle;')
+      span=' ' + comment.author
+  else
     img(src='cid:gravatar', alt='', style='vertical-align: middle;')
-    span=' ' + commenter.displayName
+    span=' ' + comment.author
+  span=' posted a new comment!'
 
-  span=' added a comment!'
-
-div(style='padding: 20px; background-color: #efefef;')!=comment
+div(style='padding: 20px; background-color: #efefef;')!=comment.content
 
 p
   span='Reply using '
-  a(href!=thread.permalink) this link
+  a(href!=domain.authority + comment.permalink) this link
   span .
