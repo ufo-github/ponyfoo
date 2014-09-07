@@ -11,7 +11,6 @@ var respond = require('../lib/respond');
 var subscriberService = require('../../../services/subscriber');
 var markdownFatService = require('../../../services/markdownFat');
 var htmlService = require('../../../services/html');
-var emailService = require('../../../services/email');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -103,7 +102,6 @@ module.exports = function (req, res, next) {
       return;
     }
     var model = {
-      to: data.recipients,
       comment: {
         author: model.author,
         content: data.html,
@@ -114,7 +112,7 @@ module.exports = function (req, res, next) {
         permalink: '/articles/' + data.article.slug
       }
     };
-    emailService.send('comment-published', model, emailService.logger);
+    subscriberService.send(data.recipients, 'comment-published', model);
   }
 
   function response (err) {

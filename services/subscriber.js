@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
 var emailService = require('./email');
@@ -9,6 +10,10 @@ var env = require('../lib/env');
 var authority = env('AUTHORITY');
 
 function noop () {}
+
+function getHash (subscriber) {
+  return subscriber._id.toString() + cryptoService.md5(subscriber.email);
+}
 
 function add (email, done) {
   contra.waterfall([
@@ -33,7 +38,7 @@ function add (email, done) {
 }
 
 function confirmation (subscriber, done) {
-  var hash = subscriber._id.toString() + cryptoService.md5(subscriber.email);
+  var hash = getHash(subscriber);
   var model = {
     to: subscriber.email,
     subject: 'Article feed subscription confirmation to Pony Foo',
@@ -58,8 +63,43 @@ function successback (done) {
   };
 }
 
+function send (recipients, template, partialModel, done) {
+  contra.waterfall([
+    function findVerifiedSubscribers (next) {
+      Subscriber.find({ verified: true }, next);
+    },
+    function patchModel (documents, next) {
+      var subscribers = recipients ? documents.filter(isRecipient) : documents;
+      var to = _.pluck(subscribers, 'email');
+      var mandrill = { locals: subscribers.map(locals) };
+      var model = _.merge({}, partialModel, { to: to, mandrill: mandrill });
+      emailService.send(template, model, next);
+    }
+  ], done || emailService.logger);
+
+  function isRecipient (subscriber) {
+    return recipients.indexOf(subscriber.email) !== -1;
+  }
+}
+
+function broadcast (template, model, done) {
+  send(null, template, model, done);
+}
+
+function locals (subscriber) {
+  return {
+    email: subscriber.email,
+    model: {
+      unsubscribe: util.format('%s/api/subscribers/%s/unsubscribe', authority, getHash(subscriber))
+    }
+  };
+}
+
+
 module.exports = {
   add: add,
   remove: remove,
-  confirm: confirm
+  confirm: confirm,
+  send: send,
+  broadcast: broadcast
 };

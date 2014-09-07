@@ -8,7 +8,7 @@ var env = require('../lib/env');
 var Article = require('../models/Article');
 var Subscriber = require('../models/Subscriber');
 var cryptoService = require('./crypto');
-var emailService = require('./email');
+var subscriberService = require('./subscriber');
 var twitterService = require('./twitter');
 var htmlService = require('./html');
 var authority = env('AUTHORITY');
@@ -44,25 +44,13 @@ function email (article, done) {
   if (done === void 0) {
     done = noop;
   }
-  contra.concurrent({
-    subscribers: findSubscribers,
-    html: absolutizeHtml
-  }, send);
-
-  function findSubscribers (next) {
-    Subscriber.find({ verified: true }, next);
-  }
-
-  function absolutizeHtml (next) {
-    htmlService.absolutize(article.introductionHtml, next);
-  }
+  htmlService.absolutize(article.introductionHtml, send);
 
   function send (err, data) {
     if (err) {
       done(err); return;
     }
     var model = {
-      to: _.pluck(data.subscribers, 'email'),
       subject: article.title,
       intro: 'Hot off the press article on Pony Foo!',
       article: {
@@ -70,24 +58,11 @@ function email (article, done) {
         permalink: '/articles/' + article.slug,
         tags: article.tags,
         introductionHtml: data.html
-      },
-      mandrill: {
-        locals: data.subscribers.map(subscriberLocals)
       }
     };
-    emailService.send('article-published', model, emailService.logger);
+    subscriberService.broadcast('article-published', model);
     done();
   }
-}
-
-function subscriberLocals (subscriber) {
-  var hash = subscriber._id.toString() + cryptoService.md5(subscriber.email);
-  return {
-    email: subscriber.email,
-    model: {
-      unsubscribe: util.format('%s/api/subscribers/%s/unsubscribe', authority, hash)
-    }
-  };
 }
 
 function tweet (article, done) {
