@@ -2,8 +2,11 @@ section#comments.mm-comments
   each thread in article.commentThreads
     article.mm-thread(data-thread=thread.id.toString())
       each comment in thread.comments
-        section.mm-comment.ly-section(id='comment-' + comment._id.toString())
+        section.mm-comment.ly-section(id='comment-' + comment._id.toString(), data-comment=comment._id.toString())
           header.mm-author
+            if user
+              a.mm-remove.ic-icon.ic-remove(aria-label='Remove')
+
             -  site = comment.site.replace(/https?:\/\//, '');
             if site
               a.mm-author-site(href!=comment.site, aria-label=site, rel='nofollow', target='_blank')

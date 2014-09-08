@@ -13,6 +13,7 @@ var articleRemove = require('./api/articles/remove');
 var articleCompute = require('./api/articles/compute');
 var articleFeed = require('./articles/feed');
 var commentInsert = require('./api/comments/insert');
+var commentRemove = require('./api/comments/remove');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
@@ -34,7 +35,8 @@ module.exports = function (app) {
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
   app.post('/api/articles/compute-relationships', authorOnly, articleCompute);
 
-  app.put('/api/articles/:slug/comment', commentInsert);
+  app.put('/api/articles/:slug/comments', commentInsert);
+  app.delete('/api/articles/:slug/comments/:id', authorOnly, commentRemove);
 
   app.put('/api/subscribers', subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);

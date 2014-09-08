@@ -5,6 +5,7 @@ var raf = require('raf');
 var throttle = require('lodash.throttle');
 var storage = require('../../lib/storage');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
+var textService = require('../../../../services/text');
 var key = 'comment-draft';
 
 module.exports = function (viewModel) {
@@ -25,6 +26,7 @@ module.exports = function (viewModel) {
   composer.on('keypress keydown keyup paste', serializeSlowly);
   send.on('click', comment);
   comments.on('click', '.mm-thread-reply', attach);
+  comments.on('click', '.mm-remove', remove);
   cancelReply.on('click', detach);
   deserialize();
 
@@ -50,12 +52,6 @@ module.exports = function (viewModel) {
     };
   }
 
-  function clear () {
-    body.value('');
-    serialize();
-    raf(deserialize);
-  }
-
   function attach (e) {
     var button = $(e.target);
     var thread = button.parents('.mm-thread');
@@ -64,6 +60,7 @@ module.exports = function (viewModel) {
     replies.removeClass('uv-hidden');
     reply.addClass('uv-hidden').parent().before(composer);
     cancelReply.removeClass('uv-hidden');
+    composer.find('.vw-validation').remove();
   }
 
   function detach () {
@@ -75,11 +72,35 @@ module.exports = function (viewModel) {
   }
 
   function comment () {
-    var endpoint = '/api/articles/' + viewModel.article.slug + '/comment';
+    var endpoint = textService.format('/api/articles/%s/comments', viewModel.article.slug);
     var model = {
       json: getCommentData()
     };
     model.json.parent = send.parents('.mm-thread').attr('data-thread');
     viewModel.measly.put(endpoint, model).on('data', clear);
+  }
+
+  function clear () {
+    body.value('');
+    serialize();
+    raf(deserialize);
+  }
+
+  function remove (e) {
+    var button = $(e.target);
+    var comment = button.parents('.mm-comment');
+    var id = comment.attr('data-comment');
+    var endpoint = textService.format('/api/articles/%s/comments/%s', viewModel.article.slug, id);
+
+    viewModel.measly.delete(endpoint).on('data', cleanup);
+
+    function cleanup () {
+      var comments = $(textService.format('[data-comment="%s"]', id));
+      var thread = $(textService.format('[data-thread="%s"]', id));
+      if (thread.length && composer.parents(thread).length) {
+        detach();
+      }
+      thread.and(comments).remove();
+    }
   }
 };

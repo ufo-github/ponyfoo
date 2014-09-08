@@ -11,7 +11,6 @@ LAUNCH
 TODO
 
 - (mkt) since always sending out subscription invitations, make them nicer, add feature list.
-- (admin) ability to remove comments or entire threads
 - (ux) render comments immediately!
 - (astro) figure out partial cookie cutter
   - add search input box

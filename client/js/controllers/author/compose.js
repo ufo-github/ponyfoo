@@ -203,16 +203,16 @@ module.exports = function (viewModel, route) {
 
   function save () {
     var data = getRequestData();
-    send(data);
+    send({ json: data });
   }
 
   function send (data) {
     var req;
 
     if (editing) {
-      req = viewModel.measly.patch('/api/articles/' + route.params.slug, { json: data });
+      req = viewModel.measly.patch('/api/articles/' + route.params.slug, data);
     } else {
-      req = viewModel.measly.put('/api/articles', { json: data });
+      req = viewModel.measly.put('/api/articles', data);
     }
     req.on('data', leave);
   }

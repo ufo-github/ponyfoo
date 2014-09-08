@@ -1,6 +1,6 @@
 nav.ly-navigation
   ul
-    if model.user !== undefined
+    if model.user
       li.ly-navigation-item.ly-logon
         a.ly-logon-anchor(href='/account/logout') Logout
       li.ly-navigation-item
