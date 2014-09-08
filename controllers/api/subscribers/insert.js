@@ -10,7 +10,7 @@ function insert (req, res, next) {
     res.status(400).json({ messages: ['Please subscribe using a valid email address!'] }); return;
   }
 
-  subscriberService.add(email, respond);
+  subscriberService.add({ email: email, source: 'intent' }, respond);
 
   function respond (err) {
     if (err) {

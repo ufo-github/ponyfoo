@@ -55,7 +55,11 @@ module.exports = function (req, res, next) {
 
     function saved (err) {
       if (!err) {
-        subscriberService.add(comment.email);
+        subscriberService.add({
+          email: comment.email,
+          name: comment.author,
+          source: 'comment'
+        });
         notify(article);
       }
       next(err);

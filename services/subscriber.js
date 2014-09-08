@@ -8,6 +8,10 @@ var cryptoService = require('./crypto');
 var Subscriber = require('../models/Subscriber');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
+var reasons = {
+  intent: 'Thanks for your interest in becoming a subscriber of our mailing list!',
+  comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that. I would like to extend you an invitation to our mailing list!'
+};
 
 function noop () {}
 
@@ -15,16 +19,16 @@ function getHash (subscriber) {
   return subscriber._id.toString() + cryptoService.md5(subscriber.email);
 }
 
-function add (email, done) {
+function add (data, done) {
   contra.waterfall([
     function findExisting (next) {
-      Subscriber.findOne({ email: email }, next);
+      Subscriber.findOne({ email: data.email }, next);
     },
     function bailOrCreate (existing, next) {
       if (existing) {
         next(); return;
       }
-      new Subscriber({ email: email }).save(saved);
+      new Subscriber(data).save(saved);
 
       function saved (err, subscriber) {
         if (err) {
@@ -41,12 +45,16 @@ function confirmation (subscriber, done) {
   var hash = getHash(subscriber);
   var model = {
     to: subscriber.email,
-    subject: 'Article feed subscription confirmation to Pony Foo',
-    intro: 'Please confirm your email subscription!',
+    subject: 'Pony Foo Subscription Invitation!',
+    intro: 'Would you like to subscribe to Pony Foo?',
     confirm: util.format('%s/api/subscribers/%s/confirm', authority, hash),
-    unsubscribe: util.format('%s/api/subscribers/%s/unsubscribe', authority, hash)
+    mandrill: {
+      merge: {
+        locals: [locals(subscriber)]
+      }
+    }
   };
-  emailService.send('article-subscription', model, done);
+  emailService.send('list-subscription', model, done);
 }
 
 function confirm (email, done) {
@@ -94,6 +102,8 @@ function locals (subscriber) {
   return {
     email: subscriber.email,
     model: {
+      name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
+      reason: reasons[subscriber.source],
       unsubscribe_html: getUnsubscribeHtml(subscriber)
     }
   };
