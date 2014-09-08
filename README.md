@@ -10,10 +10,8 @@ LAUNCH
 
 TODO
 
-- emails
-  - fix base64 embedded images!
-  - (mkt) since always sending out subscription invitations, make them nicer, add feature list.
-
+- (mkt) since always sending out subscription invitations, make them nicer, add feature list.
+- (admin) ability to remove comments or entire threads
 - (ux) render comments immediately!
 - (astro) figure out partial cookie cutter
   - add search input box
@@ -21,7 +19,6 @@ TODO
     - add a button to '/articles/archives'
     - add a button to subscribe
 
-- (taunus) support #hash in URL + historyAPI, ignore when talking to router
 - not ALL the fields
 - migration script
 - (author) email composer with subject, intro, and markdown body
