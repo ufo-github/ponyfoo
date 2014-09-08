@@ -72,18 +72,38 @@ module.exports = function (viewModel) {
   }
 
   function comment () {
+    var thread = send.parents('.mm-thread');
     var endpoint = textService.format('/api/articles/%s/comments', viewModel.article.slug);
     var model = {
       json: getCommentData()
     };
-    model.json.parent = send.parents('.mm-thread').attr('data-thread');
-    viewModel.measly.put(endpoint, model).on('data', clear);
-  }
+    model.json.parent = thread.attr('data-thread');
+    viewModel.measly.put(endpoint, model).on('data', commented);
 
-  function clear () {
-    body.value('');
-    serialize();
-    raf(deserialize);
+    function commented (data) {
+      var placeholder = $('<div>');
+      var model = { user: viewModel.user };
+
+      body.value('');
+      detach();
+      serialize();
+      raf(deserialize);
+
+      if (thread.length) {
+        model.comment = data;
+        taunus.partial(placeholder[0], 'articles/comment', model);
+        thread.find('.mm-thread-footer').before(placeholder.children());
+      } else {
+        model.article = {
+          commentThreads: {
+            comments: [data],
+            id: data[0]._id
+          }
+        };
+        taunus.partial(placeholder[0], 'articles/comment-thread', model);
+        comments.find('.mm-footer').before(placeholder.children());
+      }
+    }
   }
 
   function remove (e) {

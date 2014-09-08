@@ -1,6 +1,6 @@
 'use strict';
 
-function respond (err, res, next, validation) {
+function respond (err, res, next, validation, valid) {
   if (err) {
     if (validation.length) {
       invalid(res, validation);
@@ -8,7 +8,7 @@ function respond (err, res, next, validation) {
       next(err);
     }
   } else {
-    res.json({});
+    res.json(valid || {});
   }
 }
 

@@ -10,7 +10,6 @@ LAUNCH
 
 TODO
 
-- (ux) render comments immediately!
 - (astro) figure out partial cookie cutter
   - add search input box
   - latest posts sidebar

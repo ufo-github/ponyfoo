@@ -1,0 +1,7 @@
+each thread in article.commentThreads
+  article.mm-thread(data-thread=thread.id.toString())
+    each comment in thread.comments
+      include comment
+
+    footer.mm-thread-footer
+      button.mm-thread-reply(aria-label='Add your comment to this discussion thread') Reply to Thread

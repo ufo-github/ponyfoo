@@ -140,6 +140,6 @@ module.exports = function (req, res, next) {
   }
 
   function response (err) {
-    respond(err, res, next, validation);
+    respond(err, res, next, validation, comment);
   }
 };

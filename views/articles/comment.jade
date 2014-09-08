@@ -1,0 +1,15 @@
+section.mm-comment.ly-section(id='comment-' + comment._id.toString(), data-comment=comment._id.toString())
+  header.mm-author
+    if user
+      a.mm-remove.ic-icon.ic-remove(aria-label='Remove')
+
+    -  site = comment.site.replace(/https?:\/\//, '');
+    if site
+      a.mm-author-site(href!=comment.site, aria-label=site, rel='nofollow', target='_blank')
+        span.mm-author-name=comment.author
+        img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+    else
+      span.mm-author-name=comment.author
+      img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+
+  section.mm-content.md-markdown!=comment.contentHtml
