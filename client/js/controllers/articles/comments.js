@@ -2,6 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
+var taunus = require('taunus');
 var throttle = require('lodash.throttle');
 var storage = require('../../lib/storage');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
@@ -81,28 +82,36 @@ module.exports = function (viewModel) {
     viewModel.measly.put(endpoint, model).on('data', commented);
 
     function commented (data) {
-      var placeholder = $('<div>');
-      var model = { user: viewModel.user };
-
       body.value('');
       detach();
       serialize();
       raf(deserialize);
+      appendResult(data);
+    }
+
+    function appendResult (data) {
+      var placeholder = $('<div>');
+      var template, target;
+      var model = {
+        user: viewModel.user
+      };
 
       if (thread.length) {
         model.comment = data;
-        taunus.partial(placeholder[0], 'articles/comment', model);
-        thread.find('.mm-thread-footer').before(placeholder.children());
+        template = 'articles/comment';
+        target = thread.find('.mm-thread-footer');
       } else {
         model.article = {
-          commentThreads: {
+          commentThreads: [{
             comments: [data],
-            id: data[0]._id
-          }
+            id: data._id
+          }]
         };
-        taunus.partial(placeholder[0], 'articles/comment-thread', model);
-        comments.find('.mm-footer').before(placeholder.children());
+        template = 'articles/comment-thread';
+        target = comments.find('.mm-footer');
       }
+      taunus.partial(placeholder[0], template, model);
+      target.before(placeholder.children());
     }
   }
 
