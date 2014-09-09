@@ -10,10 +10,12 @@ var fulltext = fulltextSearch();
 var emitter = contra.emitter();
 
 function similar (article, done) {
-  rebuildOnce(function built () {
+  rebuildOnce(built);
+
+  function built () {
     var terms = fulltext.terms(indexable(article));
     query(terms, filtered);
-  });
+  }
 
   function filtered (err, articles) {
     done(err, articles ? articles.filter(strangers) : articles);
@@ -25,26 +27,31 @@ function similar (article, done) {
 }
 
 function query (terms, done) {
-  rebuildOnce(function built () {
-    contra.waterfall([
-      function compute (next) {
-        fulltext.compute(terms, next);
-      },
-      function expand (matches, next) {
-        var query = {
-          status: 'published',
-          _id: { $in: matches }
-        };
-        articleService.find(query, next);
-      }
-    ], done);
-  });
+  rebuildOnce(built);
+
+  function built () {
+    contra.waterfall([compute, expand], done);
+  }
+
+  function compute (next) {
+    fulltext.compute(terms, next);
+  }
+
+  function expand (matches, next) {
+    var query = {
+      status: 'published',
+      _id: { $in: matches }
+    };
+    articleService.find(query, next);
+  }
 }
 
 function insert (article, done) {
-  rebuildOnce(function built () {
+  rebuildOnce(built);
+
+  function built () {
     fulltext.insert(indexable(article));
-  });
+  }
 }
 
 function rebuildOnce (done) {
@@ -79,10 +86,7 @@ function indexable (article) {
     'introduction',
     'slug'
   ];
-  var important = _(fields)
-    .transform(take)
-    .value()
-    .join(' ');
+  var important = _(fields).transform(take).value().join(' ');
 
   function take (accumulator, field) {
     accumulator.push(article[field]);

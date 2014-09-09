@@ -9,12 +9,13 @@ var schema = new mongoose.Schema({
   password: { type: String, require: true },
   bypassEncryption: { type: Boolean, 'default': true },
   created: { type: Date, require: true, 'default': Date.now },
-  displayName: { type: String },
-  facebookId: { type: String },
-  githubId: { type: String },
-  googleId: { type: String },
-  linkedinId: { type: String },
-  bio: { type: String }
+  displayName: String,
+  facebookId: String,
+  githubId: String,
+  googleId: String,
+  linkedinId: String,
+  bio: String,
+  author: { type: Boolean, 'default': false }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatar').get(computeGravatar);

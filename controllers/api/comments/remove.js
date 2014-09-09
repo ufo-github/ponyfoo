@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var contra = require('contra');
 var Article = require('../../../models/Article');
-var Comment = require('../../../models/Comment');
 
 function remove (req, res, next) {
   var id = req.params.id;

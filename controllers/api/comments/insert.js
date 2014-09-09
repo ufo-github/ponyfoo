@@ -5,7 +5,6 @@ var util = require('util');
 var contra = require('contra');
 var winston = require('winston');
 var Article = require('../../../models/Article');
-var Comment = require('../../../models/Comment');
 var User = require('../../../models/User');
 var validate = require('./lib/validate');
 var respond = require('../lib/respond');
