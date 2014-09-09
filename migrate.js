@@ -145,11 +145,13 @@ function insertArticle (article, next) {
   new Article(article).save(function (err, article) {
     if (previous) {
       previous.next = article._id;
-    }
-    previous.save(function (err) {
+      previous.save(function (err) {
+        next(null, article);
+      });
+    } else {
+      previous = article;
       next(null, article);
-    });
-    previous = article;
+    }
   });
 }
 
