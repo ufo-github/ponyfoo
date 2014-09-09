@@ -11,6 +11,7 @@ LAUNCH
 TODO
 
 - not ALL the fields
+- not ALL the sub-documents!!!
 - deployment script
 
 PERFORMANCE
@@ -24,6 +25,8 @@ PERFORMANCE
 NICETIES
 
 - (author) email composer with subject, intro, and markdown body
+- (author) bio editor!
+- bio show up as aside box.
 - flash should be in layout really?
 - cmd + enter look up a lib that has simple api
 
