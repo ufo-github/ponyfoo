@@ -33,7 +33,8 @@ function generate (articles, done) {
 
 function basics (modified) {
   return [
-    { url: '/', changeFreq: 'daily', lastmod: modified }
+    { url: '/', changeFreq: 'daily', lastmod: modified },
+    { url: '/articles/archives', changeFreq: 'daily', lastmod: modified }
   ];
 }
 

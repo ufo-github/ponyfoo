@@ -10,27 +10,30 @@ LAUNCH
 
 TODO
 
-- canonical, etc: fill metadata (see defaultRequestModel.js)
-- further unbloat all.js
-
-
-- deployment script
-- revving
-
-
 - not ALL the fields
-- (astro) figure out partial cookie cutter
-  - add search input box
-  - latest posts sidebar
-    - add a button to '/articles/archives'
-    - add a button to subscribe
+- deployment script
+
+PERFORMANCE
+
+- revving
+- canonical, etc: fill metadata (see defaultRequestModel.js)
+- critical path css inline
+- further unbloat all.js
+  - load FAT js after page completes loading
+
+NICETIES
 
 - (author) email composer with subject, intro, and markdown body
+- flash should be in layout really?
+- cmd + enter look up a lib that has simple api
+
+
+OBSCURE BUGS
 
 - json when navigating back is SUPER AWKWARD!
 - views that respond with json e.g 404, should prob use a taunus method?
-- flash should be in layout really?
-- cmd + enter look up a lib that has simple api
+
+
 
   [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
   [2]: https://travis-ci.org/ponyfoo/ponyfoo

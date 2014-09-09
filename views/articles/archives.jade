@@ -17,9 +17,10 @@ ol.av-container
     - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
 
     li.av-article
+      time.av-date(datetime=pub.format())=pub.format('DD-MM-YYYY')
       a(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))=article.title
       time.av-duration=' takes roughly ' + moment.duration(article.readingTime, 'seconds').humanize()
-      span='. Published '
+      span.av-connector='. Published '
       time.av-publication(datetime=pub.format(), aria-label=pub.format(longDate))=pub.fromNow()
-      span=' under '
+      span.av-connector=' under '
       include ../partials/tags

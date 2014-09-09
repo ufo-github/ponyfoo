@@ -61,7 +61,7 @@ module.exports = function (viewModel) {
     replies.removeClass('uv-hidden');
     reply.addClass('uv-hidden').parent().before(composer);
     cancelReply.removeClass('uv-hidden');
-    composer.find('.vw-validation').remove();
+    composer.find('.vw-conventional').remove();
   }
 
   function detach () {
@@ -69,7 +69,7 @@ module.exports = function (viewModel) {
     footer.append(composer);
     replies.removeClass('uv-hidden');
     cancelReply.addClass('uv-hidden');
-    composer.find('.vw-validation').remove();
+    composer.find('.vw-conventional').remove();
   }
 
   function comment () {

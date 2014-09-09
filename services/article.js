@@ -30,6 +30,9 @@ function find (query, options, done) {
   if (options.sort) {
     cursor = cursor.sort(options.sort);
   }
+  if (options.limit) {
+    cursor = cursor.limit(options.limit);
+  }
   cursor.exec(done);
 }
 

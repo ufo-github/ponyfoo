@@ -1,0 +1,29 @@
+.nv-logon
+  display none
+
+.nv-items
+  margin 20px 0
+  list-style none
+
+.nv-item
+  display inline-block
+
+.nv-logon-anchor
+  position fixed
+  top 0
+  right 0
+  padding 10px
+  opacity 0
+  color #fff
+  transition all 0.2s ease-in-out
+
+  &:hover
+    text-decoration none
+    opacity 1
+    color #fff
+    background-color c-pink
+
+@media screen and (min-width: 768px)
+  .nv-logon,
+  .nv-items
+    display block

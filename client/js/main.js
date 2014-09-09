@@ -7,6 +7,7 @@ var taunus = require('taunus');
 var moment = require('moment');
 var markdownService = require('../../services/markdown');
 var setupMeasly = require('./setupMeasly');
+var analytics = require('./analytics');
 
 global.$ = $; // merely for debugging convenience
 global.jade = jade; // let jade have it their way
@@ -18,13 +19,9 @@ var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
 
 taunus.once('render', function (container, viewModel) {
-  if (viewModel.env.name !== 'production') {
-    return;
-  }
-  require('./vendor/ga');
-  require('./vendor/clicky');
-  require('./vendor/twitter.widget');
-  require('./lib/twitter');
+  analytics(viewModel.env);
+  require('./search');
+  require('./subscriptions');
 });
 
 ponymark.configure({

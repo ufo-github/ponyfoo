@@ -2,6 +2,7 @@
   list-style none
 
 .av-article
+  margin-top 30px
   line-height 30px
 
 .av-publication,
@@ -10,3 +11,24 @@
 
 .av-since
   font-style italic
+
+.av-date
+  margin-right 6px
+
+.av-duration,
+.av-publication,
+.av-connector,
+.av-article .tg-tags
+  display none
+
+@media screen and (min-width: 768px)
+  .av-date
+    display none
+
+  .av-duration,
+  .av-publication,
+  .av-connector
+    display block
+
+  .av-article .tg-tags
+    display inline-block

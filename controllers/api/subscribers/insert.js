@@ -16,7 +16,9 @@ function insert (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.json({});
+    res.json({
+      messages: ['Thanks! You should be promptly getting an email with activation instructions.']
+    });
   }
 }
 

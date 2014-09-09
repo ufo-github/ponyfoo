@@ -9,5 +9,5 @@ module.exports = function (req, res, next) {
 
   res.viewModel = { model: { title: 'Pony Foo' } };
 
-  articleService.find(query, handle);
+  articleService.find(query, { limit: 6 }, handle);
 };
