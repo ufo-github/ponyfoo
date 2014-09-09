@@ -117,7 +117,7 @@ function subscribe (users, done) {
     var subscribers = _(documents).concat(users).pluck('email').compact().uniq().value().map(expand);
 
     function expand (email) {
-      var s = _.find(subscribers, { email: email });
+      var s = _.find(documents, { email: email });
       var u = _.find(users, { email: email });
       return {
         verified: true,
