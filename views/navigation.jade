@@ -6,7 +6,7 @@ nav.ly-navigation
     div.ly-logon
       a.ly-logon-anchor(href='/account/login') Login
 
-  if model.user
+  if model.user.author
     ul.ly-navigation-items
         li.ly-navigation-item
           a(href='/author/compose', aria-label='Prepare a fresh draft') Compose

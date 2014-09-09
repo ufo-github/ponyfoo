@@ -1,6 +1,16 @@
 include /_flash
 
+- first = articles[articles.length - 1]
+- firstPub = moment(first.publication)
+
 h1.vw-title Archives
+p
+  span='Reading every article published '
+  time.av-since(datetime=firstPub.format())=firstPub.format('[since] MMMM YYYY')
+  span=' would take you approximately '
+  time.av-total-duration=moment.duration(total, 'seconds').humanize()
+  span !
+
 ol.av-container
   each article in articles
     - pub = moment(article.publication)
@@ -8,7 +18,7 @@ ol.av-container
 
     li.av-article
       a(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))=article.title
-      time.av-duration=' takes ' + moment.duration(article.readingTime, 'seconds').humanize()
+      time.av-duration=' takes roughly ' + moment.duration(article.readingTime, 'seconds').humanize()
       span='. Published '
       time.av-publication(datetime=pub.format(), aria-label=pub.format(longDate))=pub.fromNow()
       span=' under '

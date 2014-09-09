@@ -1,6 +1,6 @@
 section.mm-comment.ly-section(id='comment-' + comment._id.toString(), data-comment=comment._id.toString())
   header.mm-author
-    if user
+    if user && user.author
       a.mm-remove.ic-icon.ic-remove(aria-label='Remove')
 
     -  site = comment.site && comment.site.replace(/https?:\/\//, '');

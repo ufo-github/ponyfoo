@@ -10,13 +10,11 @@ LAUNCH
 
 TODO
 
-- migration script
 - canonical, etc: fill metadata (see defaultRequestModel.js)
 - further unbloat all.js
 
 
-POST-redeployment
-
+- deployment script
 - revving
 
 

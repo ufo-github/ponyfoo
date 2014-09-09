@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var articleService = require('../../services/article');
 
 module.exports = function (req, res, next) {
@@ -9,12 +10,18 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
+    var expanded = articles.map(articleService.toJSON);
     res.viewModel = {
       model: {
         title: 'Archives',
-        articles: articles.map(articleService.toJSON)
+        articles: expanded,
+        total: _.pluck(expanded, 'readingTime').reduce(sum, 0)
       }
     };
     next();
   });
+
+  function sum (accumulator, value) {
+    return accumulator + value;
+  }
 };
