@@ -24,11 +24,11 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
       span=', published '
       time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 
-  section.at-body(itemprop='articleBody')
+  section.at-corpus(itemprop='articleBody')
     section.md-markdown(itemprop='about')!=article.introductionHtml
 
     if full
-      section.md-markdown!=article.bodyHtml
+      section.md-markdown.at-body!=article.bodyHtml
     else
       section.at-full
         a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article

@@ -88,7 +88,7 @@ function ready () {
                       article.comments.push(comment);
                       article.save(function () {
                         children.forEach(function (child) {
-                          child.parent = op._id;
+                          child.parent = comment._id;
                           article.comments.push(child);
                         });
                         article.save(function () {

@@ -68,12 +68,16 @@ function factory () {
     index.addDocument(value, key);
     result = index.listTerms(i);
 
-    var gram = gramophone.extract(item, { limit: 5 });
+    var gram = gramophone.extract(item).filter(reasonable).slice(0, 5);
     if (gram.length) {
       return gram;
     }
-    var tfidf = _(result).sortBy('tfidf').pluck('term').value().slice(0, 5);
+    var tfidf = _(result).sortBy('tfidf').pluck('term').value().filter(reasonable).slice(0, 5);
     return tfidf;
+  }
+
+  function reasonable (term) {
+    return term.length > 3 && term.indexOf(' ') === -1;
   }
 
   api = {
