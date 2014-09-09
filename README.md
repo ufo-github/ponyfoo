@@ -11,11 +11,11 @@ LAUNCH
 TODO
 
 - deployment script
+- canonical, etc: fill metadata (see defaultRequestModel.js)
 
 PERFORMANCE
 
 - revving
-- canonical, etc: fill metadata (see defaultRequestModel.js)
 - critical path css inline
 - further unbloat all.js
   - load FAT js after page completes loading

@@ -15,12 +15,14 @@
     "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
   "scripts": {
-    "test": "sh build/test",
+    "build": "sh build/release",
     "clean": "sh build/clean",
     "copy": "sh build/copy",
-    "build": "sh build/release",
+    "deploy": "sh build/deploy",
+    "deploy-config": "sh build/deploy-config",
+    "diagnose": "sh build/diagnose",
     "start": "sh build/debug",
-    "diagnose": "sh build/diagnose"
+    "test": "sh build/test"
   },
   "dependencies": {
     "bcrypt": "^0.7.8",
