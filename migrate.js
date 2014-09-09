@@ -146,6 +146,7 @@ function insertArticle (article, next) {
     if (previous) {
       previous.next = article._id;
       previous.save(function (err) {
+        previous = article;
         next(null, article);
       });
     } else {
