@@ -1,7 +1,11 @@
 section#comments.mm-comments
   h2.mm-heading
-    span Comments
-    span.mm-comment-count='(' + article.commentCount + ')'
+    span.mm-heading-text Comments
+
+    if article.commentCount
+      span.mm-count='(' + article.commentCount + ')'
+    else
+      span.mm-count You're the first one here!
 
   include comment-thread
 

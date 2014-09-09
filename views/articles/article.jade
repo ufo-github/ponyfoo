@@ -11,12 +11,15 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
   meta(itemprop='keywords', content=article.tags.join(','))
   meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
 
-  if article.comments && article.comments.length
-    meta(itemprop='interactionCount', content=article.comments.length + ' UserComments')
+  if article.commentCount
+    meta(itemprop='interactionCount', content=article.commentCount + ' UserComments')
 
   header.at-header.uv-clearfix
     h1.at-title
       a.at-title-link(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
+
+    if article.commentCount
+      a.uv-left.mm-count(href='#comments')='(' + article.commentCount + ' comments)'
 
     span.at-meta
       span='reading time: '

@@ -22,5 +22,5 @@ ol.av-container
       time.av-duration=' takes roughly ' + moment.duration(article.readingTime, 'seconds').humanize()
       span.av-connector='. Published '
       time.av-publication(datetime=pub.format(), aria-label=pub.format(longDate))=pub.fromNow()
-      span.av-connector=' under '
+      span.av-connector=', under '
       include ../partials/tags

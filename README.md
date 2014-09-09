@@ -10,8 +10,6 @@ LAUNCH
 
 TODO
 
-- not ALL the fields
-- not ALL the sub-documents!!!
 - deployment script
 
 PERFORMANCE

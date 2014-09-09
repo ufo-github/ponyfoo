@@ -14,13 +14,21 @@ function factory (res, next) {
     model.action = 'articles/' + key;
 
     if (article) {
+      article.populate('prev next related comments', single);
+    } else {
+      model[key] = articles.map(articleService.toJSON);
+      next();
+    }
+
+    function single (err, article) {
+      if (err) {
+        next(err); return;
+      }
       model.full = true;
       model.title = article.title;
       model[key] = articleService.toJSON(article);
-    } else {
-      model[key] = articles.map(articleService.toJSON);
+      next();
     }
-    next();
   };
 }
 

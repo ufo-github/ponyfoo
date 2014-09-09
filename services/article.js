@@ -19,7 +19,6 @@ function find (query, options, done) {
   if (done === void 0) {
     done = options; options = {};
   }
-  if (!options.populate) { options.populate = 'prev next related comments'; }
   if (!options.sort) { options.sort = '-publication'; }
 
   var cursor = Article.find(query);
@@ -93,11 +92,39 @@ function toJSON (source) {
   article.readingTime = estimate.text(text);
   article.permalink = '/articles/' + article.slug;
 
-  article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);
-  article.commentCount = article.comments.length;
+  if (source.populated('comments')) {
+    article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);
+    article.commentCount = article.comments.length;
+  } else {
+    delete article.comments;
+  }
+  if (source.populated('prev')) {
+    article.prev = relevant(article.prev);
+  } else {
+    delete article.prev;
+  }
+  if (source.populated('next')) {
+    article.next = relevant(article.next);
+  } else {
+    delete article.next;
+  }
+  if (source.populated('related')) {
+    article.related = article.related.map(relevant);
+  } else {
+    delete article.related;
+  }
 
+  delete article.__v;
+  delete article.status;
+  delete article.sign;
+  delete article.introduction;
+  delete article.body;
   delete article.comments;
   return article;
+}
+
+function relevant (article) {
+  return { slug: article.slug, title: article.title };
 }
 
 function threads (accumulator, comment) {

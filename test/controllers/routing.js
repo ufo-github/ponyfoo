@@ -16,7 +16,6 @@ test('routes should match expectation', function (t) {
 
   plan('put', '/api/markdown/images', './api/markdown/images');
 
-  plan('get', '/api/articles', './author/only', './api/articles/list');
   plan('put', '/api/articles', './author/only', './api/articles/insert');
   plan('patch', '/api/articles/:slug', './author/only', './api/articles/update');
   plan('delete', '/api/articles/:slug', './author/only', './api/articles/remove');
