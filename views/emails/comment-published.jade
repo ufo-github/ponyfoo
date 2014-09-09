@@ -5,7 +5,7 @@ div
 p Hey *|name|*!
 
 p(style='background-color: #fff; padding: 8px; border-bottom: 2px solid #e92c6c;')
-  -  site = comment.site.replace(/https?:\/\//, '');
+  -  site = comment.site && comment.site.replace(/https?:\/\//, '');
   if site
     a(href!=comment.site)
       img(src='cid:gravatar', alt='', style='vertical-align: middle;')

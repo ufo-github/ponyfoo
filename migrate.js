@@ -108,13 +108,13 @@ function ready () {
 }
 
 function done () {
-  winston.info('Migration complete.')
+  winston.info('Migration complete.');
   process.exit();
 }
 
 function subscribe (users, done) {
-  production.model('blogSubscriber').find({}, function (err, subscribers) {
-    var subscribers = _(subscribers).concat(users).pluck('email').compact().uniq().value().map(expand);
+  production.model('blogSubscriber').find({}, function (err, documents) {
+    var subscribers = _(documents).concat(users).pluck('email').compact().uniq().value().map(expand);
 
     function expand (email) {
       var s = _.find(subscribers, { email: email });
@@ -215,9 +215,8 @@ function comments (users, done) {
 
   function user (gravatar) {
     var hash = gravatar.replace('http://www.gravatar.com/avatar/', '').replace('?d=identicon&r=PG', '');
-    var user = _.find(users, function (user) {
+    return _.find(users, function (user) {
       return cryptoService.md5(user.email) === hash;
     });
-    return user;
   }
 }

@@ -58,6 +58,9 @@ function validate (model) {
     if (input && !validator.isURL(input)) {
       validation.push('The site is optional, but it should be an URL');
     }
+    if (input.length === 0) {
+      return null;
+    }
     return scheme.test(input) ? input : 'http://' + input;
   }
 
