@@ -94,7 +94,9 @@ function toJSON (source) {
   article.permalink = '/articles/' + article.slug;
 
   article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);
+  article.commentCount = article.comments.length;
 
+  delete article.comments;
   return article;
 }
 
