@@ -22,6 +22,7 @@ PERFORMANCE
 
 NICETIES
 
+- prettify comment ui
 - (author) email composer with subject, intro, and markdown body
 - (author) bio editor!
 - bio show up as aside box.
