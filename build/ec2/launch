@@ -27,8 +27,11 @@ if [ -f $KEYFILE ] ; then
   exit
 fi
 
+# directories
 mkdir -p deploy/keys
-ssh-keygen -t rsa -b 2048 -N "" -f $KEYFILE
+
+# rsa key
+ssh-keygen -t rsa -b 4096 -N "" -f $KEYFILE
 aws ec2 import-key-pair --key-name $NAME --public-key-material file://$KEYFILE.pub
 
 # launch instance
@@ -56,6 +59,9 @@ echo "$RESOURCE_ID: IP $IP_ADDRESS assigned to instance"
 
 # warming up, wait...
 echo "$RESOURCE_ID: Waiting on public DNS"
+
+# while not working!
+
 PUBLIC_DNS="null"
 while [ $PUBLIC_DNS == "null" ]
 do
@@ -68,6 +74,9 @@ echo "$RESOURCE_ID: DNS is $PUBLIC_DNS"
 
 # ssh attempt until connection can be established
 # ssh -v -o ConnectTimeout=4 -o BatchMode=yes -o StrictHostKeyChecking=no $INSTANCE_USER@$IP_ADDRESS exit
+
+# ssh into instance
+ssh -v -i $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS
 
 # ec2-setup
 # https://github.com/bevacqua/grunt-ec2/blob/master/tasks/ec2_setup.js

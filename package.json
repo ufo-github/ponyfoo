@@ -18,9 +18,9 @@
     "build": "sh build/release",
     "clean": "sh build/clean",
     "copy": "sh build/copy",
-    "launch": "sh build/launch",
-    "deploy": "sh build/deploy",
-    "deploy-config": "sh build/deploy-config",
+    "launch": "sh build/ec2/launch",
+    "deploy": "sh build/ec2/deploy",
+    "configure": "sh build/ec2/configure",
     "diagnose": "sh build/diagnose",
     "start": "sh build/debug",
     "test": "sh build/test"
@@ -70,7 +70,7 @@
     "taunus": "^1.0.6",
     "transports": "^0.2.4",
     "twit": "^1.1.18",
-    "ultramarked": "^1.4.1",
+    "ultramarked": "^1.4.2",
     "validator": "^3.12.0",
     "winston": "^0.7.3"
   },
