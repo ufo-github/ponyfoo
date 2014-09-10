@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
 
   res.viewModel = {
     model: {
-      title: util.format('Search results for "%s"', terms.join(', '))
+      title: util.format('Search results for "%s"', terms.join('", "'))
     }
   };
 

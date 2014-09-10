@@ -4,11 +4,15 @@
   border-bottom 4px solid c-strongish
   font-size 2.5em
 
-.ly-title-anchor:visited
-  color c-strong
+.ly-title-anchor
+  transition text-shadow 0.2s ease-in-out
 
-.ly-title-anchor:hover
-  text-decoration none
+  &:visited
+    color c-strong
+
+  &:hover
+    text-decoration none
+    text-shadow 2px 2px 1px c-border
 
 .ly-legend
   display none
@@ -30,12 +34,6 @@
     text-align center
     margin-top 15px
     font-size 4.5em
-
-  .ly-title-anchor
-    transition text-shadow 0.2s ease-in-out
-
-    &:hover
-      text-shadow 2px 2px 1px c-border
 
   .ly-legend
     display block

@@ -26,7 +26,10 @@ function similar (article, done) {
   }
 }
 
-function query (terms, done) {
+function query (terms, tags, done) {
+  if (done === void 0) {
+    done = tags; tags = [];
+  }
   rebuildOnce(built);
 
   function built () {
@@ -38,11 +41,14 @@ function query (terms, done) {
   }
 
   function expand (matches, next) {
-    var query = {
+    var q = {
       status: 'published',
       _id: { $in: matches }
     };
-    articleService.find(query, next);
+    if (tags.length) {
+      q.tags = { $all: tags };
+    }
+    articleService.find(q, next);
   }
 }
 

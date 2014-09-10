@@ -1,0 +1,23 @@
+'use strict';
+
+var util = require('util');
+var listOrSingle = require('./lib/listOrSingle');
+var articleSearch = require('../../services/articleSearch');
+var tagSeparator = /[+/,_: ]+/ig;
+var termSeparator = /[+/,_: -]+/ig;
+
+module.exports = function (req, res, next) {
+  var tags = req.params.tags.split(tagSeparator);
+  var terms = req.params.terms.split(termSeparator);
+  var handle = listOrSingle(res, next);
+  var fmt = 'Search results for "%s" in articles tagged "%s"';
+  var title = util.format(fmt, terms.join('", "'), tags.join('", "'));
+
+  res.viewModel = {
+    model: {
+      title: title
+    }
+  };
+
+  articleSearch.query(terms, tags, handle);
+};
