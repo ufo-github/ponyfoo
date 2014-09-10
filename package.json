@@ -18,6 +18,7 @@
     "build": "sh build/release",
     "clean": "sh build/clean",
     "copy": "sh build/copy",
+    "launch": "sh build/launch",
     "deploy": "sh build/deploy",
     "deploy-config": "sh build/deploy-config",
     "diagnose": "sh build/diagnose",

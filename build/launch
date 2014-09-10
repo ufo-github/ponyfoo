@@ -1,30 +1,88 @@
 #!/bin/bash
 
-# pip install awscli --upgrade
+NAME="ponyfoo-staging"
+KEYFILE="deploy/keys/$NAME"
+REGION="us-east-1"
+IMAGE_ID="ami-c30360aa"
+INSTANCE_TYPE="t1.micro"
+INSTANCE_USER="ubuntu"
+SECURITY_GROUP="standard"
+COUNT=1
 
-$NAME = "staging"
-$KEYFILE = ""
-$REGION = "us-east-1"
-$IMAGE_ID = "ami-c30360aa"
-$INSTANCE_TYPE = "t1.micro"
-$SECURITY_GROUP = "standard"
-$COUNT = 1
+if ! hash jq 2>/dev/null ; then
+  echo "You need to install jq\n\
+  brew install jq"
+  exit
+fi
 
+if [ ! -f ~/.aws/config ] ; then
+  echo "You need to install awscli and configure it!\n\
+  pip install awscli\n\
+  aws configure\n"
+  exit
+fi
+
+if [ -f $KEYFILE ] ; then
+  echo "Key file already exists!"
+  exit
+fi
+
+mkdir -p deploy/keys
 ssh-keygen -t rsa -b 2048 -N "" -f $KEYFILE
-aws ec2 import-key-pair $NAME -f $KEYFILE
+aws ec2 import-key-pair --key-name $NAME --public-key-material file://$KEYFILE.pub
 
-$RESOURCE_ID = aws ec2 run-instances \
+# launch instance
+echo "Launching instance..."
+
+RESOURCE_ID=$(aws ec2 run-instances \
   --image-id $IMAGE_ID \
   --instance-type $INSTANCE_TYPE \
   --count $COUNT \
   --key-name $NAME \
-  --group $SECURITY_GROUP
+  --security-groups $SECURITY_GROUP | jq -r .Instances[0].InstanceId)
 
-aws ec2 create-tags $RESOURCE_ID --tag Name=$NAME
-$IP_ADDRESS = aws ec2-allocate-address
-aws ec2-associate-address $RESOURCE_ID $IP_ADDRESS
+echo "$RESOURCE_ID: launched"
+
+# tag instance
+aws ec2 create-tags --resources $RESOURCE_ID --tag Key=Name,Value=$NAME
+echo "$RESOURCE_ID: tagged $NAME"
+
+# assign ip address
+IP_ADDRESS=$(aws ec2 allocate-address | jq -r .PublicIp)
+echo "$RESOURCE_ID: IP $IP_ADDRESS created"
+
+aws ec2 associate-address --instance-id $RESOURCE_ID --public-ip $IP_ADDRESS
+echo "$RESOURCE_ID: IP $IP_ADDRESS assigned to instance"
+
+# warming up, wait...
+echo "$RESOURCE_ID: Waiting on public DNS"
+PUBLIC_DNS="null"
+while [ $PUBLIC_DNS == "null" ]
+do
+  PUBLIC_DNS=$(aws ec2 describe-instances --instance-ids $RESOURCE_ID | jq -r .Reservations[0].Instances[0].PublicDnsName)
+done
+
+echo "$RESOURCE_ID: DNS is $PUBLIC_DNS"
+
+# TODO setup private/pub key locally
 
 # ssh attempt until connection can be established
+# ssh -v -o ConnectTimeout=4 -o BatchMode=yes -o StrictHostKeyChecking=no $INSTANCE_USER@$IP_ADDRESS exit
 
 # ec2-setup
 # https://github.com/bevacqua/grunt-ec2/blob/master/tasks/ec2_setup.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -17,12 +17,11 @@ PERFORMANCE
 
 - revving
 - critical path css inline (https://github.com/pocketjoso/penthouse)
-- further unbloat all.js
-  - load FAT js after page completes loading
 
 NICETIES
 
 - prettify comment ui
+- improve on desktop breakpoints: sidebar
 - (author) email composer with subject, intro, and markdown body
 - (author) bio editor!
 - bio show up as aside box.
