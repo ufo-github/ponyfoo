@@ -16,7 +16,7 @@ TODO
 PERFORMANCE
 
 - revving
-- critical path css inline
+- critical path css inline (https://github.com/pocketjoso/penthouse)
 - further unbloat all.js
   - load FAT js after page completes loading
 

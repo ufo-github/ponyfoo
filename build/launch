@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# pip install awscli --upgrade
+
+$REGION = "us-east-1"
+$IMAGE_ID = "ami-c30360aa"
+$INSTANCE_TYPE = "t1.micro"
+$SECURITY_GROUP = "standard"
+$COUNT = 1
+
+ssh-keygen -t rsa -b 2048 -N "" -f $KEYFILE
+aws ec2 import-key-pair $NAME -f $KEYFILE
+
+$RESOURCE_ID = aws ec2 run-instances \
+  --image-id $IMAGE_ID \
+  --instance-type $INSTANCE_TYPE \
+  --count $COUNT \
+  --key-name $NAME \
+  --group $SECURITY_GROUP
+
+aws ec2 create-tags $RESOURCE_ID --tag Name=$NAME
+$IP_ADDRESS = aws ec2-allocate-address
+aws ec2-associate-address $RESOURCE_ID $IP_ADDRESS
+
+# ssh attempt until connection can be established
+
+# ec2-setup
+# https://github.com/bevacqua/grunt-ec2/blob/master/tasks/ec2_setup.js
