@@ -2,6 +2,8 @@
 
 # pip install awscli --upgrade
 
+$NAME = "staging"
+$KEYFILE = ""
 $REGION = "us-east-1"
 $IMAGE_ID = "ami-c30360aa"
 $INSTANCE_TYPE = "t1.micro"
