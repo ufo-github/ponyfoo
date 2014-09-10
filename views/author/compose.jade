@@ -21,7 +21,7 @@ article.ly-section
       p.ac-timing-schedule
         input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
         label.ck-checkbox(for='ac-schedule-checkbox') Schedule
-        input.ac-publication(value=article.publication)
+        input.ac-publication(value=article.publication, placeholder='e.g DD-MM-YYYY HH:mm')
     else
       p='Published ' + moment(article.publication).fromNow()
 

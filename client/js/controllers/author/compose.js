@@ -5,7 +5,6 @@ var throttle = require('lodash.throttle');
 var moment = require('moment');
 var raf = require('raf');
 var taunus = require('taunus');
-var rome = require('rome/src/rome.standalone');
 var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
@@ -37,7 +36,6 @@ module.exports = function (viewModel, route) {
   var boundSlug = true;
   var intro;
   var body;
-  var publicationCal;
   var initialDate = moment().weekday(7);
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
   var ponies = texts.map(convert);
@@ -56,28 +54,10 @@ module.exports = function (viewModel, route) {
 
   if (published) {
     deserialize(article);
-  } else {
-    initializeCalendar();
   }
 
   function convert (text) {
     return convertToPonyEditor(text, preview);
-  }
-
-  function initializeCalendar () {
-    publicationCal = rome(publication[0], {
-      appendTo: 'parent',
-      required: true
-    });
-    publicationCal.on('data', serializeSlowly).on('ready', function () {
-      if (editing) {
-        deserialize(article);
-      } else {
-        deserialize();
-        publicationCal.setValue(initialDate);
-        publicationCal.emitValues();
-      }
-    });
   }
 
   function updatePublication () {
@@ -196,7 +176,7 @@ module.exports = function (viewModel, route) {
     };
     var scheduled = schedule.value();
     if (scheduled && !published) {
-      data.publication = publicationCal.getMoment().zone(0).format();
+      data.publication = moment(scheduled, 'DD-MM-YYYY HH:mm').format();
     }
     return data;
   }

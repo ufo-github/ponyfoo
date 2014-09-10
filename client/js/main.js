@@ -9,11 +9,11 @@ var markdownService = require('../../services/markdown');
 var setupMeasly = require('./setupMeasly');
 var analytics = require('./analytics');
 
-global.$ = $; // merely for debugging convenience
-global.jade = jade; // let jade have it their way
-global.moment = moment; // let rome use our moment instance
-global.taunus = taunus; // debugging is king!
-global.md = markdownService.compile; // pretty useful too
+global.$ = $;
+global.jade = jade;
+global.moment = moment;
+global.taunus = taunus;
+global.md = markdownService.compile;
 
 var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
