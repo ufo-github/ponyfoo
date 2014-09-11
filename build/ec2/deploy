@@ -39,13 +39,8 @@ rsync \
 
 # jump into instance
 ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
-  cp -r $RSYNC_REPO $APP_LATEST
-  ln -sfn $APP_LATEST $APP_LIVE
-  rm -rf `ls -t $APP_VERSIONS | tail -n +11`
-  npm --prefix $APP_LATEST install --production
-  sudo nginx -s reload
 
-  restart () {
+  pm2_start_or_reload () {
     ONLINE=$(pm2 jlist | jq length)
     if [ "$ONLINE" == "0" ] ; then
       pm2 start -i 2 --name $NAME $APP_SCRIPT
@@ -53,6 +48,13 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
       pm2 reload $NAME
     fi
   }
+
+  cp -r $RSYNC_REPO $APP_LATEST
+  ln -sfn $APP_LATEST $APP_LIVE
+  rm -rf `ls -t $APP_VERSIONS | tail -n +11`
+  npm --prefix $APP_LATEST install --production
+  sudo nginx -s reload
+  pm2_start_or_reload
 
   exit
 EOF
