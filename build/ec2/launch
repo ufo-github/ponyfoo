@@ -17,7 +17,7 @@ INSTANCE_TYPE="t1.micro"
 INSTANCE_USER="ubuntu"
 SECURITY_GROUP="standard"
 PLATFORM="ubuntu"
-COUNT=1
+COUNT="1"
 
 if ! hash jq 2>/dev/null ; then
   echo "You need to install jq\n\
@@ -78,9 +78,9 @@ done
 
 echo "$RESOURCE_ID: DNS is $PUBLIC_DNS"
 
-ATTEMPTS=0
+ATTEMPTS="0"
 
-while [ "$SUCCESS" != 0 ]
+while [ "$SUCCESS" != "0" ]
 do
   ATTEMPTS=$[$ATTEMPTS +1]
   echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
@@ -99,6 +99,7 @@ APP_STATIC_ROOT="$APP_LIVE/.bin/public"
 RSYNC="~/apps/.rsync/$ENV"
 RSYNC_NGINX="$RSYNC/nginx"
 RSYNC_REPO="$RSYNC/app"
+RSYNC_CONFIG="$RSYNC/config"
 
 # jump into instance
 ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
@@ -122,6 +123,7 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   mkdir -p $APP_VERSIONS
   mkdir -p $RSYNC_NGINX
   mkdir -p $RSYNC_REPO
+  mkdir -p $RSYNC_CONFIG
 
   # nvm
   curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash

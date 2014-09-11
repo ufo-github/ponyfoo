@@ -1,1 +1,30 @@
 #!/bin/bash
+
+# locals
+ENV="staging"
+NAME="ponyfoo-$ENV"
+KEYFILE="deploy/keys/$ENV"
+
+# instance-specific
+INSTANCE_USER="ubuntu"
+PUBLIC_DNS=$(aws ec2 describe-instances --filters Name=tag:Name,Values=$NAME | jq -r .Reservations[0].Instances[0].PublicDnsName)
+
+APP="~/apps/$ENV"
+APP_CONFIG="$APP/config"
+
+# upload modifications
+rsync \
+  -az \
+  --stats \
+  --delete \
+  -e "ssh -o StrictHostKeyChecking=no -i $KEYFILE" \
+  .env \
+  $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
+
+# jump into instance
+ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
+  pm2 restart $NAME
+  exit
+EOF
+
+echo "Deployed configuration to $ENV"
