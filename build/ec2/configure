@@ -22,7 +22,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
 
 # jump into instance
-ssh -tti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
+ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
   pm2_reload_if_needed () {
     ONLINE=$(pm2 jlist | jq length)
     if [ "$ONLINE" != "0" ] ; then
