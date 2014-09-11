@@ -22,7 +22,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
 
 # jump into instance
-ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
+ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
   pm2_reload_if_needed () {
     ONLINE=$(pm2 jlist | jq length)
     if [ "$ONLINE" != "0" ] ; then
@@ -31,6 +31,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   }
 
   pm2_reload_if_needed
-EOF
+EOF_RELOAD
 
 echo "Deployed configuration to $ENV"

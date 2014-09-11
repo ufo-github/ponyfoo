@@ -2,7 +2,6 @@
 
 npm run clean
 npm run copy
-npm test
 
 # compile
 cp -r client/img .bin/public/img

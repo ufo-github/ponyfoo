@@ -28,6 +28,9 @@ VERSION=$(cat package.json | jq -r .version)
 
 APP_LATEST="$APP_VERSIONS/$VERSION"
 
+# build for release
+npm run release
+
 # upload modifications
 rsync \
   -az \
@@ -39,7 +42,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_REPO
 
 # jump into instance
-ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
+ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
 
   pm2_start_or_reload () {
     ONLINE=$(pm2 jlist | jq length)
@@ -57,6 +60,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   npm --prefix $APP_LATEST install --production
   sudo nginx -s reload
   pm2_start_or_reload
-EOF
+EOF_DEPLOY
 
 echo "Deployed v$VERSION to $ENV"
