@@ -1,16 +1,10 @@
 .bin/lib
-.editorconfig
 .env
 .git
-.gitignore
-.jshintignore
-.jshintrc
-.spritesmith.js
 build
 client
 deploy
 documentation
-migrate.js
 migration
 node_modules
 temp
