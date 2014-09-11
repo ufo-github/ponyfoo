@@ -57,8 +57,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   npm --prefix $APP_LATEST install --production
   sudo nginx -s reload
   pm2_start_or_reload
-
-  exit
 EOF
 
 echo "Deployed v$VERSION to $ENV"

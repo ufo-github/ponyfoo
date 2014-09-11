@@ -131,8 +131,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   # nginx
   sudo apt-get install nginx -y
   sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)
-
-  exit
 EOF
 
 
@@ -146,8 +144,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   sudo apt-get install make g++ -y
   npm install -g pm2
   pm2 startup $PLATFORM
-
-  exit
 EOF
 
 # transfer nginx templates
@@ -164,11 +160,9 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   cp -r $RSYNC_NGINX $APP_NGINX
 
   # replace variables
-  sed -i '' 's/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g' $APP_NGINX/http.conf
-  sed -i '' 's/{SERVER_NAME}/$SERVER_NAME/g;s/{STATIC_ROOT}/$APP_STATIC_ROOT/g' $APP_NGINX/server.conf
+  sed -i 's/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g' $APP_NGINX/http.conf
+  sed -i 's/{SERVER_NAME}/$SERVER_NAME/g;s/{STATIC_ROOT}/$APP_STATIC_ROOT/g' $APP_NGINX/server.conf
 
   sudo ln -sfn $APP_NGINX/http.conf /etc/nginx/http.conf
   sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/server.conf
-
-  exit
 EOF
