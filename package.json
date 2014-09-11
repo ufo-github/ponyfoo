@@ -19,6 +19,7 @@
     "clean": "sh build/clean",
     "copy": "sh build/copy",
     "launch": "sh build/ec2/launch",
+    "shutdown": "sh build/ec2/shutdown",
     "deploy": "sh build/ec2/deploy",
     "configure": "sh build/ec2/configure",
     "diagnose": "sh build/diagnose",

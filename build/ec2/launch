@@ -71,7 +71,7 @@ echo "$RESOURCE_ID: IP $IP_ADDRESS assigned to instance"
 PUBLIC_DNS="null"
 while [ $PUBLIC_DNS == "null" ]
 do
-  echo "$RESOURCE_ID: Polling for public DNS"
+  echo "$RESOURCE_ID: Polling for public DNS..."
   PUBLIC_DNS=$(aws ec2 describe-instances --instance-ids $RESOURCE_ID | jq -r .Reservations[0].Instances[0].PublicDnsName)
 done
 
@@ -100,10 +100,7 @@ RSYNC_NGINX="$RSYNC/nginx"
 RSYNC_REPO="$RSYNC/app"
 
 port_fwd () {
-  sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport $1 -j REDIRECT --to-port $2
-  sudo iptables -A INPUT -p tcp -m tcp --sport $1 -j ACCEPT
-  sudo iptables -A OUTPUT -p tcp -m tcp --dport $1 -j ACCEPT
-  sudo iptables-save
+
 }
 
 # jump into instance
@@ -113,15 +110,33 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf
   sudo cp /tmp/sysctl.conf /etc/
   sudo sysctl -p /etc/sysctl.conf
-  port_fwd 80 8080
+
+  # forward port 80 to 8080
+  sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+  sudo iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT
+  sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT
+  sudo iptables-save
 
   # expected directory structure
   mkdir -p $APP_VERSIONS
   mkdir -p $RSYNC_NGINX
   mkdir -p $RSYNC_REPO
 
-  # nodejs
+  # nvm
   curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash
+
+  # nginx
+  sudo apt-get update
+  sudo apt-get install nginx -y
+  sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)
+
+  exit
+EOF
+
+
+# jump into instance once again
+ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
+  # nodejs
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION
 
@@ -129,11 +144,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   sudo apt-get install make g++ -y
   npm install -g pm2
   pm2 startup
-
-  # nginx
-  sudo apt-get update
-  sudo apt-get install nginx -y
-  sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)
 
   exit
 EOF
