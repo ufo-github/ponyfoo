@@ -42,7 +42,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_REPO
 
 # jump into instance
-ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
+ssh -tti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
 
   pm2_start_or_reload () {
     ONLINE=$(pm2 jlist | jq length)

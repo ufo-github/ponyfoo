@@ -1,4 +1,4 @@
-#!/bin/bash
+  #!/bin/bash
 
 # locals
 ENV="staging"
@@ -102,7 +102,7 @@ RSYNC_REPO="$RSYNC/app"
 RSYNC_CONFIG="$RSYNC/config"
 
 # jump into instance
-ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
+ssh -tti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
   # aptitude comes first!
   sudo apt-key update
   sudo apt-get update
@@ -134,7 +134,7 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_
 EOF_INITIAL
 
 # jump into instance once again
-ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NODE
+ssh -tti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NODE
   # nodejs
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION
@@ -155,7 +155,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_NGINX
 
 # jump into instance again
-ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NGINX_TEMPLATES
+ssh -tti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NGINX_TEMPLATES
   cp -r $RSYNC_NGINX $APP_NGINX
 
   # replace variables
