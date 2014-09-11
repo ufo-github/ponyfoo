@@ -106,8 +106,6 @@ port_fwd () {
   sudo iptables-save
 }
 
-echo "ss $PUBLIC_DNS "
-
 # jump into instance
 ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   #forwarding
