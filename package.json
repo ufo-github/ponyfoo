@@ -80,6 +80,7 @@
     "browserify": "^5.10.1",
     "clean-css": "^2.1.8",
     "disc": "^1.2.1",
+    "emoji-random": "^0.1.2",
     "errorhandler": "^1.0.1",
     "jshint": "^2.5.0",
     "jshint-stylish": "^0.2.0",

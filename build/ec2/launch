@@ -1,22 +1,23 @@
 #!/bin/bash
 
-SERVER_NAME="ponyfoo.com"
-NAME="ponyfoo-staging"
-
 # locals
-KEYFILE="deploy/keys/$NAME"
+ENV="staging"
+NAME="ponyfoo-$ENV"
+KEYFILE="deploy/keys/$ENV"
+
+# stack specific
+SERVER_NAME="ponyfoo.com"
+NODE_VERSION="0.10"
+NGINX_WORKERS="4"
 
 # instance specific
 REGION="us-east-1"
-IMAGE_ID="ami-c30360aa"
+IMAGE_ID="ami-08389d60"
 INSTANCE_TYPE="t1.micro"
 INSTANCE_USER="ubuntu"
 SECURITY_GROUP="standard"
+PLATFORM="ubuntu"
 COUNT=1
-
-# stack specific
-NODE_VERSION="0.10"
-NGINX_WORKERS="4"
 
 if ! hash jq 2>/dev/null ; then
   echo "You need to install jq\n\
@@ -90,21 +91,21 @@ done
 
 ### setup
 
-APP="~/apps/$NAME"
+APP="~/apps/$ENV"
 APP_NGINX="$APP/nginx"
 APP_VERSIONS="$APP/v"
 APP_LIVE="$APP/live"
 APP_STATIC_ROOT="$APP_LIVE/.bin/public"
-RSYNC="~/apps/.rsync/$NAME"
+RSYNC="~/apps/.rsync/$ENV"
 RSYNC_NGINX="$RSYNC/nginx"
 RSYNC_REPO="$RSYNC/app"
 
-port_fwd () {
-
-}
-
 # jump into instance
 ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
+  # aptitude comes first!
+  sudo apt-key update
+  sudo apt-get update
+
   #forwarding
   cp /etc/sysctl.conf /tmp/
   echo "net.ipv4.ip_forward = 1" >> /tmp/sysctl.conf
@@ -126,7 +127,6 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash
 
   # nginx
-  sudo apt-get update
   sudo apt-get install nginx -y
   sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)
 
@@ -143,7 +143,7 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   # pm2
   sudo apt-get install make g++ -y
   npm install -g pm2
-  pm2 startup
+  pm2 startup $PLATFORM
 
   exit
 EOF
