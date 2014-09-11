@@ -138,7 +138,7 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   exit
 EOF
 
-# copy over nginx templates
+# transfer nginx templates
 rsync \
   -az \
   --stats \
