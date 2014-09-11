@@ -6,11 +6,10 @@ NAME="ponyfoo-$ENV"
 KEYFILE="deploy/keys/$ENV"
 
 # instance-specific
-INSTANCE=$(aws ec2 describe-instances --filters Name=tag:Name,Values=$NAME)
-INSTANCE_ID=$(echo "$INSTANCE" | jq -r .Reservations[0].Instances[0].InstanceId)
-PUBLIC_IP=$(echo "$INSTANCE" | jq -r .Reservations[0].Instances[0].PublicIpAddress)
+INSTANCE_ID=$(cat $KEYFILE.id)
+PUBLIC_IP=$(cat $KEYFILE.ip)
 
-rm $KEYFILE{,.pub}
+rm $KEYFILE{,.*}
 aws ec2 terminate-instances --instance-ids $INSTANCE_ID
 aws ec2 delete-tags --resources $INSTANCE_ID --tags Key=Name
 aws ec2 delete-key-pair --key-name $NAME

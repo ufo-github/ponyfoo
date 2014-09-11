@@ -73,7 +73,8 @@ PUBLIC_DNS="null"
 while [ "$PUBLIC_DNS" == "null" ]
 do
   echo "$RESOURCE_ID: Polling for public DNS..."
-  PUBLIC_DNS=$(aws ec2 describe-instances --instance-ids $RESOURCE_ID | jq -r .Reservations[0].Instances[0].PublicDnsName)
+  INSTANCE=$(aws ec2 describe-instances --instance-ids $RESOURCE_ID | jq .Reservations[0].Instances[0])
+  PUBLIC_DNS=$(echo "$INSTANCE" | jq -r .PublicDnsName)
 done
 
 echo "$RESOURCE_ID: DNS is $PUBLIC_DNS"
@@ -85,9 +86,14 @@ do
   ATTEMPTS=$[$ATTEMPTS +1]
   echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
   sleep 3
-  ssh -i $KEYFILE -o ConnectTimeout=3 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
+  ssh -ttti $KEYFILE -o ConnectTimeout=3 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
   SUCCESS=$?
 done
+
+echo $PUBLIC_DNS > $KEYFILE.dns
+echo $RESOURCE_ID > $KEYFILE.id
+echo $INSTANCE_USER > $KEYFILE.user
+echo $IP_ADDRESS > $KEYFILE.ip
 
 ### setup
 
@@ -102,7 +108,7 @@ RSYNC_REPO="$RSYNC/app"
 RSYNC_CONFIG="$RSYNC/config"
 
 # jump into instance
-ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
+ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
   # aptitude comes first!
   sudo apt-key update
   sudo apt-get update
@@ -134,7 +140,7 @@ ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@
 EOF_INITIAL
 
 # jump into instance once again
-ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NODE
+ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NODE
   # nodejs
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION
@@ -150,17 +156,19 @@ rsync \
   -az \
   --stats \
   --delete \
-  -e "ssh -i $KEYFILE -o StrictHostKeyChecking=no" \
+  -e "ssh -ttti $KEYFILE -o StrictHostKeyChecking=no" \
   build/ec2/nginx/ \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_NGINX
 
 # jump into instance again
-ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NGINX_TEMPLATES
+ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NGINX_TEMPLATES
   cp -r $RSYNC_NGINX $APP_NGINX
 
   # replace variables
-  sed -i 's/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g' $APP_NGINX/http.conf
-  sed -i 's/{SERVER_NAME}/$SERVER_NAME/g;s/{STATIC_ROOT}/$APP_STATIC_ROOT/g' $APP_NGINX/server.conf
+  ESCAPED_STATIC_ROOT=$(echo $APP_STATIC_ROOT | sed -e "s/[\/&]/\\&/g")
+
+  sed -i "s/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g" $APP_NGINX/http.conf
+  sed -i "s/{SERVER_NAME}/ponyfoo.com/g;s/{STATIC_ROOT}/$ESCAPED_STATIC_ROOT/g" $APP_NGINX/server.conf
 
   sudo ln -sfn $APP_NGINX/http.conf /etc/nginx/http.conf
   sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/server.conf
