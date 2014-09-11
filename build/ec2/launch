@@ -70,7 +70,7 @@ echo "$RESOURCE_ID: IP $IP_ADDRESS assigned to instance"
 # warming up, wait...
 
 PUBLIC_DNS="null"
-while [ $PUBLIC_DNS == "null" ]
+while [ "$PUBLIC_DNS" == "null" ]
 do
   echo "$RESOURCE_ID: Polling for public DNS..."
   PUBLIC_DNS=$(aws ec2 describe-instances --instance-ids $RESOURCE_ID | jq -r .Reservations[0].Instances[0].PublicDnsName)
@@ -85,7 +85,7 @@ do
   ATTEMPTS=$[$ATTEMPTS +1]
   echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
   sleep 3
-  ssh -tti $KEYFILE -o ConnectTimeout=3 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
+  ssh -i $KEYFILE -o ConnectTimeout=3 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
   SUCCESS=$?
 done
 
@@ -142,7 +142,7 @@ ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@
   # pm2
   sudo apt-get install make g++ -y
   npm install -g pm2
-  PATH=$PATH:$NVM_BIN sudo pm2 startup $PLATFORM -u $INSTANCE_USER
+  sudo env PATH=$PATH:$NVM_BIN pm2 startup $PLATFORM -u $INSTANCE_USER
 EOF_NODE
 
 # transfer nginx templates
@@ -150,8 +150,8 @@ rsync \
   -az \
   --stats \
   --delete \
-  -e "ssh -o StrictHostKeyChecking=no -i $KEYFILE" \
-  build/ec2/nginx \
+  -e "ssh -i $KEYFILE -o StrictHostKeyChecking=no" \
+  build/ec2/nginx/ \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_NGINX
 
 # jump into instance again

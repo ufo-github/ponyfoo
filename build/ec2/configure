@@ -17,7 +17,7 @@ rsync \
   -az \
   --stats \
   --delete \
-  -e "ssh -o StrictHostKeyChecking=no -i $KEYFILE" \
+  -e "ssh -i $KEYFILE -o StrictHostKeyChecking=no" \
   .env \
   $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
 
