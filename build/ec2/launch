@@ -144,7 +144,7 @@ rsync \
   --stats \
   --delete \
   -e "ssh -o StrictHostKeyChecking=no -i $KEYFILE" \
-  deploy/nginx \
+  build/ec2/nginx \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_NGINX
 
 # jump into instance again
