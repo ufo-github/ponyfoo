@@ -6,4 +6,4 @@ node_modules
 npm-debug.log
 temp
 generated
-deploy
+deploy/keys
