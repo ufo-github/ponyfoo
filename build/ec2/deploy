@@ -15,6 +15,7 @@ PUBLIC_DNS=$(echo "$INSTANCE" | jq -r .Reservations[0].Instances[0].PublicDnsNam
 APP="~/apps/$ENV"
 APP_VERSIONS="$APP/v"
 APP_LIVE="$APP/live"
+APP_CONFIG="$APP/config"
 APP_SCRIPT="$APP_LIVE/app.js"
 RSYNC="~/apps/.rsync/$ENV"
 RSYNC_REPO="$RSYNC/app"
@@ -51,6 +52,7 @@ ssh -tti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
 
   cp -r $RSYNC_REPO $APP_LATEST
   ln -sfn $APP_LATEST $APP_LIVE
+  ln -sfn $APP_CONFIG/.env $APP_LATEST/.env
   rm -rf `ls -t $APP_VERSIONS | tail -n +11`
   npm --prefix $APP_LATEST install --production
   sudo nginx -s reload
