@@ -142,8 +142,11 @@ ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@
   # pm2
   sudo apt-get install make g++ -y
   npm install -g pm2
-  pm2 startup $PLATFORM
+  sudo env PATH=$PATH:$NVM_BIN pm2 startup $PLATFORM -u $INSTANCE_USER
 EOF_NODE
+
+# TODO sudo env PATH=$PATH:$NVM_BIN pm2 startup $PLATFORM -u $INSTANCE_USER
+# TODO sed
 
 # transfer nginx templates
 rsync \
