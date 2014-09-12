@@ -51,13 +51,13 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
       section.at-siblings.uv-clearfix
         if article.prev
           a.at-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')
-            span.at-prev-anchor «
+            span.at-prev-anchor='« '
             span.at-prev-text=article.prev.title
 
         if article.next
           a.at-next.hint-before(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')
             span.at-next-text=article.next.title
-            span.at-next-anchor »
+            span.at-next-anchor=' »'
 
 if full
   include comments

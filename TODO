@@ -4,6 +4,7 @@ LAUNCH
 
 TODO
 
+- fix nginx proxy/statics!
 - canonical, etc: fill metadata (see defaultRequestModel.js)
 
 PERFORMANCE
