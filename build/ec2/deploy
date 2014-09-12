@@ -35,8 +35,7 @@ rsync \
   -az \
   --stats \
   --delete \
-  --include-from .rsync \
-  --exclude /*** \
+  --exclude-from .rsyncignore \
   -e "ssh -i $KEYFILE -o StrictHostKeyChecking=no" \
   . \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_REPO
