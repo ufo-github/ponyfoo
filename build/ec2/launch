@@ -103,7 +103,6 @@ do
   CONSECUTIVE=$[$CONSECUTIVE +1]
   echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS) passed ($CONSECUTIVE/3)!"
 done
-sleep 10
 
 ### setup
 
@@ -117,7 +116,7 @@ RSYNC_REPO="$RSYNC/app"
 RSYNC_CONFIG="$RSYNC/config"
 
 # jump into instance
-ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
+ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
   echo "stage: aptitude!"
   sudo apt-key update
   sudo apt-get update
@@ -150,7 +149,7 @@ ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_US
 EOF_INITIAL
 
 # jump into instance once again
-ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NODE
+ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NODE
   echo "stage: nodejs"
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION

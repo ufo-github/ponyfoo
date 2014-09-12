@@ -38,7 +38,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_REPO
 
 # jump into instance
-ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
+ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
   pm2_start_or_reload () {
     if [ "$(pm2 jlist)" == "[]" ] ; then
       pm2 start -i 2 --name $NAME $APP_SCRIPT

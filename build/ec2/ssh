@@ -8,4 +8,4 @@ KEYFILE="deploy/keys/$ENV"
 INSTANCE_USER=$(cat $KEYFILE.user)
 PUBLIC_DNS=$(cat $KEYFILE.dns)
 
-ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS
+ssh -i $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS

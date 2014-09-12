@@ -38,7 +38,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
 
 # jump into instance
-ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
+ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
   echo "stage: nginx templates"
   cp -r $RSYNC_NGINX $APP_NGINX
 
