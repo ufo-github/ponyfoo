@@ -86,9 +86,9 @@ echo $IP_ADDRESS > $KEYFILE.ip
 # wait on stable ssh connectivity
 ATTEMPTS="0"
 CONSECUTIVE="0"
-SUCCESS="1"
 while [ "$CONSECUTIVE" != "2" ]
 do
+  SUCCESS="1"
   while [ "$SUCCESS" != "0" ]
   do
     ATTEMPTS=$[$ATTEMPTS +1]
