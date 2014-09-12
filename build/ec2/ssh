@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# locals
+ENV="staging"
+KEYFILE="deploy/keys/$ENV"
+
+# instance-specific
+INSTANCE_USER=$(cat $KEYFILE.user)
+PUBLIC_DNS=$(cat $KEYFILE.dns)
+
+ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS

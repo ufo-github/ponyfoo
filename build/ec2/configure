@@ -6,11 +6,11 @@ NAME="ponyfoo-$ENV"
 KEYFILE="deploy/keys/$ENV"
 
 # instance-specific
-INSTANCE_USER="ubuntu"
-PUBLIC_DNS=$(aws ec2 describe-instances --filters Name=tag:Name,Values=$NAME | jq -r .Reservations[0].Instances[0].PublicDnsName)
+INSTANCE_USER=$(cat $KEYFILE.user)
+PUBLIC_DNS=$(cat $KEYFILE.dns)
 
 APP="~/apps/$ENV"
-APP_CONFIG="$APP/config"
+APP_CONFIG="$APP/config/"
 
 # upload modifications
 rsync \
@@ -22,10 +22,9 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
 
 # jump into instance
-ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
+ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
   pm2_reload_if_needed () {
-    ONLINE=$(pm2 jlist | jq length)
-    if [ "$ONLINE" != "0" ] ; then
+    if [ "$(pm2 jlist)" != "[]" ] ; then
       pm2 reload $NAME
     fi
   }

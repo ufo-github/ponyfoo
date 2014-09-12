@@ -45,6 +45,12 @@ Whenever you want to deploy, use the command below. It'll bump the version by a 
 npm run deploy
 ```
 
+If you run into trouble, you can `ssh` into the instance and ammend the situation by yourself.
+
+```shell
+npm run ssh
+```
+
 ## License
 
 MIT

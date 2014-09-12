@@ -7,10 +7,9 @@ KEYFILE="deploy/keys/$ENV"
 EMOJI="$(emoji-random)"
 
 # instance-specific
-INSTANCE_USER="ubuntu"
-INSTANCE=$(aws ec2 describe-instances --filters Name=tag:Name,Values=$NAME)
-INSTANCE_ID=$(echo "$INSTANCE" | jq -r .Reservations[0].Instances[0].InstanceId)
-PUBLIC_DNS=$(echo "$INSTANCE" | jq -r .Reservations[0].Instances[0].PublicDnsName)
+INSTANCE_USER=$(cat $KEYFILE.user)
+INSTANCE_ID=$(cat $KEYFILE.id)
+PUBLIC_DNS=$(cat $KEYFILE.dns)
 
 APP="~/apps/$ENV"
 APP_VERSIONS="$APP/v"
@@ -21,10 +20,10 @@ RSYNC="~/apps/.rsync/$ENV"
 RSYNC_REPO="$RSYNC/app"
 
 # bump package.json
-npm version patch
-VERSION=$(cat package.json | jq -r .version)
-npm version $VERSION-$ENV -m "Upgrade to %s because deploy $EMOJI"
-VERSION=$(cat package.json | jq -r .version)
+# npm version patch
+# VERSION=$(cat package.json | jq -r .version)
+# npm version $VERSION-$ENV -m "Upgrade to %s because deploy $EMOJI"
+# VERSION=$(cat package.json | jq -r .version)
 
 APP_LATEST="$APP_VERSIONS/$VERSION"
 
@@ -42,7 +41,7 @@ rsync \
   $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_REPO
 
 # jump into instance
-ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
+ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
 
   pm2_start_or_reload () {
     ONLINE=$(pm2 jlist | jq length)
@@ -53,6 +52,7 @@ ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@
     fi
   }
 
+  rm -rf $APP_LATEST
   cp -r $RSYNC_REPO $APP_LATEST
   ln -sfn $APP_LATEST $APP_LIVE
   ln -sfn $APP_CONFIG/.env $APP_LATEST/.env
@@ -60,6 +60,8 @@ ssh -i $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@
   npm --prefix $APP_LATEST install --production
   sudo nginx -s reload
   pm2_start_or_reload
+
+  sudo env PATH=$PATH:$NVM_BIN pm2 startup $PLATFORM -u $INSTANCE_USER
 EOF_DEPLOY
 
 echo "Deployed v$VERSION to $ENV"

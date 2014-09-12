@@ -15,14 +15,15 @@
     "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
   "scripts": {
-    "release": "sh build/release",
     "clean": "sh build/clean",
-    "copy": "sh build/copy",
-    "launch": "sh build/ec2/launch",
-    "shutdown": "sh build/ec2/shutdown",
-    "deploy": "sh build/ec2/deploy",
     "configure": "sh build/ec2/configure",
+    "copy": "sh build/copy",
+    "deploy": "sh build/ec2/deploy",
     "diagnose": "sh build/diagnose",
+    "launch": "sh build/ec2/launch",
+    "release": "sh build/release",
+    "shutdown": "sh build/ec2/shutdown",
+    "ssh": "sh build/ec2/ssh",
     "start": "sh build/debug",
     "test": "sh build/test"
   },
