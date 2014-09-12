@@ -147,7 +147,6 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
 
   echo "stage: nginx"
   sudo apt-get install nginx -y
-  sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
 EOF_INITIAL
 
 # jump into instance once again

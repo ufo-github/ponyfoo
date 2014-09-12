@@ -55,7 +55,7 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
   ln -sfn $APP_CONFIG $APP_LATEST/.env
   rm -rf `ls -t $APP_VERSIONS | tail -n +11`
   npm --prefix $APP_LATEST install --production
-  sudo nginx -s reload
+  sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
   pm2_start_or_reload
 EOF_DEPLOY
 
