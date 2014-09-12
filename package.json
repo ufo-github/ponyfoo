@@ -24,6 +24,7 @@
     "release": "sh build/release",
     "shutdown": "sh build/ec2/shutdown",
     "ssh": "sh build/ec2/ssh",
+    "open": "sh build/ec2/open",
     "start": "sh build/debug",
     "test": "sh build/test"
   },

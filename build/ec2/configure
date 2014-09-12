@@ -2,6 +2,7 @@
 
 # locals
 ENV="staging"
+ENVFILE="deploy/env/$ENV"
 NAME="ponyfoo-$ENV"
 KEYFILE="deploy/keys/$ENV"
 
@@ -9,8 +10,23 @@ KEYFILE="deploy/keys/$ENV"
 INSTANCE_USER=$(cat $KEYFILE.user)
 PUBLIC_DNS=$(cat $KEYFILE.dns)
 
+# stack-specific
+SERVER_NAME="$PUBLIC_DNS" # "ponyfoo.com"
+
 APP="~/apps/$ENV"
-APP_CONFIG="$APP/config/"
+APP_CONFIG="$APP/config"
+APP_NGINX="$APP/nginx"
+RSYNC="~/apps/.rsync/$ENV"
+RSYNC_NGINX="$RSYNC/nginx"
+
+# transfer nginx templates
+rsync \
+  -az \
+  --stats \
+  --delete \
+  -e "ssh -ttti $KEYFILE -o StrictHostKeyChecking=no" \
+  build/ec2/nginx/ \
+  $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_NGINX
 
 # upload modifications
 rsync \
@@ -18,11 +34,23 @@ rsync \
   --stats \
   --delete \
   -e "ssh -i $KEYFILE -o StrictHostKeyChecking=no" \
-  .env \
+  $ENVFILE \
   $INSTANCE_USER@$PUBLIC_DNS:$APP_CONFIG
 
 # jump into instance
 ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
+  echo "stage: nginx templates"
+  cp -r $RSYNC_NGINX $APP_NGINX
+
+  ESCAPED_STATIC_ROOT=`$APP_STATIC_ROOT | sed -e "s/[\/&]/\\&/g"`
+
+  sed -i "s/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g" $APP_NGINX/http.conf
+  sed -i "s/{SERVER_NAME}/$SERVER_NAME/g;s/{STATIC_ROOT}/$ESCAPED_STATIC_ROOT/g" $APP_NGINX/server.conf
+
+  sudo ln -sfn $APP_NGINX/http.conf /etc/nginx/http.conf
+  sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/server.conf
+  sudo service nginx reload
+
   pm2_reload_if_needed () {
     if [ "$(pm2 jlist)" != "[]" ] ; then
       pm2 reload $NAME

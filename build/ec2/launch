@@ -6,7 +6,6 @@ NAME="ponyfoo-$ENV"
 KEYFILE="deploy/keys/$ENV"
 
 # stack specific
-SERVER_NAME="ponyfoo.com"
 NODE_VERSION="0.10"
 NGINX_WORKERS="4"
 
@@ -98,7 +97,6 @@ done
 ### setup
 
 APP="~/apps/$ENV"
-APP_NGINX="$APP/nginx"
 APP_VERSIONS="$APP/v"
 APP_LIVE="$APP/live"
 APP_STATIC_ROOT="$APP_LIVE/.bin/public"
@@ -112,6 +110,7 @@ ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_US
   echo "stage: aptitude!"
   sudo apt-key update
   sudo apt-get update
+  sudo apt-get install git make g++ -y
 
   echo "stage: forwarding!"
   cp /etc/sysctl.conf /tmp/
@@ -146,32 +145,8 @@ ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_US
   nvm alias default $NODE_VERSION
 
   echo "stage: pm2"
-  sudo apt-get install make g++ -y
   npm install -g pm2
   sudo env PATH=\$PATH:\$NVM_BIN pm2 startup $PLATFORM -u $INSTANCE_USER
 EOF_NODE
-
-# transfer nginx templates
-rsync \
-  -az \
-  --stats \
-  --delete \
-  -e "ssh -ttti $KEYFILE -o StrictHostKeyChecking=no" \
-  build/ec2/nginx/ \
-  $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_NGINX
-
-# jump into instance again
-ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_NGINX_TEMPLATES
-  echo "stage: nginx templates"
-  cp -r $RSYNC_NGINX $APP_NGINX
-
-  ESCAPED_STATIC_ROOT=`$APP_STATIC_ROOT | sed -e "s/[\/&]/\\&/g"`
-
-  sed -i "s/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g" $APP_NGINX/http.conf
-  sed -i "s/{SERVER_NAME}/ponyfoo.com/g;s/{STATIC_ROOT}/$ESCAPED_STATIC_ROOT/g" $APP_NGINX/server.conf
-
-  sudo ln -sfn $APP_NGINX/http.conf /etc/nginx/http.conf
-  sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/server.conf
-EOF_NGINX_TEMPLATES
 
 echo "Instance $RESOURCE_ID launched!"

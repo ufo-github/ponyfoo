@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# locals
+ENV="staging"
+KEYFILE="deploy/keys/$ENV"
+
+# instance-specific
+PUBLIC_DNS=$(cat $KEYFILE.dns)
+
+open http://$PUBLIC_DNS
