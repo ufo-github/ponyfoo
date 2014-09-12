@@ -146,7 +146,7 @@ ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_US
 
   echo "stage: nginx"
   sudo apt-get install nginx -y
-  sudo service nginx start
+  sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)
 EOF_INITIAL
 
 # jump into instance once again

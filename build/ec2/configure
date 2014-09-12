@@ -48,7 +48,7 @@ ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER
   sed -i "s/{SERVER_NAME}/$SERVER_NAME/g;s/{STATIC_ROOT}/$ESCAPED_STATIC_ROOT/g" $APP_NGINX/server.conf
 
   sudo ln -sfn $APP_NGINX/http.conf /etc/nginx/http.conf
-  sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/server.conf
+  sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/sites-enabled/$NAME.conf
   sudo service nginx reload
 
   pm2_reload_if_needed () {

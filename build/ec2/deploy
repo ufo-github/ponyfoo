@@ -53,7 +53,7 @@ ssh -Ti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no $INSTANCE_USER
   ln -sfn $APP_CONFIG $APP_LATEST/.env
   rm -rf `ls -t $APP_VERSIONS | tail -n +11`
   npm --prefix $APP_LATEST install --production
-  sudo service nginx reload
+  sudo nginx -s reload
   pm2_start_or_reload
 EOF_DEPLOY
 
