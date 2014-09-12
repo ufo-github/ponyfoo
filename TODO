@@ -15,12 +15,11 @@ NICETIES
 
 - prettify comment ui
 - improve on desktop breakpoints: sidebar
-- (author) email composer with subject, intro, and markdown body
 - (author) bio editor!
 - bio show up as aside box.
+- (author) email composer with subject, intro, and markdown body
 - flash should be in layout really?
-- cmd + enter look up a lib that has simple api
-
+- keyboard shortcuts!
 
 OBSCURE BUGS
 
