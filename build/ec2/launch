@@ -85,14 +85,23 @@ echo $IP_ADDRESS > $KEYFILE.ip
 
 ATTEMPTS="0"
 
-while [ "$SUCCESS" != "0" ]
-do
-  ATTEMPTS=$[$ATTEMPTS +1]
-  echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
-  sleep 3
-  ssh -ttti $KEYFILE -o ConnectTimeout=3 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
-  SUCCESS=$?
-done
+ssh_test () {
+  SUCCESS="1"
+  while [ "$SUCCESS" != "0" ]
+  do
+    ATTEMPTS=$[$ATTEMPTS +1]
+    echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
+    sleep 6
+    ssh -ttti $KEYFILE -o ConnectTimeout=6 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
+    SUCCESS=$?
+  done
+  echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS) passed!"
+}
+
+ssh_test
+ssh_test
+ssh_test
+sleep 6
 
 ### setup
 
