@@ -7,7 +7,6 @@ KEYFILE="deploy/keys/$ENV"
 
 # stack specific
 NODE_VERSION="0.10"
-NGINX_WORKERS="4"
 
 # instance specific
 REGION="us-east-1"
