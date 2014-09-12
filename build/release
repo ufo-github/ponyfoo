@@ -5,12 +5,12 @@ npm run copy
 npm dedupe
 
 # compile
-cp -r client/img .bin/public/img
-cp client/{favicon.ico,robots.txt,humans.txt} .bin/public
+spritesmith
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --compress
 cleancss .bin/public/css/all.css -o .bin/public/css/all.css --s0
 jade views/**/*.jade -o .bin --client --commonjs --no-debug --obj '{"basedir":"views"}'
 taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > .bin/public/js/all.js
 
-# revving
+# hashing
+reaver --manifest .bin/public/{css,js,img}
