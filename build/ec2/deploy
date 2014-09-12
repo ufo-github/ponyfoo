@@ -20,8 +20,7 @@ RSYNC="~/apps/.rsync/$ENV"
 RSYNC_REPO="$RSYNC/app/"
 
 # bump package.json
-npm version patch -m "Upgrade to %s because deploy $EMOJI"
-VERSION=$(cat package.json | jq -r .version)
+VERSION=$(npm version patch -m "Upgrade to %s because deploy $EMOJI")
 
 APP_LATEST="$APP_VERSIONS/$VERSION"
 
