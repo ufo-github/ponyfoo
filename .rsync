@@ -1,11 +1,10 @@
-+ .bin
-+ controllers
-+ lib
-+ models
-+ resources
-+ services
-+ app.js
-+ package.json
-+ .taunusrc
-+ .env.defaults
-- /***
+.bin
+controllers
+lib
+models
+resources
+services
+app.js
+package.json
+.taunusrc
+.env.defaults
