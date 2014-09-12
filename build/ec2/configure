@@ -14,6 +14,8 @@ PUBLIC_DNS=$(cat $KEYFILE.dns)
 SERVER_NAME="$PUBLIC_DNS" # "ponyfoo.com"
 
 APP="~/apps/$ENV"
+APP_LIVE="$APP/live"
+APP_STATIC_ROOT="$APP_LIVE/.bin/public"
 APP_CONFIG="$APP/config"
 APP_NGINX="$APP/nginx"
 RSYNC="~/apps/.rsync/$ENV"
@@ -39,16 +41,14 @@ rsync \
 
 # jump into instance
 ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_RELOAD
-  echo "stage: nginx templates"
+  rm -rf $APP_NGINX
   cp -r $RSYNC_NGINX $APP_NGINX
 
-  ESCAPED_STATIC_ROOT=`$APP_STATIC_ROOT | sed -e "s/[\/&]/\\&/g"`
+  sed -i "s#{NGINX_USER}#$INSTANCE_USER#g;s#{NGINX_WORKERS}#$NGINX_WORKERS#g" $APP_NGINX/nginx.conf
+  sed -i "s#{SERVER_NAME}#$SERVER_NAME#g;s#{STATIC_ROOT}#$APP_STATIC_ROOT#g" $APP_NGINX/site.conf
 
-  sed -i "s/{NGINX_USER}/$INSTANCE_USER/g;s/{NGINX_WORKERS}/$NGINX_WORKERS/g" $APP_NGINX/http.conf
-  sed -i "s/{SERVER_NAME}/$SERVER_NAME/g;s/{STATIC_ROOT}/$ESCAPED_STATIC_ROOT/g" $APP_NGINX/server.conf
-
-  sudo ln -sfn $APP_NGINX/http.conf /etc/nginx/http.conf
-  sudo ln -sfn $APP_NGINX/server.conf /etc/nginx/sites-enabled/$NAME.conf
+  sudo ln -sfn $APP_NGINX/nginx.conf /etc/nginx/nginx.conf
+  sudo ln -sfn $APP_NGINX/site.conf /etc/nginx/sites-enabled/$NAME.conf
   sudo service nginx reload
 
   pm2_reload_if_needed () {

@@ -108,12 +108,11 @@ done
 
 APP="~/apps/$ENV"
 APP_VERSIONS="$APP/v"
-APP_LIVE="$APP/live"
-APP_STATIC_ROOT="$APP_LIVE/.bin/public"
 RSYNC="~/apps/.rsync/$ENV"
 RSYNC_NGINX="$RSYNC/nginx"
 RSYNC_REPO="$RSYNC/app"
 RSYNC_CONFIG="$RSYNC/config"
+NGINX_LOG="/var/log/nginx"
 
 # jump into instance
 ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_INITIAL
@@ -140,12 +139,16 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   mkdir -p $RSYNC_REPO
   mkdir -p $RSYNC_CONFIG
 
+  sudo mkdir -p $NGINX_LOG
+  sudo chown ubuntu $NGINX_LOG
+  sudo chmod -R 755 $NGINX_LOG
+
   echo "stage: nvm"
   curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash
 
   echo "stage: nginx"
   sudo apt-get install nginx -y
-  sudo nginx -s reload || sudo service nginx start || (cat /var/log/nginx/error.log && exit 1)
+  sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
 EOF_INITIAL
 
 # jump into instance once again
