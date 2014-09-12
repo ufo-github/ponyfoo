@@ -9,7 +9,6 @@ TODO
 PERFORMANCE
 
 - revving (reaver)
-- reaver should output json if provided the -m or --manifest option.
 - using the json output, pipe to another module that replaces instances across other files
   - e.g reaver -m public/* | scarab
 - critical path css inline (https://github.com/pocketjoso/penthouse)

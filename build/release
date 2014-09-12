@@ -13,4 +13,4 @@ taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > .bin/public/js/all.js
 
 # hashing
-reaver --manifest .bin/public/{css,js,img}
+reaver .bin/public/{css,js,img}/* --manifest
