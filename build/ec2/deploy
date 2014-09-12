@@ -22,8 +22,9 @@ RSYNC_REPO="$RSYNC/app/"
 # bump package.json
 git add .
 git commit -am "Pre-deploy commit because $EMOJI"
-VERSION=$(npm version patch -m "Upgrade to %s because deploy $EMOJI")
-echo "v'$VERSION'"
+npm version patch -m "Upgrade to %s because deploy $EMOJI"
+VERSION=$(cat package.json | jq .version)
+
 APP_LATEST="$APP_VERSIONS/$VERSION"
 
 # build for release

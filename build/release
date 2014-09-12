@@ -2,6 +2,7 @@
 
 npm run clean
 npm run copy
+npm dedupe
 
 # compile
 cp -r client/img .bin/public/img
