@@ -4,16 +4,19 @@ npm run clean
 npm run copy
 npm dedupe
 
+DIST=".bin/public"
+DOMAIN="http://ponyfoo.com"
+
 # compile
 mkdir -p .bin/temp
 spritesmith
-stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --compress
-cleancss .bin/public/css/all.css -o .bin/public/css/all.css --s0
+stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
+cleancss $DIST/css/all.css -o $DIST/css/all.css --s0
 jade views/**/*.jade -o .bin --client --commonjs --no-debug --obj '{"basedir":"views"}'
 taunus -o
-browserify client/js/main.js --basedir client/js | uglifyjs > .bin/public/js/all.js
+browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
 cp views/__layout.jade views/__layout.taunus.jade
-reaver .bin/public/img/* --manifest > .bin/temp/scarab
-scourge --map .bin/temp/scarab .bin/{views,public/{css,js}}
-scourge --map .bin/temp/scarab views/__layout.taunus.jade --no-glob
-reaver .bin/public/{css,js}/* --manifest | scourge views/__layout.taunus.jade --no-glob
+reaver $DIST/img/* --manifest > .bin/temp/scarab
+scourge --map .bin/temp/scarab .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
+scourge --map .bin/temp/scarab views/__layout.taunus.jade --no-glob --base-path $DIST --domain $DOMAIN
+reaver $DIST/{css,js}/* --manifest | scourge views/__layout.taunus.jade --no-glob --base-path $DIST --domain $DOMAIN
