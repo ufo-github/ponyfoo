@@ -5,6 +5,8 @@ var moment = require('moment');
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
+var env = require('../../lib/env');
+var authority = env('AUTHORITY');
 var separator = /[+/,_: -]+/ig;
 
 function parse (params) {
@@ -37,6 +39,13 @@ function parse (params) {
   };
 }
 
+function slug (params) {
+  var fmt = 'YYYY/MM/DD';
+  var keys = Object.keys(params).length;
+  var parts = [params.year, params.month, params.day].splice(0, keys.length);
+  return moment(parts.join('/'), fmt).format(fmt);
+}
+
 module.exports = function (req, res, next) {
   var parsed = parse(req.params);
   var handle = listOrSingle(res, next);
@@ -45,7 +54,11 @@ module.exports = function (req, res, next) {
 
   res.viewModel = {
     model: {
-      title: title
+      title: title,
+      meta: {
+        canonical: authority + '/articles/' + slug(req.params),
+        description: 'This search results page contains all of the ' + title.toLowerCase()
+      }
     }
   };
 

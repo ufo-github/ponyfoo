@@ -10,7 +10,11 @@ module.exports = function (req, res, next) {
     slug: req.params.slug
   };
 
-  res.viewModel = { model: { title: 'Pony Foo' } };
+  res.viewModel = {
+    model: {
+      title: 'Pony Foo'
+    }
+  };
 
   articleService.find(query, handle);
 };

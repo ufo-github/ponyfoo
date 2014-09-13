@@ -3,10 +3,13 @@
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
+var env = require('../../lib/env');
+var authority = env('AUTHORITY');
 var separator = /[+/,_: ]+/ig;
 
 module.exports = function (req, res, next) {
   var tags = req.params.tags.split(separator);
+  var title = util.format('Articles tagged "%s"', tags.join('", "'));
   var query = {
     status: 'published',
     tags: { $all: tags }
@@ -15,7 +18,11 @@ module.exports = function (req, res, next) {
 
   res.viewModel = {
     model: {
-      title: util.format('Articles tagged "%s"', tags.join('", "'))
+      title: title,
+      meta: {
+        canonical: authority + '/articles/tagged/' + tags.join('+'),
+        description: 'This search results page contains all of the ' + title.toLowerCase()
+      }
     }
   };
 

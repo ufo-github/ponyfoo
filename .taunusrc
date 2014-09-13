@@ -5,12 +5,11 @@
       "contact": "Nicolas Bevacqua <foo@bevacqua.io>",
       "twitter": "@nzgb"
     },
-    "images": {
-      "cover": "",
-      "list": []
-    },
     "model": {
-      "title": "Pony Foo"
+      "title": "Pony Foo",
+      "meta": {
+        "images": ["http://ponyfoo.com/img/ponyfoo.png"]
+      }
     },
     "keywords": []
   },

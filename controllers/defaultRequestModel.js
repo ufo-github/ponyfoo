@@ -19,6 +19,4 @@ function defaultRequestModel (req, done) {
   });
 }
 
-// images.{cover,list},description,canonical,keywords
-
 module.exports = defaultRequestModel;

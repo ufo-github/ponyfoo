@@ -1,6 +1,11 @@
 'use strict';
 
-var articleService = require('../../../services/article');
+var env = require('../../lib/env');
+var articleService = require('../../services/article');
+var metadataService = require('../../services/metadata');
+var htmlService = require('../../services/html');
+var textService = require('../../services/text');
+var authority = env('AUTHORITY');
 
 function factory (res, next) {
   return function listOrSingle (err, articles) {
@@ -17,6 +22,8 @@ function factory (res, next) {
       article.populate('prev next related comments', single);
     } else {
       model[key] = articles.map(articleService.toJSON);
+      model.meta.keywords = metadataService.mostCommonTags(articles);
+      model.meta.images = metadataService.extractImages(articles);
       next();
     }
 
@@ -26,6 +33,12 @@ function factory (res, next) {
       }
       model.full = true;
       model.title = article.title;
+      model.meta = {
+        canonical: authority + '/articles/' + article.slug,
+        description: textService.truncate(htmlService.getText(article.introductionHtml), 170),
+        keywords: article.tags,
+        images: metadataService.extractImages(article)
+      };
       model[key] = articleService.toJSON(article);
       next();
     }

@@ -2,19 +2,14 @@ LAUNCH
 
 - flash intro page
 
-TODO
-
-- canonical, etc: fill metadata (see defaultRequestModel.js)
-
 PERFORMANCE
 
-- revving (reaver)
-- using the json output, pipe to another module that replaces instances across other files
-  - e.g reaver -m public/* | scarab
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
 
+- metadata
+  - account/login
 - prettify comment ui
 - improve on desktop breakpoints: sidebar
 - (author) bio editor!

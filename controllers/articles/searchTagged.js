@@ -3,6 +3,8 @@
 var util = require('util');
 var listOrSingle = require('./lib/listOrSingle');
 var articleSearch = require('../../services/articleSearch');
+var env = require('../../lib/env');
+var authority = env('AUTHORITY');
 var tagSeparator = /[+/,_: ]+/ig;
 var termSeparator = /[+/,_: -]+/ig;
 
@@ -15,7 +17,11 @@ module.exports = function (req, res, next) {
 
   res.viewModel = {
     model: {
-      title: title
+      title: title,
+      meta: {
+        canonical: authority + '/articles/search/' + terms.join('-') + '/tagged/' + tags.join('+'),
+        description: 'This search results page contains all of the ' + title.toLowerCase()
+      }
     }
   };
 

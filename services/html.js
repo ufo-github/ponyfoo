@@ -1,9 +1,12 @@
 'use strict';
 
+var _ = require('lodash');
 var url = require('url');
+var moment = require('moment');
 var cheerio = require('cheerio');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
+var imageCache = {};
 
 function absolutize (html, done) {
   var $ = cheerio.load(html);
@@ -26,6 +29,35 @@ function absolutize (html, done) {
   }
 }
 
+function fresh (item) {
+  return item && moment().isBefore(item.expires);
+}
+
+function extractImages (key, html) {
+  if (fresh(imageCache[key])) {
+    return imageCache[key].value;
+  }
+  var $ = cheerio.load(html);
+  var images = $('img[src]').map(src);
+  var result = _(images).uniq().compact();
+
+  imageCache[key] = {
+    value: result,
+    expires: moment().add(6, 'hours')
+  };
+
+  function src () {
+    return $(this).attr('src');
+  }
+  return result;
+}
+
+function getText (html) {
+  return cheerio.load(html).text();
+}
+
 module.exports = {
-  absolutize: absolutize
+  absolutize: absolutize,
+  extractImages: extractImages,
+  getText: getText
 };
