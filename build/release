@@ -14,4 +14,4 @@ taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > .bin/public/js/all.js
 cp views/__layout.jade views/__layout.taunus.jade
 reaver .bin/public/img/* --manifest | scourge .bin/{views,public{css,js}}
-reaver .bin/public/{css,js}/* | scourge views/__layout.taunus.jade
+reaver .bin/public/{css,js}/* --manifest | scourge views/__layout.taunus.jade --no-glob
