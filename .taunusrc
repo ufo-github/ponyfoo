@@ -14,6 +14,7 @@
     },
     "keywords": []
   },
+  "layout": "__layout.taunus.jade",
   "views": ".bin/views",
   "client_wiring": ".bin/lib/wiring.js"
 }

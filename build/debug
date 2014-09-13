@@ -6,6 +6,7 @@ npm run clean
 npm run copy
 
 # compile
+cp views/__layout.jade views/__layout.taunus.jade
 spritesmith
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
 jade views/**/*.jade -o .bin --client --commonjs --pretty --no-debug --obj '{"basedir":"views"}' --watch &

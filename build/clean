@@ -2,5 +2,6 @@
 
 # cleanup
 rm -rf .bin
+rm views/__layout.taunus.jade
 mkdir -p .bin/public/{js,css}
 mkdir -p .bin/lib
