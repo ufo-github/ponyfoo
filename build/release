@@ -13,5 +13,7 @@ jade views/**/*.jade -o .bin --client --commonjs --no-debug --obj '{"basedir":"v
 taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > .bin/public/js/all.js
 cp views/__layout.jade views/__layout.taunus.jade
-reaver .bin/public/img/* --manifest | scourge .bin/{views,public{css,js}}
+reaver .bin/public/img/* --manifest > .bin/temp/scarab
+scourge --map .bin/temp/scarab .bin/{views,public/{css,js}}
+scourge --map .bin/temp/scarab views/__layout.taunus.jade --no-glob
 reaver .bin/public/{css,js}/* --manifest | scourge views/__layout.taunus.jade --no-glob
