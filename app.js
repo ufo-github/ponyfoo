@@ -2,7 +2,6 @@
 
 var express = require('express');
 var moment = require('moment');
-var jade = require('jade/runtime');
 var winston = require('winston');
 var models = require('./models');
 var logging = require('./lib/logging');
@@ -19,11 +18,8 @@ var sitemapService = require('./services/sitemap');
 logging.configure();
 development.patch(app);
 
-// these globals are used in jade templates
-global.jade = jade;
 global.moment = moment;
 
-app.set('view engine', 'jade');
 app.locals.settings['x-powered-by'] = false;
 
 db(operational);

@@ -21,6 +21,7 @@ var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 var redirects = require('./redirects');
 var defaultRequestModel = require('./defaultRequestModel');
+var layout = require('../.bin/views/server/layout/layout');
 
 module.exports = function (app) {
   app.get('/articles/feed', articleFeed);
@@ -49,6 +50,7 @@ module.exports = function (app) {
   transports.routing(app, registerAccount);
 
   taunus.mount(app, routes, {
+    layout: layout,
     defaultRequestModel: defaultRequestModel
   });
   redirects.setup(app);

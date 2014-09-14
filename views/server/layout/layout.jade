@@ -15,7 +15,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     link(rel='alternate', type='application/rss+xml', href=model.env.authority + '/articles/feed')
     link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href='/opensearch.xml')
     link(rel='canonical', href!=model.meta.canonical)
-    link(rel='stylesheet', href='/css/all.css')
+    link(rel='stylesheet', href='/css/all.4031c415.css')
 
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -51,9 +51,12 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     include navigation
 
+    if model.flash
+      include flash
+
     main.ly-main(data-taunus='model')!=partial
 
     include aside
 
     script(type='text/x-taunus', data-taunus='model')=JSON.stringify(model)
-    script(src='/js/all.js', async)
+    script(src='/js/all.180c76d1.js', async)

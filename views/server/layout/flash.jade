@@ -1,6 +1,6 @@
-- keys = Object.keys(flash)
+- keys = Object.keys(model.flash)
 
 each key in keys
   ul(class='fs-messages fs-messages-' + key)
-    each message in flash[key]
+    each message in model.flash[key]
       li(class='fs-message fs-message-' + key)=message

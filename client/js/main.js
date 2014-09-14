@@ -1,7 +1,6 @@
 'use strict';
 
 var $ = require('dominus');
-var jade = require('jade/runtime');
 var ponymark = require('ponymark');
 var taunus = require('taunus');
 var moment = require('moment');
@@ -10,7 +9,6 @@ var setupMeasly = require('./setupMeasly');
 var analytics = require('./analytics');
 
 global.$ = $;
-global.jade = jade;
 global.moment = moment;
 global.taunus = taunus;
 global.md = markdownService.compile;

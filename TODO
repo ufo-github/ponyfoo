@@ -4,7 +4,8 @@ LAUNCH
 
 PERFORMANCE
 
-- jade views require partials
+- fix js reaver/scourge
+- campaign-jadum!
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
@@ -14,7 +15,6 @@ NICETIES
 - (author) bio editor!
 - bio show up as aside box.
 - (author) email composer with subject, intro, and markdown body
-- flash should be in layout really?
 - keyboard shortcuts!
 
 OBSCURE BUGS

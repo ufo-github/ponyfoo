@@ -14,7 +14,6 @@
       }
     }
   },
-  "layout": "__layout.taunus.jade",
-  "views": ".bin/views",
+  "views": ".bin/views/shared",
   "client_wiring": ".bin/lib/wiring.js"
 }
