@@ -13,6 +13,8 @@ button.on('click', search);
 function search () {
   var email = input.value().trim();
   if (email) {
-    ajax.put('/api/subscribers', { email: email });
+    ajax.put('/api/subscribers', {
+      json: { email: email }
+    });
   }
 }
