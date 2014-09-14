@@ -4,13 +4,10 @@ LAUNCH
 
 PERFORMANCE
 
+- jade views require partials
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
-
-- metadata
-  - account/login
-  - author routes
 
 - prettify comment ui
 - improve on desktop breakpoints: sidebar
