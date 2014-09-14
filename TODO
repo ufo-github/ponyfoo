@@ -4,7 +4,7 @@ LAUNCH
 
 PERFORMANCE
 
-- replace pm2
+- back node with forever in deployments
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
