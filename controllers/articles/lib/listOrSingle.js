@@ -1,10 +1,10 @@
 'use strict';
 
-var env = require('../../lib/env');
-var articleService = require('../../services/article');
-var metadataService = require('../../services/metadata');
-var htmlService = require('../../services/html');
-var textService = require('../../services/text');
+var env = require('../../../lib/env');
+var articleService = require('../../../services/article');
+var metadataService = require('../../../services/metadata');
+var htmlService = require('../../../services/html');
+var textService = require('../../../services/text');
 var authority = env('AUTHORITY');
 
 function factory (res, next) {

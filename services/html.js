@@ -39,7 +39,7 @@ function extractImages (key, html) {
   }
   var $ = cheerio.load(html);
   var images = $('img[src]').map(src);
-  var result = _(images).uniq().compact();
+  var result = _(images).uniq().compact().value();
 
   imageCache[key] = {
     value: result,

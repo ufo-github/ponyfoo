@@ -20,7 +20,9 @@ function countTags (accumulator, tag) {
 }
 
 function mostCommonTags (articles, max) {
-  return _(articles).pluck('tags').reduce(countTags, {}).sortBy('count').reverse().first(max || 5).pluck('tag').value();
+  var weighted = _.pluck(articles, 'tags').reduce(countTags, []);
+  var sorted = _.sortBy(weighted, 'count').reverse();
+  return _(sorted).first(max || 5).pluck('tag').value();
 }
 
 function extractImagesFromArticle (article) {
@@ -31,7 +33,7 @@ function extractImages (source) {
   var many = Array.isArray(source);
   var articles = many ? source : [source];
   var images = articles.map(extractImagesFromArticle);
-  var result = many ? _(images).pluck('0').flatten().value() : _.flatten(images);
+  var result = many ? _(images).pluck('0').flatten().uniq().compact().value() : _.flatten(images);
   return appendDefaultCover(result);
 }
 
