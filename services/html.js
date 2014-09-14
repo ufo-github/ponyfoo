@@ -53,7 +53,7 @@ function extractImages (key, html) {
 }
 
 function getText (html) {
-  return cheerio.load(html).text();
+  return cheerio.load(html)('*').text();
 }
 
 module.exports = {
