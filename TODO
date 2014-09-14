@@ -6,6 +6,7 @@ PERFORMANCE
 
 - fix js reaver/scourge
 - campaign-jadum!
+- replace pm2
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
