@@ -154,10 +154,6 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   echo "stage: nodejs"
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION
-
-  echo "stage: pm2"
-  npm install -g pm2
-  sudo env PATH=\$PATH:\$NVM_BIN pm2 startup $PLATFORM -u $INSTANCE_USER
 EOF_NODE
 
 echo "Instance $RESOURCE_ID launched!"

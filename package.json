@@ -67,6 +67,7 @@
     "passport-local": "^1.0.0",
     "ponymark": "^1.2.0",
     "raf": "^2.0.1",
+    "recluster": "^0.3.7",
     "request": "^2.42.0",
     "rss": "^0.3.2",
     "scourge": "^1.0.0",
