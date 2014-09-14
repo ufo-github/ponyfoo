@@ -16,6 +16,5 @@ cleancss $DIST/css/all.css -o $DIST/css/all.css --s0
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
-reaver $DIST/img/* --manifest > .bin/temp/scarab
-scourge --map .bin/temp/scarab .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
+reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
 reaver $DIST/{css,js}/* --manifest | scourge .bin/views/server --base-path $DIST --domain $DOMAIN

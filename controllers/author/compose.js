@@ -2,6 +2,8 @@
 
 var contra = require('contra');
 var Article = require('../../models/Article');
+var env = require('../../lib/env');
+var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
