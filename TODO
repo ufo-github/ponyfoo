@@ -5,12 +5,12 @@ LAUNCH
 PERFORMANCE
 
 - fix js reaver/scourge
-- campaign-jadum!
 - replace pm2
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
 
+- 404 view
 - prettify comment ui
 - improve on desktop breakpoints: sidebar
 - (author) bio editor!

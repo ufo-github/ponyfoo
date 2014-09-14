@@ -4,7 +4,7 @@ var _ = require('lodash');
 var util = require('util');
 var path = require('path');
 var campaign = require('campaign');
-var jade = require('campaign-jade');
+var jade = require('campaign-jadum');
 var winston = require('winston');
 var env = require('../lib/env');
 var mode = env('MANDRILL_MODE');
@@ -46,7 +46,7 @@ function createClient () {
 
 function send (type, model, done) {
   var extended = _.merge({}, defaults, model);
-  var template = path.resolve('views/emails', type);
+  var template = path.resolve('.bin/views/server/emails', type);
   client.send(template, extended, done);
 }
 
