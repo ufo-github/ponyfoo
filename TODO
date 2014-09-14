@@ -4,7 +4,6 @@ LAUNCH
 
 PERFORMANCE
 
-- fix js reaver/scourge
 - replace pm2
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
