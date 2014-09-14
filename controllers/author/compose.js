@@ -9,6 +9,9 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       title: 'Article Composer',
+      meta: {
+        canonical: authority + '/author/compose'
+      },
       article: { tags: [] },
       editing: !!slug
     }

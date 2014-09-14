@@ -9,10 +9,10 @@
       "title": "Pony Foo",
       "meta": {
         "description": "Pony Foo is a technical blog maintained by Nicolas Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.",
-        "images": ["http://ponyfoo.com/img/ponyfoo.png"]
+        "images": ["http://ponyfoo.com/img/ponyfoo.png"],
+        "keywords": []
       }
-    },
-    "keywords": []
+    }
   },
   "layout": "__layout.taunus.jade",
   "views": ".bin/views",

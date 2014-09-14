@@ -10,8 +10,7 @@ module.exports = function (req, res, next) {
       title: 'Login',
       registration: registration,
       meta: {
-        canonical: authority + '/account/login',
-        keywords: []
+        canonical: authority + '/account/login'
       }
     }
   };

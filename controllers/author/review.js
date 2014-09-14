@@ -15,6 +15,9 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         title: 'Article Review',
+        meta: {
+          canonical: authority + '/author/review'
+        },
         articles: articles.map(articleService.toJSON).map(hydrate)
       }
     };
