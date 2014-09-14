@@ -10,6 +10,8 @@ NICETIES
 
 - metadata
   - account/login
+  - author routes
+
 - prettify comment ui
 - improve on desktop breakpoints: sidebar
 - (author) bio editor!
