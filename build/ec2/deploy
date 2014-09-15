@@ -70,7 +70,7 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
   ln -sfn $APP_LATEST $APP_LIVE
   ln -sfn $APP_CONFIG $APP_LATEST/.env
   rm -rf `ls -t $APP_VERSIONS | tail -n +11`
-  cp -r $APP_VERSIONS/`ls -t $APP_VERSIONS | tail -n +2`/node_modules $APP_LATEST
+  cp -r $APP_VERSIONS/\$(ls -t $APP_VERSIONS | tail -n +2)/node_modules $APP_LATEST
   npm --prefix $APP_LATEST prune
   npm --prefix $APP_LATEST rebuild
   npm --prefix $APP_LATEST install --production

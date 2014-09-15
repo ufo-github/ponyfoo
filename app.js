@@ -1,5 +1,7 @@
 'use strict';
 
+process.chdir(__dirname);
+
 var express = require('express');
 var moment = require('moment');
 var winston = require('winston');

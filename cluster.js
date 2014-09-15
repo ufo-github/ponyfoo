@@ -1,5 +1,7 @@
 'use strict';
 
+process.chdir(__dirname);
+
 var fs = require('fs');
 var recluster = require('recluster');
 var options = {
