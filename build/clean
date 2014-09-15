@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # cleanup
-rm .pid
 rm -rf .bin
 mkdir -p .bin/public/{js,css}
 mkdir -p .bin/lib

@@ -54,7 +54,7 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_R
   sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
 
   cluster_reload_if_needed () {
-    CLUSTER_PID = "$(cat .pid)"
+    CLUSTER_PID = "\$(cat .pid)"
     SUCCESS="$?"
     if [ "$SUCCESS" == "0" ] ; then
       echo "Reloading cluster..."

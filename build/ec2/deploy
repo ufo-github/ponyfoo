@@ -46,17 +46,17 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
   cluster_start () {
     echo "Initializing cluster..."
     cp $RSYNC_MAILTUBE/upstart/pony.conf $APP/$NAME.conf
-    NODE_BIN="\$NVM_BIN/node"
+    echo "\$NVM_BIN/node"
     sed -i "s#{NAME}#$NAME#g" $APP/$NAME.conf
     sed -i "s#{USER}#$INSTANCE_USER#g" $APP/$NAME.conf
-    sed -i "s#{NODE_BIN}#$NODE_BIN#g" $APP/$NAME.conf
+    sed -i "s#{NODE_BIN}#\$NVM_BIN/node#g" $APP/$NAME.conf
     sed -i "s#{APP_SCRIPT}#$APP_SCRIPT#g" $APP/$NAME.conf
     sudo ln -sfn $APP/$NAME.conf /etc/init/$NAME.conf
     start $NAME
   }
 
   cluster_start_or_reload () {
-    CLUSTER_PID = "$(cat .pid)"
+    CLUSTER_PID = "\$(cat .pid)"
     SUCCESS="$?"
     if [ "$SUCCESS" == "0" ] ; then
       echo "Reloading cluster..."
