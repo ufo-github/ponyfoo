@@ -44,7 +44,7 @@ rsync \
 ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
   cluster_start () {
     echo "Initializing cluster..."
-    cp $RSYNC_MAILTUBE/upstart/pony.conf $APP/$NAME.conf
+    cp $RSYNC_MAILTUBE/upstart/app.conf $APP/$NAME.conf
     sed -i "s#{NAME}#$NAME#g" $APP/$NAME.conf
     sed -i "s#{USER}#$INSTANCE_USER#g" $APP/$NAME.conf
     sed -i "s#{NODE_BIN}#\$NVM_BIN/node#g" $APP/$NAME.conf
