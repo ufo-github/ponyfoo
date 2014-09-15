@@ -108,7 +108,7 @@ done
 APP="~/apps/$ENV"
 APP_VERSIONS="$APP/v"
 RSYNC="~/apps/.rsync/$ENV"
-RSYNC_NGINX="$RSYNC/nginx"
+RSYNC_MAILTUBE="$RSYNC/mailtube"
 RSYNC_REPO="$RSYNC/app"
 RSYNC_CONFIG="$RSYNC/config"
 NGINX_LOG="/var/log/nginx"
@@ -134,7 +134,7 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
 
   echo "stage: expected directory structure"
   mkdir -p $APP_VERSIONS
-  mkdir -p $RSYNC_NGINX
+  mkdir -p $RSYNC_MAILTUBE
   mkdir -p $RSYNC_REPO
   mkdir -p $RSYNC_CONFIG
 

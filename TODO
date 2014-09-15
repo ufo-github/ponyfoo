@@ -4,7 +4,6 @@ LAUNCH
 
 PERFORMANCE
 
-- back node with systemd in deployments
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
@@ -16,6 +15,8 @@ NICETIES
 - bio show up as aside box.
 - (author) email composer with subject, intro, and markdown body
 - keyboard shortcuts!
+- test out typekit fonts
+- ec2 scripts should take variables from a config json file instead of hardcoded in-script
 
 OBSCURE BUGS
 
