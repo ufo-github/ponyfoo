@@ -9,15 +9,14 @@ PERFORMANCE
 NICETIES
 
 - improve on desktop breakpoints: sidebar
-- prettify comment ui
+- prettify mobile commenting ui
 - prettify 404 view
+
+NICETIES FOR LATER
+
 - (author) bio editor!
 - bio show up as aside box.
 - (author) email composer with subject, intro, and markdown body
 - keyboard shortcuts!
 - test out typekit fonts
 - ec2 scripts should take variables from a config json file instead of hardcoded in-script
-
-OBSCURE BUGS
-
-- json when navigating back is SUPER AWKWARD!
