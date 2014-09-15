@@ -51,7 +51,8 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_R
 
   sudo ln -sfn $APP_NGINX/nginx.conf /etc/nginx/nginx.conf
   sudo ln -sfn $APP_NGINX/site.conf /etc/nginx/sites-enabled/$NAME.conf
-  sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
+  sudo service nginx restart || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
+  echo "nginx: pid is \$(cat /var/run/nginx.pid)"
 
   cluster_reload_if_needed () {
     cat $APP_LIVE/.pid
