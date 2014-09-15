@@ -51,7 +51,8 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
     sed -i "s#{USER}#$INSTANCE_USER#g" $APP/$NAME.conf
     sed -i "s#{NODE_BIN}#\$NVM_BIN/node#g" $APP/$NAME.conf
     sed -i "s#{APP_SCRIPT}#$APP_SCRIPT#g" $APP/$NAME.conf
-    sudo ln -sfn $APP/$NAME.conf /etc/init/$NAME.conf
+    sudo cp $APP/$NAME.conf /etc/init/$NAME.conf
+    rm $APP/$NAME.conf
     start $NAME
   }
 
