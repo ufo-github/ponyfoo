@@ -5,13 +5,14 @@ var taunus = require('taunus');
 var measly = require('measly');
 
 function setupMeasly () {
-  taunus.on('render', function (container, viewModel) {
-    viewModel.measly = measly.layer({ context: container });
-  });
-
   measly.on('data', renderOrClean);
-  measly.on(400, render);
-  measly.on(404, render);
+  measly.on('error', render);
+  taunus.on('error', handleTaunusError);
+  taunus.on('render', createLayer);
+}
+
+function createLayer (container, viewModel) {
+  viewModel.measly = measly.layer({ context: container });
 }
 
 function clean (context) {
@@ -20,7 +21,7 @@ function clean (context) {
 
 function renderOrClean (data) {
   if (data.messages) {
-    render.call(this, null, data); return; // render() will handle it
+    render.call(this, null, data); return;
   }
   var context = $(this.context);
   clean(context);
@@ -47,6 +48,18 @@ function render (err, body) {
   messages[0].scrollIntoView();
 
   global.scrollBy(0, -100);
+}
+
+function handleTaunusError (err, origin) {
+  if (!origin.context) {
+    return;
+  }
+  var section = $(origin.context).parents('.ly-section');
+  if (section.length) {
+    render.call({ context: section.length ? section : document.body }, err, {
+      messages: ['Oops. It seems something went terribly wrong!']
+    });
+  }
 }
 
 function dom (message) {

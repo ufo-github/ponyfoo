@@ -4,14 +4,14 @@ LAUNCH
 
 PERFORMANCE
 
-- back node with forever in deployments
+- back node with systemd in deployments
 - critical path css inline (https://github.com/pocketjoso/penthouse)
 
 NICETIES
 
-- 404 view
-- prettify comment ui
 - improve on desktop breakpoints: sidebar
+- prettify comment ui
+- prettify 404 view
 - (author) bio editor!
 - bio show up as aside box.
 - (author) email composer with subject, intro, and markdown body
@@ -20,4 +20,3 @@ NICETIES
 OBSCURE BUGS
 
 - json when navigating back is SUPER AWKWARD!
-- views that respond with json e.g 404, should prob use a taunus method?

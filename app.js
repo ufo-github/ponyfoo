@@ -27,8 +27,9 @@ db(operational);
 function operational () {
   models();
   middleware(app);
+  development.statics(app);
   routing(app);
-  development.middleware(app);
+  development.errors(app);
   app.listen(port, listening);
 }
 

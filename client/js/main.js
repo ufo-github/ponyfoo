@@ -5,7 +5,7 @@ var ponymark = require('ponymark');
 var taunus = require('taunus');
 var moment = require('moment');
 var markdownService = require('../../services/markdown');
-var setupMeasly = require('./setupMeasly');
+var conventions = require('./conventions');
 var analytics = require('./analytics');
 
 global.$ = $;
@@ -27,6 +27,6 @@ ponymark.configure({
   imageUploads: '/api/markdown/images'
 });
 
-setupMeasly();
+conventions();
 
 taunus.mount(main, wiring);

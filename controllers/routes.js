@@ -16,5 +16,6 @@ module.exports = [
   { route: '/account/login', action: 'account/login' },
   { route: '/author/compose', action: 'author/compose', middleware: authorOnly },
   { route: '/author/compose/:slug', action: 'author/compose', middleware: authorOnly },
-  { route: '/author/review', action: 'author/review', middleware: authorOnly }
+  { route: '/author/review', action: 'author/review', middleware: authorOnly },
+  { route: '/*', action: 'error/not-found' }
 ];
