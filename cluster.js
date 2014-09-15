@@ -9,7 +9,7 @@ var options = {
 };
 var cluster = recluster('app.js', options);
 
-fs.writeFileSync('.pid', process.pid, 'utf8');
+fs.writeFileSync('.pid', process.pid.toString(), 'utf8');
 cluster.run();
 
 process.on('SIGUSR2', function() {
