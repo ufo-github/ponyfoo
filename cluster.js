@@ -9,10 +9,12 @@ var options = {
 };
 var cluster = recluster('app.js', options);
 
-fs.writeFileSync('.pid', process.pid.toString(), 'utf8');
+fs.writeFileSync('.pid', process.pid.toString());
 cluster.run();
 
 process.on('SIGUSR2', function() {
   console.log('Cluster got SIGUSR2, reloading...');
   cluster.reload();
 });
+
+console.log('Cluster executing with pid: ' + process.pid);
