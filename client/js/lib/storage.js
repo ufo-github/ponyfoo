@@ -1,10 +1,10 @@
 'use strict';
 
 var raf = require('raf');
-var localStorage = global.localStorage;
+var ls = global.localStorage;
 
 function get (key) {
-  var data = localStorage.getItem(key);
+  var data = ls.getItem(key);
   if (data) {
     return JSON.parse(data);
   }
@@ -13,12 +13,12 @@ function get (key) {
 
 function set (key, value) {
   raf(function setter () { // no reason to block the thread
-    localStorage.setItem(key, JSON.stringify(value));
+    ls.setItem(key, JSON.stringify(value));
   });
 }
 
 function remove (key) {
-  localStorage.removeItem(key);
+  ls.removeItem(key);
 }
 
 module.exports = {
