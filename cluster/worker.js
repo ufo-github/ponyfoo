@@ -5,6 +5,7 @@ var pkg = manifest();
 var app = path.resolve('../..', pkg.version, 'app.js');
 
 console.log('Worker %s executing app@%s', process.pid, pkg.version);
+run();
 
 function manifest () {
   try { // in hosted environments, attempt to invoke the latest known deployed version
@@ -21,5 +22,3 @@ function run () {
     require('../app'); // fall back to local
   }
 }
-
-run();

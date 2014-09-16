@@ -2,10 +2,6 @@ LAUNCH
 
 - flash intro page
 
-PERFORMANCE
-
-- critical path css inline (https://github.com/pocketjoso/penthouse)
-
 NICETIES
 
 - improve on desktop breakpoints: sidebar
