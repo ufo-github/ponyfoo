@@ -11,11 +11,11 @@ var env = require('./lib/env');
 var db = require('./lib/db');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
-var app = express();
-var port = env('PORT');
 var development = require('./lib/development');
 var feedService = require('./services/feed');
 var sitemapService = require('./services/sitemap');
+var app = express();
+var port = env('PORT');
 
 logging.configure();
 development.patch(app);

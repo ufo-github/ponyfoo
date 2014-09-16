@@ -11,7 +11,7 @@ var moment = require('moment');
 var Article = require('../models/Article');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
-var location = path.join(__dirname, '../.bin/static/sitemap.xml');
+var location = path.resolve('.bin/static/sitemap.xml');
 
 function generate (articles, done) {
   var all = articles.map(toObject);
