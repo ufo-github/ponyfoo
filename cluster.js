@@ -3,22 +3,28 @@
 process.chdir(__dirname);
 
 var fs = require('fs');
+var path = require('path');
 var recluster = require('recluster');
 var options = { workers: 2, backoff: 10 };
-var cluster = recluster('app.js', options);
+var cluster = recluster('clustnerd.js', options);
+var pidfile = path.resolve('../.pid');
 
-fs.writeFileSync('.pid', process.pid.toString() + '\n');
+fs.writeFileSync(pidfile, process.pid.toString() + '\n');
+
+log('warming up...');
 
 cluster.run();
 
 process.on('SIGUSR2', function() {
-  console.log('Cluster got SIGUSR2, reloading...');
+  log('got SIGUSR2, reloading...');
   cluster.reload();
 });
 
 process.on('exit', function () {
-  console.log('Cluster shutting down...');
-  fs.unlinkSync('.pid');
+  log('shutting down...');
+  fs.unlinkSync(pidfile);
 });
 
-console.log('Cluster executing with pid: ' + process.pid);
+function log (message) {
+  console.log('Cluster', process.pid, message);
+}
