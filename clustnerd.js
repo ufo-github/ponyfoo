@@ -10,7 +10,7 @@ require(app);
 
 function manifest () {
   try { // in hosted environments, clustnerd co-operates to always invoke the latest known deployed version
-    return require('../package.json');
+    return require('../../package.json');
   } catch (e) {
     return require('./package.json');
   }
