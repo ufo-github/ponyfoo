@@ -9,12 +9,12 @@ npm dedupe
 
 DIST=".bin/public"
 DOMAIN="http://ponyfoo.com"
+ALL_CSS="$DIST/css/all.css"
+CRITICAL_CSS=".bin/temp/critical.css"
 
-# compile
-mkdir -p .bin/temp
+# compile assets, routes
 spritesmith
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
-cleancss $DIST/css/all.css -o $DIST/css/all.css --s0
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
@@ -22,12 +22,18 @@ browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
 # critical css inlining. many slash, very escape. PLEASE. STAHP.
 LOGGING_LEVEL=info node app &
 APP_PID=$(procfinder --wait --port $PORT)
-CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT .bin/public/css/all.css)"
+CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
 CRITICAL_ESCAPED=$(echo $CRITICAL | sed -e 's/[\/#&]/\\&/g' -e 's/"/\\\\"/g')
 LAYOUT=".bin/views/server/layout/layout.js"
 echo "Gathered critical CSS, killing node app ($APP_PID)"
+echo $CRITICAL > $CRITICAL_CSS
 kill $APP_PID
 sed -i -e "s#<style></style>#<style>$CRITICAL_ESCAPED</style>#" $LAYOUT
+CSS_DIFF=$(cave $ALL_CSS --css $CRITICAL_CSS)
+echo "$CSS_DIFF" > $ALL_CSS
+cleancss $ALL_CSS -o $ALL_CSS --s0
+rm $CRITICAL_CSS
 
+# asset hashing
 reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
 reaver $DIST/{css,js}/* --manifest | scourge .bin/views/server --base-path $DIST --domain $DOMAIN

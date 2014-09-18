@@ -4,3 +4,4 @@
 rm -rf .bin
 mkdir -p .bin/public/{js,css}
 mkdir -p .bin/lib
+mkdir -p .bin/temp
