@@ -1,5 +1,6 @@
 'use strict';
 
+var taunus = require('taunus');
 var notFound = '/not-found';
 
 module.exports = function (req, res, next) {
@@ -7,7 +8,7 @@ module.exports = function (req, res, next) {
     res.redirect(notFound); return;
   }
 
-  res.viewModel = {
+  var vm = {
     model: {
       title: 'Not Found!',
       meta: {
@@ -15,5 +16,5 @@ module.exports = function (req, res, next) {
       }
     }
   };
-  next();
+  taunus.render('not-found', vm, req, res, next);
 };
