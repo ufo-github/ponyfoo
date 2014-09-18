@@ -2,7 +2,6 @@
 
 var env = require('../../lib/env');
 var registration = env('REGISTRATION_OPEN');
-var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   res.viewModel = {
@@ -10,7 +9,7 @@ module.exports = function (req, res, next) {
       title: 'Login',
       registration: registration,
       meta: {
-        canonical: authority + '/account/login'
+        canonical: '/account/login'
       }
     }
   };

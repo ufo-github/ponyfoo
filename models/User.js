@@ -15,6 +15,7 @@ var schema = new mongoose.Schema({
   googleId: String,
   linkedinId: String,
   bio: String,
+  bioHtml: String,
   author: { type: Boolean, 'default': false }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 

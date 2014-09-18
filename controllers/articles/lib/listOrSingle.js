@@ -1,11 +1,9 @@
 'use strict';
 
-var env = require('../../../lib/env');
 var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');
 var htmlService = require('../../../services/html');
 var textService = require('../../../services/text');
-var authority = env('AUTHORITY');
 
 function factory (res, next) {
   return function listOrSingle (err, articles) {
@@ -34,7 +32,7 @@ function factory (res, next) {
       model.full = true;
       model.title = article.title;
       model.meta = {
-        canonical: authority + '/articles/' + article.slug,
+        canonical: '/articles/' + article.slug,
         description: textService.truncate(htmlService.getText(article.introductionHtml), 170),
         keywords: article.tags,
         images: metadataService.extractImages(article)

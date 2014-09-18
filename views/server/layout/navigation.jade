@@ -6,8 +6,12 @@ nav.nv-container
     div.nv-logon
       a.nv-logon-anchor(href='/account/login') Login
 
-  if model.user && model.user.author
+  if model.user
     ul.nv-items
+      li.nv-item
+        a(href='/account/bio', aria-label='Edit your biography') Bio
+
+      if model.user.author
         li.nv-item
           a(href='/author/compose', aria-label='Prepare a fresh draft') Compose
         li.nv-item

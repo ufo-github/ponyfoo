@@ -7,7 +7,7 @@ var fmt = 'http://www.gravatar.com/avatar/%s?d=identicon&r=PG';
 var tiny = '&s=24';
 
 function hash (email) {
-  return cryptoService.md5(email);
+  return cryptoService.md5(email || '');
 }
 
 function format (email) {

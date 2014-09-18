@@ -1,10 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var env = require('../../lib/env');
 var articleService = require('../../services/article');
 var metadataService = require('../../services/metadata');
-var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   var query = { status: 'published' };
@@ -17,7 +15,7 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         meta: {
-          canonical: authority + '/articles/archives',
+          canonical: '/articles/archives',
           description: 'Every article ever published on Pony Foo can be found here!',
           keywords: metadataService.mostCommonTags(expanded),
           images: metadataService.appendDefaultCover([])

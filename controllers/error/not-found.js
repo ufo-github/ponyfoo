@@ -1,7 +1,5 @@
 'use strict';
 
-var env = require('../../lib/env');
-var authority = env('AUTHORITY');
 var notFound = '/not-found';
 
 module.exports = function (req, res, next) {
@@ -13,7 +11,7 @@ module.exports = function (req, res, next) {
     model: {
       title: 'Not Found!',
       meta: {
-        canonical: authority + '/not-found'
+        canonical: notFound
       }
     }
   };

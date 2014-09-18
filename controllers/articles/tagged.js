@@ -3,8 +3,6 @@
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
-var env = require('../../lib/env');
-var authority = env('AUTHORITY');
 var separator = /[+/,_: ]+/ig;
 
 module.exports = function (req, res, next) {
@@ -20,7 +18,7 @@ module.exports = function (req, res, next) {
     model: {
       title: title,
       meta: {
-        canonical: authority + '/articles/tagged/' + tags.join('+'),
+        canonical: '/articles/tagged/' + tags.join('+'),
         description: 'This search results page contains all of the ' + title.toLowerCase()
       }
     }

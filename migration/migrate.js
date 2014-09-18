@@ -60,15 +60,20 @@ function error (err) {
 }
 
 function ready () {
-  var model = {
-    email: 'nicolasbevacqua@gmail.com',
-    displayName: 'Nicolas Bevacqua',
-    bypassEncryption: false,
-    author: true,
-    password: env('MIGRATION_AUTHOR_PASSWORD')
-  };
+  var email = 'nicolasbevacqua@gmail.com';
 
-  new User(model).save(function (err, author) {
+  production.model('user').findOne({ email: email }, function (err, u) {
+    new User({
+      email: email,
+      displayName: 'Nicolas Bevacqua',
+      bypassEncryption: false,
+      author: true,
+      password: env('MIGRATION_AUTHOR_PASSWORD'),
+      bio: u.bio
+    }).save(created);
+  });
+
+  function created (err, author) {
     articles(author, function (articles) {
       contra.map.series(articles, insertArticle, function (err, articles) {
         winston.info('Rebuilding index for fun and profit!');
@@ -104,7 +109,7 @@ function ready () {
         });
       });
     });
-  });
+  }
 }
 
 function done () {

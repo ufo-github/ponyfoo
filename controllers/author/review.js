@@ -3,8 +3,6 @@
 var moment = require('moment');
 var Article = require('../../models/Article');
 var articleService = require('../../services/article');
-var env = require('../../lib/env');
-var authority = env('AUTHORITY');
 var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 
 module.exports = function (req, res, next) {
@@ -18,7 +16,7 @@ module.exports = function (req, res, next) {
       model: {
         title: 'Article Review',
         meta: {
-          canonical: authority + '/author/review'
+          canonical: '/author/review'
         },
         articles: articles.map(articleService.toJSON).map(hydrate)
       }

@@ -5,8 +5,6 @@ var moment = require('moment');
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
-var env = require('../../lib/env');
-var authority = env('AUTHORITY');
 var separator = /[+/,_: -]+/ig;
 
 function parse (params) {
@@ -56,7 +54,7 @@ module.exports = function (req, res, next) {
     model: {
       title: title,
       meta: {
-        canonical: authority + '/articles/' + slug(req.params),
+        canonical: '/articles/' + slug(req.params),
         description: 'This search results page contains all of the ' + title.toLowerCase()
       }
     }

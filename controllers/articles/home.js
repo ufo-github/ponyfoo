@@ -2,8 +2,6 @@
 
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
-var env = require('../../lib/env');
-var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   var query = { status: 'published' };
@@ -13,7 +11,7 @@ module.exports = function (req, res, next) {
     model: {
       title: 'Pony Foo',
       meta: {
-        canonical: authority + '/'
+        canonical: '/'
       }
     }
   };

@@ -5,6 +5,7 @@ var transports = require('transports');
 var routes = require('./routes');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
+var bioUpdate = require('./api/account/bioUpdate');
 var markdownImageUpload = require('./api/markdown/images');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
@@ -17,6 +18,7 @@ var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
 var sitemap = require('./sitemap/sitemap');
+var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 var redirects = require('./redirects');
@@ -40,6 +42,8 @@ module.exports = function (app) {
   app.put('/api/subscribers', subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
+
+  app.patch('/api/account/bio', authOnly, bioUpdate);
 
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 

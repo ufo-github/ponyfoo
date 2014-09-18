@@ -8,17 +8,17 @@ console.log('Worker %s executing app@%s', process.pid, pkg.version);
 run();
 
 function manifest () {
-  try { // in hosted environments, attempt to invoke the latest known deployed version
+  try { // in hosted environments, use the latest known deployed version
     return require('../../../package.json');
-  } catch (e) {
-    return require('../package.json'); // fall back to local
+  } catch (e) { // fall back to local
+    return require('../package.json');
   }
 }
 
 function run () {
   try {
     require(app);
-  } catch (e) {
-    require('../app'); // fall back to local
+  } catch (e) { // fall back to local
+    require('../app');
   }
 }
