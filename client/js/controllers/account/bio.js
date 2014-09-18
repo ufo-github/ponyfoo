@@ -3,11 +3,13 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
+var markdownService = require('../../../../services/markdown');
 
 module.exports = function (viewModel, route) {
   var container = $.findOne('.cb-bio');
   var preview = $.findOne('.cb-preview');
   var saveButton = $('.cb-save');
+  var bioSidebar = $('.de-bio');
   var bio;
 
   convertToPonyEditor(container, preview);
@@ -21,9 +23,11 @@ module.exports = function (viewModel, route) {
       json: { bio: md }
     };
     viewModel.measly.patch('/api/account/bio', data).on('data', leave);
-  }
 
-  function leave () {
-    taunus.navigate('/');
+    function leave () {
+      var html = markdownService.compile(md);
+      bioSidebar.html(html);
+      taunus.navigate('/');
+    }
   }
 };
