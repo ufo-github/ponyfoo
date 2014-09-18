@@ -2,8 +2,6 @@
 
 > Open-source blogging platform
 
-Supported Browsers: IE 10+, Chrome, Safari, Firefox
-
 ## Development
 
 Merely install dependencies and run the application using `npm start`. The `start` command will compile and bundle all necessary assets, set up file watchers, as well as `nodemon` and `browser-sync` so that you're able to continuously develop.
