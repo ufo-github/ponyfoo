@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var measly = require('measly');
+var defaultMessages = ['Oops. It seems something went terribly wrong!'];
 
 function setupMeasly () {
   measly.on('data', renderOrClean);
@@ -27,25 +28,30 @@ function renderOrClean (data) {
   clean(context);
 }
 
+function getMessages (err, body) {
+  return body && body.messages || !body && defaultMessages;
+}
+
 function render (err, body) {
-  if (!body.messages) {
+  var messages = getMessages(err, body);
+  if (messages === void 0) {
     return;
   }
   var context = $(this.context);
-  var messages = $('<ul>').addClass('vw-conventional');
+  var list = $('<ul>').addClass('vw-conventional');
 
-  $(body.messages.map(dom)).appendTo(messages);
+  $(messages.map(dom)).appendTo(list);
 
   clean(context);
 
   var title = context.find('.vw-title');
   if (title.length) {
-    title.after(messages);
+    title.after(list);
   } else {
-    context.prepend(messages);
+    context.prepend(list);
   }
 
-  messages[0].scrollIntoView();
+  list[0].scrollIntoView();
 
   global.scrollBy(0, -100);
 }
@@ -57,7 +63,7 @@ function handleTaunusError (err, origin) {
   var section = $(origin.context).parents('.ly-section');
   if (section.length) {
     render.call({ context: section.length ? section : document.body }, err, {
-      messages: ['Oops. It seems something went terribly wrong!']
+      messages: defaultMessages
     });
   }
 }

@@ -48,15 +48,15 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     a.nv-search#top(href='#search')
       span Q
 
-    header.ly-header
+    header.ly-header.vw-title
       h1.ly-title
         a.ly-title-anchor(href='/', aria-label='Go to home') Pony Foo
       h2.ly-legend Ramblings of a degenerate coder
 
-    include navigation
-
     if model.flash
       include flash
+
+    include navigation
 
     main.ly-main(data-taunus='model')!=partial
 
