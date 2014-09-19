@@ -14,3 +14,4 @@ NICETIES FOR LATER
 - keyboard shortcuts!
 - test out typekit fonts
 - ec2 scripts should take variables from a config json file instead of hardcoded in-script
+- push hints to the left with js, and then get rid of the overflow in de-bio
