@@ -6,6 +6,7 @@ var authorOnly = require('./author/only');
 module.exports = [
   { route: '/', action: 'articles/home' },
   { route: '/articles', action: 'articles/redirectHome' },
+  { route: '/articles/feed', ignore: true },
   { route: '/articles/archives', action: 'articles/archives' },
   { route: '/articles/tagged/:tags', action: 'articles/tagged' },
   { route: '/articles/search/:terms', action: 'articles/search' },
@@ -18,5 +19,6 @@ module.exports = [
   { route: '/account/bio', action: 'account/bio', middleware: authOnly },
   { route: '/author/compose', action: 'author/compose', middleware: authorOnly },
   { route: '/author/compose/:slug', action: 'author/compose', middleware: authorOnly },
-  { route: '/author/review', action: 'author/review', middleware: authorOnly }
+  { route: '/author/review', action: 'author/review', middleware: authorOnly },
+  { route: '/*', action: 'error/not-found' }
 ];

@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
     res.redirect(notFound); return;
   }
 
-  var vm = {
+  res.viewModel = {
     model: {
       title: 'Not Found!',
       meta: {
@@ -16,5 +16,5 @@ module.exports = function (req, res, next) {
       }
     }
   };
-  taunus.render('error/not-found', vm, req, res, next);
+  next();
 };

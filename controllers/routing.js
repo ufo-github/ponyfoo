@@ -21,7 +21,6 @@ var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
-var notFound = require('./error/notFound');
 var redirects = require('./redirects');
 var defaultRequestModel = require('./defaultRequestModel');
 var layout = require('../.bin/views/server/layout/layout');
@@ -59,6 +58,5 @@ module.exports = function (app) {
     defaultRequestModel: defaultRequestModel
   });
   redirects.setup(app);
-  app.get('/*', notFound);
   app.use(errors.handler);
 };
