@@ -7,7 +7,8 @@ var textService = require('../../../services/text');
 
 function factory (res, next) {
   return function listOrSingle (err, articles) {
-    if (err) {
+    if (err || articles.length === 0) {
+      res.viewModel.skip = true;
       next(err); return;
     }
     var model = res.viewModel.model;
