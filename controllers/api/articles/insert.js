@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
       publish(model, next);
     },
     function insert (published, next) {
-      model.author = req.user._id;
+      model.author = req.user;
       model.save(function saved (err) {
         if (!err && published) {
           articleService.campaign(model);

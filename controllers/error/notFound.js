@@ -16,5 +16,5 @@ module.exports = function (req, res, next) {
       }
     }
   };
-  taunus.render('not-found', vm, req, res, next);
+  taunus.render('error/not-found', vm, req, res, next);
 };

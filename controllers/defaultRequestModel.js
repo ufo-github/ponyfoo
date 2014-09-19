@@ -4,10 +4,11 @@ var pkg = require('../package.json');
 var env = require('../lib/env');
 var name = env('NODE_ENV');
 var authority = env('AUTHORITY');
+var authorEmail = env('AUTHOR_EMAIL');
 var bioService = require('../services/bio');
 
 function defaultRequestModel (req, done) {
-  bioService.get(function (err, bio) {
+  bioService.get(authorEmail, function (err, bio) {
     if (err) {
       done(err); return;
     }

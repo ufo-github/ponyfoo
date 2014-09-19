@@ -1,13 +1,33 @@
 'use strict';
 
+var contra = require('contra');
+var bioService = require('../../services/bio');
+var User = require('../../models/User');
+
 module.exports = function (req, res, next) {
-  res.viewModel = {
-    model: {
-      title: 'Bio Editor',
-      meta: {
-        canonical: '/account/bio'
-      }
+  contra.waterfall([getUser, getBio], respond);
+
+  function getUser (next) {
+    User.findOne({ _id: req.user }, 'email', next);
+  }
+
+  function getBio (user, next) {
+    bioService.get(user.email, next);
+  }
+
+  function respond (err, bio) {
+    if (err) {
+      next(err); return;
     }
-  };
-  next();
+    res.viewModel = {
+      model: {
+        title: 'Bio Editor',
+        meta: {
+          canonical: '/account/bio'
+        },
+        bio: bio
+      }
+    };
+    next();
+  }
 };

@@ -3,28 +3,25 @@
 var moment = require('moment');
 var User = require('../models/User');
 var env = require('../lib/env');
-var authorEmail = env('AUTHOR_EMAIL');
-var cached;
-var cache;
+var cache = {};
 
-function get (done) {
-  if (cached) {
-    done(null, cache); return;
+function get (email, done) {
+  if (email in cache) {
+    done(null, cache[email]); return;
   }
-  User.findOne({ email: authorEmail }, 'bioHtml', found);
+  User.findOne({ email: email }, 'bioHtml', found);
 
   function found (err, user) {
     if (err) {
       done(err); return;
     }
-    update(user.bioHtml);
+    update(email, user.bioHtml);
     done(null, user.bioHtml);
   }
 }
 
-function update (html) {
-  cached = true;
-  cache = html;
+function update (email, html) {
+  cache[email] = html;
 }
 
 module.exports = {
