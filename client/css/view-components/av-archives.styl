@@ -1,4 +1,5 @@
 .av-container
+  overflow hidden
   list-style none
 
 .av-article
@@ -15,11 +16,11 @@
 .av-date
   margin-right 6px
 
-.av-duration,
-.av-publication,
-.av-connector,
-.av-article .tg-tags
+.av-connector
   display none
+
+.av-link
+  display inline-block
 
 @media screen and (min-width: 768px)
   .av-date
@@ -28,10 +29,10 @@
   .av-article
     margin-top 0
 
-  .av-duration,
-  .av-publication,
+  .av-link
+    margin-right -20px
+
   .av-connector
     display inline
-
-  .av-article .tg-tags
-    display inline
+    white-space nowrap
+    margin-left 20px
