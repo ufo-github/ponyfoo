@@ -14,17 +14,12 @@
     color c-blue-light
 
 .mm-author
-  float right
-  margin-top -25px
+  margin-top -10px
   margin-right -10px
+  margin-left -10px
+  margin-bottom 10px
   padding 4px
-  background-color c-strongish
-  box-shadow -1px 1px 1px c-border
-  margin-left 6px
-  margin-bottom 6px
-
-.mm-comment:nth-child(even) .mm-author
-    background-color c-moderate
+  box-shadow 0px 0px 1px c-border
 
 .mm-author-name
   vertical-align middle
@@ -33,7 +28,6 @@
   white-space nowrap
   overflow hidden
   margin-right 6px
-  max-width 120px
 
 .mm-gravatar
   vertical-align middle
@@ -72,11 +66,23 @@
 .mm-remove
   display inline-block
   vertical-align top
+
+.mm-remove,
+.mm-gravatar
   margin-right 5px
+
+.mm-content
+  padding 10px 0
 
 @media screen and (min-width: 768px)
   .mm-heading
     padding 25px
 
   .mm-author
+    margin-top -25px
     margin-right -25px
+    margin-left -25px
+    margin-bottom 25px
+
+  .mm-content
+    padding 0

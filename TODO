@@ -4,7 +4,8 @@ LAUNCH
 
 NICETIES
 
-- prettify mobile commenting ui
+- fix taunus on first navigation on prime cache (cmd+r)
+- fix /account/logout no redirects
 
 NICETIES FOR LATER
 
