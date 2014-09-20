@@ -64,7 +64,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     script(type='text/x-taunus', data-taunus='model')=JSON.stringify(model)
     script.
-      ~function(d,s,r){s=d.createElement('link');r=d.getElementsByTagName('head')[0];s.rel='stylesheet';s.href='/css/all.css';s.media='only x';r.parentNode.insertBefore(s,r);setTimeout(function(){s.media='all'})}(document)
+      ~function(d,s,r){s=d.createElement('link');r=d.getElementsByTagName('head')[0];s.rel='stylesheet';s.href='/css/all.css';s.media='only x';r.appendChild(s);setTimeout(function(){s.media='all'})}(document)
 
     script.
       ~function(w,m,e){function d(){e=m.createElement('script');e.src='/js/all.js';m.body.appendChild(e)}if(w.addEventListener)w.addEventListener('load',d,!1);else if(w.attachEvent)w.attachEvent('onload',d);else w.onload=d}(window,document)
