@@ -5,6 +5,8 @@ var taunus = require('taunus');
 var measly = require('measly');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
 
+$('body').on('click', '.vw-conventional, .fs-messages', remove);
+
 function setupMeasly () {
   measly.on('data', renderOrClean);
   measly.on('error', render);
@@ -14,6 +16,10 @@ function setupMeasly () {
 
 function createLayer (container, viewModel) {
   viewModel.measly = measly.layer({ context: container });
+}
+
+function remove (e) {
+  $(e.target).remove();
 }
 
 function clean (context) {
@@ -44,11 +50,11 @@ function render (err, body) {
 
   clean(context);
 
-  var title = context.find('.vw-title');
-  if (title.length) {
-    title.after(list);
+  var title = context.findOne('.vw-title');
+  if (title) {
+    $(title).after(list);
   } else {
-    context.prepend(list);
+    $(context[0]).prepend(list);
   }
 
   list[0].scrollIntoView();
@@ -60,7 +66,9 @@ function handleTaunusError (err, origin) {
   if (!origin.context) {
     return;
   }
-  var section = $(origin.context).parents('.ly-section');
+  var ctx = $(origin.context);
+  var parents = ctx.parents('.ly-section');
+  var section = ctx.and(parents);
   if (section.length) {
     render.call({ context: section.length ? section : document.body }, err, {
       messages: defaultMessages

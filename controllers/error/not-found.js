@@ -11,6 +11,7 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       title: 'Not Found!',
+      action: 'error/not-found',
       meta: {
         canonical: notFound
       }

@@ -16,10 +16,10 @@ global.md = markdownService.compile;
 var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
 
-taunus.once('render', function (container, viewModel) {
-  analytics(viewModel.env);
+taunus.on('start', function (container, viewModel) {
   require('./search');
   require('./subscriptions');
+  analytics(viewModel.env);
 });
 
 ponymark.configure({

@@ -16,6 +16,7 @@ module.exports = [
   { route: '/articles/:year(\\d{4})', action: 'articles/dated' },
   { route: '/articles/:slug', action: 'articles/article' },
   { route: '/account/login', action: 'account/login' },
+  { route: '/account/logout', ignore: true },
   { route: '/account/bio', action: 'account/bio', middleware: authOnly },
   { route: '/author/compose', action: 'author/compose', middleware: authorOnly },
   { route: '/author/compose/:slug', action: 'author/compose', middleware: authorOnly },

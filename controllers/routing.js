@@ -40,6 +40,7 @@ module.exports = function (app) {
   app.delete('/api/articles/:slug/comments/:id', authorOnly, commentRemove);
 
   app.put('/api/subscribers', subscriberInsert);
+  app.post('/api/subscribers', subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
 
@@ -52,11 +53,11 @@ module.exports = function (app) {
   // app.post('/account/password-reset/:token([a-f0-9]{24})', resetPassword);
 
   transports.routing(app, registerAccount);
+  redirects.setup(app);
 
   taunus.mount(app, routes, {
     layout: layout,
     defaultRequestModel: defaultRequestModel
   });
-  redirects.setup(app);
   app.use(errors.handler);
 };

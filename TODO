@@ -4,10 +4,8 @@ LAUNCH
 
 NICETIES
 
-- fix taunus on first navigation on prime cache (cmd+r)
-- fix /account/logout no redirects
-
-NICETIES FOR LATER
+- fix slow start if images didn't load?
+- nicer search results page if no results (currently 404)
 
 - (author) email composer with subject, intro, and markdown body
 - keyboard shortcuts!

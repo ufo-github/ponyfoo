@@ -1,25 +1,24 @@
 'use strict';
 
-var validator = require('validator');
-var subscriberService = require('../../../services/subscriber');
+var accepts = require('./lib/accepts');
+var create = require('./lib/create');
+var httpService = require('../../../services/http');
 
 function insert (req, res, next) {
   var email = req.body.email;
 
-  if (!validator.isEmail(email)) {
-    res.status(400).json({ messages: ['Please subscribe using a valid email address!'] }); return;
-  }
-
-  subscriberService.add({ email: email, source: 'intent' }, respond);
-
-  function respond (err) {
+  create(email, function (err, valid, messages) {
     if (err) {
       next(err); return;
     }
-    res.json({
-      messages: ['Thanks! You should be promptly getting an email with activation instructions.']
-    });
-  }
+    var accept = accepts(req, ['html', 'json']);
+    if (accept.json) {
+      res.status(valid ? 200 : 400).json({ messages: messages });
+    } else {
+      req.flash(valid ? 'success' : 'error', messages);
+      res.redirect(httpService.referer(req));
+    }
+  });
 }
 
 module.exports = insert;
