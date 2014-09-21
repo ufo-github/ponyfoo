@@ -4,8 +4,8 @@ LAUNCH
 
 NICETIES
 
-- fix slow start if images didn't load?
 - nicer search results page if no results (currently 404)
+- fix slow start if images didn't load?
 
 - (author) email composer with subject, intro, and markdown body
 - keyboard shortcuts!
