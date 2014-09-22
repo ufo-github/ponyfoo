@@ -6,7 +6,6 @@ NICETIES
 
 - nicer search results page if no results (currently 404)
   - use search results view, which includes the articles/article views
-- fix slow start if images didn't load?
 
 - (author) email composer with subject, intro, and markdown body
 - keyboard shortcuts!
