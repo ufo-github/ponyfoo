@@ -1,0 +1,11 @@
+if fail
+  section.ly-section
+    h1.sr-fail-title Your search yielded no results!
+    h2.sr-fail-legend but we took the opportunity to pull together a few articles very carefully chosen at random!
+
+if articles
+  each article in articles
+    include article
+
+else
+  include article

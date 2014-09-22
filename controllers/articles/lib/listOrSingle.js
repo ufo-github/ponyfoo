@@ -7,20 +7,26 @@ var textService = require('../../../services/text');
 
 function factory (res, next) {
   return function listOrSingle (err, articles) {
-    if (err || articles.length === 0) {
-      res.viewModel.skip = true;
+    if (err) {
       next(err); return;
     }
     var model = res.viewModel.model;
     var article = articles.length === 1 && articles[0];
     var key = article ? 'article' : 'articles';
 
-    model.action = 'articles/' + key;
+    if (!model.action) {
+      model.action = 'articles/' + key;
+
+      if (articles.length === 0) {
+        res.viewModel.skip = true;
+        next(); return;
+      }
+    }
 
     if (article) {
       article.populate('prev next related comments', single);
     } else {
-      model[key] = articles.map(articleService.toJSON);
+      model.articles = articles.map(articleService.toJSON);
       model.meta.keywords = metadataService.mostCommonTags(articles);
       model.meta.images = metadataService.extractImages(articles);
       next();
@@ -38,7 +44,7 @@ function factory (res, next) {
         keywords: article.tags,
         images: metadataService.extractImages(article)
       };
-      model[key] = articleService.toJSON(article);
+      model.article = articleService.toJSON(article);
       next();
     }
   };

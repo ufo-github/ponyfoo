@@ -3,6 +3,7 @@
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
+var searchResults = require('./lib/searchResults');
 var separator = /[+/,_: ]+/ig;
 
 module.exports = function (req, res, next) {
@@ -12,7 +13,7 @@ module.exports = function (req, res, next) {
     status: 'published',
     tags: { $all: tags }
   };
-  var handle = listOrSingle(res, next);
+  var handle = listOrSingle(res, searchResults(res, next));
 
   res.viewModel = {
     model: {
@@ -20,7 +21,8 @@ module.exports = function (req, res, next) {
       meta: {
         canonical: '/articles/tagged/' + tags.join('+'),
         description: 'This search results page contains all of the ' + title.toLowerCase()
-      }
+      },
+      action: 'articles/search-results'
     }
   };
 
