@@ -8,6 +8,7 @@ var articleService = require('./article');
 var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
 var emitter = contra.emitter();
+var searchLimit = 6;
 
 function similar (article, done) {
   rebuildOnce(built);
@@ -40,15 +41,35 @@ function query (terms, tags, done) {
     fulltext.compute(terms, next);
   }
 
-  function expand (matches, next) {
-    var q = {
-      status: 'published',
-      _id: { $in: matches }
-    };
+  function tagged (q) {
     if (tags.length) {
       q.tags = { $all: tags };
     }
-    articleService.find(q, next);
+    return q;
+  }
+
+  function expand (matches, next) {
+    if (matches.length === 0) {
+      findByTextMatch(next); return;
+    }
+    var q = tagged({
+      status: 'published',
+      _id: { $in: matches }
+    });
+    Article.find(q).sort('-publication').limit(searchLimit).exec(next);
+  }
+
+  function findByTextMatch (next) {
+    var q = tagged({ status: 'published' });
+    var alternatives = new RegExp(terms.join('|'), 'i');
+    var cases = [{
+      introduction: alternatives
+    }, {
+      body: alternatives
+    }, {
+      tags: { $in: terms }
+    }];
+    Article.find(q).or(cases).sort('-publication').limit(searchLimit).exec(next);
   }
 }
 

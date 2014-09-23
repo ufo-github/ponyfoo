@@ -5,7 +5,10 @@ LAUNCH
 NICETIES
 
 - (author) email composer with subject, intro, and markdown body
-- keyboard shortcuts!
+- publish comments as an html form!
 - test out typekit fonts
-- ec2 scripts should take variables from a config json file instead of hardcoded in-script
 - push hints to the left with js, and then get rid of the overflow in de-bio
+
+NTH
+
+- ec2 scripts should take variables from a config json file instead of hardcoded in-script
