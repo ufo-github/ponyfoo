@@ -4,8 +4,9 @@ LAUNCH
 
 NICETIES
 
+- review ponymark implementations
+- fix bug rendering comment preview!
 - (author) email composer with subject, intro, and markdown body
-- publish comments as an html form!
 - test out typekit fonts
 - push hints to the left with js, and then get rid of the overflow in de-bio
 

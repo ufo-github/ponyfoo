@@ -24,6 +24,8 @@ module.exports = function (viewModel) {
   var cancelReply = $('.mc-cancel-reply');
   var footer = $('.mm-footer');
 
+  $('.mm-thread-reply').removeClass('uv-hidden');
+
   composer.on('keypress keydown keyup paste', serializeSlowly);
   send.on('click', comment);
   comments.on('click', '.mm-thread-reply', attach);
@@ -72,7 +74,9 @@ module.exports = function (viewModel) {
     composer.find('.vw-conventional').remove();
   }
 
-  function comment () {
+  function comment (e) {
+    e.preventDefault();
+
     var thread = send.parents('.mm-thread');
     var endpoint = textService.format('/api/articles/%s/comments', viewModel.article.slug);
     var model = {

@@ -3,8 +3,8 @@ article.ly-section
   section.ac-container
     input.ac-title(placeholder='A Thoughtful, Catchy Title', value=article.title)
     input.ac-slug(placeholder='a-thoughtful-catchy-title', value=article.slug)
-    div.ac-text.ac-introduction(placeholder='Introduction to your article. Used for marketing, search snippets, etc.', data-markdown=article.introduction)
-    div.ac-text.ac-body(placeholder='Main body of your article', data-markdown=article.body)
+    textarea.ac-text.ac-introduction.pmk-input(placeholder='Introduction to your article. Used for marketing, search snippets, etc.', data-markdown=article.introduction)
+    textarea.ac-text.ac-body.pmk-input(placeholder='Main body of your article', data-markdown=article.body)
     input.ac-tags(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
     article.ac-preview.md-markdown
       h1.ac-preview-title.at-title

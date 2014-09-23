@@ -5,12 +5,10 @@ var flexarea = require('flexarea');
 var ponymark = require('ponymark');
 var twitterService = require('./twitter');
 
-function convertToPonyEditor (elem, preview) {
-  var container = $(elem);
-  var pony = ponymark({ buttons: elem, input: elem, preview: preview });
-  var editor = container.find('.pmk-input');
-  editor.value(container.attr('data-markdown'));
-  flexarea(editor[0]);
+function convertToPonyEditor (textarea, preview) {
+  var pony = ponymark({ textarea: textarea, preview: preview });
+  textarea.value(textarea.attr('data-markdown'));
+  flexarea(textarea);
   pony.on('refresh', tweets);
   return pony;
 

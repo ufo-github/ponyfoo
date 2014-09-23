@@ -10,14 +10,15 @@ section#comments.mm-comments
   include comment-thread
 
   footer.mm-footer
-    section.mc-composer.ly-section
+    form.mc-composer.ly-section(action='/api/articles/' + article.slug + '/comments', method='post', name='comment')
       div.mc-author
-        input.mc-name(placeholder='John Doe')
-        input.mc-email(placeholder='hello@johndoe.io')
-        input.mc-site(placeholder='johndoe.io (optional)')
+        input.mc-name(placeholder='John Doe', name='name')
+        input.mc-email(placeholder='hello@johndoe.io', name='email')
+        input.mc-site(placeholder='johndoe.io (optional)', name='site')
       div.mc-content
+        textarea.pmk-input(name='content', placeholder='Please enter your comment here, Markdown formatting is supported.')
       article.mc-preview.md-markdown
-      button.mc-send(aria-label='Make your comment immediately available!') Publish Comment
+      input.mc-send.uv-button(type='submit', aria-label='Make your comment immediately available!', value='Publish Comment')
       a.mc-cancel-reply.uv-hidden(aria-label='Start a new discussion instead!')
         span Cancel Reply
         em.mc-cancel-detail (creates a new thread)

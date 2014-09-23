@@ -5,7 +5,7 @@ var subscriberService = require('../../../../services/subscriber');
 
 function create (email, done) {
   if (!validator.isEmail(email)) {
-    done(null, false, ['Please subscribe using a valid email address!']); return;
+    done(null, 400, ['Please subscribe using a valid email address!']); return;
   }
 
   subscriberService.add({ email: email, source: 'intent' }, result);
@@ -14,7 +14,7 @@ function create (email, done) {
     if (err) {
       done(err); return;
     }
-    done(null, true, ['Thanks! You should be promptly getting an email with activation instructions.']);
+    done(null, 200, ['Thanks! You should be promptly getting an email with activation instructions.']);
   }
 }
 

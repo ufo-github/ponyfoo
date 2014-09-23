@@ -6,13 +6,13 @@ var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var markdownService = require('../../../../services/markdown');
 
 module.exports = function (viewModel, route) {
-  var container = $.findOne('.cb-bio');
+  var editor = $.findOne('.cb-bio');
   var preview = $.findOne('.cb-preview');
   var saveButton = $('.cb-save');
   var bioSidebar = $('.de-bio');
   var bio;
 
-  convertToPonyEditor(container, preview);
+  convertToPonyEditor(editor, preview);
   bio = $('.cb-bio .pmk-input');
 
   saveButton.on('click', save);

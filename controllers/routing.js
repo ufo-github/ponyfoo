@@ -36,6 +36,7 @@ module.exports = function (app) {
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
   app.post('/api/articles/compute-relationships', authorOnly, articleCompute);
 
+  app.post('/api/articles/:slug/comments', commentInsert);
   app.put('/api/articles/:slug/comments', commentInsert);
   app.delete('/api/articles/:slug/comments/:id', authorOnly, commentRemove);
 
