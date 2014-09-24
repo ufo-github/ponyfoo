@@ -19,7 +19,10 @@ function createLayer (container, viewModel) {
 }
 
 function remove (e) {
-  $(e.target).remove();
+  e.preventDefault();
+  var ctx = $(e.target);
+  var parents = ctx.parents('.vw-conventional, .fs-messages');
+  ctx.and(parents).remove();
 }
 
 function clean (context) {
