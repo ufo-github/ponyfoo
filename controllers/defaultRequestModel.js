@@ -8,13 +8,13 @@ var authorEmail = env('AUTHOR_EMAIL');
 var bioService = require('../services/bio');
 
 function defaultRequestModel (req, done) {
-  bioService.get(authorEmail, function (err, bio) {
+  bioService.getHtml(authorEmail, function (err, bioHtml) {
     if (err) {
       done(err); return;
     }
     done(null, {
       model: {
-        bio: bio,
+        bioHtml: bioHtml,
         pkg: {
           version: pkg.version
         },

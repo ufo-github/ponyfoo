@@ -13,13 +13,17 @@ function insert (req, res, next) {
     parent: req.body.parent
   };
 
-  create(req.params.slug, model, function (err, statusCode, messages) {
+  create(req.params.slug, model, function (err, statusCode, messages, inserted) {
     if (err) {
       next(err); return;
     }
     var accept = accepts(req, ['html', 'json']);
     if (accept.json) {
-      res.status(statusCode).json({ messages: messages });
+      if (inserted) {
+        res.status(statusCode).json(inserted);
+      } else {
+        res.status(statusCode).json({ messages: messages });
+      }
     } else {
       req.flash(statusCode === 200 ? 'success' : 'error', messages);
       res.redirect(httpService.referer(req));

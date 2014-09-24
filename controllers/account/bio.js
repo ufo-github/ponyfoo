@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
   }
 
   function getBio (user, next) {
-    bioService.get(user.email, next);
+    bioService.getMarkdown(user.email, next);
   }
 
   function respond (err, bio) {

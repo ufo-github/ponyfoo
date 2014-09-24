@@ -7,7 +7,11 @@ var twitterService = require('./twitter');
 
 function convertToPonyEditor (textarea, preview) {
   var pony = ponymark({ textarea: textarea, preview: preview });
-  textarea.value(textarea.attr('data-markdown'));
+  var ta = $(textarea);
+  var md = ta.attr('data-markdown');
+  if (md) {
+    ta.value(md);
+  }
   flexarea(textarea);
   pony.on('refresh', tweets);
   return pony;

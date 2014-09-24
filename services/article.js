@@ -7,6 +7,7 @@ var estimate = require('estimate');
 var env = require('../lib/env');
 var Article = require('../models/Article');
 var Subscriber = require('../models/Subscriber');
+var commentService = require('./comment');
 var cryptoService = require('./crypto');
 var subscriberService = require('./subscriber');
 var twitterService = require('./twitter');
@@ -95,9 +96,8 @@ function toJSON (source) {
   if (source.populated('comments')) {
     article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);
     article.commentCount = article.comments.length;
-  } else {
-    delete article.comments;
   }
+
   if (source.populated('prev')) {
     article.prev = relevant(article.prev);
   } else {
@@ -129,11 +129,12 @@ function relevant (article) {
 
 function threads (accumulator, comment) {
   var thread;
+  var commentModel = commentService.toJSON(comment);
   if (comment.parent) {
     thread = _.find(accumulator, { id: comment.parent });
-    thread.comments.push(comment);
+    thread.comments.push(commentModel);
   } else {
-    thread = { id: comment._id, comments: [comment] };
+    thread = { id: comment._id, comments: [commentModel] };
     accumulator.push(thread);
   }
   return accumulator;

@@ -14,12 +14,11 @@ module.exports = function (viewModel) {
   var name = $('.mc-name');
   var email = $('.mc-email');
   var site = $('.mc-site');
-  var content = $.findOne('.mc-content');
+  var content = $('.mc-content');
   var preview = $.findOne('.mc-preview');
   var send = $('.mc-send');
   var serializeSlowly = throttle(serialize, 200);
-  var pony = convertToPonyEditor(content, preview);
-  var body = $('.pmk-input', content);
+  var pony = convertToPonyEditor(content[0], preview);
   var comments = $('.mm-comments');
   var cancelReply = $('.mc-cancel-reply');
   var footer = $('.mm-footer');
@@ -39,7 +38,7 @@ module.exports = function (viewModel) {
       name.value(data.name);
       email.value(data.email);
       site.value(data.site);
-      body.value(data.content);
+      content.value(data.content);
       pony.refresh();
     }
   }
@@ -51,7 +50,7 @@ module.exports = function (viewModel) {
       name: name.value(),
       email: email.value(),
       site: site.value(),
-      content: body.value()
+      content: content.value()
     };
   }
 
@@ -86,7 +85,7 @@ module.exports = function (viewModel) {
     viewModel.measly.put(endpoint, model).on('data', commented);
 
     function commented (data) {
-      body.value('');
+      content.value('');
       detach();
       serialize();
       raf(deserialize);
@@ -106,11 +105,13 @@ module.exports = function (viewModel) {
         target = thread.find('.mm-thread-footer');
       } else {
         model.article = {
+          author: viewModel.article.author,
           commentThreads: [{
             comments: [data],
             id: data._id
           }]
         };
+        console.log(model);
         template = 'articles/comment-thread';
         target = comments.find('.mm-footer');
       }

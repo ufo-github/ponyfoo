@@ -8,6 +8,7 @@ var Article = require('../../../../models/Article');
 var User = require('../../../../models/User');
 var validate = require('./validate');
 var respond = require('../../lib/respond');
+var commentService = require('../../../../services/comment');
 var htmlService = require('../../../../services/html');
 var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
@@ -141,6 +142,6 @@ module.exports = function (slug, model, done) {
     if (err) {
       done(null, 400, ['An error occurred while posting your comment!']); return;
     }
-    done(null, 200, ['Your comment was successfully published!']);
+    done(null, 200, ['Your comment was successfully published!'], commentService.toJSON(comment));
   }
 };

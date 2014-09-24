@@ -19,6 +19,8 @@ module.exports = function (viewModel, route) {
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
+  var intro = $('.ac-introduction');
+  var body = $('.ac-body');
   var tags = $('.ac-tags');
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
@@ -34,8 +36,6 @@ module.exports = function (viewModel, route) {
     publish: $('#ac-publish-radio')
   };
   var boundSlug = true;
-  var intro;
-  var body;
   var initialDate = moment().weekday(7);
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
   var ponies = texts.map(convert);
@@ -48,9 +48,6 @@ module.exports = function (viewModel, route) {
   saveButton.on('click', save);
   status.on('change', updatePublication);
   schedule.on('change', updatePublication);
-
-  intro = $('.ac-introduction .pmk-input');
-  body = $('.ac-body .pmk-input');
 
   if (published) {
     deserialize(article);
