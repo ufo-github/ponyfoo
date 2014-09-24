@@ -4,7 +4,6 @@ LAUNCH
 
 NICETIES
 
-- fix margin-top issue when ponymark not run yet
 - (author) email composer with subject, intro, and markdown body
 - test out typekit fonts
 - push hints to the left with js, and then get rid of the overflow in de-bio
