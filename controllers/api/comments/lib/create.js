@@ -14,8 +14,8 @@ var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
 var markdownFatService = require('../../../../services/markdownFat');
 
-module.exports = function (slug, model, done) {
-  var validation = validate(model);
+module.exports = function (slug, input, done) {
+  var validation = validate(input);
   if (validation.length) {
     done(null, 400, validation); return;
   }

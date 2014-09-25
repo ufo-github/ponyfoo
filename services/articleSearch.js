@@ -4,7 +4,10 @@ var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
 var Article = require('../models/Article');
+var env = require('../lib/env');
 var articleService = require('./article');
+var feedService = require('./feed');
+var sitemapService = require('./sitemap');
 var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
 var emitter = contra.emitter();
@@ -146,12 +149,20 @@ function addRelatedThenSave (article, done) {
 }
 
 function refreshRelated (done) {
+  env('BULK_INSERT', true);
   Article.find({ status: 'published' }, function (err, articles) {
     if (err) {
-      done(err); return;
+      complete(err); return;
     }
-    contra.each(articles, addRelatedThenSave, done);
+    contra.each(articles, addRelatedThenSave, complete);
   });
+
+  function complete (err) {
+    env('BULK_INSERT', false);
+    feedService.rebuild();
+    sitemapService.rebuild();
+    done(err);
+  }
 }
 
 module.exports = {
