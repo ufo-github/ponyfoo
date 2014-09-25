@@ -17,7 +17,8 @@ section#comments.mm-comments
         input.mc-site(placeholder='johndoe.io (optional)', name='site')
       textarea.mc-content.pmk-input(name='content', placeholder='Please enter your comment here, Markdown formatting is supported.')
       article.mc-preview.md-markdown
-      input.mc-send.uv-button(type='submit', aria-label='Make your comment immediately available!', value='Publish Comment')
+      span(aria-label='Make your comment immediately available!')
+        input.mc-send.uv-button(type='submit', value='Publish Comment')
       a.mc-cancel-reply.uv-hidden(aria-label='Start a new discussion instead!')
         span Cancel Reply
         em.mc-cancel-detail (creates a new thread)

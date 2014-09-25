@@ -11,3 +11,4 @@ NICETIES
 NTH
 
 - ec2 scripts should take variables from a config json file instead of hardcoded in-script
+- (author) author compose form graceful degradation

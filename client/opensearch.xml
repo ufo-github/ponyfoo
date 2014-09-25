@@ -3,5 +3,5 @@
   <Description>Search Pony Foo: Ramblings of a degenerate coder</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image height='16' width='16' type='image/x-icon'>http://ponyfoo.com/favicon.ico</Image>
-  <Url type='text/html' method='get' template='http://ponyfoo.com/articles/search/{searchTerms}' />
+  <Url type='text/html' method='get' template='http://ponyfoo.com/articles/search?terms={searchTerms}' />
 </OpenSearchDescription>

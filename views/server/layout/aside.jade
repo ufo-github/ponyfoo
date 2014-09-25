@@ -1,14 +1,16 @@
 aside.ly-aside.de-container
   form.ly-section.sr-container(action='/articles/search', method='get', name='search')
     input.de-input.sr-input(placeholder='e.g JavaScript', name='terms')
-    input.de-button.sr-button.uv-button(type='submit', value='Search', aria-label='Pro Tip: use "[js]" to search tagged articles!')
+    span(aria-label='Pro Tip: use "[js]" to search tagged articles!')
+      input.de-button.sr-button.uv-button(type='submit', value='Search')
 
   form.ly-section.ss-container(action='/api/subscribers', method='post', name='subscribe')
     div.ss-label Subscribe to our mailing list and be the first to know when new articles come out!
     div.ss-label One-click unsubscribe, anytime.
 
     input.de-input.ss-input(placeholder='you@provider.io', name='email')
-    input.de-button.ss-button.uv-button(type='submit', value='Subscribe', aria-label='As easy as clicking this button and confirming via email!')
+    span(aria-label='As easy as clicking this button and confirming via email!')
+      input.de-button.ss-button.uv-button(type='submit', value='Subscribe')
 
   section.ly-section.de-bio.md-markdown!=model.bioHtml
 

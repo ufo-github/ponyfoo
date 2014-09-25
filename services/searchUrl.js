@@ -1,41 +1,67 @@
 'use strict';
 
 var spaces = /\s+/;
-var rtag = /^\[(\S+)\]$/;
+var tagExtract = /\[([^\s[\]]+)\]/g;
+var tagUnwrap = /^\[(\S+)\]$/;
 
 function compile (input) {
   var builder = ['/articles'];
   var keywords = (input || '').trim().split(spaces).filter(truthy);
-  var tags = keywords.filter(tag);
-  var terms = keywords.reduce(noTags, []);
-  if (terms.length) {
+  var extracted = { tags: [], terms: [] };
+
+  keywords.reduce(extract, extracted);
+  extracted = {
+    tags: clean(extracted.tags),
+    terms: clean(extracted.terms)
+  };
+
+  if (extracted.terms.length) {
     builder.push('/search/');
-    builder.push(terms.join('-'));
+    builder.push(extracted.terms.join('-'));
   }
-  if (tags.length) {
+  if (extracted.tags.length) {
     builder.push('/tagged/');
-    builder.push(tags.map(unwrap).join('+'));
+    builder.push(extracted.tags.map(unwrap).join('+'));
   }
   return builder.length > 1 ? builder.join('') : null;
+}
 
-  function noTags (terms, term) {
-    if (tags.indexOf(term) === -1) {
-      terms.push(term);
-    }
-    return terms;
+function extract (result, keyword) {
+  var tags = keyword.match(tagExtract);
+  if (tags) {
+    result.tags.push.apply(result.tags, tags);
   }
+  var terms = [keyword];
+  var edge;
+  var splicer;
+  var split;
+  while (tags && tags.length) {
+    edge = terms.length - 1;
+    split = terms[edge].split(tags.shift());
+    splicer = [edge, 1].concat(split);
+    terms.splice.apply(terms, splicer);
+  }
+  result.terms.push.apply(result.terms, terms);
+  return result;
 }
 
-function truthy (term) {
-  return !!term;
+function clean (collection) {
+  return collection.filter(truthy).reduce(unique, []);
 }
 
-function tag (term) {
-  return rtag.test(term);
+function truthy (keyword) {
+  return !!keyword;
+}
+
+function unique (collection, item) {
+  if (collection.indexOf(item) === -1) {
+    collection.push(item);
+  }
+  return collection;
 }
 
 function unwrap (tag) {
-  return tag.replace(rtag, '$1');
+  return tag.replace(tagUnwrap, '$1');
 }
 
 module.exports = {
