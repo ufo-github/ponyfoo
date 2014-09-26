@@ -15,12 +15,12 @@ function get (email, field, done) {
     if (err) {
       done(err); return;
     }
-    update(email, field, user[field]);
+    updateInternal(email, field, user[field]);
     done(null, user[field]);
   }
 }
 
-function update (email, field, value) {
+function updateInternal (email, field, value) {
   if (!(email in cache)) {
     cache[email] = {};
   }
@@ -35,12 +35,13 @@ function getMarkdown (email, done) {
   get(email, 'bio', done);
 }
 
-function updateHtml (email, html) {
-  update(email, 'bioHtml', html);
+function update (email, md, html) {
+  updateInternal(email, 'bio', md);
+  updateInternal(email, 'bioHtml', html);
 }
 
 module.exports = {
-  updateHtml: updateHtml,
+  update: update,
   getHtml: getHtml,
   getMarkdown: getMarkdown
 };

@@ -16,6 +16,8 @@ global.md = markdownService.compile;
 var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
 
+require('hint');
+
 taunus.on('start', function (container, viewModel) {
   require('./search');
   require('./subscriptions');

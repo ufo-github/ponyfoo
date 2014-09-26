@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
   }
 
   function saved (err, user) {
-    bioService.updateHtml(user.email, bioHtml);
+    bioService.update(user.email, bio, bioHtml);
     res.json({});
   }
 };
