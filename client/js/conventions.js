@@ -71,7 +71,7 @@ function handleTaunusError (err, origin) {
   }
   var ctx = $(origin.context);
   var parents = ctx.parents('.ly-section');
-  var section = ctx.and(parents);
+  var section = ctx.where('.ly-section').and(parents);
   if (section.length) {
     render.call({ context: section.length ? section : document.body }, err, {
       messages: defaultMessages
