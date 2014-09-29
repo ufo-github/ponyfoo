@@ -13,7 +13,7 @@ var Article = require('../models/Article');
 var env = require('../lib/env');
 var htmlService = require('./html');
 var authority = env('AUTHORITY');
-var contact = 'Nicolas Bevacqua <nico@bevacqua.io>';
+var contact = 'Nicolas Bevacqua <hello@bevacqua.io>';
 var location = path.resolve('.bin/static/feed.xml');
 
 function generate (articles, done) {
