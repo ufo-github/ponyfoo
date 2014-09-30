@@ -4,8 +4,8 @@
 
 npm run clean
 npm run copy
-npm prune
-npm dedupe
+# npm prune
+# npm dedupe
 
 DIST=".bin/public"
 DOMAIN="http://ponyfoo.com"
@@ -14,7 +14,7 @@ CRITICAL_CSS=".bin/temp/critical.css"
 
 # compile assets, routes
 spritesmith
-stylus client/css/fonts.styl -o $DIST/css --include-css --compress
+stylus client/css/fonts/fonts.styl -o $DIST/css --include-css --compress
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
