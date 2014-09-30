@@ -10,6 +10,7 @@ npm run copy
 DIST=".bin/public"
 DOMAIN="http://ponyfoo.com"
 ALL_CSS="$DIST/css/all.css"
+FONT_CSS="$DIST/css/fonts.css"
 CRITICAL_CSS=".bin/temp/critical.css"
 
 # compile assets, routes
@@ -33,6 +34,7 @@ sed -i -e "s#<style></style>#<style>$CRITICAL_ESCAPED</style>#" $LAYOUT
 CSS_DIFF=$(cave $ALL_CSS --css $CRITICAL_CSS)
 echo "$CSS_DIFF" > $ALL_CSS
 cleancss $ALL_CSS -o $ALL_CSS --s0
+cleancss $FONT_CSS -o $FONT_CSS --s0
 rm $CRITICAL_CSS
 
 # asset hashing
