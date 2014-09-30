@@ -1,6 +1,6 @@
 #!/bin/bash
 
-: ${PORT:="3000"}
+: ${PORT:="3666"}
 
 npm run clean
 npm run copy
@@ -22,7 +22,7 @@ taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
 
 # critical css inlining. many slash, very escape. PLEASE. STAHP.
-LOGGING_LEVEL=info node app &
+LOGGING_LEVEL=info PORT=$PORT node app &
 APP_PID=$(procfinder --wait --port $PORT)
 CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
 CRITICAL_ESCAPED=$(echo $CRITICAL | sed -e 's/[\/#&]/\\&/g' -e 's/"/\\\\"/g')
