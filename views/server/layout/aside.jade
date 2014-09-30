@@ -1,5 +1,5 @@
 aside.ly-aside.de-container
-  form.ly-section.sr-container(action='/articles/search', method='get', name='search')
+  form#search.ly-section.sr-container(action='/articles/search', method='get', name='search')
     input.de-input.sr-input(placeholder='e.g JavaScript', name='terms')
     span(aria-label='Pro Tip: use "[js]" to search for article tags!')
       input.de-button.sr-button.uv-button(type='submit', value='Search')
@@ -15,9 +15,9 @@ aside.ly-aside.de-container
   section.ly-section.de-bio.md-markdown!=model.bioHtml
 
   section.ly-section.al-archives
-    a(href='/articles/archives') Archives
+    a(href='/articles/archives', aria-label='The archives link to every single article ever published on Pony Foo!') Archives
     span=' and '
-    a(href='/articles/feed') RSS Feed
+    a(href='/articles/feed', aria-label='Track our RSS feed and be the first to learn about freshly published content') RSS Feed
 
   section.de-back.ly-section
     a.de-back-link(href='#top')
