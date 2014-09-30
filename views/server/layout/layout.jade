@@ -43,7 +43,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     //- asynchronous font loading
     script.
-      ~function(e,t,n){function o(){n&&n[d]?c(n[d]):n&&XMLHttpRequest?o():0===t.cookie.indexOf(d)?a():s(e,'load',a)}function o(){var e=new XMLHttpRequest;e.open('GET',r,!0),s(e,'load',function(){4===e.readyState&&(c(e.responseText),n[d]=e.responseText)}),e.send()}function a(){var e=t.createElement('link');e.href=r,e.rel='stylesheet',e.type='text/css',i.appendChild(e),t.cookie=d}function c(e){var n=t.createElement('style');n.innerHTML=e,i.appendChild(n)}function s(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent('on'+t,n):e['on'+t]=n}var i=t.getElementsByTagName('head')[0],d='pony_font_cache',r='/css/fonts.css';o()}(window,document,localStorage)
+      ~function(e,t,n){function o(){n&&n[d]?c(n[d]):n&&XMLHttpRequest?o():0===t.cookie.indexOf(d)?a():s(e,'load',a)}function o(){var e=new XMLHttpRequest;e.open('GET',r,!0),s(e,'load',function(){4===e.readyState&&(c(e.responseText),n[d]=e.responseText)}),e.send()}function a(){var e=t.createElement('link');e.href=r,e.rel='stylesheet',e.type='text/css',i.appendChild(e),t.cookie=d}function c(e){var n=t.createElement('style');n.innerHTML=e,i.appendChild(n)}function s(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent('on'+t,n):e['on'+t]=n}var i=t.getElementsByTagName('head')[0],d='fonts',r='/css/fonts.css';o()}(window,document,localStorage)
 
     noscript
       link(rel='stylesheet', type='text/css', href='/css/fonts.css')
