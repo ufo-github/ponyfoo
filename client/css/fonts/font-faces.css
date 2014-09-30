@@ -1,7 +1,15 @@
 /*
-  installs: Cardo, Merriweather
-  source:; http://fonts.googleapis.com/css?family=Cardo:700|Merriweather:400italic,400,700
+  installs:
+    Cardo, Merriweather
+  source:
+    http://fonts.googleapis.com/css?family=Cardo:700|Merriweather:400italic,400,700
+  fonts:
+    http://fonts.gstatic.com/s/cardo/v8/X-1BEHTKpRYzad3JEXy9-hkAz4rYn47Zy2rvigWQf6w.woff2
+    http://fonts.gstatic.com/s/merriweather/v7/RFda8w1V0eDZheqfcyQ4EBampu5_7CjHW5spxoeN3Vs.woff2
+    http://fonts.gstatic.com/s/merriweather/v7/ZvcMqxEwPfh2qDWBPxn6nshHwsiXhsDb0smKjAA7Bek.woff2
+    http://fonts.gstatic.com/s/merriweather/v7/So5lHxHT37p2SS4-t60SlGfrnYWAzH6tTbHZfcsRIsM.woff2
 */
+
 /* latin */
 @font-face {
   font-family: 'Cardo';
