@@ -4,14 +4,13 @@ var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
 var request = require('request');
-var mkdirp = require('mkdirp');
+var validator = require('validator');
 var gravatarService = require('../../../services/gravatar');
 var cache = {};
 
-mkdirp.sync('temp/gravatars');
-
 module.exports = function (req, res, next) {
-  var resources = req.body.resources;
+  var input = Array.isArray(req.body.resources) ? req.body.resources : [];
+  var resources = _.uniq(input.map(validator.toString));
 
   contra.map(resources, 2, fetch, concat);
 
