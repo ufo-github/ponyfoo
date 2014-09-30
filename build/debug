@@ -7,6 +7,7 @@ npm run copy
 
 # compile
 spritesmith
+stylus client/css/fonts.styl -o .bin/public/css --include-css --watch &
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}' --watch &
 taunus -o # required

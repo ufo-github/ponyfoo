@@ -6,6 +6,7 @@ var routes = require('./routes');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
+var unpackImages = require('./api/performance/unpackImages');
 var markdownImageUpload = require('./api/markdown/images');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
@@ -17,6 +18,7 @@ var commentRemove = require('./api/comments/remove');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
+var apiErrorNotFound = require('./api/error/notFound');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
@@ -30,6 +32,7 @@ module.exports = function (app) {
   app.get('/sitemap.xml', sitemap);
 
   app.put('/api/markdown/images', markdownImageUpload);
+  app.post('/api/unpack-images', unpackImages);
 
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);
@@ -46,6 +49,7 @@ module.exports = function (app) {
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
+  app.all('/api/*', apiErrorNotFound);
 
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 

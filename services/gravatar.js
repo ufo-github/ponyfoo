@@ -14,7 +14,12 @@ function format (email) {
   return util.format(fmt, hash(email));
 }
 
-function fetch (email, done) {
+function fetch (email, errorSuppression, done) {
+  if (done === void 0) {
+    done = errorSuppression;
+    errorSuppression = false;
+  }
+
   request({
     url: util.format(fmt + tiny, hash(email)),
     encoding: 'binary'
@@ -22,7 +27,12 @@ function fetch (email, done) {
 
   function recode (err, res, body) {
     if (err || !body) {
-      done(err || new Error('Gravatar response body is empty')); return;
+      if (errorSuppression) {
+        done(null, { mime: '', data: '' });
+      } else {
+        done(err || new Error('Gravatar response body is empty'));
+      }
+      return;
     }
 
     done(null, {

@@ -1,3 +1,9 @@
+mixin author
+  img.mm-gravatar(data-src=comment.gravatar + '&s=24', alt='')
+  noscript
+    img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+  span.mm-author-name=comment.author
+
 section.mm-comment.ly-section(id='comment-' + comment._id.toString(), data-comment=comment._id.toString())
   header.mm-author
     if user === article.author.toString()
@@ -6,10 +12,8 @@ section.mm-comment.ly-section(id='comment-' + comment._id.toString(), data-comme
     -  site = comment.site && comment.site.replace(/https?:\/\//, '');
     if site
       a.mm-author-site(href!=comment.site, aria-label=site, rel='nofollow', target='_blank')
-        img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
-        span.mm-author-name=comment.author
+        +author
     else
-      img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
-      span.mm-author-name=comment.author
+      +author
 
   section.mm-content.md-markdown!=comment.contentHtml
