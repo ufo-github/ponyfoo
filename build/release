@@ -4,8 +4,8 @@
 
 npm run clean
 npm run copy
-npm prune
-npm dedupe
+# npm prune
+# npm dedupe
 
 DIST=".bin/public"
 DOMAIN="http://ponyfoo.com"
