@@ -1,6 +1,6 @@
 'use strict';
 
-var markdownService = require('../../services/markdown');
+var markdownFatService = require('../../services/markdownFat');
 var cryptoService = require('../../services/crypto');
 var articleSearch = require('../../services/articleSearch');
 var feedService = require('../../services/feed');
@@ -21,8 +21,8 @@ function beforeSave (next) {
   var oldSign = article.sign;
 
   article.sign = computeSignature(article);
-  article.introductionHtml = markdownService.compile(article.introduction);
-  article.bodyHtml = markdownService.compile(article.body);
+  article.introductionHtml = markdownFatService.compile(article.introduction);
+  article.bodyHtml = markdownFatService.compile(article.body);
   article.updated = Date.now();
 
   if (!bulk && oldSign !== article.sign && article.status === 'published') {

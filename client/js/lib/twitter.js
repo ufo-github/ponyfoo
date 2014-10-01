@@ -9,9 +9,7 @@ function updateView (elem) {
   }
 }
 
-taunus.on('render', function (container, viewModel) {
-  updateView(container);
-});
+taunus.on('render', updateView);
 
 module.exports = {
   updateView: updateView

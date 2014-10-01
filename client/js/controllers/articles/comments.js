@@ -5,7 +5,6 @@ var raf = require('raf');
 var taunus = require('taunus');
 var throttle = require('lodash.throttle');
 var storage = require('../../lib/storage');
-var unpackImages = require('../../lib/unpackImages');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var textService = require('../../../../services/text');
 var key = 'comment-draft';
@@ -33,7 +32,6 @@ module.exports = function (viewModel) {
   comments.on('click', '.mm-remove', remove);
   cancelReply.on('click', detach);
   deserialize();
-  unpackImages(viewModel.measly, gravatars);
 
   function deserialize () {
     var data = storage.get(key);

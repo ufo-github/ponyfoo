@@ -6,7 +6,6 @@ var routes = require('./routes');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
-var unpackImages = require('./api/performance/unpackImages');
 var markdownImageUpload = require('./api/markdown/images');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
@@ -32,7 +31,6 @@ module.exports = function (app) {
   app.get('/sitemap.xml', sitemap);
 
   app.put('/api/markdown/images', markdownImageUpload);
-  app.post('/api/unpack-images', unpackImages);
 
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);

@@ -4,8 +4,12 @@ var _ = require('lodash');
 var url = require('url');
 var moment = require('moment');
 var cheerio = require('cheerio');
+var minifyHtml = require('html-minifier').minify;
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
+var minifierOptions = {
+  collapseWhitespace: true
+};
 var imageCache = {};
 
 function absolutize (html, done) {
@@ -56,8 +60,13 @@ function getText (html) {
   return cheerio.load(html)('*').text();
 }
 
+function minify (html) {
+  return minifyHtml(html, minifierOptions);
+}
+
 module.exports = {
   absolutize: absolutize,
   extractImages: extractImages,
-  getText: getText
+  getText: getText,
+  minify: minify
 };
