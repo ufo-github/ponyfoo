@@ -4,6 +4,7 @@ var $ = require('dominus');
 var taunus = require('taunus');
 var measly = require('measly');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
+var unwrapImages = require('./lib/unwrapImages');
 
 $('body').on('click', '.vw-conventional, .fs-messages', remove);
 
@@ -12,6 +13,7 @@ function setupMeasly () {
   measly.on('error', render);
   taunus.on('error', handleTaunusError);
   taunus.on('render', createLayer);
+  taunus.on('render', unwrapImages);
 }
 
 function createLayer (container, viewModel) {
