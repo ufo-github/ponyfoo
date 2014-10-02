@@ -10,7 +10,7 @@ NODE_VERSION="0.10"
 
 # instance specific
 REGION="us-east-1"
-IMAGE_ID="ami-08389d60"
+IMAGE_ID="ami-8caa1ce4"
 INSTANCE_TYPE="t1.micro"
 INSTANCE_USER="ubuntu"
 SECURITY_GROUP="standard"
@@ -121,7 +121,6 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   sudo apt-get install git make g++ -y
 
   echo "stage: tcp tweaks"
-  sudo sysctl -w net.ipv4.tcp_window_scaling=1
   sudo sysctl -w net.ipv4.tcp_slow_start_after_idle=0
 
   echo "stage: forwarding!"
