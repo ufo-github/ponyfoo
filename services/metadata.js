@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var htmlService = require('./html');
-var defaultCover = 'http://ponyfoo.com/img/ponyfoo.png';
+var defaultCover = 'http://ponyfoo.com/img/thumbnail.png';
 
 function appendDefaultCover (list) {
   list.push(defaultCover);
