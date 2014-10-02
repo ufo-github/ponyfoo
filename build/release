@@ -24,7 +24,7 @@ browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
 # critical css inlining. many slash, very escape.
 LOGGING_LEVEL=info PORT=$PORT node app &
 APP_PID=$(procfinder --wait --port $PORT)
-CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
+CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS 1400 900)"
 CRITICAL_ESCAPED=$(echo $CRITICAL | sed -e 's/[\/#&]/\\&/g' -e 's/"/\\\\"/g')
 LAYOUT=".bin/views/server/layout/layout.js"
 echo "Gathered critical CSS, killing node app ($APP_PID)"
