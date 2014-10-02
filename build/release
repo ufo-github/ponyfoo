@@ -21,7 +21,7 @@ jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
 
-# critical css inlining. many slash, very escape. PLEASE. STAHP.
+# critical css inlining. many slash, very escape.
 LOGGING_LEVEL=info PORT=$PORT node app &
 APP_PID=$(procfinder --wait --port $PORT)
 CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
