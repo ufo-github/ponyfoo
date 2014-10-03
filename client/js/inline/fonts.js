@@ -9,8 +9,7 @@
   function load () {
     if (localStorage && localStorage[lsdata] && localStorage[lsurl] == url) {
       use(localStorage[lsdata]);
-    }
-    if (localStorage && XMLHttpRequest) {
+    } else if (localStorage && XMLHttpRequest) {
       request();
     } else if (document.cookie.indexOf(url) == 0) {
       tag();
