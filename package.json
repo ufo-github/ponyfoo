@@ -36,7 +36,7 @@
     "cheerio": "^0.17.0",
     "compression": "^1.0.11",
     "connect-flash": "^0.1.1",
-    "connect-mongo": "^0.4.1",
+    "connect-mongostore": "^0.1.4",
     "contra": "^1.6.10",
     "cookie-parser": "^1.1.0",
     "dominus": "^2.1.1",
