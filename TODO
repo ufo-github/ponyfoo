@@ -2,6 +2,8 @@ LAUNCH
 
 - flash intro page
 
+- fix cluster reload (attempt to repro locally)
+
 NICETIES
 
 - (author) email composer with subject, intro, and markdown body
