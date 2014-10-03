@@ -2,7 +2,7 @@ LAUNCH
 
 - flash intro page
 
-- figure out why penthouse kind of fails to learn about the sidebar!
+- figure out why penthouse kind of fails to learn about the sidebar! (probably calc is unsupported by phantomjs)
 - why is twitter "blocking rendering path"?
 
 NICETIES
