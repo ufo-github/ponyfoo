@@ -2,14 +2,14 @@ LAUNCH
 
 - flash intro page
 
-- why is twitter "blocking rendering path"?
-
 NICETIES
 
-- drop calc() uses from everywhere
 - (author) email composer with subject, intro, and markdown body
 
 NTH
 
 - ec2 scripts should take variables from a config json file instead of hardcoded in-script
 - (author) author compose form graceful degradation
+
+- support older browsers
+  - drop calc() uses from everywhere
