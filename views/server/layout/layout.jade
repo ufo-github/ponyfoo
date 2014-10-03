@@ -41,10 +41,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     if model.meta.images.length
       meta(name='twitter:image:src', content=model.meta.images[0])
 
-    //- asynchronous font loader
-    script.
-      ~function(e,t,n){function o(){n&&n[r]&&n[l]==f?c(n[r]):n&&XMLHttpRequest?a():0==t.cookie.indexOf(f)?s():i(e,'load',s)}function a(){var e=new XMLHttpRequest;e.open('GET',f,!0),i(e,'load',function(){4==e.readyState&&(c(e.responseText),n[r]=e.responseText,n[l]=f)}),e.send()}function s(){var e=t.createElement('link');e.href=f,e.rel='stylesheet',e.type='text/css',d.appendChild(e),t.cookie=f}function c(e){var n=t.createElement('style');n.innerHTML=e,d.appendChild(n)}function i(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent('on'+t,n):e['on'+t]=n}var d=t.getElementsByTagName('head')[0],r='fonts',l=r+'_url',f='/css/fonts.css';o()}(window,document,localStorage);
-
+    script!=fontLoader
     noscript
       link(rel='stylesheet', type='text/css', href='/css/fonts.css')
 
@@ -68,13 +65,8 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     script(type='text/x-taunus', data-taunus='model')=JSON.stringify(model)
 
+    script!=styleLoader
     noscript
       link(rel='stylesheet', type='text/css', href='/css/all.css')
 
-    //- deferred style loader
-    script.
-      ~function(d,s,r){s=d.createElement('link');r=d.getElementsByTagName('head')[0];s.rel='stylesheet';s.href='/css/all.css';s.media='only x';r.appendChild(s);setTimeout(function(){s.media='all'})}(document)
-
-    //- deferred javascript loader
-    script.
-      ~function(w,m,e){function d(){e=m.createElement('script');e.src='/js/all.js';m.body.appendChild(e)}if(w.addEventListener)w.addEventListener('load',d,!1);else if(w.attachEvent)w.attachEvent('onload',d);else w.onload=d}(window,document)
+    script!=javasriptLoader

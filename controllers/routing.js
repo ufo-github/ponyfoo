@@ -23,7 +23,7 @@ var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 var redirects = require('./redirects');
-var getDefaultModel = require('./getDefaultModel');
+var getDefaultViewModel = require('./getDefaultViewModel');
 var layout = require('../.bin/views/server/layout/layout');
 
 module.exports = function (app) {
@@ -60,7 +60,7 @@ module.exports = function (app) {
 
   taunus.mount(app, routes, {
     layout: layout,
-    getDefaultModel: getDefaultModel
+    getDefaultViewModel: getDefaultViewModel
   });
   app.use(errors.handler);
 };
