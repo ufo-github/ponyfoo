@@ -2,11 +2,11 @@ LAUNCH
 
 - flash intro page
 
-- figure out why penthouse kind of fails to learn about the sidebar! (probably calc is unsupported by phantomjs)
 - why is twitter "blocking rendering path"?
 
 NICETIES
 
+- drop calc() uses from everywhere
 - (author) email composer with subject, intro, and markdown body
 
 NTH
