@@ -1,7 +1,7 @@
 'use strict';
 
+var fs = require('fs');
 var contra = require('contra');
-var uglify = require('uglify-js');
 var pkg = require('../package.json');
 var env = require('../lib/env');
 var name = env('NODE_ENV');
@@ -9,25 +9,20 @@ var authority = env('AUTHORITY');
 var authorEmail = env('AUTHOR_EMAIL');
 var bioService = require('../services/bio');
 
-function min (file, next) {
-  next(null, uglify.minify(file).code);
+function read (file) {
+  return function (next) {
+    fs.readFile(file, { encoding: 'utf8' }, next);
+  };
 }
 
 function getDefaultViewModel (done) {
-  console.log('getting');
   contra.concurrent({
     bioHtml: function (next) {
       bioService.getHtml(authorEmail, next);
     },
-    fontLoader: function (next) {
-      min('client/js/inline/fonts.js', next);
-    },
-    javascriptLoader: function (next) {
-      min('client/js/inline/javascript.js', next);
-    },
-    styleLoader: function (next) {
-      min('client/js/inline/styles.js', next);
-    }
+    fontLoader: read('.bin/inline/fonts.js'),
+    javascriptLoader: read('.bin/inline/javascript.js'),
+    styleLoader: read('.bin/inline/styles.js')
   }, forward);
 
   function forward (err, data) {

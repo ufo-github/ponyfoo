@@ -19,7 +19,12 @@ stylus client/css/fonts/fonts.styl -o $DIST/css --include-css --compress
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
-browserify client/js/main.js --basedir client/js | uglifyjs > $DIST/js/all.js
+browserify client/js/main.js --basedir client/js | uglifyjs -m -c > $DIST/js/all.js
+
+# compile inlined scripts
+uglifyjs .bin/inline/fonts.js -m -c -o .bin/inline/fonts.js
+uglifyjs .bin/inline/javascript.js -m -c -o .bin/inline/javascript.js
+uglifyjs .bin/inline/styles.js -m -c -o .bin/inline/styles.js
 
 # critical css inlining. many slash, very escape.
 LOGGING_LEVEL=info PORT=$PORT node app &
@@ -39,4 +44,4 @@ rm $CRITICAL_CSS
 
 # asset hashing
 reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
-reaver $DIST/{css,js}/* --manifest | scourge .bin/views/server --base-path $DIST --domain $DOMAIN
+reaver $DIST/{css,js}/* --manifest | scourge .bin/{inline,views/server} --base-path $DIST --domain $DOMAIN
