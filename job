@@ -3,3 +3,4 @@
 'use strict';
 
 // article scheduler job...
+require('fs').writeFile(__dirname + '/cron_' + Date.now(), '');

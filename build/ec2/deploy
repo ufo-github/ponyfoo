@@ -77,8 +77,9 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
   cluster_start_or_reload
 
   # cron job every 10 minutes
-  chmod +x $APP_LIVE/cron
-  (crontab -l ; echo "*/10 * * * * $APP_LIVE/cron") | sort - | uniq - | crontab -
+  # chmod +x $APP_LIVE/job
+  # (crontab -l ; echo "*/10 * * * * $APP_LIVE/job") | sort - | uniq - | crontab -
+
 EOF_DEPLOY
 
 echo "Deployed v$VERSION to $ENV"
