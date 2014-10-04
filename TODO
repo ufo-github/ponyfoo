@@ -2,7 +2,7 @@ LAUNCH
 
 - flash intro page
 
-- fix cluster reload (attempt to repro locally)
+- test cluster reload fix
 
 NICETIES
 

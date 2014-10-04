@@ -1,0 +1,14 @@
+MANPATH=/Users/nico/.nvm/v0.10.26/share/man:/usr/share/man:/usr/local/share/man:/Library/Developer/CommandLineTools/usr/share/man
+SHELL=/bin/sh
+NVM_PATH=/Users/nico/.nvm/v0.10.26/lib/node
+NVM_DIR=/Users/nico/.nvm
+USER=nico
+PATH=/Users/nico/.nvm/v0.10.26/bin:/usr/bin:/bin
+NVM_NODEJS_ORG_MIRROR=http://nodejs.org/dist
+PWD=/Users/nico
+NODE_PATH=/Users/nico/.nvm/v0.10.26/lib/node_modules:
+SHLVL=1
+HOME=/Users/nico
+LOGNAME=nico
+NVM_BIN=/Users/nico/.nvm/v0.10.26/bin
+_=/usr/bin/env
