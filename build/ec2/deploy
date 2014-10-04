@@ -75,6 +75,10 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
   npm --prefix $APP_LATEST install --production
   sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
   cluster_start_or_reload
+
+  # cron job every 10 minutes
+  chmod +x $APP_LIVE/cron
+  (crontab -l ; echo "*/10 * * * * $APP_LIVE/cron") | sort - | uniq - | crontab -
 EOF_DEPLOY
 
 echo "Deployed v$VERSION to $ENV"
