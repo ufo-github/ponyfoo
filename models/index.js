@@ -10,15 +10,22 @@ function load (pattern) {
   if (index !== -1) {
     modules.splice(index, 1);
   }
-  return modules.map(unwrap);
+  return modules.map(unwrap).reduce(keys, {});
+
+  function keys (accumulator, model, i) {
+    var name = path.basename(modules[i], '.js');
+    accumulator[name] = model;
+    return accumulator;
+  }
 }
 
 function unwrap (file) {
-  winston.debug('Loading %s model', file.replace(/\.js$/, ''));
+  winston.debug('Loading %s model', path.basename(file, '.js'));
   return require(path.join(__dirname, file));
 }
 
 module.exports = function () {
-  load('*.js');
+  var models = load('*.js');
   load('hooks/*.js');
+  return models;
 };

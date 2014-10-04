@@ -4,3 +4,39 @@
 
 // article scheduler job...
 require('fs').writeFile(__dirname + '/cron_' + Date.now(), '');
+
+var contra = require('contra');
+var winston = require('winston');
+var models = require('./models');
+var pkg = require('./package.json');
+var logging = require('./lib/logging');
+var db = require('./lib/db');
+var m;
+
+logging.configure();
+db(operational);
+
+function operational () {
+  winston.info('Worker %s executing job@%s', process.pid, pkg.version);
+  m = models();
+  m.Article.find({ status: 'publish' }, found);
+}
+
+function found (err, articles) {
+  if (err || !articles || articles.length === 0) {
+    done(err); return;
+  }
+  contra.each(articles, 2, process, done);
+}
+
+function process (article, next) {
+  // ...
+  next();
+}
+
+function done (err) {
+  if (err) {
+    winston.error('Cron job failed!', err.stack || err);
+  }
+  process.exit(err ? 1 : 0);
+}

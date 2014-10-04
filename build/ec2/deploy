@@ -78,7 +78,7 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
 
   # cron job every 10 minutes
   chmod +x $APP_LIVE/job
-  (crontab -l ; echo "*/10 * * * * . \$HOME/.nvm/nvm.sh; ~/nico/git/ponyfoo/job") | sort - | uniq - | crontab -
+  (crontab -l ; echo "*/10 * * * * . \$HOME/.nvm/nvm.sh; $APP_LIVE/job") | sort - | uniq - | crontab -
 
 EOF_DEPLOY
 
