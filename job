@@ -30,7 +30,7 @@ function found (err, articles) {
 }
 
 function single (article, next) {
-  // ...
+  // should be published? publish.. campaign, etc!
   next();
 }
 
