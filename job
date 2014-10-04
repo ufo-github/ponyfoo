@@ -26,10 +26,10 @@ function found (err, articles) {
   if (err || !articles || articles.length === 0) {
     done(err); return;
   }
-  contra.each(articles, 2, process, done);
+  contra.each(articles, 2, single, done);
 }
 
-function process (article, next) {
+function single (article, next) {
   // ...
   next();
 }
