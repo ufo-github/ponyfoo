@@ -2,9 +2,8 @@
 
 var path = require('path');
 var pkg = manifest();
-var app = path.resolve('../..', pkg.version, 'app.js');
+var app = path.resolve('..', pkg.version, 'app.js');
 
-console.log('Worker %s executing app@%s', process.pid, pkg.version);
 run();
 
 function manifest () {

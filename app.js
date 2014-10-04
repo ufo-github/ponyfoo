@@ -6,6 +6,7 @@ var express = require('express');
 var moment = require('moment');
 var winston = require('winston');
 var models = require('./models');
+var pkg = require('./package.json');
 var logging = require('./lib/logging');
 var env = require('./lib/env');
 var db = require('./lib/db');
@@ -27,6 +28,7 @@ app.locals.settings['x-powered-by'] = false;
 db(operational);
 
 function operational () {
+  winston.info('Worker %s executing app@%s', process.pid, pkg.version);
   models();
   middleware(app);
   development.statics(app);
