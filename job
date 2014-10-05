@@ -10,6 +10,7 @@ var logging = require('./lib/logging');
 var db = require('./lib/db');
 var articleService = require('./services/article');
 var articlePublishService = require('./services/articlePublish');
+var p = 0;
 var m;
 
 logging.configure();
@@ -42,7 +43,10 @@ function single (article, next) {
       }
 
       function saved (err) {
-        articleService.campaign(article);
+        if (!err) {
+          p++;
+          articleService.campaign(article);
+        }
         next(err);
       }
     }
@@ -53,6 +57,6 @@ function done (err) {
   if (err) {
     winston.error('Cron job failed!', err.stack || err);
   }
-  winston.info('Cron job completed.');
+  winston.info('Published %s articles.', p);
   process.exit(err ? 1 : 0);
 }

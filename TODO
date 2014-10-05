@@ -6,6 +6,7 @@ NICETIES
 
 - (author) email composer with subject, intro, and markdown body
 - enable twitter, emails, etc.
+- fix cache invalidation! O_o
 
 
 NTH
