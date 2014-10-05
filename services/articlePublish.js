@@ -1,7 +1,7 @@
 'use strict';
 
 var contra = require('contra');
-var Article = require('../../../../models/Article');
+var Article = require('../models/Article');
 
 function publish (model, done) {
   if (model.status !== 'publish' || (model.publication && model.publication < Date.now())) {
@@ -39,4 +39,6 @@ function publish (model, done) {
   }
 }
 
-module.exports = publish;
+module.exports = {
+  publish: publish
+};

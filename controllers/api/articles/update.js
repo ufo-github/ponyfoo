@@ -3,9 +3,9 @@
 var contra = require('contra');
 var Article = require('../../../models/Article');
 var articleService = require('../../../services/article');
+var articlePublishService = require('../../../services/articlePublish');
 var respond = require('../lib/respond');
 var validate = require('./lib/validate');
-var publish = require('./lib/publish');
 
 module.exports = function (req, res, next) {
   var body = req.body;
@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
 
   contra.waterfall([
     function statusUpdate (next) {
-      publish(model, next);
+      articlePublishService.publish(model, next);
     },
     function lookup (published, next) {
       broadcast = published;
