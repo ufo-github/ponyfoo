@@ -53,5 +53,6 @@ function done (err) {
   if (err) {
     winston.error('Cron job failed!', err.stack || err);
   }
+  winston.info('Cron job completed.');
   process.exit(err ? 1 : 0);
 }
