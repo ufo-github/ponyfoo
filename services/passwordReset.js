@@ -4,7 +4,6 @@ var contra = require('contra');
 var moment = require('moment');
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
-var env = require('../lib/env');
 var emailService = require('./email');
 var userService = require('./user');
 var PasswordResetToken = require('../models/PasswordResetToken');
@@ -22,7 +21,7 @@ function createToken (user, done) {
 }
 
 function getLink (token) {
-  return env('AUTHORITY') + '/user/password-reset/' + token._id;
+  return '/user/password-reset/' + token._id;
 }
 
 function getExpiration (token) {

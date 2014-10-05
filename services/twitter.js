@@ -18,7 +18,7 @@ function tweet (status, done) {
 }
 
 function fake (status, done) {
-  winston.debug(status);
+  winston.info('Tweet: ' + status);
   (done || noop)();
 }
 

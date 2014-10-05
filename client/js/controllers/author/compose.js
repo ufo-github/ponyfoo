@@ -36,7 +36,6 @@ module.exports = function (viewModel, route) {
     publish: $('#ac-publish-radio')
   };
   var boundSlug = true;
-  var initialDate = moment().weekday(7);
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
   var ponies = texts.map(convert);
 
@@ -150,7 +149,6 @@ module.exports = function (viewModel, route) {
 
       if ('publication' in data) {
         schedule.value(true);
-        initialDate = moment(new Date(data.publication));
       }
     }
 
@@ -173,7 +171,7 @@ module.exports = function (viewModel, route) {
     };
     var scheduled = schedule.value();
     if (scheduled && !published) {
-      data.publication = moment(scheduled, 'DD-MM-YYYY HH:mm').format();
+      data.publication = moment(publication.value(), 'DD-MM-YYYY HH:mm').format();
     }
     return data;
   }

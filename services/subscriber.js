@@ -47,7 +47,7 @@ function confirmation (subscriber, done) {
     to: subscriber.email,
     subject: 'Pony Foo Subscription Invitation!',
     intro: 'Would you like to subscribe to Pony Foo?',
-    confirm: util.format('%s/api/subscribers/%s/confirm', authority, hash),
+    confirm: util.format('/api/subscribers/%s/confirm', hash),
     mandrill: {
       merge: {
         locals: [locals(subscriber)]

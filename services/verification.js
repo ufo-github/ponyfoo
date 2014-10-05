@@ -3,7 +3,6 @@
 var contra = require('contra');
 var moment = require('moment');
 var mongoose = require('mongoose');
-var env = require('../lib/env');
 var emailService = require('./email');
 var userService = require('./user');
 var UnverifiedUser = require('../models/UnverifiedUser');
@@ -21,7 +20,7 @@ function createToken (user, done) {
 }
 
 function getLink (token) {
-  return env('AUTHORITY') + '/account/verify-email/' + token._id;
+  return '/account/verify-email/' + token._id;
 }
 
 function getExpiration (token) {
