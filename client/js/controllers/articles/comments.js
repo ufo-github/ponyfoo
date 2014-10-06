@@ -112,7 +112,6 @@ module.exports = function (viewModel) {
             id: data._id
           }]
         };
-        console.log(model);
         template = 'articles/comment-thread';
         target = comments.find('.mm-footer');
       }

@@ -4,7 +4,7 @@ var contra = require('contra');
 var Article = require('../models/Article');
 
 function publish (model, done) {
-  if (model.status !== 'publish' || (model.publication && model.publication > Date.now())) {
+  if (model.status !== 'publish' || (model.publication && model.publication >= Date.now())) {
     done(null, false); return;
   }
 

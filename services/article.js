@@ -37,6 +37,9 @@ function find (query, options, done) {
 }
 
 function campaign (article, done) {
+  if (done === void 0) {
+    done = noop;
+  }
   contra.concurrent([
     contra.curry(email, article),
     contra.curry(tweet, article)
@@ -44,12 +47,9 @@ function campaign (article, done) {
 }
 
 function email (article, done) {
-  if (done === void 0) {
-    done = noop;
-  }
   htmlService.absolutize(article.introductionHtml, send);
 
-  function send (err, data) {
+  function send (err, html) {
     if (err) {
       done(err); return;
     }
@@ -60,11 +60,10 @@ function email (article, done) {
         title: article.title,
         permalink: '/articles/' + article.slug,
         tags: article.tags,
-        introductionHtml: data.html
+        introductionHtml: html
       }
     };
-    subscriberService.broadcast('article-published', model);
-    done();
+    subscriberService.broadcast('article-published', model, done);
   }
 }
 
@@ -83,7 +82,6 @@ function tweet (article, done) {
   var links = util.format('%s/articles/%s #%s', authority, article.slug, tag);
   var status = util.format(fmt, article.title, links);
   twitterService.tweet(status, done);
-  done();
 }
 
 function toJSON (source) {
