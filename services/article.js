@@ -115,7 +115,6 @@ function toJSON (source) {
   }
 
   delete article.__v;
-  delete article.status;
   delete article.sign;
   delete article.introduction;
   delete article.body;

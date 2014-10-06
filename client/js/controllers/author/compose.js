@@ -48,9 +48,7 @@ module.exports = function (viewModel, route) {
   status.on('change', updatePublication);
   schedule.on('change', updatePublication);
 
-  if (published) {
-    deserialize(article);
-  }
+  deserialize(published && article);
 
   function convert (text) {
     return convertToPonyEditor(text, preview);
