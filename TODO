@@ -4,6 +4,12 @@ LAUNCH
 
 - enable twitter, emails, etc.
 
+MOBILE
+
+- / reloads forever
+- buttons don't work
+- fonts don't load
+
 NICETIES
 
 - (author) email composer with subject, intro, and markdown body
