@@ -12,6 +12,7 @@ var fulltextSearch = require('./fulltextSearch');
 var fulltext = fulltextSearch();
 var emitter = contra.emitter();
 var searchLimit = 6;
+var unsafeTerms = /[^\w]+/ig;
 
 function similar (article, done) {
   rebuildOnce(built);
@@ -30,7 +31,12 @@ function similar (article, done) {
   }
 }
 
-function query (terms, tags, done) {
+function sanitizeTerm (term) {
+  return term.replace(unsafeTerms, '');
+}
+
+function query (input, tags, done) {
+  var terms = input.map(sanitizeTerm);
   if (done === void 0) {
     done = tags; tags = [];
   }
@@ -64,7 +70,8 @@ function query (terms, tags, done) {
 
   function findByTextMatch (next) {
     var q = tagged({ status: 'published' });
-    var alternatives = new RegExp(terms.join('|'), 'i');
+    var pattern = util.format('\b(%s)\b', terms.join('|'));
+    var alternatives = new RegExp(pattern, 'i');
     var cases = [{
       introduction: alternatives
     }, {
