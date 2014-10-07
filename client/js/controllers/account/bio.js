@@ -13,7 +13,7 @@ module.exports = function (viewModel, route) {
 
   convertToPonyEditor(editor[0], preview);
 
-  saveButton.on('click', save);
+  saveButton.on('click touch', save);
 
   function save () {
     var md = editor.value();

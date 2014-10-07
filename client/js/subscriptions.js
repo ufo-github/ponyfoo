@@ -8,7 +8,7 @@ var input = $('.ss-input');
 var button = $('.ss-button');
 var ajax = measly.layer({ context: container });
 
-button.on('click', search);
+button.on('click touch', search);
 
 function search (e) {
   e.preventDefault();

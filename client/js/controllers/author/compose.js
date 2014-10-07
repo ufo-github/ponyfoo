@@ -43,8 +43,8 @@ module.exports = function (viewModel, route) {
   tags.on('keypress keydown paste', raf.bind(null, typingTags));
   title.on('keypress keydown paste', raf.bind(null, typingTitle));
   slug.on('keypress keydown paste', typingSlug);
-  discardButton.on('click', discard);
-  saveButton.on('click', save);
+  discardButton.on('click touch', discard);
+  saveButton.on('click touch', save);
   status.on('change', updatePublication);
   schedule.on('change', updatePublication);
 
