@@ -1,7 +1,7 @@
 aside.ly-aside
   form#search.ly-section.sr-container(action='/articles/search', method='get', name='search')
     input.de-input.sr-input(placeholder='e.g JavaScript', name='terms')
-    span(aria-label='Pro Tip: use "[js]" to search for article tags!')
+    span.de-submit(aria-label='Pro Tip: use "[js]" to search for article tags!')
       input.de-button.sr-button.uv-button(type='submit', value='Search')
 
   form.ly-section.ss-container(action='/api/subscribers', method='post', name='subscribe')
@@ -9,7 +9,7 @@ aside.ly-aside
     div.ss-label One-click unsubscribe, anytime.
 
     input.de-input.ss-input(placeholder='you@provider.io', name='email')
-    span(aria-label='As easy as clicking this button and confirming via email!')
+    span.de-submit(aria-label='As easy as clicking this button and confirming via email!')
       input.de-button.ss-button.uv-button(type='submit', value='Subscribe')
 
   section.ly-section.de-bio.md-markdown!=model.bioHtml

@@ -72,7 +72,7 @@
     "request": "^2.42.0",
     "rss": "^0.3.2",
     "sitemap": "^0.7.4",
-    "taunus": "^1.6.5",
+    "taunus": "^1.6.6",
     "transports": "^1.0.0",
     "twit": "^1.1.18",
     "ultramarked": "^1.5.3",
