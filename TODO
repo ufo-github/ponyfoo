@@ -13,7 +13,7 @@ NICETIES
 
 - (author) email composer with subject, intro, and markdown body
 - (perf) optimize webfont loading on first load
-
+- (bug) fix dominus bug on .off (events removehard)
 
 NTH
 
