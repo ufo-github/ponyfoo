@@ -6,8 +6,8 @@ module.exports = function (viewModel) {
   var container = $('.ar-container');
   var compute = $('.ar-compute');
 
-  container.on('click touch', '.ic-remove', remove);
-  compute.on('click touch', computeRelated);
+  container.on('click', '.ic-remove', remove);
+  compute.on('click', computeRelated);
 
   function remove (e) {
     var target = $(e.target);

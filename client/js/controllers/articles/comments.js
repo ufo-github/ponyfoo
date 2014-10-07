@@ -27,10 +27,10 @@ module.exports = function (viewModel) {
   $('.mm-thread-reply').removeClass('uv-hidden');
 
   composer.on('keypress keydown keyup paste', serializeSlowly);
-  send.on('click touch', comment);
-  comments.on('click touch', '.mm-thread-reply', attach);
-  comments.on('click touch', '.mm-remove', remove);
-  cancelReply.on('click touch', detach);
+  send.on('click', comment);
+  comments.on('click', '.mm-thread-reply', attach);
+  comments.on('click', '.mm-remove', remove);
+  cancelReply.on('click', detach);
   deserialize();
 
   function deserialize () {

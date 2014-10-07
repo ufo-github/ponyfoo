@@ -6,7 +6,7 @@ var input = $('.sr-input');
 var button = $('.sr-button');
 var searchUrlService = require('../../services/searchUrl');
 
-button.on('click touch', search);
+button.on('click', search);
 
 function search (e) {
   e.preventDefault();
