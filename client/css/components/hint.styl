@@ -1,7 +1,15 @@
 @import 'node_modules/hint/src/hint'
 
-[data-hint]:not(.hint-before):after,
-[aria-label]:not(.hint-before):after,
-[data-hint].hint-before:before,
-[aria-label].hint-before:before
+[aria-label]:not(.hint-before):hover:after,
+[data-hint]:not(.hint-before):hover:after,
+[aria-label].hint-before:hover:before,
+[data-hint].hint-before:hover:before
+  display none
   font-family f-core
+
+@media only screen and (min-width: 768px)
+  [aria-label]:not(.hint-before):hover:after,
+  [data-hint]:not(.hint-before):hover:after,
+  [aria-label].hint-before:hover:before,
+  [data-hint].hint-before:hover:before
+    display block

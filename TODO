@@ -6,9 +6,9 @@ LAUNCH
 
 MOBILE
 
-- / reloads forever
-- buttons don't work
-- fonts don't load
+- / reloads forever (maybe taunus being taunus)
+- buttons don't work (add touch events?, what about forms?)
+- fonts don't load (just use google's fontloader)
 
 NICETIES
 
