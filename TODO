@@ -12,6 +12,7 @@ MOBILE
 NICETIES
 
 - (author) email composer with subject, intro, and markdown body
+- (perf) optimize webfont loading on first load
 
 
 NTH

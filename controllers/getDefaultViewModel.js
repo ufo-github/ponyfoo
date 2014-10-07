@@ -20,7 +20,6 @@ function getDefaultViewModel (done) {
     bioHtml: function (next) {
       bioService.getHtml(authorEmail, next);
     },
-    fontLoader: read('.bin/inline/fonts.js'),
     javascriptLoader: read('.bin/inline/javascript.js'),
     styleLoader: read('.bin/inline/styles.js')
   }, forward);

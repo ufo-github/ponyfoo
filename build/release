@@ -10,19 +10,16 @@ npm dedupe
 DIST=".bin/public"
 DOMAIN="http://ponyfoo.com"
 ALL_CSS="$DIST/css/all.css"
-FONT_CSS="$DIST/css/fonts.css"
 CRITICAL_CSS=".bin/temp/critical.css"
 
 # compile assets, routes
 spritesmith
-stylus client/css/fonts/fonts.styl -o $DIST/css --include-css --compress
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 browserify client/js/main.js --basedir client/js | uglifyjs -m -c > $DIST/js/all.js
 
 # compile inlined scripts
-uglifyjs .bin/inline/fonts.js -m -c -o .bin/inline/fonts.js
 uglifyjs .bin/inline/javascript.js -m -c -o .bin/inline/javascript.js
 uglifyjs .bin/inline/styles.js -m -c -o .bin/inline/styles.js
 
@@ -39,7 +36,6 @@ sed -i -e "s#<style></style>#<style>$CRITICAL_ESCAPED</style>#" $LAYOUT
 CSS_DIFF=$(cave $ALL_CSS --css $CRITICAL_CSS)
 echo "$CSS_DIFF" > $ALL_CSS
 cleancss $ALL_CSS -o $ALL_CSS --s0
-cleancss $FONT_CSS -o $FONT_CSS --s0
 rm $CRITICAL_CSS
 
 # asset hashing
