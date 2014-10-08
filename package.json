@@ -39,7 +39,7 @@
     "connect-mongostore": "^0.1.4",
     "contra": "^1.6.10",
     "cookie-parser": "^1.1.0",
-    "dominus": "^2.1.4",
+    "dominus": "^2.2.1",
     "estimate": "^1.0.0",
     "express": "^4.1.2",
     "express-session": "^1.7.6",

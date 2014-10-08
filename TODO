@@ -7,7 +7,7 @@ LAUNCH
 MOBILE
 
 - / reloads forever (maybe taunus being taunus)
-- buttons don't work (add touch events?, what about forms?)
+- poser polyfill array in iframe
 
 NICETIES
 
