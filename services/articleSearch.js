@@ -174,6 +174,14 @@ function refreshRelated (done) {
   }
 }
 
+function bracket (tag) {
+  return util.format('[%s]', tag);
+}
+
+function format (terms, tags) {
+  return util.format('"%s"', tags.map(bracket).concat(terms).join(' '));
+}
+
 module.exports = {
   similar: similar,
   query: query,
@@ -181,5 +189,6 @@ module.exports = {
   addRelated: addRelated,
   addRelatedThenSave: addRelatedThenSave,
   refreshRelated: refreshRelated,
-  rebuild: rebuildOnce
+  rebuild: rebuildOnce,
+  format: format
 };

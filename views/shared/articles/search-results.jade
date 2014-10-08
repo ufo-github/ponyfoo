@@ -1,9 +1,14 @@
 section.ly-section.sr-top
+  h1.sr-top-title
+    span='Your query '
+    span=query
+    if fail
+      span=' yielded no results!'
+    else
+      span=' yielded some results!'
+
   if fail
-    h1.sr-top-title Your search yielded no results!
     h2.sr-top-legend ...but we took the opportunity to pull together a few articles very carefully chosen at random!
-  else
-    h1.sr-top-title Your search yielded some results!
 
 if articles
   each article in articles

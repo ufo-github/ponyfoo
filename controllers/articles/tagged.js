@@ -2,6 +2,7 @@
 
 var util = require('util');
 var articleService = require('../../services/article');
+var articleSearchService = require('../../services/articleSearch');
 var listOrSingle = require('./lib/listOrSingle');
 var searchResults = require('./lib/searchResults');
 var separator = /[+/,_: ]+/ig;
@@ -22,7 +23,8 @@ module.exports = function (req, res, next) {
         canonical: '/articles/tagged/' + tags.join('+'),
         description: 'This search results page contains all of the ' + title.toLowerCase()
       },
-      action: 'articles/search-results'
+      action: 'articles/search-results',
+      query: articleSearchService.format([], tags)
     }
   };
 

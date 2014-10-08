@@ -2,7 +2,7 @@
 
 var markdownFatService = require('../../services/markdownFat');
 var cryptoService = require('../../services/crypto');
-var articleSearch = require('../../services/articleSearch');
+var articleSearchService = require('../../services/articleSearch');
 var feedService = require('../../services/feed');
 var sitemapService = require('../../services/sitemap');
 var Article = require('../Article');
@@ -26,7 +26,7 @@ function beforeSave (next) {
   article.updated = Date.now();
 
   if (!bulk && oldSign !== article.sign && article.status === 'published') {
-    articleSearch.addRelated(article, next);
+    articleSearchService.addRelated(article, next);
   } else {
     next();
   }
@@ -37,7 +37,7 @@ function afterSave () {
   if (bulk) { // trust that these will be rebuilt afterwards
     return;
   }
-  articleSearch.insert(this, this._id);
+  articleSearchService.insert(this, this._id);
   feedService.rebuild();
   sitemapService.rebuild();
 }

@@ -3,7 +3,7 @@
 var util = require('util');
 var listOrSingle = require('./lib/listOrSingle');
 var searchResults = require('./lib/searchResults');
-var articleSearch = require('../../services/articleSearch');
+var articleSearchService = require('../../services/articleSearch');
 var tagSeparator = /[+/,_: ]+/ig;
 var termSeparator = /[+/,_: -]+/ig;
 
@@ -21,9 +21,10 @@ module.exports = function (req, res, next) {
         canonical: '/articles/search/' + terms.join('-') + '/tagged/' + tags.join('+'),
         description: 'This search results page contains all of the ' + title.toLowerCase()
       },
-      action: 'articles/search-results'
+      action: 'articles/search-results',
+      query: articleSearchService.format(terms, tags)
     }
   };
 
-  articleSearch.query(terms, tags, handle);
+  articleSearchService.query(terms, tags, handle);
 };

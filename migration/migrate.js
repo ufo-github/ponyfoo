@@ -15,7 +15,7 @@ var UnverifiedUser = require('./models/UnverifiedUser');
 var UserVerificationToken = require('./models/UserVerificationToken');
 var PasswordResetToken = require('./models/PasswordResetToken');
 var cryptoService = require('./services/crypto');
-var articleSearch = require('./services/articleSearch');
+var articleSearchService = require('./services/articleSearch');
 var markdownFatService = require('./services/markdownFat');
 var env = require('./lib/env');
 var prd = env('MIGRATION_SOURCE_URI');
@@ -77,7 +77,7 @@ function ready () {
     articles(author, function (articles) {
       contra.map.series(articles, insertArticle, function (err, articles) {
         winston.info('Rebuilding index for fun and profit!');
-        articleSearch.refreshRelated(function () {
+        articleSearchService.refreshRelated(function () {
           users(function (users) {
             subscribe(users, function (err, subscribers) {
               comments(users, function (discussions) {
