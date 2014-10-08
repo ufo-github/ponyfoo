@@ -22,3 +22,36 @@ NTH
 
 - support older browsers
   - drop calc() uses from everywhere
+
+
+
+[Error] Failed to load resource: the server responded with a status of 400 (Bad Request) (subscribers, line 0)
+[Error] TypeError: 'undefined' is not a function (evaluating 'f(r.map(d)).appendTo(i)')
+  l (all.3a94349d.js, line 1)
+  (anonymous function) (all.3a94349d.js, line 2)
+  filter
+  emit (all.3a94349d.js, line 2)
+  (anonymous function) (all.3a94349d.js, line 3)
+  forEach
+  n (all.3a94349d.js, line 3)
+  p (all.3a94349d.js, line 3)
+  (anonymous function) (all.3a94349d.js, line 6)
+  p (all.3a94349d.js, line 6)
+  n (all.3a94349d.js, line 6)
+[Error] TypeError: 'undefined' is not a function (evaluating 'r.find(".mm-thread-reply")')
+  f (all.3a94349d.js, line 1)
+  r (all.3a94349d.js, line 2)
+[Error] Failed to load resource: the server responded with a status of 400 (Bad Request) (comments, line 0)
+[Error] TypeError: 'undefined' is not a function (evaluating 'f(r.map(d)).appendTo(i)')
+  l (all.3a94349d.js, line 1)
+  (anonymous function) (all.3a94349d.js, line 2)
+  filter
+  emit (all.3a94349d.js, line 2)
+  (anonymous function) (all.3a94349d.js, line 3)
+  forEach
+  n (all.3a94349d.js, line 3)
+  p (all.3a94349d.js, line 3)
+  (anonymous function) (all.3a94349d.js, line 6)
+  p (all.3a94349d.js, line 6)
+  n (all.3a94349d.js, line 6)
+
