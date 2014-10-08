@@ -8,6 +8,7 @@ MOBILE
 
 - / reloads forever (maybe taunus being taunus)
 - poser polyfill array in iframe
+- mongoose TTL bug
 
 NICETIES
 
