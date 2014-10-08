@@ -15,6 +15,7 @@ var routing = require('./controllers/routing');
 var development = require('./lib/development');
 var feedService = require('./services/feed');
 var sitemapService = require('./services/sitemap');
+var articleSearchService = require('./services/articleSearch');
 var app = express();
 var port = env('PORT');
 
@@ -42,4 +43,5 @@ function listening () {
   development.browserSync();
   feedService.rebuild();
   sitemapService.rebuild();
+  articleSearchService.rebuild();
 }

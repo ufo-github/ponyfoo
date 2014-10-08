@@ -92,10 +92,12 @@ function insert (article, done) {
 }
 
 function rebuildOnce (done) {
+  var next = done || Function.prototype;
+
   if (fulltext.built) {
-    done();
+    next();
   } else if (emitter.rebuilding) {
-    emitter.once('rebuilt', done);
+    emitter.once('rebuilt', next);
   } else {
     emitter.rebuilding = true;
     Article.find({ status: 'published' }, fill);
@@ -103,7 +105,7 @@ function rebuildOnce (done) {
 
   function fill (err, articles) {
     if (err) {
-      done(err); emitter.rebuilding = false; return;
+      next(err); emitter.rebuilding = false; return;
     }
     fulltext.rebuild(articles.map(indexable), emitThenEnd);
   }
@@ -111,7 +113,7 @@ function rebuildOnce (done) {
   function emitThenEnd () {
     emitter.rebuilding = false;
     emitter.emit('rebuilt');
-    done();
+    next();
   }
 }
 
@@ -178,5 +180,6 @@ module.exports = {
   insert: insert,
   addRelated: addRelated,
   addRelatedThenSave: addRelatedThenSave,
-  refreshRelated: refreshRelated
+  refreshRelated: refreshRelated,
+  rebuild: rebuildOnce
 };
