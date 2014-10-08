@@ -56,10 +56,9 @@ module.exports = function (viewModel) {
   }
 
   function attach (e) {
-    console.log('attach', e);
-    var button = $(e.target);console.log(button);
-    var thread = button.parents('.mm-thread');console.log(thread);
-    var reply = thread.find('.mm-thread-reply');console.log('success');
+    var button = $(e.target);
+    var thread = button.parents('.mm-thread');
+    var reply = thread.find('.mm-thread-reply');
     var replies = $('.mm-thread-reply').but(reply);
     replies.removeClass('uv-hidden');
     reply.addClass('uv-hidden').parent().before(composer);
