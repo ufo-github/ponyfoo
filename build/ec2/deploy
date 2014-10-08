@@ -59,7 +59,7 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
     cat $APP/.pid
     if [ "\$?" == "0" ] ; then
       echo "Reloading cluster..."
-      kill -s SIGUSR2 \$(cat $APP/.pid)
+      kill -s SIGUSR2 \$(cat $APP/.pid) || (echo "Reload failed..." && rm $APP/.pid && cluster_start)
     else
       cluster_start
     fi
