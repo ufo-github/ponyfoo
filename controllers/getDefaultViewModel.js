@@ -21,7 +21,8 @@ function getDefaultViewModel (done) {
       bioService.getHtml(authorEmail, next);
     },
     javascriptLoader: read('.bin/inline/javascript.js'),
-    styleLoader: read('.bin/inline/styles.js')
+    styleLoader: read('.bin/inline/styles.js'),
+    fontLoader: read('.bin/inline/fonts.js')
   }, forward);
 
   function forward (err, data) {
@@ -51,9 +52,9 @@ function getDefaultViewModel (done) {
         },
         bioHtml: data.bioHtml
       },
-      fontLoader: data.fontLoader,
       javascriptLoader: data.javascriptLoader,
-      styleLoader: data.styleLoader
+      styleLoader: data.styleLoader,
+      fontLoader: data.fontLoader
     });
   }
 }

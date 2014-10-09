@@ -22,6 +22,7 @@ browserify client/js/main.js --basedir client/js | uglifyjs -m -c > $DIST/js/all
 # compile inlined scripts
 uglifyjs .bin/inline/javascript.js -m -c -o .bin/inline/javascript.js
 uglifyjs .bin/inline/styles.js -m -c -o .bin/inline/styles.js
+uglifyjs .bin/inline/fonts.js -m -c -o .bin/inline/fonts.js
 
 # critical css inlining. many slash, very escape.
 LOGGING_LEVEL=info PORT=$PORT node app &
