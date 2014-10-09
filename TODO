@@ -3,11 +3,9 @@ LAUNCH
 - (todo) flash intro page
 - (todo) enable twitter, emails, etc.
 
-MOBILE
-
-- (bug) / reloads forever (maybe taunus being taunus)
-
 NICETIES
+
+- (perf) optimize webfont loading on first load
 
 - (author) email composer with subject, intro, and markdown body
 - (awk) mongoose TTL bug
@@ -16,8 +14,6 @@ NTH
 
 - (support) support older browsers
   - drop calc() uses from everywhere
-
-- (perf) optimize webfont loading on first load
 
 - (nth) ec2 scripts should take variables from a config json file instead of hardcoded in-script
 - (nth author) author compose form graceful degradation
