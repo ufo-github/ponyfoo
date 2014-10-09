@@ -5,8 +5,6 @@ LAUNCH
 
 NICETIES
 
-- (perf) optimize webfont loading on first load
-
 - (author) email composer with subject, intro, and markdown body
 - (awk) mongoose TTL bug
 
