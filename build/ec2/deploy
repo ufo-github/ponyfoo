@@ -78,8 +78,8 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
   cluster_start_or_reload
 
   # cron job every 5 minutes
-  chmod +x $APP_LIVE/job
-  (crontab -l ; echo "*/5 * * * * . \$HOME/.nvm/nvm.sh; $APP_LIVE/job") | sort - | uniq - | crontab -
+  chmod +x $APP_LIVE/jobs/scheduler
+  (crontab -l ; echo "*/5 * * * * . \$HOME/.nvm/nvm.sh; $APP_LIVE/jobs/scheduler") | sort - | uniq - | crontab -
 
 EOF_DEPLOY
 
