@@ -146,7 +146,7 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   sudo chmod -R 755 $NGINX_LOG
 
   echo "stage: nvm"
-  curl https://raw.githubusercontent.com/creationix/nvm/v0.15.0/install.sh | bash
+  curl https://raw.githubusercontent.com/creationix/nvm/v0.17.2/install.sh | bash
 
   echo "stage: nginx"
   sudo apt-get install nginx -y
