@@ -12,6 +12,9 @@ module.exports = function (req, res, next) {
   }
 
   function getBio (user, next) {
+    if (user === null) {
+      next(new Error('Please log out and authenticate again!')); return;
+    }
     bioService.getMarkdown(user.email, next);
   }
 

@@ -1,23 +1,23 @@
 'use strict';
 
-require('./lib/logging').configure();
+require('../lib/logging').configure();
 
 var _ = require('lodash');
 var contra = require('contra');
 var mongoose = require('mongoose');
 var winston = require('winston');
-var db = require('./lib/db');
-var models = require('./models');
-var Article = require('./models/Article');
-var Subscriber = require('./models/Subscriber');
-var User = require('./models/User');
-var UnverifiedUser = require('./models/UnverifiedUser');
-var UserVerificationToken = require('./models/UserVerificationToken');
-var PasswordResetToken = require('./models/PasswordResetToken');
-var cryptoService = require('./services/crypto');
-var articleSearchService = require('./services/articleSearch');
-var markdownFatService = require('./services/markdownFat');
-var env = require('./lib/env');
+var db = require('../lib/db');
+var models = require('../models');
+var Article = require('../models/Article');
+var Subscriber = require('../models/Subscriber');
+var User = require('../models/User');
+var UnverifiedUser = require('../models/UnverifiedUser');
+var UserVerificationToken = require('../models/UserVerificationToken');
+var PasswordResetToken = require('../models/PasswordResetToken');
+var cryptoService = require('../services/crypto');
+var articleSearchService = require('../services/articleSearch');
+var markdownFatService = require('../services/markdownFat');
+var env = require('../lib/env');
 var prd = env('MIGRATION_SOURCE_URI');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var socket = { socketOptions: { connectTimeoutMS: 2000, keepAlive: 1 } };
@@ -30,7 +30,7 @@ env('BULK_INSERT', true);
 db(operational);
 
 function operational () {
-  winston.info('connected to local!');
+  winston.info('Connected to target database!');
   models();
 
   contra.concurrent([
@@ -50,8 +50,8 @@ function operational () {
 }
 
 function connected () {
-  winston.info('connected to production!');
-  require('./migration/models-old/fill')(production);
+  winston.info('Connected to source database!');
+  require('./models-old/fill')(production);
   ready();
 }
 
@@ -78,6 +78,8 @@ function ready () {
       contra.map.series(articles, insertArticle, function (err, articles) {
         winston.info('Rebuilding index for fun and profit!');
         articleSearchService.refreshRelated(function () {
+          env('BULK_INSERT', true); // .refreshRelated turns BULK_INSERT off
+
           users(function (users) {
             subscribe(users, function (err, subscribers) {
               comments(users, function (discussions) {
