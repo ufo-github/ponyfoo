@@ -84,23 +84,14 @@ echo $IP_ADDRESS > $KEYFILE.ip
 
 # wait on stable ssh connectivity
 ATTEMPTS="0"
-CONSECUTIVE="0"
-while [ "$CONSECUTIVE" != "3" ]
+SUCCESS="1"
+while [ "$SUCCESS" != "0" ]
 do
-  SUCCESS="1"
-  while [ "$SUCCESS" != "0" ]
-  do
-    ATTEMPTS=$[$ATTEMPTS +1]
-    echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
-    sleep 10
-    ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
-    SUCCESS=$?
-    if [ "$SUCCESS" != "0" ] ; then
-      CONSECUTIVE="0"
-    fi
-  done
-  CONSECUTIVE=$[$CONSECUTIVE +1]
-  echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS) passed ($CONSECUTIVE/3)!"
+  ATTEMPTS=$[$ATTEMPTS +1]
+  echo "$RESOURCE_ID: Establishing ssh connection... ($ATTEMPTS)"
+  sleep 10
+  ssh -ttti $KEYFILE -o ConnectTimeout=10 -o StrictHostKeyChecking=no -q $INSTANCE_USER@$PUBLIC_DNS exit
+  SUCCESS=$?
 done
 
 ### setup
