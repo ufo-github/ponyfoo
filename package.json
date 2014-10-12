@@ -22,6 +22,7 @@
     "diagnose": "sh build/diagnose",
     "launch": "sh build/ec2/launch",
     "release": "sh build/release",
+    "sync": "sh build/sync",
     "staging": "sh build/staging",
     "shutdown": "sh build/ec2/shutdown",
     "ssh": "sh build/ec2/ssh",
