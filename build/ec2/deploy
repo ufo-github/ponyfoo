@@ -2,10 +2,22 @@
 
 # locals
 ENV="staging"
+NAME="ponyfoo-$ENV"
+KEYFILE="deploy/keys/$ENV"
 EMOJI="$(emoji-random)"
+
+# instance-specific
+INSTANCE_USER=$(cat $KEYFILE.user)
+INSTANCE_ID=$(cat $KEYFILE.id)
+PUBLIC_DNS=$(cat $KEYFILE.dns)
 
 APP="~/apps/$ENV"
 APP_VERSIONS="$APP/v"
+APP_LIVE="$APP/live"
+APP_CONFIG="$APP/config"
+RSYNC="~/apps/.rsync/$ENV"
+RSYNC_MAILTUBE="$RSYNC/mailtube"
+RSYNC_REPO="$RSYNC/app/"
 
 # bump package.json
 git add .
@@ -18,6 +30,57 @@ APP_LATEST="$APP_VERSIONS/$VERSION"
 # build distribution
 # npm run $ENV
 npm run release
-npm run sync
+
+# upload modifications
+rsync \
+  -az \
+  --stats \
+  --delete \
+  --exclude-from .rsyncignore \
+  -e "ssh -i $KEYFILE -o StrictHostKeyChecking=no" \
+  . \
+  $INSTANCE_USER@$PUBLIC_DNS:$RSYNC_REPO
+
+# jump into instance
+ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_DEPLOY
+  cluster_start () {
+    echo "Initializing cluster..."
+    cp $RSYNC_MAILTUBE/upstart/app.conf $APP/$NAME.conf
+    sed -i "s#{NAME}#$NAME#g" $APP/$NAME.conf
+    sed -i "s#{USER}#$INSTANCE_USER#g" $APP/$NAME.conf
+    sed -i "s#{NODE_BIN}#\$NVM_BIN/node#g" $APP/$NAME.conf
+    sed -i "s#{APP_SCRIPT}#\$HOME/apps/$ENV/live/cluster.js#g" $APP/$NAME.conf
+    sudo cp $APP/$NAME.conf /etc/init/$NAME.conf
+    rm $APP/$NAME.conf
+    sudo start $NAME
+  }
+
+  cluster_start_or_reload () {
+    cat $APP/.pid
+    if [ "\$?" == "0" ] ; then
+      echo "Reloading cluster..."
+      kill -s SIGUSR2 \$(cat $APP/.pid) || (echo "Reload failed..." && rm $APP/.pid && cluster_start)
+    else
+      cluster_start
+    fi
+  }
+
+  rm -rf $APP_LATEST
+  cp -r $RSYNC_REPO $APP_LATEST
+  cp -r $APP_VERSIONS/\$(ls -t1 $APP_VERSIONS | head -2 | tail -1)/node_modules $APP_LATEST
+  cp $APP_LATEST/package.json $APP/package.json
+  ln -sfn $APP_LATEST $APP_LIVE
+  ln -sfn $APP_CONFIG $APP_LATEST/.env
+  find $APP_VERSIONS -mindepth 1 -maxdepth 1 | tail -n +6 | xargs rm -rf
+  npm --prefix $APP_LATEST prune
+  npm --prefix $APP_LATEST install --production
+  sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
+  cluster_start_or_reload
+
+  # cron job every 5 minutes
+  chmod +x $APP_LIVE/jobs/scheduler
+  (crontab -l ; echo "*/5 * * * * . \$HOME/.nvm/nvm.sh; $APP_LIVE/jobs/scheduler") | sort - | uniq - | crontab -
+
+EOF_DEPLOY
 
 echo "Deployed v$VERSION to $ENV"
