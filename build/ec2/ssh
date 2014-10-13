@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # locals
-ENV="staging"
+ENV="$(build/ec2/env-get)"
 KEYFILE="deploy/keys/$ENV"
 
 # instance-specific

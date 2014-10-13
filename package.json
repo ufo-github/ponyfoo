@@ -21,6 +21,8 @@
     "deploy": "build/ec2/deploy",
     "diagnose": "build/diagnose",
     "launch": "build/ec2/launch",
+    "env": "build/ec2/env",
+    "env-get": "build/ec2/env-get",
     "release": "build/release",
     "staging": "build/staging",
     "shutdown": "build/ec2/shutdown",

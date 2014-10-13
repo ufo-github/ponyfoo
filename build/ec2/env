@@ -1,0 +1,5 @@
+#!/bin/bash
+
+: ${ENV:="staging"}
+
+echo $ENV > deploy/.env
