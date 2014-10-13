@@ -3,3 +3,4 @@
 : ${ENV:="staging"}
 
 echo $ENV > deploy/.env
+echo "Target deployment environment set to: '$ENV'"
