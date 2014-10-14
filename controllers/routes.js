@@ -23,6 +23,7 @@ module.exports = [
   { route: '/account/bio', action: 'account/bio', middleware: authOnly },
   { route: '/author/compose', action: 'author/compose', middleware: authorOnly },
   { route: '/author/compose/:slug', action: 'author/compose', middleware: authorOnly },
+  { route: '/author/email', action: 'author/email', middleware: authorOnly },
   { route: '/author/review', action: 'author/review', middleware: authorOnly },
   { route: '/*', action: 'error/not-found' }
 ];

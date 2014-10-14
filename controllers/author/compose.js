@@ -1,6 +1,5 @@
 'use strict';
 
-var contra = require('contra');
 var Article = require('../../models/Article');
 
 module.exports = function (req, res, next) {
