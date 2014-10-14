@@ -80,7 +80,8 @@
     "twit": "^1.1.18",
     "ultramarked": "^1.5.3",
     "validator": "^3.12.0",
-    "winston": "^0.7.3"
+    "winston": "^0.7.3",
+    "winston-mongodb": "^0.5.2"
   },
   "devDependencies": {
     "browser-sync": "^1.3.3",
