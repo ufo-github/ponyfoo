@@ -25,6 +25,7 @@ var errors = require('../lib/errors');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
 var getNaked = require('./getNaked');
+var verifyForm = require('./verifyForm');
 var layout = require('../.bin/views/server/layout/layout');
 
 module.exports = function (app) {
@@ -40,12 +41,12 @@ module.exports = function (app) {
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
   app.post('/api/articles/compute-relationships', authorOnly, articleCompute);
 
-  app.post('/api/articles/:slug/comments', commentInsert);
   app.put('/api/articles/:slug/comments', commentInsert);
+  app.post('/api/articles/:slug/comments', verifyForm, commentInsert);
   app.delete('/api/articles/:slug/comments/:id', authorOnly, commentRemove);
 
   app.put('/api/subscribers', subscriberInsert);
-  app.post('/api/subscribers', subscriberInsert);
+  app.post('/api/subscribers', verifyForm, subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
 

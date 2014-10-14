@@ -3,12 +3,12 @@ LAUNCH
 - (todo) flash intro page
 - (todo) enable twitter, emails, etc.
 
-- fix dns issues
+- (live) fix dns issues
+- (live) fix spam issues
 
 NICETIES
 
-- (author) email composer send out!
-- (awk) mongoose TTL bug
+- (author) email composer api endpoint!
 
 NTH
 

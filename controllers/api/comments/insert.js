@@ -1,7 +1,7 @@
 'use strict';
 
+var accepts = require('accepts');
 var create = require('./lib/create');
-var accepts = require('../lib/accepts');
 var httpService = require('../../../services/http');
 
 function insert (req, res, next) {
@@ -17,8 +17,8 @@ function insert (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var accept = accepts(req, ['html', 'json']);
-    if (accept.json) {
+    var accept = accepts(req).types('html', 'json');
+    if (accept === 'json') {
       if (inserted) {
         res.status(statusCode).json(inserted);
       } else {

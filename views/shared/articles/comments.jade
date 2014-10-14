@@ -11,6 +11,7 @@ section#comments.mm-comments
 
   footer.mm-footer
     form.mc-composer.ly-section(action='/api/articles/' + article.slug + '/comments', method='post', name='comment')
+      input.uv-hidden(name='verify')
       div.mc-author
         input.mc-name(placeholder='John Doe', name='name')
         input.mc-email(placeholder='hello@johndoe.io', name='email')
