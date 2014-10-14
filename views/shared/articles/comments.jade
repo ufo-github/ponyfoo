@@ -11,11 +11,12 @@ section#comments.mm-comments
 
   footer.mm-footer
     form.mc-composer.ly-section(action='/api/articles/' + article.slug + '/comments', method='post', name='comment')
-      input.uv-verify(name='verify')
       div.mc-author
         input.mc-name(placeholder='John Doe', name='name')
         input.mc-email(placeholder='hello@johndoe.io', name='email')
         input.mc-site(placeholder='johndoe.io (optional)', name='site')
+      noscript
+        input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
       textarea.mc-content.pmk-input(name='content', placeholder='Please enter your comment here, Markdown formatting is supported.')
       article.mc-preview.md-markdown
       span(aria-label='Make your comment immediately available!')
