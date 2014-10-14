@@ -23,6 +23,7 @@ module.exports = function (req, res, next) {
 
   function saved (err, user) {
     bioService.update(user.email, bio, bioHtml);
+    taunus.rebuildDefaultViewModel();
     res.json({});
   }
 };

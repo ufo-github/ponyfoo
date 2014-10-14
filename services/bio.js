@@ -27,12 +27,12 @@ function updateInternal (email, field, value) {
   cache[email][field] = value;
 }
 
-function getHtml (email, done) {
-  get(email, 'bioHtml', done);
-}
-
 function getMarkdown (email, done) {
   get(email, 'bio', done);
+}
+
+function getHtml (email, done) {
+  get(email, 'bioHtml', done);
 }
 
 function update (email, md, html) {
@@ -42,6 +42,6 @@ function update (email, md, html) {
 
 module.exports = {
   update: update,
-  getHtml: getHtml,
-  getMarkdown: getMarkdown
+  getMarkdown: getMarkdown,
+  getHtml: getHtml
 };
