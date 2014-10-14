@@ -11,7 +11,7 @@ INSTANCE_USER=$(cat $KEYFILE.user)
 PUBLIC_DNS=$(cat $KEYFILE.dns)
 
 # stack-specific
-SERVER_NAME="$PUBLIC_DNS" # "ponyfoo.com"
+SERVER_NAME="ponyfoo.com"
 NGINX_WORKERS="4"
 
 APP="~/apps/$ENV"
