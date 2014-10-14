@@ -7,7 +7,7 @@ p
 
 p='This link will expire ' + validation.expires + '.'
 p(style='padding-top: 15px;')
-  a(href!=domain.authority + validation.link)=validation.link
+  a(href!=domain.authority + validation.link)!=domain.authority + validation.link
 
 p(style='padding-top: 25px;') No further action is required to ignore this request
 p Email verification is in place to mitigate the effect of spam bots using fake email addresses. We apologize for the inconvenience.
