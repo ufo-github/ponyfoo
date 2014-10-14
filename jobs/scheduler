@@ -57,7 +57,7 @@ function single (article, next) {
 
       function promoted (err) {
         if (err) {
-          winston.err('Article campaign failed for "%s".\n%s', article.title, err.stack || err);
+          winston.error('Article campaign failed for "%s".\n%s', article.title, err.stack || err);
         }
         next(err);
       }
