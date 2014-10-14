@@ -12,4 +12,4 @@ NTH
 - (support) support older browsers
   - drop calc() uses from everywhere
 
-- (nth author) author compose form graceful degradation
+- (nth author) author compose,bio,email form graceful degradation
