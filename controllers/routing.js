@@ -24,13 +24,10 @@ var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
-var getNaked = require('./getNaked');
 var verifyForm = require('./verifyForm');
 var layout = require('../.bin/views/server/layout/layout');
 
 module.exports = function (app) {
-  app.get('/*', getNaked);
-
   app.get('/articles/feed', articleFeed);
   app.get('/sitemap.xml', sitemap);
 
