@@ -19,6 +19,6 @@ article.ly-section
             td
               include ../partials/tags
             td(class='ar-status ar-status-' + article.status, aria-label=article._.conditionLabel)=article._.condition
-            td
+            td.ar-buttons
               a.ic-icon.ic-edit(href='/author/compose/' + article.slug, aria-label='Edit')
               a.ic-icon.ic-remove(aria-label='Remove', data-slug=article.slug)
