@@ -7,6 +7,7 @@ var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
 var markdownImageUpload = require('./api/markdown/images');
+var authorEmail = require('./api/author/email');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
@@ -46,6 +47,8 @@ module.exports = function (app) {
   app.post('/api/subscribers', verifyForm, subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
+
+  app.post('/api/email', authorOnly, authorEmail);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
   app.all('/api/*', apiErrorNotFound);

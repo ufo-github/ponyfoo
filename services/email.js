@@ -47,7 +47,7 @@ function createClient () {
 function send (type, model, done) {
   var extended = _.merge({}, defaults, model);
   var template = path.resolve('.bin/views/server/emails', type);
-  client.send(template, extended, done);
+  client.send(template, extended, done || logger);
 }
 
 function logger () {

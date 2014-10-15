@@ -87,7 +87,7 @@ function send (recipients, template, partialModel, done) {
       var model = _.merge({}, partialModel, { to: to, mandrill: mandrill });
       emailService.send(template, model, next);
     }
-  ], done || emailService.logger);
+  ], done);
 
   function isRecipient (subscriber) {
     return recipients.indexOf(subscriber.email) !== -1;

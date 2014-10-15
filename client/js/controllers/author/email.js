@@ -5,25 +5,33 @@ var raf = require('raf');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 
 module.exports = function (viewModel) {
-  var title = $('.ec-title');
-  var previewTitle = $('.ec-preview-title');
+  var subject = $('.ec-subject');
+  var teaser = $('.ec-teaser');
+  var previewSubject = $('.ec-preview-subject');
+  var previewTeaser = $('.ec-preview-teaser');
   var body = $('.ec-body');
   var preview = $.findOne('.ec-preview');
   var sendButton = $('.ec-send');
 
   convertToPonyEditor(body[0], preview);
 
-  title.on('keypress keydown paste', raf.bind(null, updatePreviewTitle));
+  subject.on('keypress keydown paste', raf.bind(null, updatePreviewSubject));
+  teaser.on('keypress keydown paste', raf.bind(null, updatePreviewTeaser));
   sendButton.on('click', send);
 
-  function updatePreviewTitle () {
-    previewTitle.text(title.value());
+  function updatePreviewSubject () {
+    previewSubject.text(subject.value());
+  }
+
+  function updatePreviewTeaser () {
+    previewTeaser.text(teaser.value());
   }
 
   function send () {
     viewModel.measly.post('/api/email', {
       json: {
-        title: title.value(),
+        subject: subject.value(),
+        teaser: teaser.value(),
         body: body.value()
       }
     });
