@@ -19,7 +19,7 @@ module.exports = function (viewModel, route) {
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
-  var intro = $('.ac-introduction');
+  var teaser = $('.ac-teaser');
   var body = $('.ac-body');
   var tags = $('.ac-tags');
   var schedule = $('.ac-schedule');
@@ -136,7 +136,7 @@ module.exports = function (viewModel, route) {
 
     title.value(titleText);
     slug.value(slugText);
-    intro.value(data.introduction || '');
+    teaser.value(data.teaser || '');
     body.value(data.body || '');
     tags.value((data.tags || []).join(' '));
 
@@ -162,7 +162,7 @@ module.exports = function (viewModel, route) {
     var data = {
       title: title.value(),
       slug: slug.value(),
-      introduction: intro.value(),
+      teaser: teaser.value(),
       body: body.value(),
       tags: individualTags,
       status: state

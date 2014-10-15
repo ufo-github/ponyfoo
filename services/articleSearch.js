@@ -73,7 +73,7 @@ function query (input, tags, done) {
     var pattern = util.format('\b(%s)\b', terms.join('|'));
     var alternatives = new RegExp(pattern, 'i');
     var cases = [{
-      introduction: alternatives
+      teaser: alternatives
     }, {
       body: alternatives
     }, {
@@ -122,7 +122,7 @@ function indexable (article) {
     'title', 'title', 'title',
     'tags', 'tags', 'tags',
     'body',
-    'introduction',
+    'teaser',
     'slug'
   ];
   var important = _(fields).transform(take).value().join(' ');

@@ -26,7 +26,7 @@ function mostCommonTags (articles, max) {
 }
 
 function extractImagesFromArticle (article) {
-  return htmlService.extractImages(article.slug, article.introductionHtml + article.bodyHtml);
+  return htmlService.extractImages(article.slug, article.teaserHtml + article.bodyHtml);
 }
 
 function extractImages (source) {

@@ -12,7 +12,7 @@ Article.schema.pre('save', beforeSave);
 Article.schema.post('save', afterSave);
 
 function computeSignature (a) {
-  return cryptoService.md5([a.title, a.status, a.introduction, a.body].concat(a.tags).join(' '));
+  return cryptoService.md5([a.title, a.status, a.teaser, a.body].concat(a.tags).join(' '));
 }
 
 function beforeSave (next) {
@@ -21,7 +21,7 @@ function beforeSave (next) {
   var oldSign = article.sign;
 
   article.sign = computeSignature(article);
-  article.introductionHtml = markdownFatService.compile(article.introduction);
+  article.teaserHtml = markdownFatService.compile(article.teaser);
   article.bodyHtml = markdownFatService.compile(article.body);
   article.updated = Date.now();
 

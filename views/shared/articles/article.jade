@@ -29,7 +29,7 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
       time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 
   section.at-corpus(itemprop='articleBody')
-    section.md-markdown.at-intro(itemprop='about')!=article.introductionHtml
+    section.md-markdown.at-intro(itemprop='about')!=article.teaserHtml
 
     if full
       section.md-markdown.at-body!=article.bodyHtml

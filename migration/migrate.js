@@ -173,7 +173,7 @@ function articles (author, done) {
         updated: entry.updated,
         publication: entry.date,
         status: 'published',
-        introduction: entry.brief,
+        teaser: entry.brief,
         body: entry.text,
         author: author._id,
         slug: entry.slug,

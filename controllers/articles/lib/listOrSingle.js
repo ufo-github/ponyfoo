@@ -40,7 +40,7 @@ function factory (res, next) {
       model.title = article.title;
       model.meta = {
         canonical: '/articles/' + article.slug,
-        description: textService.truncate(htmlService.getText(article.introductionHtml), 170),
+        description: textService.truncate(htmlService.getText(article.teaserHtml), 170),
         keywords: article.tags,
         images: metadataService.extractImages(article)
       };

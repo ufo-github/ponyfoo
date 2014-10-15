@@ -13,6 +13,9 @@ var minifierOptions = {
 var imageCache = {};
 
 function absolutize (html, done) {
+  if (!html) {
+    done(null, html); return;
+  }
   var $ = cheerio.load(html);
 
   $('a[href]').each(resolve('href'));

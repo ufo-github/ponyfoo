@@ -47,7 +47,7 @@ function campaign (article, done) {
 }
 
 function email (article, done) {
-  htmlService.absolutize(article.introductionHtml, send);
+  htmlService.absolutize(article.teaserHtml, send);
 
   function send (err, html) {
     if (err) {
@@ -60,7 +60,7 @@ function email (article, done) {
         title: article.title,
         permalink: '/articles/' + article.slug,
         tags: article.tags,
-        introductionHtml: html
+        teaserHtml: html
       }
     };
     subscriberService.broadcast('article-published', model, done);
@@ -85,7 +85,7 @@ function tweet (article, done) {
 }
 
 function toJSON (source) {
-  var text = [source.introductionHtml, source.bodyHtml].join(' ');
+  var text = [source.teaserHtml, source.bodyHtml].join(' ');
   var article = source.toJSON();
 
   article.readingTime = estimate.text(text);
@@ -114,7 +114,7 @@ function toJSON (source) {
 
   delete article.__v;
   delete article.sign;
-  delete article.introduction;
+  delete article.teaser;
   delete article.body;
   delete article.comments;
   return article;
