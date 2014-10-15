@@ -2,6 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
+var taunus = require('taunus');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 
 module.exports = function (viewModel) {
@@ -28,12 +29,17 @@ module.exports = function (viewModel) {
   }
 
   function send () {
-    viewModel.measly.post('/api/email', {
+    var model = {
       json: {
         subject: subject.value(),
         teaser: teaser.value(),
         body: body.value()
       }
-    });
+    };
+    viewModel.measly.post('/api/email', model).on('data', leave);
+  }
+
+  function leave () {
+    taunus.navigate('/');
   }
 };

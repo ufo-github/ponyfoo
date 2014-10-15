@@ -107,7 +107,7 @@ function emailToken (user, token, done) {
   var model = {
     to: user.email,
     subject: 'Account Password Reset',
-    intro: 'Action required to reset your account password',
+    teaser: 'Action required to reset your account password',
     reset: {
       link: getLink(token),
       expires: getExpiration(token).fromNow()

@@ -43,7 +43,7 @@ module.exports = function (req, res, next) {
     }
     subscriberService.broadcast('raw', {
       subject: subject,
-      intro: teaser,
+      teaser: teaser,
       rawBody: absolutized
     });
   }

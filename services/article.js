@@ -55,7 +55,7 @@ function email (article, done) {
     }
     var model = {
       subject: article.title,
-      intro: 'A new article is hot off the press on Pony Foo!',
+      teaser: 'A new article is hot off the press on Pony Foo!',
       article: {
         title: article.title,
         permalink: '/articles/' + article.slug,

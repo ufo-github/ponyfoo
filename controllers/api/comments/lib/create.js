@@ -122,7 +122,7 @@ module.exports = function (slug, input, done) {
     var permalinkToArticle =  '/articles/' + data.article.slug;
     var email = {
       subject: util.format('Fresh comments on "%s"!', data.article.title),
-      intro: 'Someone posted a comment on a thread you\'re watching!',
+      teaser: 'Someone posted a comment on a thread you\'re watching!',
       comment: {
         author: comment.author,
         content: data.html,

@@ -31,7 +31,7 @@ function sendEmail (user, token, done) {
   var model = {
     to: user.email,
     subject: 'Account Email Verification',
-    intro: 'Action required to complete your account registration',
+    teaser: 'Action required to complete your account registration',
     validation: {
       link: getLink(token),
       expires: getExpiration(token).fromNow()

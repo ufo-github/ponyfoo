@@ -46,7 +46,7 @@ function confirmation (subscriber, done) {
   var model = {
     to: subscriber.email,
     subject: 'Pony Foo Subscription Invitation!',
-    intro: 'Would you like to subscribe to Pony Foo?',
+    teaser: 'Would you like to subscribe to Pony Foo?',
     confirm: util.format('/api/subscribers/%s/confirm', hash),
     mandrill: {
       merge: {
