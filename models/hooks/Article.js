@@ -1,6 +1,6 @@
 'use strict';
 
-var markdownCompositeService = require('../../services/markdownComposite');
+var markupService = require('../../services/markup');
 var cryptoService = require('../../services/crypto');
 var articleSearchService = require('../../services/articleSearch');
 var feedService = require('../../services/feed');
@@ -33,7 +33,7 @@ function beforeSave (next) {
 }
 
 function toHtml (md, i) {
-  return markdownCompositeService.compile(md, { deferImages: i });
+  return markupService.compile(md, { deferImages: i });
 }
 
 function afterSave () {

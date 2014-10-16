@@ -3,13 +3,13 @@
 var taunus = require('taunus');
 var contra = require('contra');
 var validator = require('validator');
-var markdownCompositeService = require('../../../services/markdownComposite');
+var markupService = require('../../../services/markup');
 var bioService = require('../../../services/bio');
 var User = require('../../../models/User');
 
 module.exports = function (req, res, next) {
   var bio = validator.toString(req.body.bio);
-  var bioHtml = markdownCompositeService.compile(bio, { deferImages: true });
+  var bioHtml = markupService.compile(bio, { deferImages: true });
 
   User.findOne({ _id: req.user }, update);
 

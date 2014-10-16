@@ -11,7 +11,7 @@ var util = require('util');
 var moment = require('moment');
 var Article = require('../models/Article');
 var env = require('../lib/env');
-var htmlService = require('./html');
+var markupService = require('./markup');
 var authority = env('AUTHORITY');
 var contact = 'Nicolas Bevacqua <hello@bevacqua.io>';
 var location = path.resolve('.bin/static/feed.xml');
@@ -40,7 +40,7 @@ function generate (articles, done) {
   contra.each(articles, absolutize, fill);
 
   function absolutize (article, done) {
-    var teaser = htmlService.absolutize(article.teaserHtml);
+    var teaser = markupService.compile(article.teaserHtml, { markdown: false, absolutize: true });
     absolutes[article._id] = teaser;
     done();
   }

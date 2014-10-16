@@ -11,7 +11,7 @@ var commentService = require('./comment');
 var cryptoService = require('./crypto');
 var subscriberService = require('./subscriber');
 var twitterService = require('./twitter');
-var htmlService = require('./html');
+var markupService = require('./markup');
 var authority = env('AUTHORITY');
 
 function noop () {}
@@ -47,7 +47,7 @@ function campaign (article, done) {
 }
 
 function email (article, done) {
-  var teaser = htmlService.absolutize(article.teaserHtml);
+  var teaser = markupService.compile(article.teaserHtml, { markdown: false, absolutize: true });
   var model = {
     subject: article.title,
     teaser: 'A new article is hot off the press on Pony Foo!',

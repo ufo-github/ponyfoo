@@ -3,7 +3,7 @@
 var validator = require('validator');
 var emailService = require('../../../services/email');
 var subscriberService = require('../../../services/subscriber');
-var markdownCompositeService = require('../../../services/markdownComposite');
+var markupService = require('../../../services/markup');
 var htmlService = require('../../../services/html');
 
 module.exports = function (req, res, next) {
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
     return;
   }
 
-  var bodyHtml = markdownCompositeService.compile(body, { absolutize: true });
+  var bodyHtml = markupService.compile(body, { absolutize: true });
 
   subscriberService.broadcast('raw', {
     subject: subject,

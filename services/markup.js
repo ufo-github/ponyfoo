@@ -7,11 +7,13 @@ var markdownService = require('./markdown');
 function compile (md, options) {
   var methods = [];
   var o = options || {};
+
   add(o.minify !== false, htmlService.minify);
   add(o.absolutize, htmlService.absolutize);
   add(o.deferImages, deferImages);
   add(o.externalize, htmlService.externalizeLinks);
   add(o.markdown !== false, markdownService.compile);
+
   var composite = _.compose.apply(_, methods);
   var html = composite(md);
   return html;

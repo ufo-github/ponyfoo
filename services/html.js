@@ -84,7 +84,7 @@ function deferImages (html, startIndex) {
       return;
     }
     elem = $(this);
-    elem.data('src', elem.attr('src'));
+    elem.attr('data-src', elem.attr('src'));
     elem.removeAttr('src');
   }
 }
@@ -99,7 +99,7 @@ function undeferImages (html) {
 
   function undefer () {
     var elem = $(this);
-    elem.attr('src', elem.data('src'));
+    elem.attr('src', elem.attr('data-src'));
     elem.removeAttr('data-src');
   }
 }
@@ -120,5 +120,6 @@ module.exports = {
   getText: getText,
   minify: minify,
   deferImages: deferImages,
-  undeferImages: undeferImages
+  undeferImages: undeferImages,
+  externalizeLinks: externalizeLinks
 };

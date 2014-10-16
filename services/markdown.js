@@ -37,8 +37,10 @@ var options = {
   })
 };
 
+function compile (text) {
+  return ultramarked(text, options);
+}
+
 module.exports = {
-  compile: function (text) {
-    return ultramarked(text, options);
-  }
+  compile: compile
 };
