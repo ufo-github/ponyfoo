@@ -1,14 +1,15 @@
 'use strict';
 
+var taunus = require('taunus');
 var contra = require('contra');
 var validator = require('validator');
-var markdownFatService = require('../../../services/markdownFat');
+var markdownCompositeService = require('../../../services/markdownComposite');
 var bioService = require('../../../services/bio');
 var User = require('../../../models/User');
 
 module.exports = function (req, res, next) {
   var bio = validator.toString(req.body.bio);
-  var bioHtml = markdownFatService.compile(bio);
+  var bioHtml = markdownCompositeService.compile(bio, { deferImages: true });
 
   User.findOne({ _id: req.user }, update);
 

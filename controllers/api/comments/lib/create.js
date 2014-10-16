@@ -10,9 +10,10 @@ var validate = require('./validate');
 var respond = require('../../lib/respond');
 var commentService = require('../../../../services/comment');
 var htmlService = require('../../../../services/html');
+var markdownCompositeService = require('../../../../services/markdownComposite');
 var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
-var markdownFatService = require('../../../../services/markdownFat');
+var markdownService = require('../../../../services/markdown');
 
 module.exports = function (slug, input, done) {
   var validation = validate(input);
@@ -47,7 +48,7 @@ module.exports = function (slug, input, done) {
         done(null, 400, ['Comments can\'t be nested that deep!']); return;
       }
     }
-    model.contentHtml = markdownFatService.compileExternalizeLinks(model.content);
+    model.contentHtml = markdownCompositeService(model.content);
     comment = article.comments.create(model);
     article.comments.push(comment);
     article.save(saved);
@@ -101,7 +102,7 @@ module.exports = function (slug, input, done) {
   }
 
   function absolutizeHtml (next) {
-    htmlService.absolutize(comment.contentHtml, next);
+    next(null, htmlService.absolutize(comment.contentHtml));
   }
 
   function fetchGravatar (next) {

@@ -1,6 +1,6 @@
 'use strict';
 
-var markdownFatService = require('../../services/markdownFat');
+var markdownCompositeService = require('../../services/markdownComposite');
 var cryptoService = require('../../services/crypto');
 var articleSearchService = require('../../services/articleSearch');
 var feedService = require('../../services/feed');
@@ -21,8 +21,8 @@ function beforeSave (next) {
   var oldSign = article.sign;
 
   article.sign = computeSignature(article);
-  article.teaserHtml = markdownFatService.compile(article.teaser);
-  article.bodyHtml = markdownFatService.compile(article.body);
+  article.teaserHtml = toHtml(article.teaser, 1);
+  article.bodyHtml = toHtml(article.body, true);
   article.updated = Date.now();
 
   if (!bulk && oldSign !== article.sign && article.status === 'published') {
@@ -30,6 +30,10 @@ function beforeSave (next) {
   } else {
     next();
   }
+}
+
+function toHtml (md, i) {
+  return markdownCompositeService.compile(md, { deferImages: i });
 }
 
 function afterSave () {

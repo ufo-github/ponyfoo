@@ -40,13 +40,9 @@ function generate (articles, done) {
   contra.each(articles, absolutize, fill);
 
   function absolutize (article, done) {
-    htmlService.absolutize(article.teaserHtml, function (err, html) {
-      if (err) {
-        done(err); return;
-      }
-      absolutes[article._id] = html;
-      done();
-    });
+    var teaser = htmlService.absolutize(article.teaserHtml);
+    absolutes[article._id] = teaser;
+    done();
   }
 
   function fill (err) {

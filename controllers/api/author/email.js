@@ -3,7 +3,7 @@
 var validator = require('validator');
 var emailService = require('../../../services/email');
 var subscriberService = require('../../../services/subscriber');
-var markdownFatService = require('../../../services/markdownFat');
+var markdownCompositeService = require('../../../services/markdownComposite');
 var htmlService = require('../../../services/html');
 
 module.exports = function (req, res, next) {
@@ -15,9 +15,13 @@ module.exports = function (req, res, next) {
     return;
   }
 
-  var bodyHtml = markdownFatService.compile(body);
+  var bodyHtml = markdownCompositeService.compile(body, { absolutize: true });
 
-  htmlService.absolutize(bodyHtml, send);
+  subscriberService.broadcast('raw', {
+    subject: subject,
+    teaser: teaser,
+    rawBody: bodyHtml
+  });
   res.json({});
 
   function invalid () {
@@ -35,16 +39,5 @@ module.exports = function (req, res, next) {
       res.status(400).json({ messages: messages });
       return true;
     }
-  }
-
-  function send (err, absolutized) {
-    if (err) {
-      return;
-    }
-    subscriberService.broadcast('raw', {
-      subject: subject,
-      teaser: teaser,
-      rawBody: absolutized
-    });
   }
 };

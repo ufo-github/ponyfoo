@@ -16,7 +16,7 @@ var UserVerificationToken = require('../models/UserVerificationToken');
 var PasswordResetToken = require('../models/PasswordResetToken');
 var cryptoService = require('../services/crypto');
 var articleSearchService = require('../services/articleSearch');
-var markdownFatService = require('../services/markdownFat');
+var markdownCompositeService = require('../services/markdownComposite');
 var env = require('../lib/env');
 var prd = env('MIGRATION_SOURCE_URI');
 var ObjectId = mongoose.Schema.Types.ObjectId;
@@ -210,7 +210,7 @@ function comments (users, done) {
       return {
         created: comment.date,
         content: comment.text,
-        contentHtml: markdownFatService.compileExternalizeLinks(comment.text),
+        contentHtml: markdownCompositeService.compile(comment.text, { externalize: true }),
         author: u.displayName,
         email: u.email,
         site: u.website ? u.website.url : null

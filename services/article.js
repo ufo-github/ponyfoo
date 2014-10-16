@@ -47,24 +47,18 @@ function campaign (article, done) {
 }
 
 function email (article, done) {
-  htmlService.absolutize(article.teaserHtml, send);
-
-  function send (err, html) {
-    if (err) {
-      done(err); return;
+  var teaser = htmlService.absolutize(article.teaserHtml);
+  var model = {
+    subject: article.title,
+    teaser: 'A new article is hot off the press on Pony Foo!',
+    article: {
+      title: article.title,
+      permalink: '/articles/' + article.slug,
+      tags: article.tags,
+      teaserHtml: teaser
     }
-    var model = {
-      subject: article.title,
-      teaser: 'A new article is hot off the press on Pony Foo!',
-      article: {
-        title: article.title,
-        permalink: '/articles/' + article.slug,
-        tags: article.tags,
-        teaserHtml: html
-      }
-    };
-    subscriberService.broadcast('article-published', model, done);
-  }
+  };
+  subscriberService.broadcast('article-published', model, done);
 }
 
 function tweet (article, done) {

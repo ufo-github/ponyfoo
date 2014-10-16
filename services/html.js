@@ -12,9 +12,9 @@ var minifierOptions = {
 };
 var imageCache = {};
 
-function absolutize (html, done) {
+function absolutize (html) {
   if (!html) {
-    done(null, html); return;
+    return html;
   }
   var $ = cheerio.load(html);
 
@@ -24,7 +24,9 @@ function absolutize (html, done) {
   $('script[src]').each(resolve('src'));
   $('link[href]').each(resolve('href'));
 
-  done(null, $.html());
+  var absolute = $.html();
+  var undeferred = undeferImages(absolute); // undo deferred image sources
+  return undeferred;
 
   function resolve (prop) {
     return function each () {
@@ -67,9 +69,56 @@ function minify (html) {
   return minifyHtml(html, minifierOptions);
 }
 
+function deferImages (html, startIndex) {
+  if (!html) {
+    return html;
+  }
+  var $ = cheerio.load(html);
+  $('img[src]').each(defer);
+  return $.html();
+
+  function defer (i) {
+    var start = startIndex || 0;
+    var elem;
+    if (i < start) {
+      return;
+    }
+    elem = $(this);
+    elem.data('src', elem.attr('src'));
+    elem.removeAttr('src');
+  }
+}
+
+function undeferImages (html) {
+  if (!html) {
+    return html;
+  }
+  var $ = cheerio.load(html);
+  $('img[data-src]').each(undefer);
+  return $.html();
+
+  function undefer () {
+    var elem = $(this);
+    elem.attr('src', elem.data('src'));
+    elem.removeAttr('data-src');
+  }
+}
+
+function externalizeLinks (html) {
+  if (!html) {
+    return html;
+  }
+  var $ = cheerio.load(html);
+  $('a[href]').attr('target', '_blank');
+  $('a[href]').attr('rel', 'nofollow');
+  return $.html();
+}
+
 module.exports = {
   absolutize: absolutize,
   extractImages: extractImages,
   getText: getText,
-  minify: minify
+  minify: minify,
+  deferImages: deferImages,
+  undeferImages: undeferImages
 };
