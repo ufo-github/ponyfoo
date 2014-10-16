@@ -35,7 +35,7 @@ function ready () {
     }
 
     function saveComment (comment) {
-      comment.contentHtml = markupService.compile(comment.content);
+      comment.contentHtml = markupService.compile(comment.content, { deferImages: true, externalize: true });
     }
   }
 
