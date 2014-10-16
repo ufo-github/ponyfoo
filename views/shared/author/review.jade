@@ -15,7 +15,10 @@ article.ly-section
         each article in articles
           tr
             td
-              a(href!=article.permalink, aria-label='Navigate to full article')=article.title
+              if article.status === 'published'
+                a(href!=article.permalink, aria-label='Navigate to full article')=article.title
+              else
+                span=article.title
             td
               include ../partials/tags
             td(class='ar-status ar-status-' + article.status, aria-label=article._.conditionLabel)=article._.condition
