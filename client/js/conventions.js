@@ -61,7 +61,7 @@ function render (err, body) {
   if (title) {
     $(title).after(list);
   } else {
-    $(context[0]).prepend(list);
+    context.i(0).prepend(list);
   }
 
   list[0].scrollIntoView();

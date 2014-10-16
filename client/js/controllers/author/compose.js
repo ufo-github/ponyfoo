@@ -38,7 +38,10 @@ module.exports = function (viewModel, route) {
   var boundSlug = true;
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
   var ponies = texts.map(convert);
+  var previews = $('.pmk-preview', preview);
 
+  previews.i(0).addClass('at-teaser');
+  previews.i(1).addClass('at-body');
   texts.on('keypress keydown paste', typingText);
   tags.on('keypress keydown paste', raf.bind(null, typingTags));
   title.on('keypress keydown paste', raf.bind(null, typingTitle));
