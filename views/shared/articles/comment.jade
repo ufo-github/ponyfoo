@@ -1,5 +1,5 @@
 mixin author
-  img.mm-gravatar(data-src=comment.gravatar + '&s=24', alt='')
+  img.mm-gravatar.js-only(data-src=comment.gravatar + '&s=24', alt='')
   noscript
     img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
   span.mm-author-name=comment.author

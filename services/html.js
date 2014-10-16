@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var url = require('url');
+var util = require('util');
 var moment = require('moment');
 var cheerio = require('cheerio');
 var minifyHtml = require('html-minifier').minify;
@@ -79,13 +80,16 @@ function deferImages (html, startIndex) {
 
   function defer (i) {
     var start = startIndex || 0;
-    var elem;
+    var elem, fallback;
     if (i < start) {
       return;
     }
     elem = $(this);
+    fallback = util.format('<noscript>%s</noscript>', $.html(elem));
     elem.attr('data-src', elem.attr('src'));
+    elem.addClass('js-only');
     elem.removeAttr('src');
+    elem.after(fallback);
   }
 }
 
@@ -100,7 +104,9 @@ function undeferImages (html) {
   function undefer () {
     var elem = $(this);
     elem.attr('src', elem.attr('data-src'));
+    elem.removeClass('js-only');
     elem.removeAttr('data-src');
+    elem.next('noscript').remove();
   }
 }
 
