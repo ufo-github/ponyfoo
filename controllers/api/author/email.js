@@ -4,7 +4,6 @@ var validator = require('validator');
 var emailService = require('../../../services/email');
 var subscriberService = require('../../../services/subscriber');
 var markupService = require('../../../services/markup');
-var htmlService = require('../../../services/html');
 
 module.exports = function (req, res, next) {
   var subject = req.body.subject;

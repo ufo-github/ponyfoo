@@ -30,6 +30,7 @@ function ready () {
     contra.each(articles, save, done);
 
     function save (article, next) {
+      winston.info('Processing article "%s"', article.title);
       article.comments.forEach(saveComment);
       article.save(next);
     }
@@ -43,6 +44,7 @@ function ready () {
     if (err) {
       throw err;
     }
+    winston.info('Successfully executed hooks!');
     process.exit();
   }
 }
