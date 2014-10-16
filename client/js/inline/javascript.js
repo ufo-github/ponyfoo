@@ -1,4 +1,4 @@
-~function(window, document) {
+~function (window, document) {
   function inject () {
     var elem = document.createElement('script');
     elem.src = '/js/all.js';
