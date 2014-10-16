@@ -66,11 +66,11 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
 
   rm -rf $APP_LATEST
   cp -r $RSYNC_REPO $APP_LATEST
-  cp -r $APP_VERSIONS/\$(ls -t1 $APP_VERSIONS | sort -r | head -2 | tail -1)/node_modules $APP_LATEST
+  cp -r $APP_VERSIONS/\$(ls -t1 $APP_VERSIONS | sort --version-sort -r | head -2 | tail -1)/node_modules $APP_LATEST
   cp $APP_LATEST/package.json $APP/package.json
   ln -sfn $APP_LATEST $APP_LIVE
   ln -sfn $APP_CONFIG $APP_LATEST/.env
-  find $APP_VERSIONS -mindepth 1 -maxdepth 1 | sort -r | tail -n +6 | xargs rm -rf
+  find $APP_VERSIONS -mindepth 1 -maxdepth 1 | sort --version-sort -r | tail -n +6 | xargs rm -rf
   npm --prefix $APP_LATEST prune
   npm --prefix $APP_LATEST install --production
   sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
