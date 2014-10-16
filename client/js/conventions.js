@@ -8,12 +8,13 @@ var unwrapImages = require('./lib/unwrapImages');
 
 $('body').on('click', '.vw-conventional, .fs-messages', remove);
 
-function setupMeasly () {
+function conventions () {
   measly.on('data', renderOrClean);
   measly.on('error', render);
   taunus.on('error', handleTaunusError);
   taunus.on('render', createLayer);
   taunus.on('render', unwrapImages);
+  taunus.on('start', unwrapImages);
 }
 
 function createLayer (container, viewModel) {
@@ -85,4 +86,4 @@ function dom (message) {
   return $('<li>').text(message).addClass('vw-conventional-message')[0];
 }
 
-module.exports = setupMeasly;
+module.exports = conventions;
