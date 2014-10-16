@@ -27,7 +27,7 @@ function ready () {
     if (err) {
       throw err;
     }
-    contra.each(articles, save, done);
+    contra.each(articles, save, users);
 
     function save (article, next) {
       winston.info('Processing article "%s"', article.title);
@@ -37,6 +37,23 @@ function ready () {
 
     function saveComment (comment) {
       comment.contentHtml = markupService.compile(comment.content, { deferImages: true, externalize: true });
+    }
+  }
+
+  function users (err) {
+    if (err) {
+      throw err;
+    }
+    m.User.find({}, found);
+  }
+
+  function found (err, users) {
+    contra.each(users, save, done);
+
+    function save (user, next) {
+      winston.info('Processing user "%s"', user.email);
+      user.bioHtml = markupService.compile(user.bio, { deferImages: true });
+      user.save(next);
     }
   }
 

@@ -47,7 +47,7 @@ module.exports = function (slug, input, done) {
         done(null, 400, ['Comments can\'t be nested that deep!']); return;
       }
     }
-    model.contentHtml = markupService.compile(model.content, { deferImages: true });
+    model.contentHtml = markupService.compile(model.content, { deferImages: true, externalize: true });
     comment = article.comments.create(model);
     article.comments.push(comment);
     article.save(saved);
