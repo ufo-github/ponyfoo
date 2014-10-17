@@ -25,19 +25,19 @@ test('routes should match expectation', function (t) {
 
   plan('get', '/articles/feed', './articles/feed');
 
-  plan('get', '/', null, '../../../controllers/articles/home');
-  plan('get', '/articles', null, '../../../controllers/articles/redirectHome');
-  plan('get', '/articles/archives', null, '../../../controllers/articles/archives');
-  plan('get', '/articles/tagged/:tags', null, '../../../controllers/articles/tagged');
-  plan('get', '/articles/search/:terms', null, '../../../controllers/articles/search');
-  plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', null, '../../../controllers/articles/dated');
-  plan('get', '/articles/:year(\\d{4})/:month([01]\\d)', null, '../../../controllers/articles/dated');
-  plan('get', '/articles/:year(\\d{4})', null, '../../../controllers/articles/dated');
-  plan('get', '/articles/:slug', null, '../../../controllers/articles/article');
-  plan('get', '/account/login', null, '../../../controllers/account/login');
-  plan('get', '/author/compose', null, './author/only', '../../../controllers/author/compose');
-  plan('get', '/author/compose/:slug', null, './author/only', '../../../controllers/author/compose');
-  plan('get', '/author/review', null, './author/only', '../../../controllers/author/review');
+  plan('get', '/', '../../../controllers/articles/home');
+  plan('get', '/articles', '../../../controllers/articles/redirectHome');
+  plan('get', '/articles/archives', '../../../controllers/articles/archives');
+  plan('get', '/articles/tagged/:tags', '../../../controllers/articles/tagged');
+  plan('get', '/articles/search/:terms', '../../../controllers/articles/search');
+  plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', '../../../controllers/articles/dated');
+  plan('get', '/articles/:year(\\d{4})/:month([01]\\d)', '../../../controllers/articles/dated');
+  plan('get', '/articles/:year(\\d{4})', '../../../controllers/articles/dated');
+  plan('get', '/articles/:slug', '../../../controllers/articles/article');
+  plan('get', '/account/login', '../../../controllers/account/login');
+  plan('get', '/author/compose', './author/only', '../../../controllers/author/compose');
+  plan('get', '/author/compose/:slug', './author/only', '../../../controllers/author/compose');
+  plan('get', '/author/review', './author/only', '../../../controllers/author/review');
 
   run();
   teardown();
@@ -86,7 +86,8 @@ test('routes should match expectation', function (t) {
       post: sinon.spy(),
       patch: sinon.spy(),
       delete: sinon.spy(),
-      use: sinon.spy()
+      use: sinon.spy(),
+      all: sinon.spy()
     };
 
     var routing = require('../../controllers/routing');
