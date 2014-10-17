@@ -11,4 +11,3 @@ stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 browserify client/js/main.js -o .bin/public/js/all.js --basedir client/js --debug
-

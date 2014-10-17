@@ -23,12 +23,13 @@
     "launch": "build/ec2/launch",
     "env": "build/ec2/env",
     "env-get": "build/ec2/env-get",
+    "build-development": "build/build-development",
     "build-staging": "build/build-staging",
     "build-production": "build/build-production",
     "shutdown": "build/ec2/shutdown",
     "ssh": "build/ec2/ssh",
     "open": "build/ec2/open",
-    "start": "build/debug",
+    "start": "npm run build-development",
     "test": "build/test"
   },
   "dependencies": {
