@@ -38,6 +38,7 @@
     "body-parser": "^1.3.0",
     "campaign": "^1.4.0",
     "campaign-jadum": "^1.1.0",
+    "cave": "^2.0.0",
     "cheerio": "^0.17.0",
     "compression": "^1.0.11",
     "connect-flash": "^0.1.1",
