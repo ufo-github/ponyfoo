@@ -3,6 +3,7 @@
 - whenText = when.format(longDate)
 - modified = moment(article.updated)
 - created = moment(article.created)
+- published = article.status === 'published'
 
 article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting')
   meta(itemprop='dateCreated', content=created.format())
@@ -60,5 +61,5 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
             span.at-next-text=article.next.title
             span.at-next-anchor=' »'
 
-if full
+if published && full
   include comments

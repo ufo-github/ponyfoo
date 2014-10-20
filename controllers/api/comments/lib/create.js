@@ -25,7 +25,7 @@ module.exports = function (slug, input, done) {
   contra.waterfall([findArticle, decisionTree, create], created);
 
   function findArticle (next) {
-    Article.findOne({ slug: slug }).populate('comments').exec(next);
+    Article.findOne({ slug: slug, status: 'published' }).populate('comments').exec(next);
   }
 
   function decisionTree (article, next) {
