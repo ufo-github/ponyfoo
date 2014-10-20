@@ -13,7 +13,7 @@ function find (Model, query, count, done) {
   function single () {
     contra.waterfall([
       function (next) {
-        Model.count(next);
+        Model.find(query).count(next);
       },
       function (count, next) {
         var skips = Math.floor(Math.random() * count);
