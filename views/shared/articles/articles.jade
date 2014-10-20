@@ -1,2 +1,6 @@
 each article in articles
   include article
+
+if articles.length === 6
+  footer.at-more.ly-section
+    a.at-more-button.uv-button(href='/?skip=' + (skipped + 6)) I crave more articles!
