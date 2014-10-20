@@ -26,7 +26,6 @@ test('routes should match expectation', function (t) {
   plan('get', '/articles/feed', './articles/feed');
 
   plan('get', '/', '../../../controllers/articles/home');
-  plan('get', '/articles', '../../../controllers/articles/redirectHome');
   plan('get', '/articles/archives', '../../../controllers/articles/archives');
   plan('get', '/articles/tagged/:tags', '../../../controllers/articles/tagged');
   plan('get', '/articles/search/:terms', '../../../controllers/articles/search');
