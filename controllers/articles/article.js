@@ -1,12 +1,12 @@
 'use strict';
 
 var articleService = require('../../services/article');
+var cryptoService = require('../../services/crypto');
 var listOrSingle = require('./lib/listOrSingle');
 
 module.exports = function (req, res, next) {
   var handle = listOrSingle(res, next);
   var query = {
-    status: 'published',
     slug: req.params.slug
   };
 
@@ -16,5 +16,27 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleService.find(query, handle);
+  articleService.findOne(query, validate);
+
+  function validate (err, article) {
+    if (err || !article) {
+      done(); return;
+    }
+    if (article.status === 'published') {
+      done(); return;
+    }
+
+    // draft share link?
+    var verify = req.query.verify;
+    if (verify && verify === cryptoService.md5(article._id)) {
+      done(); return;
+    }
+
+    // not found!
+    handle(null, []);
+
+    function done () {
+      handle(err, [article]);
+    }
+  }
 };

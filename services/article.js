@@ -16,13 +16,13 @@ var authority = env('AUTHORITY');
 
 function noop () {}
 
-function find (query, options, done) {
+function findInternal (method, query, options, done) {
   if (done === void 0) {
     done = options; options = {};
   }
   if (!options.sort) { options.sort = '-publication'; }
 
-  var cursor = Article.find(query);
+  var cursor = Article[method](query);
 
   if (options.populate) {
     cursor = cursor.populate(options.populate);
@@ -38,6 +38,9 @@ function find (query, options, done) {
   }
   cursor.exec(done);
 }
+
+var find = findInternal.bind(null, 'find');
+var findOne = findInternal.bind(null, 'findOne');
 
 function campaign (article, done) {
   if (done === void 0) {
@@ -140,6 +143,7 @@ function byPublication (a, b) {
 
 module.exports = {
   find: find,
+  findOne: findOne,
   campaign: campaign,
   toJSON: toJSON
 };

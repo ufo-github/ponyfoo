@@ -4,6 +4,7 @@ var _ = require('lodash');
 var moment = require('moment');
 var Article = require('../../models/Article');
 var articleService = require('../../services/article');
+var cryptoService = require('../../services/crypto');
 var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 
 module.exports = getModel;
@@ -38,12 +39,15 @@ function hydrate (article) {
   if (published) {
     article._.condition = 'Published ' + when.fromNow();
     article._.conditionLabel = 'Published on ' + when.format(longDate);
-  } else if (article.status === 'draft') {
-    article._.condition = 'Draft';
-    article._.conditionLabel = 'Edit the article in order to publish it';
   } else {
-    article._.condition = 'Publishing ' + when.fromNow();
-    article._.conditionLabel = 'Slated for publication on ' + when.format(longDate);
+    article.permalink += '?verify=' + cryptoService.md5(article._id);
+    if (article.status === 'draft') {
+      article._.condition = 'Draft';
+      article._.conditionLabel = 'Edit the article in order to publish it';
+    } else {
+      article._.condition = 'Publishing ' + when.fromNow();
+      article._.conditionLabel = 'Slated for publication on ' + when.format(longDate);
+    }
   }
   return article;
 }

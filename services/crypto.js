@@ -24,7 +24,7 @@ function test (hash, value, done) {
 }
 
 function md5 (value) {
-  return crypto.createHash('md5').update(value).digest('hex');
+  return crypto.createHash('md5').update(String(value)).digest('hex');
 }
 
 module.exports = {
