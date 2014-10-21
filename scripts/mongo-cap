@@ -1,0 +1,4 @@
+mongo
+db.logs.convertToCapped(52428800)
+db.sessions.convertToCapped(52428800)
+exit
