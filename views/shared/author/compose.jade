@@ -11,6 +11,8 @@ article.ly-section
       span.ac-preview-read
     section.ac-preview-tags
   aside.ac-timing
+    - publication = moment(article.publication)
+    - publicationFormat = 'DD-MM-YYYY HH:mm'
     if article.status !== 'published'
       p.ac-timing-draft
         input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
@@ -21,9 +23,9 @@ article.ly-section
       p.ac-timing-schedule
         input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
         label.ck-checkbox(for='ac-schedule-checkbox') Schedule
-        input.ac-publication(value=article.publication, placeholder='e.g DD-MM-YYYY HH:mm')
+        input.ac-publication(value=publication.format(publicationFormat), placeholder='e.g ' + publicationFormat)
     else
-      p='Published ' + moment(article.publication).fromNow()
+      p='Published ' + publication.fromNow()
 
   footer.ac-actions
     if editing

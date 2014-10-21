@@ -26,8 +26,9 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
     span.at-meta
       span='reading time: '
       time(aria-label='You\'re probably faster than that!')=moment.duration(article.readingTime, 'seconds').humanize()
-      span=', published '
-      time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
+      span=', ' + article.status + ' '
+      if article.status !== 'draft'
+        time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
 
   section.at-corpus(itemprop='articleBody')
     section.md-markdown.at-teaser(itemprop='about')!=article.teaserHtml

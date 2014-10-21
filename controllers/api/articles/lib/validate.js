@@ -26,7 +26,9 @@ function validate (model, update) {
   };
   var publication = getPublicationDate();
   if (publication) {
-    sanitized.publication = publication;
+    sanitized.publication = getPublicationDate();
+  } else if (model.status !== 'published') {
+    sanitized.publication = void 0;
   }
   validation.model = sanitized;
 
