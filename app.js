@@ -18,7 +18,7 @@ var sitemapService = require('./services/sitemap');
 var articleSearchService = require('./services/articleSearch');
 var app = express();
 var port = env('PORT');
-var rebuild = !env('APP_REBUILD');
+var shouldRebuild = !env('APP_REBUILD');
 
 logging.configure();
 development.patch(app);
@@ -43,9 +43,13 @@ function listening () {
   winston.info('app listening on port %s', port);
   development.browserSync();
 
-  if (rebuild) {
-    feedService.rebuild();
-    sitemapService.rebuild();
-    articleSearchService.rebuild();
+  if (shouldRebuild) {
+    setTimeout(rebuild, 5000);
   }
+}
+
+function rebuild () {
+  feedService.rebuild();
+  sitemapService.rebuild();
+  articleSearchService.rebuild();
 }
