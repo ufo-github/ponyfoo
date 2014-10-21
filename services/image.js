@@ -3,6 +3,9 @@
 var fs = require('fs');
 var path = require('path');
 var Imagemin = require('imagemin');
+var optipng = require('imagemin-optipng');
+var mozjpeg = require('imagemin-mozjpeg');
+var gifsicle = require('imagemin-gifsicle');
 var winston = require('winston');
 var prettyBytes = require('pretty-bytes');
 var env = require('../lib/env');
@@ -11,11 +14,11 @@ var level = env('LOGGING_LEVEL');
 function findPlugin (ext) {
   if (ext === 'png') {
     // warning: higher levels have better yield but are _way_ too slow!
-    return Imagemin.optipng({ optimizationLevel: 1 });
+    return optipng({ optimizationLevel: 1 });
   } else if (ext === 'jpg' || ext === 'jpeg') {
-    return Imagemin.mozjpeg();
+    return mozjpeg();
   } else if (ext === 'gif') {
-    return Imagemin.gifsicle({ interlaced: true });
+    return gifsicle({ interlaced: true });
   }
 }
 
