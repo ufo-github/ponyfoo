@@ -1,6 +1,6 @@
 aside.ly-aside
   form#search.ly-section.sr-container(action='/articles/search', method='get', name='search')
-    input.de-input.sr-input(placeholder='e.g JavaScript', name='terms')
+    input.de-input.sr-input(placeholder='e.g JavaScript', name='terms', value=model.query && model.query.replace(/"/g,''))
     span.de-submit(aria-label='Pro Tip: use "[js]" to search for article tags!')
       input.de-button.sr-button.uv-button(type='submit', value='Search')
 
