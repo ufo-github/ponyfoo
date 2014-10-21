@@ -58,6 +58,7 @@
     "imagemin": "^2.1.0",
     "imagemin-gifsicle": "^3.0.0",
     "imagemin-mozjpeg": "^3.0.0",
+    "imagemin-optipng": "^3.0.0",
     "imagemin-pngquant": "^3.0.0",
     "jadum": "^1.1.0",
     "lodash": "^2.4.1",
