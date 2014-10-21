@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var throttle = require('lodash.throttle');
+var throttle = require('../../lib/throttle');
 var moment = require('moment');
 var raf = require('raf');
 var taunus = require('taunus');
