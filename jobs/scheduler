@@ -6,12 +6,13 @@ process.chdir(__dirname);
 
 var contra = require('contra');
 var winston = require('winston');
-var models = require('./models');
-var pkg = require('./package.json');
-var logging = require('./lib/logging');
-var db = require('./lib/db');
-var articleService = require('./services/article');
-var articlePublishService = require('./services/articlePublish');
+var moment = require('moment');
+var models = require('../models');
+var pkg = require('../package.json');
+var logging = require('../lib/logging');
+var db = require('../lib/db');
+var articleService = require('../services/article');
+var articlePublishService = require('../services/articlePublish');
 var t, p = 0;
 var m;
 
@@ -39,9 +40,14 @@ function single (article, next) {
       articlePublishService.publish(article, next);
     },
     function notifySubscribers (published, next) {
+      var when;
       if (published) {
         article.save(saved); // save the status change first!
       } else {
+        if (article.publication) {
+          when = moment(article.publication).fromNow();
+          winston.info('Article "%s" will be published %s.', article.title, when);
+        }
         next();
       }
 
