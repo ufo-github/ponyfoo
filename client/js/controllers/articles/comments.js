@@ -95,9 +95,16 @@ module.exports = function (viewModel) {
 
     function appendResult (data) {
       var placeholder = $('<div>');
-      var template, target;
+      var template, target, partial;
       var model = {
-        user: viewModel.user
+        user: viewModel.user,
+        article: {
+          author: viewModel.article.author,
+          commentThreads: [{
+            comments: [data],
+            id: data._id
+          }]
+        }
       };
 
       if (thread.length) {
@@ -105,18 +112,13 @@ module.exports = function (viewModel) {
         template = 'articles/comment';
         target = thread.find('.mm-thread-footer');
       } else {
-        model.article = {
-          author: viewModel.article.author,
-          commentThreads: [{
-            comments: [data],
-            id: data._id
-          }]
-        };
         template = 'articles/comment-thread';
         target = comments.find('.mm-footer');
       }
       taunus.partial(placeholder[0], template, model);
-      target.before(placeholder.children());
+      partial = placeholder.children();
+      partial.find('.mm-thread-reply').removeClass('uv-hidden');
+      target.before(partial);
     }
   }
 
