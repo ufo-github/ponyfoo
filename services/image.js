@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var Imagemin = require('imagemin');
-var optipng = require('imagemin-optipng');
+var pngquant = require('imagemin-pngquant');
 var mozjpeg = require('imagemin-mozjpeg');
 var gifsicle = require('imagemin-gifsicle');
 var winston = require('winston');
@@ -13,8 +13,7 @@ var level = env('LOGGING_LEVEL');
 
 function findPlugin (ext) {
   if (ext === 'png') {
-    // warning: higher levels have better yield but are _way_ too slow!
-    return optipng({ optimizationLevel: 1 });
+    return pngquant();
   } else if (ext === 'jpg' || ext === 'jpeg') {
     return mozjpeg();
   } else if (ext === 'gif') {
