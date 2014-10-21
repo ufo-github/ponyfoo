@@ -2,7 +2,7 @@
 
 'use strict';
 
-process.chdir(__dirname);
+require('../chdir');
 
 var contra = require('contra');
 var winston = require('winston');
@@ -13,7 +13,8 @@ var logging = require('../lib/logging');
 var db = require('../lib/db');
 var articleService = require('../services/article');
 var articlePublishService = require('../services/articlePublish');
-var t, p = 0;
+var t = 0;
+var p = 0;
 var m;
 
 logging.configure();

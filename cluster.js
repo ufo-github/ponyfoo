@@ -1,6 +1,6 @@
 'use strict';
 
-process.chdir(__dirname);
+require('./chdir');
 
 var fs = require('fs');
 var path = require('path');

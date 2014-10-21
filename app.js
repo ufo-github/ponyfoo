@@ -1,6 +1,6 @@
 'use strict';
 
-process.chdir(__dirname);
+require('./chdir');
 
 var express = require('express');
 var moment = require('moment');
