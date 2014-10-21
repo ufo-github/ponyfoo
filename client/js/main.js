@@ -26,7 +26,10 @@ taunus.on('start', function (container, viewModel) {
 
 ponymark.configure({
   markdown: markdownService.compile,
-  imageUploads: '/api/markdown/images'
+  imageUploads: {
+    url: '/api/markdown/images',
+    timeout: 25000
+  }
 });
 
 conventions();

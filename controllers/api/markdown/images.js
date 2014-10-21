@@ -1,29 +1,47 @@
 'use strict';
 
 var path = require('path');
+var contra = require('contra');
 var ponymark = require('ponymark');
+var imageService = require('../../../services/image');
 var env = require('../../../lib/env');
 var dir = path.resolve('./temp/images');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var image = req.files && req.files.image;
-  var options = {
-    production: env('NODE_ENV') === 'production',
-    imgur: env('IMGUR_API_KEY'),
-    local: dir,
-    image: image
-  };
+  if (!image) {
+    errored('Image upload failed!'); return;
+  }
 
-  ponymark.imageUpload(options, uploaded);
+  contra.waterfall([optimize, upload], uploaded);
+
+  function optimize (next) {
+    imageService.optimizeUpload(image, next);
+  }
+
+  function upload (buffer, next) {
+    var options = {
+      production: env('NODE_ENV') === 'production',
+      imgur: env('IMGUR_API_KEY'),
+      local: dir,
+      image: image
+    };
+
+    ponymark.imageUpload(options, next);
+  }
 
   function uploaded (err, result) {
     if (err) {
       errored(err.message); return;
     }
-    res.status(200).json(result);
+    respond(200, result);
   }
 
   function errored (message) {
-    res.status(400).json({ messages: [message] });
+    respond(400, { messages: [message] });
+  }
+
+  function respond (status, message) {
+    res.status(status).json(message);
   }
 };
