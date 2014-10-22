@@ -22,6 +22,7 @@ taunus.on('start', function (container, viewModel) {
   require('./search');
   require('./subscriptions');
   analytics(viewModel.env);
+  require('./welcome')(viewModel);
 });
 
 ponymark.configure({
