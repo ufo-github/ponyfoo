@@ -19,6 +19,7 @@ function conventions () {
 }
 
 function createLayer (container, viewModel) {
+  measly.abort();
   viewModel.measly = measly.layer({ context: container });
 }
 
@@ -46,6 +47,9 @@ function getMessages (err, body) {
 }
 
 function render (err, body) {
+  if (this.aborted) {
+    return;
+  }
   var messages = getMessages(err, body);
   if (messages === void 0) {
     return;
