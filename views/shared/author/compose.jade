@@ -6,33 +6,26 @@ article.ly-section
     textarea.ac-text.ac-teaser.pmk-input(placeholder='Tease the reader about your article. Used for marketing, search snippets, etc.', data-markdown=article.teaser)
     textarea.ac-text.ac-body.pmk-input(placeholder='Main body of your article', data-markdown=article.body)
     input.ac-tags(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
-    article.ac-preview.md-markdown
-      h1.ac-preview-title.at-title
-      span.ac-preview-read
-    section.ac-preview-tags
 
   - publication = moment(article.publication)
   - publicationFormat = 'DD-MM-YYYY HH:mm'
   - published = article.status === 'published'
 
-  aside.ac-aside
-    section.ac-timing
-      if !published
-        p You can save the article as a draft, publish it, or slate it for publication at a later date
-        p
-          input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
-          label.ck-radio(for='ac-draft-radio') Draft
-        p
-          input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish' || article.status === void 0)
-          label.ck-radio(for='ac-publish-radio') Publish
-        p
-          input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
-          label.ck-checkbox(for='ac-schedule-checkbox') Schedule
-          input.ac-publication(value=publication.format(publicationFormat), placeholder=publicationFormat)
-      else
-        p='Published ' + publication.fromNow()
+  if !published
+    aside.ac-aside
+      section.ac-timing
+          p You can save the article as a draft, publish it, or slate it for publication at a later date
+          p
+            input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
+            label.ck-radio(for='ac-draft-radio') Draft
+          p
+            input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish' || article.status === void 0)
+            label.ck-radio(for='ac-publish-radio') Publish
+          p
+            input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
+            label.ck-checkbox(for='ac-schedule-checkbox') Schedule
+            input.ac-publication(value=publication.format(publicationFormat), placeholder=publicationFormat)
 
-    if !published
       section.ac-campaign
         p What mediums do you want to use to promote the article?
         p
@@ -44,6 +37,11 @@ article.ly-section
         p
           input.ck-input#ac-campaign-echojs(type='checkbox', checked=article.echojs !== false)
           label.ck-checkbox(for='ac-campaign-echojs') Submit to EchoJS
+
+  article.ac-preview.md-markdown
+    h1.ac-preview-title.at-title
+    span.ac-preview-read
+  section.ac-preview-tags
 
   footer.ac-actions
     if editing
