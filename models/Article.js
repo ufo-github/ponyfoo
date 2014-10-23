@@ -20,7 +20,10 @@ var schema = new mongoose.Schema({
   prev: { type: ObjectId, index: { unique: false }, ref: 'Article' },
   next: { type: ObjectId, index: { unique: false }, ref: 'Article' },
   related: [{ type: ObjectId, ref: 'Article' }],
-  comments: [commentSchema]
+  comments: [commentSchema],
+  email: { type: Boolean, 'default': true },
+  tweet: { type: Boolean, 'default': true },
+  echojs: { type: Boolean, 'default': true }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 var api = mongoose.model('Article', schema);

@@ -3,6 +3,7 @@ Thumbs.db
 .pid
 .env
 .bin
+.job.scheduler
 node_modules
 npm-debug.log
 temp

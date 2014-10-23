@@ -9,6 +9,7 @@ var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var key = 'author-unsaved-draft';
+var publicationFormat = 'DD-MM-YYYY HH:mm';
 
 function noop () {}
 
@@ -22,6 +23,10 @@ module.exports = function (viewModel, route) {
   var teaser = $('.ac-teaser');
   var body = $('.ac-body');
   var tags = $('.ac-tags');
+  var campaign = $('.ac-campaign');
+  var email = $('#ac-campaign-email');
+  var tweet = $('#ac-campaign-tweet');
+  var echojs = $('#ac-campaign-echojs');
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
   var preview = $.findOne('.ac-preview');
@@ -49,6 +54,7 @@ module.exports = function (viewModel, route) {
   discardButton.on('click', discard);
   saveButton.on('click', save);
   status.on('change', updatePublication);
+  campaign.on('change', '.ck-input', serializeSlowly);
   schedule.on('change', updatePublication);
 
   deserialize(editing && article);
@@ -142,6 +148,9 @@ module.exports = function (viewModel, route) {
     teaser.value(data.teaser || '');
     body.value(data.body || '');
     tags.value((data.tags || []).join(' '));
+    email.value(data.email);
+    tweet.value(data.tweet);
+    echojs.value(data.echojs);
 
     boundSlug = textService.slug(titleText) === slugText;
 
@@ -168,11 +177,14 @@ module.exports = function (viewModel, route) {
       teaser: teaser.value(),
       body: body.value(),
       tags: individualTags,
-      status: state
+      status: state,
+      email: email.value(),
+      tweet: tweet.value(),
+      echojs: echojs.value()
     };
     var scheduled = schedule.value();
     if (scheduled && !published) {
-      data.publication = moment(publication.value(), 'DD-MM-YYYY HH:mm').format();
+      data.publication = moment(publication.value(), publicationFormat).format();
     }
     return data;
   }

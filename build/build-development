@@ -8,8 +8,8 @@ npm run copy
 # compile
 spritesmith
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
-jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}' --watch &
-taunus -o && taunus -o -w &
+jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
+taunus -o
 watchify client/js/main.js -o .bin/public/js/all.js --basedir client/js --debug --verbose &
 
 # start app

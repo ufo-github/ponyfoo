@@ -11,6 +11,7 @@ var commentService = require('./comment');
 var cryptoService = require('./crypto');
 var subscriberService = require('./subscriber');
 var twitterService = require('./twitter');
+var echojsService = require('./echojs');
 var markupService = require('./markup');
 var authority = env('AUTHORITY');
 
@@ -48,11 +49,15 @@ function campaign (article, done) {
   }
   contra.concurrent([
     contra.curry(email, article),
-    contra.curry(tweet, article)
+    contra.curry(tweet, article),
+    contra.curry(echojs, article)
   ], done);
 }
 
 function email (article, done) {
+  if (article.email === false) {
+    done(); return;
+  }
   var teaser = markupService.compile(article.teaserHtml, { markdown: false, absolutize: true });
   var model = {
     subject: article.title,
@@ -68,6 +73,9 @@ function email (article, done) {
 }
 
 function tweet (article, done) {
+  if (article.tweet === false) {
+    done(); return;
+  }
   var formats = [
     'Published: "%s" %s',
     'Fresh content!  "%s" %s',
@@ -82,6 +90,17 @@ function tweet (article, done) {
   var links = util.format('%s/articles/%s #%s', authority, article.slug, tag);
   var status = util.format(fmt, article.title, links);
   twitterService.tweet(status, done);
+}
+
+function echojs (article, done) {
+  if (article.echojs === false) {
+    done(); return;
+  }
+  var data = {
+    title: article.title,
+    url: util.format('%s/articles/%s', authority, article.slug)
+  };
+  echojsService.submit(data, done);
 }
 
 function toJSON (source) {

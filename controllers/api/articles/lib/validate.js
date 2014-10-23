@@ -22,7 +22,10 @@ function validate (model, update) {
     body: getContent('body'),
     tags: getTags(),
     comments: [],
-    related: []
+    related: [],
+    email: !!model.email,
+    tweet: !!model.tweet,
+    echojs: !!model.echojs
   };
   var publication = getPublicationDate();
   if (publication) {
