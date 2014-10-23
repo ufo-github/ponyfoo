@@ -139,7 +139,9 @@ module.exports = function (viewModel, route) {
   function clear () { storage.remove(key); }
 
   function deserialize (source) {
-    var data = source || storage.get(key) || {};
+    var data = source || storage.get(key) || {
+      email: true, tweet: true, echojs: true
+    };
     var titleText = data.title || '';
     var slugText = data.slug || '';
 
