@@ -6,8 +6,8 @@ var fs = require('fs');
 var path = require('path');
 var recluster = require('recluster');
 var options = { workers: 2, backoff: 10 };
-var cluster = recluster('./cluster/worker.js', options);
-var pidfile = path.resolve('../../.pid');
+var cluster = recluster('./app.js', options);
+var pidfile = path.resolve('./.pid');
 
 fs.writeFileSync(pidfile, process.pid.toString() + '\n');
 

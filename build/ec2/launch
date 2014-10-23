@@ -106,7 +106,6 @@ done
 ### setup
 
 APP="~/apps/$ENV"
-APP_VERSIONS="$APP/v"
 RSYNC="~/apps/.rsync/$ENV"
 RSYNC_MAILTUBE="$RSYNC/mailtube"
 RSYNC_REPO="$RSYNC/app"
@@ -136,7 +135,7 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   sudo iptables-save
 
   echo "stage: expected directory structure"
-  mkdir -p $APP_VERSIONS
+  mkdir -p $APP
   mkdir -p $RSYNC_MAILTUBE
   mkdir -p $RSYNC_REPO
   mkdir -p $RSYNC_CONFIG

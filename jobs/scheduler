@@ -4,6 +4,7 @@
 
 require('../chdir');
 
+var fs = require('fs');
 var contra = require('contra');
 var winston = require('winston');
 var moment = require('moment');
@@ -17,6 +18,7 @@ var t = 0;
 var p = 0;
 var m;
 
+fs.writeFile('.job.scheduler', moment().format('HH:mm:ss -- DD MMMM, YYYY') + '\n');
 logging.configure();
 db(operational);
 
