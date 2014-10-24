@@ -37,8 +37,10 @@ var options = {
   })
 };
 
+ultramarked.setOptions(options);
+
 function compile (text) {
-  return ultramarked(text, options);
+  return ultramarked(text);
 }
 
 module.exports = {
