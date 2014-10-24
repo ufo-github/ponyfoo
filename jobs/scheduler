@@ -17,8 +17,9 @@ var articlePublishService = require('../services/articlePublish');
 var t = 0;
 var p = 0;
 var m;
+var defaultFormat = 'HH:mm:ss -- DD MMMM, YYYY';
 
-fs.writeFile('.job.scheduler', moment().format('HH:mm:ss -- DD MMMM, YYYY') + '\n');
+fs.writeFile('.job.scheduler', moment().format(defaultFormat) + '\n');
 logging.configure();
 db(operational);
 
@@ -48,8 +49,8 @@ function single (article, next) {
         article.save(saved); // save the status change first!
       } else {
         if (article.publication) {
-          when = moment(article.publication).fromNow();
-          winston.info('Article "%s" will be published %s.', article.title, when);
+          when = moment(article.publication);
+          winston.info('Article "%s" will be published %s (%s).', article.title, when.fromNow(), when.format(defaultFormat));
         }
         next();
       }
