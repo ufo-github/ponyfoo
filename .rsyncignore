@@ -1,4 +1,6 @@
 .git
+.pid
+.env
 node_modules
 build
 deploy
