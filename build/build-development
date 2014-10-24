@@ -13,4 +13,4 @@ taunus -o
 watchify client/js/main.js -o .bin/public/js/all.js --basedir client/js --debug --verbose &
 
 # start app
-nodemon app.js
+APP_REBUILD=false nodemon app.js
