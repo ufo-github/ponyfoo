@@ -20,11 +20,15 @@ process.on('SIGUSR2', function() {
   cluster.reload();
 });
 
+process.on('SIGINT', function () {
+  process.exit();
+});
+
 process.on('exit', function () {
   log('shutting down...');
   fs.unlinkSync(pidfile);
 });
 
 function log (message) {
-  console.log('Cluster', process.pid, message);
+  console.log('\nCluster', process.pid, message);
 }
