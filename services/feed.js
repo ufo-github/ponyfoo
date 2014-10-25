@@ -17,7 +17,7 @@ var contact = 'Nicolas Bevacqua <hello@bevacqua.io>';
 var location = path.resolve('.bin/static/feed.xml');
 
 function generate (articles, done) {
-  var absolutes = {};
+  var htmls = {};
   var tags = _(articles).pluck('tags').flatten().unique().value();
   var now = moment();
   var feed = new RSS({
@@ -41,7 +41,8 @@ function generate (articles, done) {
 
   function absolutize (article, done) {
     var teaser = markupService.compile(article.teaserHtml, { markdown: false, absolutize: true });
-    absolutes[article._id] = teaser;
+    var body = markupService.compile(article.bodyHtml, { markdown: false, absolutize: true });
+    htmls[article._id] = teaser + body;
     done();
   }
 
@@ -53,7 +54,7 @@ function generate (articles, done) {
     articles.forEach(function insert (article) {
       feed.item({
         title: article.title,
-        description: absolutes[article._id],
+        description: htmls[article._id],
         url: authority + '/articles/' + article.slug,
         categories: article.tags,
         author: contact,
