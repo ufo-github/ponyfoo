@@ -40,9 +40,12 @@ function generate (articles, done) {
   contra.each(articles, absolutize, fill);
 
   function absolutize (article, done) {
-    var teaser = markupService.compile(article.teaserHtml, { markdown: false, absolutize: true });
-    var body = markupService.compile(article.bodyHtml, { markdown: false, absolutize: true });
-    htmls[article._id] = teaser + body;
+    var fullHtml = article.teaserHtml + article.bodyHtml;
+    var article = markupService.compile(fullHtml, {
+      markdown: false,
+      absolutize: true
+    });
+    htmls[article._id] = article;
     done();
   }
 
