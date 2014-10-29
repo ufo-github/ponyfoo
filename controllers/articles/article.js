@@ -20,7 +20,7 @@ module.exports = function (req, res, next) {
 
   function validate (err, article) {
     if (err || !article) {
-      done(); return;
+      notFound(); return;
     }
     if (article.status === 'published') {
       done(); return;
@@ -33,10 +33,14 @@ module.exports = function (req, res, next) {
     }
 
     // not found!
-    handle(null, []);
+    notFound();
 
     function done () {
       handle(err, [article]);
+    }
+
+    function notFound () {
+      handle(err, []);
     }
   }
 };

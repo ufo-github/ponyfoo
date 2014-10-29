@@ -17,9 +17,7 @@ function read (file) {
 
 function getDefaultViewModel (done) {
   contra.concurrent({
-    bioHtml: function (next) {
-      bioService.getHtml(authorEmail, next);
-    },
+    bioHtml: bioService.getHtml.bind(null, authorEmail),
     javascriptLoader: read('.bin/inline/javascript.js'),
     styleLoader: read('.bin/inline/styles.js'),
     fontLoader: read('.bin/inline/fonts.js')

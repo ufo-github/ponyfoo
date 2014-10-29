@@ -1,15 +1,27 @@
-~function (window, document) {
-  function inject () {
-    var elem = document.createElement('script');
-    elem.src = '/js/all.js';
-    document.body.appendChild(elem);
+~function (window, document, location) {
+  function inject (url) {
+    var script = document.createElement('script');
+    script.src = url;
+    document.body.appendChild(script);
+  }
+
+  function injector () {
+    var search = location.search;
+    var searchQuery = search ? '&' + search.substr(1) : '';
+    var searchJson = '?json&callback=taunusReady' + searchQuery;
+    inject(location.pathname + searchJson);
+    inject('/js/all.js');
   }
 
   if (window.addEventListener) {
-    window.addEventListener('load', inject, false);
+    window.addEventListener('load', injector, false);
   } else if (window.attachEvent) {
-    window.attachEvent('onload', inject);
+    window.attachEvent('onload', injector);
   } else {
-    window.onload = inject;
+    window.onload = injector;
   }
-}(window, document);
+
+  window.taunusReady = function (model) {
+    window.taunusReady = model;
+  };
+}(window, document, location);
