@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var cube = $('.pc-cube');
+var cube = $('.pc-cube').addClass('pc-smooth');
 
 function show () {
   cube.addClass('pc-show');

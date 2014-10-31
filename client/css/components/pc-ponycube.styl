@@ -28,6 +28,13 @@ pc-face(x, y, c)
 
     opacity 0
 
+  // avoid opacity fade to 0 on page load, by adding opacity transition after load
+  .pc-smooth
+    transition-property all
+
+  .pc-show
+    opacity 1
+
   .pc-faces
     width 100%
     height 100%
@@ -80,9 +87,6 @@ pc-face(x, y, c)
   .pc-bottom
     pc-face(-90deg, 0, c-green-light)
     animation pc-glow-bottom 0.4s alternate infinite
-
-.pc-show
-  opacity 1
 
 @keyframes pc-glow-front
   0%
