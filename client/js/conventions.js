@@ -5,6 +5,7 @@ var taunus = require('taunus');
 var measly = require('measly');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
 var unwrapImages = require('./lib/unwrapImages');
+var cube = require('./lib/cube');
 var body = $('body');
 
 body.on('click', '.vw-conventional, .fs-messages', remove);
@@ -12,10 +13,13 @@ body.on('click', '.vw-conventional, .fs-messages', remove);
 function conventions () {
   measly.on('data', renderOrClean);
   measly.on('error', render);
-  taunus.on('error', handleTaunusError);
   taunus.on('render', createLayer);
   taunus.on('render', unwrapImages);
   taunus.on('start', unwrapImages.bind(null, body));
+  taunus.on('fetch.start', cube.show);
+  taunus.on('fetch.done', cube.hide);
+  taunus.on('fetch.error', cube.hide);
+  taunus.on('fetch.error', handleTaunusError);
 }
 
 function createLayer (container, viewModel) {
