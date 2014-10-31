@@ -14,27 +14,28 @@ module.exports = function (req, res, next) {
     respond.invalid(res, validation); return;
   }
   var model = validation.model;
-  var broadcast = false;
 
   contra.waterfall([
-    function statusUpdate (next) {
-      articlePublishService.publish(model, next);
-    },
-    function lookup (published, next) {
-      broadcast = published;
+    function lookup (next) {
       Article.findOne({ slug: req.params.slug }, next);
     },
     function found (article, next) {
       if (!article) {
         res.status(404).json({ messages: ['Article not found'] }); return;
       }
-      Object.keys(model).forEach(function (key) {
+      model._id = article._id;
+      articlePublishService.publish(model, function maybePublished (err, published) {
+        next(err, article, published);
+      });
+    },
+    function statusUpdate (article, published, next) {
+      Object.keys(model).forEach(function updateModel (key) {
         article[key] = model[key];
       });
       article.save(saved);
 
       function saved (err) {
-        if (!err && broadcast) {
+        if (!err && published) {
           articleService.campaign(article);
         }
         next(err);

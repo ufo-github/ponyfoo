@@ -10,6 +10,7 @@ var Subscriber = require('../models/Subscriber');
 var commentService = require('./comment');
 var cryptoService = require('./crypto');
 var subscriberService = require('./subscriber');
+var textService = require('./text');
 var twitterService = require('./twitter');
 var echojsService = require('./echojs');
 var markupService = require('./markup');
@@ -86,8 +87,9 @@ function tweet (article, done) {
     'This just out! "%s" %s'
   ];
   var fmt = _.sample(formats);
-  var tag = article.tags.slice(0, 2).join(' #').replace(/-/g, '');
-  var links = util.format('%s/articles/%s #%s', authority, article.slug, tag);
+  var tag = article.tags.slice(0, 2).join(' #');
+  var camelTag = textService.hyphenToCamel(tag);
+  var links = util.format('%s/articles/%s #%s', authority, article.slug, camelTag);
   var status = util.format(fmt, article.title, links);
   twitterService.tweet(status, done);
 }

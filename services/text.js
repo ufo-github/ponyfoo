@@ -32,6 +32,7 @@ var replacements = [
   [/c#/ig, 'csharp'],
   [/f#/ig, 'fsharp']
 ];
+var hyphenated = /-([a-z])/g;
 
 function truthy (value) {
   return !!value;
@@ -97,9 +98,18 @@ function format () {
   return args.reduce(replacer, initial);
 }
 
+function hyphenToCamel (text) {
+  return text.replace(hyphenated, upperCase);
+}
+
+function upperCase (m, g) {
+  return g.toUpperCase();
+}
+
 module.exports = {
  slug: slug,
  truncate: truncate,
  splitTags: splitTags,
- format: format
+ format: format,
+ hyphenToCamel: hyphenToCamel
 };
