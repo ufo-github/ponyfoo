@@ -39,14 +39,14 @@ function generate (articles, done) {
 
   contra.each(articles, absolutize, fill);
 
-  function absolutize (article, done) {
+  function absolutize (article, next) {
     var fullHtml = article.teaserHtml + article.bodyHtml;
-    var article = markupService.compile(fullHtml, {
+    var compiled = markupService.compile(fullHtml, {
       markdown: false,
       absolutize: true
     });
-    htmls[article._id] = article;
-    done();
+    htmls[article.slug] = compiled;
+    next();
   }
 
   function fill (err) {
@@ -57,7 +57,7 @@ function generate (articles, done) {
     articles.forEach(function insert (article) {
       feed.item({
         title: article.title,
-        description: htmls[article._id],
+        description: htmls[article.slug],
         url: authority + '/articles/' + article.slug,
         categories: article.tags,
         author: contact,
