@@ -2,6 +2,8 @@
 
 var fs = require('fs');
 var path = require('path');
+var gm = require('gm');
+var contra = require('contra');
 var Imagemin = require('imagemin');
 var pngquant = require('imagemin-pngquant');
 var mozjpeg = require('imagemin-mozjpeg');
@@ -10,6 +12,10 @@ var winston = require('winston');
 var prettyBytes = require('pretty-bytes');
 var env = require('../lib/env');
 var level = env('LOGGING_LEVEL');
+var limits = {
+  width: 900,
+  height: 550
+};
 
 function findPlugin (ext) {
   if (ext === 'png') {
@@ -38,23 +44,30 @@ function log (ul) {
   var was = prettyBytes(ul.size);
   var is = prettyBytes(stats.size);
   var difference = ul.size - stats.size;
-  var diff = prettyBytes(difference);
-  var percentage = (100 - stats.size * 100 / ul.size).toFixed(2);
-  winston.debug('%s was: %s, is: %s, diff: %s (%s%)', ul.originalname, was, is, diff, percentage);
+  var diff = prettyBytes(-difference);
+  var percentage = -(100 - stats.size * 100 / ul.size).toFixed(2);
+  winston.debug('%s was %s, is %s, diff %s [%s%]', ul.originalname, was, is, diff, percentage);
+}
+
+function shrink (ul, done) {
+  gm(ul.path).resize(limits.width, limits.height).write(ul.path, done);
 }
 
 function optimizeUpload (ul, done) {
-  getMinifier(ul).run(processed);
-
-  function processed (err, buffers) {
-    if (err) {
-      done(err); return;
+  contra.series([
+    function (next) {
+      shrink(ul, next);
+    },
+    function (next) {
+      getMinifier(ul).run(next);
+    },
+    function (next) {
+      process.nextTick(function () {
+        log(ul);
+      });
+      next();
     }
-    process.nextTick(function () {
-      log(ul);
-    });
-    done(err, ul);
-  }
+  ], done);
 }
 
 module.exports = {
