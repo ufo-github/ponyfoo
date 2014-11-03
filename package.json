@@ -88,7 +88,7 @@
     "taunus": "^1.8.2",
     "transports": "^1.0.0",
     "twit": "^1.1.18",
-    "ultramarked": "^1.6.0",
+    "ultramarked": "^1.6.1",
     "validator": "^3.12.0",
     "winston": "^0.7.3",
     "winston-mongodb": "^0.5.2"
