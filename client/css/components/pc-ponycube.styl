@@ -10,6 +10,9 @@ pc-face(x, y, c)
   box-shadow 3px 3px 50px c
   opacity 1
 
+.pc-cube
+  opacity 0
+
 @media screen and (min-width: 768px)
   .pc-cube,
   .pc-faces,
@@ -25,8 +28,6 @@ pc-face(x, y, c)
     height pc-size
     transition transform 0.7s
     animation pc-bounce-wrapper 5s alternate infinite
-
-    opacity 0
 
   // avoid opacity fade to 0 on page load, by adding opacity transition after load
   .pc-smooth
