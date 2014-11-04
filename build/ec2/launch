@@ -117,7 +117,7 @@ ssh -ttti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF
   echo "stage: aptitude!"
   sudo apt-key update
   sudo apt-get update
-  sudo apt-get install git make g++ -y
+  sudo apt-get install git make g++ graphicsmagick -y
 
   echo "stage: tcp tweaks"
   sudo sysctl -w net.ipv4.tcp_slow_start_after_idle=0
