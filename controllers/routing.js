@@ -64,7 +64,10 @@ module.exports = function (app) {
 
   taunus.mount(app, routes, {
     layout: layout,
-    getDefaultViewModel: getDefaultViewModel
+    getDefaultViewModel: getDefaultViewModel,
+    hget: {
+      root: 'article', ignore: 'footer,.mm-count,.at-meta'
+    }
   });
   app.use(errors.handler);
 };

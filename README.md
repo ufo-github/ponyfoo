@@ -55,6 +55,14 @@ If you run into trouble, you can `ssh` into the instance and ammend the situatio
 npm run ssh
 ```
 
+## Usage
+
+To access the production site visit [ponyfoo.com][4], or use `curl` to get a plaintext edition.
+
+```shell
+curl -L -H "Accept: text/plain" ponyfoo.com/articles/last
+```
+
 ## License
 
 MIT
