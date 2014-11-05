@@ -1,7 +1,7 @@
 {
   "name": "ponyfoo",
   "description": "Open-source blogging platform",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "homepage": "https://github.com/bevacqua/ponyfoo",
   "authors": [
     "Nicolas Bevacqua <nicolasbevacqua@gmail.com>"
