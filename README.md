@@ -70,3 +70,4 @@ MIT
   [1]: https://travis-ci.org/ponyfoo/ponyfoo.png?branch=master
   [2]: https://travis-ci.org/ponyfoo/ponyfoo
   [3]: http://mongolab.com/
+  [4]: https://github.com/ponyfoo/ponyfoo
