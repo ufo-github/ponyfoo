@@ -35,4 +35,4 @@ ponymark.configure({
 
 conventions();
 
-taunus.mount(main, wiring);
+taunus.mount(main, wiring, { cache: true });

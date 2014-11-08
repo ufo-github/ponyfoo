@@ -40,6 +40,6 @@ module.exports = function (viewModel) {
   }
 
   function leave () {
-    //taunus.navigate('/');
+    taunus.navigate('/');
   }
 };
