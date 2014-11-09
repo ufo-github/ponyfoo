@@ -61,7 +61,7 @@
     "imagemin-jpegtran": "^3.0.0",
     "imagemin-mozjpeg": "^3.0.0",
     "imagemin-pngquant": "^3.0.0",
-    "jadum": "^1.1.2",
+    "jadum": "^1.2.0",
     "lamernews-client": "^1.1.0",
     "lodash": "^2.4.1",
     "measly": "^1.3.6",
@@ -90,7 +90,7 @@
     "taunus-express": "^1.0.1",
     "transports": "^1.0.0",
     "twit": "^1.1.18",
-    "ultramarked": "^1.6.1",
+    "ultramarked": "^1.6.3",
     "validator": "^3.12.0",
     "winston": "^0.7.3",
     "winston-mongodb": "^0.5.2"
