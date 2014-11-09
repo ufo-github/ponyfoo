@@ -1,6 +1,7 @@
 'use strict';
 
 var taunus = require('taunus');
+var taunusExpress = require('taunus-express');
 var transports = require('transports');
 var routes = require('./routes');
 var verifyAccountEmail = require('./account/verifyEmail');
@@ -62,7 +63,8 @@ module.exports = function (app) {
   transports.routing(app, registerAccount);
   redirects.setup(app);
 
-  taunus.mount(app, routes, {
+  taunusExpress(taunus, app, {
+    routes: routes,
     layout: layout,
     getDefaultViewModel: getDefaultViewModel,
     hget: {
