@@ -14,6 +14,7 @@
   "bugs": {
     "url": "https://github.com/bevacqua/ponyfoo/issues"
   },
+  "main": "app",
   "scripts": {
     "clean": "build/clean",
     "configure": "build/ec2/configure",

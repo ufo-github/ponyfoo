@@ -5,30 +5,41 @@ require('./chdir');
 var fs = require('fs');
 var path = require('path');
 var recluster = require('recluster');
-var options = { workers: 2, backoff: 10 };
-var cluster = recluster('./app.js', options);
 var pidfile = path.resolve('.pid');
 
-fs.writeFileSync(pidfile, process.pid.toString() + '\n');
+function warmup () {
+  var options = {
+    workers: 2, backoff: 10
+  };
+  var cluster = recluster('./app.js', options);
 
-log('warming up...');
+  fs.writeFileSync(pidfile, process.pid.toString() + '\n');
 
-cluster.run();
+  log('warming up...');
 
-process.on('SIGUSR2', function() {
-  log('got SIGUSR2, reloading...');
-  cluster.reload();
-});
+  cluster.run();
 
-process.on('SIGINT', function () {
-  process.exit();
-});
+  process.on('SIGUSR2', function() {
+    log('got SIGUSR2, reloading...');
+    cluster.reload();
+  });
 
-process.on('exit', function () {
-  log('shutting down...');
-  fs.unlinkSync(pidfile);
-});
+  process.on('SIGINT', function () {
+    process.exit();
+  });
+
+  process.on('exit', function () {
+    log('shutting down...');
+    fs.unlinkSync(pidfile);
+  });
+}
 
 function log (message) {
   console.log('\nCluster', process.pid, message);
+}
+
+if (module.parent) {
+  module.exports = warmup;
+} else {
+  warmup();
 }

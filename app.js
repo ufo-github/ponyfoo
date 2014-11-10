@@ -16,27 +16,30 @@ var development = require('./lib/development');
 var feedService = require('./services/feed');
 var sitemapService = require('./services/sitemap');
 var articleSearchService = require('./services/articleSearch');
-var app = express();
-var port = env('PORT');
 var shouldRebuild = !env('APP_REBUILD');
+var port = env('PORT');
 
-logging.configure();
-development.patch(app);
+function listen () {
+  var app = express();
 
-global.moment = moment;
+  logging.configure();
+  development.patch(app);
 
-app.locals.settings['x-powered-by'] = false;
+  global.moment = moment;
 
-db(operational);
+  app.locals.settings['x-powered-by'] = false;
 
-function operational () {
-  winston.info('Worker %s executing app@%s', process.pid, pkg.version);
-  models();
-  middleware(app);
-  development.statics(app);
-  routing(app);
-  development.errors(app);
-  app.listen(port, listening);
+  db(operational);
+
+  function operational () {
+    winston.info('Worker %s executing app@%s', process.pid, pkg.version);
+    models();
+    middleware(app);
+    development.statics(app);
+    routing(app);
+    development.errors(app);
+    app.listen(port, listening);
+  }
 }
 
 function listening () {
@@ -44,7 +47,7 @@ function listening () {
   development.browserSync();
 
   if (shouldRebuild) {
-    setTimeout(rebuild, 5000);
+    setTimeout(rebuild, random(1000, 5000));
   }
 }
 
@@ -52,4 +55,14 @@ function rebuild () {
   feedService.rebuild();
   sitemapService.rebuild();
   articleSearchService.rebuild();
+}
+
+function random (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+if (module.parent) {
+  module.exports = listen;
+} else {
+  listen();
 }
