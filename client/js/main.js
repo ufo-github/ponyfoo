@@ -35,4 +35,4 @@ ponymark.configure({
 
 conventions();
 
-taunus.mount(main, wiring, { cache: true });
+taunus.mount(main, wiring, { cache: true, prefetch: true });

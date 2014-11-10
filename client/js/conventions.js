@@ -18,6 +18,7 @@ function conventions () {
   taunus.on('start', unwrapImages.bind(null, body));
   taunus.on('fetch.start', cube.show);
   taunus.on('fetch.done', cube.hide);
+  taunus.on('fetch.abort', cube.hide);
   taunus.on('fetch.error', cube.hide);
   taunus.on('fetch.error', handleTaunusError);
 }
@@ -77,11 +78,8 @@ function render (err, body) {
   global.scrollBy(0, -100);
 }
 
-function handleTaunusError (err, origin) {
-  if (!origin.context) {
-    return;
-  }
-  var ctx = $(origin.context);
+function handleTaunusError (route, context, err) {
+  var ctx = $(context.element);
   var parents = ctx.parents('.ly-section');
   var section = ctx.where('.ly-section').and(parents);
   if (section.length) {
