@@ -6,10 +6,6 @@
   }
 
   function injector () {
-    var search = location.search;
-    var searchQuery = search ? '&' + search.substr(1) : '';
-    var searchJson = '?json&callback=taunusReady' + searchQuery;
-    inject(location.pathname + searchJson);
     inject('/js/all.js');
   }
 
@@ -20,8 +16,4 @@
   } else {
     window.onload = injector;
   }
-
-  window.taunusReady = function (model) {
-    window.taunusReady = model;
-  };
 }(window, document, location);
