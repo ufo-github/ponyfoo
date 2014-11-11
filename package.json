@@ -91,7 +91,7 @@
     "taunus-express": "^1.0.1",
     "transports": "^1.0.0",
     "twit": "^1.1.18",
-    "ultramarked": "^1.6.3",
+    "ultramarked": "^1.7.0",
     "validator": "^3.12.0",
     "winston": "^0.7.3",
     "winston-mongodb": "^0.5.2"
