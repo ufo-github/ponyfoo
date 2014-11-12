@@ -13,7 +13,7 @@ var publicationFormat = 'DD-MM-YYYY HH:mm';
 
 function noop () {}
 
-module.exports = function (viewModel, route) {
+module.exports = function (viewModel, container, route) {
   var article = viewModel.article;
   var editing = viewModel.editing;
   var published = editing && article.status === 'published';

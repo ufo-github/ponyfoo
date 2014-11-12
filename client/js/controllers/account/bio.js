@@ -5,7 +5,7 @@ var taunus = require('taunus');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var markdownService = require('../../../../services/markdown');
 
-module.exports = function (viewModel, route) {
+module.exports = function (viewModel) {
   var editor = $('.cb-bio');
   var preview = $.findOne('.cb-preview');
   var saveButton = $('.cb-save');
