@@ -3,7 +3,7 @@
 var notFound = '/not-found';
 
 module.exports = function (req, res, next) {
-  if (req.url !== notFound) {
+  if (req.path !== notFound) {
     res.redirect(notFound); return;
   }
 
