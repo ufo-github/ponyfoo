@@ -67,7 +67,7 @@ module.exports = function (app) {
     routes: routes,
     layout: layout,
     getDefaultViewModel: getDefaultViewModel,
-    hget: {
+    plaintext: {
       root: 'article', ignore: 'footer,.mm-count,.at-meta'
     }
   });

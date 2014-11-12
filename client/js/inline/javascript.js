@@ -6,8 +6,16 @@
   }
 
   function injector () {
+    var search = location.search;
+    var searchQuery = search ? '&' + search.substr(1) : '';
+    var searchJson = '?json&callback=taunusReady' + searchQuery;
+    inject(location.pathname + searchJson);
     inject('/js/all.js');
   }
+
+  window.taunusReady = function (model) {
+    window.taunusReady = model;
+  };
 
   if (window.addEventListener) {
     window.addEventListener('load', injector, false);

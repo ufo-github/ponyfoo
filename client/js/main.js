@@ -7,14 +7,9 @@ var moment = require('moment');
 var markdownService = require('../../services/markdown');
 var conventions = require('./conventions');
 var analytics = require('./analytics');
-
-global.$ = $;
-global.moment = moment;
-global.taunus = taunus;
-global.md = markdownService.compile;
-
 var wiring = require('./wiring');
 var main = $.findOne('.ly-main');
+var g = global;
 
 require('hint');
 
@@ -35,4 +30,9 @@ ponymark.configure({
 
 conventions();
 
-taunus.mount(main, wiring, { cache: true, prefetch: true });
+taunus.mount(main, wiring, { cache: true, prefetch: true, bootstrap: 'manual' });
+
+g.$ = $;
+g.moment = moment;
+g.taunus = taunus;
+g.md = markdownService.compile;

@@ -1,6 +1,5 @@
 'use strict';
 
-var taunus = require('taunus');
 var notFound = '/not-found';
 
 module.exports = function (req, res, next) {
