@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var input = $('.sr-input');
 var button = $('.sr-button');
 var searchUrlService = require('../../services/searchUrl');

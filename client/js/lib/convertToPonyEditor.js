@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var flexarea = require('flexarea');
-var ponymark = require('ponymark');
+var ponymark = require('./ponymark');
 var twitterService = require('./twitter');
 
 function convertToPonyEditor (textarea, preview) {

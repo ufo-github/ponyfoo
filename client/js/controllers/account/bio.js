@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var markdownService = require('../../../../services/markdown');
 

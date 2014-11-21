@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var measly = require('measly');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
 var unwrapImages = require('./lib/unwrapImages');

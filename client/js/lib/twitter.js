@@ -1,6 +1,6 @@
 'use strict';
 
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var throttle = require('./throttle');
 var throttledUpdateView = throttle(updateView, 2500);
 

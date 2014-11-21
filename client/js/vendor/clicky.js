@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var ga = require('./ga-snippet');
 var main = $.findOne('.ly-main');
 var property = '100527664';

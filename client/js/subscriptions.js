@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var measly = require('measly');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var container = $('.ss-container');
 var input = $('.ss-input');
 var button = $('.ss-button');

@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 
 module.exports = function (viewModel) {

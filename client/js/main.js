@@ -1,7 +1,6 @@
 'use strict';
 
 var $ = require('dominus');
-var ponymark = require('ponymark');
 var taunus = require('taunus');
 var moment = require('moment');
 var markdownService = require('../../services/markdown');
@@ -20,19 +19,10 @@ taunus.on('start', function (container, viewModel) {
   require('./welcome')(viewModel);
 });
 
-ponymark.configure({
-  markdown: markdownService.compile,
-  imageUploads: {
-    url: '/api/markdown/images',
-    timeout: 25000
-  }
-});
-
 conventions();
 
 taunus.mount(main, wiring, { cache: true, prefetch: true, bootstrap: 'manual' });
 
 g.$ = $;
-g.moment = moment;
-g.taunus = taunus;
 g.md = markdownService.compile;
+g.moment = moment;

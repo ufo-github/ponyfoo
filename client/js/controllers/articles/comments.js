@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
-var taunus = require('taunus');
+var taunus = require('taunus/global');
 var throttle = require('../../lib/throttle');
 var storage = require('../../lib/storage');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');

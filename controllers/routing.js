@@ -24,10 +24,12 @@ var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
 var errors = require('../lib/errors');
+var env = require('../lib/env');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
 var verifyForm = require('./verifyForm');
 var layout = require('../.bin/views/server/layout/layout');
+var production = env('NODE_ENV') === 'production';
 
 module.exports = function (app) {
   app.get('/articles/feed', articleFeed);
@@ -69,7 +71,8 @@ module.exports = function (app) {
     getDefaultViewModel: getDefaultViewModel,
     plaintext: {
       root: 'article', ignore: 'footer,.mm-count,.at-meta'
-    }
+    },
+    deferMinified: production
   });
   app.use(errors.handler);
 };
