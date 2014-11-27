@@ -8,9 +8,10 @@ npm run copy
 # compile
 spritesmith
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
-jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}' --no-debug
+jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
+jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}' --watch &
 taunus -o
 watchify client/js/main.js -o .bin/public/js/all.js --basedir client/js --debug --verbose &
 
 # start app
-APP_REBUILD=false nodemon app.js
+APP_REBUILD=false nodemon -e js,jade app.js
