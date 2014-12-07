@@ -45,7 +45,7 @@ function getDefaultViewModel (done) {
         },
         meta: {
           description: 'Pony Foo is a technical blog maintained by Nicolas Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.',
-          images: ['http://ponyfoo.com/img/thumbnail.png'],
+          images: [authority + '/img/thumbnail.png'],
           keywords: []
         },
         bioHtml: data.bioHtml

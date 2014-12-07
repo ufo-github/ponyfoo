@@ -1,8 +1,10 @@
 'use strict';
 
 var _ = require('lodash');
+var env = require('../lib/env');
 var htmlService = require('./html');
-var defaultCover = 'http://ponyfoo.com/img/thumbnail.png';
+var authority = env('AUTHORITY');
+var defaultCover = authority + '/img/thumbnail.png';
 
 function appendDefaultCover (list) {
   list.push(defaultCover);
