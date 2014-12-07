@@ -15,6 +15,9 @@ function get (email, field, done) {
     if (err) {
       done(err); return;
     }
+    if (!user) {
+      done(null, ''); return;
+    }
     updateInternal(email, field, user[field]);
     done(null, user[field]);
   }
