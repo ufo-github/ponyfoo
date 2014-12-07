@@ -5,7 +5,11 @@ var metadataService = require('../../../services/metadata');
 var htmlService = require('../../../services/html');
 var textService = require('../../../services/text');
 
-function factory (res, next) {
+function factory (res, options, next) {
+  if (arguments.length < 3) {
+    next = options;
+    options = {};
+  }
   return function listOrSingle (err, articles) {
     if (err) {
       next(err); return;
@@ -17,7 +21,7 @@ function factory (res, next) {
     if (!model.action) {
       model.action = 'articles/' + key;
 
-      if (articles.length === 0) {
+      if (articles.length === 0 && options.skip !== false) {
         res.viewModel.skip = true;
         next(); return;
       }

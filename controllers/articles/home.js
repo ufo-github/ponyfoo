@@ -6,7 +6,7 @@ var listOrSingle = require('./lib/listOrSingle');
 
 module.exports = function (req, res, next) {
   var query = { status: 'published' };
-  var handle = listOrSingle(res, next);
+  var handle = listOrSingle(res, { skip: false }, next);
   var skip = validationService.integer(req.query.skip, 0);
 
   res.viewModel = {
