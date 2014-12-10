@@ -4,6 +4,9 @@ var $ = require('dominus');
 var comments = require('./comments');
 
 module.exports = function (viewModel) {
+  if (!viewModel.published || !viewModel.full) {
+    return
+  }
   var composer = $('.mc-composer');
   var commentsModel = {
     user: viewModel.user,
