@@ -15,7 +15,7 @@ function search (e) {
   var email = input.value().trim();
   if (email) {
     ajax.put('/api/subscribers', {
-      json: { email: email }
+      json: { subscriber: email }
     });
   }
 }
