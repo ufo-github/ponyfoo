@@ -71,8 +71,11 @@ module.exports = function (slug, input, done) {
       html: absolutizeHtml,
       gravatar: fetchGravatar
     }, function prepare (err, data) {
+      if (err) {
+        send(err); return;
+      }
       data.article = article;
-      send(err, data);
+      send(null, data);
     });
   }
 
