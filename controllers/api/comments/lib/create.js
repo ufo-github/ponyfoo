@@ -12,7 +12,6 @@ var commentService = require('../../../../services/comment');
 var markupService = require('../../../../services/markup');
 var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
-var markdownService = require('../../../../services/markdown');
 
 module.exports = function (slug, input, done) {
   var validation = validate(input);
