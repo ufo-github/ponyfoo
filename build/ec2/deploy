@@ -62,8 +62,9 @@ ssh -Ti $KEYFILE -o StrictHostKeyChecking=no $INSTANCE_USER@$PUBLIC_DNS << EOF_D
 
   ln -sfn $APP_CONFIG $RSYNC_REPO/.env
   ln -sfn $RSYNC_REPO $APP/live
-  npm --prefix $RSYNC_REPO prune
-  npm --prefix $RSYNC_REPO install --production --no-optional
+  npm update -g npm
+  npm prune --prefix $RSYNC_REPO
+  npm install --prefix $RSYNC_REPO --production --no-optional
   sudo nginx -s reload || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
   cluster_start_or_reload
 

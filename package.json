@@ -43,7 +43,6 @@
     "compression": "^1.0.11",
     "connect-flash": "^0.1.1",
     "connect-mongo-2": "^1.1.0",
-    "connect-mongostore": "^0.1.4",
     "contra": "^1.7.0",
     "cookie-parser": "^1.1.0",
     "dominus": "^2.5.1",
