@@ -24,7 +24,7 @@ function countTags (accumulator, tag) {
 function mostCommonTags (articles, max) {
   var weighted = _.pluck(articles, 'tags').reduce(countTags, []);
   var sorted = _.sortBy(weighted, 'count').reverse();
-  return _(sorted).first(max || 5).pluck('tag').value();
+  return _(sorted).pluck('tag').first(max || 5);
 }
 
 function extractImagesFromArticle (article) {

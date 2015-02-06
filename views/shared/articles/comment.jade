@@ -4,7 +4,7 @@ mixin author
     img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
   span.mm-author-name=comment.author
 
-section.mm-comment.ly-section(id='comment-' + comment._id.toString(), data-comment=comment._id.toString())
+section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment._id)
   header.mm-author
     if user === article.author.toString()
       a.mm-remove.ic-icon.ic-remove(aria-label='Remove')

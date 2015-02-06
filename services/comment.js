@@ -1,9 +1,16 @@
 'use strict';
 
-var _ = require('lodash');
-
 function toJSON (comment) {
-  return _.pick(comment, '_id', 'created', 'author', 'email', 'contentHtml', 'site', 'parent', 'gravatar');
+  return {
+    _id: comment._id.toString(),
+    created: comment.created,
+    author: comment.author,
+    email: comment.email,
+    contentHtml: comment.contentHtml,
+    site: comment.site,
+    parent: (comment.parent || '').toString(),
+    gravatar: comment.gravatar,
+  };
 }
 
 module.exports = {

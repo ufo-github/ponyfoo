@@ -148,11 +148,11 @@ function relevant (article) {
 function threads (accumulator, comment) {
   var thread;
   var commentModel = commentService.toJSON(comment);
-  if (comment.parent) {
-    thread = _.find(accumulator, { id: comment.parent });
+  if (commentModel.parent) {
+    thread = _.find(accumulator, { id: commentModel.parent.toString() });
     thread.comments.push(commentModel);
   } else {
-    thread = { id: comment._id, comments: [commentModel] };
+    thread = { id: commentModel._id.toString(), comments: [commentModel] };
     accumulator.push(thread);
   }
   return accumulator;
