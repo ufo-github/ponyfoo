@@ -4,6 +4,7 @@ var taunus = require('taunus');
 var taunusExpress = require('taunus-express');
 var transports = require('transports');
 var routes = require('./routes');
+var statusHealth = require('./api/status/health');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
@@ -32,6 +33,7 @@ var layout = require('../.bin/views/server/layout/layout');
 var production = env('NODE_ENV') === 'production';
 
 module.exports = function (app) {
+  app.get('/api/status/health', statusHealth);
   app.get('/articles/feed', articleFeed);
   app.get('/sitemap.xml', sitemap);
 

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-ENV="$(cat deploy/.env)"
-
-if [ "$ENV" == "" ] ; then
-  exit 1
-fi
-
-echo $ENV

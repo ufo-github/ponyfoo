@@ -5,7 +5,7 @@ var contra = require('contra');
 var ponymark = require('ponymark');
 var imageService = require('../../../services/image');
 var env = require('../../../lib/env');
-var dir = path.resolve('./temp/images');
+var dir = path.resolve('./tmp/images');
 
 module.exports = function (req, res) {
   var image = req.files && req.files.image;

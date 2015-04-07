@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # cleanup
+rm -rf tmp
 rm -rf .bin
 mkdir -p .bin/{lib,temp,inline}
 mkdir -p .bin/public/{js,css}
+mkdir tmp
