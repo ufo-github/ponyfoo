@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
   };
 
   if (slug) {
-    Article.findOne({ slug: slug }, populate);
+    Article.findOne({ slug: slug }).lean().exec(populate);
   } else {
     next();
   }
@@ -30,6 +30,7 @@ module.exports = function (req, res, next) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
     res.viewModel.model.article = article;
+    res.viewModel.model.article.tags = article.tags || [];
     next();
   }
 };
