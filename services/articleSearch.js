@@ -143,8 +143,7 @@ function addRelated (article, done) {
     article.related = _(articles)
       .reject({ _id: article._id })
       .pluck('_id')
-      .first(6)
-      .value();
+      .slice(0, 6);
 
     done();
   }
