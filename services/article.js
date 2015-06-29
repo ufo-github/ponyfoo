@@ -111,6 +111,7 @@ function toJSON (source) {
 
   article.readingTime = estimate.text(text);
   article.permalink = '/articles/' + article.slug;
+  article.author = article.author.toString();
 
   if (source.populated('comments')) {
     article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);

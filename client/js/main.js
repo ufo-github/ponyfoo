@@ -21,7 +21,7 @@ taunus.on('start', function (container, viewModel) {
 
 conventions();
 
-taunus.mount(main, wiring, { cache: true, prefetch: true, bootstrap: 'manual' });
+taunus.mount(main, wiring, { bootstrap: 'manual' });
 
 g.$ = $;
 g.md = markdownService.compile;
