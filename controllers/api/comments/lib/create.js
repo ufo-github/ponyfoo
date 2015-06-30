@@ -14,7 +14,8 @@ var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
 var env = require('../../../../lib/env');
 var words = env('SPAM_WORDS');
-var rspam = new RegExp('(^|[@,;:.\s])(' + words + ')([@,;:.\s]|$)', 'i');
+var delimiters = '[@,;:.<>{}()\\[\\]\\s]';
+var rspam = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
 
 function spam (comment) {
   var caught = (
