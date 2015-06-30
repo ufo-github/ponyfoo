@@ -12,6 +12,21 @@ var commentService = require('../../../../services/comment');
 var markupService = require('../../../../services/markup');
 var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
+var env = require('../../../../lib/env');
+var words = env('SPAM_WORDS');
+var rspam = new RegExp('(^|[@,;:.\s])(' + words + ')([@,;:.\s]|$)', 'i');
+
+function spam (comment) {
+  var caught = (
+    spamIn(comment.content) ||
+    spamIn(comment.site) ||
+    spamIn(comment.author)
+  );
+  return caught;
+  function spamIn (field) {
+    return (field || '').match(rspam);
+  }
+}
 
 module.exports = function (slug, input, done) {
   var validation = validate(input);
@@ -45,6 +60,9 @@ module.exports = function (slug, input, done) {
       if (parent.parent) {
         done(null, 400, ['Comments can\'t be nested that deep!']); return;
       }
+    }
+    if (spam(model)) {
+      next(null); return;
     }
     model.contentHtml = markupService.compile(model.content, { deferImages: true, externalize: true });
     comment = article.comments.create(model);
@@ -144,6 +162,6 @@ module.exports = function (slug, input, done) {
     if (err) {
       done(null, 400, ['An error occurred while posting your comment!']); return;
     }
-    done(null, 200, ['Your comment was successfully published!'], commentService.toJSON(comment));
+    done(null, 200, ['Your comment was successfully published!'], comment ? commentService.toJSON(comment) : model);
   }
 };
