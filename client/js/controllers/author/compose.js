@@ -27,6 +27,7 @@ module.exports = function (viewModel, container, route) {
   var email = $('#ac-campaign-email');
   var tweet = $('#ac-campaign-tweet');
   var echojs = $('#ac-campaign-echojs');
+  var hn = $('#ac-campaign-hn');
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
   var preview = $.findOne('.ac-preview');
@@ -140,7 +141,7 @@ module.exports = function (viewModel, container, route) {
 
   function deserialize (source) {
     var data = source || storage.get(key) || {
-      email: true, tweet: true, echojs: true
+      email: true, tweet: true, echojs: true, hn: true
     };
     var titleText = data.title || '';
     var slugText = data.slug || '';
@@ -153,6 +154,7 @@ module.exports = function (viewModel, container, route) {
     email.value(data.email);
     tweet.value(data.tweet);
     echojs.value(data.echojs);
+    hn.value(data.hn);
 
     boundSlug = textService.slug(titleText) === slugText;
 
@@ -182,7 +184,8 @@ module.exports = function (viewModel, container, route) {
       status: state,
       email: email.value(),
       tweet: tweet.value(),
-      echojs: echojs.value()
+      echojs: echojs.value(),
+      hn: hn.value()
     };
     var scheduled = schedule.value();
     if (scheduled && !published) {

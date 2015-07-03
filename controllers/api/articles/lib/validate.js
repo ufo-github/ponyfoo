@@ -25,7 +25,8 @@ function validate (model, update) {
     related: [],
     email: !!model.email,
     tweet: !!model.tweet,
-    echojs: !!model.echojs
+    echojs: !!model.echojs,
+    hn: !!model.hn
   };
   var publication = getPublicationDate();
   if (publication) {

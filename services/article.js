@@ -13,6 +13,7 @@ var subscriberService = require('./subscriber');
 var textService = require('./text');
 var twitterService = require('./twitter');
 var echojsService = require('./echojs');
+var hackernewsService = require('./hackernews');
 var markupService = require('./markup');
 var authority = env('AUTHORITY');
 
@@ -51,7 +52,8 @@ function campaign (article, done) {
   contra.concurrent([
     contra.curry(email, article),
     contra.curry(tweet, article),
-    contra.curry(echojs, article)
+    contra.curry(echojs, article),
+    contra.curry(hackernews, article)
   ], done);
 }
 
@@ -103,6 +105,17 @@ function echojs (article, done) {
     url: util.format('%s/articles/%s', authority, article.slug)
   };
   echojsService.submit(data, done);
+}
+
+function hackernews (article, done) {
+  if (article.hn === false) {
+    done(); return;
+  }
+  var data = {
+    title: article.title,
+    url: util.format('%s/articles/%s', authority, article.slug)
+  };
+  hackernewsService.submit(data, done);
 }
 
 function toJSON (source) {
