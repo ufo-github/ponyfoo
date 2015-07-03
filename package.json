@@ -61,7 +61,7 @@
     "jadum": "1.4.0",
     "lamernews-client": "1.1.0",
     "lodash": "3.1.0",
-    "measly": "1.3.6",
+    "measly": "1.3.7",
     "mkdirp": "0.5.0",
     "moment": "2.8.3",
     "mongoose": "3.8.15",
@@ -76,7 +76,7 @@
     "passport-google-oauth": "0.1.5",
     "passport-linkedin": "0.1.3",
     "passport-local": "1.0.0",
-    "ponymark": "3.3.2",
+    "ponymark": "3.3.3",
     "pretty-bytes": "1.0.1",
     "raf": "2.0.1",
     "recluster": "0.3.7",
@@ -93,7 +93,7 @@
     "winston-mongodb": "0.5.2"
   },
   "devDependencies": {
-    "browser-sync": "1.3.3",
+    "browser-sync": "2.7.13",
     "browserify": "5.10.1",
     "cave": "2.0.0",
     "clean-css": "2.1.8",
