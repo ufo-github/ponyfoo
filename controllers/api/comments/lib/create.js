@@ -14,18 +14,19 @@ var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
 var env = require('../../../../lib/env');
 var words = env('SPAM_WORDS');
-var delimiters = '[@,;:.<>{}()\\[\\]\\s]';
-var rspam = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
+var delimiters = '[?@,;:.<>{}()\\[\\]\\s_-]';
+var rdelimited = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
+var ranywhere = new RegExp(words, 'i');
 
 function spam (comment) {
   var caught = (
     spamIn(comment.content) ||
-    spamIn(comment.site) ||
+    spamIn(comment.site, ranywhere) ||
     spamIn(comment.author)
   );
   return caught;
-  function spamIn (field) {
-    return (field || '').match(rspam);
+  function spamIn (field, target) {
+    return (field || '').match(target || rdelimited);
   }
 }
 
