@@ -33,6 +33,7 @@ function listen () {
 
   function operational () {
     winston.info('Worker %s executing app@%s', process.pid, pkg.version);
+    process.on('uncaughtException', fatal);
     models();
     middleware(app);
     development.statics(app);
@@ -55,6 +56,14 @@ function rebuild () {
   feedService.rebuild();
   sitemapService.rebuild();
   articleSearchService.rebuild();
+}
+
+function fatal (err) {
+  winston.error('Uncaught exception', { error: err, stack: err.stack || '(none)' }, exit);
+}
+
+function exit () {
+  process.exit(1);
 }
 
 function random (min, max) {
