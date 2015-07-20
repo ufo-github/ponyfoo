@@ -32,7 +32,6 @@ function link (tokens, i) {
 }
 
 function filter (token) {
-  console.log(token)
   var unsourced = token.tag !== 'iframe' && token.tag !== 'script';
   return unsourced || domains.some(starts);
   function starts (beginning) {
@@ -46,7 +45,11 @@ function compile (text) {
       filter: filter,
       allowedTags: insane.defaults.allowedTags.concat('iframe', 'script'),
       allowedAttributes: {
-        script: ['src', 'async']
+        script: ['src', 'async'],
+        p: ['data-height', 'data-theme-id', 'data-slug-hash', 'data-default-tab', 'data-user']
+      },
+      allowedClasses: {
+        p: ['codepen']
       }
     }
   });
