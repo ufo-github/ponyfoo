@@ -1,24 +1,17 @@
-c-github-code = #f8f8f8
-
 .md-markdown
-  pre
-    background-color c-github-code
-
-  :not(pre) > .hljs
-    display inline
-
   blockquote
     position relative
     margin 0
-    padding 12px 12px 12px 52px
+    padding 12px 12px 12px 48px
     background-color rgba(c-pink, 0.05)
 
     &:before
-      position absolute
-      left 12px
       content '“'
+      font-family Georgia, serif
       color c-pink
-      text-shadow 0 1px c-strong
+      position absolute
+      top 15px
+      left 8px
       font-size 65px
       font-weight 700
       line-height 40px
@@ -50,10 +43,17 @@ c-github-code = #f8f8f8
     &:last-child
       margin-bottom 0
 
-  li
-    > ul,
-    > ol
-      margin-left 15px
+.md-markdown-inline
+  display inline
+
+  p
+    display inline
+
+.md-code-block
+  padding 0 15px
+
+.md-code-block .md-code
+  display block
 
 .md-border
   border 5px solid c-blue-light

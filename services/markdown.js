@@ -1,7 +1,19 @@
 'use strict';
 
-var ultramarked = require('ultramarked');
+var megamark = require('megamark');
 var textService = require('./text');
+var domains = [
+  'http://codepen.io/',
+  'http://jsbin.com/',
+  'http://jsfiddle.net/',
+  'http://embed.plnkr.co/'
+];
+
+megamark.parser.renderer.rules.link_open = link;
+
+module.exports = {
+  compile: compile
+};
 
 function getLabel (title) {
   var trimmedTitle = title ? title.trim() : '';
@@ -11,38 +23,20 @@ function getLabel (title) {
   return '';
 }
 
-function link (href, title, text) {
-  return textService.format('<a href="%s"%s>%s</a>', href, getLabel(title), text);
+function link (tokens, i) {
+  var fmt = '<a href="%s"%s>';
+  var open = tokens[i];
+  var html = textService.format(fmt, open.href, getLabel(open.title));
+  return html;
 }
 
-function image (href, title, text) {
-  return textService.format('<img src="%s"%s alt="%s" />', href, getLabel(title), text);
+function filter (token) {
+  return token.tag !== 'iframe' || domains.some(starts);
+  function starts (beginning) {
+    return token.attrs.src.indexOf(beginning) === 0;
+  }
 }
-
-var iframes = [
-  'http://codepen.io/',
-  'http://jsbin.com/',
-  'http://jsfiddle.net/',
-  'http://embed.plnkr.co/'
-];
-
-var options = {
-  smartLists: true,
-  ultralight: true,
-  ultrasanitize: true,
-  iframes: iframes,
-  renderer: ultramarked.renderer({
-    link: link,
-    image: image
-  })
-};
-
-ultramarked.setOptions(options);
 
 function compile (text) {
-  return ultramarked(text);
+  return megamark(text, { filter: filter });
 }
-
-module.exports = {
-  compile: compile
-};
