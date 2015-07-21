@@ -24,10 +24,26 @@ function getLabel (title) {
   return '';
 }
 
+function attr (token, name) {
+  if (token[name]) {
+    return token[name];
+  }
+  var i = 0;
+  var len = token.attrs ? token.attrs.length : 0;
+  for (; i < len; i++) {
+    if (token.attrs[i][0] === name) {
+      return token.attrs[i][1];
+    }
+  }
+  return null;
+}
+
 function link (tokens, i) {
   var fmt = '<a href="%s"%s>';
   var open = tokens[i];
-  var html = textService.format(fmt, open.href, getLabel(open.title));
+  var href = attr(open, 'href');
+  var title = attr(open, 'title');
+  var html = textService.format(fmt, href, getLabel(title));
   return html;
 }
 
@@ -35,7 +51,8 @@ function filter (token) {
   var unsourced = token.tag !== 'iframe' && token.tag !== 'script';
   return unsourced || domains.some(starts);
   function starts (beginning) {
-    return token.attrs.src.indexOf(beginning) === 0;
+    var src = attr(token, 'src');
+    return src && src.indexOf(beginning) === 0;
   }
 }
 
