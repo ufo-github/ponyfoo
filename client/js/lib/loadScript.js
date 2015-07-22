@@ -8,6 +8,7 @@ function loadScript (url) {
   script.async = true;
   script.src = url;
   first.parentNode.insertBefore(script, first);
+  return script;
 }
 
 module.exports = loadScript;

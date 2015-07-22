@@ -11,6 +11,7 @@ var main = $.findOne('.ly-main');
 var g = global;
 
 require('hint');
+require('./lib/codepen');
 
 conventions();
 
