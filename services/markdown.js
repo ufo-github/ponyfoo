@@ -28,8 +28,14 @@ function attr (token, name) {
   if (token[name]) {
     return token[name];
   }
+  if (!token.attrs) {
+    return null;
+  }
+  if (token.attrs[name]) {
+    return token.attrs[name];
+  }
   var i = 0;
-  var len = token.attrs ? token.attrs.length : 0;
+  var len = token.attrs.length;
   for (; i < len; i++) {
     if (token.attrs[i][0] === name) {
       return token.attrs[i][1];
