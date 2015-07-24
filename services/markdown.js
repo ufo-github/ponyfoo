@@ -72,7 +72,8 @@ function compile (text) {
         p: ['data-height', 'data-theme-id', 'data-slug-hash', 'data-default-tab', 'data-user']
       },
       allowedClasses: {
-        p: ['codepen']
+        p: ['codepen'],
+        blockquote: ['twitter-tweet']
       }
     }
   });
