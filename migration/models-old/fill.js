@@ -16,7 +16,7 @@ function load (pattern, conn) {
 }
 
 function unwrap (conn, file) {
-  winston.debug('Loading OLD %s model', file.replace(/\.js$/, ''));
+  // winston.debug('Loading OLD %s model', file.replace(/\.js$/, ''));
   return require(path.join(__dirname, file))(conn);
 }
 

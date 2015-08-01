@@ -15,7 +15,7 @@ function factory () {
     var parts = item.split(separator);
     var key = parts[0];
     var value = gramophone.extract(parts[1], { flatten: true });
-    winston.debug('Natural index processing "%s"...', key);
+    // winston.debug('Natural index processing "%s"...', key);
     index.addDocument(value, key);
   }
 
@@ -23,7 +23,7 @@ function factory () {
     var start = moment();
     var results = [];
 
-    winston.debug('Natural index computing "%s"...', terms.join(', '));
+    // winston.debug('Natural index computing "%s"...', terms.join(', '));
 
     index.tfidfs(terms, function (i, weight) {
       if (!weight) {
@@ -39,7 +39,7 @@ function factory () {
 
     var fmt = 'Natural index computed. %s match(es) found in %s';
     var end = moment().subtract(start).format('mm:ss.SSS');
-    winston.debug(fmt, results.length, end);
+    // winston.debug(fmt, results.length, end);
     done(null, _.pluck(results, 'item'));
 
     function diff (a, b) {
@@ -49,11 +49,11 @@ function factory () {
 
   function rebuild (documents, done) {
     var start = moment();
-    winston.debug('Natural index rebuilding...');
+    // winston.debug('Natural index rebuilding...');
     index = new natural.TfIdf();
     documents.forEach(insert);
     var end = moment().subtract(start).format('mm:ss.SSS');
-    winston.debug('Natural index rebuilt in %s', end);
+    // winston.debug('Natural index rebuilt in %s', end);
     api.built = true;
     done();
   }

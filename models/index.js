@@ -20,7 +20,7 @@ function load (pattern) {
 }
 
 function unwrap (file) {
-  winston.debug('Loading %s model', path.basename(file, '.js'));
+  // winston.debug('Loading %s model', path.basename(file, '.js'));
   return require(path.join(__dirname, file));
 }
 
