@@ -33,7 +33,7 @@ copy_over () {
   rm -rf tmp/appserver
   mkdir -p tmp/appserver/deploy/env
   cp -r {.bin,client,controllers,jobs,lib,models,resources,services,test,views,.env.defaults.json,.taunusrc,*.js,package.json} tmp/appserver
-  cp "deploy/env/$NODE_ENV.json" tmp/appserver/deploy/env
+  cp "deploy/env/.env.$NODE_ENV.json" tmp/appserver/deploy/env
 }
 
 build_primal_image () {
