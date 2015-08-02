@@ -3,9 +3,12 @@
 require('./preconfigure');
 require('./chdir');
 
+var os = require('os');
+var http = require('http');
 var express = require('express');
 var moment = require('moment');
 var winston = require('winston');
+var lipstick = require('lipstick');
 var models = require('./models');
 var pkg = require('./package.json');
 var logging = require('./lib/logging');
@@ -22,6 +25,7 @@ var port = env('PORT');
 
 function listen () {
   var app = express();
+  var server = http.createServer(app);
 
   logging.configure();
   development.patch(app);
@@ -40,12 +44,12 @@ function listen () {
     development.statics(app);
     routing(app);
     development.errors(app);
-    app.listen(port, listening);
+    lipstick.listen(server, port, listening);
   }
 }
 
 function listening () {
-  winston.info('app listening on port %s', port);
+  winston.info('app listening on http://%s:%s', os.hostname(), port);
   development.browserSync();
 
   if (shouldRebuild) {
