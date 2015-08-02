@@ -8,7 +8,6 @@ var respond = require('../lib/respond');
 var validate = require('./lib/validate');
 
 module.exports = function (req, res, next) {
-  var body = req.body;
   var validation = validate(req.body, true);
   if (validation.length) {
     respond.invalid(res, validation); return;

@@ -1,15 +1,10 @@
 'use strict';
 
-var _ = require('lodash');
 var contra = require('contra');
 var Article = require('../../../models/Article');
 
 function remove (req, res, next) {
   var id = req.params.id;
-  var query = [
-    { _id: id },
-    { parent: req.params.id }
-  ];
 
   contra.waterfall([lookup, found, removal], handle);
 

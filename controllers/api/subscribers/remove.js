@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var contra = require('contra');
 var subscriberService = require('../../../services/subscriber');
 var unfold = require('./lib/unfold');

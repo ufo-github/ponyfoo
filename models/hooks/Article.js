@@ -41,7 +41,7 @@ function afterSave () {
   if (bulk) { // trust that these will be rebuilt afterwards
     return;
   }
-  articleSearchService.insert(this, this._id);
+  articleSearchService.insert(this);
   feedService.rebuild();
   sitemapService.rebuild();
 }

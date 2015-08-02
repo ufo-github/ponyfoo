@@ -1,8 +1,6 @@
 'use strict';
 
-var moment = require('moment');
 var User = require('../models/User');
-var env = require('../lib/env');
 var cache = {};
 
 function get (email, field, done) {

@@ -5,7 +5,6 @@ var moment = require('moment');
 var util = require('util');
 var articleService = require('../../services/article');
 var listOrSingle = require('./lib/listOrSingle');
-var separator = /[+/,_: -]+/ig;
 
 function parse (params) {
   var formats = ['YYYY', 'MM', 'DD'];

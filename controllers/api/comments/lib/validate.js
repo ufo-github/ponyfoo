@@ -1,9 +1,7 @@
 'use strict';
 
 var util = require('util');
-var mongoose = require('mongoose');
 var validator = require('validator');
-var ObjectId = mongoose.Schema.Types.ObjectId;
 
 function validate (model) {
   var validation = [];

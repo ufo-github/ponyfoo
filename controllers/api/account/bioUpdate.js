@@ -1,13 +1,12 @@
 'use strict';
 
 var taunus = require('taunus');
-var contra = require('contra');
 var validator = require('validator');
 var markupService = require('../../../services/markup');
 var bioService = require('../../../services/bio');
 var User = require('../../../models/User');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var bio = validator.toString(req.body.bio);
   var bioHtml = markupService.compile(bio, { deferImages: true });
 

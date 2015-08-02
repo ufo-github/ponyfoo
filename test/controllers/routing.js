@@ -2,8 +2,6 @@
 
 var test = require('tape');
 var sinon = require('sinon');
-var path = require('path');
-var util = require('util');
 var mockery = require('mockery');
 
 test('routes should match expectation', function (t) {
@@ -49,7 +47,7 @@ test('routes should match expectation', function (t) {
     mockery.enable();
     mockery.warnOnUnregistered(false);
     mockery.registerMock('transports', transports);
-    mockery.registerMock('../lib/errors', sinon.stub());
+    mockery.registerMock('../lib/errors', errors);
   }
 
   function teardown () {
@@ -123,7 +121,7 @@ test('routes should match expectation', function (t) {
     }
   }
 
-  function count (acc, route) {
+  function count (acc) {
     return 2 + acc;
   }
 });

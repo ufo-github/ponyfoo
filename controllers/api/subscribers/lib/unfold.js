@@ -1,9 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
 var contra = require('contra');
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
 var Subscriber = require('../../../../models/Subscriber');
 var cryptoService = require('../../../../services/crypto');
 

@@ -1,6 +1,5 @@
 'use strict';
 
-var util = require('util');
 var mongoose = require('mongoose');
 var cryptoService = require('../services/crypto');
 var gravatarService = require('../services/gravatar');

@@ -19,7 +19,7 @@ function setup (app) {
 }
 
 function redirect (template, qs) {
-  return function middleware (req, res, next) {
+  return function middleware (req, res) {
     var part = qs ? 'query' : 'params';
     var endpoint = Object.keys(req[part]).reduce(map, template);
     res.redirect(301, endpoint);
@@ -30,7 +30,7 @@ function redirect (template, qs) {
   };
 }
 
-function searchTerms (req, res, next) {
+function searchTerms (req, res) {
   var route = searchUrlService.compile(req.query.terms);
   if (route) {
     res.redirect(301, route);

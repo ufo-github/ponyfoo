@@ -5,7 +5,6 @@ var util = require('util');
 var contra = require('contra');
 var Article = require('../models/Article');
 var env = require('../lib/env');
-var articleService = require('./article');
 var feedService = require('./feed');
 var sitemapService = require('./sitemap');
 var fulltextSearch = require('./fulltextSearch');
@@ -83,7 +82,7 @@ function query (input, tags, done) {
   }
 }
 
-function insert (article, done) {
+function insert (article) {
   rebuildOnce(built);
 
   function built () {

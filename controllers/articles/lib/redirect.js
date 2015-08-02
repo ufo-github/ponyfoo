@@ -1,6 +1,5 @@
 'use strict';
 
-var Article = require('../../../models/Article');
 var errors = require('../../../lib/errors');
 
 function redirect (res, next) {

@@ -1,11 +1,10 @@
 'use strict';
 
 var validator = require('validator');
-var emailService = require('../../../services/email');
 var subscriberService = require('../../../services/subscriber');
 var markupService = require('../../../services/markup');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var subject = req.body.subject;
   var teaser = req.body.teaser;
   var body = req.body.body;

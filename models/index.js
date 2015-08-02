@@ -1,6 +1,5 @@
 'use strict';
 
-var winston = require('winston');
 var path = require('path');
 var glob = require('glob');
 
@@ -20,7 +19,6 @@ function load (pattern) {
 }
 
 function unwrap (file) {
-  // winston.debug('Loading %s model', path.basename(file, '.js'));
   return require(path.join(__dirname, file));
 }
 
