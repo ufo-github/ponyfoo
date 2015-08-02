@@ -1,5 +1,7 @@
 {
   "variables": {
+    "SOURCE_AMI": "ami-ac4c4ec4",
+    "INSTANCE_TYPE": "m3.medium",
     "INSTANCE_USER": "admin",
     "NVM_VERSION": "v0.24.0",
     "NODE_VERSION": "0.10"
@@ -7,8 +9,8 @@
   "builders": [{
     "type": "amazon-ebs",
     "region": "us-east-1",
-    "source_ami": "ami-22de994a",
-    "instance_type": "t1.micro",
+    "source_ami": "{{user `SOURCE_AMI`}}",
+    "instance_type": "{{user `INSTANCE_TYPE`}}",
     "ssh_username": "{{user `INSTANCE_USER`}}",
     "ami_name": "ponyfoo-primal {{timestamp}}"
   }],

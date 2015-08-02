@@ -16,7 +16,7 @@ require('./lib/codepen');
 conventions();
 
 taunus.on('start', starting);
-taunus.mount(main, wiring, { bootstrap: 'manual' });
+taunus.mount(main, wiring, { bootstrap: 'manual', forms: false });
 
 g.$ = $;
 g.md = markdownService.compile;

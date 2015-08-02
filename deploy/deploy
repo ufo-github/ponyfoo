@@ -4,7 +4,7 @@ set -e
 
 : "${NODE_ENV:="staging"}"
 
-PRIMAL_ID="ami-075e996c"
+PRIMAL_ID="ami-4169cf2a"
 # IMAGE_ID="ami-xxxxxxxx"
 CLEANUP="no"
 INSTANCE_TYPE="t1.micro"
@@ -41,6 +41,7 @@ build_primal_image () {
 
   cp package.json deploy/mailtube
   packer build \
+    -var NODE_VERSION=$(jq -r .engines.node < package.json) \
     deploy/templates/primal.json | tee deploy/log/packer-primal.log
 
   PRIMAL_ID=$(tail -1 < deploy/log/packer-primal.log | cut -d ' ' -f 2)

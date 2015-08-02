@@ -25,16 +25,14 @@ uglifyjs .bin/inline/fonts.js -m -c "comparisons=false,keep_fargs=true,unsafe=tr
 
 # critical css inlining. many slash, very escape.
 LOGGING_LEVEL=info PORT=$PORT APP_REBUILD=0 node app &
-APP_PID=$(procfinder --wait --port $PORT)
+sleep 5
 CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
 CRITICAL_ESCAPED=$(echo $CRITICAL | sed -e 's/[\/#&]/\\&/g' -e 's/"/\\\\"/g')
 LAYOUT=".bin/views/server/layout/layout.js"
-echo "Gathered critical CSS, killing node app ($APP_PID)"
+echo "Gathered critical CSS, killing node app"
 echo $CRITICAL > $CRITICAL_CSS
-kill $APP_PID
+kill $!
 sed -i -e "s#<style></style>#<style>$CRITICAL_ESCAPED</style>#" $LAYOUT
-CSS_DIFF=$(cave $ALL_CSS --css $CRITICAL_CSS)
-echo "$CSS_DIFF" > $ALL_CSS
 cleancss $ALL_CSS -o $ALL_CSS --s0
 rm $CRITICAL_CSS
 

@@ -20,10 +20,10 @@ function unfold (req, res, done) {
 
   function validateThenRemove (subscriber, next) {
     if (!subscriber) {
-      next(); return;
+      next(null, null); return;
     }
     if (cryptoService.md5(subscriber.email) !== email) {
-      next(); return;
+      next(null, null); return;
     }
     next(null, subscriber.email);
   }
