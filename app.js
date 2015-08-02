@@ -1,5 +1,6 @@
 'use strict';
 
+require('./preconfigure');
 require('./chdir');
 
 var express = require('express');

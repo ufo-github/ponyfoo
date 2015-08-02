@@ -10,7 +10,7 @@ stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}' --watch &
 taunus -o
-watchify client/js/main.js -o .bin/public/js/all.js --basedir client/js --debug --verbose &
+watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
 
 # start app
 APP_REBUILD=false nodemon -e js,jade app.js

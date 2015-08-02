@@ -16,7 +16,7 @@ CRITICAL_CSS=".bin/temp/critical.css"
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
-browserify client/js/main.js --basedir client/js | uglifyjs -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o $DIST/js/all.js
+browserify client/js/main.js | uglifyjs -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o $DIST/js/all.js
 
 # compile inlined scripts
 uglifyjs .bin/inline/javascript.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/javascript.js

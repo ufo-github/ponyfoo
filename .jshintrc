@@ -8,6 +8,7 @@
   "sub": true,
   "validthis": true,
   "undef": true,
+  "unused": true,
   "trailing": true,
   "boss": true,
   "eqnull": true,
