@@ -1,6 +1,6 @@
 'use strict';
 
-require('./lib/preconfigure');
+require('./preconfigure');
 require('./chdir');
 
 var lipstick = require('lipstick');
