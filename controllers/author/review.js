@@ -46,7 +46,7 @@ function hydrate (article) {
       article._.conditionLabel = 'Edit the article in order to publish it';
     } else {
       article._.condition = 'Publishing ' + when.fromNow();
-      article._.conditionLabel = 'Slated for publication on ' + when.format(longDate);
+      article._.conditionLabel = 'Slated for publication';
     }
   }
   return article;
