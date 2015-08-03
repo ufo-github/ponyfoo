@@ -26,7 +26,7 @@ mkdir deploy/log
 echo "setup: creating $ELB_NAME load balancer ($AVAILABILITY_ZONES)..."
 aws elb create-load-balancer \
   --load-balancer-name "$ELB_NAME" \
-  --listeners Protocol=HTTP,LoadBalancerPort=80,InstanceProtocol=HTTP,InstancePort=80 \
+  --listeners Protocol=TCP,LoadBalancerPort=80,InstanceProtocol=TCP,InstancePort=80 \
   --availability-zones $AVAILABILITY_ZONES > deploy/log/elb-create.log
 
 echo "setup: enabling connection draining on elb..."
@@ -37,7 +37,20 @@ aws elb modify-load-balancer-attributes \
 echo "setup: configuring health checks on elb..."
 aws elb configure-health-check \
   --load-balancer-name "$ELB_NAME" \
-  --health-check Target=HTTP:80/api/status/health,Interval=30,UnhealthyThreshold=2,HealthyThreshold=2,Timeout=4 > deploy/log/elb-health.log
+  --health-check Target=TCP:80,Interval=30,UnhealthyThreshold=2,HealthyThreshold=2,Timeout=4 > deploy/log/elb-health.log
+
+echo "setup: creating proxy protocol policy on elb..."
+aws elb create-load-balancer-policy \
+  --load-balancer-name "$ELB_NAME" \
+  --policy-name "$ELB_NAME-proxy-protocol" \
+  --policy-type-name ProxyProtocolPolicyType \
+  --policy-attributes AttributeName=ProxyProtocol,AttributeValue=true > deploy/log/elb-create-pp.log
+
+echo "setup: enabling proxy protocol on elb..."
+aws elb set-load-balancer-policies-for-backend-server \
+  --load-balancer-name "$ELB_NAME" \
+  --policy-names "$ELB_NAME-proxy-protocol" \
+  --instance-port 80 > deploy/log/elb-enable-pp.log
 
 echo "setup: describing load balancer to create route53 alias recordset..."
 aws elb describe-load-balancers \
