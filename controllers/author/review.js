@@ -40,7 +40,7 @@ function hydrate (article) {
     article._.condition = 'Published ' + when.fromNow();
     article._.conditionLabel = 'Published on ' + when.format(longDate);
   } else {
-    article.permalink += '?verify=' + cryptoService.md5(article._id);
+    article.permalink += '?verify=' + cryptoService.md5(article._id + article.created);
     if (article.status === 'draft') {
       article._.condition = 'Draft';
       article._.conditionLabel = 'Edit the article in order to publish it';

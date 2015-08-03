@@ -62,7 +62,7 @@ function optimizeUpload (ul, done) {
       getMinifier(ul).run(next);
     },
     function (next) {
-      process.nextTick(function () {
+      setImmediate(function () {
         log(ul);
       });
       next();
