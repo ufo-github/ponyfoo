@@ -4,8 +4,16 @@ echo "packer: updating aptitude"
 sudo apt-key update
 sudo apt-get update
 sudo apt-get remove apt-listchanges -y
-sudo apt-get install git make g++ graphicsmagick curl python-software-properties -y
+sudo apt-get install git make g++ graphicsmagick curl python-software-properties software-properties-common -y
 sudo add-apt-repository ppa:nginx/stable -y
+
+echo "packer: creating swap space"
+sudo mkdir -p /media/fasthdd
+sudo dd if=/dev/zero of=/media/fasthdd/swapfile.img bs=1024 count=2M
+sudo mkswap /media/fasthdd/swapfile.img
+sudo chmod 0600 /media/fasthdd/swapfile.img
+echo "/media/fasthdd/swapfile.img swap swap sw 0 0" | sudo tee -a /etc/fstab
+sudo swapon /media/fasthdd/swapfile.img
 
 echo "packer: nginx"
 sudo mkdir -p /var/log/nginx
