@@ -4,7 +4,7 @@ set -e
 
 : "${NODE_ENV:="staging"}"
 
-# PRIMAL_ID="ami-c3ca6ba8"
+PRIMAL_ID="ami-d3fd5db8"
 # IMAGE_ID="ami-xxxxxxxx"
 CLEANUP="no"
 INSTANCE_TYPE="t1.micro"

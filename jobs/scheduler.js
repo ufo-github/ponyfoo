@@ -1,7 +1,6 @@
-#!/usr/bin/env node
-
 'use strict';
 
+require('../preconfigure');
 require('../chdir');
 
 var fs = require('fs');
@@ -24,7 +23,7 @@ logging.configure();
 db(operational);
 
 function operational () {
-  winston.info('Worker %s executing job@%s', process.pid, pkg.version);
+  winston.info('[job] Worker %s executing job@%s', process.pid, pkg.version);
   m = models();
   m.Article.find({ status: 'publish' }, found);
 }
@@ -34,7 +33,7 @@ function found (err, articles) {
     done(err); return;
   }
   t = articles.length;
-  winston.info('Found %s articles queued for publication', t);
+  winston.info('[job] Found %s articles slated for publication', t);
   contra.each(articles, 2, single, done);
 }
 
@@ -50,7 +49,7 @@ function single (article, next) {
       } else {
         if (article.publication) {
           when = moment(article.publication);
-          winston.info('Article "%s" will be published %s (%s).', article.title, when.fromNow(), when.format(defaultFormat));
+          winston.info('[job] Article "%s" will be published %s (%s).', article.title, when.fromNow(), when.format(defaultFormat));
         }
         next();
       }
@@ -59,7 +58,7 @@ function single (article, next) {
         if (!err) {
           p++;
           articleService.campaign(article, promoted);
-          winston.info('Published "%s".', article.title);
+          winston.info('[job] Published "%s".', article.title);
         } else {
           next(err);
         }
@@ -67,7 +66,7 @@ function single (article, next) {
 
       function promoted (err) {
         if (err) {
-          winston.error('Article campaign failed for "%s".\n%s', article.title, err.stack || err);
+          winston.error('[job] Article campaign failed for "%s".\n%s', article.title, err.stack || err);
         }
         next(err);
       }
@@ -77,8 +76,11 @@ function single (article, next) {
 
 function done (err) {
   if (err) {
-    winston.error('Cron job failed!', err.stack || err);
+    winston.error('[job] Cron job failed!', err.stack || err);
   }
-  winston.info('Published %s/%s articles.', p, t);
-  process.exit(err ? 1 : 0);
+  winston.info('[job] Published %s/%s articles.', p, t);
+  setTimeout(exit, 3000);
+  function exit () {
+    process.exit(err ? 1 : 0);
+  }
 }
