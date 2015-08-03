@@ -26,7 +26,7 @@ function conventions () {
 }
 
 function relativeTime (container) {
-  $('time', container).forEach(relative);
+  $('.rt-relative', container).forEach(relative);
 }
 
 function relative (el) {
