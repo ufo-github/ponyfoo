@@ -29,6 +29,7 @@ var schema = new mongoose.Schema({
 
 var api = mongoose.model('Article', schema);
 
+schema.index({ tags: 'text', body: 'text', title: 'text', teaser: 'text' });
 api.validStatuses = ['draft', 'publish', 'published'];
 api.schema = schema;
 

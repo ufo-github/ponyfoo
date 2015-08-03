@@ -2,9 +2,9 @@
 
 var markupService = require('../../services/markup');
 var cryptoService = require('../../services/crypto');
-var articleSearchService = require('../../services/articleSearch');
 var feedService = require('../../services/feed');
 var sitemapService = require('../../services/sitemap');
+var articleSearchService = require('../../services/articleSearch');
 var Article = require('../Article');
 var env = require('../../lib/env');
 
@@ -41,7 +41,6 @@ function afterSave () {
   if (bulk) { // trust that these will be rebuilt afterwards
     return;
   }
-  articleSearchService.insert(this);
   feedService.rebuild();
   sitemapService.rebuild();
 }

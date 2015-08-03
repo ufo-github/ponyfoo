@@ -17,7 +17,6 @@ test('routes should match expectation', function (t) {
   plan('put', '/api/articles', './author/only', './api/articles/insert');
   plan('patch', '/api/articles/:slug', './author/only', './api/articles/update');
   plan('delete', '/api/articles/:slug', './author/only', './api/articles/remove');
-  plan('post', '/api/articles/compute-relationships', './author/only', './api/articles/compute');
 
   plan('get', '/account/verify-email/:token([a-f0-9]{24})', './account/verifyEmail');
 

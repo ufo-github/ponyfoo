@@ -19,7 +19,6 @@ var routing = require('./controllers/routing');
 var development = require('./lib/development');
 var feedService = require('./services/feed');
 var sitemapService = require('./services/sitemap');
-var articleSearchService = require('./services/articleSearch');
 var shouldRebuild = !env('APP_REBUILD');
 var port = env('PORT');
 
@@ -60,7 +59,6 @@ function listening () {
 function rebuild () {
   feedService.rebuild();
   sitemapService.rebuild();
-  articleSearchService.rebuild();
 }
 
 function fatal (err) {

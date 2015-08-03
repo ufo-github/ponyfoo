@@ -13,7 +13,6 @@ var authorEmail = require('./api/author/email');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
-var articleCompute = require('./api/articles/compute');
 var articleFeed = require('./articles/feed');
 var commentInsert = require('./api/comments/insert');
 var commentRemove = require('./api/comments/remove');
@@ -42,7 +41,6 @@ module.exports = function (app) {
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
-  app.post('/api/articles/compute-relationships', authorOnly, articleCompute);
 
   app.put('/api/articles/:slug/comments', commentInsert);
   app.post('/api/articles/:slug/comments', verifyForm, commentInsert);

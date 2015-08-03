@@ -1,175 +1,54 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
+var freq = require('freq');
 var util = require('util');
-var contra = require('contra');
+var hget = require('hget');
+var common = require('./common_english.json');
 var Article = require('../models/Article');
-var env = require('../lib/env');
-var feedService = require('./feed');
-var sitemapService = require('./sitemap');
-var fulltextSearch = require('./fulltextSearch');
-var fulltext = fulltextSearch();
-var emitter = contra.emitter();
 var searchLimit = 6;
 var unsafeTerms = /[^\w]+/ig;
-
-function similar (article, done) {
-  rebuildOnce(built);
-
-  function built () {
-    var terms = fulltext.terms(indexable(article));
-    query(terms, filtered);
-  }
-
-  function filtered (err, articles) {
-    done(err, articles ? articles.filter(strangers) : articles);
-  }
-
-  function strangers (a) { // makes no sense to suggest a sibling
-    return !a._id.equals(article.prev) && !a._id.equals(article.next);
-  }
-}
+var irrelevant = [
+  'javascript', 'js', 'css', 'web', 'https', 'com',
+  'performance', 'github', 'taunus', 'http',
+  'ponyfoo', 'pony', 'foo', 'mark', 'google'
+];
 
 function sanitizeTerm (term) {
   return term.replace(unsafeTerms, '');
 }
 
-function query (input, tags, done) {
+function query (input, options, done) {
   var terms = input.map(sanitizeTerm);
   if (done === void 0) {
-    done = tags; tags = [];
+    done = options; options = {};
   }
-  rebuildOnce(built);
+  var tagged = {
+    tags: { $all: options.tags || [] }
+  };
+  var fulltext = {
+    $text: { $search: terms.join(' ') }
+  };
+  var cursor = Article.find();
 
-  function built () {
-    contra.waterfall([compute, expand], done);
-  }
-
-  function compute (next) {
-    fulltext.compute(terms, next);
-  }
-
-  function tagged (q) {
-    if (tags.length) {
-      q.tags = { $all: tags };
-    }
-    return q;
+  if (options.oldest) {
+    cursor = cursor.and([{ updated: { $gt: options.oldest } }]);
   }
 
-  function expand (matches, next) {
-    if (matches.length === 0) {
-      findByTextMatch(next); return;
-    }
-    var q = tagged({
-      status: 'published',
-      _id: { $in: matches }
-    });
-    Article.find(q).sort('-publication').limit(searchLimit).exec(next);
+  if (options.tags && options.tags.length) {
+    cursor = cursor.and([tagged]);
   }
 
-  function findByTextMatch (next) {
-    var q = tagged({ status: 'published' });
-    var pattern = util.format('\b(%s)\b', terms.join('|'));
-    var alternatives = new RegExp(pattern, 'i');
-    var cases = [{
-      teaser: alternatives
-    }, {
-      body: alternatives
-    }, {
-      tags: { $in: terms }
-    }];
-    Article.find(q).or(cases).sort('-publication').limit(searchLimit).exec(next);
-  }
-}
+  cursor = cursor
+    .and([fulltext])
+    .sort('-publication');
 
-function insert (article) {
-  rebuildOnce(built);
-
-  function built () {
-    fulltext.insert(indexable(article));
-  }
-}
-
-function rebuildOnce (done) {
-  var next = done || Function.prototype;
-
-  if (fulltext.built) {
-    next();
-  } else if (emitter.rebuilding) {
-    emitter.once('rebuilt', next);
-  } else {
-    emitter.rebuilding = true;
-    Article.find({ status: 'published' }, fill);
+  if (options.unlimited !== true) {
+    cursor = cursor.limit(searchLimit);
   }
 
-  function fill (err, articles) {
-    if (err) {
-      next(err); emitter.rebuilding = false; return;
-    }
-    fulltext.rebuild(articles.map(indexable), emitThenEnd);
-  }
-
-  function emitThenEnd () {
-    emitter.rebuilding = false;
-    emitter.emit('rebuilt');
-    next();
-  }
-}
-
-function indexable (article) {
-  var fields = [
-    'title', 'title', 'title',
-    'tags', 'tags', 'tags',
-    'body',
-    'teaser',
-    'slug'
-  ];
-  var important = _(fields).transform(take).value().join(' ');
-
-  function take (accumulator, field) {
-    accumulator.push(article[field]);
-  }
-  return util.format('%s; %s', article._id, important);
-}
-
-function addRelated (article, done) {
-  similar(article, related);
-
-  function related (err, articles) {
-    if (err) {
-      done(err); return;
-    }
-    article.related = _(articles)
-      .reject({ _id: article._id })
-      .pluck('_id')
-      .slice(0, 6);
-
-    done();
-  }
-}
-
-function addRelatedThenSave (article, done) {
-  contra.series([
-    contra.curry(addRelated, article),
-    article.save.bind(article)
-  ], done);
-}
-
-function refreshRelated (done) {
-  env('BULK_INSERT', true);
-  Article.find({ status: 'published' }, function (err, articles) {
-    if (err) {
-      complete(err); return;
-    }
-    contra.each(articles, addRelatedThenSave, complete);
-  });
-
-  function complete (err) {
-    env('BULK_INSERT', false);
-    feedService.rebuild();
-    sitemapService.rebuild();
-    done(err);
-  }
+  cursor.exec(done);
 }
 
 function bracket (tag) {
@@ -180,13 +59,53 @@ function format (terms, tags) {
   return util.format('"%s"', tags.map(bracket).concat(terms).join(' '));
 }
 
+function insanely (html) {
+  return hget('<div>' + html + '</div>');
+}
+
+function strip (text) {
+  var rcommon = '([\\s\\W]+)(?:' + common.join('|') + ')([\\s\\W]+)';
+  return text.replace(new RegExp(rcommon, 'gi'), '$1$2');
+}
+
+function addRelated (article, done) {
+  var text = [
+    article.title,
+    article.tags.join(' '),
+    insanely(article.bodyHtml),
+    insanely(article.teaserHtml)
+  ].join(' ');
+  var relevant = text.replace(/([-_*`\[\]\/:]|<\/?(kbd|mark)>|https?|www\.?|\.com)/g, ' ');
+  var frequencies = freq(strip(relevant));
+  var sorted = _.sortByOrder(frequencies, ['count'], ['desc']);
+  var filtered = sorted.filter(sanely).slice(0, 6);
+  var terms = _.pluck(filtered, 'word');
+  var options = {
+    unlimited: true,
+    oldest: moment('2014-01-01', 'YYYY-MM-DD').toDate() // avoid terrible articles
+  };
+  query(terms, options, queried);
+
+  function queried (err, articles) {
+    if (err) {
+      done(err); return;
+    }
+    var ids = _(articles)
+      .sample(searchLimit)
+      .pluck('_id')
+      .reject({ _id: article._id })
+      .value();
+    article.related = ids;
+    done();
+  }
+}
+
+function sanely (entry) {
+  return entry.word.length > 5 && irrelevant.indexOf(entry.word) === -1;
+}
+
 module.exports = {
-  similar: similar,
   query: query,
-  insert: insert,
-  addRelated: addRelated,
-  addRelatedThenSave: addRelatedThenSave,
-  refreshRelated: refreshRelated,
-  rebuild: rebuildOnce,
-  format: format
+  format: format,
+  addRelated: addRelated
 };

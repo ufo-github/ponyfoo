@@ -26,5 +26,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleSearchService.query(terms, tags, handle);
+  articleSearchService.query(terms, { tags: tags }, handle);
 };
