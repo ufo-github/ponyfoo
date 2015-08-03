@@ -1,16 +1,15 @@
 article.ly-section
   h1.vw-title Sign In
 
-  section.al-providers
-    a.al-provider(href='/account/login/google', title='Authenticate with Google') Authenticate with Google
-    a.al-provider(href='/account/login/github', title='Authenticate with GitHub') Authenticate with GitHub
-    a.al-provider(href='/account/login/facebook', title='Authenticate with Facebook') Authenticate with Facebook
-    a.al-provider(href='/account/login/linkedin', title='Authenticate with LinkedIn') Authenticate with LinkedIn
+  if providers.length
+    section.al-providers
+      each p in providers
+        a.al-provider(href=p.link, title='Authenticate with ' + p.name)='Authenticate with ' + p.name
 
-  p.al-separator
-   span='- or the '
-   i old fashioned
-   span=' way -'
+    p.al-separator
+     span='- or the '
+     i old fashioned
+     span=' way -'
 
   form.al-form(method='post', action='/account/login/local')
     input(type='hidden', name='redirect', value=previousUrl)
@@ -21,9 +20,6 @@ article.ly-section
 
       p
         input.alf-input.alf-password(type='password', name='password', placeholder='Input your password')
-
-      p.uv-right
-        a.alf-reset(aria-label='Lost your password?') password reset
 
       if registration
         p

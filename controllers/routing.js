@@ -58,10 +58,6 @@ module.exports = function (app) {
 
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 
-  // app.post('/account/password-reset', requestPasswordReset);
-  // app.get('/account/password-reset/:token([a-f0-9]{24})', validateToken);
-  // app.post('/account/password-reset/:token([a-f0-9]{24})', resetPassword);
-
   transports.routing(app, registerAccount);
   redirects.setup(app);
 
