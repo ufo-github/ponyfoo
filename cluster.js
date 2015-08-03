@@ -34,3 +34,7 @@ function operational () {
 function fatal (err) {
   winston.error('Uncaught exception (cluster)', { error: err, stack: err.stack || '(none)' }, exit);
 }
+
+function exit () {
+  process.exit(1);
+}
