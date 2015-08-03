@@ -1,0 +1,23 @@
+mixin pager ()
+  if page > 1
+    a.lk-button(href=page === 2 ? taunus.resolve('author/logs') : taunus.resolve('author/logs', { page: page - 1 })) Previous Page
+  if more
+    a.lk-button(href=taunus.resolve('author/logs', { page: page + 1 })) Next Page
+
+h1 Logs
+
+section.lg-container
+  header.lg-actions
+    +pager()
+
+  if logs.length
+    table.lg-table
+      thead
+        th Level
+        th When
+        th Message
+      tbody.lg-body
+        include logs/rows
+
+    footer.lg-actions
+      +pager()

@@ -1,0 +1,64 @@
+.lg-container
+  overflow scroll
+  margin-bottom 20px
+
+.lg-table
+  margin 10px 0
+
+.lg-level
+  display inline-block
+  color #fff
+  padding 5px
+
+.lg-debug .lg-level
+  background-color c-blue-strong
+  color c-black
+
+.lg-info .lg-level
+  background-color c-strong
+
+.lg-warn .lg-level
+  background-color c-red-shadow
+
+.lg-error .lg-level
+  background-color c-pink
+
+.lg-created
+  font-style italic
+
+.lg-stack
+  margin 0
+  white-space pre-wrap
+
+.lg-stack-start
+  font-family sans-serif
+  font-weight bold
+  color c-pink
+  font-size 16px
+  margin-bottom 5px
+
+.lg-actions .lk-button
+  width 100%
+  padding 10px
+  margin-top 10px
+
+  &:first-child
+    margin-top 0
+
+@media only screen and (max-width: 600px)
+  .lg-stack
+    white-space nowrap
+
+@media only screen and (min-width: 600px)
+  .lg-actions
+    text-align right
+
+    .lk-button
+      display inline-block
+      width inherit
+      margin-top 0
+      margin-left 10px
+      padding 5px
+
+      &:first-child
+        margin-left 0

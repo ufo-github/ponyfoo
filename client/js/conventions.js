@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var taunus = require('taunus/global');
 var measly = require('measly');
+var moment = require('moment');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
 var unwrapImages = require('./lib/unwrapImages');
 var cube = require('./lib/cube');
@@ -13,6 +14,7 @@ body.on('click', '.vw-conventional, .fs-messages', remove);
 function conventions () {
   measly.on('data', renderOrClean);
   measly.on('error', render);
+  taunus.on('render', relativeTime);
   taunus.on('render', createLayer);
   taunus.on('render', unwrapImages);
   taunus.on('start', unwrapImages.bind(null, body));
@@ -21,6 +23,16 @@ function conventions () {
   taunus.on('fetch.abort', cube.hide);
   taunus.on('fetch.error', cube.hide);
   taunus.on('fetch.error', handleTaunusError);
+}
+
+function relativeTime (container) {
+  $('time', container).forEach(relative);
+}
+
+function relative (el) {
+  var time = $(el);
+  var absolute = moment(time.attr('datetime'));
+  time.text(absolute.fromNow());
 }
 
 function createLayer (container, viewModel) {

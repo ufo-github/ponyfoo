@@ -25,5 +25,6 @@ module.exports = [
   { route: '/author/compose/:slug', action: 'author/compose', middleware: authorOnly },
   { route: '/author/email', action: 'author/email', middleware: authorOnly },
   { route: '/author/review', action: 'author/review', middleware: authorOnly },
+  { route: '/author/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: authorOnly },
   { route: '/*', action: 'error/not-found' }
 ];

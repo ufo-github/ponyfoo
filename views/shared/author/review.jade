@@ -13,11 +13,11 @@ article.ly-section
       tbody
         each article in articles
           tr
-            td
+            td(data-label='Title')
               a(href!=article.permalink, aria-label='Navigate to full article')=article.title
-            td
+            td(data-label='Tags')
               include ../partials/tags
-            td(class='ar-status ar-status-' + article.status, aria-label=article._.conditionLabel)=article._.condition
-            td.ar-buttons
+            td(data-label='Condition', class='ar-status ar-status-' + article.status, aria-label=article._.conditionLabel)=article._.condition
+            td.ar-buttons(data-label='Actions')
               a.ic-edit(href='/author/compose/' + article.slug, aria-label='Edit this article') Edit
               a.ic-remove(aria-label='Delete this article', data-slug=article.slug) Remove

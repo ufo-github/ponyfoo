@@ -1,0 +1,12 @@
+each entry in logs
+  tr(class='lg-' + entry.level)
+    td(data-label='Level')
+      span.lg-level=entry.level
+    td(data-label='When')
+      time.lg-created(datetime=entry.created.datetime, aria-label=entry.created.title)=entry.created.text
+    td(data-label='Message')
+      div.lg-message=entry.message
+  if entry.meta.error
+    tr(class='lg-' + entry.level)
+      td(colspan='5')
+        pre.lg-stack(title=entry.meta.errorText)!=entry.meta.error
