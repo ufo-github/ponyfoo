@@ -9,10 +9,11 @@ var pkg = require('../../../package.json');
 var articleService = require('../../../services/article');
 var articlePublishService = require('../../../services/articlePublish');
 var defaultFormat = 'HH:mm:ss -- DD MMMM, YYYY';
-var total = 0;
-var amountPublished = 0;
 
 function scheduler (req, res, next) {
+  var total = 0;
+  var amountPublished = 0;
+
   fs.writeFile('.job.scheduler', moment().format(defaultFormat) + '\n');
   winston.info('[job] Worker %s executing job@%s', process.pid, pkg.version);
   Article.find({ status: 'publish' }, found);
