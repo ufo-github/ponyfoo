@@ -10,7 +10,7 @@ var articleService = require('../../../services/article');
 var articlePublishService = require('../../../services/articlePublish');
 var defaultFormat = 'HH:mm:ss -- DD MMMM, YYYY';
 
-function scheduler (req, res, next) {
+function scheduler (req, res) {
   var total = 0;
   var amountPublished = 0;
 
