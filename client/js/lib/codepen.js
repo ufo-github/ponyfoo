@@ -8,8 +8,8 @@ function updateView (elem) {
   if ($('.ls-codepen').length === 0) {
     $(loadScript('//assets.codepen.io/assets/embed/ei.js')).addClass('ls-codepen');
   }
-  if (global.CodePenEmbed) {
-    global.CodePenEmbed.showCodePenEmbeds();
+  if (global.CodePenEmbed && global.CodePenEmbed._showCodePenEmbeds) {
+    global.CodePenEmbed._showCodePenEmbeds();
   }
 }
 
