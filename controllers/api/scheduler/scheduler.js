@@ -15,7 +15,7 @@ function scheduler (req, res, next) {
   var amountPublished = 0;
 
   fs.writeFile('.job.scheduler', moment().format(defaultFormat) + '\n');
-  winston.info('[job] Worker %s executing job@%s', process.pid, pkg.version);
+  winston.debug('[job] Worker %s executing job@%s', process.pid, pkg.version);
   Article.find({ status: 'publish' }, found);
 
   function found (err, articles) {
@@ -23,7 +23,7 @@ function scheduler (req, res, next) {
       done(err); return;
     }
     total = articles.length;
-    winston.info('[job] Found %s articles slated for publication', total);
+    winston.debug('[job] Found %s articles slated for publication', total);
     contra.each(articles, 2, single, done);
   }
 
@@ -45,13 +45,12 @@ function scheduler (req, res, next) {
         }
 
         function saved (err) {
-          if (!err) {
-            amountPublished++;
-            articleService.campaign(article, promoted);
-            winston.info('[job] Published "%s".', article.title);
-          } else {
-            next(err);
+          if (err) {
+            next(err); return;
           }
+          amountPublished++;
+          articleService.campaign(article, promoted);
+          winston.info('[job] Published "%s".', article.title);
         }
 
         function promoted (err) {
@@ -69,7 +68,7 @@ function scheduler (req, res, next) {
       winston.error('[job] Cron job failed!', err.stack || err);
       res.status(500).json({});
     }
-    winston.info('[job] Published %s/%s articles.', amountPublished, total);
+    winston.debug('[job] Published %s/%s articles.', amountPublished, total);
     res.json({});
   }
 }
