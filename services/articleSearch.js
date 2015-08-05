@@ -2,11 +2,17 @@
 
 var _ = require('lodash');
 var moment = require('moment');
+var contra = require('contra');
+var but = require('but');
 var freq = require('freq');
 var util = require('util');
 var hget = require('hget');
+var winston = require('winston');
 var common = require('./common_english.json');
+var env = require('../lib/env');
 var Article = require('../models/Article');
+var feedService = require('./feed');
+var sitemapService = require('./sitemap');
 var searchLimit = 6;
 var unsafeTerms = /[^\w]+/ig;
 var irrelevant = [
@@ -24,24 +30,19 @@ function query (input, options, done) {
   if (done === void 0) {
     done = options; options = {};
   }
-  var tagged = {
-    tags: { $all: options.tags || [] }
-  };
-  var fulltext = {
-    $text: { $search: terms.join(' ') }
-  };
-  var cursor = Article.find();
+  var q = { status: 'published' };
 
   if (options.oldest) {
-    cursor = cursor.and([{ updated: { $gt: options.oldest } }]);
+    q.created = { $gt: options.oldest };
   }
-
   if (options.tags && options.tags.length) {
-    cursor = cursor.and([tagged]);
+    q.tags = { $all: options.tags };
   }
 
-  cursor = cursor
-    .and([fulltext])
+  q.$text = { $search: terms.join(' ') };
+
+  var cursor = Article
+    .find(q)
     .sort('-publication');
 
   if (options.unlimited !== true) {
@@ -93,9 +94,40 @@ function addRelated (article, done) {
     var ids = _(articles)
       .sample(searchLimit)
       .pluck('_id')
-      .reject({ _id: article._id })
+      .reject(article._id)
       .value();
     article.related = ids;
+    done();
+  }
+}
+
+function addRelatedAll (done) {
+  env('BULK_INSERT', true);
+  contra.waterfall([
+    function findAll (next) {
+      Article.find({ status: 'published' }, next);
+    },
+    function compute (articles, next) {
+      contra.each(articles, 3, addRelatedArticles, but(next));
+      function addRelatedArticles (article, next) {
+        addRelated(article, save);
+        function save (err) {
+          if (err) {
+            next(err); return;
+          }
+          winston.debug('Computed relationships for: "%s"', article.slug);
+          article.save(but(next));
+        }
+      }
+    }
+  ], unbulk);
+  function unbulk (err) {
+    env('BULK_INSERT', false);
+    if (err) {
+      done(err); return;
+    }
+    feedService.rebuild();
+    sitemapService.rebuild();
     done();
   }
 }
@@ -107,5 +139,6 @@ function sanely (entry) {
 module.exports = {
   query: query,
   format: format,
-  addRelated: addRelated
+  addRelated: addRelated,
+  addRelatedAll: addRelatedAll
 };

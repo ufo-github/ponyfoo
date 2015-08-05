@@ -10,6 +10,7 @@ var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
 var markdownImageUpload = require('./api/markdown/images');
 var authorEmail = require('./api/author/email');
+var authorCompute = require('./author/compute');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
@@ -43,6 +44,8 @@ module.exports = function (app) {
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
+
+  app.get('/author/compute', authorOnly, authorCompute);
 
   app.put('/api/articles/:slug/comments', commentInsert);
   app.post('/api/articles/:slug/comments', verifyForm, commentInsert);
