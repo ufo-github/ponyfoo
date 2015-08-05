@@ -24,7 +24,7 @@ uglifyjs .bin/inline/styles.js -m -c "comparisons=false,keep_fargs=true,unsafe=t
 uglifyjs .bin/inline/fonts.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/fonts.js
 
 # critical css inlining. many slash, very escape.
-LOGGING_LEVEL=info PORT=$PORT APP_REBUILD=0 node app &
+LOGGING_LEVEL=info PORT=$PORT APP_REBUILD=0 NODE_ENV=development node app &
 sleep 5
 CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
 CRITICAL_ESCAPED=$(echo $CRITICAL | sed -e 's/[\/#&]/\\&/g' -e 's/"/\\\\"/g')
