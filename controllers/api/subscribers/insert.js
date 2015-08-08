@@ -6,8 +6,9 @@ var httpService = require('../../../services/http');
 
 function insert (req, res, next) {
   var email = req.body.subscriber;
+  var source = req.body.source;
 
-  create(email, function (err, statusCode, messages) {
+  create(email, source, function (err, statusCode, messages) {
     if (err) {
       next(err); return;
     }

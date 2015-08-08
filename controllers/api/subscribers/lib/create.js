@@ -3,12 +3,12 @@
 var validator = require('validator');
 var subscriberService = require('../../../../services/subscriber');
 
-function create (email, done) {
+function create (email, source, done) {
   if (!validator.isEmail(email)) {
     done(null, 400, ['Please subscribe using a valid email address!']); return;
   }
 
-  subscriberService.add({ email: email, source: 'intent' }, result);
+  subscriberService.add({ email: email, source: source || 'intent' }, result);
 
   function result (err) {
     if (err) {
