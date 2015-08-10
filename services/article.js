@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var but = require('but');
 var util = require('util');
 var contra = require('contra');
 var estimate = require('estimate');
@@ -113,7 +114,14 @@ function hackernews (article, done) {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
   };
-  hackernewsService.submit(data, done);
+  hackernewsService.submit(data, submitted);
+  function submitted (err, res, body, discuss) {
+    if (err) {
+      done(err); return;
+    }
+    article.hnDiscuss = discuss;
+    article.save(but(done));
+  }
 }
 
 function toJSON (source) {

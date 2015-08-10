@@ -35,6 +35,11 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
 
     if full
       section.md-markdown.at-body!=article.bodyHtml
+      if article.hnDiscuss
+        section.at-discuss
+          span='There\'s a '
+          a(href=article.hnDiscuss, target='_blank', aria-label='Your upvote is appreciated!') discussion on Hacker News
+          span .
     else
       section.at-full
         a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article

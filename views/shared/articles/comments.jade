@@ -1,5 +1,8 @@
 form.ly-section(action='/api/subscribers', method='post', name='subscribe')
-  div.ss-label Did you like the article? You can subscribe to our mailing list and be the first to know when new articles come out!
+  div.ss-label
+    ='Did you like the article? Subscribe and get an email when new articles come out! Also, '
+    a(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
+    | !
 
   noscript
     input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')

@@ -13,3 +13,6 @@ p
     a(href!=domain.authority + '/articles/tagged/' + tag, style='padding-right: 4px;')=tag
 
 div(style='padding: 20px; background-color: #efefef;')!=article.teaserHtml
+
+div(style='text-align: center;')
+  a(style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; width: 150px; background-color: #e92c6c; color: #fff; font-weight: bold; box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);', href!=domain.authority + article.permalink) Read the full article on Pony Foo
