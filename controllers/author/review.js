@@ -10,7 +10,7 @@ var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 module.exports = getModel;
 
 function getModel (req, res, next) {
-  Article.find({}).sort('-created').exec(respond);
+  Article.find({}).sort('-publication').exec(respond);
 
   function respond (err, articles) {
     if (err) {
