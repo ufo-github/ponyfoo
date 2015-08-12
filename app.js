@@ -62,7 +62,7 @@ function rebuild () {
 }
 
 function fatal (err) {
-  winston.error('Uncaught exception', { error: err, stack: err.stack || '(none)' }, exit);
+  winston.error('Uncaught exception', { stack: err.stack || err.message || err || '(unknown)' }, exit);
 }
 
 function exit () {

@@ -55,7 +55,7 @@ function scheduler (req, res) {
 
         function promoted (err) {
           if (err) {
-            winston.error('[job] Article campaign failed for "%s".\n%s', article.title, err.stack || err);
+            winston.error('[job] Article campaign failed for "%s".', article.title, { stack: err.stack || err.message || err || '(unknown)' });
           }
           next(err);
         }
@@ -65,7 +65,7 @@ function scheduler (req, res) {
 
   function done (err) {
     if (err) {
-      winston.error('[job] Cron job failed!', err.stack || err);
+      winston.error('[job] Cron job failed!', { stack: err.stack || err.message || err || '(unknown)' });
       res.status(500).json({});
     }
     winston.debug('[job] Published %s/%s articles.', amountPublished, total);

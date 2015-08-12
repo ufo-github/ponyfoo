@@ -32,7 +32,7 @@ function operational () {
 }
 
 function fatal (err) {
-  winston.error('Uncaught exception (cluster)', { error: err, stack: err.stack || '(none)' }, exit);
+  winston.error('Uncaught exception (cluster)', { stack: err.stack || err.message || err || '(unknown)' }, exit);
 }
 
 function exit () {

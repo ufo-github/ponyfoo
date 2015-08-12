@@ -55,10 +55,7 @@ function logger () {
   var err = args.shift(), message;
   if (err) {
     message = util.format('Email sending failed: %s', err.message || '\n' + err.stack);
-    winston.error(message, {
-      err: err,
-      args: args
-    });
+    winston.error(message, { stack: err.stack || err.message || err || '(unknown)' });
   } else {
     winston.debug('Email sent!');
   }

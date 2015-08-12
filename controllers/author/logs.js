@@ -42,7 +42,7 @@ function metaToModel (meta) {
   return {
     pid: meta.pid,
     hostname: meta.hostname,
-    error: meta.error ? errorService.toHtmlModel(meta.error) : null,
-    errorText: meta.error ? errorService.toTextModel(meta.error) : null
+    error: meta.stack ? errorService.toHtmlModel(meta.stack) : null,
+    errorText: meta.stack ? errorService.toTextModel(meta.stack) : null
   };
 }
