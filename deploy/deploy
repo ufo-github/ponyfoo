@@ -3,8 +3,8 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${PRIMAL_AMI:="ami-6979d202"}"
-: "${CARNIVORE_AMI:="ami-8b79d2e0"}"
+: "${PRIMAL_AMI:="ami-65258e0e"}"
+# : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 : "${CLEANUP:="no"}"
 
 # configurable variables
