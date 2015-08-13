@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+: "${NODE_ENV:="staging"}"
+
+echo "build-env: building app for $NODE_ENV environment"
+npm run build-$NODE_ENV
+
+echo "build-env: copying files over to tmp/appserver"
+rm -rf tmp/appserver
+mkdir -p tmp/appserver/deploy/env
+cp -r {.bin,client,controllers,lib,models,resources,services,test,views,.env.defaults.json,.taunusrc,*.js,package.json} tmp/appserver || true
+cp "deploy/env/.env.$NODE_ENV.json" tmp/appserver/deploy/env || true

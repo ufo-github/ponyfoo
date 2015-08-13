@@ -20,6 +20,7 @@
   "main": "app",
   "scripts": {
     "build-development": "build/build-development",
+    "build-env": "build/build-env",
     "build-production": "build/build-production",
     "build-staging": "build/build-staging",
     "clean": "build/clean",

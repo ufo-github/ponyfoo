@@ -6,7 +6,7 @@
     "VPC_ID": null,
     "SUBNET_ID": null,
     "NVM_VERSION": "v0.24.0",
-    "NODE_VERSION": "0.10"
+    "NODE_VERSION": null
   },
   "builders": [{
     "type": "amazon-ebs",

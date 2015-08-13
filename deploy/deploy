@@ -3,8 +3,8 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-# : "${PRIMAL_AMI:="ami-6979d202"}"
-# : "${CARNIVORE_AMI:="ami-8b79d2e0"}"
+: "${PRIMAL_AMI:="ami-6979d202"}"
+: "${CARNIVORE_AMI:="ami-8b79d2e0"}"
 : "${CLEANUP:="no"}"
 
 # configurable variables
@@ -20,7 +20,6 @@ DESIRED_CAPACITY="1"
 STAMP="$(date +"%Y%m%d%H%M%S")"
 SG_NAME="standard-$NAME"
 ELB_NAME="elb-$NAME"
-KEYFILE="deploy/keys/$NODE_ENV"
 ASG_NAME="asg-$NAME-$STAMP"
 LC_NAME="lc-$NAME-$STAMP"
 
@@ -54,14 +53,8 @@ fi
 
 if [ -z ${CARNIVORE_AMI+x} ]
 then
-  echo "deploy: building app for $NODE_ENV"
-  npm run build-$NODE_ENV
-
-  echo "deploy: copying files over to tmp/appserver"
-  rm -rf tmp/appserver
-  mkdir -p tmp/appserver/deploy/env
-  cp -r {.bin,client,controllers,lib,models,resources,services,test,views,.env.defaults.json,.taunusrc,*.js,package.json} tmp/appserver
-  cp "deploy/env/.env.$NODE_ENV.json" tmp/appserver/deploy/env
+  echo "deploy: building app..."
+  npm run build-env
 
   echo "deploy: building carnivore image with packer..."
   packer build \
@@ -140,7 +133,7 @@ aws autoscaling create-auto-scaling-group \
 EC2_HEALTH="0"
 while [ "$EC2_HEALTH" != "$DESIRED_CAPACITY" ]
 do
-  printf "deploy-aws: ensuring new instance(s) are healthy at ec2"
+  printf "deploy: ensuring new instance(s) are healthy at ec2"
   sleep 2;printf ".";sleep 2;printf "."
   aws autoscaling describe-auto-scaling-groups \
     --auto-scaling-group-names "$ASG_NAME" > deploy/log/asg-description.log
@@ -156,7 +149,7 @@ ELB_INSTANCES=$(jq -r '.AutoScalingGroups[0].Instances[]?.InstanceId' < deploy/l
 ELB_HEALTH="0"
 while [ "$ELB_HEALTH" != "$DESIRED_CAPACITY" ]
 do
-  printf "deploy-aws: ensuring new instance(s) are healthy at elb"
+  printf "deploy: ensuring new instance(s) are healthy at elb"
   sleep 2;printf ".";sleep 2;printf "."
   aws elb describe-instance-health \
     --load-balancer-name "$ELB_NAME" \
@@ -191,7 +184,7 @@ do
   OPERATIONAL="1"
   while [ "$OPERATIONAL" != "0" ]
   do
-    printf "deploy-aws: ensuring outdated instance(s) are terminated"
+    printf "deploy: ensuring outdated instance(s) are terminated"
     sleep 2;printf ".";sleep 2;printf "."
     aws autoscaling describe-auto-scaling-groups \
       --auto-scaling-group-names "$EXISTING_GROUP_NAME" > deploy/log/asg-existing-description.log
