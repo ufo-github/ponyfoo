@@ -49,7 +49,7 @@
     "connect-redis": "2.4.1",
     "contra": "1.9.1",
     "cookie-parser": "1.1.0",
-    "dominus": "5.0.2",
+    "dominus": "5.0.6",
     "estimate": "1.0.0",
     "express": "4.13.2",
     "express-session": "1.7.6",

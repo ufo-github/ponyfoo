@@ -4,6 +4,7 @@ var $ = require('dominus');
 var taunus = require('taunus');
 var moment = require('moment');
 var markdownService = require('../../services/markdown');
+var subscriptions = require('./subscriptions');
 var conventions = require('./conventions');
 var analytics = require('./analytics');
 var wiring = require('./wiring');
@@ -26,7 +27,7 @@ setTimeout(helpMePay, 7000);
 
 function starting (container, viewModel) {
   require('./search');
-  require('./subscriptions');
+  subscriptions($('.de-subscribe'));
   analytics(viewModel.env);
   require('./welcome')(viewModel);
   setTimeout(refreshesAd, 0);

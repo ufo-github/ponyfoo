@@ -12,7 +12,7 @@ module.exports = function (viewModel) {
     user: viewModel.user,
     article: viewModel.article,
     measly: viewModel.measly.layer({
-      context: composer
+      context: composer[0]
     })
   };
   comments(commentsModel);

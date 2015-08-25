@@ -5,6 +5,7 @@ var raf = require('raf');
 var taunus = require('taunus/global');
 var throttle = require('../../lib/throttle');
 var storage = require('../../lib/storage');
+var subscriptions = require('../../subscriptions');
 var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var textService = require('../../../../services/text');
 var key = 'comment-draft';
@@ -26,6 +27,7 @@ module.exports = function (viewModel) {
 
   $('.mm-thread-reply').removeClass('uv-hidden');
 
+  subscriptions($('.mm-subscribe'));
   composer.on('keypress keydown keyup paste', serializeSlowly);
   send.on('click', comment);
   comments.on('click', '.mm-thread-reply', attach);
