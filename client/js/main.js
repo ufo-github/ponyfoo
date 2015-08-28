@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var moment = require('moment');
+var fonts = require('./fonts');
 var markdownService = require('../../services/markdown');
 var subscriptions = require('./subscriptions');
 var conventions = require('./conventions');
@@ -15,6 +16,7 @@ require('hint');
 require('./lib/codepen');
 
 conventions();
+fonts();
 
 taunus.on('start', starting);
 taunus.mount(main, wiring, { bootstrap: 'manual', forms: false });
