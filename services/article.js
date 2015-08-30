@@ -53,7 +53,7 @@ function campaign (article, done) {
     contra.curry(email, article),
     contra.curry(tweet, article),
     contra.curry(echojs, article),
-    contra.curry(hackernews, article)
+    contra.curry(hackernews, article),
     contra.curry(lobsters, article)
   ], done);
 }
