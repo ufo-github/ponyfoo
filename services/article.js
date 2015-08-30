@@ -13,6 +13,7 @@ var textService = require('./text');
 var twitterService = require('./twitter');
 var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
+var lobstersService = require('./lobsters');
 var markupService = require('./markup');
 var authority = env('AUTHORITY');
 
@@ -53,6 +54,7 @@ function campaign (article, done) {
     contra.curry(tweet, article),
     contra.curry(echojs, article),
     contra.curry(hackernews, article)
+    contra.curry(lobsters, article)
   ], done);
 }
 
@@ -122,6 +124,17 @@ function hackernews (article, done) {
     article.hnDiscuss = discuss;
     article.save(but(done));
   }
+}
+
+function lobsters (article, done) {
+  if (article.lobsters === false) {
+    done(); return;
+  }
+  var data = {
+    title: article.title,
+    url: util.format('%s/articles/%s', authority, article.slug)
+  };
+  lobstersService.submit(data, done);
 }
 
 function toJSON (source) {

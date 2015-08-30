@@ -24,6 +24,7 @@ var schema = new mongoose.Schema({
   email: { type: Boolean, 'default': true },
   tweet: { type: Boolean, 'default': true },
   echojs: { type: Boolean, 'default': true },
+  lobsters: { type: Boolean, 'default': true },
   hn: { type: Boolean, 'default': true },
   hnDiscuss: String
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
