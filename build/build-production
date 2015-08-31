@@ -12,6 +12,9 @@ DOMAIN="http://ponyfoo.com"
 ALL_CSS="$DIST/css/all.css"
 CRITICAL_CSS=".bin/temp/critical.css"
 
+# d3
+browserify node_modules/d3 -s d3 | uglifyjs -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" > .bin/public/js/d3.js
+
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
@@ -38,4 +41,4 @@ rm $CRITICAL_CSS
 
 # asset hashing
 reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
-reaver $DIST/{css,js}/* --manifest | scourge .bin/{inline,views/server} --base-path $DIST --domain $DOMAIN
+reaver $DIST/{css,js}/* --manifest | scourge .bin/{inline,views/server,public/,js} --base-path $DIST --domain $DOMAIN

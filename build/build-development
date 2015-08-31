@@ -5,6 +5,9 @@
 npm run clean
 npm run copy
 
+# d3
+browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js
+
 # compile
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
