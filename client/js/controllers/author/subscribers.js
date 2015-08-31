@@ -16,14 +16,14 @@ function pullData (subscribers) {
       date: week.format('Do MMMM ’YY'),
       migration: 0,
       sidebar: 0,
-      article: 0,
-      comment: 0
+      comment: 0,
+      article: 0
     };
-    curr[source()]++;
+    add();
     while (subscribers.length) {
       subscriber = subscribers.pop();
       if (moment(subscriber.created).isAfter(week)) {
-        curr[source()]++;
+        add();
       } else {
         break;
       }
@@ -31,18 +31,23 @@ function pullData (subscribers) {
     data.push(curr);
   }
   return data;
+  function add () {
+    curr[source()]++;
+  }
   function source () {
-    return subscriber.source === 'intent' ? 'article' : subscriber.source
+    return subscriber.source === 'intent' ? 'sidebar' : subscriber.source;
   }
 }
 
-module.exports = function (viewModel) {
+module.exports = function (viewModel, container) {
   loadScript('/js/d3.js', function () {
+    var parent = container.getElementsByClassName('as-container')[0];
+    var rect = parent.getBoundingClientRect();
     var margin = {
       top: 20, right: 20, bottom: 30, left: 40
     };
-    var width = 960 - margin.left - margin.right;
-    var height = 500 - margin.top - margin.bottom;
+    var width = rect.right - rect.left - margin.left - margin.right;
+    var height = Math.ceil((rect.right - rect.left) / 1) - margin.top - margin.bottom;
 
     var data = pullData(viewModel.subscribers);
 
@@ -52,11 +57,11 @@ module.exports = function (viewModel) {
 
     var y = d3.scale
       .linear()
-      .rangeRound([height, 0]);
+      .rangeRound([height - 150, 0]);
 
     var color = d3.scale
       .ordinal()
-      .range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00']);
+      .range(['#8a89a6', '#7b6888', '#6b486b', '#9755b4']);
 
     var xAxis = d3.svg
       .axis()
@@ -70,7 +75,7 @@ module.exports = function (viewModel) {
       .tickFormat(d3.format('.2s'));
 
     var svg = d3
-      .select('.as-subscribers')
+      .select('.as-chart')
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
@@ -96,9 +101,9 @@ module.exports = function (viewModel) {
       .call(xAxis)
       .selectAll('text')
       .attr('y', 0)
-      .attr('x', 9)
+      .attr('x', -140)
       .attr('dy', '.35em')
-      .attr('transform', 'rotate(75)')
+      .attr('transform', 'rotate(70) translate(10,-45)')
       .style('text-anchor', 'start')
       .each(function (d, i) {
         if (i % 2 !== 0) {
@@ -134,7 +139,7 @@ module.exports = function (viewModel) {
       .data(color.domain().slice().reverse())
       .enter().append('g')
       .attr('class', 'as-legend')
-      .attr('transform', function(d, i) { return 'translate(-700,' + i * 20 + ')'; });
+      .attr('transform', function(d, i) { return 'translate(-' + (width - 160) + ',' + i * 20 + ')'; });
 
     legend.append('rect')
       .attr('x', width - 18)
