@@ -1,4 +1,7 @@
 article.ly-section
-  h1.vw-title Subscribers
+  h1.vw-title
+    span Subscribers
+    span=' '
+    span='(' + subscribers.filter(function(s) { return s.verified }).length + ')'
   section.as-container
     div.as-chart
