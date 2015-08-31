@@ -14,6 +14,7 @@ function pullData (subscribers) {
     curr = {
       moment: week,
       date: week.format('Do MMMM ’YY'),
+      unverified: 0,
       migration: 0,
       sidebar: 0,
       comment: 0,
@@ -32,7 +33,11 @@ function pullData (subscribers) {
   }
   return data;
   function add () {
-    curr[source()]++;
+    if (subscriber.verified) {
+      curr[source()]++;
+    } else {
+      curr.unverified++;
+    }
   }
   function source () {
     return subscriber.source === 'intent' ? 'sidebar' : subscriber.source;
@@ -47,7 +52,7 @@ module.exports = function (viewModel, container) {
       top: 20, right: 20, bottom: 30, left: 40
     };
     var width = rect.right - rect.left - margin.left - margin.right;
-    var height = Math.ceil((rect.right - rect.left) / 1) - margin.top - margin.bottom;
+    var height = Math.ceil((rect.right - rect.left) / 1.5) - margin.top - margin.bottom;
 
     var data = pullData(viewModel.subscribers);
 
@@ -61,7 +66,7 @@ module.exports = function (viewModel, container) {
 
     var color = d3.scale
       .ordinal()
-      .range(['#8a89a6', '#7b6888', '#6b486b', '#9755b4']);
+      .range(['#412917', '#8a89a6', '#7b6888', '#6b486b', '#9755b4']);
 
     var xAxis = d3.svg
       .axis()
@@ -87,7 +92,7 @@ module.exports = function (viewModel, container) {
     data.forEach(function(d) {
       var y0 = 0;
       d.fragments = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-      d.total = d.migration + d.sidebar + d.comment + d.article;
+      d.total = d.unverified + d.migration + d.sidebar + d.comment + d.article;
     });
 
     data.sort(function(a, b) { return a.moment.isAfter(b.moment) ? 1 : -1; });
