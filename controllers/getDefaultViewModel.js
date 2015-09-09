@@ -8,6 +8,7 @@ var name = env('NODE_ENV');
 var authority = env('AUTHORITY');
 var authorEmail = env('AUTHOR_EMAIL');
 var bioService = require('../services/bio');
+var popularityService = require('../services/popularity');
 
 function read (file) {
   return function (next) {
@@ -18,6 +19,7 @@ function read (file) {
 function getDefaultViewModel (done) {
   contra.concurrent({
     bioHtml: bioService.getHtml.bind(null, authorEmail),
+    popularArticles: popularityService.getArticles,
     javascriptLoader: read('.bin/inline/javascript.js'),
     styleLoader: read('.bin/inline/styles.js'),
     fontLoader: read('.bin/inline/fonts.js')
@@ -48,7 +50,8 @@ function getDefaultViewModel (done) {
           images: [authority + '/img/thumbnail.png'],
           keywords: []
         },
-        bioHtml: data.bioHtml
+        bioHtml: data.bioHtml,
+        popularArticles: data.popularArticles
       },
       javascriptLoader: data.javascriptLoader,
       styleLoader: data.styleLoader,

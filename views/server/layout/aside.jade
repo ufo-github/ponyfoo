@@ -22,6 +22,18 @@ aside.ly-aside
 
   section.ly-section.de-bio.md-markdown!=model.bioHtml
 
+  if model.popularArticles.length
+    section.ly-section
+      h2.de-heading
+        a.lk-heading#popular(href='#popular') Greatest Hits
+      ul.de-popular
+        each article in model.popularArticles
+          li
+            a(
+              href='/articles/' + article.slug,
+              aria-label=moment(article.publication).format('(YYYY)') + ' Tagged: ' + article.tags.join(', ')
+            )=article.title
+
   section.ly-section.al-archives
     a(href='/articles/archives', aria-label='The archives link to every single article ever published on Pony Foo!') Archives
     span=' and '

@@ -47,12 +47,15 @@ function pullData (subscribers) {
 }
 
 module.exports = function (viewModel, container) {
-  loadD3(loadD3tip.bind(null, loaded))
+  loadD3(loadD3tip.bind(null, loaded));
 
   function loadD3 (next) { loadScript('/js/d3.js', next); }
   function loadD3tip (next) { loadScript('/js/d3-tip.js', next); }
   function loaded () {
-    d3tip(d3)
+    var d3 = global.d3;
+    var d3tip = global.d3tip;
+
+    d3tip(d3);
 
     var parent = container.getElementsByClassName('as-container')[0];
     var rect = parent.getBoundingClientRect();
@@ -66,7 +69,7 @@ module.exports = function (viewModel, container) {
 
     var x = d3.scale
       .ordinal()
-      .rangeRoundBands([0, width], .1);
+      .rangeRoundBands([0, width], 0.1);
 
     var y = d3.scale
       .linear()

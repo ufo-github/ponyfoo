@@ -25,6 +25,23 @@
 .de-bio
   text-align left
 
+.de-heading
+  margin-top 10px
+
+.de-popular
+  list-style-type none
+  text-align left
+
+  li
+    margin 20px 0
+    white-space nowrap
+    text-overflow ellipsis
+    color c-pink
+    overflow hidden
+
 @media screen and (min-width: 768px)
   .de-back
     display none
+
+  .de-popular li
+    margin 10px 0

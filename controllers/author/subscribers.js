@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
 var Subscriber = require('../../models/Subscriber');
 
 module.exports = function (req, res, next) {
