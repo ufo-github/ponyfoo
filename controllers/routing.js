@@ -20,7 +20,9 @@ var commentRemove = require('./api/comments/remove');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
-var scheduler = require('./api/scheduler/scheduler');
+var secretOnly = require('./api/secret/only');
+var secretScheduler = require('./api/secret/scheduler');
+var secretRemodel = require('./api/secret/remodel');
 var apiErrorNotFound = require('./api/error/notFound');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
@@ -35,7 +37,8 @@ var production = env('NODE_ENV') === 'production';
 
 module.exports = function (app) {
   app.get('/api/status/health', statusHealth);
-  app.get('/api/scheduler', scheduler);
+  app.get('/api/:secret(\\d+)/scheduler', secretOnly, secretScheduler);
+  app.get('/api/:secret(\\d+)/remodel', secretOnly, secretRemodel);
   app.get('/articles/feed', articleFeed);
   app.get('/sitemap.xml', sitemap);
 

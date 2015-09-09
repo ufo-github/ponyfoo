@@ -4,3 +4,6 @@ cp -r client/img .bin/public
 cp -r client/js/inline .bin
 cp client/{favicon.ico,robots.txt,humans.txt,opensearch.xml} .bin/public
 rm -rf .bin/public/img/icons
+
+# secret
+echo $RANDOM$RANDOM$RANDOM$RANDOM$RANDOM$RANDOM > .bin/secret
