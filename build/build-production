@@ -14,6 +14,7 @@ CRITICAL_CSS=".bin/temp/critical.css"
 
 # d3
 browserify node_modules/d3 -s d3 | uglifyjs -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" > .bin/public/js/d3.js
+browserify node_modules/d3-tip -s d3tip | uglifyjs -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" > .bin/public/js/d3-tip.js
 
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress

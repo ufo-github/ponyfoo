@@ -61,6 +61,7 @@
     "contra": "1.9.1",
     "cookie-parser": "1.1.0",
     "d3": "3.5.6",
+    "d3-tip": "0.6.7",
     "dominus": "5.0.6",
     "estimate": "1.0.0",
     "express": "4.13.2",

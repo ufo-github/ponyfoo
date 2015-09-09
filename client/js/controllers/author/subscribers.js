@@ -1,7 +1,9 @@
 'use strict';
 
-var loadScript = require('../../lib/loadScript');
+var $ = require('dominus');
 var moment = require('moment');
+var loadScript = require('../../lib/loadScript');
+var textService = require('../../../../services/text');
 
 function pullData (subscribers) {
   var data = [];
@@ -45,7 +47,13 @@ function pullData (subscribers) {
 }
 
 module.exports = function (viewModel, container) {
-  loadScript('/js/d3.js', function () {
+  loadD3(loadD3tip.bind(null, loaded))
+
+  function loadD3 (next) { loadScript('/js/d3.js', next); }
+  function loadD3tip (next) { loadScript('/js/d3-tip.js', next); }
+  function loaded () {
+    d3tip(d3)
+
     var parent = container.getElementsByClassName('as-container')[0];
     var rect = parent.getBoundingClientRect();
     var margin = {
@@ -159,5 +167,24 @@ module.exports = function (viewModel, container) {
       .style('text-anchor', 'end')
       .text(function(d) { return d; });
 
-  });
+    var tip = d3.tip()
+      .attr('class', 'as-tip')
+      .style()
+      .offset([-10, 0])
+      .html(function (d) {
+        return textService.format(
+          '<div class="as-tip-content" style="color: %s"><span class="as-tip-label">%s:</span> <span class="as-tip-value">%s</span></div>',
+          color(d.name),
+          d.name,
+          d.y1
+        );
+      });
+
+    svg.call(tip);
+    svg
+      .selectAll('rect')
+      .on('mouseover', tip.show);
+
+    $(parent).on('click', tip.hide);
+  }
 };
