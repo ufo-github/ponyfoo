@@ -102,7 +102,7 @@ module.exports = function (viewModel, container) {
 
     data.forEach(function(d) {
       var y0 = 0;
-      d.fragments = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+      d.fragments = color.domain().map(function(name) { return { name: name, y0: y0, y1: y0 += +d[name] }; });
       d.total = d.unverified + d.migration + d.sidebar + d.comment + d.article;
     });
 
@@ -148,7 +148,7 @@ module.exports = function (viewModel, container) {
       .enter().append('rect')
       .attr('width', x.rangeBand())
       .attr('y', function(d) { return y(d.y1); })
-      .attr('height', function(d) { return y(d.y0) - y(d.y1); })
+      .attr('height', function(d) { console.log(d, y(d.y1)); return y(d.y0) - y(d.y1); })
       .style('fill', function(d) { return color(d.name); });
 
     var legend = svg.selectAll('.legend')
@@ -179,14 +179,16 @@ module.exports = function (viewModel, container) {
           '<div class="as-tip-content" style="color: %s"><span class="as-tip-label">%s:</span> <span class="as-tip-value">%s</span></div>',
           color(d.name),
           d.name,
-          d.y1
+          d.y1 - d.y0
         );
       });
 
     svg.call(tip);
     svg
       .selectAll('rect')
-      .on('mouseover', tip.show);
+      .on('mouseover', function (d) {
+        if (d.y1 - d.y0 > 0) { tip.show(d); }
+      });
 
     $(parent).on('click', tip.hide);
   }
