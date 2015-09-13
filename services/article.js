@@ -11,6 +11,7 @@ var commentService = require('./comment');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
 var twitterService = require('./twitter');
+var twitterEmojiService = require('./twitterEmoji');
 var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
@@ -81,19 +82,20 @@ function tweet (article, done) {
     done(); return;
   }
   var formats = [
-    'Published: "%s" %s',
-    'Fresh content!  "%s" %s',
-    '"%s" contains crisp new words! %s',
-    '"%s" is hot off the press! %s',
-    'Extra! Extra! "%s" has just come out! %s',
-    '"%s" has just been published! %s',
-    'This just out! "%s" %s'
+    'Just %s published: "%s" %s',
+    'Fresh %s content on Pony Foo! "%s" %s',
+    '%s "%s" contains crisp new words! %s',
+    '%s "%s" is hot off the press! %s',
+    'Extra! Extra! %s "%s" has just come out! %s',
+    '%s "%s" has just been published! %s',
+    'This just %s out! "%s" %s'
   ];
   var fmt = _.sample(formats);
   var tag = article.tags.slice(0, 2).join(' #');
   var camelTag = textService.hyphenToCamel(tag);
   var links = util.format('%s/articles/%s #%s', authority, article.slug, camelTag);
-  var status = util.format(fmt, article.title, links);
+  var emoji = twitterEmojiService.generate(['people']);
+  var status = util.format(fmt, emoji, article.title, links);
   twitterService.tweet(status, done);
 }
 
