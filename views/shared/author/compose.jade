@@ -4,6 +4,7 @@ article.ly-section
     input.ac-title(placeholder='A Thoughtful, Catchy Title', value=article.title)
     input.ac-slug(placeholder='a-thoughtful-catchy-title', value=article.slug)
     textarea.ac-text.ac-teaser.pmk-input(placeholder='Tease the reader about your article. Used for marketing, search snippets, etc.', data-markdown=article.teaser)
+    textarea.ac-text.ac-introduction.pmk-input(placeholder='Write the introduction to the topics presented in your article. Included in emails.', data-markdown=article.introduction)
     textarea.ac-text.ac-body.pmk-input(placeholder='Main body of your article', data-markdown=article.body)
     input.ac-tags(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
 

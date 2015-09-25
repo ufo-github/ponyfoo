@@ -12,7 +12,7 @@ Article.schema.pre('save', beforeSave);
 Article.schema.post('save', afterSave);
 
 function computeSignature (a) {
-  return cryptoService.md5([a.title, a.status, a.teaser, a.body].concat(a.tags).join(' '));
+  return cryptoService.md5([a.title, a.status, a.teaser, a.introduction, a.body].concat(a.tags).join(' '));
 }
 
 function beforeSave (next) {
@@ -22,6 +22,7 @@ function beforeSave (next) {
 
   article.sign = computeSignature(article);
   article.teaserHtml = toHtml(article.teaser, 1);
+  article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);
   article.updated = Date.now();
 

@@ -12,26 +12,29 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
   meta(itemprop='keywords', content=article.tags.join(','))
   meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
 
-  - cc = article.commentCount
-  if cc
-    meta(itemprop='interactionCount', content=cc + ' UserComments')
+  - commentCount = article.commentCount
+  if commentCount
+    meta(itemprop='interactionCount', content=commentCount + ' UserComments')
 
   header.at-header.uv-clearfix
     h1.at-title
-      a.at-title-link(href=article.permalink, aria-label='Tagged: ' + article.tags.join(', '), itemprop='headline')=article.title
+      a.at-title-link(href=article.permalink, itemprop='headline')=article.title
 
-    if cc
-      a.uv-left.mm-count(href='#comments')='(' + cc + ' comment' + (cc === 1 ? ')' : 's)')
+    //- if commentCount
+    //-   a.uv-left.mm-count(href='#comments')='(' + commentCount + ' comment' + (commentCount === 1 ? ')' : 's)')
 
-    span.at-meta
-      span='reading time: '
-      time(aria-label='You\'re probably faster than that!')=moment.duration(article.readingTime, 'seconds').humanize()
-      span=', ' + article.status + ' '
-      if article.status !== 'draft'
-        time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
+    //- span.at-meta
+    //-   span='reading time: '
+    //-   time(aria-label='You\'re probably faster than that!')=moment.duration(article.readingTime, 'seconds').humanize()
+    //-   span=', ' + article.status + ' '
+    //-   if article.status !== 'draft'
+    //-     time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
+
+  section.at-teaser
+    div.md-markdown!=article.teaserHtml
 
   section.at-corpus(itemprop='articleBody')
-    section.md-markdown.at-teaser(itemprop='about')!=article.teaserHtml
+    section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml
 
     if full
       section.md-markdown.at-body!=article.bodyHtml

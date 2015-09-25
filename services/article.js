@@ -63,7 +63,8 @@ function email (article, done) {
   if (article.email === false) {
     done(); return;
   }
-  var teaser = markupService.compile(article.teaserHtml, { markdown: false, absolutize: true });
+  var intro = article.teaserHtml + article.introductionHtml
+  var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
   var model = {
     subject: article.title,
     teaser: 'A new article is hot off the press on Pony Foo!',
@@ -140,7 +141,7 @@ function lobsters (article, done) {
 }
 
 function toJSON (source) {
-  var text = [source.teaserHtml, source.bodyHtml].join(' ');
+  var text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(' ');
   var article = source.toJSON();
 
   article.readingTime = estimate.text(text);
@@ -171,6 +172,7 @@ function toJSON (source) {
   delete article.__v;
   delete article.sign;
   delete article.teaser;
+  delete article.introduction;
   delete article.body;
   delete article.comments;
   return article;

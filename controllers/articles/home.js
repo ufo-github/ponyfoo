@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
 
   res.viewModel = {
     model: {
-      title: 'Pony Foo \u2014 JavaScript Consultant',
+      title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolas Bevacqua',
       meta: {
         canonical: '/'
       },

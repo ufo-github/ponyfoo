@@ -19,6 +19,7 @@ function validate (model, update) {
     title: getTitle(),
     slug: getSlug(),
     teaser: getContent('teaser'),
+    introduction: getContent('introduction'),
     body: getContent('body'),
     tags: getTags(),
     comments: [],

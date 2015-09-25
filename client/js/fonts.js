@@ -4,11 +4,11 @@ var fontfaceonload = require('fontfaceonload');
 
 function wait () {
   fontfaceonload('Merriweather', {
-    success: success('ly-merriweather')
+    success: success('ly-teasers')
   });
-  fontfaceonload('Cardo', {
+  fontfaceonload('Neuton', {
     weight: 700,
-    success: success('ly-cardo')
+    success: success('ly-custom-headings')
   });
 }
 function success (className) {

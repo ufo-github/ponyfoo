@@ -1,0 +1,26 @@
+rainbow()
+  background linear-gradient(to right, c-white 0, c-yellow-highlight 33%, c-green 66%, c-pink 100%)
+
+@keyframes bg-rainbow
+  0%
+    background-color c-pink
+  50%
+    background-color c-yellow
+  90%
+    opacity 0.6
+    background-color c-green
+
+rainbow-pseudo-on-hover()
+  position relative
+  padding-bottom 5px
+
+  &:hover:before
+    position absolute
+    content ''
+    left 0
+    right 0
+    bottom -3px
+    height 3px
+    opacity 0.8
+    transition all 0.1s ease-in-out
+    animation bg-rainbow 0.5s infinite

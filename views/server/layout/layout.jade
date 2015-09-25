@@ -47,16 +47,28 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
       style.
         .js-only{display:none !important}
       link(rel='stylesheet', type='text/css', href='/css/all.css')
-      link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Cardo:700|Merriweather:400italic,400,700')
+      link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Neuton:700|Merriweather:400italic,400,700')
 
   body#top
-    a.nv-search(href='#search') Search
+    //- a.nv-search(href='#search') Search
 
     header.ly-header.vw-title
       h1.ly-title
-        a.ly-title-anchor(href='/', aria-label='Go to home')
-          img(src='/img/ponyfoo.png', alt='Pony Foo')
-      h2.ly-legend Ramblings of a degenerate coder
+        a.go-anchor(href='/')
+          object.go-block(type='image/svg+xml' data='/img/ponyfoo.svg')
+            img.go-block(src='/img/ponyfoo.png', alt='Pony Foo')
+          span.go-text-wrapper
+            span.go-text ponyfoo.com
+      nav.hn-navigation
+        ul.hn-list
+          li.hn-item
+            a.hn-link(href='/') Home
+          li.hn-item
+            a.hn-link(href='/articles/history', aria-label='Pony Foo has been online for a while. Get access to the full publication history from here') History
+          li.hn-item
+            a.hn-link(href='/articles/feed', aria-label='Track the RSS feed and be the first to learn about freshly published content') Feed
+          li.hn-item
+            a.hn-link(href='http://bevacqua.io', aria-label='Want to learn more about me?', target='_blank') About
 
     if model.flash
       include flash
@@ -65,7 +77,6 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     main.ly-main!=partial
 
-    include aside
-    include ponycube
+    //- include aside
 
     script!=javascriptLoader

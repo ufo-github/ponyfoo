@@ -1,0 +1,43 @@
+.go-anchor
+  rect
+    transition all 0.1s ease-in-out
+  &:hover rect
+    animation-name logo-0
+    animation-duration 0.7s
+    animation-iteration-count infinite
+    &[fill="#1a1a1a"]
+      animation-name logo-10
+    &[fill="#333"]
+      animation-name logo-15
+    &[fill="#4d4d4d"]
+      animation-name logo-20
+    &[fill="#666"]
+      animation-name logo-30
+    &[fill="#26EF00"]
+      animation-name logo-eye
+    &[fill="#26E400"]
+      animation-name logo-eye-core
+  for offset in (1..107)
+    rect:nth-child({offset})
+      animation-duration 0.7s + offset * 0.01
+@keyframes logo-0
+  20%
+    fill c-pink
+@keyframes logo-10
+  20%
+    fill lighten(c-pink, 10%)
+@keyframes logo-15
+  20%
+    fill lighten(c-pink, 15%)
+@keyframes logo-20
+  20%
+    fill lighten(c-pink, 20%)
+@keyframes logo-30
+  20%
+    fill lighten(c-pink, 30%)
+@keyframes logo-eye
+  20%
+    fill c-yellow-highlight
+@keyframes logo-eye-core
+  20%
+    fill c-yellow

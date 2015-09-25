@@ -74,7 +74,8 @@ function addRelated (article, done) {
     article.title,
     article.tags.join(' '),
     insanely(article.bodyHtml),
-    insanely(article.teaserHtml)
+    insanely(article.teaserHtml),
+    insanely(article.introductionHtml)
   ].join(' ');
   var relevant = text.replace(/([-_*`\[\]\/:]|<\/?(kbd|mark)>|https?|www\.?|\.com)/g, ' ');
   var frequencies = freq(strip(relevant));

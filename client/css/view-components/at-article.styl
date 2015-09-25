@@ -1,29 +1,29 @@
 .at-header
-  margin-bottom 15px
+  position relative
+  background-color lighten(c-pink, 20%)
+  border-bottom 5px solid c-pink
+  padding 20px
+  margin 0
+
+.at-title-link
+  color c-white
 
 .at-title
-  text-align center
-  margin-top 0
+  padding 0
+  margin 0
   font-size 2.6em
+  text-align center
 
-  .at-title-link,
-  .at-title-link:hover,
-  .at-title-link:visited
-    color #111
-    text-decoration none
+  /.ly-custom-headings &
+    font-size 3em
 
-  .at-title-link
-    transition text-shadow 0.2s ease-in-out
+.ly-teasers .at-teaser
+  font-family f-subheading
 
-    &:hover
-      text-shadow 2px 2px 1px c-border
-
-.ly-merriweather
-  .at-teaser > p:first-of-type
-    font-family f-subheading
-
-  .at-teaser > p:first-child
-    font-family f-subheading
+.at-teaser
+  margin-bottom 60px
+  padding 20px
+  background-color lighten(c-yellow, 30%)
 
 .at-meta
   display none
@@ -53,7 +53,7 @@
 
   &:hover
     text-decoration none
-    background-color c-yellow-js
+    background-color c-yellow
     color c-pink
 
 .at-siblings
@@ -115,9 +115,18 @@
   margin 20px 0
 
 @media screen and (min-width: 768px)
+  .at-header
+    padding 20px 40px 30px
+
   .at-title
     text-align inherit
     font-size 3em
+
+    /.ly-custom-headings &
+      font-size 4em
+
+  .at-teaser
+    padding 20px 40px
 
   .at-meta
     display inherit

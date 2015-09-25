@@ -40,7 +40,7 @@ function generate (articles, done) {
   contra.each(articles, absolutize, fill);
 
   function absolutize (article, next) {
-    var fullHtml = article.teaserHtml + article.bodyHtml;
+    var fullHtml = article.teaserHtml + article.introductionHtml + article.bodyHtml;
     var compiled = markupService.compile(fullHtml, {
       markdown: false,
       absolutize: true

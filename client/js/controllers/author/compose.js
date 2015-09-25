@@ -21,6 +21,7 @@ module.exports = function (viewModel, container, route) {
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
   var teaser = $('.ac-teaser');
+  var introduction = $('.ac-introduction');
   var body = $('.ac-body');
   var tags = $('.ac-tags');
   var campaign = $('.ac-campaign');
@@ -48,7 +49,8 @@ module.exports = function (viewModel, container, route) {
   var previews = $('.pmk-preview', preview);
 
   previews.i(0).addClass('at-teaser');
-  previews.i(1).addClass('at-body');
+  previews.i(1).addClass('at-introduction');
+  previews.i(2).addClass('at-body');
   texts.on('keypress keydown paste', typingText);
   tags.on('keypress keydown paste', raf.bind(null, typingTags));
   title.on('keypress keydown paste', raf.bind(null, typingTitle));
@@ -150,6 +152,7 @@ module.exports = function (viewModel, container, route) {
     title.value(titleText);
     slug.value(slugText);
     teaser.value(data.teaser || '');
+    introduction.value(data.introduction || '');
     body.value(data.body || '');
     tags.value((data.tags || []).join(' '));
     email.value(data.email);
@@ -181,6 +184,7 @@ module.exports = function (viewModel, container, route) {
       title: title.value(),
       slug: slug.value(),
       teaser: teaser.value(),
+      introduction: introduction.value(),
       body: body.value(),
       tags: individualTags,
       status: state,

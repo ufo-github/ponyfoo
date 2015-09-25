@@ -14,6 +14,8 @@ var schema = new mongoose.Schema({
   sign: String,
   teaser: String,
   teaserHtml: String,
+  introduction: String,
+  introductionHtml: String,
   body: String,
   bodyHtml: String,
   tags: [String],
@@ -31,7 +33,13 @@ var schema = new mongoose.Schema({
 
 var api = mongoose.model('Article', schema);
 
-schema.index({ tags: 'text', body: 'text', title: 'text', teaser: 'text' });
+schema.index({
+  tags: 'text',
+  body: 'text',
+  title: 'text',
+  teaser: 'text',
+  introduction: 'text'
+});
 api.validStatuses = ['draft', 'publish', 'published'];
 api.schema = schema;
 
