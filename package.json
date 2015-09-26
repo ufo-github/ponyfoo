@@ -126,6 +126,7 @@
     "browserify-shim": "3.8.10",
     "clean-css": "3.3.7",
     "disc": "1.2.1",
+    "domador": "2.1.2",
     "errorhandler": "1.0.1",
     "gzip-size": "1.0.0",
     "jshint": "2.5.0",

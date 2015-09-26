@@ -16,4 +16,5 @@ section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment.
     else
       +author
 
-  section.mm-content.md-markdown!=comment.contentHtml
+  section.mm-content
+    div.mm-content-html.md-markdown!=comment.contentHtml

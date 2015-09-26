@@ -1,18 +1,33 @@
+.go-logo-container
+  margin 30px // center on the pony's head, ignore the horn
+  padding 0
+  text-align center
+
 .go-anchor
   cursor pointer
   display inline-block
-  margin-left 30px // center on the pony's head, ignore the horn
-
-.go-block
-  display block
+  margin-left 30px
 
 .go-text-wrapper
   display block
-  text-align left
   font-variant small-caps
   font-size 22px
-  margin-top 3px
-  color c-black
+  padding-top 3px
 
 .go-text
+  color c-black
   rainbow-pseudo-on-hover()
+
+.ly-teasers .go-logo-container
+  font-family f-subheading
+
+@media screen and (min-width: 768px)
+  .go-logo-container
+    margin-bottom 0
+
+  .go-text-wrapper
+    text-align left
+
+  .go-anchor
+    display block
+    margin-left 0

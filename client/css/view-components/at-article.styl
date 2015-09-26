@@ -1,12 +1,15 @@
-.at-header
-  position relative
-  background-color lighten(c-pink, 20%)
-  border-bottom 5px solid c-pink
-  padding 20px
-  margin 0
-
 .at-title-link
+  position relative
+  display block
+  background-color lighten(c-pink, 20%)
+  border-bottom 4px solid c-pink
+  padding 20px
   color c-white
+  transition color 0.1s ease-in-out
+
+@media only screen and (min-width: 768px)
+  .at-title-link
+    background linear-gradient(to bottom right, lighten(c-pink, 20%) 0, lighten(c-pink, 20%) 30%, c-pink 80%, darken(c-pink, 20%) 100%)
 
 .at-title
   padding 0
@@ -21,21 +24,27 @@
   font-family f-subheading
 
 .at-teaser
-  margin-bottom 60px
-  padding 20px
-  background-color lighten(c-yellow, 30%)
+  position relative
+  background-color lighten(c-yellow, 65%)
+
+  &:after
+    position absolute
+    bottom 0
+    left 0
+    right 0
+    height 4px
+    content ''
+    rainbow()
+
+.at-teaser-markdown,
+.at-introduction,
+.at-body
+  padding 20px 20px
 
 .at-meta
   display none
   float right
   font-style italic
-  color c-red-shadow
-
-.at-corpus
-  margin-bottom 25px
-
-.at-body
-  margin-top 25px
 
 .at-full
   margin-top 25px
@@ -56,43 +65,9 @@
     background-color c-yellow
     color c-pink
 
-.at-siblings
-  margin-top 20px
-  text-align center
-
-.at-prev,
-.at-next
-  display block
-  margin-bottom 20px
-
-  &:hover span
-    text-decoration underline
-
-.at-prev-anchor
-  margin-right 4px
-
-.at-next-anchor
-  margin-left 4px
-
-.at-prev-anchor,
-.at-next-anchor
-  display inline-block
-  vertical-align middle
-  user-select none
-  white-space nowrap
-
-.at-prev-text,
-.at-next-text
-  display inline-block
-  vertical-align middle
-  white-space nowrap
-  overflow hidden
-  max-width calc(100% - 20px)
-
 .at-related
   padding 15px
   margin-top 20px
-  background-color c-light-gray
 
 .at-related-item
   margin-top 20px
@@ -115,7 +90,7 @@
   margin 20px 0
 
 @media screen and (min-width: 768px)
-  .at-header
+  .at-title-link
     padding 20px 40px 30px
 
   .at-title
@@ -125,29 +100,13 @@
     /.ly-custom-headings &
       font-size 4em
 
-  .at-teaser
+  .at-teaser-markdown,
+  .at-introduction,
+  .at-body
     padding 20px 40px
 
   .at-meta
     display inherit
-
-  .at-prev
-    float left
-    text-align left
-    margin-right 10px
-
-  .at-next
-    float right
-    text-align right
-
-  .at-prev,
-  .at-next
-    display inline-block
-    margin-bottom 0
-    width calc(50% - 5px)
-
-  .at-next-text
-    text-align right
 
   .at-related-header
     display block

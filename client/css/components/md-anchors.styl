@@ -1,0 +1,18 @@
+.md-heading-hover
+  cursor pointer
+  background-color rgba(c-yellow, 0.1)
+
+@media only screen and (min-width: 768px)
+  .md-heading-hover
+    position relative
+    &:before
+      content '»'
+      font-family Georgia, serif
+      color rgba(c-pink, 0.4)
+      position absolute
+      top 0
+      left 16px
+      font-size 30px
+      font-weight 700
+      line-height 64px
+      margin-right 10px

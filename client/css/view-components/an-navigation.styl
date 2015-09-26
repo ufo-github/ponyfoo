@@ -1,0 +1,37 @@
+.an-siblings
+  padding 80px 0 60px
+  margin 0 20px
+  text-align center
+  position relative
+
+  &:before
+    position absolute
+    top 0
+    left 0
+    right 0
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+
+.ly-teasers .an-siblings
+  font-family f-subheading
+
+.an-anchor
+  display inline-block
+  margin-bottom 20px
+  color c-black
+  rainbow-pseudo-on-hover()
+
+.an-prev
+  float left
+  text-align left
+  margin-right 10px
+
+.an-next
+  float right
+  text-align right
+
+@media screen and (min-width: 768px)
+  .an-siblings
+    max-width 1000px
+    margin 0 40px

@@ -10,11 +10,8 @@ rainbow()
     opacity 0.6
     background-color c-green
 
-rainbow-pseudo-on-hover()
-  position relative
-  padding-bottom 5px
-
-  &:hover:before
+rainbow-pseudo()
+  &:before
     position absolute
     content ''
     left 0
@@ -24,3 +21,10 @@ rainbow-pseudo-on-hover()
     opacity 0.8
     transition all 0.1s ease-in-out
     animation bg-rainbow 0.5s infinite
+
+rainbow-pseudo-on-hover()
+  position relative
+  padding-bottom 5px
+
+  &:hover
+    rainbow-pseudo()

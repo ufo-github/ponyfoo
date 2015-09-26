@@ -18,6 +18,7 @@ module.exports = function (viewModel) {
   var content = $('.mc-content');
   var preview = $.findOne('.mc-preview');
   var send = $('.mc-send');
+  var sendText = $('.bt-text', send);
   var serializeSlowly = throttle(serialize, 200);
   var pony = convertToPonyEditor(content[0], preview);
   var comments = $('.mm-comments');
@@ -64,6 +65,7 @@ module.exports = function (viewModel) {
     var replies = $('.mm-thread-reply').but(reply);
     replies.removeClass('uv-hidden');
     reply.addClass('uv-hidden').parent().before(composer);
+    sendText.text('Add Reply');
     cancelReply.removeClass('uv-hidden');
     composer.find('.vw-conventional').remove();
   }
@@ -73,6 +75,7 @@ module.exports = function (viewModel) {
     footer.append(composer);
     replies.removeClass('uv-hidden');
     cancelReply.addClass('uv-hidden');
+    sendText.text('Add Comment');
     composer.find('.vw-conventional').remove();
   }
 

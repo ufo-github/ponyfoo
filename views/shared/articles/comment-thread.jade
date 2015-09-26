@@ -1,7 +1,10 @@
 each thread in article.commentThreads
   article.mm-thread(data-thread=thread.id)
-    each comment in thread.comments
-      include comment
+    section.mm-thread-comments
+      each comment in thread.comments
+        include comment
 
     footer.mm-thread-footer
-      button.mm-thread-reply.uv-hidden(aria-label='Add your comment to this discussion thread') Reply to Thread
+      button.gg-container.bt-button.bt-purple.mm-thread-reply.uv-hidden
+        span.bt-text Reply
+        include ../partials/button-background

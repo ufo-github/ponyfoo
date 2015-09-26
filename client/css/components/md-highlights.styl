@@ -1,108 +1,90 @@
-c-github-code = #f8f8f8
-
 .md-code-block,
-:not(.md-code-block) > .md-code
-  background-color c-github-code
-  line-height 22px
-  margin 0
+.md-code-inline
+  text-size-adjust none
+  background c-yellow-01
+  color #4d4d4c
 
 .md-code-block
-  padding 0
-
-:not(.md-code-block) > .md-code
-  padding 0px 6px
+  line-height 24px
 
 .md-code
   padding 8px 10px
-  color #333
+
+.md-code-inline
+  padding 0px 6px
 
 a .md-code
-  background-color transparent
-  color c-pink
+  color inherit
 
-a:hover .md-code
-  text-decoration underline
+.md-code-comment
+  color #8e908c
 
-.md-code-comment,
-.md-code-template_comment
-  color #998
-  font-style italic
-
-.md-code-keyword,
-.md-lang-css .md-code-keyword,
-.md-lang-javascript .md-code-title,
-.md-lang-nginx .md-code-title,
-.md-code-subst,
-.md-code-request,
-.md-code-status
-  color #333
-  font-weight bold
+.md-code-variable,
+.md-code-attribute,
+.md-code-tag,
+.md-code-regexp,
+.md-lang-ruby .md-code-constant,
+.md-lang-xml .md-code-tag .md-code-title,
+.md-lang-xml .md-code-pi,
+.md-lang-xml .md-code-doctype,
+.md-lang-html .md-code-doctype,
+.md-lang-css .md-code-id,
+.md-lang-css .md-code-class,
+.md-lang-css .md-code-pseudo
+  color #c82829
 
 .md-code-number,
-.md-code-hexcolor,
-.md-lang-ruby .md-code-constant
-  color #099
-
-.md-code-string,
-.md-code-tag .md-code-value
-  color #d14
-
-.md-code-title,
-.md-code-id,
-  color #900
-  font-weight bold
-
-.md-lang-javascript .md-code-title,
-.md-code-subst
-  font-weight normal
-
-.md-code-class .md-code-title
-  color #458
-  font-weight bold
-
-.md-code-tag,
-.md-code-tag .md-code-title,
-.md-code-rules .md-code-property
-  color #000080
-  font-weight normal
-
-.md-code-attribute,
-.md-code-variable
-  color #008080
-
-.md-code-regexp
-  color #009926
-
-.md-code-symbol,
-.md-lang-ruby .md-code-symbol .md-code-string,
-.md-code-prompt
-  color #990073
-
-.md-code-built_in
-  color #0086b3
-
 .md-code-preprocessor,
 .md-code-pragma,
-.md-code-pi,
-.md-code-doctype,
-.md-code-shebang,
-.md-code-cdata
-  color #999
-  font-weight bold
+.md-code-built_in,
+.md-code-literal,
+.md-code-params,
+.md-code-constant
+  color #f5871f
 
-.md-code-deletion
-  background #fdd
+.md-lang-ruby .md-code-class .md-code-title,
+.md-lang-css .md-code-rule .md-code-attribute
+  color #eab700
 
-.md-code-addition
-  background #dfd
+.md-code-string,
+.md-code-value,
+.md-code-inheritance,
+.md-code-header,
+.md-code-name,
+.md-lang-ruby .md-code-symbol,
+.md-lang-xml .md-code-cdata
+  color #718c00
 
-.md-code-chunk
-  color #aaa
+.md-code-title,
+.md-lang-css .md-code-hexcolor
+  color #3e999f
+
+.md-code-function,
+.md-lang-python .md-code-decorator,
+.md-lang-python .md-code-title,
+.md-lang-ruby .md-code-function .md-code-title,
+.md-lang-ruby .md-code-title .md-code-keyword,
+.md-lang-perl .md-code-sub,
+.md-lang-javascript .md-code-title,
+.md-lang-coffeescript .md-code-title
+  color #4271ae
+
+.md-code-keyword,
+.md-lang-javascript .md-code-function
+  color #8959a8
+
+.md-lang-coffeescript .md-lang-javascript,
+.md-lang-javascript .md-lang-xml,
+.md-lang-tex .md-code-formula,
+.md-lang-xml .md-lang-javascript,
+.md-lang-xml .vbscript,
+.md-lang-xml .md-lang-css,
+.md-lang-xml .md-code-cdata
+  opacity 0.5
 
 .md-mark
-  background-color c-yellow-highlight
-  padding 1px 2px
-  font-style normal
+  background-color rgba(c-yellow-highlight, 0.5)
+  color inherit
 
   span
     color inherit

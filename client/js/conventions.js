@@ -16,8 +16,32 @@ function conventions () {
   taunus.on('render', relativeTime);
   taunus.on('render', createLayer);
   taunus.on('render', unwrapImages);
+  taunus.on('render', linkifyHeadings);
   taunus.on('start', unwrapImages.bind(null, body));
   taunus.on('fetch.error', handleTaunusError);
+}
+
+function linkifyHeadings (container) {
+  $('.md-markdown', container)
+    .find('h1,h2,h3,h4,h5,h6')
+    .map(wrapInline)
+    .find('.md-heading')
+    .on('mouseenter', function (e) {
+      $(e.target).parent().addClass('md-heading-hover')
+    })
+    .on('mouseleave', function (e) {
+      $(e.target).parent().removeClass('md-heading-hover')
+    })
+    .on('click', changeHash)
+
+  function wrapInline (el) {
+    return $(el).html('<span class="md-heading">' + $(el).html() + '</span>')
+  }
+
+  function changeHash (e) {
+    console.log(e.target)
+    location.hash = $(e.target).parents('[id]').attr('id');
+  }
 }
 
 function relativeTime (container) {

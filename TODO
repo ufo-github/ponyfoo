@@ -1,6 +1,4 @@
-NTH
-
-- (support) support older browsers
-  - drop calc() uses from everywhere
-
-- (nth author) author compose,bio,email form graceful degradation
+- sidebar things
+- subscribe before comments
+- comment counts and tags
+- related articles
