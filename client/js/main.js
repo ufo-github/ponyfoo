@@ -17,6 +17,7 @@ require('./lib/codepen');
 
 conventions();
 require('./conventions/textareas')()
+require('./conventions/konami')()
 fonts();
 
 taunus.on('start', starting);
