@@ -32,7 +32,7 @@ function getDefaultViewModel (done) {
 
     done(null, {
       author: {
-        contact: 'Nicolas Bevacqua <foo@bevacqua.io>',
+        contact: 'Nicolas Bevacqua <hello@ponyfoo.com>',
         twitter: '@nzgb'
       },
       description: '',
@@ -47,7 +47,7 @@ function getDefaultViewModel (done) {
         },
         meta: {
           description: 'Pony Foo is a technical blog maintained by Nicolas Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.',
-          images: [authority + '/img/thumbnail.png'],
+          images: [authority + '/img/ponyfoo.png'],
           keywords: []
         },
         bioHtml: data.bioHtml,

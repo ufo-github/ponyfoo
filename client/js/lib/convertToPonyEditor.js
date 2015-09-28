@@ -1,7 +1,6 @@
 'use strict';
 
 var $ = require('dominus');
-var flexarea = require('flexarea');
 var ponymark = require('./ponymark');
 var twitterService = require('./twitter');
 
@@ -12,7 +11,6 @@ function convertToPonyEditor (textarea, preview) {
   if (md) {
     ta.value(md);
   }
-  flexarea(textarea);
   pony.on('refresh', tweets);
   return pony;
 

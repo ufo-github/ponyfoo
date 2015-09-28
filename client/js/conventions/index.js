@@ -4,8 +4,9 @@ var $ = require('dominus');
 var taunus = require('taunus/global');
 var measly = require('measly');
 var moment = require('moment');
+var loading = require('./loading');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
-var unwrapImages = require('./lib/unwrapImages');
+var unwrapImages = require('../lib/unwrapImages');
 var body = $('body');
 
 body.on('click', '.vw-conventional, .fs-messages', remove);
@@ -19,6 +20,11 @@ function conventions () {
   taunus.on('render', linkifyHeadings);
   taunus.on('start', unwrapImages.bind(null, body));
   taunus.on('fetch.error', handleTaunusError);
+
+  taunus.on('fetch.start', loading.show);
+  taunus.on('fetch.done', loading.hide);
+  taunus.on('fetch.abort', loading.hide);
+  taunus.on('fetch.error', loading.hide);
 }
 
 function linkifyHeadings (container) {

@@ -1,8 +1,9 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('path');
 var gm = require('gm');
+var but = require('but');
+var path = require('path');
 var contra = require('contra');
 var Imagemin = require('imagemin');
 var pngquant = require('imagemin-pngquant');
@@ -17,59 +18,66 @@ var limits = {
   height: 550
 };
 
-function findPlugin (ext) {
-  if (ext === 'png') {
+function findPlugin (file) {
+  var ext = path.extname(file).toLowerCase();
+  if (ext === '.png') {
     return pngquant();
-  } else if (ext === 'jpg' || ext === 'jpeg') {
+  } else if (ext === '.jpg' || ext === '.jpeg') {
     return mozjpeg();
-  } else if (ext === 'gif') {
+  } else if (ext === '.gif') {
     return gifsicle({ interlaced: true });
   }
 }
 
-function getMinifier (ul) {
-  var imagemin = new Imagemin().src(ul.path).dest(path.dirname(ul.path));
-  var plugin = findPlugin(ul.extension);
+function getMinifier (options) {
+  var imagemin = new Imagemin().src(options.file).dest(path.dirname(options.file));
+  var plugin = findPlugin(options.file);
   if (plugin) {
     imagemin.use(plugin);
   }
   return imagemin;
 }
 
-function log (ul) {
+function log (options) {
   if (level !== 'debug') {
     return;
   }
-  var stats = fs.statSync(ul.path);
-  var was = prettyBytes(ul.size);
-  var is = prettyBytes(stats.size);
-  var difference = ul.size - stats.size;
-  var diff = prettyBytes(-difference);
-  var percentage = -(100 - stats.size * 100 / ul.size).toFixed(2);
-  winston.debug('%s was %s, is %s, diff %s [%s%]', ul.originalname, was, is, diff, percentage);
+  fs.stat(options.file, function gotStats (err, stats) {
+    if (err) {
+      return;
+    }
+    var was = prettyBytes(options.size);
+    var is = prettyBytes(stats.size);
+    var difference = options.size - stats.size;
+    var diff = prettyBytes(-difference);
+    var percentage = -(100 - stats.size * 100 / options.size).toFixed(2);
+    winston.debug('%s was %s, is %s, diff %s [%s%]', options.name, was, is, diff, percentage);
+  });
 }
 
-function shrink (ul, done) {
-  gm(ul.path).resize(limits.width, limits.height).write(ul.path, done);
+function shrink (options, done) {
+  gm(options.file).autoOrient().resize(limits.width, limits.height).write(options.file, done);
 }
 
-function optimizeUpload (ul, done) {
+function optimize (options, done) {
   contra.series([
-    function (next) {
-      shrink(ul, next);
+    function shrinkStep (next) {
+      shrink(options, next);
     },
-    function (next) {
-      getMinifier(ul).run(next);
+    function minifyStep (next) {
+      getMinifier(options).run(next);
     },
-    function (next) {
-      setImmediate(function () {
-        log(ul);
-      });
+    function logStep (next) {
+      process.nextTick(logLater);
       next();
     }
-  ], done);
+  ], but(done));
+
+  function logLater () {
+    log(options);
+  }
 }
 
 module.exports = {
-  optimizeUpload: optimizeUpload
+  optimize: optimize
 };

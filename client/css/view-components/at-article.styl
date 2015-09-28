@@ -1,3 +1,6 @@
+.at-container
+  position relative
+
 .at-title-link
   position relative
   display block
@@ -41,53 +44,16 @@
 .at-body
   padding 20px 20px
 
-.at-meta
-  display none
-  float right
-  font-style italic
-
 .at-full
   margin-top 25px
   text-align center
 
-.at-full-button
-  display inline-block
-  padding 16px
-  background-color c-pink
-  box-shadow 1px 1px 1px c-border
-  color #fff
-
-  &:visited
-    color #fff
-
-  &:hover
-    text-decoration none
-    background-color c-yellow
+.at-subscribe
+  margin 0 20px 40px
+  .ss-label
+    margin-bottom 10px
+  a
     color c-pink
-
-.at-related
-  padding 15px
-  margin-top 20px
-
-.at-related-item
-  margin-top 20px
-
-  &:first-child
-    margin-top 0
-
-.at-related-header
-  margin-top 0
-  display none
-
-.at-more
-  text-align center
-
-.at-more-button
-  display block
-  font-weight normal
-
-.at-discuss
-  margin 20px 0
 
 @media screen and (min-width: 768px)
   .at-title-link
@@ -105,14 +71,6 @@
   .at-body
     padding 20px 40px
 
-  .at-meta
-    display inherit
-
-  .at-related-header
-    display block
-
-  .at-more
-    padding 10px 0
-
-  .at-more-button
-    display inline-block
+  .at-subscribe
+    margin 0 40px 40px
+    max-width 1000px

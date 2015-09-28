@@ -1,0 +1,44 @@
+.dm-container
+  position relative
+  background-color lighten(c-green, 98%)
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    bottom -4px
+    height 4px
+    content ''
+    background linear-gradient(to left, c-white 0, c-yellow-highlight 33%, c-green 66%, lighten(c-green, 98%) 100%)
+
+.dm-title
+  background-color lighten(c-green, 85%)
+  border-bottom 1px solid c-green
+  margin 0
+  padding 10px
+
+.dm-label
+  cursor text
+  display inline-block
+  width 110px
+  padding 10px
+  background-color lighten(c-green, 95%)
+  color #555
+
+.dm-value
+  display inline-block
+  padding 10px
+
+  a
+    color darken(c-green, 25%)
+
+  .tg-tag
+    background-color lighten(c-green, 95%)
+
+.dm-related-item
+  list-style-type none
+
+.dm-label-block,
+.dm-value-block
+  display block
+  width 100%

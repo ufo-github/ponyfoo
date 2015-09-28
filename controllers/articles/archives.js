@@ -1,34 +1,8 @@
 'use strict';
 
-var _ = require('lodash');
-var articleService = require('../../services/article');
-var metadataService = require('../../services/metadata');
+var taunus = require('taunus');
+var httpService = require('../../services/http');
 
 module.exports = function (req, res, next) {
-  var query = { status: 'published' };
-
-  articleService.find(query, function (err, articles) {
-    if (err) {
-      next(err); return;
-    }
-    var expanded = articles.map(articleService.toJSON);
-    res.viewModel = {
-      model: {
-        meta: {
-          canonical: '/articles/archives',
-          description: 'Every article ever published on Pony Foo can be found here!',
-          keywords: metadataService.mostCommonTags(expanded),
-          images: metadataService.appendDefaultCover([])
-        },
-        title: 'Archives',
-        articles: expanded,
-        total: _.pluck(expanded, 'readingTime').reduce(sum, 0)
-      }
-    };
-    next();
-  });
-
-  function sum (accumulator, value) {
-    return accumulator + value;
-  }
+  httpService.redirect(req, res, taunus.resolve('articles/history'), { hard: true });
 };

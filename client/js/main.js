@@ -16,6 +16,7 @@ require('hint');
 require('./lib/codepen');
 
 conventions();
+require('./conventions/textareas')()
 fonts();
 
 taunus.on('start', starting);
@@ -32,21 +33,11 @@ function starting (container, viewModel) {
   subscriptions($('.de-subscribe'));
   analytics(viewModel.env);
   require('./welcome')(viewModel);
-  setTimeout(refreshesAd, 0);
 }
 
 function helpMePay () {
   var ad = $('#carbonads').length !== 0;
   if (ad === false) {
     $('.ca-help-me').removeClass('uv-hidden');
-    taunus.off('change', refreshAd);
   }
-}
-
-function refreshesAd () {
-  taunus.on('change', refreshAd);
-}
-
-function refreshAd () {
-  g._carbonads.refresh();
 }

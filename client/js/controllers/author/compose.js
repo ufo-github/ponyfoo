@@ -7,7 +7,6 @@ var raf = require('raf');
 var taunus = require('taunus/global');
 var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
-var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var key = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
 

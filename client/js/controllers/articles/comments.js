@@ -6,7 +6,6 @@ var taunus = require('taunus/global');
 var throttle = require('../../lib/throttle');
 var storage = require('../../lib/storage');
 var subscriptions = require('../../subscriptions');
-var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var textService = require('../../../../services/text');
 var key = 'comment-draft';
 
@@ -20,7 +19,6 @@ module.exports = function (viewModel) {
   var send = $('.mc-send');
   var sendText = $('.bt-text', send);
   var serializeSlowly = throttle(serialize, 200);
-  var pony = convertToPonyEditor(content[0], preview);
   var comments = $('.mm-comments');
   var cancelReply = $('.mc-cancel-reply');
   var footer = $('.mm-footer');
@@ -42,8 +40,6 @@ module.exports = function (viewModel) {
       name.value(data.name);
       email.value(data.email);
       site.value(data.site);
-      content.value(data.content);
-      pony.refresh();
     }
   }
 

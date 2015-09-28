@@ -15,12 +15,24 @@
   font-size 14px
   margin-left 8px
 
+  &:hover
+    padding-bottom 3px
+    border-bottom 1px solid c-purple
+
 .mc-site,
 .mc-cancel-detail
   display none
 
 .mc-send
+  border-top 3px solid lighten(c-yellow, 40%)
   display inline-block
+
+.mc-content ~ .wk-switchboard
+  display none
+
+.mc-composer
+  margin-left 30px
+  text-align left
 
 @media screen and (min-width: 768px)
   .mc-author
@@ -40,11 +52,12 @@
     display inline-block
     font-size initial
     margin-bottom 0
-    width calc((100% / 3) - 10px)
+    width 32%
+    margin-right 2%
+
+  .mc-site
+    margin-right 0
 
   .mc-cancel-detail
     display inline-block
     margin-left 6px
-
-  .mc-cancel-reply:hover .mc-cancel-detail
-    text-decoration underline

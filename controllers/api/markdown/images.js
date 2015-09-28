@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path');
+var taunus = require('taunus');
 var contra = require('contra');
 var ponymark = require('ponymark');
 var imageService = require('../../../services/image');
@@ -8,7 +9,7 @@ var env = require('../../../lib/env');
 var dir = path.resolve('./tmp/images');
 
 module.exports = function (req, res) {
-  var image = req.files && req.files.image;
+  var image = req.files && req.files.woofmark_upload;
   if (!image) {
     errored('Image upload failed!'); return;
   }
@@ -16,10 +17,14 @@ module.exports = function (req, res) {
   contra.waterfall([optimize, upload], uploaded);
 
   function optimize (next) {
-    imageService.optimizeUpload(image, next);
+    imageService.optimize({
+      file: image.path,
+      name: image.originalname,
+      size: image.size
+    }, next);
   }
 
-  function upload (buffer, next) {
+  function upload (next) {
     var options = {
       production: env('NODE_ENV') === 'production',
       imgur: env('IMGUR_API_KEY'),
@@ -34,7 +39,9 @@ module.exports = function (req, res) {
     if (err) {
       errored(err.message); return;
     }
-    respond(200, result);
+    respond(200, {
+      href: result.url, title: result.alt, version: taunus.state.version
+    });
   }
 
   function errored (message) {

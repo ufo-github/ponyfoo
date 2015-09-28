@@ -1,15 +1,39 @@
+.de-sidebar
+  position relative
+  margin-top 150px
+  padding-top 25px
+  background-color rgba(c-white, 0.75)
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 0
+    height 4px
+    content ''
+    background linear-gradient(to left, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+
+  .ly-section
+    margin-bottom 25px
+    &:last-child
+      margin-bottom 0
+
+  p
+    margin 20px 0
+    line-height 28px
+
 .de-input
   display inline-block
-  width calc(100% - 115px)
-
-.de-submit
-  display inline-block
+  width calc(100% - 130px)
 
 .de-button
+  vertical-align top
   display inline-block
-  width 110px
-  padding 8px
-  box-shadow 1px 1px 0px c-strongish
+  button
+    width 130px
+  .bt-text
+    font-size 18px
+    line-height 38px
 
 .de-back-link
   &:after
@@ -22,22 +46,59 @@
     display inline-block
     content 'Back to top'
 
+.de-search,
+.de-subscribe
+  padding 10px
+
 .de-bio
+  position relative
   text-align left
+  padding 25px 10px
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 0
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+
+  &:after
+    position absolute
+    left 0
+    right 0
+    bottom -4px
+    height 4px
+    content ''
+    background linear-gradient(to left, c-white 0, c-yellow-highlight 66%, c-pink 100%)
 
 .de-heading
   margin-top 10px
 
 .de-popular
+  position relative
   list-style-type none
   text-align left
+  padding-bottom 10px
+  margin-bottom 50px
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    bottom -4px
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 0, c-yellow-highlight 33%, c-green 66%, lighten(c-green, 98%) 100%)
 
   li
     margin 20px 0
     white-space nowrap
     text-overflow ellipsis
-    color c-pink
     overflow hidden
+  a
+    color darken(c-green, 25%)
 
 @media screen and (min-width: 768px)
   .de-back
@@ -45,3 +106,22 @@
 
   .de-popular li
     margin 10px 0
+
+@media screen and (min-width: 1400px)
+  .de-sidebar
+    margin-top 0
+    position absolute
+    top 0
+    right 0
+    padding 20px 40px 20px 20px
+    width 360px
+
+    &:before
+      content none
+
+  .de-search,
+  .de-subscribe
+    padding 0
+
+  .de-bio
+    padding 25px 0

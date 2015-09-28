@@ -1,29 +1,14 @@
-//- form.ly-section.ss-container.mm-subscribe(action='/api/subscribers', method='post', name='subscribe')
-//-   div.ss-label
-//-     ='Did you like the article? Subscribe and get an email when new articles come out! Also, '
-//-     a(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
-//-     | !
-
-//-   noscript
-//-     input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
-
-//-   input.ss-source(type='hidden', name='source', value='article')
-//-   input.de-input.ss-input(placeholder='you@provider.io', name='subscriber')
-//-   span.de-submit(aria-label='As easy as clicking this button and confirming via email!')
-//-     input.de-button.ss-button.uv-button(type='submit', value='Subscribe')
-
 section#comments.mm-comments
   h2.mm-heading
     span.mm-heading-text Comments
     span=' '
     if article.commentCount
       span.mm-count='(' + article.commentCount + ')'
-    else
-      span.mm-count You're the first one here!
 
   include comment-thread
 
   footer.mm-footer
+    div.mm-footer-title Add your comments below. Be nice and mindful of others.
     form.mc-composer.ly-section(action='/api/articles/' + article.slug + '/comments', method='post', name='comment')
       div.mc-author
         input.mc-name(placeholder='John Doe', name='name')
@@ -31,11 +16,12 @@ section#comments.mm-comments
         input.mc-site(placeholder='johndoe.io (optional)', name='site')
       noscript
         input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
-      textarea.mc-content.pmk-input(name='content', placeholder='Please enter your comment here, Markdown formatting is supported.')
-      article.mc-preview.md-markdown
-      button.gg-container.bt-button.bt-pink.mc-send(aria-label='Make your comment immediately available!')
-        span.bt-text Add Comment
-        include ../partials/button-background
+      div
+        textarea.mc-content(name='content', placeholder='Please enter your comment here, Markdown formatting is supported.')
+      span.bt-label(aria-label='Make your comment immediately available!')
+        button.gg-container.bt-button.bt-pink.mc-send(type='submit')
+          span.bt-text Add Comment
+          include ../partials/button-background
       a.mc-cancel-reply.uv-hidden(aria-label='Start a new discussion instead!')
         span Cancel Reply
-        em.mc-cancel-detail (creates a new thread)
+        em.mc-cancel-detail (create a new comment thread instead)

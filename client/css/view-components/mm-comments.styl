@@ -46,13 +46,13 @@ mm-author-padding = 10px
 .mm-content
   position relative
   margin-top 2px
-  margin-left 21px
+  margin-left 20px
 
   &:before
     float left
     content ''
     border-bottom 1px dotted lighten(c-green, 40%)
-    width 15px
+    width 10px
     height 30px
     margin-top -3px
 
@@ -72,9 +72,16 @@ mm-author-padding = 10px
     display none
 
 .mm-content-html
-  margin-left 20px
-  padding 10px 20px
-  background-color c-light-orange
+  margin-left 10px
+  padding 10px
+  background linear-gradient(to right, c-light-orange 0%, lighten(c-orange, 60%) 100%)
+
+  .md-code-block
+    margin 0 -10px
+    padding 0
+
+    &:last-child
+      margin-bottom -10px
 
 .mm-thread-footer
   text-align right
@@ -82,14 +89,32 @@ mm-author-padding = 10px
 .mm-thread-reply
   border-top 3px solid lighten(c-orange, 20%)
 
+.mm-thread-footer .mc-composer
+  border-top 3px solid lighten(c-orange, 20%)
+
+.mm-thread,
+.mm-footer
+  max-width 1040px
+
+.mm-footer-title
+  margin 40px 10px
+  text-align center
+
+  &:only-child
+    display none
+
+.ly-teasers .mm-footer-title
+  font-family f-subheading
+
 @media screen and (min-width: 768px)
+  .mm-thread-footer
+    .mc-composer
+      border-top none
+    .mc-author input
+      border-top 3px solid lighten(c-orange, 20%)
+
+  .mm-footer-title
+    margin 40px 20px
+
   .mm-heading
     padding 20px 40px
-
-  .mm-content-html
-    p,
-    ul,
-    ol,
-    table,
-    blockquote
-      max-width 980px

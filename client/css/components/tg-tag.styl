@@ -5,20 +5,18 @@
 .tg-tag-item
   display inline-block
   list-style none
-  line-height 40px
   margin-right 5px
 
   &:last-child
     margin-right 0
 
 .tg-tag
-  padding 2px 4px
-  background-color c-strongish
-  box-shadow 1px 1px 1px c-border
+  display block
+  text-size-adjust none
   margin-right 10px
-
-  &:hover
-    text-decoration none
+  line-height 18px
+  padding 2px 6px
+  background c-yellow-01
 
 @media screen and (min-width: 768px)
   .tg-tags
@@ -26,6 +24,3 @@
 
   .tg-tag
     margin 0
-
-  .tg-tag-item
-    line-height inherit

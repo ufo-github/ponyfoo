@@ -1,70 +1,62 @@
 - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
 - when = moment(article.publication)
-- whenText = when.format(longDate)
 - modified = moment(article.updated)
 - created = moment(article.created)
 - published = article.status === 'published'
 
-article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting')
-  meta(itemprop='dateCreated', content=created.format())
-  meta(itemprop='datePublished', content=when.format())
-  meta(itemprop='dateModified', content=modified.format())
-  meta(itemprop='keywords', content=article.tags.join(','))
-  meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
+header.at-header
+  h1.at-title
+    a.at-title-link(href=article.permalink, itemprop='headline')=article.title
 
-  - commentCount = article.commentCount
-  if commentCount
-    meta(itemprop='interactionCount', content=commentCount + ' UserComments')
+section.at-teaser
+  div.at-teaser-markdown.md-markdown!=article.teaserHtml
 
-  header.at-header.uv-clearfix
-    h1.at-title
-      a.at-title-link(href=article.permalink, itemprop='headline')=article.title
+section.at-container
+  article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting')
+    meta(itemprop='dateCreated', content=created.format())
+    meta(itemprop='datePublished', content=when.format())
+    meta(itemprop='dateModified', content=modified.format())
+    meta(itemprop='keywords', content=article.tags.join(','))
+    meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
 
-    //- TODO goes to sidebar
-    //- if commentCount
-    //-   a.uv-left.mm-count(href='#comments')='(' + commentCount + ' comment' + (commentCount === 1 ? ')' : 's)')
+    - commentCount = article.commentCount
+    if commentCount
+      meta(itemprop='interactionCount', content=commentCount + ' UserComments')
 
-    //- span.at-meta
-    //-   span='reading time: '
-    //-   time(aria-label='You\'re probably faster than that!')=moment.duration(article.readingTime, 'seconds').humanize()
-    //-   span=', ' + article.status + ' '
-    //-   if article.status !== 'draft'
-    //-     time(aria-label='Published ' + whenText, datetime=when.format())=when.fromNow()
+    section.at-corpus(itemprop='articleBody')
+      section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml
 
-  section.at-teaser
-    div.at-teaser-markdown.md-markdown!=article.teaserHtml
+      if full
+        section.md-markdown.at-body!=article.bodyHtml
+      else
+        section.at-full
+          a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article
 
-  section.at-corpus(itemprop='articleBody')
-    section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml
+    footer.an-siblings
+      if article.prev
+        a.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')='« ' + article.prev.title
+      if article.next
+        a.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')=article.next.title + ' »'
 
-    if full
-      section.md-markdown.at-body!=article.bodyHtml
-      if article.hnDiscuss
-        section.at-discuss
-          span='There\'s a '
-          a(href=article.hnDiscuss, target='_blank', aria-label='Your upvote is appreciated!') discussion on Hacker News
-          span .
-    else
-      section.at-full
-        a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article
+  form.ly-section.ss-container.at-subscribe(action='/api/subscribers', method='post', name='subscribe')
+    div.ss-label
+      ='Liked the article? Subscribe below to get an email when new articles come out! Also, '
+      a(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
+      | .
 
-    //- TODO goes to sidebar
-    //- include ../partials/tags
+    noscript
+      input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
 
-    //- if full
-    //-   if article.related.length
-    //-     section.at-related
-    //-       p.at-related-header Browse related articles!
-    //-       ul
-    //-         each related in article.related
-    //-           li.at-related-item
-    //-             a(href='/articles/' + related.slug, aria-label='Read the article!')=related.title
+    input.ss-source(type='hidden', name='source', value='article')
+    input.de-input.ss-input(placeholder='you@provider.io', name='subscriber')
 
-  footer.an-siblings.uv-clearfix
-    if article.prev
-      a.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')='« ' + article.prev.title
-    if article.next
-      a.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')=article.next.title + ' »'
+    span.bt-label.de-button(aria-label='As easy as clicking this button and confirming via email!')
+      button.gg-container.bt-button.bt-pink.ss-button(type='submit')
+        span.bt-text Subscribe
+        include ../partials/button-background
 
-if published && full
-  include comments
+  if published && full
+    include comments
+
+  if full
+    include aside

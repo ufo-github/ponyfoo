@@ -1,9 +1,14 @@
 //
-  -            such pony !
-    @nzgb
-        so buildfirst#          __|_\_
-                              =u__.-.__)
-     http://ponyfoo.com           /_/
+  -
+
+     If you'd like to contribute
+          ascii art that
+        sort of looks like the logo,
+             please let me know!
+
+     I just gave up.
+
+     – @nzgb
 
           very semver #{model.pkg.version}
 doctype html
@@ -50,8 +55,6 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
       link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Neuton:700|Merriweather:400italic,400,700')
 
   body#top
-    //- a.nv-search(href='#search') Search
-
     header.ly-header.vw-title
       h1.go-logo-container
         span.go-anchor.gg-container
@@ -76,6 +79,10 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     main.ly-main!=partial
 
-    //- include aside
+    footer.ly-footer
+      p
+        span='The contents distributed in this site are licensed under a '
+        a.ly-license(href='http://creativecommons.org/licenses/by-nc/2.5/', target='_blank') Creative Commons Attribution-NonCommercial 2.5 License
+        span .
 
     script!=javascriptLoader
