@@ -1,7 +1,7 @@
 'use strict';
 
 var util = require('util');
-var listOrSingle = require('./lib/listOrSingle');
+var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');
 var articleSearchService = require('../../services/articleSearch');
 var separator = /[+/,_: -]+/ig;
@@ -9,7 +9,7 @@ var separator = /[+/,_: -]+/ig;
 module.exports = function (req, res, next) {
   var terms = req.params.terms.split(separator);
   var title = util.format('Search results for "%s"', terms.join('", "'));
-  var handle = listOrSingle(res, searchResults(res, next));
+  var handle = articleListHandler(res, searchResults(res, next));
 
   res.viewModel = {
     model: {

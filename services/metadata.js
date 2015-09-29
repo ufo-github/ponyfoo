@@ -4,7 +4,7 @@ var _ = require('lodash');
 var env = require('../lib/env');
 var htmlService = require('./html');
 var authority = env('AUTHORITY');
-var defaultCover = authority + '/img/thumbnail.png';
+var defaultCover = authority + '/img/ponyfoo.png';
 
 function appendDefaultCover (list) {
   list.push(defaultCover);

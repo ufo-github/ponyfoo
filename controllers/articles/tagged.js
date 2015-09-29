@@ -3,7 +3,7 @@
 var util = require('util');
 var articleService = require('../../services/article');
 var articleSearchService = require('../../services/articleSearch');
-var listOrSingle = require('./lib/listOrSingle');
+var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');
 var separator = /[+/,_: ]+/ig;
 
@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
     status: 'published',
     tags: { $all: tags }
   };
-  var handle = listOrSingle(res, searchResults(res, next));
+  var handle = articleListHandler(res, searchResults(res, next));
 
   res.viewModel = {
     model: {

@@ -1,23 +1,23 @@
 'use strict';
 
-var validationService = require('../../services/validation');
 var articleService = require('../../services/article');
-var listOrSingle = require('./lib/listOrSingle');
+var articleListHandler = require('./lib/articleListHandler');
 
 module.exports = function (req, res, next) {
+  var limit = 40;
+  var page = parseInt(req.params.page, 10) || 1;
   var query = { status: 'published' };
-  var handle = listOrSingle(res, { skip: false }, next);
-  var skip = validationService.integer(req.query.skip, 0);
+  var handle = articleListHandler(res, { skip: false }, next);
 
   res.viewModel = {
     model: {
-      title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolas Bevacqua',
       meta: {
         canonical: '/'
       },
-      skipped: skip
+      page: page,
+      limit: limit
     }
   };
 
-  articleService.find(query, { limit: 6, skip: skip }, handle);
+  articleService.find(query, { limit: limit, skip: page * limit }, handle);
 };

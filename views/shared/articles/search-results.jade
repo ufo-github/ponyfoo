@@ -1,18 +1,15 @@
-section.ly-section.sr-top
-  h1.sr-top-title
-    span='Your query '
-    span=query
+article.aa-container
+  header.ly-section.sr-header
+    h1.sr-title
+      span='Your query '
+      span=query
+      if fail
+        span=' yielded no results!'
+      else
+        span=' yielded some results!'
+
     if fail
-      span=' yielded no results!'
-    else
-      span=' yielded some results!'
+      h2.sr-note ...but we took the opportunity to pull together a few articles very carefully chosen at random!
 
-  if fail
-    h2.sr-top-legend ...but we took the opportunity to pull together a few articles very carefully chosen at random!
-
-if articles
-  each article in articles
-    include article
-
-else
-  include article
+  include list
+  include ../partials/aside

@@ -1,28 +1,6 @@
 .at-container
   position relative
 
-.at-title-link
-  position relative
-  display block
-  background-color lighten(c-pink, 20%)
-  border-bottom 4px solid c-pink
-  padding 20px
-  color c-white
-  transition color 0.1s ease-in-out
-
-@media only screen and (min-width: 768px)
-  .at-title-link
-    background linear-gradient(to bottom right, lighten(c-pink, 20%) 0, lighten(c-pink, 20%) 30%, c-pink 80%, darken(c-pink, 20%) 100%)
-
-.at-title
-  padding 0
-  margin 0
-  font-size 2.6em
-  text-align center
-
-  /.ly-custom-headings &
-    font-size 3em
-
 .ly-teasers .at-teaser
   font-family f-subheading
 
@@ -32,7 +10,7 @@
 
   &:after
     position absolute
-    bottom 0
+    bottom -4px
     left 0
     right 0
     height 4px
@@ -43,6 +21,20 @@
 .at-introduction,
 .at-body
   padding 20px 20px
+
+.at-body
+  position relative
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    bottom -4px
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+    max-width 1000px
+    margin 0 20px
 
 .at-full
   margin-top 25px
@@ -56,20 +48,13 @@
     color c-pink
 
 @media screen and (min-width: 768px)
-  .at-title-link
-    padding 20px 40px 30px
-
-  .at-title
-    text-align inherit
-    font-size 3em
-
-    /.ly-custom-headings &
-      font-size 4em
-
   .at-teaser-markdown,
   .at-introduction,
   .at-body
     padding 20px 40px
+
+  .at-body:before
+    margin 0 40px
 
   .at-subscribe
     margin 0 40px 40px

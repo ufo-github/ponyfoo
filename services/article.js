@@ -140,18 +140,24 @@ function lobsters (article, done) {
   lobstersService.submit(data, done);
 }
 
-function toJSON (source) {
+function toJSON (source, options) {
+  var o = options || {};
   var text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(' ');
   var article = source.toJSON();
 
   article.readingTime = estimate.text(text);
   article.permalink = '/articles/' + article.slug;
-  article.author = article.author.toString();
+
+  if (source.populated('author')) {
+    article.author = article.author.toString();
+  } else {
+    delete article.author;
+  }
 
   if (source.populated('comments')) {
     article.commentThreads = article.comments.sort(byPublication).reduce(threads, []);
-    article.commentCount = article.comments.length;
   }
+  article.commentCount = article.comments.length;
 
   if (source.populated('prev')) {
     article.prev = relevant(article.prev);
@@ -169,12 +175,25 @@ function toJSON (source) {
     delete article.related;
   }
 
+  if (o.meta) {
+    delete article.teaser;
+    delete article.teaserHtml;
+    delete article.introduction;
+    delete article.introductionHtml;
+    delete article.body;
+    delete article.bodyHtml;
+  }
   delete article.__v;
   delete article.sign;
   delete article.teaser;
   delete article.introduction;
   delete article.body;
   delete article.comments;
+  delete article.hn;
+  delete article.lobsters;
+  delete article.echojs;
+  delete article.tweet;
+  delete article.email;
   return article;
 }
 

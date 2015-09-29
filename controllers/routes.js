@@ -5,6 +5,7 @@ var authorOnly = require('./author/only');
 
 module.exports = [
   { route: '/', action: 'articles/home' },
+  { route: '/p/:page([1-9][0-9]{0,})', action: 'articles/home' },
   { route: '/articles/feed', ignore: true },
   { route: '/articles/history', action: 'articles/history' },
   { route: '/articles/archives', ignore: true },

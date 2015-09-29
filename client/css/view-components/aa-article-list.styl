@@ -1,0 +1,76 @@
+.aa-container
+  position relative
+
+.aa-articles
+  list-style-type none
+
+.aa-article
+  margin 10px 0 10px 10px
+
+.aa-footer
+  margin 10px
+
+.aa-visit
+  color c-black
+
+.aa-history
+  color c-pink
+
+.aa-trivia,
+.aa-tags
+  display block
+
+.aa-trivia
+  color #444
+
+.aa-article
+  display inline-block
+  vertical-align top
+  border-top 9px dotted
+  width 145px
+
+  &:nth-child(6n-5)
+    border-top-color darken(c-yellow-highlight, 25%)
+
+  &:nth-child(6n-4)
+    border-top-color darken(c-orange, 25%)
+
+  &:nth-child(6n-3)
+    border-top-color c-pink
+
+  &:nth-child(6n-2)
+    border-top-color c-red
+
+  &:nth-child(6n-1)
+    border-top-color c-purple
+
+  &:nth-child(6n-0)
+    border-top-color darken(c-green, 25%)
+
+.aa-title
+  overflow-wrap normal
+  overflow hidden
+  text-overflow ellipsis
+
+.aa-empty
+  text-align center
+  font-style italic
+  font-size 24px
+  padding 80px
+  a
+    color c-pink
+
+.ly-teasers .aa-empty
+  font-family f-subheading
+
+@media screen and (min-width: 768px)
+  .aa-articles
+    max-width 1025px
+    margin-left 30px
+
+  .aa-article
+    margin 20px 15px
+    width 175px
+
+  .aa-footer
+    margin 20px 40px

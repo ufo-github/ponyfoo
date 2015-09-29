@@ -5,8 +5,8 @@
 - published = article.status === 'published'
 
 header.at-header
-  h1.at-title
-    a.at-title-link(href=article.permalink, itemprop='headline')=article.title
+  h1.dc-title
+    a.dc-title-text(href=article.permalink, itemprop='headline')=article.title
 
 section.at-teaser
   div.at-teaser-markdown.md-markdown!=article.teaserHtml
@@ -32,7 +32,7 @@ section.at-container
         section.at-full
           a.at-full-button(href=article.permalink, aria-label='Quality content awaits!') Read the full article
 
-    footer.an-siblings
+    footer.an-siblings.uv-clearfix
       if article.prev
         a.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')='« ' + article.prev.title
       if article.next
@@ -59,4 +59,4 @@ section.at-container
     if published
       include comments
 
-    include aside
+    include ../partials/aside

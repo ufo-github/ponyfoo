@@ -1,0 +1,47 @@
+- longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
+- when = moment(article.publication)
+- commentCount = article.commentCount
+
+section.dm-container.ly-section
+  header
+    h3.dm-title Trivia Box
+
+  div
+    if article.status === 'draft'
+      label.dm-label Draft
+    if article.status === 'publish'
+      label.dm-label Slated for Publication
+      span.dm-value
+        span=' '
+        time(aria-label='Publishing ' + when.format(longDate), datetime=when.format())=when.fromNow()
+    if article.status === 'published'
+      label.dm-label Published
+      span.dm-value
+        span=' '
+        time(aria-label='Published ' + when.format(longDate), datetime=when.format())=when.fromNow()
+
+  div
+    label.dm-label Length
+    span.dm-value
+      span=' '
+      span=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
+      span=' read'
+
+  div
+    label.dm-label Comments
+    span.dm-value
+      span=' '
+      a(href='#comments')=commentCount || 'None yet'
+
+  div
+    label.dm-label.dm-label-block Tagged
+    span.dm-value.dm-value-block
+      include tags
+
+  if article.related.length
+    div
+      label.dm-label.dm-label-block Similar Articles
+      ul.dm-value.dm-value-block
+        each related in article.related
+          li.dm-related-item
+            a(href='/articles/' + related.slug, aria-label='Read the article!')=related.title

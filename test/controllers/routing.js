@@ -23,7 +23,7 @@ test('routes should match expectation', function (t) {
   plan('get', '/articles/feed', './articles/feed');
 
   plan('get', '/', '../../../controllers/articles/home');
-  plan('get', '/articles/archives', '../../../controllers/articles/archives');
+  plan('get', '/articles/history', '../../../controllers/articles/history');
   plan('get', '/articles/tagged/:tags', '../../../controllers/articles/tagged');
   plan('get', '/articles/search/:terms', '../../../controllers/articles/search');
   plan('get', '/articles/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)', '../../../controllers/articles/dated');

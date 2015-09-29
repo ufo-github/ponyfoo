@@ -37,7 +37,7 @@ function getDefaultViewModel (done) {
       },
       description: '',
       model: {
-        title: 'Pony Foo',
+        title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolas Bevacqua',
         pkg: {
           version: pkg.version
         },

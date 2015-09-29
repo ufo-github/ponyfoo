@@ -26,7 +26,7 @@ function generate (articles, done) {
     generator: 'bevacqua/ponyfoo',
     feed_url: authority + '/articles/feed',
     site_url: authority,
-    image_url: authority + '/img/thumbnail.png',
+    image_url: authority + '/img/ponyfoo.png',
     author: contact,
     managingEditor: contact,
     webMaster: contact,

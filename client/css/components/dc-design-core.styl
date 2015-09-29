@@ -1,0 +1,29 @@
+.dc-title-text
+  position relative
+  display block
+  background-color lighten(c-pink, 20%)
+  border-bottom 4px solid c-pink
+  padding 20px
+  color c-white
+  transition color 0.1s ease-in-out
+
+.dc-title
+  padding 0
+  margin 0
+  font-size 2.6em
+  text-align center
+
+  /.ly-custom-headings &
+    font-size 3em
+
+@media only screen and (min-width: 768px)
+  .dc-title-text
+    background linear-gradient(to bottom right, lighten(c-pink, 20%) 0, lighten(c-pink, 20%) 30%, c-pink 80%, darken(c-pink, 20%) 100%)
+    padding 20px 40px 30px
+
+  .dc-title
+    text-align inherit
+    font-size 3em
+
+    /.ly-custom-headings &
+      font-size 4em

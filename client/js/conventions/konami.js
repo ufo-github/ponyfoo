@@ -30,7 +30,8 @@ function makeCSS (count) {
   var rootSelector = '.konami-code rect'
   var vendors = ['-webkit-', '-moz-', '-o-', '-ms-', '']
   var gradual = prefixed('transition', 'opacity 3s ease-in-out')
-  var base = '.konami-code{position:fixed;top:0;left:0;right:0;bottom:0;opacity:1;' + gradual + '}'
+  var opacity = Math.random() + 0.2
+  var base = '.konami-code{position:fixed;top:0;left:0;right:0;bottom:0;cursor:pointer;opacity:' + opacity + ';' + gradual + '}'
   var fadeaway = '.konami-code-fadeaway{opacity:0}'
   var rects = [[[''], [
     prefixed('transition', 'all 0.1s ease-in-out'),
@@ -100,20 +101,9 @@ function render () {
   var x;
   var y;
   var svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  var rect;
-  for (y = -2; y < h/d+2; y++) {
-    for (x = -2; x < w/d+2; x++) {
-      rect = doc.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      rect.setAttributeNS(null, 'width', d);
-      rect.setAttributeNS(null, 'height', d);
-      rect.setAttributeNS(null, 'x', x * d);
-      rect.setAttributeNS(null, 'y', y * d);
-      rect.setAttributeNS(null, 'fill', filler());
-      if (Math.random() > 0.2) {
-        rect.setAttributeNS(null, 'class', 'konami-rect')
-      }
-      svg.appendChild(rect);
-      c++;
+  for (y = -1; y < h/d+1; y++) {
+    for (x = -1; x < w/d+1; x++) {
+      addRect();
     }
   }
   appendCSS(c);
@@ -122,7 +112,21 @@ function render () {
   svg.setAttributeNS(null, 'height', y * d);
   doc.body.appendChild(svg);
   loading.show();
+  $('.konami-code').on('click', clear);
   setTimeout(clear, 12000)
+  function addRect () {
+    var rect = doc.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttributeNS(null, 'width', d);
+    rect.setAttributeNS(null, 'height', d);
+    rect.setAttributeNS(null, 'x', x * d);
+    rect.setAttributeNS(null, 'y', y * d);
+    rect.setAttributeNS(null, 'fill', filler());
+    if (Math.random() > 0.05) {
+      rect.setAttributeNS(null, 'class', 'konami-rect')
+    }
+    svg.appendChild(rect);
+    c++;
+  }
 }
 
 function clear () {

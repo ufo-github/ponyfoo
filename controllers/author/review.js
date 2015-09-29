@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var but = require('but');
 var moment = require('moment');
 var Article = require('../../models/Article');
 var articleService = require('../../services/article');
@@ -16,7 +17,7 @@ function getModel (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var hydrated = articles.map(articleService.toJSON).map(hydrate);
+    var hydrated = articles.map(but(articleService.toJSON)).map(hydrate);
     var sorted = _.sortBy(hydrated, sortByStatus);
     res.viewModel = {
       model: {

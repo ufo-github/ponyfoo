@@ -1,0 +1,13 @@
+ol.aa-articles
+  each article in articles
+    - count = article.commentCount
+    li.aa-article
+      h2.aa-title
+        a.aa-visit(href='/articles/' + article.slug)=article.title
+      span.aa-trivia=moment(article.publication).fromNow()
+      span.aa-trivia
+        span=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
+        span=' read'
+      span.aa-trivia=count + ' comment' + (count === 1 ? '' : 's')
+      span.aa-tags
+        include ../partials/tags

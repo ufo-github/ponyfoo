@@ -1,4 +1,13 @@
 .hy-container
+  position relative
+
+.hy-lesson,
+.hy-items
+  padding 20px
+  a
+    color c-pink
+
+.hy-items
   overflow hidden
   list-style none
 
@@ -20,22 +29,32 @@
   margin-right 6px
 
 .hy-connector
-  display none
+  display inline
+  white-space nowrap
 
 .hy-link
   display inline-block
 
+.hy-tags
+  display none
+
 @media screen and (min-width: 768px)
+  .hy-lesson,
+  .hy-items
+    padding 20px 40px
+    max-width 1080px
+
   .hy-date
     display none
 
   .hy-article
     margin-top 0
 
+  .hy-connector
+    margin-left 20px
+
   .hy-link
     margin-right -20px
 
-  .hy-connector
+  .hy-tags
     display inline
-    white-space nowrap
-    margin-left 20px

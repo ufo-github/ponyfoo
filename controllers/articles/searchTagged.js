@@ -1,7 +1,7 @@
 'use strict';
 
 var util = require('util');
-var listOrSingle = require('./lib/listOrSingle');
+var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');
 var articleSearchService = require('../../services/articleSearch');
 var tagSeparator = /[+/,_: ]+/ig;
@@ -10,7 +10,7 @@ var termSeparator = /[+/,_: -]+/ig;
 module.exports = function (req, res, next) {
   var tags = req.params.tags.split(tagSeparator);
   var terms = req.params.terms.split(termSeparator);
-  var handle = listOrSingle(res, searchResults(res, next));
+  var handle = articleListHandler(res, searchResults(res, next));
   var fmt = 'Search results for "%s" in articles tagged "%s"';
   var title = util.format(fmt, terms.join('", "'), tags.join('", "'));
 

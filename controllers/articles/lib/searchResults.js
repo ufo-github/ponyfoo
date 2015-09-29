@@ -1,5 +1,6 @@
 'use strict';
 
+var but = require('but');
 var Article = require('../../../models/Article');
 var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');
@@ -18,7 +19,7 @@ function factory (res, next) {
       if (err) {
         next(err); return;
       }
-      model.articles = articles.map(articleService.toJSON);
+      model.articles = articles.map(but(articleService.toJSON));
       model.meta.keywords = metadataService.mostCommonTags(articles);
       model.meta.images = metadataService.extractImages(articles);
       next();
