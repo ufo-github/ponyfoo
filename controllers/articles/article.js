@@ -5,6 +5,7 @@ var articleService = require('../../services/article');
 var cryptoService = require('../../services/crypto');
 var htmlService = require('../../services/html');
 var textService = require('../../services/text');
+var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   var query = { slug: req.params.slug };
@@ -61,6 +62,7 @@ module.exports = function (req, res, next) {
       images: metadataService.extractImages(article)
     };
     model.article = articleService.toJSON(article);
+    inliningService.addStyles(res.viewModel.model, 'article');
     next();
   }
 };

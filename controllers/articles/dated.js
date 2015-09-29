@@ -45,7 +45,7 @@ function slug (params) {
 
 module.exports = function (req, res, next) {
   var parsed = parse(req.params);
-  var handle = articleListHandler(res, { skip: false }, next);
+  var handle = articleListHandler(res, { skip: false, summary: true }, next);
   var titleFormat = 'Articles published on %s';
   var title = util.format(titleFormat, parsed.text);
 

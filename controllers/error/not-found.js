@@ -1,6 +1,7 @@
 'use strict';
 
 var notFound = '/not-found';
+var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   if (req.path !== notFound) {
@@ -16,5 +17,6 @@ module.exports = function (req, res, next) {
       }
     }
   };
+  inliningService.addStyles(res.viewModel.model, 'not-found');
   next();
 };

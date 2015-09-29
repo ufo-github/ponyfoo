@@ -30,15 +30,23 @@ uglifyjs .bin/inline/fonts.js -m -c "comparisons=false,keep_fargs=true,unsafe=tr
 # critical css inlining. many slash, very escape.
 LOGGING_LEVEL=info PORT=$PORT APP_REBUILD=0 NODE_ENV=development node app &
 sleep 5
-CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT $ALL_CSS)"
-CRITICAL_ESCAPED=$(echo $CRITICAL | sed -e 's/[\/#&]/\\&/g' -e 's/"/\\\\"/g')
-LAYOUT=".bin/views/server/layout/layout.js"
-echo "Gathered critical CSS, killing node app"
-echo $CRITICAL > $CRITICAL_CSS
+
+gather() {
+  CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT$1 $ALL_CSS 1400 1100)"
+  echo $CRITICAL | cleancss --s0 -o .bin/inlined/$2.css
+  echo "penthouse: gathered css for $2"
+}
+
+gather "/" "summaries"
+gather "/account/login" "login"
+gather "/articles/last" "article"
+gather "/articles/history" "history"
+gather "/articles/tagged/ponyfoo" "search"
+gather "/not-found" "not-found"
+
+echo "penthouse: killing node app"
 kill $!
-sed -i -e "s#<style></style>#<style>$CRITICAL_ESCAPED</style>#" $LAYOUT
 cleancss $ALL_CSS -o $ALL_CSS --s0
-rm $CRITICAL_CSS
 
 # asset hashing
 reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN

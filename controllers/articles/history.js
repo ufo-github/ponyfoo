@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var articleService = require('../../services/article');
 var metadataService = require('../../services/metadata');
+var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   var query = { status: 'published' };
@@ -28,6 +29,7 @@ module.exports = function (req, res, next) {
         total: _.pluck(expanded, 'readingTime').reduce(sum, 0)
       }
     };
+    inliningService.addStyles(res.viewModel.model, 'history');
     next();
   });
 

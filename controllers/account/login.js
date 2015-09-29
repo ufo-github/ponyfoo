@@ -3,6 +3,7 @@
 var env = require('../../lib/env');
 var registration = env('REGISTRATION_OPEN');
 var data = require('../../lib/authentication/data');
+var inliningService = require('../../services/inlining');
 var providers = Object.keys(data.providers).filter(enabled).map(namePair);
 
 function enabled (key) {
@@ -25,5 +26,6 @@ module.exports = function (req, res, next) {
       providers: providers
     }
   };
+  inliningService.addStyles(res.viewModel.model, 'login');
   next();
 };

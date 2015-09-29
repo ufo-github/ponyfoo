@@ -15,7 +15,8 @@ doctype html
 html(lang='en', itemscope, itemtype='http://schema.org/Blog')
   head
     title=model.title
-    style
+    if model.inlineStyles
+      style=model.inlineStyles.value
     meta(charset='utf-8')
 
     link(rel='shortcut icon', href='/favicon.ico')

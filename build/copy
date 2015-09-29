@@ -5,6 +5,7 @@ cp -r client/js/inline .bin
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
 cp client/{favicon.ico,robots.txt,humans.txt,opensearch.xml} .bin/public
 rm -rf .bin/public/img/icons
+mkdir .bin/inlined
 
 # secret
 echo $RANDOM$RANDOM$RANDOM$RANDOM$RANDOM$RANDOM > .bin/secret

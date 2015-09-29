@@ -9,7 +9,7 @@ var separator = /[+/,_: -]+/ig;
 module.exports = function (req, res, next) {
   var terms = req.params.terms.split(separator);
   var title = util.format('Search results for "%s"', terms.join('", "'));
-  var handle = articleListHandler(res, { summary: true }, searchResults(res, next));
+  var handle = articleListHandler(res, { summary: true, search: true }, searchResults(res, next));
 
   res.viewModel = {
     model: {

@@ -4,6 +4,7 @@ var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');
 var textService = require('../../../services/text');
 var htmlService = require('../../../services/html');
+var inliningService = require('../../../services/inlining');
 
 function factory (res, options, next) {
   if (arguments.length < 3) {
@@ -35,6 +36,7 @@ function factory (res, options, next) {
     model.articles = expanded;
     model.meta.keywords = metadataService.mostCommonTags(articles);
     model.meta.images = metadataService.extractImages(articles);
+    inliningService.addStyles(model, options.search ? 'search' : 'summaries');
     next();
   };
 }
