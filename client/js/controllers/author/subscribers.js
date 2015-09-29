@@ -77,7 +77,7 @@ module.exports = function (viewModel, container) {
 
     var color = d3.scale
       .ordinal()
-      .range(['#412917', '#8a89a6', '#7b6888', '#6b486b', '#9755b4']);
+      .range(['#1a4d7f', '#cbc5c0', '#900070', '#e92c6c', '#f3720d']);
 
     var xAxis = d3.svg
       .axis()
@@ -148,7 +148,7 @@ module.exports = function (viewModel, container) {
       .enter().append('rect')
       .attr('width', x.rangeBand())
       .attr('y', function(d) { return y(d.y1); })
-      .attr('height', function(d) { console.log(d, y(d.y1)); return y(d.y0) - y(d.y1); })
+      .attr('height', function(d) { return y(d.y0) - y(d.y1); })
       .style('fill', function(d) { return color(d.name); });
 
     var legend = svg.selectAll('.legend')

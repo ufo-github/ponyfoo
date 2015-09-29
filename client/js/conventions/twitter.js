@@ -1,8 +1,6 @@
 'use strict';
 
 var taunus = require('taunus/global');
-var throttle = require('./throttle');
-var throttledUpdateView = throttle(updateView, 2500);
 
 function updateView (elem) {
   var twitter = global.twttr;
@@ -11,8 +9,9 @@ function updateView (elem) {
   }
 }
 
-taunus.on('render', throttledUpdateView);
+function twitter () {
+  taunus.on('start', updateView.bind(null, document.body));
+  taunus.on('render', updateView);
+}
 
-module.exports = {
-  updateView: throttledUpdateView
-};
+module.exports = twitter;

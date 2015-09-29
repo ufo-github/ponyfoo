@@ -18,7 +18,7 @@ function truncate (text, cap) {
     if (i !== -1) { // truncate the last word, which may have been trimmed
       result = result.substr(0, i);
     }
-    result += ' [...]';
+    result += ' …';
   }
   return result;
 }

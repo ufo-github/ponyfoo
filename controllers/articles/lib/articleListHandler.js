@@ -1,8 +1,9 @@
 'use strict';
 
-var but = require('but');
 var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');
+var textService = require('../../../services/text');
+var htmlService = require('../../../services/html');
 
 function factory (res, options, next) {
   if (arguments.length < 3) {
@@ -24,7 +25,11 @@ function factory (res, options, next) {
     }
 
     var expanded = articles.map(function (article) {
-      return articleService.toJSON(article, { meta: true });
+      var model = articleService.toJSON(article, { meta: true });
+      if (options.summary) {
+        model.summary = textService.truncate(htmlService.getText(article.teaserHtml + article.introductionHtml), 170);
+      }
+      return model;
     });
 
     model.articles = expanded;

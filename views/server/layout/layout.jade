@@ -77,7 +77,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     include navigation
 
-    main.ly-main!=partial
+    main.ly-main(data-taunus='taunus-model')!=partial
 
     footer.ly-footer
       p
@@ -86,3 +86,4 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
         span .
 
     script!=javascriptLoader
+    script#taunus-model(type='text/taunus')!=JSON.stringify({ version: version, model: model }).replace(/&/g, '&amp;').replace(/<\//g, '&lt;/')

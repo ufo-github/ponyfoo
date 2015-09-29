@@ -14,11 +14,11 @@ module.exports = function (req, res, next) {
     status: 'published',
     tags: { $all: tags }
   };
-  var handle = articleListHandler(res, searchResults(res, next));
+  var handle = articleListHandler(res, { summary: true }, searchResults(res, next));
 
   res.viewModel = {
     model: {
-      title: title,
+      title: title + ' on Pony Foo',
       meta: {
         canonical: '/articles/tagged/' + tags.join('+'),
         description: 'This search results page contains all of the ' + title.toLowerCase()

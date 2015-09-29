@@ -7,7 +7,7 @@ mixin author
 section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment._id)
   header.mm-author
     if user === article.author
-      a.mm-remove.fa.fa-remove(aria-label='Delete this comment') Remove
+      a.mm-remove.fa.fa-remove(aria-label='Delete this comment')
 
     -  site = comment.site && comment.site.replace(/https?:\/\//, '');
     if site

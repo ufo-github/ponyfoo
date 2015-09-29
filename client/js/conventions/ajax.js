@@ -3,10 +3,7 @@
 var $ = require('dominus');
 var taunus = require('taunus/global');
 var measly = require('measly');
-var moment = require('moment');
-var loading = require('./loading');
 var defaultMessages = ['Oops. It seems something went terribly wrong!'];
-var unwrapImages = require('../lib/unwrapImages');
 var body = $('body');
 
 body.on('click', '.vw-conventional, .fs-messages', remove);
@@ -14,50 +11,8 @@ body.on('click', '.vw-conventional, .fs-messages', remove);
 function conventions () {
   measly.on('data', renderOrClean);
   measly.on('error', render);
-  taunus.on('render', relativeTime);
   taunus.on('render', createLayer);
-  taunus.on('render', unwrapImages);
-  taunus.on('render', linkifyHeadings);
-  taunus.on('start', unwrapImages.bind(null, body));
   taunus.on('fetch.error', handleTaunusError);
-
-  taunus.on('fetch.start', loading.show);
-  taunus.on('fetch.done', loading.hide);
-  taunus.on('fetch.abort', loading.hide);
-  taunus.on('fetch.error', loading.hide);
-}
-
-function linkifyHeadings (container) {
-  $('.md-markdown', container)
-    .find('h1,h2,h3,h4,h5,h6')
-    .map(wrapInline)
-    .find('.md-heading')
-    .on('mouseenter', function (e) {
-      $(e.target).parent().addClass('md-heading-hover')
-    })
-    .on('mouseleave', function (e) {
-      $(e.target).parent().removeClass('md-heading-hover')
-    })
-    .on('click', changeHash)
-
-  function wrapInline (el) {
-    return $(el).html('<span class="md-heading">' + $(el).html() + '</span>')
-  }
-
-  function changeHash (e) {
-    console.log(e.target)
-    location.hash = $(e.target).parents('[id]').attr('id');
-  }
-}
-
-function relativeTime (container) {
-  $('.rt-relative', container).forEach(relative);
-}
-
-function relative (el) {
-  var time = $(el);
-  var absolute = moment(time.attr('datetime'));
-  time.text(absolute.fromNow());
 }
 
 function createLayer (container, viewModel) {

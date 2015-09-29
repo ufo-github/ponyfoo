@@ -6,7 +6,10 @@
 
 .nv-item
   display inline-block
-  margin-left 6px
+  margin-right 10px
+
+  &:last-child
+    margin-right 0
 
 .nv-logon-anchor
   position fixed
@@ -22,38 +25,13 @@
     color #fff
     background-color c-pink
 
-.nv-search
-  float right
-  background-color c-pink
-  margin-top 13px
-  padding 8px 12px
-  color #fff
-  box-shadow 1px 1px 1px c-pink - #333
-
-  &:visited
-    color #fff
-
-  &:hover
-    background-color c-yellow
-    box-shadow 1px 1px 1px c-yellow - #333
-    color c-pink
-    text-decoration none
-
-.nv-search:after
-  display inline-block
-  font-family monospace
-  margin-left 8px
-  content '↓'
-
 .nv-container
   margin 20px 0
   padding 10px
-  background-color c-moderate
+  a
+    color c-pink
 
 @media screen and (min-width: 768px)
   .nv-logon,
   .nv-items
     display block
-
-  .nv-search
-    display none

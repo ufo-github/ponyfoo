@@ -1,7 +1,10 @@
 @import 'node_modules/woofmark/src/woofmark'
 
-form textarea
+.wk-textarea
   margin-top 45px
+
+.wk-switchboard
+  display none
 
 .wk-commands
   position absolute
@@ -11,6 +14,12 @@ form textarea
 
 .wk-command
   width 20%
+  &:hover
+    color c-pink
+
+.wk-mode
+  cursor pointer
+
   &:hover
     color c-pink
 

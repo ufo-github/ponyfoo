@@ -1,7 +1,10 @@
-article.ly-section
-  h1.vw-title
-    span Subscribers
-    span=' '
-    span='(' + subscribers.filter(function(s) { return s.verified }).length + ')'
-  section.as-container
-    div.as-chart
+article.ly-section.vw-maintainer
+  section.vw-maintainer-content
+    h1.vw-title
+      span Subscribers
+      span=' '
+      span='(' + subscribers.filter(function(s) { return s.verified }).length + ')'
+    section.as-container
+      div.as-chart
+
+  include ../partials/aside

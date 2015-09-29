@@ -10,13 +10,13 @@ var termSeparator = /[+/,_: -]+/ig;
 module.exports = function (req, res, next) {
   var tags = req.params.tags.split(tagSeparator);
   var terms = req.params.terms.split(termSeparator);
-  var handle = articleListHandler(res, searchResults(res, next));
+  var handle = articleListHandler(res, { summary: true }, searchResults(res, next));
   var fmt = 'Search results for "%s" in articles tagged "%s"';
   var title = util.format(fmt, terms.join('", "'), tags.join('", "'));
 
   res.viewModel = {
     model: {
-      title: title,
+      title: title + ' on Pony Foo',
       meta: {
         canonical: '/articles/search/' + terms.join('-') + '/tagged/' + tags.join('+'),
         description: 'This search results page contains all of the ' + title.toLowerCase()

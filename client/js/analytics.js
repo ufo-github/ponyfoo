@@ -1,13 +1,13 @@
 'use strict';
 
 function analytics (env) {
+  require('./vendor/twitter.widget');
+  require('./vendor/codepen');
   if (env.name !== 'production') {
     return;
   }
   require('./vendor/ga');
   require('./vendor/clicky');
-  require('./vendor/twitter.widget');
-  require('./lib/twitter');
 }
 
 module.exports = analytics;

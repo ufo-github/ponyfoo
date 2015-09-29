@@ -1,30 +1,35 @@
-article.ly-section
-  h1.vw-title Sign In
+article.ly-section.al-container
+  section.al-logon
+    h1.vw-title Authentication
 
-  if providers.length
-    section.al-providers
-      each p in providers
-        a.al-provider(href=p.link, title='Authenticate with ' + p.name)='Authenticate with ' + p.name
+    if providers.length
+      section.al-providers
+        each p in providers
+          a.al-provider(href=p.link, title='Authenticate with ' + p.name)='Authenticate with ' + p.name
 
-    p.al-separator
-     span='- or the '
-     i old fashioned
-     span=' way -'
+      p.al-separator
+       span='- or the '
+       i old fashioned
+       span=' way -'
 
-  form.al-form(method='post', action='/account/login/local')
-    input(type='hidden', name='redirect', value=previousUrl)
-
-    fieldset
-      p
-        input.alf-input.alf-email(type='text', name='email', placeholder='Input your email')
+    form.al-form(method='post', action='/account/login/local')
+      input(type='hidden', name='redirect', value=previousUrl)
 
       p
-        input.alf-input.alf-password(type='password', name='password', placeholder='Input your password')
+        input(type='text', name='email', placeholder='Your email address')
+
+      p
+        input(type='password', name='password', placeholder='Your password')
 
       if registration
         p
-          input.ck-input.alf-create#alf-create-checkbox(type='checkbox', name='create')
+          input.ck-input#alf-create-checkbox(type='checkbox', name='create')
           label.ck-checkbox(for='alf-create-checkbox') New Account
 
-    p.alf-buttons
-      input.uv-button.alf-login(type='submit', value='Login')
+      p
+        span.bt-label.de-button
+          button.gg-container.bt-button.bt-pink(type='submit')
+            span.bt-text Login
+            include ../partials/button-background
+
+  include ../partials/aside

@@ -7,12 +7,11 @@
 
 .lg-level
   display inline-block
-  color #fff
+  color c-white
   padding 5px
 
 .lg-debug .lg-level
   background-color darken(c-orange, 25%)
-  color c-black
 
 .lg-info .lg-level
   background-color c-purple
@@ -37,28 +36,9 @@
   font-size 16px
   margin-bottom 5px
 
-.lg-actions button
-  width 100%
-  padding 10px
-  margin-top 10px
-
-  &:first-child
-    margin-top 0
+.lg-actions .an-siblings
+  margin 0
 
 @media only screen and (max-width: 600px)
   .lg-stack
     white-space nowrap
-
-@media only screen and (min-width: 600px)
-  .lg-actions
-    text-align right
-
-    button
-      display inline-block
-      width inherit
-      margin-top 0
-      margin-left 10px
-      padding 5px
-
-      &:first-child
-        margin-left 0

@@ -3,7 +3,6 @@
 var $ = require('dominus');
 var raf = require('raf');
 var taunus = require('taunus/global');
-var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 
 module.exports = function (viewModel) {
   var subject = $('.ec-subject');
@@ -13,8 +12,6 @@ module.exports = function (viewModel) {
   var body = $('.ec-body');
   var preview = $.findOne('.ec-preview');
   var sendButton = $('.ec-send');
-
-  convertToPonyEditor(body[0], preview);
 
   subject.on('keypress keydown paste', raf.bind(null, updatePreviewSubject));
   teaser.on('keypress keydown paste', raf.bind(null, updatePreviewTeaser));

@@ -1,23 +1,28 @@
 mixin pager ()
-  if page > 1
-    a(href=page === 2 ? taunus.resolve('author/logs') : taunus.resolve('author/logs', { page: page - 1 })) Previous Page
-  if more
-    a(href=taunus.resolve('author/logs', { page: page + 1 })) Next Page
+  section.an-siblings.uv-clearfix
+    if page > 1
+      a.an-anchor.an-prev(href=page === 2 ? taunus.resolve('author/logs') : taunus.resolve('author/logs', { page: page - 1 }), rel='prev', aria-label='Go to the previous page') « Newer
+    if more
+      a.an-anchor.an-next(href=taunus.resolve('author/logs', { page: page + 1 }), rel='next', aria-label='Go to the next page') Older »
 
-h1 Logs
+article.vw-maintainer
+  section.vw-maintainer-content
+    h1.vw-title Logs
 
-section.lg-container
-  header.lg-actions
-    +pager()
+    section.lg-container
+      header.lg-actions
+        +pager()
 
-  if logs.length
-    table.lg-table
-      thead
-        th Level
-        th When
-        th Message
-      tbody.lg-body
-        include logs/rows
+      if logs.length
+        table.lg-table
+          thead
+            th Level
+            th When
+            th Message
+          tbody.lg-body
+            include logs/rows
 
-    footer.lg-actions
-      +pager()
+        footer.lg-actions
+          +pager()
+
+  include ../partials/aside

@@ -1,11 +1,15 @@
-article.ly-section
-  h1.vw-title Email Composer
-  section.ec-container
-    input.ec-subject(placeholder='Email Subject')
-    input.ec-teaser(placeholder='Teaser about email contents')
-    textarea.ec-text.ec-body.pmk-input(placeholder='Main body of your email')
-    article.ec-preview.md-markdown
-      h1.ec-preview-subject.at-title
-      h4.ec-preview-teaser
-  footer.ec-actions
-    button.ec-send(aria-label='Send out to every subscriber!') Send to all
+article.ly-section.vw-maintainer
+  section.vw-maintainer-content
+    h1.vw-title Email Composer
+    section.ec-container
+      input.ec-subject(placeholder='Email Subject')
+      input.ec-teaser(placeholder='Teaser about email contents')
+      div
+        textarea.ec-text.ec-body.wk-textarea(placeholder='Main body of your email')
+    footer.ec-actions
+      span.bt-label(aria-label='Send out to every subscriber!')
+        button.gg-container.bt-button.bt-pink.ec-send(type='submit')
+          span.bt-text Send to All
+          include ../partials/button-background
+
+  include ../partials/aside

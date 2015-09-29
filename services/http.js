@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var util = require('util');
 var safeson = require('safeson');
-var winston = require('winston');
 var taunus = require('taunus');
 var accepts = require('accepts');
 var pkg = require('../package.json');

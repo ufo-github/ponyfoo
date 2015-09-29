@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
+var taunus = require('taunus');
 var loader = $('.go-anchor')
   .clone()
   .appendTo(document.body)
@@ -15,7 +16,13 @@ function hide () {
   loader.removeClass('ll-show');
 }
 
-module.exports = {
-  show: show,
-  hide: hide
-};
+function loading () {
+  taunus.on('fetch.start', show);
+  taunus.on('fetch.done', hide);
+  taunus.on('fetch.abort', hide);
+  taunus.on('fetch.error', hide);
+}
+
+loading.show = show;
+loading.hide = hide;
+module.exports = loading;

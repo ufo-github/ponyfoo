@@ -6,13 +6,15 @@ var domador = require('domador');
 var woofmark = require('woofmark');
 var markdownService = require('../../../services/markdown');
 
+// TODO twitterService.updateView(preview);
+
 function textareas () {
   taunus.gradual.transform(before);
   taunus.on('render', activate);
 }
 
 function activate (container, model) {
-  $('form textarea', container).but('.pmk-input').forEach(convert);
+  $('.wk-textarea', container).but('.pmk-input').forEach(convert);
 
   function convert (el) {
     var wel = $(el)

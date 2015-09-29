@@ -2,7 +2,6 @@
 
 var $ = require('dominus');
 var taunus = require('taunus/global');
-var convertToPonyEditor = require('../../lib/convertToPonyEditor');
 var markdownService = require('../../../../services/markdown');
 
 module.exports = function (viewModel) {
@@ -10,8 +9,6 @@ module.exports = function (viewModel) {
   var preview = $.findOne('.cb-preview');
   var saveButton = $('.cb-save');
   var bioSidebar = $('.de-bio');
-
-  convertToPonyEditor(editor[0], preview);
 
   saveButton.on('click', save);
 

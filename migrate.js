@@ -53,6 +53,10 @@ function listening () {
 
   require('./models/Article').find({}, function (err, articles) {
     require('contra').each.series(articles, function (article, next) {
+      if (article.introduction) {
+        console.log('Skipping "%s"', article.title)
+        next(); return;
+      }
       var h = require('cheerio').load(article.teaserHtml)
       var p = h('p').first()
       var tease = require('domador')(p.html())
@@ -60,17 +64,10 @@ function listening () {
       var rest = require('domador')(h.html())
       article.teaser = tease
       article.introduction = rest
-      // console.log('TEASE',article.teaser)
-      // console.log('GREASE',article.introduction)
-      // next()
+      console.log('Updating "%s"', article.title)
       article.save(require('but')(next))
     })
   })
-}
-
-function rebuild () {
-  feedService.rebuild();
-  sitemapService.rebuild();
 }
 
 function fatal (err) {

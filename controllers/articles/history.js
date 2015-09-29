@@ -1,13 +1,12 @@
 'use strict';
 
 var _ = require('lodash');
-var but = require('but');
 var articleService = require('../../services/article');
 var metadataService = require('../../services/metadata');
 
 module.exports = function (req, res, next) {
-  var options = { fields: '-teaser -introduction -body -comments' };
   var query = { status: 'published' };
+  var options = { fields: '-teaser -introduction -body -comments' };
 
   articleService.find(query, options, function (err, articles) {
     if (err) {

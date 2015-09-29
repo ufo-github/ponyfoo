@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var taunus = require('taunus');
 var validator = require('validator');
 var markupService = require('../../../services/markup');
@@ -22,6 +23,11 @@ module.exports = function (req, res) {
   }
 
   function saved (err, user) {
+    if (err) {
+      winston.error(err);
+      res.json({});
+      return;
+    }
     bioService.update(user.email, bio, bioHtml);
     taunus.rebuildDefaultViewModel();
     res.json({});

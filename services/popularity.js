@@ -22,7 +22,10 @@ function getArticles (done) {
     null
   );
   jwt.authorize(authorized);
-  function authorized (err, tokens) {
+  function authorized (err) {
+    if (err) {
+      done(err); return;
+    }
     var query = {
       auth: jwt,
       ids: 'ga:' + profile,

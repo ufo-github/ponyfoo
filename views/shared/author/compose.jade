@@ -1,57 +1,64 @@
-article.ly-section
-  h1.vw-title Article Composer
-  section.ac-container
-    input.ac-title(placeholder='A Thoughtful, Catchy Title', value=article.title)
-    input.ac-slug(placeholder='a-thoughtful-catchy-title', value=article.slug)
-    textarea.ac-text.ac-teaser.pmk-input(placeholder='Tease the reader about your article. Used for marketing, search snippets, etc.', data-markdown=article.teaser)
-    textarea.ac-text.ac-introduction.pmk-input(placeholder='Write the introduction to the topics presented in your article. Included in emails.', data-markdown=article.introduction)
-    textarea.ac-text.ac-body.pmk-input(placeholder='Main body of your article', data-markdown=article.body)
-    input.ac-tags(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
+article.ly-section.vw-maintainer
+  section.vw-maintainer-content.ac-container
+    h1.vw-title Article Composer
+    section.ac-container
+      input.ac-title(placeholder='A Thoughtful, Catchy Title', value=article.title)
+      input.ac-slug(placeholder='a-thoughtful-catchy-title', value=article.slug)
+      div
+        textarea.wk-textarea.ac-text.ac-teaser(placeholder='Tease the reader about your article. Used for marketing, search snippets, etc.')=article.teaser
+      div
+        textarea.wk-textarea.ac-text.ac-introduction(placeholder='Write the introduction to the topics presented in your article. Included in emails.')=article.introduction
+      div
+        textarea.wk-textarea.ac-text.ac-body(placeholder='Main body of your article')=article.body
+      input.ac-tags(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
 
-  - publication = moment(article.publication)
-  - publicationFormat = 'DD-MM-YYYY HH:mm'
-  - published = article.status === 'published'
+    - publication = moment(article.publication)
+    - publicationFormat = 'DD-MM-YYYY HH:mm'
+    - published = article.status === 'published'
 
-  if !published
-    aside.ac-aside
-      section.ac-timing
-          p You can save the article as a draft, publish it, or slate it for publication at a later date
-          p
-            input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
-            label.ck-radio(for='ac-draft-radio') Draft
-          p
-            input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish' || article.status === void 0)
-            label.ck-radio(for='ac-publish-radio') Publish
-          p
-            input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
-            label.ck-checkbox(for='ac-schedule-checkbox') Schedule
-            input.ac-publication(value=publication.format(publicationFormat), placeholder=publicationFormat)
+    if !published
+      aside.ac-aside
+        p You can save the article as a draft, publish it, or slate it for publication at a later date
+        p.ac-timing-item
+          input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
+          label.ck-radio(for='ac-draft-radio') Draft
+        p.ac-timing-item
+          input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish' || article.status === void 0)
+          label.ck-radio(for='ac-publish-radio') Publish
+        p.ac-timing-item
+          input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
+          label.ck-checkbox(for='ac-schedule-checkbox') Schedule
+          input.ac-publication(value=publication.format(publicationFormat), placeholder=publicationFormat)
 
-      section.ac-campaign
         p What mediums do you want to use to promote the article?
-        p
+        p.ac-campaign-item
           input.ck-input#ac-campaign-email(type='checkbox', checked=article.email !== false)
           label.ck-checkbox(for='ac-campaign-email') Send an email
-        p
+        p.ac-campaign-item
           input.ck-input#ac-campaign-tweet(type='checkbox', checked=article.tweet !== false)
           label.ck-checkbox(for='ac-campaign-tweet') Post a tweet
-        p
+        p.ac-campaign-item
           input.ck-input#ac-campaign-echojs(type='checkbox', checked=article.echojs !== false)
           label.ck-checkbox(for='ac-campaign-echojs') Submit to EchoJS
-        p
+        p.ac-campaign-item
           input.ck-input#ac-campaign-hn(type='checkbox', checked=article.hn !== false)
           label.ck-checkbox(for='ac-campaign-hn') Submit to Hacker News
-        p
+        p.ac-campaign-item
           input.ck-input#ac-campaign-lobsters(type='checkbox', checked=article.lobsters !== false)
           label.ck-checkbox(for='ac-campaign-lobsters') Submit to Lobste.rs
 
-  article.ac-preview.md-markdown
-    h1.ac-preview-title.at-title
-    span.ac-preview-read
-  section.ac-preview-tags
+    article.ac-preview.md-markdown
+      h1.ac-preview-title.at-title
+      span.ac-preview-read
+    section.ac-preview-tags
 
-  footer.ac-actions
-    if editing
-      a.ac-cancel(aria-label='Back to Author Review', href='/author/review') Cancel
-    a.ac-discard(aria-label='Your draft will be permanently deleted') Discard Draft
-    button.ac-save(aria-label='Make the content immediately accessible!') Publish
+    footer.ac-actions
+      if editing
+        a.ac-cancel(aria-label='Back to Author Review', href='/author/review') Cancel
+      a.ac-discard(aria-label='Your draft will be permanently deleted') Discard Draft
+      span.bt-label(aria-label='Make the content immediately accessible!')
+        button.gg-container.bt-button.bt-pink.ac-save(type='submit')
+          span.bt-text Publish
+          include ../partials/button-background
+
+  include ../partials/aside

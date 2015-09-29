@@ -96,7 +96,7 @@ module.exports = function (viewModel) {
 
     function appendResult (data) {
       var placeholder = $('<div>');
-      var template, target, partial;
+      var template, partial;
       var model = {
         user: viewModel.user,
         article: {
@@ -107,19 +107,20 @@ module.exports = function (viewModel) {
           }]
         }
       };
-
       if (thread.length) {
         model.comment = data;
         template = 'articles/comment';
-        target = thread.find('.mm-thread-footer');
       } else {
         template = 'articles/comment-thread';
-        target = comments.find('.mm-footer');
       }
       taunus.partial(placeholder[0], template, model);
       partial = placeholder.children();
       partial.find('.mm-thread-reply').removeClass('uv-hidden');
-      target.before(partial);
+      if (thread.length) {
+        thread.find('.mm-thread-comments').append(partial);
+      } else {
+        comments.find('.mm-footer').before(partial);
+      }
     }
   }
 

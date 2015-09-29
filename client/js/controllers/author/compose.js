@@ -44,7 +44,6 @@ module.exports = function (viewModel, container, route) {
   };
   var boundSlug = true;
   var serializeSlowly = editing ? noop : throttle(serialize, 200);
-  var ponies = texts.map(convert);
   var previews = $('.pmk-preview', preview);
 
   previews.i(0).addClass('at-teaser');
@@ -62,35 +61,31 @@ module.exports = function (viewModel, container, route) {
 
   deserialize(editing && article);
 
-  function convert (text) {
-    return convertToPonyEditor(text, preview);
-  }
-
   function updatePublication () {
     serializeSlowly();
 
     if (published) {
-      saveButton.text('Save Changes');
-      saveButton.attr('aria-label', 'Make your modifications immediately accessible!');
+      saveButton.find('.bt-text').text('Save Changes');
+      saveButton.parent().attr('aria-label', 'Make your modifications immediately accessible!');
       discardButton.text('Delete Article');
       discardButton.attr('aria-label', 'Permanently delete this article');
       return;
     }
     var state = status.where(':checked').text();
     if (state === 'draft') {
-      saveButton.text('Save Draft');
-      saveButton.attr('aria-label', 'You can access your drafts at any time');
+      saveButton.find('.bt-text').text('Save Draft');
+      saveButton.parent().attr('aria-label', 'You can access your drafts at any time');
       return;
     }
     var scheduled = schedule.value();
     if (scheduled) {
-      saveButton.text('Schedule');
-      saveButton.attr('aria-label', 'Schedule this article for publication');
+      saveButton.find('.bt-text').text('Schedule');
+      saveButton.parent().attr('aria-label', 'Schedule this article for publication');
       return;
     }
     if (state === 'publish') {
-      saveButton.text('Publish');
-      saveButton.attr('aria-label', 'Make the content immediately accessible!');
+      saveButton.find('.bt-text').text('Publish');
+      saveButton.parent().attr('aria-label', 'Make the content immediately accessible!');
     }
   }
 
@@ -124,18 +119,16 @@ module.exports = function (viewModel, container, route) {
     serializeSlowly();
   }
 
+  function updatePreviewMarkdown () {
+    // TODO
+  }
+
   function updatePreviewTags () {
     var individualTags = textService.splitTags(tags.value());
     var model = {
       article: { tags: individualTags }
     };
     taunus.partial(previewTags, 'partials/tags', model);
-  }
-
-  function updatePreviewMarkdown () {
-    ponies.forEach(function refresh (pony) {
-      pony.refresh();
-    });
   }
 
   function serialize () { storage.set(key, getRequestData()); }
@@ -217,6 +210,10 @@ module.exports = function (viewModel, container, route) {
   }
 
   function discard () {
+    var confirmation = confirm('About to discard /articles/' + route.params.slug + ', are you sure?');
+    if (!confirmation) {
+      return;
+    }
     if (editing) {
       viewModel.measly.delete('/api/articles/' + route.params.slug).on('data', leave);
     } else {

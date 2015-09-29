@@ -7,21 +7,32 @@
 .aa-article
   margin 10px 0 10px 10px
 
+.aa-summary
+  margin 10px 0
+
+.ly-teasers .aa-summary
+  font-family f-subheading
+
 .aa-footer
   margin 10px
 
 .aa-visit
   color c-black
 
+.aa-continue
+  display block
+  font-style italic
+
+.aa-continue,
 .aa-history
   color c-pink
 
-.aa-trivia,
+.aa-trivia
+  margin 10px 0
+  font-size 13px
+
 .aa-tags
   display block
-
-.aa-trivia
-  color #444
 
 .aa-article
   display inline-block
@@ -65,7 +76,7 @@
 
 @media screen and (min-width: 768px)
   .aa-articles
-    max-width 1025px
+    max-width 825px
     margin-left 30px
 
   .aa-article
@@ -74,3 +85,7 @@
 
   .aa-footer
     margin 20px 40px
+
+@media only screen and (min-width: 1400px)
+  .aa-articles
+    max-width 1025px

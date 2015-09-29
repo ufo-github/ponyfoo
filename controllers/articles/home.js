@@ -7,7 +7,8 @@ module.exports = function (req, res, next) {
   var limit = 40;
   var page = parseInt(req.params.page, 10) || 1;
   var query = { status: 'published' };
-  var handle = articleListHandler(res, { skip: false }, next);
+  var options = { limit: limit, skip: page * limit - limit };
+  var handle = articleListHandler(res, { skip: false, summary: true }, next);
 
   res.viewModel = {
     model: {
@@ -19,5 +20,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleService.find(query, { limit: limit, skip: page * limit }, handle);
+  articleService.find(query, options, handle);
 };

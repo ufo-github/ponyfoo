@@ -1,8 +1,13 @@
-article.ly-section
-  h1.vw-title Bio Editor
-  section.cb-container
-    textarea.cb-bio.pmk-input(placeholder='Your bio goes here!', data-markdown=bio)
-    article.cb-preview.md-markdown
+article.ly-section.vw-maintainer
+  section.vw-maintainer-content
+    h1.vw-title Bio Editor
+    section
+      div
+        textarea.wk-textarea.cb-bio(placeholder='Your bio goes here!')=bio
 
-  footer.cb-actions
-    button.cb-save Save
+    footer.cb-actions
+      button.gg-container.bt-button.bt-pink.cb-save(type='submit')
+        span.bt-text Save
+        include ../partials/button-background
+
+  include ../partials/aside
