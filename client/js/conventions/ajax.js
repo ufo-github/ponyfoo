@@ -12,12 +12,16 @@ function conventions () {
   measly.on('data', renderOrClean);
   measly.on('error', render);
   taunus.on('render', createLayer);
+  taunus.on('change', abort);
   taunus.on('fetch.error', handleTaunusError);
 }
 
 function createLayer (container, viewModel) {
-  measly.abort();
   viewModel.measly = measly.layer({ context: container });
+}
+
+function abort () {
+  measly.abort();
 }
 
 function remove (e) {
