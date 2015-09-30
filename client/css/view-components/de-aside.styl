@@ -101,13 +101,21 @@
     margin 10px 0
 
 @media screen and (min-width: 1200px)
+  sidebar-width = 360px
+
+  .de-host
+    padding-right sidebar-width
+
+  .de-column
+    position relative
+    float left
+    width 100%
+
   .de-sidebar
     margin-top 0
-    position absolute
-    top 0
-    right 0
     padding 20px
-    width 360px
+    width sidebar-width
+    margin-right sidebar-width * -1
 
     &:before
       content none

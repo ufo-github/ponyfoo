@@ -1,20 +1,21 @@
-if articles.length
-  include columns
-else
-  section.aa-articles.aa-empty
-    span No articles were found. Maybe you're on the
+div.de-column
+  if articles.length
+    include columns
+  else
+    section.aa-articles.aa-empty
+      span No articles were found. Maybe you're on the
+      span=' '
+      a(href='/', aria-label='Go back home') wrong page
+      span ?
+
+  section.an-siblings.uv-clearfix
+    if page > 1
+      a.an-anchor.an-prev(href=page === 2 ? '/' : '/p/' + (page - 1), rel='prev', aria-label='Go to the previous page') « Newer
+    if articles.length === limit
+      a.an-anchor.an-next(href='/p/' + (page + 1), rel='next', aria-label='Go to the next page') Older »
+
+  footer.aa-footer.ly-section
+    span Can't find what you were looking for? Try searching the
     span=' '
-    a(href='/', aria-label='Go back home') wrong page
-    span ?
-
-section.an-siblings.uv-clearfix
-  if page > 1
-    a.an-anchor.an-prev(href=page === 2 ? '/' : '/p/' + (page - 1), rel='prev', aria-label='Go to the previous page') « Newer
-  if articles.length === limit
-    a.an-anchor.an-next(href='/p/' + (page + 1), rel='next', aria-label='Go to the next page') Older »
-
-footer.aa-footer.ly-section
-  span Can't find what you were looking for? Try searching the
-  span=' '
-  a.aa-history(href='/articles/history', aria-label='Pony Foo has been online for a while. Get access to the full publication history from here') full publication history
-  span .
+    a.aa-history(href='/articles/history', aria-label='Pony Foo has been online for a while. Get access to the full publication history from here') full publication history
+    span .

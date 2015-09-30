@@ -98,7 +98,17 @@
 .md-code-block .md-code
   display block
 
-@media only screen and (min-width: 768px)
+@media only screen and (min-width: 1300px)
+  .md-markdown
+    p,
+    ul,
+    ol,
+    table,
+    blockquote,
+    code
+      max-width 900px
+
+@media only screen and (min-width: 1400px)
   .md-markdown
     p,
     ul,
@@ -107,3 +117,6 @@
     blockquote,
     code
       max-width 1000px
+
+    .md-code-block
+      margin 0 -400px 0 -40px // account for 360px in sidebar

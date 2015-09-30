@@ -3,44 +3,45 @@
 
 article.ly-section
   h1.vw-title.dc-title.dc-title-text Publication History
-  section.hy-container
-    div.hy-lesson.md-markdown
-      p
-        span I first started developing the blogging engine for Pony Foo around mid-2012. I had just read
-        span=' '
-        a(href='http://amzn.to/1Fwinou', target='_blank') The Pragmatic Programmer
-        span=' '
-        span and I was looking for a challenge. I built the engine using Node.js and that's how I got into server-side JavaScript. I really enjoyed publishing articles on a blog, even though &mdash; for a long time &mdash; nobody read what I published. Eventually people started reading the blog, and nowadays some people even go as far as to read minutiae about how the blog came to be. I find that immensely rewarding. Not long after I started blogging I decided to write a book about
-        span=' '
-        a(href='http://bevacqua.io/buildfirst', target='_blank') JavaScript Application Design
-        span , which was published in February, 2015.
-      p
-        span Reading every article ever published on Pony Foo &mdash; there's
-        span=' ' + articles.length + ' '
-        span of them &mdash; would take you approximately
-        span=' '
-        time.hy-total-duration=moment.duration(total, 'seconds').humanize()
-        span . You better get to it!
+  section.hy-container.de-host
+    div.de-column
+      div.hy-lesson.md-markdown
+        p
+          span I first started developing the blogging engine for Pony Foo around mid-2012. I had just read
+          span=' '
+          a(href='http://amzn.to/1Fwinou', target='_blank') The Pragmatic Programmer
+          span=' '
+          span and I was looking for a challenge. I built the engine using Node.js and that's how I got into server-side JavaScript. I really enjoyed publishing articles on a blog, even though &mdash; for a long time &mdash; nobody read what I published. Eventually people started reading the blog, and nowadays some people even go as far as to read minutiae about how the blog came to be. I find that immensely rewarding. Not long after I started blogging I decided to write a book about
+          span=' '
+          a(href='http://bevacqua.io/buildfirst', target='_blank') JavaScript Application Design
+          span , which was published in February, 2015.
+        p
+          span Reading every article ever published on Pony Foo &mdash; there's
+          span=' ' + articles.length + ' '
+          span of them &mdash; would take you approximately
+          span=' '
+          time.hy-total-duration=moment.duration(total, 'seconds').humanize()
+          span . You better get to it!
 
-    ol.hy-items
-      each article in articles
-        - pub = moment(article.publication)
-        - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
+      ol.hy-items
+        each article in articles
+          - pub = moment(article.publication)
+          - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
 
-        li.hy-article
-          a.hy-link(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))=article.title
-          span.hy-connector
-            span!=' &mdash; published '
-            time.hy-publication(datetime=pub.format(), aria-label=pub.format(longDate))=pub.fromNow()
-            span.hy-tags
-              span=', under '
-              include ../partials/tags
+          li.hy-article
+            a.hy-link(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))=article.title
+            span.hy-connector
+              span!=' &mdash; published '
+              time.hy-publication(datetime=pub.format(), aria-label=pub.format(longDate))=pub.fromNow()
+              span.hy-tags
+                span=', under '
+                include ../partials/tags
 
-    div.hy-lesson.md-markdown
-      p
-        span If you'd like to learn more about my work you could visit
-        span=' '
-        a(href='http://bevacqua.io', target='_blank') my about page
-        span .
+      div.hy-lesson.md-markdown
+        p
+          span If you'd like to learn more about my work you could visit
+          span=' '
+          a(href='http://bevacqua.io', target='_blank') my about page
+          span .
 
     include ../partials/aside

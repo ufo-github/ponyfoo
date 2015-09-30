@@ -83,6 +83,9 @@ mm-author-padding = 10px
     &:last-child
       margin-bottom -10px
 
+.mm-thread
+  margin-top 40px
+
 .mm-thread-footer
   text-align right
 
@@ -91,10 +94,7 @@ mm-author-padding = 10px
 
 .mm-thread-footer .mc-composer
   border-top 3px solid lighten(c-orange, 20%)
-
-.mm-thread,
-.mm-footer
-  max-width 840px
+  margin-bottom 40px
 
 .mm-footer-title
   margin 40px 10px
@@ -108,6 +108,7 @@ mm-author-padding = 10px
 
 .mm-remove
   float right
+  color c-orange-dark
   line-height 22px
 
 @media screen and (min-width: 768px)
@@ -122,8 +123,3 @@ mm-author-padding = 10px
 
   .mm-heading
     padding 20px 40px
-
-@media screen and (min-width: 1400px)
-  .mm-thread,
-  .mm-footer
-    max-width 1040px
