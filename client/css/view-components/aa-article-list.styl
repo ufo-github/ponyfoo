@@ -1,11 +1,9 @@
 .aa-container
   position relative
+  margin 10px
 
 .aa-articles
   list-style-type none
-
-.aa-article
-  margin 10px 0 10px 10px
 
 .aa-summary
   margin 10px 0
@@ -38,23 +36,22 @@
   display inline-block
   vertical-align top
   border-top 9px dotted
-  width 145px
+  margin-bottom 20px
+  margin-right 8%
+  width 46%
 
+  &:nth-child(2n)
+    margin-right 0
   &:nth-child(6n-5)
     border-top-color darken(c-yellow-highlight, 25%)
-
   &:nth-child(6n-4)
     border-top-color darken(c-orange, 25%)
-
   &:nth-child(6n-3)
     border-top-color c-pink
-
   &:nth-child(6n-2)
     border-top-color c-red
-
   &:nth-child(6n-1)
     border-top-color c-purple
-
   &:nth-child(6n-0)
     border-top-color darken(c-green, 25%)
 
@@ -74,18 +71,42 @@
 .ly-teasers .aa-empty
   font-family f-subheading
 
-@media screen and (min-width: 768px)
-  .aa-articles
-    max-width 825px
-    margin-left 30px
-
+@media screen and (min-width: 575px)
   .aa-article
-    margin 20px 15px
-    width 175px
+    margin-right 5%
+    width 30%
 
-  .aa-footer
-    margin 20px 40px
+    &:nth-child(2n)
+      margin-right 5%
+    &:nth-child(3n)
+      margin-right 0
 
-@media only screen and (min-width: 1400px)
+@media screen and (min-width: 725px)
+  .aa-article
+    margin-right 2%
+    width 23.5%
+
+    &:nth-child(2n)
+      margin-right 2%
+    &:nth-child(3n)
+      margin-right 2%
+    &:nth-child(4n)
+      margin-right 0
+
+@media screen and (min-width: 1000px)
+  .aa-article
+    margin-right 1.875%
+    width 18.5%
+
+    &:nth-child(2n)
+      margin-right 1.875%
+    &:nth-child(3n)
+      margin-right 1.875%
+    &:nth-child(4n)
+      margin-right 1.875%
+    &:nth-child(5n)
+      margin-right 0
+
+@media screen and (min-width: 1200px)
   .aa-articles
-    max-width 1025px
+    max-width calc(100% - 380px)

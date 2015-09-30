@@ -35,17 +35,6 @@
     font-size 18px
     line-height 38px
 
-.de-back-link
-  &:after
-    display inline-block
-    font-family monospace
-    margin-left 8px
-    content '↑'
-
-  &:before
-    display inline-block
-    content 'Back to top'
-
 .de-search-label
   font-style italic
   margin-bottom 10px
@@ -77,6 +66,9 @@
     content ''
     background linear-gradient(to left, c-white 0, c-yellow-highlight 66%, c-pink 100%)
 
+.de-hits
+  padding 0 10px
+
 .de-heading
   margin-top 10px
 
@@ -105,9 +97,6 @@
     color darken(c-green, 25%)
 
 @media screen and (min-width: 768px)
-  .de-back
-    display none
-
   .de-popular li
     margin 10px 0
 
@@ -117,7 +106,7 @@
     position absolute
     top 0
     right 0
-    padding 20px 40px 20px 20px
+    padding 20px
     width 360px
 
     &:before
@@ -125,6 +114,7 @@
 
   .de-search,
   .de-subscribe
+  .de-hits
     padding 0
 
   .de-bio
