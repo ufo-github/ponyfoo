@@ -1,5 +1,10 @@
 'use strict';
 
+var env = require('./lib/env');
+if (env('NODE_ENV') === 'production') {
+  require('newrelic');
+}
+
 require('./preconfigure');
 require('./chdir');
 
@@ -12,7 +17,6 @@ var lipstick = require('lipstick');
 var models = require('./models');
 var pkg = require('./package.json');
 var logging = require('./lib/logging');
-var env = require('./lib/env');
 var db = require('./lib/db');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
@@ -32,10 +36,6 @@ function listen () {
   global.moment = moment;
 
   app.locals.settings['x-powered-by'] = false;
-
-  if (env('NODE_ENV') === 'production') {
-    require('newrelic');
-  }
 
   db(operational);
 
