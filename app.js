@@ -30,7 +30,6 @@ function listen () {
   var app = express();
   var server = http.createServer(app);
 
-  logging.configure();
   development.patch(app);
 
   global.moment = moment;
@@ -40,6 +39,7 @@ function listen () {
   db(operational);
 
   function operational () {
+    logging.configure();
     winston.info('Worker %s executing app@%s', process.pid, pkg.version);
     process.on('uncaughtException', fatal);
     models();

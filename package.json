@@ -121,8 +121,8 @@
     "twit": "1.1.18",
     "validator": "3.12.0",
     "wemoji": "0.1.9",
-    "winston": "1.0.1",
-    "winston-mongodb": "1.1.1",
+    "winston": "1.0.2",
+    "winston-mongodb": "1.1.2",
     "woofmark": "4.0.2"
   },
   "devDependencies": {

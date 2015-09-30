@@ -23,11 +23,11 @@ function start () {
     port: port,
     workers: workers
   });
-  logging.configure();
   db(operational);
 }
 
 function operational () {
+  logging.configure();
   process.on('uncaughtException', fatal);
 }
 

@@ -5,8 +5,7 @@
 - published = article.status === 'published'
 
 header.at-header
-  h1.dc-title
-    a.dc-title-text(href=article.permalink, itemprop='headline')=article.title
+  h1.dc-title(itemprop='headline')=article.title
 
 section.at-teaser
   div.at-teaser-markdown.md-markdown!=article.teaserHtml
