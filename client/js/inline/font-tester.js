@@ -4,7 +4,7 @@ var fontfaceonload = require('fontfaceonload');
 var fontfaceonload = global.FontFaceOnload;
 var el = document.getElementById('_fonts');
 
-wait(); // used after cache is primed
+setTimeout(wait, 0); // used after cache is primed
 onloadStyle(el, wait); // cache isn't primed
 
 // source: https://github.com/filamentgroup/loadCSS/blob/1173c13133078b2688505f50af4412142515f4a5/onloadCSS.js
