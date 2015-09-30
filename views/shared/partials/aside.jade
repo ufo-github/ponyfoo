@@ -1,5 +1,5 @@
 aside.de-sidebar.de-column
-  section.ca-container
+  section.de-carbon.ca-container
     script#_carbonads_js(src='//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom', async)
     div.ca-help-me.uv-hidden
       span='Please consider disabling your ad blocker on Pony Foo. You can also support me directly through '
@@ -42,9 +42,9 @@ aside.de-sidebar.de-column
   if popularArticles.length
     section.ly-section.de-hits
       h3 Greatest Hits
-      ul.de-popular
+      ul.de-hit-list
         each article in popularArticles
-          li
+          li.de-hit
             a(
               href='/articles/' + article.slug,
               aria-label=moment(article.publication).format('(YYYY)') + ' Tagged: ' + article.tags.join(', ')
