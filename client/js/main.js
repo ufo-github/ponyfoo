@@ -3,7 +3,6 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var moment = require('moment');
-var fonts = require('./fonts');
 var markdownService = require('../../services/markdown');
 var subscriptions = require('./subscriptions');
 var analytics = require('./analytics');
@@ -23,7 +22,6 @@ require('./conventions/relativeTime')();
 require('./conventions/textareas')();
 require('./conventions/konami')();
 require('./conventions/carbon')();
-fonts();
 
 taunus.on('start', starting);
 taunus.mount(main, wiring, { bootstrap: 'inline', forms: false });

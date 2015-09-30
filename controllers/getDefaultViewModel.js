@@ -22,7 +22,8 @@ function getDefaultViewModel (done) {
     popularArticles: popularityService.getArticles,
     javascriptLoader: read('.bin/inline/javascript.js'),
     styleLoader: read('.bin/inline/styles.js'),
-    fontLoader: read('.bin/inline/fonts.js')
+    fontLoader: read('.bin/inline/fonts.js'),
+    fontTester: read('.bin/inline/font-tester.js')
   }, forward);
 
   function forward (err, data) {
@@ -55,7 +56,8 @@ function getDefaultViewModel (done) {
       },
       javascriptLoader: data.javascriptLoader,
       styleLoader: data.styleLoader,
-      fontLoader: data.fontLoader
+      fontLoader: data.fontLoader,
+      fontTester: data.fontTester
     });
   }
 }

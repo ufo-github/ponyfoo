@@ -2,6 +2,7 @@
 
 cp -r client/img .bin/public
 cp -r client/js/inline .bin
+browserify client/js/inline/font-tester.js > .bin/inline/font-tester.js
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
 cp client/{favicon.ico,robots.txt,humans.txt,opensearch.xml} .bin/public
 rm -rf .bin/public/img/icons
