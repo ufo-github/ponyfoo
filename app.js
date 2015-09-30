@@ -33,6 +33,10 @@ function listen () {
 
   app.locals.settings['x-powered-by'] = false;
 
+  if (env('NODE_ENV') === 'production') {
+    require('newrelic');
+  }
+
   db(operational);
 
   function operational () {

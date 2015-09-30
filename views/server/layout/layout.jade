@@ -49,12 +49,10 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     script!=styleLoader
     script!=fontLoader
-    script!=fontTester
     noscript
+      link(rel='stylesheet', type='text/css', href='/css/all.css')
       style.
         .js-only{display:none !important}
-      link(rel='stylesheet', type='text/css', href='/css/all.css')
-      link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Neuton:700|Merriweather:400italic,400,700')
 
   body#top
     header.ly-header.vw-title

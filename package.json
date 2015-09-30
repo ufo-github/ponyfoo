@@ -98,6 +98,7 @@
     "morgan": "1.6.1",
     "multer": "0.1.0",
     "nconf": "0.7.1",
+    "newrelic": "1.22.1",
     "passport": "0.2.2",
     "passport-facebook": "1.0.3",
     "passport-github": "0.1.5",

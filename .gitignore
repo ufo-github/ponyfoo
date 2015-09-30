@@ -11,3 +11,5 @@ node_modules/
 npm-debug.log
 tmp/
 Thumbs.db
+newrelic.js
+newrelic_agent.log

@@ -26,7 +26,6 @@ browserify client/js/main.js | uglifyjs -m -c "comparisons=false,keep_fargs=true
 uglifyjs .bin/inline/javascript.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/javascript.js
 uglifyjs .bin/inline/styles.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/styles.js
 uglifyjs .bin/inline/fonts.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/fonts.js
-uglifyjs .bin/inline/font-tester.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/font-tester.js
 
 # critical css inlining
 gather() {
