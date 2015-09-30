@@ -2,7 +2,6 @@
 .DS_Store
 .env.json
 .job.scheduler
-.pid
 deploy/env/
 deploy/keys/
 deploy/log/
