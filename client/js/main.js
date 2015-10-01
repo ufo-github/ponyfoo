@@ -24,7 +24,7 @@ require('./conventions/konami')();
 require('./conventions/carbon')();
 
 taunus.on('start', starting);
-taunus.mount(main, wiring, { bootstrap: 'inline', forms: false });
+taunus.mount(main, wiring, { bootstrap: 'manual', forms: false });
 
 g.$ = $;
 g.md = markdownService.compile;
