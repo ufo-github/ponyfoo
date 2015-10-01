@@ -81,8 +81,8 @@
   h4,
   h5,
   h6
-    margin-left -40px
-    margin-right -40px
+    margin-left -20px
+    margin-right -20px
     padding 10px 40px
 
 .md-markdown-inline
@@ -93,10 +93,24 @@
 
 .md-code-block
   padding 10px 40px
-  margin 0 -40px
+  margin 0 -20px
 
 .md-code-block .md-code
   display block
+
+@media only screen and (min-width: 768px)
+  .md-code-block
+    margin 0 -40px
+
+  .md-markdown
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6
+      margin-left -40px
+      margin-right -40px
 
 @media only screen and (min-width: 1300px)
   .md-markdown
