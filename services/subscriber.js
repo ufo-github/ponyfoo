@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var util = require('util');
 var contra = require('contra');
+var winston = require('winston');
 var emailService = require('./email');
 var cryptoService = require('./crypto');
 var Subscriber = require('../models/Subscriber');
@@ -27,15 +28,41 @@ function add (data, done) {
     },
     function bailOrCreate (existing, next) {
       if (existing) {
-        next(); return;
+        ack(null, false, true); return;
       }
       new Subscriber(data).save(saved);
 
       function saved (err, subscriber) {
         if (err) {
-          next(err);
+          ack(err, false);
+        } else if (data.verified !== true) {
+          confirmation(subscriber, confirmationSent);
         } else {
-          confirmation(subscriber, next);
+          ack(null, true); return;
+        }
+      }
+      function confirmationSent () {
+        ack(null, true);
+      }
+      function ack (err, success, existed) {
+        if (err) {
+          winston.warn(err);
+        } else {
+          winston.info('Email subscription for "%s" %s via %s', data.email, getStatus(), data.source || '(unset)');
+        }
+        next(err, success, existed);
+        function getStatus () {
+          if (existed) {
+            return 'was duplicate';
+          }
+          if (success) {
+            if (data.verified) {
+              return 'confirmed';
+            } else {
+              return 'requested';
+            }
+          }
+          return 'failed';
         }
       }
     }
@@ -59,15 +86,18 @@ function confirmation (subscriber, done) {
 }
 
 function confirm (email, done) {
-  Subscriber.update({ email: email }, { verified: true }, successback(done));
+  Subscriber.update({ email: email }, { verified: true }, successback('confirmed', email, done));
 }
 
 function remove (email, done) {
-  Subscriber.remove({ email: email }, successback(done));
+  Subscriber.remove({ email: email }, successback('withdrawn', email, done));
 }
 
-function successback (done) {
-  return function (err) {
+function successback (action, email, done) {
+  return function proceed (err) {
+    if (!err) {
+      winston.info('Email subscription for "%s" %s', email, action);
+    }
     done(err, !err);
   };
 }
