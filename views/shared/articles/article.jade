@@ -27,7 +27,7 @@ section.at-container.de-host
         section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml
         section.md-markdown.at-body!=article.bodyHtml
 
-      footer.an-siblings.uv-clearfix
+      footer.at-siblings.an-siblings.uv-clearfix
         if article.prev
           a.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')='« ' + article.prev.title
         if article.next

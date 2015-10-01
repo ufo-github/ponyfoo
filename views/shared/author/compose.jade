@@ -1,5 +1,5 @@
 article.ly-section.vw-maintainer.de-host
-  section.vw-maintainer-content.ac-container.de-column
+  section.vw-maintainer-content.de-column
     h1.vw-title Article Composer
     section.ac-container
       input.ac-title(placeholder='A Thoughtful, Catchy Title', value=article.title)
@@ -48,9 +48,11 @@ article.ly-section.vw-maintainer.de-host
           label.ck-checkbox(for='ac-campaign-lobsters') Submit to Lobste.rs
 
     article.ac-preview.md-markdown
-      h1.ac-preview-title.at-title
-      span.ac-preview-read
-    section.ac-preview-tags
+      h1.ac-preview-title.dc-title
+      section.at-teaser
+        div.ac-preview-teaser.at-teaser-markdown
+      section.ac-preview-introduction.at-introduction
+      section.ac-preview-body.at-body
 
     footer.ac-actions
       if editing

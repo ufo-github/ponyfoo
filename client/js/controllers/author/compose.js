@@ -2,6 +2,7 @@
 
 var $ = require('dominus');
 var throttle = require('../../lib/throttle');
+var megamark = require('megamark');
 var moment = require('moment');
 var raf = require('raf');
 var taunus = require('taunus/global');
@@ -34,7 +35,7 @@ module.exports = function (viewModel, container, route) {
   var preview = $.findOne('.ac-preview');
   var previewTitle = $('.ac-preview-title');
   var previewTags = $.findOne('.ac-preview-tags');
-  var previewRead = $('.ac-preview-read');
+  var previewHtml = $('.ac-preview-html');
   var discardButton = $('.ac-discard');
   var saveButton = $('.ac-save');
   var status = $('.ac-status');
@@ -91,6 +92,7 @@ module.exports = function (viewModel, container, route) {
 
   function typingText () {
     serializeSlowly();
+    updatePreviewMarkdown();
   }
 
   function typingTitle () {
@@ -115,20 +117,17 @@ module.exports = function (viewModel, container, route) {
   }
 
   function typingTags () {
-    updatePreviewTags();
     serializeSlowly();
   }
 
   function updatePreviewMarkdown () {
-    // TODO
-  }
+    $('.ac-preview-teaser').html(getHtml(teaser));
+    $('.ac-preview-introduction').html(getHtml(introduction));
+    $('.ac-preview-body').html(getHtml(body));
 
-  function updatePreviewTags () {
-    var individualTags = textService.splitTags(tags.value());
-    var model = {
-      article: { tags: individualTags }
-    };
-    taunus.partial(previewTags, 'partials/tags', model);
+    function getHtml (el) {
+      return megamark(el.value());
+    }
   }
 
   function serialize () { storage.set(key, getRequestData()); }
@@ -164,7 +163,6 @@ module.exports = function (viewModel, container, route) {
     }
 
     updatePreviewTitle();
-    updatePreviewTags();
     updatePreviewMarkdown();
     updatePublication();
   }
