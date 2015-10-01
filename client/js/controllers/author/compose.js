@@ -8,7 +8,7 @@ var raf = require('raf');
 var taunus = require('taunus/global');
 var textService = require('../../../../services/text');
 var storage = require('../../lib/storage');
-var key = 'author-unsaved-draft';
+var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
 
 function noop () {}
@@ -50,10 +50,10 @@ module.exports = function (viewModel, container, route) {
   previews.i(0).addClass('at-teaser');
   previews.i(1).addClass('at-introduction');
   previews.i(2).addClass('at-body');
-  texts.on('keypress keydown paste', typingText);
-  tags.on('keypress keydown paste', raf.bind(null, typingTags));
   title.on('keypress keydown paste', raf.bind(null, typingTitle));
   slug.on('keypress keydown paste', typingSlug);
+  texts.on('keypress keydown paste', raf.bind(null, typingText));
+  tags.on('keypress keydown paste', raf.bind(null, typingTags));
   discardButton.on('click', discard);
   saveButton.on('click', save);
   status.on('change', updatePublication);
@@ -130,11 +130,11 @@ module.exports = function (viewModel, container, route) {
     }
   }
 
-  function serialize () { storage.set(key, getRequestData()); }
-  function clear () { storage.remove(key); }
+  function serialize () { storage.set(defaultKey, getRequestData()); }
+  function clear () { storage.remove(defaultKey); }
 
   function deserialize (source) {
-    var data = source || storage.get(key) || {
+    var data = source || storage.get(defaultKey) || {
       email: true, tweet: true, echojs: true, hn: true, lobsters: true
     };
     var titleText = data.title || '';
