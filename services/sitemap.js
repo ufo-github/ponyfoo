@@ -43,7 +43,7 @@ function tagUrl (tag) {
 }
 
 function articleUrl (article) {
-  return { url: '/articles/' + article.slug, changefreq:' weekly', priority: 1, lastmod: toLastMod(article.updated) };
+  return { url: '/articles/' + article.slug, changefreq: 'weekly', priority: 1, lastmod: toLastMod(article.updated) };
 }
 
 function toObject (article) {
