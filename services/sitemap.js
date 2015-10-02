@@ -33,17 +33,17 @@ function generate (articles, done) {
 
 function basics (modified) {
   return [
-    { url: '/', changeFreq: 'daily', lastmod: modified },
-    { url: '/articles/history', changeFreq: 'daily', lastmod: modified }
+    { url: '/', changefreq: 'daily', lastmod: modified, priority: 1 },
+    { url: '/articles/history', changefreq: 'daily', lastmod: modified, priority: 1 }
   ];
 }
 
 function tagUrl (tag) {
-  return { url: '/articles/tagged/' + tag, changeFreq: 'weekly' };
+  return { url: '/articles/tagged/' + tag, changefreq: 'weekly' };
 }
 
 function articleUrl (article) {
-  return { url: '/articles/' + article.slug, changeFreq:' weekly', priority: 1, lastmod: toLastMod(article.updated) };
+  return { url: '/articles/' + article.slug, changefreq:' weekly', priority: 1, lastmod: toLastMod(article.updated) };
 }
 
 function toObject (article) {
@@ -61,13 +61,13 @@ function dateTransformer (accumulator, date) {
   var day = month + '/' + mo.format('DD');
 
   if (!accumulator.year[year]) {
-    accumulator.year[year] = { url: '/articles/' + year, changeFreq: 'monthly', priority: 0.4 };
+    accumulator.year[year] = { url: '/articles/' + year, changefreq: 'monthly', priority: 0.4 };
   }
   if (!accumulator.month[month]) {
-    accumulator.month[month] = { url: '/articles/' + month, changeFreq: 'monthly', priority: 0.4 };
+    accumulator.month[month] = { url: '/articles/' + month, changefreq: 'monthly', priority: 0.4 };
   }
   if (!accumulator.day[day]) {
-    accumulator.day[day] = { url: '/articles/' + day, changeFreq: 'monthly', priority: 0.4 };
+    accumulator.day[day] = { url: '/articles/' + day, changefreq: 'monthly', priority: 0.4 };
   }
   return accumulator;
 }
