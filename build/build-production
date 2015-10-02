@@ -28,14 +28,20 @@ uglifyjs .bin/inline/styles.js -m -c "comparisons=false,keep_fargs=true,unsafe=t
 uglifyjs .bin/inline/fonts.js -m -c "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" -b "ascii_only=true,beautify=false" -o .bin/inline/fonts.js
 
 # critical css inlining
-gather() {
+gather() { # endpoint, component_name
   CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT$1 $ALL_CSS 1400 1100)"
   echo $CRITICAL | cleancss --s0 -o .bin/inlined/$2.css
   echo "penthouse: gathered css for $2"
 }
 
 LOGGING_LEVEL=warn PORT=$PORT APP_REBUILD=0 NODE_ENV=development node app &
-sleep 5
+
+# wait for app to listen on $PORT
+while [ "$(lsof -i tcp:$PORT | grep -i listen)" == "" ]
+do
+  sleep 0.1
+done
+
 gather "/" "summaries"
 gather "/account/login" "login"
 gather "/articles/last" "article"
@@ -44,7 +50,7 @@ gather "/articles/tagged/ponyfoo" "search"
 gather "/not-found" "not-found"
 
 echo "penthouse: killing node app"
-kill $!
+kill $! # kills `node app`
 cleancss $ALL_CSS -o $ALL_CSS --s0
 
 # asset hashing

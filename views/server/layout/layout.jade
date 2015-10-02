@@ -15,8 +15,6 @@ doctype html
 html(lang='en', itemscope, itemtype='http://schema.org/Blog')
   head
     title=model.title
-    if model.inlineStyles
-      style=model.inlineStyles.value
     meta(charset='utf-8')
 
     link(rel='shortcut icon', href='/favicon.ico')
@@ -47,10 +45,16 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     if model.meta.images.length
       meta(name='twitter:image:src', content=model.meta.images[0])
 
-    script!=styleLoader
+    if model.inlineStyles
+      style=model.inlineStyles.value
+      script!=styleLoader
+      noscript
+          link(rel='stylesheet', type='text/css', href='/css/all.css')
+    else
+      link(rel='stylesheet', type='text/css', href='/css/all.css')
+
     script!=fontLoader
     noscript
-      link(rel='stylesheet', type='text/css', href='/css/all.css')
       style.
         .js-only{display:none !important}
 
