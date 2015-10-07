@@ -58,7 +58,9 @@ function render (err, body) {
   var context = $(this.context);
   var list = $('<ul>').addClass('vw-conventional');
 
-  $(messages.map(dom)).appendTo(list);
+  $(messages.map(dom)).appendTo(list).i(0).append(
+    $('<span>').addClass('fa fa-remove vw-conventional-remove')
+  );
 
   clean(context);
 
