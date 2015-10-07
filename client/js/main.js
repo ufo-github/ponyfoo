@@ -14,6 +14,7 @@ require('hint');
 
 require('./conventions/codepen')();
 require('./conventions/twitter')();
+require('./conventions/ajaxLogoNavigation')();
 require('./conventions/ajax')();
 require('./conventions/loading')();
 require('./conventions/unwrapImages')();
