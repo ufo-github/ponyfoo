@@ -5,9 +5,9 @@ div
 p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom: 2px solid #e92c6c;')
   -  site = comment.site && comment.site.replace(/https?:\/\//, '');
   if site
-    a(href!=comment.site)
+    a(href!=comment.site, style='color: #fcfcfc')
       img(src='cid:gravatar', alt='', style='vertical-align: middle;')
-      span!='&nbsp;&nbsp;'
+      span!='&nbsp;'
       span=' ' + comment.author
   else
     img(src='cid:gravatar', alt='', style='vertical-align: middle;')
