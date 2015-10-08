@@ -123,6 +123,7 @@ function addRelated (article, forced, done) {
 
 function addRelatedAll (done) {
   env('BULK_INSERT', true);
+  winston.info('Computing relationships for articles site-wide');
   contra.waterfall([
     function findAll (next) {
       Article.find({ status: 'published' }, next);
@@ -145,8 +146,10 @@ function addRelatedAll (done) {
   function unbulk (err) {
     env('BULK_INSERT', false);
     if (err) {
+      winston.warn('Error computing relationships', err);
       done(err); return;
     }
+    winston.info('Relationship computation completed');
     feedService.rebuild();
     sitemapService.rebuild();
     done();
