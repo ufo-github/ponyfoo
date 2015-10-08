@@ -25,6 +25,7 @@ var secretOnly = require('./api/secret/only');
 var secretScheduler = require('./api/secret/scheduler');
 var secretRemodel = require('./api/secret/remodel');
 var apiErrorNotFound = require('./api/error/notFound');
+var lastSentEmail = require('./development/lastSentEmail');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
@@ -67,6 +68,10 @@ module.exports = function (app) {
   app.all('/api/*', apiErrorNotFound);
 
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
+
+  if (!production) {
+    app.get('/dev/last-email', lastSentEmail);
+  }
 
   transports.routing(app, registerAccount);
   redirects.setup(app);

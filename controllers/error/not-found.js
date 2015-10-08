@@ -4,10 +4,7 @@ var notFound = '/not-found';
 var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
-  if (req.path !== notFound) {
-    res.redirect(notFound); return;
-  }
-
+  res.status(404);
   res.viewModel = {
     model: {
       title: 'Not Found!',

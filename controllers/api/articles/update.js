@@ -1,6 +1,7 @@
 'use strict';
 
 var contra = require('contra');
+var winston = require('winston');
 var Article = require('../../../models/Article');
 var articleService = require('../../../services/article');
 var articlePublishService = require('../../../services/articlePublish');
@@ -23,16 +24,18 @@ module.exports = function (req, res, next) {
         res.status(404).json({ messages: ['Article not found'] }); return;
       }
       model._id = article._id;
-      articlePublishService.publish(model, function maybePublished (err, published) {
+      articlePublishService.publish(model, maybePublished);
+      function maybePublished (err, published) {
         next(err, article, published);
-      });
+      }
     },
     function statusUpdate (article, published, next) {
-      Object.keys(model).forEach(function updateModel (key) {
-        article[key] = model[key];
-      });
+      Object.keys(model).forEach(updateModel);
       article.save(saved);
 
+      function updateModel (key) {
+        article[key] = model[key];
+      }
       function saved (err) {
         if (!err && published) {
           articleService.campaign(article);
@@ -41,6 +44,9 @@ module.exports = function (req, res, next) {
       }
     }
   ], function response (err) {
+    if (err) {
+      winston.error(err);
+    }
     respond(err, res, next, validation);
   });
 };

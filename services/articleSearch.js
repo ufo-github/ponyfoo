@@ -8,7 +8,7 @@ var freq = require('freq');
 var util = require('util');
 var hget = require('hget');
 var winston = require('winston');
-var common = require('./common_english.json');
+var common = require('./common_english.json').reduce(toMap, {});
 var env = require('../lib/env');
 var Article = require('../models/Article');
 var feedService = require('./feed');
@@ -20,6 +20,7 @@ var irrelevant = [
   'performance', 'github', 'taunus', 'http',
   'ponyfoo', 'pony', 'foo', 'mark', 'google'
 ];
+var processing = {};
 
 function sanitizeTerm (term) {
   return term.replace(unsafeTerms, '');
@@ -64,12 +65,24 @@ function insanely (html) {
   return hget('<div>' + html + '</div>');
 }
 
-function strip (text) {
-  var rcommon = '([\\s\\W]+)(?:' + common.join('|') + ')([\\s\\W]+)';
-  return text.replace(new RegExp(rcommon, 'gi'), '$1$2');
-}
+function addRelated (article, forced, done) {
+  if (done === void 0) {
+    done = forced;
+    forced = false;
+  }
 
-function addRelated (article, done) {
+  if (processing[article._id]) {
+    processing[article._id] = false;
+    done(); return;
+  }
+  if (!forced) {
+    done();
+    if (article.related && article.related.length) {
+      return;
+   }
+  }
+  processing[article._id] = true;
+
   var text = [
     article.title,
     article.tags.join(' '),
@@ -77,10 +90,10 @@ function addRelated (article, done) {
     insanely(article.teaserHtml),
     insanely(article.introductionHtml)
   ].join(' ');
-  var relevant = text.replace(/([-_*`\[\]\/:]|<\/?(kbd|mark)>|https?|www\.?|\.com)/g, ' ');
-  var frequencies = freq(strip(relevant));
+  var relevant = text.replace(/([-_*`\[\]\/}{=><:]|<\/?(kbd|mark)>|https?|www\.?|\.com)/g, ' ');
+  var frequencies = freq(relevant).filter(sanely);
   var sorted = _.sortByOrder(frequencies, ['count'], ['desc']);
-  var filtered = sorted.filter(sanely).slice(0, 6);
+  var filtered = sorted.slice(0, 6);
   var terms = _.pluck(filtered, 'word');
   var options = {
     unlimited: true,
@@ -90,15 +103,21 @@ function addRelated (article, done) {
 
   function queried (err, articles) {
     if (err) {
-      done(err); return;
+      winston.warn(err); done(err); return;
     }
     var ids = _(articles)
       .sample(searchLimit)
       .pluck('_id')
       .reject(article._id)
       .value();
+
     article.related = ids;
-    done();
+
+    if (forced) {
+      article.save(but(done));
+    } else {
+      article.save();
+    }
   }
 }
 
@@ -111,7 +130,8 @@ function addRelatedAll (done) {
     function compute (articles, next) {
       contra.each(articles, 3, addRelatedArticles, but(next));
       function addRelatedArticles (article, next) {
-        addRelated(article, save);
+        winston.debug('Computing relationships for: "%s"', article.slug);
+        addRelated(article, true, save);
         function save (err) {
           if (err) {
             next(err); return;
@@ -134,7 +154,11 @@ function addRelatedAll (done) {
 }
 
 function sanely (entry) {
-  return entry.word.length > 5 && irrelevant.indexOf(entry.word) === -1;
+  return !common[entry.word] && entry.word.length > 1 && irrelevant.indexOf(entry.word) === -1;
+}
+
+function toMap (map, word) {
+  map[word] = 1; return map;
 }
 
 module.exports = {

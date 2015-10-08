@@ -1,5 +1,6 @@
 'use strict';
 
+var but = require('but');
 var contra = require('contra');
 var Article = require('../models/Article');
 
@@ -29,9 +30,7 @@ function publish (model, done) {
       next(); return;
     }
     prev.next = model._id;
-    prev.save(function saved (err) {
-      next(err);
-    });
+    prev.save(but(next));
   }
 
   function published (err) {
