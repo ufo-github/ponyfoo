@@ -95,12 +95,19 @@
   padding 10px 40px
   margin 0 -20px
 
+  + blockquote
+    max-width inherit !important
+    margin 0 -20px
+
 .md-code-block .md-code
   display block
 
 @media only screen and (min-width: 768px)
   .md-code-block
     margin 0 -40px
+
+    + blockquote
+      margin 0 -40px
 
   .md-markdown
     h1,
@@ -134,3 +141,6 @@
 
     .md-code-block
       margin 0 -400px 0 -40px // account for 360px in sidebar
+
+      + blockquote
+        margin 0 -400px 0 -40px // account for 360px in sidebar
