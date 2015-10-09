@@ -6,7 +6,7 @@ function welcome (viewModel) {
     'Feel free to play around with our globals: $, md, and moment!'
   ].join('\n');
 
-  var css = 'color: #e92c6c; font-size: 2em; font-family: "Merriweather" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;';
+  var css = 'color: #e92c6c; font-size: 3em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;';
 
   console.log(message, css, viewModel.pkg.version);
 }
