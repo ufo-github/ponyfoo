@@ -47,13 +47,9 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
 
     if model.inlineStyles
       style=model.inlineStyles.value
-      script!=styleLoader
-      noscript
-          link(rel='stylesheet', type='text/css', href='/css/all.css')
     else
       link(rel='stylesheet', type='text/css', href='/css/all.css')
 
-    script!=fontLoader
     noscript
       style.
         .js-only{display:none !important}
@@ -90,3 +86,8 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
         span .
 
     script!=javascriptLoader
+    if model.inlineStyles
+      script!=styleLoader
+      noscript
+        link(rel='stylesheet', type='text/css', href='/css/all.css')
+    script!=fontLoader

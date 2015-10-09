@@ -2,27 +2,35 @@
 
 var $ = require('dominus');
 var taunus = require('taunus');
-var timer = false;
+var loadScript = require('../lib/loadScript');
 var placement = 'https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom';
 var options = {
   container: $.findOne('.ca-content'),
   id: '_carbonads_js'
 };
+var script = loadScript(placement, options, loaded);
+var timer;
 
-require('../lib/loadScript')(placement, options);
+function loaded () {
+  timer = setTimeout(helpMePay, 5000);
+}
 
 function carbon () {
+  taunus.once('change', track);
+}
+
+function track () {
   taunus.on('change', changed);
-  timer = setTimeout(helpMePay, 7000);
 }
 
 function changed () {
   options.container = $.findOne('.ca-content', taunus.state.container);
   if (timer) {
     clearTimeout(timer);
-    timer = setTimeout(helpMePay, 7000);
+    timer = setTimeout(helpMePay, 5000);
   }
   if (global._carbonads) {
+    options.container.appendChild(script);
     global._carbonads.refresh();
   }
 }
@@ -31,6 +39,8 @@ function helpMePay () {
   var ad = $('#carbonads').length !== 0;
   if (ad === false) {
     $('.ca-help-me').removeClass('uv-hidden');
+  } else {
+    $('.ca-help-me').addClass('uv-hidden');
   }
   timer = false;
 }
