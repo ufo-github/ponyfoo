@@ -16,7 +16,7 @@
     &:before
       content '\201c'
       font-family Georgia, serif
-      color c-pink
+      color c-orange-dark
       position absolute
       top 20px
       left 8px
@@ -95,20 +95,14 @@
   padding 10px 40px
   margin 0 -20px
 
-  + blockquote
-    max-width inherit !important
-    margin 0 -20px
+.md-markdown:not(.mm-content-html) .md-code-block + blockquote
+  max-width inherit !important
+  margin 0 -20px
 
 .md-code-block .md-code
   display block
 
 @media only screen and (min-width: 768px)
-  .md-code-block
-    margin 0 -40px
-
-    + blockquote
-      margin 0 -40px
-
   .md-markdown
     h1,
     h2,
@@ -118,6 +112,12 @@
     h6
       margin-left -40px
       margin-right -40px
+
+  .md-code-block
+    margin 0 -40px
+
+  .md-markdown:not(.mm-content-html) .md-code-block + blockquote
+    margin 0 -40px
 
 @media only screen and (min-width: 1300px)
   .md-markdown
@@ -139,8 +139,8 @@
     code
       max-width 1000px
 
-    .md-code-block
-      margin 0 -400px 0 -40px // account for 360px in sidebar
+  .md-code-block
+    margin 0 -400px 0 -40px // account for 360px in sidebar
 
-      + blockquote
-        margin 0 -400px 0 -40px // account for 360px in sidebar
+  .md-markdown:not(.mm-content-html) .md-code-block + blockquote
+    margin 0 -400px 0 -40px // account for 360px in sidebar
