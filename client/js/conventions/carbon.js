@@ -3,6 +3,13 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var timer = false;
+var placement = 'https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom';
+var options = {
+  container: $.findOne('.ca-content'),
+  id: '_carbonads_js'
+};
+
+require('../lib/loadScript')(placement, options);
 
 function carbon () {
   taunus.on('change', changed);
@@ -10,6 +17,7 @@ function carbon () {
 }
 
 function changed () {
+  options.container = $.findOne('.ca-content', taunus.state.container);
   if (timer) {
     clearTimeout(timer);
     timer = setTimeout(helpMePay, 7000);
