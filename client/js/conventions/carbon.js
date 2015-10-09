@@ -38,9 +38,9 @@ function changed () {
 function helpMePay () {
   var blocked = $('#carbonads').length === 0;
   if (blocked) {
-    $('.ca-help-me').removeClass('uv-hidden');
+    $('.ca-blocked').removeClass('uv-hidden');
   } else {
-    $('.ca-help-me').addClass('uv-hidden');
+    $('.ca-blocked').addClass('uv-hidden');
   }
   timer = false;
 }
