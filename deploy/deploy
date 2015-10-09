@@ -3,9 +3,9 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${PRIMAL_AMI:="ami-4b22662e"}"
+: "${PRIMAL_AMI:="ami-ed9fd188"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
-: "${CLEANUP:="no"}"
+# : "${CLEANUP:="no"}"
 
 # configurable variables
 NAME="ponyfoo-$NODE_ENV"
