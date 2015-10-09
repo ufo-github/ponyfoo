@@ -27,8 +27,8 @@ function changed () {
   options.container = $.findOne('.ca-content', taunus.state.container);
   if (timer) {
     clearTimeout(timer);
-    timer = setTimeout(helpMePay, 5000);
   }
+  timer = setTimeout(helpMePay, 5000);
   if (global._carbonads) {
     options.container.appendChild(script);
     global._carbonads.refresh();
@@ -36,8 +36,8 @@ function changed () {
 }
 
 function helpMePay () {
-  var ad = $('#carbonads').length !== 0;
-  if (ad === false) {
+  var blocked = $('#carbonads').length === 0;
+  if (blocked) {
     $('.ca-help-me').removeClass('uv-hidden');
   } else {
     $('.ca-help-me').addClass('uv-hidden');

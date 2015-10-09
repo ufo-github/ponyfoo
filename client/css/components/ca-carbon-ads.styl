@@ -1,21 +1,12 @@
 .ca-container
-  padding 0
-  margin 0
+  position relative
   text-align left
+  padding 10px 10px 25px
+  height 140px
+  margin-bottom 25px
 
   &:empty
     display none
-
-.ca-help-me
-  font-style italic
-  a
-    color c-pink
-
-.ca-content
-  text-align center
-  position relative
-  padding 10px 10px 25px
-  margin-bottom 25px
 
   &:before
     position absolute
@@ -26,8 +17,26 @@
     content ''
     background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
 
+.ca-loading,
+.ca-help-me
+  font-style italic
+
+.ca-help-me a
+  color c-pink
+
 #carbonads + .ca-help-me
   display none
+
+.ca-loading,
+.ca-help-me,
+#carbonads
+  text-align center
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background-color c-white
 
 .carbon-wrap
   text-align left

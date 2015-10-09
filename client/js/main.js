@@ -18,6 +18,7 @@ require('./conventions/ajaxLogoNavigation')();
 require('./conventions/ajax')();
 require('./conventions/loading')();
 require('./conventions/unwrapImages')();
+require('./conventions/unwrapEmails')();
 require('./conventions/linkifyHeadings')();
 require('./conventions/relativeTime')();
 require('./conventions/textareas')();
