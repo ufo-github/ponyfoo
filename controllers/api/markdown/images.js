@@ -40,7 +40,11 @@ module.exports = function (req, res) {
       errored(err.message); return;
     }
     respond(200, {
-      href: result.url, title: result.alt, version: taunus.state.version
+      href: result.url && result.url.indexOf('http://i.imgur.com/') === 0 ?
+        'https' + result.url.slice(4) :
+                  result.url,
+      title: result.alt,
+      version: taunus.state.version
     });
   }
 

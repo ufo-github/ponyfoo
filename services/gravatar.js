@@ -3,7 +3,7 @@
 var util = require('util');
 var request = require('request');
 var cryptoService = require('./crypto');
-var fmt = 'http://www.gravatar.com/avatar/%s?d=identicon&r=PG';
+var fmt = 'https://www.gravatar.com/avatar/%s?d=identicon&r=PG';
 var tiny = '&s=24';
 
 function hash (email) {

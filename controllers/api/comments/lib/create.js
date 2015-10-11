@@ -64,7 +64,12 @@ module.exports = function (slug, input, done) {
     if (spam(model)) {
       next(null); return;
     }
-    model.contentHtml = markupService.compile(model.content, { deferImages: true, externalize: true });
+    var opts = {
+      deferImages: true,
+      externalize: true
+    };
+    model.content = model.content.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
+    model.contentHtml = markupService.compile(model.content, opts);
     comment = article.comments.create(model);
     article.comments.push(comment);
     article.save(saved);

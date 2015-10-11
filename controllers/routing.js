@@ -26,6 +26,7 @@ var secretScheduler = require('./api/secret/scheduler');
 var secretRemodel = require('./api/secret/remodel');
 var apiErrorNotFound = require('./api/error/notFound');
 var lastSentEmail = require('./development/lastSentEmail');
+var cspReport = require('./api/cspReport');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
@@ -38,6 +39,7 @@ var layout = require('../.bin/views/server/layout/layout');
 var production = env('NODE_ENV') === 'production';
 
 module.exports = function (app) {
+  app.get('/api/csp-report', cspReport);
   app.get('/api/status/health', statusHealth);
   app.get('/api/:secret(\\d+)/scheduler', secretOnly, secretScheduler);
   app.get('/api/:secret(\\d+)/remodel', secretOnly, secretRemodel);

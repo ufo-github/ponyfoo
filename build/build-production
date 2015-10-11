@@ -8,7 +8,7 @@ npm run clean
 npm run copy
 
 DIST=".bin/public"
-DOMAIN="http://ponyfoo.com"
+DOMAIN="https://ponyfoo.com"
 ALL_CSS="$DIST/css/all.css"
 CRITICAL_CSS=".bin/temp/critical.css"
 

@@ -22,7 +22,7 @@ var defaults = {
       handle: '@ponyfoo'
     },
     landing: {
-      url: 'http://ponyfoo.com',
+      url: 'https://ponyfoo.com',
       name: 'Pony Foo'
     },
     name: 'Pony Foo'

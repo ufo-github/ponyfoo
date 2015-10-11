@@ -10,4 +10,4 @@ then
   HOST_NAME=""
 fi
 
-open http://$HOST_NAME$TLD
+open https://$HOST_NAME$TLD

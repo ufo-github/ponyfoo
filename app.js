@@ -52,7 +52,7 @@ function listen () {
 }
 
 function listening () {
-  winston.info('app listening on http://%s:%s', os.hostname(), port);
+  winston.info('app listening on %s:%s', os.hostname(), port);
   development.browserSync();
 
   if (shouldRebuild) {

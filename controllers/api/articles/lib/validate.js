@@ -90,12 +90,14 @@ function validate (model, update) {
 
   function getContent (prop) {
     var length = 3;
+    var message;
     var input = validator.toString(model[prop]);
-    if (validator.isLength(input, length)) {
-      return input;
+    if (!validator.isLength(input, length)) {
+      message = util.format('The article %s must be at least %s characters long.', prop, length);
+      validation.push(message);
+      return;
     }
-    var message = util.format('The article %s must be at least %s characters long.', prop, length);
-    validation.push(message);
+    return input.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
   }
 
   function getTags () {
