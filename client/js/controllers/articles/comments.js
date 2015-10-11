@@ -3,7 +3,7 @@
 var $ = require('dominus');
 var raf = require('raf');
 var taunus = require('taunus/global');
-var throttle = require('../../lib/throttle');
+var debounce = require('lodash/function/debounce');
 var storage = require('../../lib/storage');
 var subscriptions = require('../../subscriptions');
 var textService = require('../../../../services/text');
@@ -18,7 +18,7 @@ module.exports = function (viewModel) {
   var preview = $.findOne('.mc-preview');
   var send = $('.mc-send');
   var sendText = $('.bt-text', send);
-  var serializeSlowly = throttle(serialize, 200);
+  var serializeSlowly = debounce(serialize, 100);
   var comments = $('.mm-comments');
   var cancelReply = $('.mc-cancel-reply');
   var footer = $('.mm-footer');
@@ -27,7 +27,7 @@ module.exports = function (viewModel) {
   $('.mm-thread-reply').removeClass('uv-hidden');
 
   subscriptions($('.mm-subscribe'));
-  composer.on('keypress keydown keyup paste', serializeSlowly);
+  composer.on('keypress keydown keyup paste input', serializeSlowly);
   send.on('click', comment);
   comments.on('click', '.mm-thread-reply', attach);
   comments.on('click', '.mm-remove', remove);

@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var throttle = require('../../lib/throttle');
+var debounce = require('lodash/function/debounce');
 var megamark = require('megamark');
 var moment = require('moment');
 var raf = require('raf');
@@ -44,16 +44,21 @@ module.exports = function (viewModel, container, route) {
     publish: $('#ac-publish-radio')
   };
   var boundSlug = true;
-  var serializeSlowly = editing ? noop : throttle(serialize, 200);
+  var serializeSlowly = editing ? noop : debounce(serialize, 200);
   var previews = $('.pmk-preview', preview);
+
+  var typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
+  var typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
+  var typingTextSlowly = raf.bind(null, debounce(typingText, 100));
+  var typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
 
   previews.i(0).addClass('at-teaser');
   previews.i(1).addClass('at-introduction');
   previews.i(2).addClass('at-body');
-  title.on('keypress keydown paste', raf.bind(null, typingTitle));
-  slug.on('keypress keydown paste', typingSlug);
-  texts.on('keypress keydown paste', raf.bind(null, typingText));
-  tags.on('keypress keydown paste', raf.bind(null, typingTags));
+  title.on('keypress keydown paste input', typingTitleSlowly);
+  slug.on('keypress keydown paste input', typingSlugSlowly);
+  texts.on('keypress keydown paste input', typingTextSlowly);
+  tags.on('keypress keydown paste input', typingTagsSlowly);
   discardButton.on('click', discard);
   saveButton.on('click', save);
   status.on('change', updatePublication);
