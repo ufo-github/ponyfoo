@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var util = require('util');
+var insane = require('insane');
 var contra = require('contra');
 var winston = require('winston');
 var Article = require('../../../../models/Article');
@@ -68,8 +69,24 @@ module.exports = function (slug, input, done) {
       deferImages: true,
       externalize: true
     };
-    model.content = model.content.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
-    model.contentHtml = markupService.compile(model.content, opts);
+    var md = model.content.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
+    var html = markupService.compile(model.content, opts);
+    var runsafe = /^\s*http:\/\//i;
+    var unsafeImages = false;
+    insane(html, {
+      filter: function filter (token) {
+        console.log(token)
+        if (token.tag === 'img' && (runsafe.test(token.attrs.src) || runsafe.test(token.attrs['data-src']))) {
+          unsafeImages = true;
+        }
+        return !unsafeImages;
+      }
+    });
+    if (unsafeImages) {
+      done(null, 400, ['Please ensure your images are loaded securely over HTTPS.']); return;
+    }
+    model.content = md;
+    model.contentHtml = html;
     comment = article.comments.create(model);
     article.comments.push(comment);
     article.save(saved);
