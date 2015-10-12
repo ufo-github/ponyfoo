@@ -75,7 +75,6 @@ module.exports = function (slug, input, done) {
     var unsafeImages = false;
     insane(html, {
       filter: function filter (token) {
-        console.log(token)
         if (token.tag === 'img' && (runsafe.test(token.attrs.src) || runsafe.test(token.attrs['data-src']))) {
           unsafeImages = true;
         }
