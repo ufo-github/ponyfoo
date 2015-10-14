@@ -31,12 +31,17 @@ function activator (e) {
 }
 
 function fetcher (e) {
-  var url = new URL(e.request.url);
+  var request = e.request;
+  if (request.method !== 'GET') {
+    e.respondWith(fetch(request)); return;
+  }
 
-  e.respondWith(caches.match(e.request).then(queriedCache));
+  var url = new URL(request.url);
+
+  e.respondWith(caches.match(request).then(queriedCache));
 
   function queriedCache (cached) {
-    return cached || fetch(e.request)
+    return cached || fetch(request)
       .then(fetchedFromNetwork)
       .catch(unableToResolve);
   }
@@ -44,13 +49,13 @@ function fetcher (e) {
   function fetchedFromNetwork (response) {
     var clonedResponse = response.clone();
     caches.open(version + 'pages').then(function add (cache) {
-      cache.put(e.request, clonedResponse);
+      cache.put(request, clonedResponse);
     });
     return response;
   }
 
   function unableToResolve () {
-    var accepts = e.request.headers.get('Accept');
+    var accepts = request.headers.get('Accept');
     if (accepts.indexOf('image') !== -1) {
       if (url.host === 'www.gravatar.com') {
         return caches.match(mysteryMan);
