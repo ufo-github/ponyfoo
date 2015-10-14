@@ -18,6 +18,7 @@ setTimeout(function () {
 checkAllFonts(); // cache may be primed, try to swap early!
 setTimeout(checkAllFonts, 0); // fixes issues when opening a new tab with ctrl+enter in chrome
 contentLoaded(window, checkAllFonts); // cache isn't primed, wait on async <link> with custom fonts
+contentLoaded(window, checkAllFonts, true); // always runs on onload event
 
 function checkAllFonts () {
   checkFont('Merriweather', 'ly-teasers');
