@@ -1,13 +1,11 @@
 'use strict';
 
-var errors = require('../../../lib/errors');
-
 function redirect (res, next) {
   return function (err, documents) {
     if (err) {
       next(err);
     } else if (!documents || !documents.length) {
-      next(new errors.NotFoundError());
+      next('route');
     } else {
       res.redirect('/articles/' + documents[0].slug);
     }

@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var taunus = require('taunus');
 var taunusExpress = require('taunus-express');
 var transports = require('transports');
@@ -30,7 +31,6 @@ var cspReport = require('./api/cspReport');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var authorOnly = require('./author/only');
-var errors = require('../lib/errors');
 var env = require('../lib/env');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
@@ -87,5 +87,12 @@ module.exports = function (app) {
     },
     deferMinified: production
   });
-  app.use(errors.handler);
+  app.use(errorHandler);
+
+  function errorHandler (err, req, res, next) {
+    if (err) {
+      winston.warn(err);
+    }
+    next(err);
+  }
 };
