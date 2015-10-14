@@ -59,13 +59,14 @@ function fetcher (e) {
       if (url.host === 'www.gravatar.com') {
         return caches.match(mysteryMan);
       }
-      if (url.host === 'i.imgur.com') {
-        return caches.match(rainbows);
+      return caches.match(rainbows);
+    }
+    if (url.origin === location.origin) {
+      if (accepts.indexOf('application/json') !== -1) {
+        return new Response('', { status: 0 });
       }
+      return caches.match('/offline');
     }
-    if (accepts.indexOf('application/json') !== -1) {
-      return new Response('', { status: 0 });
-    }
-    return caches.match('/offline');
+    return new Response('', { status: 0 });
   }
 }
