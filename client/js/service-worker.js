@@ -11,7 +11,6 @@ var offlineFundamentals = [
   mysteryMan,
   rainbows
 ];
-var serviceUnavailable = 503;
 
 self.addEventListener('install', installer);
 self.addEventListener('activate', activator);
@@ -42,7 +41,7 @@ function fetcher (e) {
 
   function queriedCache (cached) {
     return cached || fetch(request)
-      .then(fetchedFromNetwork)
+      .then(fetchedFromNetwork, unableToResolve)
       .catch(unableToResolve);
   }
 
@@ -65,10 +64,7 @@ function fetcher (e) {
       }
     }
     if (accepts.indexOf('application/json') !== -1) {
-      return new Response('{}', { // so rough, but also *actually* good enough.
-        status: serviceUnavailable,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response('', { status: 0 });
     }
     return caches.match('/offline');
   }
