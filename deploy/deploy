@@ -3,7 +3,7 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${PRIMAL_AMI:="ami-933366f6"}"
+: "${PRIMAL_AMI:="ami-8daefbe8"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${CLEANUP:="no"}"
 
