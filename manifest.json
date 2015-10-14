@@ -1,0 +1,13 @@
+{
+  "short_name": "Pony Foo",
+  "name": "Pony Foo",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "lang": "en",
+  "icons": [{
+    "src": "/apple-touch-icon-144x144-precomposed.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }]
+}
