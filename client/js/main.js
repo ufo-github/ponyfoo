@@ -32,6 +32,10 @@ g.$ = $;
 g.md = markdownService.compile;
 g.moment = moment;
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js');
+}
+
 function starting (container, viewModel) {
   require('./search');
   subscriptions($('.de-subscribe'));
