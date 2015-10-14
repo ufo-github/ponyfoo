@@ -60,7 +60,7 @@ function fetcher (e) {
       }
     }
     if (accepts.indexOf('application/json') !== -1) {
-      return new Response('', { // so rough, but also *actually* good enough.
+      return new Response('{}', { // so rough, but also *actually* good enough.
         status: serviceUnavailable,
         headers: { 'Content-Type': 'application/json' }
       });
