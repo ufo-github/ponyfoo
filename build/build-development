@@ -14,8 +14,9 @@ stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}' --watch &
 taunus -o
+watchify client/js/inline/fonts.js -o .bin/inline/fonts.js --debug --verbose &
 watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
 watchify client/js/service-worker.js -o .bin/public/service-worker.js --debug --verbose &
 
 # start app
-nodemon -e js,jade app.js
+nodemon -e js,jade -w .bin/inline app.js

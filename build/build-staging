@@ -9,5 +9,6 @@ npm run copy
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
 taunus -o
+browserify client/js/inline/fonts.js -o .bin/inline/fonts.js --debug
 browserify client/js/main.js -o .bin/public/js/all.js --debug
-browserify client/js/service-worker.js -o .bin/public/js/service-worker.js --debug
+browserify client/js/service-worker.js -o .bin/public/service-worker.js --debug

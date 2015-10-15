@@ -2,6 +2,7 @@
 
 var fontfaceonload = require('fontfaceonload');
 var contentLoaded = require('./vendor/contentLoaded');
+var persistance = 'localStorage' in window;
 var checks = {};
 
 // load fonts from google asynchronously
@@ -31,12 +32,10 @@ function checkFont (name, className) {
   } else if (checks[className].once) {
     return;
   }
-  if ('sessionStorage' in window && sessionStorage['fonts:' + className]) {
+  if (persistance && localStorage['fonts:' + className]) {
     checks[className](); return; // user probably has the font in their cache
   }
-  fontfaceonload(name, {
-    success: checks[className], weight: 700
-  });
+  fontfaceonload(name, { success: checks[className], weight: 700 });
 }
 
 function fontLoaded (className) {
@@ -48,8 +47,8 @@ function fontLoaded (className) {
     var doc = document.documentElement;
     var separator = doc.className.length ? ' ' : '';
     doc.className += separator + className;
-    if ('sessionStorage' in window) {
-      sessionStorage['fonts:' + className] = true;
+    if (persistance) {
+      localStorage['fonts:' + className] = true;
     }
   };
 }

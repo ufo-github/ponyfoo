@@ -3,7 +3,6 @@
 cp -r client/img .bin/public
 cp -r resources/emails .bin/public/img/email
 cp -r client/js/inline .bin
-browserify client/js/inline/fonts.js > .bin/inline/fonts.js
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
 cp client/{manifest.json,*.{ico,png,txt,xml}} .bin/public
 rm -rf .bin/public/img/icons
