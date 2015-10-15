@@ -40,9 +40,10 @@ function fetcher (e) {
   e.respondWith(caches.match(request).then(queriedCache));
 
   function queriedCache (cached) {
-    return cached || fetch(request)
+    var networked = fetch(request)
       .then(fetchedFromNetwork, unableToResolve)
       .catch(unableToResolve);
+    return cached || networked;
   }
 
   function fetchedFromNetwork (response) {
