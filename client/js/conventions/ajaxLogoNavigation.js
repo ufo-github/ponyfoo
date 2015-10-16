@@ -4,7 +4,7 @@ var $ = require('dominus');
 var taunus = require('taunus');
 
 function ajaxLogoNavigation () {
-  $('.go-logo').on('click', hijack);
+  $('.go-logo').on('left-click', hijack);
 }
 
 function hijack (e) {

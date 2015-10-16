@@ -1,6 +1,6 @@
 'use strict';
 
-var version = 'v1::';
+var version = 'v2::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var offlineFundamentals = [
@@ -27,6 +27,21 @@ function installer (e) {
 
 function activator (e) {
   if ('clients' in self && clients.claim) { clients.claim(); }
+
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      return Promise.all(
+        keys
+          .filter(function (key) {
+            return key.indexOf(version) !== 0;
+          })
+          .map(function (key) {
+            return caches.delete(keys[i]);
+          })
+        )
+      });
+    })
+  );
 }
 
 function fetcher (e) {
