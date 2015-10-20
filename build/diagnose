@@ -1,7 +1,11 @@
 #!/bin/bash
 
-browserify client/js/main.js --basedir client/js --full-paths | uglifyjs -m -c | discify --open
+SOURCE_CODE=`browserify client/js/main.js \
+  --full-paths \
+  | uglifyjs \
+    --mangle \
+    --compress "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" \
+    --beautify "ascii_only=true,beautify=false"`
 
-SIZE=$(browserify client/js/main.js --basedir client/js --full-paths | uglifyjs -m -c | gzip-size | pretty-bytes)
-
-echo "Client-side JavaScript is $SIZE minified and gzipped."
+echo "Client-side JavaScript is `echo $SOURCE_CODE | gzip-size | pretty-bytes` minified and gzipped."
+echo $SOURCE_CODE | discify --open
