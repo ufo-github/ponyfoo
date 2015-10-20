@@ -79,6 +79,7 @@ module.exports = function (app) {
   redirects.setup(app);
 
   taunusExpress(taunus, app, {
+    version: env('APP_VERSION'),
     routes: routes,
     layout: layout,
     getDefaultViewModel: getDefaultViewModel,

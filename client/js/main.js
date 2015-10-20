@@ -4,14 +4,16 @@ var $ = require('dominus');
 var taunus = require('taunus');
 var moment = require('moment');
 var markdownService = require('../../services/markdown');
-var subscriptions = require('./subscriptions');
 var analytics = require('./analytics');
 var wiring = require('./wiring');
+var env = require('../../lib/env');
 var main = $.findOne('.ly-main');
 var g = global;
 
 require('hint');
 
+require('./conventions/search')();
+require('./conventions/subscriptions')();
 require('./conventions/codepen')();
 require('./conventions/twitter')();
 require('./conventions/ajaxLogoNavigation')();
@@ -25,8 +27,11 @@ require('./conventions/textareas')();
 require('./conventions/konami')();
 require('./conventions/carbon')();
 
-taunus.on('start', starting);
-taunus.mount(main, wiring, { bootstrap: 'manual', forms: false });
+taunus.mount(main, wiring, {
+  version: env('APP_VERSION'),
+  bootstrap: 'manual',
+  forms: false
+});
 
 g.$ = $;
 g.md = markdownService.compile;
@@ -36,9 +41,5 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js');
 }
 
-function starting (container, viewModel) {
-  require('./search');
-  subscriptions($('.de-subscribe'));
-  analytics(viewModel.env);
-  require('./welcome')(viewModel);
-}
+analytics(env('NODE_ENV'));
+require('./welcome')(env('APP_VERSION'));

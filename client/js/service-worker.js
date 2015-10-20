@@ -1,8 +1,9 @@
 'use strict';
 
-var version = 'v2::';
+var version = 'v3::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
+var env = require('../../lib/env');
 var offlineFundamentals = [
   '/',
   '/offline',
@@ -28,18 +29,16 @@ function installer (e) {
 function activator (e) {
   if ('clients' in self && clients.claim) { clients.claim(); }
 
-  event.waitUntil(
+  e.waitUntil(
     caches.keys().then(function (keys) {
-      return Promise.all(
-        keys
-          .filter(function (key) {
-            return key.indexOf(version) !== 0;
-          })
-          .map(function (key) {
-            return caches.delete(keys[i]);
-          })
-        )
-      });
+      return Promise.all(keys
+        .filter(function (key) {
+          return key.indexOf(version) !== 0;
+        })
+        .map(function (key) {
+          return caches.delete(key);
+        })
+      );
     })
   );
 }
@@ -71,6 +70,9 @@ function fetcher (e) {
 
   function unableToResolve () {
     var accepts = request.headers.get('Accept');
+    if (url.origin === location.origin && accepts.indexOf('application/json') !== -1) {
+      return offlineView();
+    }
     if (accepts.indexOf('image') !== -1) {
       if (url.host === 'www.gravatar.com') {
         return caches.match(mysteryMan);
@@ -78,11 +80,24 @@ function fetcher (e) {
       return caches.match(rainbows);
     }
     if (url.origin === location.origin) {
-      if (accepts.indexOf('application/json') !== -1) {
-        return new Response('', { status: 0 });
-      }
       return caches.match('/offline');
     }
-    return new Response('', { status: 0 });
+    return offlineResponse();
+  }
+
+  function offlineView () {
+    var viewModel = {
+      version: env('TAUNUS_VERSION'),
+      model: { action: 'error/offline' }
+    };
+    var options = {
+      status: 200,
+      headers: new Headers({ 'content-type': 'application/json' })
+    };
+    return new Response(JSON.stringify(viewModel), options);
+  }
+
+  function offlineResponse () {
+    return new Response('', { status: 503 });
   }
 }

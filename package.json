@@ -36,7 +36,8 @@
     "preinstall": "npm install node-gyp-install && ./node_modules/node-gyp-install/bin.js"
   },
   "browser": {
-    "fontfaceonload": "./node_modules/fontfaceonload/dist/fontfaceonload.js"
+    "fontfaceonload": "./node_modules/fontfaceonload/dist/fontfaceonload.js",
+    "./lib/env.js": "./client/js/lib/env.js"
   },
   "browserify-shim": {
     "fontfaceonload": "FontFaceOnload"
@@ -116,7 +117,7 @@
     "safeson": "1.0.0",
     "sitemap": "1.4.0",
     "sluggish": "1.0.1",
-    "taunus": "7.1.8",
+    "taunus": "7.1.9",
     "taunus-express": "3.0.0",
     "transports": "1.0.0",
     "trim-emoji": "1.0.0",

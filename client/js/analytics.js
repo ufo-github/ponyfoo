@@ -3,7 +3,7 @@
 function analytics (env) {
   require('./vendor/twitter.widget');
   require('./vendor/codepen');
-  if (env.name !== 'production') {
+  if (env !== 'production') {
     return;
   }
   require('./vendor/ga');

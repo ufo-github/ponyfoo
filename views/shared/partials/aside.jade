@@ -43,9 +43,10 @@ aside.de-sidebar.de-column
         span.bt-text Subscribe
         include ../partials/button-background
 
-  section.ly-section.de-bio.md-markdown!=bioHtml
+  if bioHtml
+    section.ly-section.de-bio.md-markdown!=bioHtml
 
-  if popularArticles.length
+  if popularArticles && popularArticles.length
     section.ly-section.de-hits
       h3 Greatest Hits
       ul.de-hit-list

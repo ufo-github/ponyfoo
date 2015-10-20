@@ -1,16 +1,16 @@
 'use strict';
 
-var notFound = '/not-found';
+var offline = '/offline';
 var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
-  res.status(404);
+  res.status(200);
   res.viewModel = {
     model: {
-      title: 'Not Found!',
-      action: 'error/not-found',
+      title: 'Application Offline',
+      action: 'error/offline',
       meta: {
-        canonical: notFound
+        canonical: offline
       }
     }
   };
