@@ -98,6 +98,6 @@ function fetcher (e) {
   }
 
   function offlineResponse () {
-    return new Response('', { status: 503 });
+    return new Response('', { status: 503, statusText: 'Service Unavailable' });
   }
 }

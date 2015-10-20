@@ -146,7 +146,7 @@
     "penthouse": "0.3.5",
     "phantomjs": "git+https://github.com/dtothefp/phantomjs.git#7053c397caf6fdc8f9f65690e7e8dbfa1c35bcbb",
     "process-finder": "1.0.0",
-    "reaver": "1.1.2",
+    "reaver": "2.0.0",
     "scourge": "1.0.1",
     "serve-favicon": "2.0.1",
     "serve-static": "1.1.0",

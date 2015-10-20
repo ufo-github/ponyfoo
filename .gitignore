@@ -1,6 +1,7 @@
 .bin
 .DS_Store
 .env.json
+.env.browser.json
 .job.scheduler
 deploy/env/
 deploy/keys/

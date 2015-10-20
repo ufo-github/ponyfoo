@@ -57,4 +57,5 @@ cleancss $ALL_CSS -o $ALL_CSS --s0
 
 # asset hashing
 reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
-reaver $DIST/{css,js}/* --manifest | scourge .bin/{inline,views/server,public/,js} --base-path $DIST --domain $DOMAIN
+reaver $DIST/{css,js}/* --consider .bin/public/service-worker.js --manifest | scourge .bin/{inline,views/server,public} --base-path $DIST --domain $DOMAIN
+reaver .bin/public/service-worker.js --manifest | scourge .bin/public/js --base-path $DIST --domain $DOMAIN
