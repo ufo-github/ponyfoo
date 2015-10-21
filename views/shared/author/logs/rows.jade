@@ -3,7 +3,7 @@ each entry in logs
     td(data-label='Level')
       span.lg-level=entry.level
     td(data-label='When')
-      time.lg-created.rt-relative(datetime=entry.created.datetime, aria-label=entry.created.title)=entry.created.text
+      time.lg-created(datetime=entry.created.datetime, aria-label=entry.created.title)=entry.created.text
     td(data-label='Message')
       div.lg-message=entry.message
   if entry.meta.error

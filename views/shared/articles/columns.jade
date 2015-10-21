@@ -1,5 +1,6 @@
 ol.aa-articles
   each article in articles
+    - pub = article.publication
     - count = article.commentCount
     li.aa-article
       h2.aa-title
@@ -8,7 +9,8 @@ ol.aa-articles
         div=article.summary
         a.aa-continue(href='/articles/' + article.slug) (continued)
       div.aa-trivia
-        div.aa-trivia-item=moment(article.publication).fromNow()
+        div.aa-trivia-item
+          time(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text.toLowerCase()
         div.aa-trivia-item
           span=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
           span=' read'

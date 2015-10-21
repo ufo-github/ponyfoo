@@ -1,5 +1,5 @@
 - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
-- when = moment(article.publication)
+- when = article.publication
 - modified = moment(article.updated)
 - created = moment(article.created)
 - published = article.status === 'published'
@@ -14,8 +14,8 @@ section.at-container.de-host
   div.de-column
     article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting')
       meta(itemprop='dateCreated', content=created.format())
-      meta(itemprop='datePublished', content=when.format())
       meta(itemprop='dateModified', content=modified.format())
+      meta(itemprop='datePublished', content=when.datetime)
       meta(itemprop='keywords', content=article.tags.join(','))
       meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
 

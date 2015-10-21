@@ -20,4 +20,4 @@ watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
 watchify client/js/service-worker.js -o .bin/public/service-worker.js --debug --verbose &
 
 # start app
-nodemon -e js,jade -w .bin/inline -w client/js/service-worker app.js
+nodemon -e js,jade app.js

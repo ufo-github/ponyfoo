@@ -1,5 +1,5 @@
 - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
-- when = moment(article.publication)
+- publication = article.publication
 - commentCount = article.commentCount
 
 section.dm-container.ly-section
@@ -13,12 +13,12 @@ section.dm-container.ly-section
       label.dm-label Slated for Publication
       span.dm-value
         span=' '
-        time(aria-label='Publishing ' + when.format(longDate), datetime=when.format())=when.fromNow()
+        time(datetime=publication.datetime, aria-label='Publishing ' + publication.title)=publication.text
     if article.status === 'published'
       label.dm-label Published
       span.dm-value
         span=' '
-        time(aria-label='Published ' + when.format(longDate), datetime=when.format())=when.fromNow()
+        time(datetime=publication.datetime, aria-label='Published ' + publication.title)=publication.text
 
   div
     label.dm-label Length

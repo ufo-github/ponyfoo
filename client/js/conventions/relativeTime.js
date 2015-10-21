@@ -5,11 +5,16 @@ var taunus = require('taunus');
 var moment = require('moment');
 
 function relativeTime () {
-  taunus.on('render', render);
+  taunus.on('render', adjust);
+  setInterval(adjustAll, 18000);
 }
 
-function render (container) {
-  $('.rt-relative', container).forEach(relative);
+function adjustAll () {
+  adjust(document.body);
+}
+
+function adjust (container) {
+  $('time', container).forEach(relative);
 }
 
 function relative (el) {

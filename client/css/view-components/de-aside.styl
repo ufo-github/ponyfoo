@@ -88,16 +88,23 @@
     content ''
     background linear-gradient(to right, c-white 0, c-yellow-highlight 33%, c-green 66%, lighten(c-green, 98%) 100%)
 
-  li
+  .de-hit-item
     margin 20px 0
+
+  .de-hit-link,
+  .de-hit-text
+    display block
+
+  .de-hit-link
+    color darken(c-green, 25%)
+
+  .de-hit-text
     white-space nowrap
     text-overflow ellipsis
     overflow hidden
-  a
-    color darken(c-green, 25%)
 
 @media screen and (min-width: 768px)
-  .de-hit
+  .de-hit-item
     margin 10px 0
 
 @media screen and (min-width: 1200px)

@@ -35,13 +35,14 @@ mm-author-padding = 10px
 .mm-author-name
   margin-left 8px
 
-.ly-teasers .mm-author-name
+.ly-teasers .mm-author
   font-family f-subheading
 
 .mm-gravatar,
 .mm-author-name
   display inline-block
   vertical-align middle
+  line-height 22px
 
 .mm-content
   position relative
@@ -124,6 +125,30 @@ mm-author-padding = 10px
   float right
   color c-orange-dark
   line-height 22px
+  margin-left 10px
+
+.mm-wrote,
+.mm-wrote-separator,
+.mm-written
+  display inline-block
+  vertical-align baseline
+  white-space pre
+  color c-orange-dark
+  font-size 12px
+  line-height 22px
+
+.mm-wrote
+  display none
+
+.mm-written
+  float right
+
+@media screen and (min-width: 500px)
+  .mm-wrote
+    display inline-block
+
+  .mm-written
+    float none
 
 @media screen and (min-width: 768px)
   .mm-thread-footer

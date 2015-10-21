@@ -5,7 +5,7 @@ mixin author
   span.mm-author-name=comment.author
 
 section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment._id)
-  header.mm-author
+  header.mm-author.uv-clearfix
     if user
       a.mm-remove.fa.fa-remove(aria-label='Delete this comment')
 
@@ -16,5 +16,10 @@ section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment.
     else
       +author
 
+    span.mm-wrote=' wrote'
+    span.mm-wrote-separator=' '
+    time.mm-written(datetime=comment.created.datetime, aria-label=comment.created.title)='on ' + comment.created.text
+
   section.mm-content
     div.mm-content-html.md-markdown!=comment.contentHtml
+

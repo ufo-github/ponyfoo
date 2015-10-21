@@ -1,9 +1,11 @@
 'use strict';
 
+var datetimeService = require('./datetime');
+
 function toJSON (comment) {
   return {
     _id: comment._id.toString(),
-    created: comment.created,
+    created: datetimeService.field(comment.created),
     author: comment.author,
     email: comment.email,
     contentHtml: comment.contentHtml,

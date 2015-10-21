@@ -10,6 +10,7 @@ var Article = require('../models/Article');
 var commentService = require('./comment');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
+var datetimeService = require('./datetime');
 var twitterService = require('./twitter');
 var twitterEmojiService = require('./twitterEmoji');
 var echojsService = require('./echojs');
@@ -145,8 +146,9 @@ function toJSON (source, options) {
   var text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(' ');
   var article = source.toJSON();
 
-  article.readingTime = estimate.text(text);
   article.permalink = '/articles/' + article.slug;
+  article.publication = datetimeService.field(article.publication);
+  article.readingTime = estimate.text(text);
 
   if (source.populated('author')) {
     article.author = article.author.toString();
