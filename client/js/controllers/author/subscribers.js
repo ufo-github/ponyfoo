@@ -53,7 +53,7 @@ module.exports = function (viewModel, container) {
   function loadD3tip (next) { loadScript('/js/d3-tip.js', next); }
   function loaded () {
     var d3 = global.d3;
-    var d3tip = global.d3tip;
+    var d3tip = global.d3Tip;
 
     d3tip(d3);
 

@@ -41,7 +41,7 @@ uglifyjs_alone() {
 
 # d3
 browserify_standalone "d3" "node_modules/d3" ".bin/public/js/d3.js"
-browserify_standalone "d3tip" "node_modules/d3-tip" ".bin/public/js/d3-tip.js"
+browserify_standalone "d3-tip" "node_modules/d3-tip" ".bin/public/js/d3-tip.js"
 
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
