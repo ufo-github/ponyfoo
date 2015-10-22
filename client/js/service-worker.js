@@ -18,7 +18,8 @@ self.addEventListener('activate', activator);
 self.addEventListener('fetch', fetcher);
 
 function installer (e) {
-  self.skipWaiting();
+  if ('skipWaiting' in self) { self.skipWaiting(); }
+
   e.waitUntil(caches.open(version + 'fundamentals').then(prefill));
 
   function prefill (cache) {
