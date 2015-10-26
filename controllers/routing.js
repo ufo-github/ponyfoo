@@ -16,6 +16,7 @@ var authorCompute = require('./author/compute');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
+var articleShare = require('./api/articles/share');
 var articleFeed = require('./articles/feed');
 var commentInsert = require('./api/comments/insert');
 var commentRemove = require('./api/comments/remove');
@@ -51,6 +52,7 @@ module.exports = function (app) {
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
+  app.post('/api/articles/:slug/share/:medium', authorOnly, articleShare);
 
   app.get('/author/compute', authorOnly, authorCompute);
 

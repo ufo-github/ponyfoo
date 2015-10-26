@@ -11,6 +11,7 @@ article.ly-section.vw-maintainer.de-host
             th Title
             th Tags
             th Condition
+            th Sharing
             th Actions
         tbody
           each article in articles
@@ -20,6 +21,20 @@ article.ly-section.vw-maintainer.de-host
               td(data-label='Tags')
                 include ../partials/tags
               td(data-label='Condition', class='ar-status ar-status-' + article.status, aria-label=article._.conditionLabel)=article._.condition
+              td.ar-sharing(data-label='Sharing')
+                if article.status === 'published'
+                  form.ar-share(action='/api/articles/' + article.slug + '/share/email', method='post')
+                    button.fa.fa-envelope.ar-share-button(aria-label='Send out an email about this article')
+                  form.ar-share(action='/api/articles/' + article.slug + '/share/twitter', method='post')
+                    button.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
+                  form.ar-share(action='/api/articles/' + article.slug + '/share/facebook', method='post')
+                    button.fa.fa-facebook-official.ar-share-button(aria-label='Share on Facebook Page')
+                  form.ar-share(action='/api/articles/' + article.slug + '/share/echojs', method='post')
+                    button.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
+                  form.ar-share(action='/api/articles/' + article.slug + '/share/hackernews', method='post')
+                    button.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
+                  form.ar-share(action='/api/articles/' + article.slug + '/share/lobsters', method='post')
+                    button.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
               td.ar-buttons(data-label='Actions')
                 a.fa.fa-pencil.ar-edit(href='/author/compose/' + article.slug, aria-label='Edit this article')
                 a.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)

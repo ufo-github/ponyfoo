@@ -6,8 +6,8 @@ npm run clean
 npm run copy
 
 # d3
-browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js
-browserify node_modules/d3-tip -s d3tip -o .bin/public/js/d3-tip.js
+browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js --debug
+browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &

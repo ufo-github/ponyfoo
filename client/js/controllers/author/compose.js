@@ -27,6 +27,7 @@ module.exports = function (viewModel, container, route) {
   var campaign = $('.ac-campaign');
   var email = $('#ac-campaign-email');
   var tweet = $('#ac-campaign-tweet');
+  var fb = $('#ac-campaign-fb');
   var echojs = $('#ac-campaign-echojs');
   var hn = $('#ac-campaign-hn');
   var lobsters = $('#ac-campaign-lobsters');
@@ -140,7 +141,7 @@ module.exports = function (viewModel, container, route) {
 
   function deserialize (source) {
     var data = source || storage.get(defaultKey) || {
-      email: true, tweet: true, echojs: true, hn: true, lobsters: true
+      email: true, tweet: true, fb: true, echojs: true, hn: true, lobsters: true
     };
     var titleText = data.title || '';
     var slugText = data.slug || '';
@@ -153,6 +154,7 @@ module.exports = function (viewModel, container, route) {
     tags.value((data.tags || []).join(' '));
     email.value(data.email);
     tweet.value(data.tweet);
+    fb.value(data);
     echojs.value(data.echojs);
     hn.value(data.hn);
     lobsters.value(data.lobsters);
@@ -185,6 +187,7 @@ module.exports = function (viewModel, container, route) {
       status: state,
       email: email.value(),
       tweet: tweet.value(),
+      fb: fb.value(),
       echojs: echojs.value(),
       hn: hn.value(),
       lobsters: lobsters.value()

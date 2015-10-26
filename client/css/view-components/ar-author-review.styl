@@ -1,6 +1,5 @@
-.ar-container
-  a
-    color c-pink
+.ar-container a
+  color c-pink
 
 .ar-actions
   display block
@@ -11,6 +10,10 @@
 .ar-recompute
   margin-right 20px
 
+.ar-sharing
+  width 125px
+  text-align center
+
 .ar-buttons
   width 80px
   text-align center
@@ -18,7 +21,23 @@
 .ar-edit
   margin-right 20px
 
+.ar-share
+  display inline
+  line-height 32px
+  margin-right 20px
+
+  &:last-child
+    margin-right 0
+
+.ar-share-button
+  padding 0
+  color c-black
+
+  &:hover
+    color c-pink
+
 @media only screen and (max-width: 950px)
+  .ar-sharing,
   .ar-buttons
     text-align left
     width inherit

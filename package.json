@@ -70,6 +70,7 @@
     "estimate": "1.0.0",
     "express": "4.13.2",
     "express-session": "1.7.6",
+    "fb": "0.7.3",
     "font-awesome-stylus": "4.4.0",
     "fontfaceonload": "0.1.6",
     "frameguard": "0.2.2",

@@ -29,6 +29,7 @@ module.exports = [
   { route: '/author/review', action: 'author/review', middleware: authorOnly },
   { route: '/author/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: authorOnly },
   { route: '/author/subscribers', action: 'author/subscribers', middleware: authorOnly },
+  { route: '/subscribe', action: 'marketing/subscribe' },
   { route: '/offline', action: 'error/offline' },
   { route: '/*', action: 'error/not-found' }
 ];

@@ -26,6 +26,7 @@ function validate (model, update) {
     related: [],
     email: !!model.email,
     tweet: !!model.tweet,
+    fb: !!model.fb,
     echojs: !!model.echojs,
     hn: !!model.hn,
     lobsters: !!model.lobsters

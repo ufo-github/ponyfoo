@@ -20,7 +20,8 @@ function pullData (subscribers) {
       migration: 0,
       sidebar: 0,
       comment: 0,
-      article: 0
+      article: 0,
+      landed: 0
     };
     add();
     while (subscribers.length) {
@@ -77,7 +78,7 @@ module.exports = function (viewModel, container) {
 
     var color = d3.scale
       .ordinal()
-      .range(['#1a4d7f', '#cbc5c0', '#900070', '#e92c6c', '#f3720d']);
+      .range(['#1a4d7f', '#cbc5c0', '#900070', '#e92c6c', '#f3720d', '#ffe270']);
 
     var xAxis = d3.svg
       .axis()
@@ -103,7 +104,7 @@ module.exports = function (viewModel, container) {
     data.forEach(function(d) {
       var y0 = 0;
       d.fragments = color.domain().map(function(name) { return { name: name, y0: y0, y1: y0 += +d[name] }; });
-      d.total = d.unverified + d.migration + d.sidebar + d.comment + d.article;
+      d.total = d.unverified + d.migration + d.sidebar + d.comment + d.article + d.landed;
     });
 
     data.sort(function(a, b) { return a.moment.isAfter(b.moment) ? 1 : -1; });
@@ -172,7 +173,7 @@ module.exports = function (viewModel, container) {
 
     var tip = d3.tip()
       .attr('class', 'as-tip')
-      .style()
+      .direction('e')
       .offset([-10, 0])
       .html(function (d) {
         return textService.format(

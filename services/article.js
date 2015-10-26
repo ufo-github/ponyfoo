@@ -11,6 +11,7 @@ var commentService = require('./comment');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
 var datetimeService = require('./datetime');
+var facebookService = require('./facebook');
 var twitterService = require('./twitter');
 var twitterEmojiService = require('./twitterEmoji');
 var echojsService = require('./echojs');
@@ -52,18 +53,25 @@ function campaign (article, done) {
     done = noop;
   }
   contra.concurrent([
-    contra.curry(email, article),
-    contra.curry(tweet, article),
-    contra.curry(echojs, article),
-    contra.curry(hackernews, article),
-    contra.curry(lobsters, article)
+    curried('email', email),
+    curried('tweet', tweet),
+    curried('fb', fbShare),
+    curried('echojs', echojs),
+    curried('hn', hackernews),
+    curried('lobsters', lobsters)
   ], done);
+
+  function curried (key, fn) {
+    return function sharing (next) {
+      if (article[key] === false) {
+        next(); return;
+      }
+      fn(article, next);
+    };
+  }
 }
 
 function email (article, done) {
-  if (article.email === false) {
-    done(); return;
-  }
   var intro = article.teaserHtml + article.introductionHtml
   var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
   var model = {
@@ -79,32 +87,38 @@ function email (article, done) {
   subscriberService.broadcast('article-published', model, done);
 }
 
-function tweet (article, done) {
-  if (article.tweet === false) {
-    done(); return;
-  }
+function socialStatus (article) {
   var formats = [
-    'Just %s published: "%s" %s',
-    'Fresh %s content on Pony Foo! "%s" %s',
-    '%s "%s" contains crisp new words! %s',
-    '%s "%s" is hot off the press! %s',
-    'Extra! Extra! %s "%s" has just come out! %s',
-    '%s "%s" has just been published! %s',
-    'This just %s out! "%s" %s'
+    'Just %s published: "%s"',
+    'Fresh %s content on Pony Foo! "%s"',
+    '%s "%s" contains crisp new words!',
+    '%s "%s" is hot off the press!',
+    'Extra! Extra! %s "%s" has just come out!',
+    '%s "%s" has just been published!',
+    'This just %s out! "%s"'
   ];
   var fmt = _.sample(formats);
-  var tag = article.tags.slice(0, 2).join(' #');
-  var camelTag = textService.hyphenToCamel(tag);
-  var links = util.format('%s/articles/%s #%s', authority, article.slug, camelTag);
   var emoji = twitterEmojiService.generate(['people']);
-  var status = util.format(fmt, emoji, article.title, links);
+  var status = util.format(fmt, emoji, article.title);
+  return status;
+}
+
+function statusLink (article) {
+  return util.format('%s/articles/%s', authority, article.slug);
+}
+
+function tweet (article, done) {
+  var tag = '#' + article.tags.slice(0, 2).join(' #');
+  var camelTag = textService.hyphenToCamel(tag);
+  var status = util.format('%s %s %s', socialStatus(article), statusLink(article), camelTag);
   twitterService.tweet(status, done);
 }
 
+function fbShare (article, done) {
+  facebookService.share(socialStatus(article), statusLink(article), done);
+}
+
 function echojs (article, done) {
-  if (article.echojs === false) {
-    done(); return;
-  }
   var data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
@@ -113,27 +127,18 @@ function echojs (article, done) {
 }
 
 function hackernews (article, done) {
-  if (article.hn === false) {
-    done(); return;
-  }
   var data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
   };
   hackernewsService.submit(data, submitted);
   function submitted (err, res, body, discuss) {
-    if (err) {
-      done(err); return;
-    }
     article.hnDiscuss = discuss;
     article.save(but(done));
   }
 }
 
 function lobsters (article, done) {
-  if (article.lobsters === false) {
-    done(); return;
-  }
   var data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
@@ -195,6 +200,7 @@ function toJSON (source, options) {
   delete article.lobsters;
   delete article.echojs;
   delete article.tweet;
+  delete article.fb;
   delete article.email;
   return article;
 }
@@ -219,6 +225,13 @@ function threads (accumulator, comment) {
 function byPublication (a, b) {
   return a.created - b.created;
 }
+
+campaign.email = email;
+campaign.twitter = tweet;
+campaign.facebook = fbShare;
+campaign.echojs = echojs;
+campaign.hackernews = hackernews;
+campaign.lobsters = lobsters;
 
 module.exports = {
   find: find,
