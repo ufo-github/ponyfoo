@@ -1,5 +1,5 @@
 p
-  span='An article has been published at '
+  span='An article has been published on '
   a(href!=domain.authority) Pony Foo
   span='. You can feast your eyes on it by following this link: '
   a(href!=domain.authority + article.permalink)=article.title
@@ -16,4 +16,4 @@ p
 div(style='padding: 20px; background-color: #fff9f4;')!=article.teaserHtml
 
 div(style='text-align: center;')
-  a(style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; font-size: 24px; background-color: #e92c6c; color: #fff;', href!=domain.authority + article.permalink) Read the full article on Pony Foo
+  a(style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; font-size: 24px; background-color: #e92c6c; color: #fff;', href!=domain.authority + article.permalink) Read More

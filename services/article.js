@@ -66,17 +66,17 @@ function campaign (article, done) {
       if (article[key] === false) {
         next(); return;
       }
-      fn(article, next);
+      fn(article, {}, next);
     };
   }
 }
 
-function email (article, done) {
+function email (article, options, done) {
   var intro = article.teaserHtml + article.introductionHtml
   var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
   var model = {
     subject: article.title,
-    teaser: 'A new article is hot off the press on Pony Foo!',
+    teaser: options.reshare ? 'You can\'t miss this!' : 'Hot off the press!',
     article: {
       title: article.title,
       permalink: '/articles/' + article.slug,
@@ -87,8 +87,8 @@ function email (article, done) {
   subscriberService.broadcast('article-published', model, done);
 }
 
-function socialStatus (article) {
-  var formats = [
+function socialStatus (article, options) {
+  var fresh = [
     'Just %s published: "%s"',
     'Fresh %s content on Pony Foo! "%s"',
     '%s "%s" contains crisp new words!',
@@ -97,6 +97,12 @@ function socialStatus (article) {
     '%s "%s" has just been published!',
     'This just %s out! "%s"'
   ];
+  var manual = [
+    '%s Check out "%s" on Pony Foo!',
+    'ICYMI %s %s',
+    'Have you %s read "%s" yet?'
+  ];
+  var formats = options.reshare ? manual : fresh;
   var fmt = _.sample(formats);
   var emoji = twitterEmojiService.generate(['people']);
   var status = util.format(fmt, emoji, article.title);
@@ -107,18 +113,18 @@ function statusLink (article) {
   return util.format('%s/articles/%s', authority, article.slug);
 }
 
-function tweet (article, done) {
+function tweet (article, options, done) {
   var tag = '#' + article.tags.slice(0, 2).join(' #');
   var camelTag = textService.hyphenToCamel(tag);
-  var status = util.format('%s %s %s', socialStatus(article), statusLink(article), camelTag);
+  var status = util.format('%s %s %s', socialStatus(article, options), statusLink(article), camelTag);
   twitterService.tweet(status, done);
 }
 
-function fbShare (article, done) {
-  facebookService.share(socialStatus(article), statusLink(article), done);
+function fbShare (article, options, done) {
+  facebookService.share(socialStatus(article, options), statusLink(article), done);
 }
 
-function echojs (article, done) {
+function echojs (article, options, done) {
   var data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
@@ -126,7 +132,7 @@ function echojs (article, done) {
   echojsService.submit(data, done);
 }
 
-function hackernews (article, done) {
+function hackernews (article, options, done) {
   var data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
@@ -138,7 +144,7 @@ function hackernews (article, done) {
   }
 }
 
-function lobsters (article, done) {
+function lobsters (article, options, done) {
   var data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
