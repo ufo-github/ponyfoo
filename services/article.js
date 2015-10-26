@@ -100,7 +100,7 @@ function socialStatus (article, options) {
   var manual = [
     '%s Check out "%s" on Pony Foo!',
     'ICYMI %s %s',
-    'Have you %s read "%s" yet?'
+    'Have you read %s "%s" yet?'
   ];
   var formats = options.reshare ? manual : fresh;
   var fmt = _.sample(formats);
