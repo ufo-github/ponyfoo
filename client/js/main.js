@@ -37,9 +37,7 @@ g.$ = $;
 g.md = markdownService.compile;
 g.moment = moment;
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js');
-}
+require('./service-worker-registration')();
 
 analytics(env('NODE_ENV'));
 require('./welcome')(env('APP_VERSION'));

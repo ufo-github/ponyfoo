@@ -176,9 +176,10 @@ module.exports = function (viewModel, container) {
       .direction('e')
       .offset([-10, 0])
       .html(function (d) {
+        var c = color(d.name);
         return textService.format(
           '<div class="as-tip-content" style="color: %s"><span class="as-tip-label">%s:</span> <span class="as-tip-value">%s</span></div>',
-          color(d.name),
+          c === '#ffe270' ? '#a79d0d' : c,
           d.name,
           d.y1 - d.y0
         );

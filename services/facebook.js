@@ -15,7 +15,6 @@ function noop () {}
 function share (status, link, done) {
   FB.api(pageId + '/feed', 'post', { message: status, link: link }, normalize);
   function normalize (res) {
-    console.log(res);
     if (!res || res.error) {
       (done || noop)(new Error(res.error), res); return;
     }

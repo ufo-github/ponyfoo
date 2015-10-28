@@ -1,11 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
-var moment = require('moment');
 var Article = require('../../models/Article');
 var articleService = require('../../services/article');
-var cryptoService = require('../../services/crypto');
-var longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
 
 module.exports = getModel;
 
@@ -16,10 +13,10 @@ function getModel (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var hydrated = articles.map(function (article) {
+    var models = articles.map(function (article) {
       return articleService.toJSON(article, { meta: true });
-    }).map(hydrate);
-    var sorted = _.sortBy(hydrated, sortByStatus);
+    });
+    var sorted = _.sortBy(models, sortByStatus);
     res.viewModel = {
       model: {
         title: 'Article Review',
@@ -31,27 +28,6 @@ function getModel (req, res, next) {
     };
     next();
   }
-}
-
-function hydrate (article) {
-  article._ = {};
-
-  var when = moment(article.publication);
-  var published = article.status === 'published';
-  if (published) {
-    article._.condition = 'Published ' + when.fromNow();
-    article._.conditionLabel = 'Published on ' + when.format(longDate);
-  } else {
-    article.permalink += '?verify=' + cryptoService.md5(article._id + article.created);
-    if (article.status === 'draft') {
-      article._.condition = 'Draft';
-      article._.conditionLabel = 'Edit the article in order to publish it';
-    } else {
-      article._.condition = 'Publishing ' + when.fromNow();
-      article._.conditionLabel = 'Slated for publication';
-    }
-  }
-  return article;
 }
 
 function sortByStatus (article) {

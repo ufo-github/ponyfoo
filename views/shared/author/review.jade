@@ -20,7 +20,8 @@ article.ly-section.vw-maintainer.de-host
                 a(href!=article.permalink, aria-label='Navigate to full article')=article.title
               td(data-label='Tags')
                 include ../partials/tags
-              td(data-label='Condition', class='ar-status ar-status-' + article.status, aria-label=article._.conditionLabel)=article._.condition
+              td(data-label='Condition', class='ar-status ar-status-' + article.status)
+                include ../partials/estimate
               td.ar-sharing(data-label='Sharing')
                 if article.status === 'published'
                   form.ar-share(action='/api/articles/' + article.slug + '/share/email', method='post')

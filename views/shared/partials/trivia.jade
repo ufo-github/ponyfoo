@@ -1,5 +1,4 @@
 - longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
-- publication = article.publication
 - commentCount = article.commentCount
 
 section.dm-container.ly-section
@@ -7,18 +6,7 @@ section.dm-container.ly-section
     h3.dm-title Trivia Box
 
   div
-    if article.status === 'draft'
-      label.dm-label Draft
-    if article.status === 'publish'
-      label.dm-label Slated for Publication
-      span.dm-value
-        span=' '
-        time(datetime=publication.datetime, aria-label='Publishing ' + publication.title)=publication.text
-    if article.status === 'published'
-      label.dm-label Published
-      span.dm-value
-        span=' '
-        time(datetime=publication.datetime, aria-label='Published ' + publication.title)=publication.text
+    include estimate
 
   div
     label.dm-label Length
