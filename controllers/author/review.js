@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Article = require('../../models/Article');
 var articleService = require('../../services/article');
+var cryptoService = require('../../services/crypto');
 
 module.exports = getModel;
 
@@ -14,7 +15,9 @@ function getModel (req, res, next) {
       next(err); return;
     }
     var models = articles.map(function (article) {
-      return articleService.toJSON(article, { meta: true });
+      var article = articleService.toJSON(article, { meta: true });
+      article.permalink += '?verify=' + cryptoService.md5(article._id + article.created);
+      return article;
     });
     var sorted = _.sortBy(models, sortByStatus);
     res.viewModel = {
