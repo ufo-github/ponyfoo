@@ -1,9 +1,6 @@
 'use strict';
 
 var env = require('./lib/env');
-if (env('NODE_ENV') === 'production') {
-  require('newrelic');
-}
 
 require('./preconfigure');
 require('./chdir');
