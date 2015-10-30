@@ -4,7 +4,7 @@ echo "packer: updating aptitude"
 sudo apt-key update
 sudo apt-get update
 sudo apt-get remove apt-listchanges -y
-sudo apt-get install git make g++ graphicsmagick curl python-software-properties software-properties-common -y
+sudo apt-get install git make g++ graphicsmagick curl python-software-properties software-properties-common lsof libkrb5-dev -y
 sudo add-apt-repository ppa:nginx/stable -y
 
 echo "packer: creating swap space"

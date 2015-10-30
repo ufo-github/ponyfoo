@@ -41,9 +41,19 @@ mv $HOME/app/server/deploy/env/.env.$NODE_ENV.json $HOME/app/server/.env.json
 mv $HOME/app/precache/node_modules $HOME/app/server/node_modules
 npm install --prefix $HOME/app/server --production
 
+PORT=3000
+
 echo "packer: booting appserver daemon..."
 sudo service $NAME start
 
+echo "packer: asserting application is functional..."
+while [ "$(lsof -i tcp:$PORT | grep -i listen)" == "" ]
+do
+  sleep 0.1
+done
+
+echo "packer: application managed to listen on port $PORT"
+
 echo "packer: setting up cron jobs"
-crontab -l | { cat; echo "*/6 * * * * curl http://localhost:3000/api/`cat $HOME/app/server/.bin/secret`/scheduler"; } | crontab -
-crontab -l | { cat; echo "0 */6 * * * curl http://localhost:3000/api/`cat $HOME/app/server/.bin/secret`/remodel"; } | crontab -
+crontab -l | { cat; echo "*/6 * * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/scheduler"; } | crontab -
+crontab -l | { cat; echo "0 */6 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/remodel"; } | crontab -
