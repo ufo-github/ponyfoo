@@ -50,7 +50,7 @@ function activator (e) {
 function fetcher (e) {
   var request = e.request;
   if (request.method !== 'GET') {
-    e.respondWith(fetch(request)); return;
+    return;
   }
 
   var url = new URL(request.url);
