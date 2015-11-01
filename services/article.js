@@ -89,22 +89,22 @@ function email (article, options, done) {
 
 function socialStatus (article, options) {
   var fresh = [
-    'Just %s published: "%s"',
-    'Fresh %s content on Pony Foo! "%s"',
-    '%s "%s" contains crisp new words!',
-    '%s "%s" is hot off the press!',
-    'Extra! Extra! %s "%s" has just come out!',
-    '%s "%s" has just been published!',
-    'This just %s out! "%s"'
+    'Just %spublished: "%s"',
+    'Fresh %scontent on Pony Foo! "%s"',
+    '%s"%s" contains crisp new words!',
+    '%s"%s" is hot off the press!',
+    'Extra! Extra! %s"%s" has just come out!',
+    '%s"%s" has just been published!',
+    'This just %sout! "%s"'
   ];
   var manual = [
-    '%s Check out "%s" on Pony Foo!',
-    'ICYMI %s %s',
-    'Have you read %s "%s" yet?'
+    '%sCheck out "%s" on Pony Foo!',
+    'ICYMI %s%s',
+    'Have you read %s"%s" yet?'
   ];
   var formats = options.reshare ? manual : fresh;
   var fmt = _.sample(formats);
-  var emoji = twitterEmojiService.generate(['people']);
+  var emoji = options.emoji === false ? '' : twitterEmojiService.generate(['people']) + ' ';
   var status = util.format(fmt, emoji, article.title);
   return status;
 }
@@ -121,6 +121,7 @@ function tweet (article, options, done) {
 }
 
 function fbShare (article, options, done) {
+  options.emoji = false;
   facebookService.share(socialStatus(article, options), statusLink(article), done);
 }
 
