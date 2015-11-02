@@ -3,8 +3,10 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${PRIMAL_AMI:="ami-d9196ab3"}"
+: "${RAW_AMI:="ami-ef730185"}"
+: "${PRIMAL_AMI:="ami-a47406ce"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
+# : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
 
 # configurable variables
@@ -33,6 +35,23 @@ VPC_ID=$(jq -r .Subnets[0].VpcId < deploy/log/subnet.log)
 SUBNET_ID=$(jq -r .Subnets[0].SubnetId < deploy/log/subnet.log)
 
 # build images using packer
+if [ -z ${RAW_AMI+x} ]
+then
+  echo "deploy: building raw image with packer..."
+
+  cp package.json deploy/mailtube
+  packer build \
+    -var VPC_ID=$VPC_ID \
+    -var SUBNET_ID=$SUBNET_ID \
+    deploy/templates/raw.json | tee deploy/log/packer-raw.log
+
+  RAW_AMI=$(tail -1 < deploy/log/packer-raw.log | cut -d ' ' -f 2)
+
+  echo "deploy: built image $RAW_AMI"
+else
+  echo "deploy: skipping raw image build, using $RAW_AMI"
+fi
+
 if [ -z ${PRIMAL_AMI+x} ]
 then
   echo "deploy: building primal image with packer..."
@@ -41,6 +60,7 @@ then
   packer build \
     -var VPC_ID=$VPC_ID \
     -var SUBNET_ID=$SUBNET_ID \
+    -var SOURCE_AMI=$RAW_AMI \
     -var NODE_VERSION=$(jq -r .engines.node < package.json) \
     deploy/templates/primal.json | tee deploy/log/packer-primal.log
 
@@ -70,6 +90,12 @@ then
 else
   CLEANUP="no"
   echo "deploy: skipping deployment image build, using $CARNIVORE_AMI"
+fi
+
+if [ "$DEPLOYMENT" == "no" ]
+then
+  echo "deploy: not deploying."
+  exit
 fi
 
 echo "deploy: deploying $CARNIVORE_AMI ($NODE_ENV) to aws."

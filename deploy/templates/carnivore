@@ -41,6 +41,12 @@ mv $HOME/app/server/deploy/env/.env.$NODE_ENV.json $HOME/app/server/.env.json
 mv $HOME/app/precache/node_modules $HOME/app/server/node_modules
 npm install --prefix $HOME/app/server --production
 
+if [ $? -ne 0 ]
+then
+  echo "packer: npm install failed. bailing"
+  exit 1
+fi
+
 PORT=3000
 
 echo "packer: booting appserver daemon..."

@@ -32,7 +32,8 @@
     "open": "deploy/open",
     "shutdown": "deploy/shutdown",
     "start": "npm run build-development",
-    "test": "build/test"
+    "test": "build/test",
+    "preinstall": "npm install node-gyp-install && ./node_modules/node-gyp-install/bin.js"
   },
   "browser": {
     "fontfaceonload": "./node_modules/fontfaceonload/dist/fontfaceonload.js",
