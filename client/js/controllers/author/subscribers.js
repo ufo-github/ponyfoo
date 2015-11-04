@@ -16,8 +16,8 @@ function pullData (subscribers) {
     curr = {
       moment: week,
       date: week.format('Do MMMM ’YY'),
-      unverified: 0,
       migration: 0,
+      unverified: 0,
       sidebar: 0,
       comment: 0,
       article: 0,
@@ -78,7 +78,7 @@ module.exports = function (viewModel, container) {
 
     var color = d3.scale
       .ordinal()
-      .range(['#1a4d7f', '#cbc5c0', '#900070', '#e92c6c', '#f3720d', '#ffe270']);
+      .range(['#cbc5c0', '#1a4d7f', '#900070', '#e92c6c', '#f3720d', '#ffe270']);
 
     var xAxis = d3.svg
       .axis()
@@ -103,7 +103,7 @@ module.exports = function (viewModel, container) {
 
     data.forEach(function(d) {
       var y0 = 0;
-      d.fragments = color.domain().map(function(name) { return { name: name, y0: y0, y1: y0 += +d[name] }; });
+      d.fragments = color.domain().map(function(name) { return { name: name, y0: y0, y1: y0 += +d[name], d: d }; });
       d.total = d.unverified + d.migration + d.sidebar + d.comment + d.article + d.landed;
     });
 
@@ -144,9 +144,10 @@ module.exports = function (viewModel, container) {
       .attr('class', 'as-g')
       .attr('transform', function(d) { return 'translate(' + x(d.date) + ',0)'; });
 
-    date.selectAll('rect')
+    date.selectAll('.as-bar')
       .data(function(d) { return d.fragments; })
       .enter().append('rect')
+      .attr('class', 'as-bar')
       .attr('width', x.rangeBand())
       .attr('y', function(d) { return y(d.y1); })
       .attr('height', function(d) { return y(d.y0) - y(d.y1); })
@@ -176,13 +177,35 @@ module.exports = function (viewModel, container) {
       .direction('e')
       .offset([-10, 0])
       .html(function (d) {
+        var full = d.d;
+        var i = data.indexOf(full);
+        var oldIndex = i - 1;
+        var old = oldIndex < 0 ? 0 : data[oldIndex].total - data[oldIndex].unverified;
+        var now = full.total - full.unverified;
         var c = color(d.name);
-        return textService.format(
-          '<div class="as-tip-content" style="color: %s"><span class="as-tip-label">%s:</span> <span class="as-tip-value">%s</span></div>',
-          c === '#ffe270' ? '#a79d0d' : c,
+        return textService.format([
+          '<div class="as-tip-content" style="color: %s; background-color: %s;">',
+            '<div>',
+              '<span class="as-tip-label">%s:</span>',
+              ' %s (%s)',
+            '</div>',
+            '<div>Overall: %s (%s)</div>',
+          '</div>'
+          ].join(''),
+          c === '#ffe270' ? '#333' : '#fbf9ec',
+          c,
           d.name,
-          d.y1 - d.y0
+          full[d.name],
+          diffText(data[oldIndex][d.name], full[d.name]),
+          now,
+          diffText(old, now)
         );
+        function diffText (old, now) {
+          var diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);
+          var sign = diff < 0 ? '' : '+';
+          var fixed = diff.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+          return sign + fixed + '%';
+        }
       });
 
     svg.call(tip);
