@@ -39,7 +39,8 @@ mv /tmp/appserver $HOME/app/server
 echo "packer: installing server dependencies"
 mv $HOME/app/server/deploy/env/.env.$NODE_ENV.json $HOME/app/server/.env.json
 mv $HOME/app/precache/node_modules $HOME/app/server/node_modules
-npm install --prefix $HOME/app/server --production
+cd $HOME/app/server
+npm install --production
 
 if [ $? -ne 0 ]
 then
