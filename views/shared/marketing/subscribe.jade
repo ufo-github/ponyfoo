@@ -4,6 +4,7 @@ header
 section.de-host
   div.de-column.ms-container
     form.ly-section.ss-container.at-subscribe(action='/api/subscribers', method='post', name='subscribe')
+      h2 Subscribe with just your email!
       div.ss-label
         ='Subscribe below to get an email when new articles come out! Also, '
         a(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
@@ -19,5 +20,7 @@ section.de-host
         button.gg-container.bt-button.bt-pink.ss-button(type='submit')
           span.bt-text Subscribe
           include ../partials/button-background
+
+      include ../partials/subscribers
 
   include ../partials/aside

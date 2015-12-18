@@ -121,7 +121,10 @@ module.exports = function (req, res) {
 
   function errored (message, err) {
     winston.warn('Error uploading an image', err);
-    respond(400, { messages: [message] });
+    respond(400, {
+      messages: [message],
+      version: taunus.state.version
+    });
   }
 
   function respond (status, message) {

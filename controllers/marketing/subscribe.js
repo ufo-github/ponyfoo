@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
 
     res.viewModel = {
       model: {
-        title: 'Subscribers',
+        title: 'Subscribe to Pony Foo!',
         subscribers: subscribers
       }
     };
