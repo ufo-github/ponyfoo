@@ -4,7 +4,7 @@ set -e
 
 : "${NODE_ENV:="staging"}"
 : "${RAW_AMI:="ami-ef730185"}"
-# : "${PRIMAL_AMI:="ami-xxxxxxxx"}"
+: "${PRIMAL_AMI:="ami-dd96c2b7"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
