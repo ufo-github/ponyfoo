@@ -16,7 +16,9 @@ function getModel (req, res, next) {
     }
     var models = articles.map(function (article) {
       var article = articleService.toJSON(article, { meta: true });
-      article.permalink += '?verify=' + cryptoService.md5(article._id + article.created);
+      if (article.status !== 'published') {
+        article.permalink += '?verify=' + cryptoService.md5(article._id + article.created);
+      }
       return article;
     });
     var sorted = _.sortBy(models, sortByStatus);
