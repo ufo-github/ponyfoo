@@ -9,10 +9,12 @@ var cryptoService = require('./crypto');
 var Subscriber = require('../models/Subscriber');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
+var intent = 'Thanks for your interest in becoming a subscriber of our mailing list!';
 var reasons = {
-  article: 'Thanks for your interest in becoming a subscriber of our mailing list!',
-  sidebar: 'Thanks for your interest in becoming a subscriber of our mailing list!',
-  comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here\'s hoping that you become an active contributor on Pony Foo!. I would also like to extend you an invitation to our mailing list!'
+  landed: intent,
+  article: intent,
+  sidebar: intent,
+  comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here\'s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
 };
 
 function noop () {}
