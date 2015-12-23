@@ -61,7 +61,7 @@ uglifyjs_alone ".bin/inline/styles.js" ".bin/inline/styles.js"
 # critical css inlining
 gather() { # endpoint, component_name
   CRITICAL="$(phantomjs node_modules/penthouse/penthouse.js http://localhost:$PORT$1 $ALL_CSS 1400 1100)"
-  echo $CRITICAL | cleancss --s0 -o .bin/inlined/$2.css
+  echo $CRITICAL | apartment -p "(.*)animation(.*),(.*)transition(.*)" | cleancss --s0 -o .bin/inlined/$2.css
   echo "penthouse: gathered css for $2"
 }
 

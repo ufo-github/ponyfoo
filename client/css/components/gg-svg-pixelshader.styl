@@ -12,7 +12,7 @@
   for offset in (1..107) // 107 for logo
     &:nth-child({offset})
       animation-name logo-0
-      animation-duration 0.7s + offset * 0.01
+      animation-duration round(0.7s + offset * 0.01, 4)
 
   &[fill="#1a1a1a"]
     animation-name logo-10
@@ -34,7 +34,7 @@
     &:nth-child({offset})
       if offset > 141
         animation-name logo-hat-white
-        animation-duration 0.4s + (offset - 141) * 0.05
+        animation-duration round(0.4s + (offset - 141) * 0.05, 4)
       else
         if offset % 4 == 0
           animation-name logo-hat-yellow
@@ -42,7 +42,7 @@
           animation-name logo-hat-orange
         else
           animation-name logo-hat-red
-        animation-duration 0.35s + (141 - offset) * 0.005
+        animation-duration round(0.35s + (141 - offset) * 0.005, 4)
 
 @keyframes logo-hat-white
   60%
