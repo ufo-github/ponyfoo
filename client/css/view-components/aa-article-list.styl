@@ -39,23 +39,30 @@
   vertical-align top
   border-top 9px dotted
   margin-bottom 20px
-  margin-right 8%
-  width 46%
+  margin-right 2%
+  width 49%
+  padding 0 5px
 
   &:nth-child(2n)
     margin-right 0
   &:nth-child(6n-5)
     border-top-color darken(c-yellow-highlight, 25%)
+    background-color rgba(c-yellow-highlight, 0.05)
   &:nth-child(6n-4)
     border-top-color darken(c-orange, 25%)
+    background-color rgba(c-orange, 0.05)
   &:nth-child(6n-3)
     border-top-color c-pink
+    background-color rgba(c-pink, 0.05)
   &:nth-child(6n-2)
     border-top-color c-red
+    background-color rgba(c-red, 0.05)
   &:nth-child(6n-1)
     border-top-color c-purple
+    background-color rgba(c-purple, 0.05)
   &:nth-child(6n-0)
     border-top-color darken(c-green, 25%)
+    background-color rgba(c-green, 0.05)
 
 .aa-title
   overflow-wrap normal
@@ -75,11 +82,12 @@
 
 @media screen and (min-width: 575px)
   .aa-article
-    margin-right 5%
-    width 30%
+    margin-right 2%
+    width 32%
+    padding 0 10px
 
     &:nth-child(2n)
-      margin-right 5%
+      margin-right 2%
     &:nth-child(3n)
       margin-right 0
 
