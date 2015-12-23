@@ -42,7 +42,7 @@ function welcome (version) {
   var fourds = 'color: #4d4d4d; ' + logoFont;
   var black = 'color: #000000; ' + logoFont;
   var transparent = 'color: transparent; ' + logoFont;
-  var css = 'color: #e92c6c; font-size: 3em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;';
+  var css = 'color: #e92c6c; font-size: 1.4em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;';
 
   console.log(
     message,

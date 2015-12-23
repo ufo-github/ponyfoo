@@ -6,9 +6,14 @@
 
 .gg-container:hover rect,
 .gg-continuous rect
-  animation-name logo-0
   animation-duration 0.7s
   animation-iteration-count infinite
+
+  for offset in (1..107) // 107 for logo
+    &:nth-child({offset})
+      animation-name logo-0
+      animation-duration 0.7s + offset * 0.01
+
   &[fill="#1a1a1a"]
     animation-name logo-10
   &[fill="#333"]
@@ -24,9 +29,33 @@
   &[fill="#26E400"],
   &[fill="#999"]
     animation-name logo-eye-core
-  for offset in (1..107)
+
+  for offset in (108..223) // 116 for hat
     &:nth-child({offset})
-      animation-duration 0.7s + offset * 0.01
+      if offset > 141
+        animation-name logo-hat-white
+        animation-duration 0.4s + (offset - 141) * 0.05
+      else
+        if offset % 4 == 0
+          animation-name logo-hat-yellow
+        else if offset % 3 == 0
+          animation-name logo-hat-orange
+        else
+          animation-name logo-hat-red
+        animation-duration 0.35s + (141 - offset) * 0.005
+
+@keyframes logo-hat-white
+  60%
+    fill lighten(c-pink, 95%)
+@keyframes logo-hat-yellow
+  60%
+    fill darken(c-yellow, 5%)
+@keyframes logo-hat-red
+  60%
+    fill lighten(c-red, 20%)
+@keyframes logo-hat-orange
+  60%
+    fill lighten(c-orange, 15%)
 
 @keyframes logo-0
   20%
