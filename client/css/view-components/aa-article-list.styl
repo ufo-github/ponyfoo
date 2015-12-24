@@ -34,40 +34,65 @@
 .aa-comments
   color inherit
 
+.aa-cover
+  // background-color inherit
+  position absolute
+  transition all 0.2s ease-in-out
+  bottom 0
+  left 0
+  right 0
+
+  &:before
+    content ''
+    display block
+    height 140px
+
+  /.aa-article:hover &
+    opacity 0
+    pointer-events none
+
+.aa-cover-image
+  display block
+  width 100%
+
+aa-colored(c-border-top, c-background)
+  border-top-color c-border-top
+  background-color c-background
+  .aa-cover:before
+    background linear-gradient(to top, c-background 0, rgba(c-background, 0.8) 50%, transparent 100%)
+  .aa-cover-image
+    background-color c-background
+
 .aa-article
+  position relative
   display inline-block
   vertical-align top
   border-top 9px dotted
   margin-bottom 20px
   margin-right 2%
   width 49%
-  padding 0 5px
+  padding 15px 5px
 
   &:nth-child(2n)
     margin-right 0
   &:nth-child(6n-5)
-    border-top-color darken(c-yellow-highlight, 25%)
-    background-color rgba(c-yellow-highlight, 0.05)
+    aa-colored(darken(c-yellow-highlight, 25%), c-yellow-005)
   &:nth-child(6n-4)
-    border-top-color darken(c-orange, 25%)
-    background-color rgba(c-orange, 0.05)
+    aa-colored(darken(c-orange, 25%), c-orange-005)
   &:nth-child(6n-3)
-    border-top-color c-pink
-    background-color rgba(c-pink, 0.05)
+    aa-colored(c-pink, c-pink-005)
   &:nth-child(6n-2)
-    border-top-color c-red
-    background-color rgba(c-red, 0.05)
+    aa-colored(c-red, c-red-005)
   &:nth-child(6n-1)
-    border-top-color c-purple
-    background-color rgba(c-purple, 0.05)
+    aa-colored(c-purple, c-purple-005)
   &:nth-child(6n-0)
-    border-top-color darken(c-green, 25%)
-    background-color rgba(c-green, 0.05)
+    aa-colored(c-green, c-green-005)
 
 .aa-title
   overflow-wrap normal
   overflow hidden
   text-overflow ellipsis
+  margin-top 0
 
 .aa-empty
   text-align center
@@ -84,7 +109,7 @@
   .aa-article
     margin-right 2%
     width 32%
-    padding 0 10px
+    padding 15px 10px
 
     &:nth-child(2n)
       margin-right 2%

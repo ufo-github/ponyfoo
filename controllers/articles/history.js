@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     var expanded = articles.map(function (article) {
-      return articleService.toJSON(article, { meta: true });
+      return articleService.toJSON(article, { meta: true, id: false });
     });
     res.viewModel = {
       model: {

@@ -34,9 +34,17 @@ function extractImagesFromArticle (article) {
 function extractImages (source) {
   var many = Array.isArray(source);
   var articles = many ? source : [source];
-  var images = articles.map(extractImagesFromArticle);
-  var result = many ? _(images).pluck('0').flatten().uniq().compact().value() : _.flatten(images);
-  return appendDefaultCover(result);
+  var reduced = articles.reduce(articleReducer, {});
+  var values = _.values(reduced);
+  var images = many ? _(values).pluck('0').flatten().uniq().compact().value() : _.flatten(values);
+  return {
+    images: appendDefaultCover(images),
+    map: reduced
+  };
+  function articleReducer (reduced, article) {
+    reduced[article._id] = extractImagesFromArticle(article);
+    return reduced;
+  }
 }
 
 module.exports = {

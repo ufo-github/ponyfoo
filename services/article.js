@@ -189,6 +189,9 @@ function toJSON (source, options) {
     delete article.related;
   }
 
+  if (o.id === false) {
+    delete article._id;
+  }
   if (o.meta) {
     delete article.teaser;
     delete article.teaserHtml;

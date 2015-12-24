@@ -5,10 +5,10 @@ ol.aa-articles
     li.aa-article
       h2.aa-title
         a.aa-visit(href='/articles/' + article.slug)=article.title
-      div.aa-summary
+      section.aa-summary
         div=article.summary
         a.aa-continue(href='/articles/' + article.slug) (continued)
-      div.aa-trivia
+      section.aa-trivia
         div.aa-trivia-item
           time(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text.toLowerCase()
         div.aa-trivia-item
@@ -16,5 +16,10 @@ ol.aa-articles
           span=' read'
         div.aa-trivia-item
           a.aa-comments(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
-      span.aa-tags
+      section.aa-tags
         include ../partials/tags
+      if article.cover
+        footer.aa-cover
+          img.aa-cover-image.js-only(data-src=article.cover, alt='')
+          noscript
+            img.aa-cover-image(src=article.cover, alt='')

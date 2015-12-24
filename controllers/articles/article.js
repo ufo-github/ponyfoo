@@ -59,7 +59,7 @@ module.exports = function (req, res, next) {
       canonical: '/articles/' + article.slug,
       description: textService.truncate(htmlService.getText(article.teaserHtml + article.introductionHtml), 170),
       keywords: article.tags,
-      images: metadataService.extractImages(article)
+      images: metadataService.extractImages(article).images
     };
     model.article = articleService.toJSON(article);
     inliningService.addStyles(res.viewModel.model, 'article');

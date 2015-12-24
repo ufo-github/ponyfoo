@@ -56,10 +56,11 @@ function extractImages (key, html) {
     expires: moment().add(6, 'hours')
   };
 
+  return result;
+
   function src () {
     return $(this).attr('src');
   }
-  return result;
 }
 
 function getText (html) {
