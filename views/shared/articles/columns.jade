@@ -19,7 +19,8 @@ ol.aa-articles
       section.aa-tags
         include ../partials/tags
       if article.cover
-        footer.aa-cover
-          img.aa-cover-image.js-only(data-src=article.cover, alt='')
-          noscript
-            img.aa-cover-image(src=article.cover, alt='')
+        footer.aa-cover-footer
+          a.aa-cover-link(href='/articles/' + article.slug)
+            img.aa-cover-image.js-only(data-src=article.cover, alt='')
+            noscript
+              img.aa-cover-image(src=article.cover, alt='')

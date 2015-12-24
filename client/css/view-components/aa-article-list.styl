@@ -34,8 +34,7 @@
 .aa-comments
   color inherit
 
-.aa-cover
-  // background-color inherit
+.aa-cover-footer
   position absolute
   transition all 0.2s ease-in-out
   bottom 0
@@ -51,16 +50,21 @@
     opacity 0
     pointer-events none
 
+.aa-cover-link
+  display block
+
 .aa-cover-image
   display block
-  width 100%
+  margin 0 auto
+  max-width 100%
+  max-height 300px
 
 aa-colored(c-border-top, c-background)
   border-top-color c-border-top
   background-color c-background
-  .aa-cover:before
+  .aa-cover-footer:before
     background linear-gradient(to top, c-background 0, rgba(c-background, 0.8) 50%, transparent 100%)
-  .aa-cover-image
+  .aa-cover-link
     background-color c-background
 
 .aa-article
