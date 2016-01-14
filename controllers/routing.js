@@ -8,6 +8,8 @@ var routes = require('./routes');
 var statusHealth = require('./api/status/health');
 var authorEngagementsNew = require('./api/author/engagements-new');
 var authorEngagementsRemove = require('./api/author/engagements-remove');
+var authorPresentationsNew = require('./api/author/presentations-new');
+var authorPresentationsRemove = require('./api/author/presentations-remove');
 var twitterLead = require('./api/twitter/lead');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
@@ -71,6 +73,8 @@ module.exports = function (app) {
 
   app.post('/api/engagements/new', authorOnly, authorEngagementsNew);
   app.post('/api/engagements/remove', authorOnly, authorEngagementsRemove);
+  app.post('/api/presentations/new', authorOnly, authorPresentationsNew);
+  app.post('/api/presentations/remove', authorOnly, authorPresentationsRemove);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
   app.post('/api/twitter-lead', twitterLead);

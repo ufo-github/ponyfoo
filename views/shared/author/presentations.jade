@@ -1,0 +1,24 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Presentations
+    section.ae-container
+      div.ae-actions
+        a.ae-add.fa.fa-pencil-square-o(href='/author/presentations/new', aria-label='Add a presentation')
+      table
+        thead
+          tr
+            th Presented
+            th Title
+            th Actions
+        tbody
+          each p in presentations
+            tr
+              td(data-label='Presented')
+                time(datetime=p.presented.datetime, aria-label=p.presented.title)='On ' + p.presented.text
+              td(data-label='Title')=p.title
+              td.ae-buttons(data-label='Actions')
+                form(action='/api/presentations/remove', method='post')
+                  input(name='id', type='hidden', value=p.id)
+                  button.ae-remove.fa.fa-remove(aria-label='Delete this presentation', type='submit')
+
+  include ../partials/aside

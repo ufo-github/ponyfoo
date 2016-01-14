@@ -1,0 +1,24 @@
+article.ly-section.vw-maintainer.de-host
+  form.vw-maintainer-content.de-column(action='/api/presentations/new', method='post')
+    h1.vw-title New Presentation
+    input.apn-title(name='title', placeholder='What is the name of your presentation?')
+    input.apn-slug(name='slug', placeholder='name-of-presentation')
+    input.apn-presented(name='presented', placeholder='DD-MM-YYYY of first time it was presented')
+    div
+      textarea.apn-description.wk-textarea(name='description', placeholder='Describe the presentation')
+    input.apn-youtube(name='youtube', placeholder='YouTube embed link')
+    input.apn-vimeo(name='vimeo', placeholder='Vimeo embed link')
+    input.apn-speakerdeck-id(name='speakerdeck_id', placeholder='Speaker Deck presentation ID')
+    input.apn-speakerdeck-ratio(name='speakerdeck_ratio', placeholder='Speaker Deck presentation ratio', value='1.33333333333333')
+    div.apn-resources
+      input.apn-resources-title(name='resources_title[]', placeholder='Relevant resource title')
+      input.apn-resources-url(name='resources_url[]', placeholder='Relevant resource link')
+    footer.apn-actions
+      a.apn-add-resource(aria-label='Add another related resource') Add extra resource
+      a.apn-cancel(href='/author/presentations', aria-label='Back to list of presentations') Cancel
+      span(aria-label='Make the presentation public!')
+        button.gg-container.bt-button.bt-pink(type='submit')
+          span.bt-text Publish
+          include ../partials/button-background
+
+  include ../partials/aside

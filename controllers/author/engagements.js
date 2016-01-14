@@ -15,8 +15,8 @@ module.exports = function (req, res, next) {
           return {
             id: engagement._id.toString(),
             conference: engagement.conference,
-            range: datetimeService.range(engagement.start, engagement.end),
-          }
+            range: datetimeService.range(engagement.start, engagement.end)
+          };
         })
       }
     };

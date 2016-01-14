@@ -1,3 +1,12 @@
+mixin speakingCta
+  span.tku-map
+    img.js-only(data-src=engagements.fullMap, alt='')
+    noscript
+      img(src=engagements.fullMap, alt='')
+    a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:speaking@ponyfoo.com')
+      span.bt-text Let's talk!
+      include ../partials/button-background
+
 mixin dateRange (t)
   each date, i in t.range.dates
     if i > 0
@@ -43,13 +52,7 @@ article.tk-container
       span events
       span.tkf-connector .
       div.tku-site-container Want me to speak or run a workshop at your event?
-      span.tku-map
-        img.js-only(data-src=engagements.fullMap, alt='')
-        noscript
-          img(src=engagements.fullMap, alt='')
-        a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:talks@ponyfoo.com')
-          span.bt-text Let's talk!
-          include ../partials/button-background
+      +speakingCta
 
 article.tk-container
   header
@@ -95,7 +98,7 @@ article.tk-container
                     mozAllowFullScreen,
                     AllowFullScreen
                   )
-              if p.speakerdeck
+              if p.speakerdeck && p.speakerdeck.id && p.speakerdeck.ratio
                 section.pt-speakerdeck
                   script.speakerdeck-embed(
                     data-id=p.speakerdeck.id,
@@ -132,12 +135,6 @@ article
 
       section
         h2.tk-heading Want me to speak or run a workshop at your event?
-        span.tku-map
-          img.js-only(data-src=engagements.fullMap, alt='')
-          noscript
-            img(src=engagements.fullMap, alt='')
-          a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:talks@ponyfoo.com')
-            span.bt-text Let's talk!
-            include ../partials/button-background
+        +speakingCta
 
     include ../partials/aside
