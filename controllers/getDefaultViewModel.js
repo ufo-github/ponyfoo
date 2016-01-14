@@ -32,12 +32,12 @@ function getDefaultViewModel (done) {
 
     done(null, {
       author: {
-        contact: 'Nicolas Bevacqua <hello@ponyfoo.com>',
+        contact: 'Nicolás Bevacqua <hello@ponyfoo.com>',
         twitter: '@nzgb'
       },
       description: '',
       model: {
-        title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolas Bevacqua',
+        title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolás Bevacqua',
         pkg: {
           version: pkg.version
         },
@@ -46,7 +46,7 @@ function getDefaultViewModel (done) {
           authority: authority
         },
         meta: {
-          description: 'Pony Foo is a technical blog maintained by Nicolas Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.',
+          description: 'Pony Foo is a technical blog maintained by Nicolás Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.',
           images: [authority + '/img/ponyfoo.png'],
           keywords: []
         },

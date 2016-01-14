@@ -1,0 +1,67 @@
+mixin dateRange (t)
+  each date, i in t.range.dates
+    if i > 0
+      span.tk-day-separator=t.range.dates[i - 1][1] ? ' \u2014 ' : '\u2014'
+    strong.tk-day=date[0]
+    if date[1]
+      span.tk-month-separator=' '
+      span.tk-month=date[1]
+  span=' '
+  span.tk-year=t.range.year
+
+section.tk-full-map-container
+  img.tk-full-map(src=talks.fullMap, alt='')
+
+article.tk-container
+  header
+    h1.tk-heading Upcoming Conference Appearances
+
+  ol.tku-list
+    each t in talks.upcoming
+      li.tku-item
+        span.tk-range(aria-label=t.range.title)
+          +dateRange(t)
+        div.tku-site-container
+          a.tk-site(href=t.website, target='_blank')=t.conference
+        div
+          span.tk-venue-connector='At '
+          span=t.venue
+        a.tku-map(href=t.map.link, target='_blank')
+          img.js-only(data-src=t.map.image, alt='')
+          noscript
+            img(src=t.map.image, alt='')
+          ul.tku-tags.tk-tags
+            each tag in t.tags
+              li.tku-tag.tk-tag=tag
+
+    li.tku-item
+      span.tkf-connector In the
+      span=' '
+      span future
+      span.tkf-connector , at your
+      span=' '
+      span events
+      div.tku-site-container Want me to speak or give a workshop at your event?
+      span.tku-map
+        img.js-only(data-src=talks.fullMap, alt='')
+        noscript
+          img(src=talks.fullMap, alt='')
+        a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:talks@ponyfoo.com')
+          span.bt-text Let's talk!
+          include ../partials/button-background
+
+article.tk-container
+  header
+    h2.tk-heading Conference Appearances in the Past
+
+  ol.tkp-list
+    each t in talks.past
+      li.tkp-item
+        a.tk-site(href=t.website, target='_blank')=t.conference
+        span.tk-venue-connector=' at '
+        span.tk-venue=t.venue
+        ul.tk-tags
+          each tag in t.tags
+            li.tk-tag=tag
+        span.tkp-range.tk-range(aria-label=t.range.title)
+          +dateRange(t)

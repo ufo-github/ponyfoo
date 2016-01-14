@@ -1,5 +1,5 @@
 /* TEAM */
-    Chef: Nicolas Bevacqua
+    Chef: Nicolás Bevacqua
     Contact: hello@ponyfoo.com
     Twitter: @nzgb
     GitHub: bevacqua

@@ -31,7 +31,7 @@ module.exports = function (req, res, next) {
 
 function cast (log) {
   return {
-    created: datetimeService.field(log.timestamp, true),
+    created: datetimeService.field(log.timestamp, 'precise'),
     message: log.message,
     level: log.level,
     meta: metaToModel(log.meta)

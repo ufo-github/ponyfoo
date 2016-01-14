@@ -2,17 +2,25 @@
 
 var $ = require('dominus');
 var taunus = require('taunus/global');
-var ga = require('./ga-snippet');
+var env = require('../lib/env');
 var main = $.findOne('.ly-main');
-var property = '100527664';
+var property = env('CLICKY_PROPERTY');
 
-require('./clicky-snippet');
-
-global.clicky_site_ids = [property];
-global.clicky_custom = { timer: 0 };
-
-taunus.on('render', function (container, viewModel) {
-  if (container === main && global.clicky) {
-    global.clicky.log(global.location.href);
+module.exports = function clicky () {
+  if (!property) {
+    return;
   }
-});
+
+  require('./clicky-snippet')();
+
+  global.clicky_site_ids = [property];
+  global.clicky_custom = { timer: 0 };
+
+  taunus.on('render', render);
+
+  function render (container, viewModel) {
+    if (container === main && global.clicky) {
+      global.clicky.log(global.location.href);
+    }
+  }
+};

@@ -1,3 +1,5 @@
 'use strict';
 
-require('../lib/loadScript')('//static.getclicky.com/js');
+module.exports = function clickySnippet () {
+  require('../lib/loadScript')('//static.getclicky.com/js');
+};

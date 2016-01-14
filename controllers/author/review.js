@@ -15,11 +15,11 @@ function getModel (req, res, next) {
       next(err); return;
     }
     var models = articles.map(function (article) {
-      var article = articleService.toJSON(article, { meta: true });
-      if (article.status !== 'published') {
-        article.permalink += '?verify=' + cryptoService.md5(article._id + article.created);
+      var model = articleService.toJSON(article, { meta: true });
+      if (model.status !== 'published') {
+        model.permalink += '?verify=' + cryptoService.md5(model._id + model.created);
       }
-      return article;
+      return model;
     });
     var sorted = _.sortBy(models, sortByStatus);
     res.viewModel = {

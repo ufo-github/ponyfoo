@@ -19,6 +19,7 @@ module.exports = [
   { route: '/articles/:year(\\d{4})/:month([01]\\d)', action: 'articles/dated' },
   { route: '/articles/:year(\\d{4})', action: 'articles/dated' },
   { route: '/articles/:slug', action: 'articles/article' },
+  { route: '/talks', action: 'talks/home' },
   { route: '/account/login', action: 'account/login' },
   { route: '/account/login/:provider', ignore: true },
   { route: '/account/logout', ignore: true },

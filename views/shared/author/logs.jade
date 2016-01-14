@@ -1,4 +1,4 @@
-mixin pager ()
+mixin pager
   section.an-siblings.uv-clearfix
     if page > 1
       a.an-anchor.an-prev(href=page === 2 ? taunus.resolve('author/logs') : taunus.resolve('author/logs', { page: page - 1 }), rel='prev', aria-label='Go to the previous page') « Newer
@@ -11,7 +11,7 @@ article.vw-maintainer.de-host
 
     section.lg-container
       header.lg-actions
-        +pager()
+        +pager
 
       if logs.length
         table.lg-table
@@ -23,6 +23,6 @@ article.vw-maintainer.de-host
             include logs/rows
 
         footer.lg-actions
-          +pager()
+          +pager
 
   include ../partials/aside

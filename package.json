@@ -4,7 +4,7 @@
   "version": "1.0.37",
   "homepage": "https://github.com/bevacqua/ponyfoo",
   "authors": [
-    "Nicolas Bevacqua <nicolasbevacqua@gmail.com>"
+    "Nicolás Bevacqua <nicolasbevacqua@gmail.com>"
   ],
   "engines": {
     "node": "4.2.1"
@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "accepts": "1.2.13",
+    "assignment": "2.2.0",
     "bcrypt": "0.8.5",
     "body-parser": "1.3.0",
     "but": "2.0.1",

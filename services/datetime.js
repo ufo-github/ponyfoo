@@ -8,14 +8,15 @@ var formats = {
     title: 'hh:mm:ss A, MMM D, YYYY ([GMT] Z)',
     text: 'hh:mm:ss A, MMM D'
   },
-  concise: {
+  default: {
     title: 'hh:mm A, MMM D, YYYY ([GMT] Z)',
     text: 'MMM D, YYYY'
   }
 };
 
-function field (value, precise) {
-  var f = formats[precise === true ? 'precise' : 'concise'];
+function field (value, format) {
+  var ff = format || 'default';
+  var f = formats[ff];
   var m = moment(value);
   if (m.isValid()) {
     return {
@@ -25,6 +26,36 @@ function field (value, precise) {
     };
   }
   return null;
+}
+
+function range (left, right) {
+  var start = moment(left);
+  var end = moment(right);
+  var singleMonth = start.month() === end.month();
+  var singleDate = singleMonth && start.date() === end.date();
+  return {
+    year: end.format('YYYY'),
+    dates: getDates(),
+    title: getTitle()
+  };
+  function getDates () {
+    if (singleDate) {
+      return [[start.format('Do'), start.format('MMMM')]];
+    }
+    if (singleMonth) {
+      return [[start.format('D')], [end.format('D'), end.format('MMMM')]];
+    }
+    return [[start.format('D'), start.format('MMM')], [end.format('D'), end.format('MMM')]];
+  }
+  function getTitle () {
+    if (singleDate) {
+      return start.format('Do MMMM, YYYY');
+    }
+    if (singleMonth) {
+      return start.format('D') + '—' + end.format('D MMMM, YYYY');
+    }
+    return start.format('D MMM') + ' — ' + end.format('D MMM, YYYY');
+  }
 }
 
 function prettifyTimezone (text) { // turns -03:00 into -3, +00:00 into nothingness
@@ -57,6 +88,7 @@ function parseDuration (value) {
 }
 
 module.exports = {
+  range: range,
   field: field,
   parseDate: parseDate,
   parseDuration: parseDuration

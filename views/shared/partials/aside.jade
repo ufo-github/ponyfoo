@@ -1,23 +1,12 @@
 aside.de-sidebar.de-column
-  section.de-carbon.ca-container
-    div.ca-loading
-      span A relevant ad will be displayed here soon. These ads help pay for my hosting.
-    div.ca-content
-      div.ca-blocked.uv-hidden
-        span Please consider disabling your ad blocker on Pony Foo. These ads help pay for my hosting.
-        div.ca-support
-          span='You can also support Pony Foo directly through '
-          a(href='https://patreon.com/bevacqua', target='_blank') Patreon
-          span=' or via '
-          a(href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=29CRFXW53HRP2') PayPal
-          span .
+  include ad
 
   form#search.ly-section.de-search(action='/articles/search', method='get', name='search')
     div.de-search-label
       sub Search for articles
     input.de-input.sr-input(placeholder='e.g JavaScript', name='terms', value=query && query.replace(/"/g,''))
 
-    span.bt-label.de-button(aria-label='Pro Tip: use "[js]" to search for article tags!')
+    span.de-button(aria-label='Pro Tip: use "[js]" to search for article tags!')
       button.gg-container.bt-button.bt-pink.sr-button(type='submit')
         span.bt-text Search
         include ../partials/button-background
@@ -38,7 +27,7 @@ aside.de-sidebar.de-column
     input.ss-source(type='hidden', name='source', value='sidebar')
     input.de-input.ss-input(placeholder='you@provider.io', name='subscriber')
 
-    span.bt-label.de-button(aria-label='As easy as clicking this button and confirming via email!')
+    span.de-button(aria-label='As easy as clicking this button and confirming via email!')
       button.gg-container.bt-button.bt-pink.ss-button(type='submit')
         span.bt-text Subscribe
         include ../partials/button-background
