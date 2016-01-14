@@ -4,7 +4,7 @@ var datetimeService = require('../../services/datetime');
 var Engagement = require('../../models/Engagement');
 
 module.exports = function (req, res, next) {
-  Engagement.find({}).lean().exec(function (err, engagements) {
+  Engagement.find({}).sort('-end').lean().exec(function (err, engagements) {
     if (err) {
       next(err); return;
     }

@@ -1,6 +1,6 @@
 .tk-full-map-container
   position relative
-  margin 20px 0
+  margin-top 20px
   &:before
     position absolute
     left 0
@@ -15,11 +15,12 @@
   width 100%
 
 .tk-container
-  padding 20px
+  padding 0 20px
 
 .tk-heading
   text-align center
-  margin 60px 0 80px
+  margin 100px 0
+  font-size 3em
 
 .tk-site
   color c-pink
@@ -60,16 +61,10 @@
 
 .tku-list
   list-style-type none
+  margin-top -60px
 
 .tku-item
-  display inline-block
-  vertical-align top
-  width 30%
   margin-top 60px
-  margin-right 5%
-
-  &:nth-child(3n)
-    margin-right 0
 
 .tku-site-container
   background-color rgba(c-pink, 0.02)
@@ -77,12 +72,15 @@
   padding 5px
   font-weight 700
   font-size 24px
-  font-family f-subheading
   text-align right
+
+.ly-teasers .tku-site-container
+  font-family f-subheading
 
 .tku-map
   position relative
   display block
+  text-align right
   min-height 90px
 
 .tku-tags
@@ -113,12 +111,56 @@
 
 .tkp-item
   display block
-  margin 20px 0
+  margin 40px 0
   .tk-site,
   .tk-venue-connector,
   .tk-venue,
   .tk-range
     vertical-align middle
 
+.tkp-venue
+  color inherit
+
 .tkp-range
   float right
+
+.tkp-tags,
+.tkp-venue-connector,
+.tkp-venue
+  display none
+
+.tks-image
+  display block
+  width 100%
+
+.tks-image-footer
+  text-align right
+  font-style italic
+  font-weight 300
+
+.tks-image-link
+  color c-pink
+
+@media only screen and (min-width: 768px)
+  .tkp-tags
+    display inline-block
+
+  .tkp-venue-connector,
+  .tkp-venue
+    display inline
+
+@media only screen and (min-width: 1000px)
+  .tk-heading
+    font-size 4.5em
+
+  .tku-item
+    display inline-block
+    vertical-align top
+    width 30%
+    margin-right 5%
+
+    &:nth-child(3n)
+      margin-right 0
+
+  .tkp-item
+    margin 20px 0

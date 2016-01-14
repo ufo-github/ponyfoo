@@ -10,14 +10,14 @@ mixin dateRange (t)
   span.tk-year=t.range.year
 
 section.tk-full-map-container
-  img.tk-full-map(src=talks.fullMap, alt='')
+  img.tk-full-map(src=engagements.fullMap, alt='')
 
 article.tk-container
   header
     h1.tk-heading Upcoming Conference Appearances
 
   ol.tku-list
-    each t in talks.upcoming
+    each t in engagements.upcoming
       li.tku-item
         span.tk-range(aria-label=t.range.title)
           +dateRange(t)
@@ -42,11 +42,11 @@ article.tk-container
       span=' '
       span events
       span.tkf-connector .
-      div.tku-site-container Want me to speak or give a workshop at your event?
+      div.tku-site-container Want me to speak or run a workshop at your event?
       span.tku-map
-        img.js-only(data-src=talks.fullMap, alt='')
+        img.js-only(data-src=engagements.fullMap, alt='')
         noscript
-          img(src=talks.fullMap, alt='')
+          img(src=engagements.fullMap, alt='')
         a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:talks@ponyfoo.com')
           span.bt-text Let's talk!
           include ../partials/button-background
@@ -56,13 +56,88 @@ article.tk-container
     h2.tk-heading Conference Appearances in the Past
 
   ol.tkp-list
-    each t in talks.past
-      li.tkp-item
+    each t in engagements.past
+      li.tkp-item.uv-clearfix
         a.tk-site(href=t.website, target='_blank')=t.conference
-        span.tk-venue-connector=' at '
-        span.tk-venue=t.venue
-        ul.tk-tags
+        span.tkp-venue-connector.tk-venue-connector=' at '
+        a.tkp-venue.tk-venue(href=t.map.link, target='_blank')=t.venue
+        ul.tkp-tags.tk-tags
           each tag in t.tags
             li.tk-tag=tag
         span.tkp-range.tk-range(aria-label=t.range.title)
           +dateRange(t)
+
+article.tk-container
+  header
+    h2.tk-heading Talk Videos and Slides
+
+    ol.pt-list
+      each p in presentations
+        li.pt-item
+          h2.pt-title=p.title
+          section.pt-embed-container
+            div.pt-embeds
+              if p.youtube
+                section.pt-video.pt-youtube
+                  iframe.pt-video-frame.pt-youtube-frame(
+                    src=p.youtube,
+                    frameBorder='0',
+                    webkitAllowFullScreen,
+                    mozAllowFullScreen,
+                    AllowFullScreen
+                  )
+              if p.vimeo
+                section.pt-video.pt-vimeo
+                  iframe.pt-video-frame.pt-vimeo-frame(
+                    src=p.vimeo,
+                    frameBorder='0',
+                    webkitAllowFullScreen,
+                    mozAllowFullScreen,
+                    AllowFullScreen
+                  )
+              if p.speakerdeck
+                section.pt-speakerdeck
+                  script.speakerdeck-embed(
+                    data-id=p.speakerdeck.id,
+                    data-ratio=p.speakerdeck.ratio,
+                    src='//speakerdeck.com/assets/embed.js',
+                    async
+                  )
+          section.pt-description
+            p.pt-description-text.md-markdown!=p.description
+          ul.pt-resources
+            each r in p.resources
+              li.pt-resource
+                a.pt-resource-link(href=r.url, target='_blank')!=r.title
+
+article
+  header
+    h2.tk-heading Workshops and Presentations
+
+  section.de-host
+    div.tk-container.de-column
+      img.tks-image(src='/img/speaking.jpg', alt='')
+      div.tks-image-footer
+        sub
+          span Photograph on stage, while presenting
+          span=' '
+          strong Practical ES6 for the Modern JavaScript Tinkerer
+          span=' at '
+          a.tks-image-link(href='http://2015.dotjs.eu/', target='_blank') dotJS in Paris
+          span , 2015.
+      div
+        p Delivering a talk on something I'm passionate about is fun and exciting. I enjoy speaking about all things JavaScript, performance, maintainable code, and the open web.
+        p My preferred format is to deliver 25&mdash;30 minute presentations where your audience will be inspired about a topic I deeply care about. There are topics that definitely deserve an extended treatment, though. In this case, limited-attendance workshops are a good fit where your audience can learn about a subject extensively.
+        p I've delivered workshops on web performance before and I'm also interested in delivering workshops on ES6 as well as all things JavaScript. If you'd like to discuss the possibility of me running a workshop at your event, please use the contact button below and shoot me an email!
+
+      section
+        h2.tk-heading Want me to speak or run a workshop at your event?
+        span.tku-map
+          img.js-only(data-src=engagements.fullMap, alt='')
+          noscript
+            img(src=engagements.fullMap, alt='')
+          a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:talks@ponyfoo.com')
+            span.bt-text Let's talk!
+            include ../partials/button-background
+
+    include ../partials/aside

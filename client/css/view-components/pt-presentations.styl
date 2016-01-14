@@ -1,0 +1,97 @@
+.pt-list
+  list-style-type none
+
+.pt-item
+  position relative
+  margin-bottom 60px
+  padding-bottom 60px
+  &:last-child
+    margin-bottom 0
+  &:before
+    position absolute
+    left 0
+    right 0
+    bottom 0
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 40%, c-yellow-highlight 66%, c-orange 100%)
+  &:nth-child(even):before
+    background linear-gradient(to left,  c-white 40%, c-yellow-highlight 66%, c-orange 100%)
+
+.pt-speakerdeck,
+.pt-video
+  min-height 230px
+  margin-bottom 20px
+
+.pt-video-frame
+  width 100%
+  min-height 230px
+
+.pt-container
+  border-bottom 3px dotted c-yellow
+  background-color c-yellow-highlight-04
+  padding 20px
+
+  &:nth-child(even)
+    background-color c-yellow-highlight-04
+
+  &:last-child
+    border-bottom none
+
+.pt-title
+  margin-top 0
+
+.ly-teasers .pt-title
+  font-family f-subheading
+
+.pt-description-text
+  margin 0
+
+.pt-resources
+  margin-top 20px
+
+.pt-resource
+  line-height 30px
+
+.pt-resource-link
+  color c-pink
+
+@media only screen and (min-width: 500px)
+  .pt-video-frame
+    min-height 400px
+
+@media only screen and (min-width: 800px)
+  .pt-speakerdeck,
+  .pt-video,
+  .pt-description,
+  .pt-resources
+    display inline-block
+    vertical-align top
+    width 47%
+    margin-bottom 0
+
+  .pt-video,
+  .pt-description
+    margin-right 6%
+
+  .pt-resources
+    margin 0
+
+  .pt-embed-container
+    margin 20px -20px
+    padding 20px
+    background-color c-yellow-01
+
+  .pt-embeds
+    position relative
+
+  .pt-video
+    height 0
+
+  .pt-video-frame
+    position absolute
+    top 0
+    left 0
+    width 47%
+    height 100%
+    min-height 100%
