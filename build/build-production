@@ -39,7 +39,8 @@ uglifyjs_alone() {
     --output $2
 }
 
-# d3
+# deferred libraries
+browserify_standalone "rome" "node_modules/rome" ".bin/public/js/rome.js"
 browserify_standalone "d3" "node_modules/d3" ".bin/public/js/d3.js"
 browserify_standalone "d3-tip" "node_modules/d3-tip" ".bin/public/js/d3-tip.js"
 

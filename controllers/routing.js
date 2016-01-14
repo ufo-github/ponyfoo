@@ -6,6 +6,8 @@ var taunusExpress = require('taunus-express');
 var transports = require('transports');
 var routes = require('./routes');
 var statusHealth = require('./api/status/health');
+var authorEngagementsNew = require('./api/author/engagements-new');
+var authorEngagementsRemove = require('./api/author/engagements-remove');
 var twitterLead = require('./api/twitter/lead');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
@@ -66,6 +68,9 @@ module.exports = function (app) {
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
 
   app.post('/api/email', authorOnly, authorEmail);
+
+  app.post('/api/engagements/new', authorOnly, authorEngagementsNew);
+  app.post('/api/engagements/remove', authorOnly, authorEngagementsRemove);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
   app.post('/api/twitter-lead', twitterLead);

@@ -9,85 +9,17 @@ var datetimeService = require('../../services/datetime');
 var browserEnv = require('../../client/js/lib/env');
 var mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
 var Engagement = require('../../models/Engagement');
+var pastTagMap = {
+  speaking: 'spoke',
+  organizing: 'organized',
+  attending: 'attended'
+};
 
 module.exports = function (req, res, next) {
   Engagement.find({}).lean().exec(function (err, engagements) {
     if (err) {
       next(err); return;
     }
-    engagements = [{
-      start: moment().add(5, 'days').toDate(),
-      end: moment().add(80, 'days').toDate(),
-      conference: 'JSConf Buulstan',
-      venue: 'Casa Familia Bevacqua',
-      location: 'Falkland Islands',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking']
-    }, {
-      start: moment().add(5, 'days').toDate(),
-      end: moment().add(7, 'days').toDate(),
-      conference: 'Foo Bar',
-      venue: 'Beer Garden',
-      location: 'Paris, France',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking', 'Workshop']
-    }, {
-      start: moment().add(5, 'days').toDate(),
-      end: moment().add(80, 'days').toDate(),
-      conference: 'JSConf Buulstan',
-      venue: 'Casa Familia Bevacqua',
-      location: 'Barcelona 1053, Morón',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking', 'Workshop']
-    }, {
-      start: moment().subtract(7, 'days').toDate(),
-      end: moment().subtract(5, 'days').toDate(),
-      conference: 'Foo Bar',
-      venue: 'Palermo Viejo',
-      location: 'Julian Perez 1010, Morón',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking']
-    }, {
-      start: moment().add(5, 'days').toDate(),
-      end: moment().add(80, 'days').toDate(),
-      conference: 'JSConf Buulstan',
-      venue: 'Casa Familia Bevacqua',
-      location: 'Sttutgart',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking']
-    }, {
-      start: moment().subtract(5, 'days').toDate(),
-      end: moment().subtract(5, 'days').toDate(),
-      conference: 'Foo Bar',
-      venue: 'Beer Garden',
-      location: 'San Francisco, SF, US',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking']
-    }, {
-      start: moment().subtract(80, 'days').toDate(),
-      end: moment().subtract(5, 'days').toDate(),
-      conference: 'JSConf Buulstan',
-      venue: 'Casa Familia Bevacqua',
-      location: 'Falkland Islands',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking']
-    }, {
-      start: moment().subtract(5, 'days').toDate(),
-      end: moment().subtract(2, 'days').toDate(),
-      conference: 'Foo Bar',
-      venue: 'Beer Garden',
-      location: 'Paris, France',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking', 'Workshop']
-    }, {
-      start: moment().add(5, 'days').toDate(),
-      end: moment().add(80, 'days').toDate(),
-      conference: 'JSConf Buulstan',
-      venue: 'Casa Familia Bevacqua',
-      location: 'Barcelona 1053, Morón',
-      website: 'https://tiramoslacasaporlaventana.com',
-      tags: ['Speaking', 'Workshop']
-    }];
     var upcoming = _.sortBy(engagements.filter(hasNotEnded), 'end');
     var diff = _.difference(engagements, upcoming);
     var past = _.sortBy(diff, 'end').reverse();
@@ -131,6 +63,7 @@ function getMarkerSize (engagement) {
 }
 
 function toTalk (engagement, i) {
+  var upcoming = hasNotEnded(engagement);
   var talk = {
     range: datetimeService.range(engagement.start, engagement.end),
     conference: engagement.conference,
@@ -144,9 +77,12 @@ function toTalk (engagement, i) {
         size: getMarkerSize(engagement)
       }], { scale: 17 })
     },
-    tags: engagement.tags
+    tags: engagement.tags.map(toTagText)
   };
   return talk;
+  function toTagText (tag) {
+    return upcoming ? tag : pastTagMap[tag] || tag;
+  }
 }
 
 function hasStarted (engagement) {

@@ -28,6 +28,8 @@ module.exports = [
   { route: '/author/compose/:slug', action: 'author/compose', middleware: authorOnly },
   { route: '/author/email', action: 'author/email', middleware: authorOnly },
   { route: '/author/review', action: 'author/review', middleware: authorOnly },
+  { route: '/author/engagements', action: 'author/engagements', middleware: authorOnly },
+  { route: '/author/engagements/new', action: 'author/engagements-new', middleware: authorOnly },
   { route: '/author/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: authorOnly },
   { route: '/author/subscribers', action: 'author/subscribers', middleware: authorOnly },
   { route: '/subscribe', action: 'marketing/subscribe' },

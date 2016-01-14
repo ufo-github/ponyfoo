@@ -1,0 +1,32 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Engagements
+    section.ae-container
+      div.ae-actions
+        a.ae-add.fa.fa-pencil-square-o(href='/author/engagements/new', aria-label='Add an engagement')
+      table
+        thead
+          tr
+            th Dates
+            th Conference
+            th Actions
+        tbody
+          each engagement in engagements
+            tr
+              td(data-label='Dates')
+                each date, i in engagement.range.dates
+                  if i > 0
+                    span=engagement.range.dates[i - 1][1] ? ' \u2014 ' : '\u2014'
+                  strong=date[0]
+                  if date[1]
+                    span=' '
+                    span=date[1]
+                span=' '
+                span=engagement.range.year
+              td(data-label='Conference')=engagement.conference
+              td.ae-buttons(data-label='Actions')
+                form(action='/api/engagements/remove', method='post')
+                  input(name='id', type='hidden', value=engagement.id)
+                  button.ae-remove.fa.fa-remove(aria-label='Delete this engagement', type='submit')
+
+  include ../partials/aside

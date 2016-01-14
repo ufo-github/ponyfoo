@@ -5,7 +5,8 @@
 npm run clean
 npm run copy
 
-# d3
+# deferred libraries
+browserify node_modules/rome -s rome -o .bin/public/js/rome.js --debug
 browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js --debug
 browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug
 

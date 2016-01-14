@@ -1,3 +1,5 @@
 'use strict';
 
-require('../lib/loadScript')('//assets.codepen.io/assets/embed/ei.js');
+module.exports = function codepen () {
+  require('../lib/loadScript')('//assets.codepen.io/assets/embed/ei.js');
+};
