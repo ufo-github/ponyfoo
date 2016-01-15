@@ -8,7 +8,7 @@ section.pt-embed-container
           mozallowfullscreen,
           webkitallowfullscreen,
           frameborder='0',
-          src=presentation.youtube
+          data-src=presentation.youtube
         )
     else if presentation.vimeo
       section.pt-video.pt-vimeo
@@ -18,10 +18,11 @@ section.pt-embed-container
           mozallowfullscreen,
           webkitallowfullscreen,
           frameborder='0',
-          src=presentation.vimeo
+          data-src=presentation.vimeo
         )
     else
-      section.pt-video No live-recorded presentation video yet!
+      section.pt-video.pt-empty
+        span.pt-empty-text No live-recorded presentation video yet!
     if presentation.speakerdeck
       section.pt-speakerdeck
         iframe.pt-speakerdeck-frame(
@@ -30,8 +31,11 @@ section.pt-embed-container
           mozallowfullscreen,
           webkitallowfullscreen,
           frameborder='0',
-          src='https://speakerdeck.com/player/' + presentation.speakerdeck
+          data-src='https://speakerdeck.com/player/' + presentation.speakerdeck
         )
+    else
+      section.pt-speakerdeck.pt-empty
+        span.pt-empty-text No presentation slides yet!
 section.pt-description.md-markdown!=presentation.description
 ul.pt-resources
   each r in presentation.resources

@@ -20,6 +20,7 @@ require('./conventions/twitter')();
 require('./conventions/ajaxLogoNavigation')();
 require('./conventions/ajax')();
 require('./conventions/loading')();
+require('./conventions/unwrapFrames')();
 require('./conventions/unwrapImages')();
 require('./conventions/unwrapEmails')();
 require('./conventions/linkifyHeadings')();
