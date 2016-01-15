@@ -27,19 +27,31 @@ function home (req, res, next) {
     var upcoming = _.sortBy(data.engagements.filter(hasNotEnded), 'end');
     var diff = _.difference(data.engagements, upcoming);
     var past = _.sortBy(diff, 'end').reverse();
+    var fullMap = getFullMap(data.engagements);
+    var upcomingModels = upcoming.map(toEngagementModel);
     res.viewModel = {
       model: {
         title: 'Conference Talks presented by Nicolás Bevacqua',
+        meta: {
+          canonical: '/speaking',
+          images: [fullMap]
+            .concat(upcomingModels.map(toEngagementMapImage))
+            .concat('/img/speaking.b83cbc22.jpg')
+        },
         engagements: {
-          upcoming: upcoming.map(toEngagementModel),
+          upcoming: upcomingModels,
           past: past.map(toEngagementModel),
-          fullMap: getFullMap(data.engagements)
+          fullMap: fullMap
         },
         presentations: data.presentations.map(presentationService.toModel)
       }
     };
     next();
   });
+}
+
+function toEngagementMapImage (engagement) {
+  return engagement.map.image;
 }
 
 function getModelData (done) {
@@ -62,7 +74,7 @@ function getFullMap (engagements) {
     return {
       location: engagement.location,
       color: getMarkerColor(engagement),
-      size: getMarkerSize(engagement)
+      size: 'tiny'
     };
   }
 }
@@ -74,10 +86,6 @@ function getMarkerColor (engagement) {
   return hex;
 }
 
-function getMarkerSize (engagement) {
-  return 'tiny';
-}
-
 function toEngagementModel (engagement) {
   var upcoming = hasNotEnded(engagement);
   var model = {
@@ -85,12 +93,13 @@ function toEngagementModel (engagement) {
     conference: engagement.conference,
     website: engagement.website,
     venue: engagement.venue,
+    location: engagement.location,
     map: {
       link: 'https://maps.google.com?q=' + encodeURIComponent(engagement.location).replace(/%20/g, '+'),
       image: getMapImageUrl([{
         location: engagement.location,
         color: getMarkerColor(engagement),
-        size: getMarkerSize(engagement)
+        size: 'med'
       }], { scale: 17 })
     },
     tags: engagement.tags.map(toTagText)

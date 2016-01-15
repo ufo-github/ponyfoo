@@ -10,7 +10,7 @@ section.pt-embed-container
           frameborder='0',
           src=presentation.youtube
         )
-    if presentation.vimeo
+    else if presentation.vimeo
       section.pt-video.pt-vimeo
         iframe.pt-video-frame.pt-vimeo-frame(
           allowfullscreen,
@@ -20,6 +20,8 @@ section.pt-embed-container
           frameborder='0',
           src=presentation.vimeo
         )
+    else
+      section.pt-video No live-recorded presentation video yet!
     if presentation.speakerdeck
       section.pt-speakerdeck
         iframe.pt-speakerdeck-frame(

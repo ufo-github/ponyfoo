@@ -1,8 +1,6 @@
 mixin speakingCta
   span.tku-map
-    img.js-only(data-src=engagements.fullMap, alt='')
-    noscript
-      img(src=engagements.fullMap, alt='')
+    img(src=engagements.fullMap, alt='')
     a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we\'ll discuss it.', data-email='mailto:speaking@ponyfoo.com')
       span.bt-text Let's talk!
       include ../partials/button-background
@@ -18,8 +16,10 @@ mixin dateRange (t)
   span=' '
   span.tk-year=t.range.year
 
-section.tk-full-map-container
-  img.tk-full-map(src=engagements.fullMap, alt='')
+section.tkfm-container
+  img.tkfm-static(src=engagements.fullMap, alt='')
+  div.tkfm-interactive.tkfm-interactive-unloaded
+  div.tkfm-interact.uv-hidden Want to take a look around?
 
 article.tk-container
   header
@@ -36,9 +36,7 @@ article.tk-container
           span.tk-venue-connector='At '
           span=t.venue
         a.tku-map(href=t.map.link, target='_blank')
-          img.js-only(data-src=t.map.image, alt='')
-          noscript
-            img(src=t.map.image, alt='')
+          img(src=t.map.image, alt='')
           ul.tku-tags.tk-tags
             each tag in t.tags
               li.tku-tag.tk-tag=tag

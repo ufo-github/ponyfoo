@@ -1,4 +1,6 @@
-.tk-full-map-container
+tkfm-container-gradline-height = 4px
+
+.tkfm-container
   position relative
   margin-top 20px
   &:before
@@ -6,13 +8,49 @@
     left 0
     right 0
     bottom 0
-    height 4px
+    height tkfm-container-gradline-height
     content ''
     background linear-gradient(to right, c-white 0, c-pink 66%, c-black 100%)
 
-.tk-full-map
+.tkfm-static
   display block
   width 100%
+
+.tkfm-interact,
+.tkfm-interactive
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom tkfm-container-gradline-height
+
+.tkfm-interact
+  transition opacity 1s ease-in-out
+  cursor pointer
+  text-align center
+  position absolute
+  left 0
+  right 0
+  top 50%
+  background #fff
+  height 80px
+  line-height 80px
+  opacity 0.8
+  margin-top -40px
+  color c-pink
+
+.tkfm-interact-fadeout
+  opacity 0
+  pointer-events none
+
+.tkfm-interactive
+  opacity 0
+  transition opacity 1s ease-in-out
+  visibility hidden
+
+.tkfm-interactive-fadein
+  opacity 1
+  visibility visible
 
 .tk-container
   padding 0 20px

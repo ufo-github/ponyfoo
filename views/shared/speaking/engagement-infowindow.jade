@@ -1,0 +1,15 @@
+span.tk-range(aria-label=engagement.range.title)
+  each date, i in engagement.range.dates
+    if i > 0
+      span.tk-day-separator=engagement.range.dates[i - 1][1] ? ' \u2014 ' : '\u2014'
+    strong.tk-day=date[0]
+    if date[1]
+      span.tk-month-separator=' '
+      span.tk-month=date[1]
+  span=' '
+  span.tk-year=engagement.range.year
+div.tku-site-container
+  a.tk-site(href=engagement.website, target='_blank')=engagement.conference
+div
+  span.tk-venue-connector='At '
+  span=engagement.venue
