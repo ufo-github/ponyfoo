@@ -23,7 +23,8 @@
   min-height 230px
   margin-bottom 20px
 
-.pt-video-frame
+.pt-video-frame,
+.pt-speakerdeck-frame
   width 100%
   min-height 230px
 
@@ -44,9 +45,6 @@
 .ly-teasers .pt-title
   font-family f-subheading
 
-.pt-description-text
-  margin 0
-
 .pt-resources
   margin-top 20px
 
@@ -56,8 +54,18 @@
 .pt-resource-link
   color c-pink
 
+.pt-permalink
+  margin-left 15px
+  color c-yellow-highlight
+
+.pt-standalone
+  padding 20px
+
 @media only screen and (min-width: 500px)
-  .pt-video-frame
+  .pt-video,
+  .pt-video-frame,
+  .pt-speakerdeck,
+  .pt-speakerdeck-frame
     min-height 400px
 
 @media only screen and (min-width: 800px)
@@ -88,10 +96,21 @@
   .pt-video
     height 0
 
-  .pt-video-frame
+  .pt-video-frame,
+  .pt-speakerdeck-frame
     position absolute
     top 0
+    bottom 0
+    width 48%
+
+  .pt-video-frame
     left 0
-    width 47%
-    height 100%
-    min-height 100%
+  .pt-speakerdeck-frame
+    right 0
+
+@media only screen and (min-width: 1100px)
+  .pt-video,
+  .pt-video-frame,
+  .pt-speakerdeck,
+  .pt-speakerdeck-frame
+    min-height 500px

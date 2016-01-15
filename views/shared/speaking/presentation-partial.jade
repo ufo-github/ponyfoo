@@ -1,0 +1,37 @@
+section.pt-embed-container
+  div.pt-embeds
+    if presentation.youtube
+      section.pt-video.pt-youtube
+        iframe.pt-video-frame.pt-youtube-frame(
+          allowfullscreen,
+          allowtransparency,
+          mozallowfullscreen,
+          webkitallowfullscreen,
+          frameborder='0',
+          src=presentation.youtube
+        )
+    if presentation.vimeo
+      section.pt-video.pt-vimeo
+        iframe.pt-video-frame.pt-vimeo-frame(
+          allowfullscreen,
+          allowtransparency,
+          mozallowfullscreen,
+          webkitallowfullscreen,
+          frameborder='0',
+          src=presentation.vimeo
+        )
+    if presentation.speakerdeck
+      section.pt-speakerdeck
+        iframe.pt-speakerdeck-frame(
+          allowfullscreen,
+          allowtransparency,
+          mozallowfullscreen,
+          webkitallowfullscreen,
+          frameborder='0',
+          src='https://speakerdeck.com/player/' + presentation.speakerdeck
+        )
+section.pt-description.md-markdown!=presentation.description
+ul.pt-resources
+  each r in presentation.resources
+    li.pt-resource
+      a.pt-resource-link.md-markdown(href=r.url, target=r.target)!=r.title

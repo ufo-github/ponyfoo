@@ -5,12 +5,14 @@ var contra = require('contra');
 var queso = require('queso');
 var assign = require('assignment');
 var moment = require('moment');
+var env = require('../../lib/env');
+var browserEnv = require('../../client/js/lib/env');
 var colorService = require('../../services/color');
 var datetimeService = require('../../services/datetime');
-var browserEnv = require('../../client/js/lib/env');
-var mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
+var presentationService = require('../../services/presentation');
 var Engagement = require('../../models/Engagement');
 var Presentation = require('../../models/Presentation');
+var mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
 var pastTagMap = {
   speaking: 'spoke',
   organizing: 'organized',
@@ -33,7 +35,7 @@ function home (req, res, next) {
           past: past.map(toEngagementModel),
           fullMap: getFullMap(data.engagements)
         },
-        presentations: data.presentations.map(toPresentationModel)
+        presentations: data.presentations.map(presentationService.toModel)
       }
     };
     next();
@@ -49,24 +51,6 @@ function getModelData (done) {
       Presentation.find({}).sort('-presented').lean().exec(next);
     }
   }, done);
-}
-
-function toPresentationModel (presentation) {
-  return {
-    presented: datetimeService.field(presentation.presented),
-    title: presentation.title,
-    slug: presentation.slug,
-    description: presentation.descriptionHtml,
-    youtube: presentation.youtube,
-    vimeo: presentation.vimeo,
-    speakerdeck: presentation.speakerdeck,
-    resources: presentation.resources.map(function (resource) {
-      return {
-        title: resource.titleHtml,
-        url: resource.url
-      };
-    })
-  };
 }
 
 function getFullMap (engagements) {
@@ -94,7 +78,7 @@ function getMarkerSize (engagement) {
   return 'tiny';
 }
 
-function toEngagementModel (engagement, i) {
+function toEngagementModel (engagement) {
   var upcoming = hasNotEnded(engagement);
   var model = {
     range: datetimeService.range(engagement.start, engagement.end),
@@ -115,10 +99,6 @@ function toEngagementModel (engagement, i) {
   function toTagText (tag) {
     return upcoming ? tag : pastTagMap[tag] || tag;
   }
-}
-
-function hasStarted (engagement) {
-  return moment(engagement.start).startOf('day').isBefore(moment());
 }
 
 function hasNotEnded (engagement) {

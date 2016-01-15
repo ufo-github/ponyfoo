@@ -75,44 +75,12 @@ article.tk-container
     h2.tk-heading Talk Videos and Slides
 
     ol.pt-list
-      each p in presentations
+      each presentation in presentations
         li.pt-item
-          h2.pt-title=p.title
-          section.pt-embed-container
-            div.pt-embeds
-              if p.youtube
-                section.pt-video.pt-youtube
-                  iframe.pt-video-frame.pt-youtube-frame(
-                    src=p.youtube,
-                    frameBorder='0',
-                    webkitAllowFullScreen,
-                    mozAllowFullScreen,
-                    AllowFullScreen
-                  )
-              if p.vimeo
-                section.pt-video.pt-vimeo
-                  iframe.pt-video-frame.pt-vimeo-frame(
-                    src=p.vimeo,
-                    frameBorder='0',
-                    webkitAllowFullScreen,
-                    mozAllowFullScreen,
-                    AllowFullScreen
-                  )
-              if p.speakerdeck && p.speakerdeck.id && p.speakerdeck.ratio
-                section.pt-speakerdeck
-                  script.speakerdeck-embed(
-                    data-id=p.speakerdeck.id,
-                    data-ratio=p.speakerdeck.ratio,
-                    src='//speakerdeck.com/assets/embed.js',
-                    async
-                  )
-          section.pt-description
-            p.pt-description-text.md-markdown!=p.description
-          ul.pt-resources
-            each r in p.resources
-              li.pt-resource
-                a.pt-resource-link(href=r.url, target='_blank')!=r.title
-
+          h2.pt-title
+            span=presentation.title
+            a.pt-permalink.fa.fa-arrow-right(href='/presentations/' + presentation.slug, aria-label='Permalink to this presentation')
+          include presentation-partial
 article
   header
     h2.tk-heading Workshops and Presentations

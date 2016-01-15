@@ -24,8 +24,7 @@ module.exports = function (req, res) {
     youtube: body.youtube,
     vimeo: body.vimeo,
     speakerdeck: {
-      id: body.speakerdeck_id,
-      ratio: parseFloat(body.speakerdeck_ratio)
+      id: body.speakerdeck_id
     },
     resources: body.resources_title.map(toResourceItem)
   };

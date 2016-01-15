@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var moment = require('moment');
+var raf = require('raf');
 var markdownService = require('../../services/markdown');
 var analytics = require('./analytics');
 var wiring = require('./wiring');

@@ -28,11 +28,14 @@ function changed () {
   if (timer) {
     clearTimeout(timer);
   }
-  timer = setTimeout(helpMePay, 5000);
+  if (!options.container) {
+    return;
+  }
   if (global._carbonads) {
     options.container.appendChild(script);
     global._carbonads.refresh();
   }
+  timer = setTimeout(helpMePay, 5000);
 }
 
 function helpMePay () {
