@@ -6,6 +6,7 @@ var colors = {
   green: '37ed2c',
   orange: 'f8ab6f',
   pink: 'e92c6c',
+  pinkLight: 'f4a5c0',
   purple: '900070',
   red: 'ff0056',
   white: 'fcfcfc',

@@ -23,8 +23,8 @@ module.exports = function (viewModel, container) {
     };
     var map = new gmaps.Map(interactiveMapEl, mapOptions);
     var places = new gmaps.places.PlacesService(map);
-    var upcoming = viewModel.engagements.upcoming.map(toMarkCallback('#e92c6c'));
-    var past = viewModel.engagements.past.map(toMarkCallback('#000'));
+    var upcoming = viewModel.engagements.upcoming.map(toMarkCallback('e92c6c'));
+    var past = viewModel.engagements.past.map(toMarkCallback('f4a5c0'));
     var all = upcoming.concat(past);
 
     concurrent(all, 4, ready);
@@ -76,7 +76,8 @@ module.exports = function (viewModel, container) {
           var marker = new gmaps.Marker({
             map: map,
             position: place.geometry.location,
-            title: engagement.conference
+            title: engagement.conference,
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|' + color
           });
           gmaps.event.addListener(marker, 'click', reveal);
           function reveal () {

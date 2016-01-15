@@ -71,9 +71,10 @@ function getFullMap (engagements) {
     style: 'all|saturation:-100'
   });
   function toPlace (engagement) {
+    var color = getMarkerColor(engagement);
     return {
       location: engagement.location,
-      color: getMarkerColor(engagement),
+      color: '0x' + color,
       size: 'tiny'
     };
   }
@@ -81,9 +82,7 @@ function getFullMap (engagements) {
 
 function getMarkerColor (engagement) {
   var upcoming = hasNotEnded(engagement);
-  var color = colorService[upcoming ? 'pink' : 'black'];
-  var hex = '0x' + color;
-  return hex;
+  return upcoming ? colorService.pink : colorService.pinkLight;
 }
 
 function toEngagementModel (engagement) {
@@ -95,11 +94,10 @@ function toEngagementModel (engagement) {
     venue: engagement.venue,
     location: engagement.location,
     map: {
-      link: 'https://maps.google.com?q=' + encodeURIComponent(engagement.location).replace(/%20/g, '+'),
+      link: 'https://maps.google.com?q=' + encodeURIComponent(engagement.location).replace(/(%20|\s)/g, '+'),
       image: getMapImageUrl([{
         location: engagement.location,
-        color: getMarkerColor(engagement),
-        size: 'med'
+        icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+%7C' + getMarkerColor(engagement)
       }], { scale: 17 })
     },
     tags: engagement.tags.map(toTagText)
@@ -129,7 +127,7 @@ function getMapImageUrl (places, options) {
 
 function getMarker (all, place) {
   var marker = Object.keys(place).reduce(getProps, '');
-  return all + '&markers=' + encodeURIComponent(marker) + place.location;
+  return all + '&markers=' + encodeURIComponent(marker) + place.location.replace(/(%20|\s)/g, '+');
   function getProps (props, key) {
     if (key === 'location') {
       return props;
