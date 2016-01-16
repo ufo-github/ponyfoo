@@ -1,6 +1,6 @@
 'use strict';
 
-var version = 'v8::';
+var version = 'v9::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var env = require('../../lib/env');
@@ -54,7 +54,9 @@ function fetcher (e) {
   }
 
   var url = new URL(request.url);
-
+  if (request.url.indexOf('https://maps.googleapis.com/maps/vt') === 0) {
+    return; // ignore
+  }
   e.respondWith(caches.match(request).then(queriedCache));
 
   function queriedCache (cached) {
