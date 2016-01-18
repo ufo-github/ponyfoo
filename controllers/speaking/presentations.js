@@ -6,21 +6,21 @@ var textService = require('../../services/text');
 var htmlService = require('../../services/html');
 
 module.exports = function (req, res, next) {
-  Presentation.findOne({ slug: req.params.slug }, function (err, presentation) {
+  Presentation.find({}).sort('-presented').exec(function (err, presentations) {
     if (err) {
       next(err); return;
     }
-    if (!presentation) {
+    if (!presentations.length) {
       res.viewModel = { skip: true };
       next(); return;
     }
-    var descriptionText = htmlService.getText(presentation.descriptionHtml);
+    var latest = presentations[0];
+    var descriptionText = htmlService.getText(latest.descriptionHtml);
     var description = textService.truncate(descriptionText, 170);
-    var model = presentationService.toModel(presentation);
     res.viewModel = {
       model: {
-        title: presentation.title,
-        presentation: model,
+        title: 'Conference Presentations \u2014 Pony Foo',
+        presentations: presentations.map(presentationService.toModel),
         meta: {
           description: description
         }

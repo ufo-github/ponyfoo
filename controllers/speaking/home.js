@@ -60,7 +60,7 @@ function getModelData (done) {
       Engagement.find({}).lean().exec(next);
     },
     presentations: function (next) {
-      Presentation.find({}).sort('-presented').lean().exec(next);
+      Presentation.find({}).sort('-presented').limit(5).lean().exec(next);
     }
   }, done);
 }

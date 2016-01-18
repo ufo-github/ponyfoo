@@ -20,6 +20,7 @@ module.exports = [
   { route: '/articles/:year(\\d{4})', action: 'articles/dated' },
   { route: '/articles/:slug', action: 'articles/article' },
   { route: '/speaking', action: 'speaking/home' },
+  { route: '/presentations', action: 'speaking/presentations' },
   { route: '/presentations/:slug', action: 'speaking/presentation' },
   { route: '/account/login', action: 'account/login' },
   { route: '/account/login/:provider', ignore: true },
