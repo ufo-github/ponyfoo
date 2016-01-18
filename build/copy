@@ -1,7 +1,6 @@
 #!/bin/bash
 
 cp -r client/img .bin/public
-cp -r resources/emails .bin/public/img/email
 cp -r client/js/inline .bin
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
 cp client/{manifest.json,*.{ico,png,txt,xml}} .bin/public
@@ -10,3 +9,4 @@ mkdir .bin/inlined
 
 # secret
 echo $RANDOM$RANDOM$RANDOM$RANDOM$RANDOM$RANDOM > .bin/secret
+echo $NODE_ENV > .bin/env

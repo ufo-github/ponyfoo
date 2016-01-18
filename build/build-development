@@ -3,7 +3,7 @@
 : ${PORT:="3000"}
 
 npm run clean
-npm run copy
+NODE_ENV=development npm run copy
 
 # deferred libraries
 browserify node_modules/rome -s rome -o .bin/public/js/rome.js --debug

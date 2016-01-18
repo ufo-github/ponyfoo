@@ -1,6 +1,5 @@
 'use strict';
 
-var but = require('but');
 var Article = require('../../../models/Article');
 var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');

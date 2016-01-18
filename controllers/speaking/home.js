@@ -5,8 +5,8 @@ var contra = require('contra');
 var queso = require('queso');
 var assign = require('assignment');
 var moment = require('moment');
-var env = require('../../lib/env');
 var browserEnv = require('../../client/js/lib/env');
+var staticService = require('../../services/static');
 var colorService = require('../../services/color');
 var datetimeService = require('../../services/datetime');
 var presentationService = require('../../services/presentation');
@@ -36,7 +36,7 @@ function home (req, res, next) {
           canonical: '/speaking',
           images: [fullMap]
             .concat(upcomingModels.map(toEngagementMapImage))
-            .concat('/img/speaking.b83cbc22.jpg')
+            .concat(staticService.unroll('/img/speaking.jpg'))
         },
         engagements: {
           upcoming: upcomingModels,

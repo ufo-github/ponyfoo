@@ -12,6 +12,7 @@ var moment = require('moment');
 var Article = require('../models/Article');
 var env = require('../lib/env');
 var markupService = require('./markup');
+var staticService = require('./static');
 var authority = env('AUTHORITY');
 var contact = 'Nicolás Bevacqua <hello@ponyfoo.com>';
 var location = path.resolve('.bin/static/feed.xml');
@@ -26,7 +27,7 @@ function generate (articles, done) {
     generator: 'bevacqua/ponyfoo',
     feed_url: authority + '/articles/feed',
     site_url: authority,
-    image_url: authority + '/img/ponyfoo.png',
+    image_url: authority + staticService.unroll('/img/thumbnail.png'),
     author: contact,
     managingEditor: contact,
     webMaster: contact,

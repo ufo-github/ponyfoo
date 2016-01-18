@@ -8,6 +8,7 @@ var name = env('NODE_ENV');
 var authority = env('AUTHORITY');
 var authorEmail = env('AUTHOR_EMAIL');
 var bioService = require('../services/bio');
+var staticService = require('../services/static');
 var popularityService = require('../services/popularity');
 
 function read (file) {
@@ -47,7 +48,7 @@ function getDefaultViewModel (done) {
         },
         meta: {
           description: 'Pony Foo is a technical blog maintained by Nicolás Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.',
-          images: [authority + '/img/ponyfoo.png'],
+          images: [authority + staticService.unroll('/img/thumbnail.png')],
           keywords: []
         },
         bioHtml: data.bioHtml,

@@ -3,8 +3,9 @@
 var _ = require('lodash');
 var env = require('../lib/env');
 var htmlService = require('./html');
+var staticService = require('./static');
 var authority = env('AUTHORITY');
-var defaultCover = authority + '/img/ponyfoo.png';
+var defaultCover = authority + staticService.unroll('/img/thumbnail.png');
 
 function appendDefaultCover (list) {
   list.push(defaultCover);
