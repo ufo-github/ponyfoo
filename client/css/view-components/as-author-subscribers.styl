@@ -10,11 +10,16 @@
 .as-legend
   fill c-black
 
-.as-x path
-  display none
+.as-x
+  path
+    display none
+  .tick
+    display none
+    &:nth-child(5n)
+      display block
 
 .as-legend
-  text-transform capitalize
+  display none
 
 .as-tip
   line-height 1
@@ -26,3 +31,11 @@
 
 .as-tip-label
   text-transform capitalize
+
+@media only screen and (min-width: 768px)
+  .as-legend
+    display block
+    text-transform capitalize
+
+  .as-x .tick
+    display block

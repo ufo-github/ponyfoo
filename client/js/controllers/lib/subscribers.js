@@ -2,18 +2,20 @@
 
 var $ = require('dominus');
 var moment = require('moment');
+var debounce = require('lodash/function/debounce');
 var loadScript = require('../../lib/loadScript');
 var textService = require('../../../../services/text');
 
 function pullData (subscribers) {
+  var copy = subscribers.slice();
   var data = [];
   var subscriber;
   var week;
-  var curr;
-  while (subscribers.length) {
-    subscriber = subscribers.pop();
+  var current;
+  while (copy.length) {
+    subscriber = copy.pop();
     week = moment(subscriber.created).subtract(7, 'days');
-    curr = {
+    current = {
       moment: week,
       date: week.format('Do MMMM ’YY'),
       migration: 0,
@@ -24,26 +26,25 @@ function pullData (subscribers) {
       landed: 0
     };
     add();
-    while (subscribers.length) {
-      subscriber = subscribers.pop();
+    while (copy.length) {
+      subscriber = copy.pop();
       if (moment(subscriber.created).isAfter(week)) {
         add();
       } else {
         break;
       }
     }
-    data.push(curr);
+    data.push(current);
   }
   return data;
   function add () {
-    if (subscriber.verified) {
-      curr[source()]++;
-    } else {
-      curr.unverified++;
-    }
+    current[source()]++;
   }
   function source () {
-    return subscriber.source === 'intent' ? 'sidebar' : subscriber.source;
+    if (subscriber.verified) {
+      return subscriber.source === 'intent' ? 'sidebar' : subscriber.source;
+    }
+    return 'unverified';
   }
 }
 
@@ -55,19 +56,30 @@ module.exports = function (viewModel, container) {
   function loaded () {
     var d3 = global.d3;
     var d3tip = global.d3Tip;
+    var renderTimely = debounce(render, 300);
 
     d3tip(d3);
 
-    var parent = container.getElementsByClassName('as-container')[0];
+    render();
+    $(window).on('resize', renderTimely);
+  }
+
+  function render () {
+    var d3 = global.d3;
+    var parent = $.findOne('.as-container', container);
+
+    $('.as-chart', container).remove();
+
     var rect = parent.getBoundingClientRect();
     var margin = {
       top: 20, right: 20, bottom: 30, left: 40
     };
-    var width = rect.right - rect.left - margin.left - margin.right;
-    var height = Math.ceil((rect.right - rect.left) / 1.5) - margin.top - margin.bottom;
+    var dx = rect.right - rect.left;
+    var unboundHeight = Math.ceil(dx / 1.5) - margin.top - margin.bottom;
+    var width = dx - margin.left - margin.right;
+    var height = Math.max(unboundHeight, 300);
 
     var data = pullData(viewModel.subscribers);
-
     var x = d3.scale
       .ordinal()
       .rangeRoundBands([0, width], 0.1);
@@ -92,7 +104,9 @@ module.exports = function (viewModel, container) {
       .tickFormat(d3.format('.2s'));
 
     var svg = d3
-      .select('.as-chart')
+      .select('.as-container')
+      .append('div')
+      .classed('as-chart', true)
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
