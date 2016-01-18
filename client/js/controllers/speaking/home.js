@@ -23,8 +23,10 @@ module.exports = function (viewModel, container) {
     };
     var map = new gmaps.Map(interactiveMapEl, mapOptions);
     var places = new gmaps.places.PlacesService(map);
-    var upcoming = viewModel.engagements.upcoming.map(toMarkCallback('e92c6c'));
-    var past = viewModel.engagements.past.map(toMarkCallback('f4a5c0'));
+    var toPink = markMapper('/img/map-pin-e92c6c.png'); // from http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|e92c6c
+    var toPinkLight = markMapper('/img/map-pin-f4a5c0.png'); // from http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|f4a5c0
+    var upcoming = viewModel.engagements.upcoming.map(toPink);
+    var past = viewModel.engagements.past.map(toPinkLight);
     var all = upcoming.concat(past);
 
     concurrent(all, 4, ready);
@@ -41,14 +43,14 @@ module.exports = function (viewModel, container) {
       }
     }
 
-    function toMarkCallback (color) {
+    function markMapper (icon) {
       return function (engagement) {
         return function (next) {
-          markPlace(color, engagement, next);
+          markPlace(icon, engagement, next);
         };
       };
     }
-    function markPlace (color, engagement, next) {
+    function markPlace (icon, engagement, next) {
       places.textSearch({ query: engagement.location }, foundPlace);
       function foundPlace (results, status) {
         if (status === gmaps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
@@ -66,7 +68,7 @@ module.exports = function (viewModel, container) {
         }
         next();
         function retry () {
-          markPlace(color, engagement, next);
+          markPlace(icon, engagement, next);
         }
         function createMarker (place) {
           var partial = taunus.state.templates['speaking/engagement-infowindow'];
@@ -77,7 +79,7 @@ module.exports = function (viewModel, container) {
             map: map,
             position: place.geometry.location,
             title: engagement.conference,
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|' + color
+            icon: icon
           });
           gmaps.event.addListener(marker, 'click', reveal);
           function reveal () {
