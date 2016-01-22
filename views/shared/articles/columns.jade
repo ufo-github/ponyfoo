@@ -2,7 +2,7 @@ ol.aa-articles
   each article in articles
     - pub = article.publication
     - count = article.commentCount
-    li.aa-article
+    li.aa-article.dc-colored
       h2.aa-title
         a.aa-visit(href='/articles/' + article.slug)=article.title
       section.aa-summary

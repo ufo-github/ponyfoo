@@ -59,19 +59,10 @@
   max-width 100%
   max-height 300px
 
-aa-colored(c-border-top, c-background)
-  border-top-color c-border-top
-  background-color c-background
-  .aa-cover-footer:before
-    background linear-gradient(to top, c-background 0, rgba(c-background, 0.8) 50%, transparent 100%)
-  .aa-cover-link
-    background-color c-background
-
 .aa-article
   position relative
   display inline-block
   vertical-align top
-  border-top 9px dotted
   margin-bottom 20px
   margin-right 2%
   width 49%
@@ -79,18 +70,6 @@ aa-colored(c-border-top, c-background)
 
   &:nth-child(2n)
     margin-right 0
-  &:nth-child(6n-5)
-    aa-colored(darken(c-yellow-highlight, 25%), c-yellow-005)
-  &:nth-child(6n-4)
-    aa-colored(darken(c-orange, 25%), c-orange-005)
-  &:nth-child(6n-3)
-    aa-colored(c-pink, c-pink-005)
-  &:nth-child(6n-2)
-    aa-colored(c-red, c-red-005)
-  &:nth-child(6n-1)
-    aa-colored(c-purple, c-purple-005)
-  &:nth-child(6n-0)
-    aa-colored(c-green, c-green-005)
 
 .aa-title
   overflow-wrap normal

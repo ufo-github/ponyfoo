@@ -1,0 +1,18 @@
+article.ly-section.vw-maintainer.de-host
+  form.vw-maintainer-content.de-column(action='/api/oss/new', method='post')
+    h1.vw-title New Open-Source Project
+    input.aoss-name(name='name', placeholder='example')
+    input.aoss-repo(name='repo', placeholder='bevacqua/example')
+    input.aoss-branch(name='branch', placeholder='The default branch for the repository', value='master')
+    input.aoss-screenshot(name='screenshot', placeholder='A secure screenshot image file')
+    input.aoss-teaser(name='teaser', placeholder='Teaser about the purpose of this project')
+    div
+      textarea.aoss-description.wk-textarea(name='description', placeholder='Description of the project')
+    footer.aoss-actions
+      a.aoss-cancel(href='/author/oss', aria-label='Back to list of open-source projects') Cancel
+      span(aria-label='Share the open-source project!')
+        button.gg-container.bt-button.bt-pink(type='submit')
+          span.bt-text Share
+          include ../partials/button-background
+
+  include ../partials/aside

@@ -1,0 +1,21 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Open-Source Projects
+    section.ae-container
+      div.ae-actions
+        a.ae-add.fa.fa-pencil-square-o(href='/author/oss/new', aria-label='Add an open-source project')
+      table
+        thead
+          tr
+            th Name
+            th Actions
+        tbody
+          each project in projects
+            tr
+              td(data-label='Name')=project.name
+              td.ae-buttons(data-label='Actions')
+                form(action='/api/oss/remove', method='post')
+                  input(name='id', type='hidden', value=project.id)
+                  button.ae-remove.fa.fa-remove(aria-label='Delete this project', type='submit')
+
+  include ../partials/aside

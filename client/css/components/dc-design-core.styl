@@ -11,6 +11,29 @@
   /.ly-custom-headings &
     font-size 3em
 
+dc-color(c-border-top, c-background)
+  border-top-color c-border-top
+  background-color c-background
+  .aa-cover-footer:before
+    background linear-gradient(to top, c-background 0, rgba(c-background, 0.8) 50%, transparent 100%)
+  .aa-cover-link
+    background-color c-background
+
+.dc-colored
+  border-top 9px dotted
+  &:nth-child(6n-5)
+    dc-color(darken(c-yellow-highlight, 25%), c-yellow-005)
+  &:nth-child(6n-4)
+    dc-color(darken(c-orange, 25%), c-orange-005)
+  &:nth-child(6n-3)
+    dc-color(c-pink, c-pink-005)
+  &:nth-child(6n-2)
+    dc-color(c-red, c-red-005)
+  &:nth-child(6n-1)
+    dc-color(c-purple, c-purple-005)
+  &:nth-child(6n-0)
+    dc-color(c-green, c-green-005)
+
 @media only screen and (min-width: 768px)
   .dc-title
     background linear-gradient(to bottom right, lighten(c-pink, 20%) 0, lighten(c-pink, 20%) 30%, c-pink 80%, darken(c-pink, 20%) 100%)

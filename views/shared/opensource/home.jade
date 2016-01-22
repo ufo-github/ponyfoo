@@ -1,0 +1,66 @@
+article.os-container.os-intro
+  h1.os-heading Open-Source
+  div.os-role Showcase of some of the contributions I've made to open-source modules
+
+  p
+    span I wrote hundreds of open-source modules for both front-end development and Node &mdash; this website
+    span=' '
+    a(href='https://github.com/ponyfoo/ponyfoo', title='Source code for Pony Foo', target='_blank') is also open-source
+    span . You can find all of my public work on
+    span=' '
+    a(href='https://github.com/bevacqua', target='_blank') GitHub
+    span . The vast majority revolves
+    span=' '
+    a(href='https://github.com/bevacqua/lipstick', target='_blank') around
+    span=' '
+    a(href='https://github.com/bevacqua/sluggish' target='_blank') a
+    span=' '
+    a(href='https://github.com/bevacqua/crossvent' target='_blank') lot
+    span=' '
+    a(href='https://github.com/bevacqua/sell' target='_blank') of
+    span=' '
+    a(href='https://github.com/bevacqua/local-storage' target='_blank') simple
+    span=' '
+    a(href='https://github.com/bevacqua/omnibox' target='_blank') JavaScript
+    span=' '
+    a(href='https://github.com/bevacqua/insane' target='_blank') modules
+    span=', and '
+    a(href='https://github.com/bevacqua/hget' target='_blank') helpful
+    span=' '
+    a(href='https://github.com/bevacqua/reaver' target='_blank') command-line
+    span=' '
+    a(href='https://github.com/bevacqua/cave' target='_blank') utilities
+    span=', as well as '
+    a(href='https://github.com/bevacqua/perfschool' target='_blank') workshops
+    span=', and the occassional browser '
+    a(href='https://github.com/bevacqua/ftco' target='_blank') extension
+    span='. I\'ve published '
+    a(href='https://github.com/bevacqua/js' target='_blank') JavaScript
+    span=' and '
+    a(href='https://github.com/bevacqua/css' target='_blank') CSS
+    span=' quality guides on GitHub, as well as a detailed '
+    a(href='https://github.com/bevacqua/es6' target='_blank') ES6
+    span=' feature list.'
+
+  p Below, you can find a few of the projects I enjoy maintaining and working on.
+
+article.os-container.osp-list
+  each item in projects
+    section.osp-container.dc-colored
+      h3.osp-name
+        a.osp-link(
+          href='https://github.com/' + item.repo,
+          title='Check out the repository!',
+          target='_blank'
+        )=item.name
+      span.osp-meta(data-repo=item.repo)
+      div.osp-teaser=item.teaser
+      div.md-markdown!=item.description
+      if item.screenshot
+      div.osp-screenshot-container
+        a.osp-screenshot-link(
+          href='https://github.com/' + item.repo,
+          title='Check out the repository!',
+          target='_blank'
+        )
+          img(src=item.screenshot, alt='')

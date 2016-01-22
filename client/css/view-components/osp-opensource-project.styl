@@ -1,0 +1,57 @@
+.osp-container
+  padding 20px
+  margin-bottom 20px
+
+.osp-name
+  float left
+  margin-top 0
+  margin-bottom 10px
+
+.osp-link
+  color c-black
+
+.osp-meta
+  float right
+  color c-black
+  font-size 10px
+  line-height 24px
+
+.osp-updated
+  margin-right 5px
+
+.osp-updated-link
+  color c-pink
+
+.osp-stars
+  margin-left 2px
+
+.osp-teaser
+  clear both
+  margin 10px 0 20px
+  text-align center
+  font-style italic
+  color c-gray
+
+.osp-screenshot-container
+  margin-top 20px
+  text-align center
+
+.osp-screenshot-link
+  display inline-block
+  border-bottom none
+  max-width 100% // because firefox
+
+  &:hover
+    border-bottom none
+    background-color transparent
+
+@media only screen and (min-width: 680px)
+  .osp-container
+    display inline-block
+    vertical-align top
+    width 50%
+    margin-bottom 40px
+
+@media only screen and (min-width: 1040px)
+  .osp-container
+    width 33.33333%

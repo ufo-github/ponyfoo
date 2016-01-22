@@ -1,3 +1,5 @@
+- rss = 'https://feeds.feedburner.com/ponyfoo'
+
 //
   -
 
@@ -49,7 +51,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     link(rel='apple-touch-icon-precomposed', sizes='72x72', href='/apple-touch-icon-72x72-precomposed.png')
     link(rel='apple-touch-icon-precomposed', href='/apple-touch-icon-precomposed.png')
 
-    link(rel='alternate', type='application/rss+xml', href='https://feeds.feedburner.com/ponyfoo')
+    link(rel='alternate', type='application/rss+xml', href=rss)
     link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.env.authority + '/opensearch.xml')
 
     if model.meta.canonical
@@ -113,11 +115,13 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
           li.hn-item
             a.hn-link(href='/speaking', aria-label='Find talk videos, slides, and upcoming speaking engagements.') Speaking
           li.hn-item
+            a.hn-link(href='/opensource', aria-label='Learn about my contributions to the open-source community.') Open-Source
+          li.hn-item
             a.hn-link(href='/articles/history', aria-label='Pony Foo has been online for a while. Get access to the full article publication history from here.') Articles
           li.hn-item
-            a.hn-link(href='/articles/feed', aria-label='Track the RSS feed and be the first to learn about freshly published content.', target='_blank') RSS
+            a.hn-link(href='/about', aria-label='Learn more about me.') About
           li.hn-item
-            a.hn-link(href='https://bevacqua.io', aria-label='Learn more about me.', target='_blank') About
+            a.hn-link(href=rss, aria-label='Track the RSS feed and be the first to learn about freshly published content.', target='_blank') RSS
 
     if model.flash
       include flash
