@@ -1,0 +1,115 @@
+header.bk-header
+  h1.bk-heading JavaScript Application Design
+  div.bk-role A Build-First Approach
+
+article.de-host
+  section.de-column.bok-container
+    div.bok-book
+      img.bok-cover-image(src='/img/javascript-application-design.jpg', alt='')
+      sub.bok-cover-footnote
+        span='Purchase directly through '
+        a.bok-purchase(href='/bf/manning', target='_blank') Manning
+        span=', or via '
+        a.bok-purchase(href='/bf/amazon', target='_blank') Amazon
+        span .
+
+    div.bok-description
+      div.bok-factoids
+        span.bok-factoid.bok-factoid-1 Published January, 2015
+        span.bok-factoid.bok-factoid-2 Has 344 pages
+        span.bok-factoid.bok-factoid-3 ISBN 9781617291951
+
+      blockquote.bok-quote
+        p.bok-quote-text Enjoy the ride through the process of improving your development workflow.
+        p.bok-quote-attribution – Addy Osmani, Google
+
+      div.md-markdown
+        p The fate of most applications is often sealed before a single line of code has been written. How is that possible? Simply, bad design assures bad results. Good design and effective processes are the foundation on which maintainable applications are built, scaled, and improved. For JavaScript developers, this means discovering the tooling, modern libraries, and architectural patterns that enable those improvements.
+
+        p
+          em JavaScript Application Design: A Build First Approach
+          span=' '
+          span introduces techniques to improve software quality and development workflow. You'll begin by learning how to establish processes designed to optimize the quality of your work. You'll execute tasks whenever your code changes, run tests on every commit, and deploy in an automated fashion. Then you'll focus on designing modular components and composing them together to build robust applications.
+
+        p Write modular, cleaner, and easily testable code. Using a modular approach to application design, you'll learn how to write smaller components that work well together. You'll be able to master complex asynchronous flows in JavaScript. Learn different kinds of testing such as unit testing, integration testing, and visual diff. testing. Design a REST API and implement it.
+
+    div.bok-toc
+      h2.bok-toc-title Table of Contents
+      ol.bok-toc-list
+        li.bok-toc-part
+          p.bok-toc-part-title I. Build Processes
+          ol.bok-toc-chapters
+            li
+              span.bok-toc-number='1. '
+              span.bok-toc-chapter Introduction to Build First
+            li
+              span.bok-toc-number='2. '
+              span.bok-toc-chapter Composing Build Tasks and Flows
+            li
+              span.bok-toc-number='3. '
+              span.bok-toc-chapter Mastering Environments and the Development Workflow
+            li
+              span.bok-toc-number='4. '
+              span.bok-toc-chapter Release, Deployment, and Monitoring
+              a(href='/bf/ch04', download='javascript-application-design-ch04.pdf', target='_blank', aria-label='Download it directly from the Manning website').bok-sample Free!
+        li.bok-toc-part
+          p.bok-toc-part-title II. Managing Complexity
+          ol.bok-toc-chapters
+            li
+              span.bok-toc-number='5. '
+              span.bok-toc-chapter Embracing Modularity and Dependency Management
+              a.bok-sample(href='/bf/ch05', download='javascript-application-design-ch05.pdf', target='_blank', aria-label='Download it directly from the Manning website') Free!
+            li
+              span.bok-toc-number='6. '
+              span.bok-toc-chapter Understanding Asynchronous Flow Control Methods In JavaScript
+            li
+              span.bok-toc-number='7. '
+              span.bok-toc-chapter Leveraging Model-View-Controller
+            li
+              span.bok-toc-number='8. '
+              span.bok-toc-chapter Testing JavaScript Components
+            li
+              span.bok-toc-number='9. '
+              span.bok-toc-chapter REST API Design and Layered Service Architectures
+        li.bok-toc-part
+          p.bok-toc-part-title III. Appendices
+          ol.bok-toc-chapters
+            li
+              span.bok-toc-number='A. '
+              span.bok-toc-chapter Modules in Node.js
+            li
+              span.bok-toc-number='B. '
+              span.bok-toc-chapter Introduction to Grunt
+            li
+              span.bok-toc-number='C. '
+              span.bok-toc-chapter Picking Your Build Tool
+            li
+              span.bok-toc-number='D. '
+              span.bok-toc-chapter JavaScript Code Quality Guide
+
+    div.bok-sale.md-markdown
+      p
+        span='There are tons of freely available code samples on '
+        a(href='https://github.com/buildfirst/buildfirst', target='_blank') the GitHub repository
+        span='. The book can be purchased directly through '
+        a(href='/bf/manning', target='_blank') Manning
+        span=', or via '
+        a(href='/bf/amazon', target='_blank') Amazon
+        span .
+
+      div.bok-purchase-buttons
+        span.de-button(aria-label='As easy as clicking this button!')
+          a.gg-container.bt-button.bt-pink.bok-purchase-button(href='/bf/manning', target='_blank')
+            span.bt-text Purchase from Manning
+            include ../partials/button-background
+
+        span.de-button(aria-label='As easy as clicking this button!')
+          a.gg-container.bt-button.bt-pink.bok-purchase-button(href='/bf/amazon', target='_blank')
+            span.bt-text Purchase on Amazon
+            include ../partials/button-background
+
+    footer.tk-presentations-link
+      a.tk-presentations-anchor(href='/books') Back to full list of books
+
+
+  include ../partials/aside

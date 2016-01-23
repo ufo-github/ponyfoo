@@ -1,0 +1,25 @@
+header.bk-header
+  h1.bk-heading Books
+  div.bk-role I write books about JavaScript and the web platform.
+
+article.de-host
+  section.de-column
+    article.bk-history.md-markdown
+      p
+        span='I started blogging '
+        a(href='/articles/pony-foo-begins', aria-label='Pony Foo Begins') around early 2013
+        span='. Over half a year later I became increasingly interested in writing a book, and that interest eventually materialized as my first book: '
+        a(href='/books/javascript-application-design', aria-label='JavaScript Application Design: a build-first approach') JavaScript Application Design
+        span .
+
+    article.bk-books
+
+      a.bk-book.dc-colored(href='/books/javascript-application-design')
+        img.bk-cover-image(src='/img/javascript-application-design.jpg', alt='')
+        sub.bk-cover-footnote
+          strong (2015)
+          span=' Build processes and code quality in the JavaScript environment. '
+          span.bk-link-tease Learn more!
+
+  include ../partials/aside
+

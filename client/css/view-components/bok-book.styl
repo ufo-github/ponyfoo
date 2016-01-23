@@ -1,0 +1,107 @@
+.bok-container
+  padding 20px
+
+.bok-book
+  padding-bottom 20px
+  margin-bottom 30px
+  margin-right 30px
+
+.bok-cover-image
+  width 100%
+
+.bok-cover-image,
+.bok-cover-footnote
+  display block
+
+.bok-cover-footnote
+  margin-top 10px
+  font-style italic
+  color c-black
+  text-align center
+
+.bok-factoids
+  overflow hidden
+
+.bok-factoid
+  display inline-block
+  vertical-align top
+  font-size 12px
+  width 33.33333%
+  padding 10px
+  padding-bottom 2010px
+  margin-bottom -2000px
+.bok-factoid-1
+  background-color rgba(c-orange-dark, 0.1)
+.bok-factoid-2
+  background-color rgba(c-orange-dark, 0.2)
+.bok-factoid-3
+  background-color rgba(c-orange-dark, 0.1)
+
+.bok-quote
+  background linear-gradient(to right, c-light-turquoise 0, c-light-turquoise 66%, c-turquoise 100%)
+  color c-white
+  padding 10px
+  margin 0 0 20px 0
+
+.bok-quote-text,
+.bok-quote-attribution
+  font-style italic
+  margin 0
+
+.bok-quote-attribution
+  text-align right
+
+.bok-purchase
+  color c-pink
+
+.bok-toc
+  background-color c-yellow-005
+  margin-top 40px
+  padding 20px
+
+.bok-toc-title
+  text-align center
+  margin-top 0
+  font-size 4em
+
+.bok-toc-list,
+.bok-toc-chapters
+  list-style-type none
+
+.bok-toc-part-title
+  font-variant small-caps
+  font-weight bold
+  margin 20px 0
+
+.bok-sample
+  margin-left 10px
+  padding 2px 5px
+  background-color c-yellow-highlight
+  border-bottom 1px solid c-pink
+  color c-black
+
+.bok-sale
+  margin-top 40px
+  margin-bottom 200px
+
+.bok-purchase-buttons
+  text-align center
+  .de-button
+    margin-right 20px
+    &:last-child
+      margin-right 0
+
+.bok-purchase-button
+  display block
+
+@media screen and (min-width: 700px)
+  .bok-book
+    width 300px
+
+  .bok-description
+    width calc(100% - 330px)
+
+  .bok-book,
+  .bok-description
+    display inline-block
+    vertical-align top

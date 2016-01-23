@@ -22,6 +22,8 @@ module.exports = [
   { route: '/about', action: 'marketing/about' },
   { route: '/speaking', action: 'speaking/home' },
   { route: '/opensource', action: 'opensource/home' },
+  { route: '/books', action: 'books/home' },
+  { route: '/books/javascript-application-design', action: 'books/javascript-application-design' },
   { route: '/presentations', action: 'speaking/presentations' },
   { route: '/presentations/:slug', action: 'speaking/presentation' },
   { route: '/account/login', action: 'account/login' },

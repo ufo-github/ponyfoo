@@ -1,6 +1,6 @@
 'use strict';
 
-var searchUrlService = require('../services/searchUrl');
+var searchUrlService = require('../../services/searchUrl');
 
 function setup (app) {
   app.get('/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)/:slug', redirect('/articles/:slug'));
