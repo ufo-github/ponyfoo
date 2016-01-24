@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
     var description = textService.truncate(descriptionText, 170);
     res.viewModel = {
       model: {
-        title: 'Conference projects \u2014 Pony Foo',
+        title: 'Open-source projects \u2014 Pony Foo',
         projects: projects.map(function (project) {
           return {
             name: project.name,

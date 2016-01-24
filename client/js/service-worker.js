@@ -1,12 +1,14 @@
 'use strict';
 
-var version = 'v10::';
+var version = 'v11::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var env = require('../../lib/env');
 var swivel = require('swivel');
 var parse = require('omnibox/querystring').parse;
 var sw = require('./lib/sw');
+var prefixes = ['api', 'author', 'account', 'bf', 's'];
+var rprefixes = new RegExp('^\/(' + prefixes.join('|') + ')(\/|$)', 'i');
 var offlineFundamentals = [
   '/',
   '/offline',
@@ -54,6 +56,10 @@ function fetcher (e) {
   }
 
   var url = new URL(request.url);
+  var sameorigin = url.origin === location.origin;
+  if (sameorigin && rprefixes.test(url.pathname)) {
+    return; // ignore
+  }
   if (request.url.indexOf('https://maps.googleapis.com/maps/vt') === 0) {
     return; // ignore
   }
@@ -78,7 +84,7 @@ function fetcher (e) {
       var qs = parse(url.search.slice(1));
       var loading = 'json' in qs && qs.callback === 'taunusReady';
       var json = matchesType(response, 'application/json');
-      var notifies = cached && url.origin === location.origin;
+      var notifies = cached && sameorigin;
       if (!notifies) {
         return;
       }
@@ -121,7 +127,7 @@ function fetcher (e) {
 
   function unableToResolve () {
     var accepts = request.headers.get('Accept');
-    if (url.origin === location.origin && accepts.indexOf('application/json') !== -1) {
+    if (sameorigin && accepts.indexOf('application/json') !== -1) {
       return offlineView();
     }
     if (accepts.indexOf('image') !== -1) {
@@ -132,7 +138,7 @@ function fetcher (e) {
         return caches.match(rainbows);
       }
     }
-    if (url.origin === location.origin) {
+    if (sameorigin) {
       return caches.match('/offline');
     }
     return offlineResponse();
