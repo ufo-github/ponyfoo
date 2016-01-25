@@ -16,9 +16,12 @@ ul(style='padding-left: 20px;')
   li I might also send you discount codes for books or conferences
   li One-click unsubscribe link provided in every email you receive
 
-p
+p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ConfirmAction')
+  meta(itemprop='name', content='Confirm Subscription')
+  meta(itemprop='description', content='Confirm Subscription – Pony Foo')
   span='Follow '
-  a(href!=domain.authority + confirm) this link
+  span(itemprop='handler', itemscope, itemtype='http://schema.org/HttpActionHandler')
+    a(itemprop='url', href!=domain.authority + confirm) this link
   span=' to confirm your email address subscription.'
 
 div(style='text-align: center;')

@@ -17,7 +17,9 @@ p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom:
 
 div(style='padding: 20px; background-color: #fff9f4;')!=comment.content
 
-p
+p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
+  meta(itemprop='name', content='Reply')
+  meta(itemprop='description', content='Reply to Comment – Pony Foo')
   span='Reply using '
-  a(href!=domain.authority + comment.permalink) this link
+  a(itemprop='target', href!=domain.authority + comment.permalink) this link
   span .

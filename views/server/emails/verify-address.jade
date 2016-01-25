@@ -6,8 +6,11 @@ p
   span . After that, you will be able to access your account.
 
 p='This link will expire ' + validation.expires + '.'
-p(style='padding-top: 15px;')
-  a(href!=domain.authority + validation.link)!=domain.authority + validation.link
+p(style='padding-top: 15px;', itemprop='potentialAction', itemscope, itemtype='http://schema.org/ConfirmAction')
+  meta(itemprop='name', content='Verify Email')
+  meta(itemprop='description', content='Verify Email – Pony Foo')
+  span(itemprop='handler', itemscope, itemtype='http://schema.org/HttpActionHandler')
+    a(itemprop='url', href!=domain.authority + validation.link)!=domain.authority + validation.link
 
 p(style='padding-top: 25px;') No further action is required to ignore this request
 p Email verification is in place to mitigate the effect of spam bots using fake email addresses. We apologize for the inconvenience.

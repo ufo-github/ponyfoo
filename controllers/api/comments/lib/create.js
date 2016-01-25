@@ -182,10 +182,10 @@ module.exports = function (slug, input, done) {
         '@type': 'EmailMessage',
         potentialAction: {
           '@type': 'ViewAction',
-          name: 'See comment',
+          name: 'Reply',
           target:  authority + permalinkToComment
         },
-        description: 'See comment – ' + data.article.title
+        description: 'Reply to Comment – ' + data.article.title
       }
     };
     subscriberService.send(data.recipients, 'comment-published', email);
