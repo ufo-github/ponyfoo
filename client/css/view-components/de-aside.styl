@@ -4,14 +4,20 @@
   padding-top 25px
   background-color rgba(c-white, 0.75)
 
-  &:before
+  &:before,
+  .ca-container:before
     position absolute
     left 0
     right 0
-    top 0
     height 4px
     content ''
-    background linear-gradient(to left, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+    background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+  &:before
+    top 0
+  .ca-container:before
+    bottom -4px
+  .ca-container
+    max-width inherit
 
   .ly-section
     margin-bottom 25px

@@ -1,20 +1,14 @@
+w-ad = 300px
+
 .ca-container
   position relative
   text-align left
+  max-width w-ad
   height 140px
-  margin-bottom 25px
+  margin 0 auto 25px
 
   &:empty
     display none
-
-  &:before
-    position absolute
-    left 0
-    right 0
-    bottom -4px
-    height 4px
-    content ''
-    background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
 
 .ca-loading,
 .ca-blocked
