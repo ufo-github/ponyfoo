@@ -73,15 +73,29 @@ function add (data, done) {
 
 function confirmation (subscriber, done) {
   var hash = getHash(subscriber);
+  var confirm = util.format('/api/subscribers/%s/confirm', hash);
   var model = {
     to: subscriber.email,
     subject: 'Pony Foo Subscription Invitation!',
     teaser: 'Would you like to subscribe to Pony Foo?',
-    confirm: util.format('/api/subscribers/%s/confirm', hash),
+    confirm: confirm,
     mandrill: {
       merge: {
         locals: [locals(subscriber)]
       }
+    },
+    linkedData: {
+      '@context': 'http://schema.org',
+      '@type': 'EmailMessage',
+      potentialAction: {
+        '@type': 'ConfirmAction',
+        name: 'Confirm Subscription',
+        handler: {
+          '@type': 'HttpActionHandler',
+          url: authority + confirm
+        }
+      },
+      description: 'Confirm Subscription – Pony Foo'
     }
   };
   emailService.send('list-subscription', model, done);

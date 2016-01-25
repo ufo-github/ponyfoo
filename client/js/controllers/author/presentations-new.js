@@ -2,6 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
+var rome = require('rome');
 var debounce = require('lodash/function/debounce');
 var loadScript = require('../../lib/loadScript');
 var textService = require('../../../../services/text');

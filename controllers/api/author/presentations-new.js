@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var sluggish = require('sluggish');
 var moment = require('moment');
 var Presentation = require('../../../models/Presentation');

@@ -12,6 +12,7 @@ var markupService = require('../../../../services/markup');
 var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
 var env = require('../../../../lib/env');
+var authority = env('AUTHORITY');
 var words = env('SPAM_WORDS');
 var delimiters = '[?@,;:.<>{}()\\[\\]\\s_-]';
 var rdelimited = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
@@ -161,6 +162,7 @@ module.exports = function (slug, input, done) {
       return;
     }
     var permalinkToArticle =  '/articles/' + data.article.slug;
+    var permalinkToComment = permalinkToArticle + '#comment-' + comment._id;
     var email = {
       subject: util.format('Fresh comments on "%s"!', data.article.title),
       teaser: 'Someone posted a comment on a thread you\'re watching!',
@@ -168,13 +170,23 @@ module.exports = function (slug, input, done) {
         author: comment.author,
         content: data.html,
         site: comment.site,
-        permalink: permalinkToArticle + '#comment-' + comment._id
+        permalink: permalinkToComment
       },
       article: {
         title: data.article.title,
         permalink: permalinkToArticle
       },
-      images: [data.gravatar]
+      images: [data.gravatar],
+      linkedData: {
+        '@context': 'http://schema.org',
+        '@type': 'EmailMessage',
+        potentialAction: {
+          '@type': 'ViewAction',
+          name: 'See comment',
+          target:  authority + permalinkToComment
+        },
+        description: 'See comment – ' + data.article.title
+      }
     };
     subscriberService.send(data.recipients, 'comment-published', email);
   }

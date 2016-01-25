@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
+var rome = require('rome');
 var loadScript = require('../../lib/loadScript');
 
 module.exports = function (viewModel, container) {

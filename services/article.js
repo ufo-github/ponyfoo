@@ -72,16 +72,27 @@ function campaign (article, done) {
 }
 
 function email (article, options, done) {
-  var intro = article.teaserHtml + article.introductionHtml
+  var relativePermalink = '/articles/' + article.slug;
+  var intro = article.teaserHtml + article.introductionHtml;
   var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
   var model = {
     subject: article.title,
     teaser: options.reshare ? 'You can\'t miss this!' : 'Hot off the press!',
     article: {
       title: article.title,
-      permalink: '/articles/' + article.slug,
+      permalink: relativePermalink,
       tags: article.tags,
       teaserHtml: teaser
+    },
+    linkedData: {
+      '@context': 'http://schema.org',
+      '@type': 'EmailMessage',
+      potentialAction: {
+        '@type': 'ViewAction',
+        name: 'See article',
+        target:  authority + relativePermalink
+      },
+      description: 'See article – ' + article.title
     }
   };
   subscriberService.broadcast('article-published', model, done);

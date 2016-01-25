@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
+var taunus = require('taunus');
 
 function bind () {
   taunus.on('render', unwrapFrames);

@@ -5,9 +5,11 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var emailService = require('./email');
 var userService = require('./user');
+var env = require('../lib/env');
 var UnverifiedUser = require('../models/UnverifiedUser');
 var UserVerificationToken = require('../models/UserVerificationToken');
 var User = require('../models/User');
+var authority = env('AUTHORITY');
 var ObjectId = mongoose.Types.ObjectId;
 
 function createToken (user, done) {
@@ -28,13 +30,27 @@ function getExpiration (token) {
 }
 
 function sendEmail (user, token, done) {
+  var link = getLink(token);
   var model = {
     to: user.email,
     subject: 'Account Email Verification',
     teaser: 'Action required to complete your account registration',
     validation: {
-      link: getLink(token),
+      link: link,
       expires: getExpiration(token).fromNow()
+    },
+    linkedData: {
+      '@context': 'http://schema.org',
+      '@type': 'EmailMessage',
+      potentialAction: {
+        '@type': 'ConfirmAction',
+        name: 'Verify Email',
+        handler: {
+          '@type': 'HttpActionHandler',
+          url: authority + link
+        }
+      },
+      description: 'Verify Email – Pony Foo'
     }
   };
   emailService.send('verify-address', model);

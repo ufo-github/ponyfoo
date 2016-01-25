@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var moment = require('moment');
 var OpenSourceProject = require('../../../models/OpenSourceProject');
 var markupService = require('../../../services/markup');
