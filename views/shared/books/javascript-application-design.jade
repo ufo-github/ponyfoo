@@ -98,15 +98,17 @@ article.de-host
         span .
 
       div.bok-purchase-buttons
-        span.de-button(aria-label='As easy as clicking this button!')
-          a.gg-container.bt-button.bt-pink.bok-purchase-button(href='/bf/manning', target='_blank')
-            span.bt-text Purchase from Manning
-            include ../partials/button-background
+        span.bok-purchase-manning
+          span.bok-purchase-label(aria-label='As easy as clicking this button!')
+            a.gg-container.bt-button.bt-pink.bok-purchase-button(href='/bf/manning', target='_blank')
+              span.bt-text Purchase from Manning
+              include ../partials/button-background
 
-        span.de-button(aria-label='As easy as clicking this button!')
-          a.gg-container.bt-button.bt-pink.bok-purchase-button(href='/bf/amazon', target='_blank')
-            span.bt-text Purchase on Amazon
-            include ../partials/button-background
+        span.bok-purchase-amazon
+          span.bok-purchase-label(aria-label='As easy as clicking this button!')
+            a.gg-container.bt-button.bt-pink.bok-purchase-button(href='/bf/amazon', target='_blank')
+              span.bt-text Purchase on Amazon
+              include ../partials/button-background
 
     footer.tk-presentations-link
       a.tk-presentations-anchor(href='/books') Back to full list of books

@@ -107,7 +107,8 @@ svg.go-logo(width='156', height='156', viewbox='0 0 13 13', shape-rendering='cri
   rect(width='1', height='1', y='12', x='7')
   rect(width='1', height='1', y='12', x='8', fill='#333')
 
-  if new Date().getMonth() === 11
+  - var now = new Date()
+  if now.getMonth() === 11 || (now.getMonth() === 0 && now.getDate() < 16)
     rect(width='0.4', height='0.4', x='4', fill='#c78386')
     rect(width='0.4', height='0.4', x='4.4', fill='#c6161c')
 

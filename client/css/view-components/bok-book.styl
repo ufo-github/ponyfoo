@@ -86,13 +86,18 @@
 
 .bok-purchase-buttons
   text-align center
-  .de-button
-    margin-right 20px
-    &:last-child
-      margin-right 0
 
 .bok-purchase-button
   display block
+.bok-purchase-label
+  display inline-block
+
+.bok-purchase-manning,
+.bok-purchase-amazon
+  display block
+
+.bok-purchase-manning
+  margin-bottom 40px
 
 @media screen and (min-width: 700px)
   .bok-book
@@ -105,3 +110,11 @@
   .bok-description
     display inline-block
     vertical-align top
+
+  .bok-purchase-manning,
+  .bok-purchase-amazon
+    display inline-block
+
+  .bok-purchase-manning
+    margin-bottom 0
+    margin-right 40px

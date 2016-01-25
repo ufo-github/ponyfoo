@@ -9,28 +9,30 @@
   animation-duration 0.7s
   animation-iteration-count infinite
 
-  for offset in (1..107) // 107 for logo
+  for offset in (1..180) // 107 for logo, 180 for button-background
     &:nth-child({offset})
       animation-name logo-0
       animation-duration round(0.7s + offset * 0.01, 4)
 
-  &[fill="#1a1a1a"]
+  &[fill='#1a1a1a']
     animation-name logo-10
-  &[fill="#333"]
+  &[fill='#333']
     animation-name logo-15
-  &[fill="#4d4d4d"]
+  &[fill='#4d4d4d']
     animation-name logo-20
-  &[fill="#666"]
+  &[fill='#666']
     animation-name logo-30
-  &[fill="#26EF00"],
-  &[fill="#555"],
-  &[fill="#444"]
+  &[fill='#26EF00'],
+  &[fill='#555'],
+  &[fill='#444']
     animation-name logo-eye
-  &[fill="#26E400"],
-  &[fill="#999"]
+  &[fill='#26E400'],
+  &[fill='#999']
     animation-name logo-eye-core
 
-  for offset in (108..223) // 116 for hat
+.gg-container:hover .go-logo rect,
+.gg-continuous .go-logo rect
+  for offset in (108..223) // 116 for holiday hat
     &:nth-child({offset})
       if offset > 141
         animation-name logo-hat-white
