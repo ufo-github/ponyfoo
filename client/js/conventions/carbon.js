@@ -10,9 +10,17 @@ var options = {
 };
 var script = loadScript(placement, options, loaded);
 var timer;
+var originalGo;
 
 function loaded () {
   timer = setTimeout(helpMePay, 5000);
+  originalGo = global._carbonads_go;
+  global._carbonads_go = go;
+}
+
+function go () {
+  originalGo.apply(null, arguments);
+  $('#_carbonads_js ~ [id^=carbonads_]').remove(); // remove extra ads if carbon is being weird
 }
 
 function carbon () {
@@ -33,7 +41,7 @@ function changed () {
   }
   if (global._carbonads) {
     options.container.appendChild(script);
-    global._carbonads.refresh();
+    global._carbonads.reload();
   }
   timer = setTimeout(helpMePay, 5000);
 }
