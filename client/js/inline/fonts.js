@@ -22,7 +22,7 @@ contentLoaded(window, checkAllFonts); // cache isn't primed, wait on async <link
 contentLoaded(window, checkAllFonts, true); // always runs on onload event
 
 function checkAllFonts () {
-  checkFont('Merriweather', 'ly-teasers');
+  checkFont('Merriweather', 'ly-custom-subheadings');
   checkFont('Neuton', 'ly-custom-headings');
 }
 

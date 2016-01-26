@@ -14,14 +14,16 @@ article.de-host
         span .
 
     div.bok-description
-      div.bok-factoids
-        span.bok-factoid.bok-factoid-1 Published January, 2015
-        span.bok-factoid.bok-factoid-2 Has 344 pages
-        span.bok-factoid.bok-factoid-3 ISBN 9781617291951
+      div.bok-trivia
+        div.bok-factoids
+          span.bok-factoid Published January, 2015
+          span.bok-factoid Has 344 pages
+          span.bok-factoid ISBN 9781617291951
+          span.bok-factoid Manning
 
-      blockquote.bok-quote
-        p.bok-quote-text Enjoy the ride through the process of improving your development workflow.
-        p.bok-quote-attribution – Addy Osmani, Google
+        blockquote.bok-quote
+          p.bok-quote-text Enjoy the ride through the process of improving your development workflow.
+          p.bok-quote-attribution – Addy Osmani, Google
 
       div.md-markdown
         p The fate of most applications is often sealed before a single line of code has been written. How is that possible? Simply, bad design assures bad results. Good design and effective processes are the foundation on which maintainable applications are built, scaled, and improved. For JavaScript developers, this means discovering the tooling, modern libraries, and architectural patterns that enable those improvements.
@@ -33,8 +35,8 @@ article.de-host
 
         p Write modular, cleaner, and easily testable code. Using a modular approach to application design, you'll learn how to write smaller components that work well together. You'll be able to master complex asynchronous flows in JavaScript. Learn different kinds of testing such as unit testing, integration testing, and visual diff. testing. Design a REST API and implement it.
 
-    div.bok-toc
-      h2.bok-toc-title Table of Contents
+    div.bok-toc.md-markdown
+      h2.bok-toc-header.bok-header#toc Table of Contents
       ol.bok-toc-list
         li.bok-toc-part
           p.bok-toc-part-title I. Build Processes
@@ -88,26 +90,46 @@ article.de-host
               span.bok-toc-chapter JavaScript Code Quality Guide
 
     div.bok-praise.md-markdown
-      h2.bok-toc-title Praise For This Book
+      h2.bok-header#praise Praise For This Book
+
       div.bok-tweets
+        div.bok-tweet
+          <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/andywalpole">@andywalpole</a> <a href="https://twitter.com/buildfirst">@buildfirst</a> <a href="https://twitter.com/nzgb">@nzgb</a> it&#39;s an incredible book, changed how i thought about the build process</p>&mdash; Shanan (@shanan) <a href="https://twitter.com/shanan/status/638163114236612609">August 31, 2015</a></blockquote>
+
         div.bok-tweet
           <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">I am in love with this book:&#10;&quot;JavaScript Application Design&#10;A Build First Approach&quot; by <a href="https://twitter.com/nzgb">@nzgb</a>&#10;<a href="http://t.co/BZNTekBfZP">http://t.co/BZNTekBfZP</a> &#10;<a href="https://twitter.com/hashtag/javascript?src=hash">#javascript</a> <a href="https://twitter.com/hashtag/frontend?src=hash">#frontend</a></p>&mdash; Nouranology(); (@Nouran_Mhmoud) <a href="https://twitter.com/Nouran_Mhmoud/status/620645877170991108">July 13, 2015</a></blockquote>
 
+      div.bok-tweets
         div.bok-tweet
-          <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Really digging <a href="https://twitter.com/nzgb">@nzgb</a>&#39;s JavaScript Application Design, esp Part 2 &quot;Managing Complexity&quot;. Exactly what I needed! - <a href="http://t.co/VH7x6igP3U">http://t.co/VH7x6igP3U</a>.</p>&mdash; Matt Netkow (@dotNetkow) <a href="https://twitter.com/dotNetkow/status/567679932328075264">February 17, 2015</a></blockquote>
+          <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Definitely worth having. ⭐️⭐️⭐️⭐️⭐️ <a href="https://t.co/81LkEHULpV">https://t.co/81LkEHULpV</a></p>&mdash; Chris Williams (@amboy00) <a href="https://twitter.com/amboy00/status/620594278528499712">July 13, 2015</a></blockquote>
+
+        div.bok-tweet
+          <blockquote class="twitter-tweet" lang="en" data-cards="hidden"><p lang="en" dir="ltr">Excited to read &quot;JavaScript Application Design&quot; by <a href="https://twitter.com/nzgb">@nzgb</a> - order it here: <a href="http://t.co/mCiTuCyFCk">http://t.co/mCiTuCyFCk</a> <a href="http://t.co/kEyyYMt5i5">pic.twitter.com/kEyyYMt5i5</a></p>&mdash; Matt Mazur (@mhmazur) <a href="https://twitter.com/mhmazur/status/571379506067349506">February 27, 2015</a></blockquote>
 
       div.bok-tweets
         div.bok-tweet
+          <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Really digging <a href="https://twitter.com/nzgb">@nzgb</a>&#39;s JavaScript Application Design, esp Part 2 &quot;Managing Complexity&quot;. Exactly what I needed! - <a href="http://t.co/VH7x6igP3U">http://t.co/VH7x6igP3U</a>.</p>&mdash; Matt Netkow (@dotNetkow) <a href="https://twitter.com/dotNetkow/status/567679932328075264">February 17, 2015</a></blockquote>
+
+        div.bok-tweet
           <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Reading &quot;Javascript Application Design&quot; by <a href="https://twitter.com/nzgb">@nzgb</a>, a must read for serious devs who wants to make great quality software <a href="https://twitter.com/hashtag/buildfirst?src=hash">#buildfirst</a></p>&mdash; Enzo Luis Strongoli (@Hazzard) <a href="https://twitter.com/Hazzard/status/542108563368579072">December 9, 2014</a></blockquote>
 
+      div.bok-tweets
         div.bok-tweet
           <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Feedback: &quot;I bought the JavaScript Application Design MEAP edition and it&#39;s BEASTLY super-good!&quot; He&#39;s already using it at work&#10;<a href="https://twitter.com/ManningBooks">@ManningBooks</a></p>&mdash; JavaScript A. Design (@buildfirst) <a href="https://twitter.com/buildfirst/status/531790077580812289">November 10, 2014</a></blockquote>
 
+        div.bok-tweet
+          <blockquote class="twitter-tweet" lang="en"><p lang="en" dir="ltr">&quot;JavaScript Application Design&quot; by <a href="https://twitter.com/nzgb">@nzgb</a> might have the clearest explanation of client side MVC I&#39;ve read. <a href="http://t.co/LbOTTEBgkT">http://t.co/LbOTTEBgkT</a></p>&mdash; Adam D. Scott (@adamdscott) <a href="https://twitter.com/adamdscott/status/498422683093438464">August 10, 2014</a></blockquote>
+
     div.bok-sale.md-markdown
+      h2.bok-header#purchase Purchasing Options
+
       p
         span='There are tons of freely available code samples on '
         a(href='https://github.com/buildfirst/buildfirst', target='_blank') the GitHub repository
-        span='. The book can be purchased directly through '
+        span='. There\'s over 90 code samples that range from the basics such as creating an automated Lint task, to more advanced tasks such as deploying to Amazon Web Services or inlining critical CSS to improve perceived performance.'
+
+      p
+        span='The book can be purchased directly through '
         a(href='/bf/manning', target='_blank') Manning
         span=', or via '
         a(href='/bf/amazon', target='_blank') Amazon
