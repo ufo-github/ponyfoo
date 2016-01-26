@@ -6,8 +6,6 @@ var domador = require('domador');
 var woofmark = require('woofmark');
 var markdownService = require('../../../services/markdown');
 
-// TODO twitterService.updateView(preview);
-
 function textareas () {
   taunus.gradual.transform(before);
   taunus.on('render', activate);
@@ -18,11 +16,10 @@ function activate (container, model) {
 
   function convert (el) {
     var wel = $(el)
-    var hasHtml = wel.hasClass('wk-html')
-    var hasWysiwyg = wel.hasClass('wk-wysiwyg')
+    var hasHtml = wel.hasClass('wk-html');
+    var hasWysiwyg = wel.hasClass('wk-wysiwyg');
     var editor = woofmark(el, {
-      parseMarkdown: domador,
-      parseHTML: markdownService.decompile,
+      parseMarkdown: markdownService.compile,
       classes: {
         wysiwyg: 'md-markdown',
         prompts: {

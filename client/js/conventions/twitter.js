@@ -14,4 +14,6 @@ function twitter () {
   taunus.on('render', updateView);
 }
 
+twitter.updateView = updateView;
+
 module.exports = twitter;

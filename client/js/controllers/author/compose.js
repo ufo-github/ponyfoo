@@ -2,11 +2,12 @@
 
 var $ = require('dominus');
 var debounce = require('lodash/function/debounce');
-var megamark = require('megamark');
 var moment = require('moment');
 var raf = require('raf');
 var taunus = require('taunus/global');
 var textService = require('../../../../services/text');
+var markdownService = require('../../../../services/markdown');
+var twitterService = require('../../conventions/twitter');
 var storage = require('../../lib/storage');
 var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
@@ -35,6 +36,9 @@ module.exports = function (viewModel, container, route) {
   var publication = $('.ac-publication');
   var preview = $.findOne('.ac-preview');
   var previewTitle = $('.ac-preview-title');
+  var previewTeaser = $('.ac-preview-teaser');
+  var previewIntroduction = $('.ac-preview-introduction');
+  var previewBody = $('.ac-preview-body');
   var previewTags = $.findOne('.ac-preview-tags');
   var previewHtml = $('.ac-preview-html');
   var discardButton = $('.ac-discard');
@@ -127,12 +131,13 @@ module.exports = function (viewModel, container, route) {
   }
 
   function updatePreviewMarkdown () {
-    $('.ac-preview-teaser').html(getHtml(teaser));
-    $('.ac-preview-introduction').html(getHtml(introduction));
-    $('.ac-preview-body').html(getHtml(body));
+    previewTeaser.html(getHtml(teaser));
+    previewIntroduction.html(getHtml(introduction));
+    previewBody.html(getHtml(body));
+    twitterService.updateView(preview);
 
     function getHtml (el) {
-      return megamark(el.value());
+      return markdownService.compile(el.value());
     }
   }
 
