@@ -18,9 +18,31 @@ function loaded () {
   global._carbonads_go = go;
 }
 
-function go () {
-  originalGo.apply(null, arguments);
+function go (data) {
+  patch(data);
+  originalGo(data);
   $('#_carbonads_js ~ [id^=carbonads_]').remove(); // remove extra ads if carbon is being weird
+}
+
+function patch (data) {
+  data.ads.forEach(patchAd);
+  function patchAd (ad) {
+    try { // fix unsafe image loading for hosts known to support https
+      ad.image = patchUnsafeImageHost(ad.image);
+    } catch (e) {
+    }
+  }
+}
+
+function patchUnsafeImageHost (image) {
+  if (image.indexOf('//') === 0) {
+    return 'https:' + image;
+  }
+  var url = new URL(image);
+  if (url.host === 'assets.servedby-buysellads.com' && url.protocol === 'http:') {
+    return url.href.replace(/^http:/, 'https:');
+  }
+  return image;
 }
 
 function carbon () {
