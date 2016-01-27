@@ -14,7 +14,9 @@ var nullLatLng = {
 module.exports = function (viewModel, container) {
   loadScript(source, function () {
     var gmaps = google.maps;
-    var interactButton = $('.tkfm-interact');
+    var playButton = $('.tkfm-play');
+    var stopContainer = $('.tkfm-stop');
+    var stopButton = $('.tkfm-stop-button');
     var interactiveMap = $('.tkfm-interactive');
     var interactiveMapEl = interactiveMap[0];
     var mapOptions = {
@@ -28,18 +30,32 @@ module.exports = function (viewModel, container) {
     var upcoming = viewModel.engagements.upcoming.map(toPink);
     var past = viewModel.engagements.past.map(toPinkLight);
     var all = upcoming.concat(past);
+    var openedInfoWindow;
 
     concurrent(all, 4, ready);
 
     function ready () {
-      interactButton.removeClass('uv-hidden').on('click', interact);
+      playButton.removeClass('tkfm-hidden').on('click', play);
+      stopButton.on('click', stop);
     }
-    function interact () {
-      interactButton.addClass('tkfm-interact-fadeout');
-      interactiveMap.addClass('tkfm-interactive-fadein');
+    function play () {
+      playButton.addClass('tkfm-play-fadeout');
+      stopContainer.removeClass('tkfm-hidden');
+      interactiveMap
+        .removeClass('tkfm-interactive-buried')
+        .addClass('tkfm-interactive-opaque');
       setTimeout(showInteractiveMap, 1000);
       function showInteractiveMap () {
-        interactButton.remove();
+        interactiveMap.addClass('tkfm-interactive-loaded');
+        playButton.removeClass('tkfm-play-fadeout');
+      }
+    }
+    function stop () {
+      stopContainer.addClass('tkfm-hidden');
+      interactiveMap.removeClass('tkfm-interactive-opaque');
+      setTimeout(hiddenInteractiveMap, 1000);
+      function hiddenInteractiveMap () {
+        interactiveMap.addClass('tkfm-interactive-buried');
       }
     }
 
@@ -82,8 +98,17 @@ module.exports = function (viewModel, container) {
             icon: icon
           });
           gmaps.event.addListener(marker, 'click', reveal);
+          gmaps.event.addListener(infoWindow, 'closeclick', closing);
+          function closing () {
+            if (openedInfoWindow) {
+              openedInfoWindow.close();
+              openedInfoWindow = null;
+            }
+          }
           function reveal () {
+            closing();
             infoWindow.open(map, marker);
+            openedInfoWindow = infoWindow;
           }
         }
       }
