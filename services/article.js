@@ -271,6 +271,9 @@ function summarize (article) {
     return remainder > 0;
   }
   function transformText (text) {
+    if (remainder <= 0) {
+      return '';
+    }
     var truncated = textService.truncate(text, remainder, false);
     if (truncated[truncated.length - 1] === '…') {
       remainder = 0;
