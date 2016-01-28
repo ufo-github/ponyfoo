@@ -21,5 +21,6 @@ p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction'
   meta(itemprop='name', content='Reply')
   meta(itemprop='description', content='Reply to Comment – Pony Foo')
   span='Reply using '
-  a(itemprop='target', href!=domain.authority + comment.permalink) this link
+  span(itemprop='target')
+    a(itemprop='url', href!=domain.authority + comment.permalink) this link
   span .

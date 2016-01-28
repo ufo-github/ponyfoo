@@ -18,4 +18,5 @@ div(style='padding: 20px; background-color: #fff9f4;')!=article.teaserHtml
 div(style='text-align: center;', itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
   meta(itemprop='name', content='See article')
   meta(itemprop='description', content='See article – Pony Foo')
-  a(itemprop='target', style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; font-size: 24px; background-color: #e92c6c; color: #fff;', href!=domain.authority + article.permalink) Read More
+  span(itemprop='target')
+    a(itemprop='url', style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; font-size: 24px; background-color: #e92c6c; color: #fff;', href!=domain.authority + article.permalink) Read More
