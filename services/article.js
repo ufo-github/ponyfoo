@@ -253,7 +253,14 @@ function summarize (article) {
   var all = article.teaserHtml + article.introductionHtml;
   var remainder = 170;
   var ignoredTags = {
-    img: true, blockquote: true
+    blockquote: true,
+    h1: true,
+    h2: true,
+    h3: true,
+    h4: true,
+    h5: true,
+    h6: true,
+    img: true
   };
   var plain = '';
   var html = insane(all, {

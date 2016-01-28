@@ -15,9 +15,11 @@ function truncate (text, cap, trimmed) {
     result = result.substr(0, cap);
     i = result.lastIndexOf(' ');
 
-    if (i !== -1) { // truncate the last word, which may have been slashed
-      result = result.substr(0, i);
+    if (i === -1) { // assume that we'd otherwise slash a word
+      return '…';
     }
+     // truncate the last word, which may have been slashed
+    result = result.substr(0, i);
     result += ' …';
   }
   return result;
