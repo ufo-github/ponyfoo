@@ -6,7 +6,7 @@ ol.aa-articles
       h2.aa-title
         a.aa-visit(href='/articles/' + article.slug)=article.title
       section.aa-summary
-        div=article.summary
+        div.md-markdown.md-markdown-summary!=article.summaryHtml
         a.aa-continue(href='/articles/' + article.slug) (continued)
       section.aa-trivia
         div.aa-trivia-item

@@ -8,14 +8,14 @@ function truthy (value) {
   return !!value;
 }
 
-function truncate (text, cap) {
+function truncate (text, cap, trimmed) {
   var i;
-  var result = text.trim();
+  var result = trimmed === false ? text : text.trim();
   if (result.length > cap) {
     result = result.substr(0, cap);
     i = result.lastIndexOf(' ');
 
-    if (i !== -1) { // truncate the last word, which may have been trimmed
+    if (i !== -1) { // truncate the last word, which may have been slashed
       result = result.substr(0, i);
     }
     result += ' …';

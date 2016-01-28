@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
   var page = parseInt(req.params.page, 10) || 1;
   var query = { status: 'published' };
   var options = { limit: limit, skip: page * limit - limit };
-  var handle = articleListHandler(res, { skip: false, summary: true }, next);
+  var handle = articleListHandler(res, { skip: false }, next);
 
   res.viewModel = {
     model: {

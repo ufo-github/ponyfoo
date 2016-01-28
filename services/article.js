@@ -4,6 +4,7 @@ var _ = require('lodash');
 var but = require('but');
 var util = require('util');
 var contra = require('contra');
+var insane = require('insane');
 var estimate = require('estimate');
 var env = require('../lib/env');
 var Article = require('../models/Article');
@@ -203,12 +204,12 @@ function toJSON (source, options) {
   if (o.id === false) {
     delete article._id;
   }
+  if (o.summary !== true) {
+    delete article.summaryHtml;
+  }
   if (o.meta) {
-    delete article.teaser;
     delete article.teaserHtml;
-    delete article.introduction;
     delete article.introductionHtml;
-    delete article.body;
     delete article.bodyHtml;
   }
   delete article.__v;
@@ -216,6 +217,7 @@ function toJSON (source, options) {
   delete article.teaser;
   delete article.introduction;
   delete article.body;
+  delete article.summaryText;
   delete article.comments;
   delete article.hn;
   delete article.lobsters;
@@ -247,6 +249,39 @@ function byPublication (a, b) {
   return a.created - b.created;
 }
 
+function summarize (article) {
+  var all = article.teaserHtml + article.introductionHtml;
+  var remainder = 170;
+  var ignoredTags = {
+    img: true, blockquote: true
+  };
+  var plain = '';
+  var html = insane(all, {
+    filter: filter,
+    transformText: transformText,
+    allowedAttributes: {
+      mark: ['class']
+    }
+  });
+  return { html: html, text: plain };
+  function filter (token) {
+    if (token.tag in ignoredTags) {
+      return false;
+    }
+    return remainder > 0;
+  }
+  function transformText (text) {
+    var truncated = textService.truncate(text, remainder, false);
+    if (truncated[truncated.length - 1] === '…') {
+      remainder = 0;
+    } else {
+      remainder -= truncated.length;
+    }
+    plain += truncated;
+    return truncated;
+  }
+}
+
 campaign.email = email;
 campaign.twitter = tweet;
 campaign.facebook = fbShare;
@@ -258,5 +293,6 @@ module.exports = {
   find: find,
   findOne: findOne,
   campaign: campaign,
+  summarize: summarize,
   toJSON: toJSON
 };

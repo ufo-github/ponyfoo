@@ -57,7 +57,7 @@ module.exports = function (req, res, next) {
     model.title = article.title;
     model.meta = {
       canonical: '/articles/' + article.slug,
-      description: textService.truncate(htmlService.getText(article.teaserHtml + article.introductionHtml), 170),
+      description: article.summaryText,
       keywords: article.tags,
       images: metadataService.extractImages(article).images
     };

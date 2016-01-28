@@ -3,7 +3,6 @@
 var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');
 var textService = require('../../../services/text');
-var htmlService = require('../../../services/html');
 var inliningService = require('../../../services/inlining');
 
 function factory (res, options, next) {
@@ -35,10 +34,8 @@ function factory (res, options, next) {
     next();
 
     function expand (article) {
-      var model = articleService.toJSON(article, { meta: true, id: false });
-      if (options.summary) {
-        model.summary = summarize(article);
-      }
+      var config = { meta: true, summary: true, id: false };
+      var model = articleService.toJSON(article, config);
       var images = imagesResult.map[article._id];
       if (images && images.length) {
         model.cover = images[0];
@@ -46,13 +43,6 @@ function factory (res, options, next) {
       return model;
     }
   };
-}
-
-function summarize (article) {
-  var all = article.teaserHtml + article.introductionHtml;
-  var text = htmlService.getText(all);
-  var truncated = textService.truncate(text, 170);
-  return truncated;
 }
 
 module.exports = factory;

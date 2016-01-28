@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
     status: 'published',
     tags: { $all: tags }
   };
-  var handle = articleListHandler(res, { summary: true, search: true }, searchResults(res, next));
+  var handle = articleListHandler(res, { search: true }, searchResults(res, next));
 
   res.viewModel = {
     model: {
