@@ -40,7 +40,7 @@ function imageUpload (options, done) {
   } else if (!o.production) {
     fileUpload(o, done);
   } else {
-    done(new Error('Misconfigured ponymark.imageUpload!'));
+    done(new Error('Misconfigured image upload!'));
   }
 }
 
