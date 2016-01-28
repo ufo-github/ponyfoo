@@ -8,23 +8,6 @@ function truthy (value) {
   return !!value;
 }
 
-function truncate (text, cap, trimmed) {
-  var i;
-  var result = trimmed === false ? text : text.trim();
-  if (result.length > cap) {
-    result = result.substr(0, cap);
-    i = result.lastIndexOf(' ');
-
-    if (i === -1) { // assume that we'd otherwise slash a word
-      return '…';
-    }
-     // truncate the last word, which may have been slashed
-    result = result.substr(0, i);
-    result += ' …';
-  }
-  return result;
-}
-
 function unique (results, item) {
   if (results.indexOf(item) === -1) {
     results.push(item);
@@ -55,8 +38,6 @@ function upperCase (m, g) {
 }
 
 module.exports = {
- slug: sluggish,
- truncate: truncate,
  splitTags: splitTags,
  format: format,
  hyphenToCamel: hyphenToCamel

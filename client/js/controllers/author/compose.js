@@ -3,6 +3,7 @@
 var $ = require('dominus');
 var debounce = require('lodash/function/debounce');
 var moment = require('moment');
+var sluggish = require('sluggish');
 var raf = require('raf');
 var taunus = require('taunus/global');
 var textService = require('../../../../services/text');
@@ -119,7 +120,7 @@ module.exports = function (viewModel, container, route) {
   }
 
   function updateSlug () {
-    slug.value(textService.slug(title.value()));
+    slug.value(sluggish(title.value()));
   }
 
   function updatePreviewTitle () {
@@ -164,7 +165,7 @@ module.exports = function (viewModel, container, route) {
     hn.value(data.hn);
     lobsters.value(data.lobsters);
 
-    boundSlug = textService.slug(titleText) === slugText;
+    boundSlug = sluggish(titleText) === slugText;
 
     if (data.status !== 'published') {
       statusRadio[data.status || 'publish'].value(true);

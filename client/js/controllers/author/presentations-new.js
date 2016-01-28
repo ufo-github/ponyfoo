@@ -3,9 +3,9 @@
 var $ = require('dominus');
 var raf = require('raf');
 var rome = require('rome');
+var sluggish = require('sluggish');
 var debounce = require('lodash/function/debounce');
 var loadScript = require('../../lib/loadScript');
-var textService = require('../../../../services/text');
 
 module.exports = function (viewModel, container) {
   var presented = $.findOne('.apn-presented');
@@ -32,7 +32,7 @@ module.exports = function (viewModel, container) {
       slugUpdates('off');
     }
     function updateSlug () {
-      slug.value(textService.slug(title.value()));
+      slug.value(sluggish(title.value()));
     }
     function addResourceElements () {
       resources.clone().beforeOf(actions);

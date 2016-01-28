@@ -2,6 +2,7 @@
 
 var util = require('util');
 var moment = require('moment');
+var sluggish = require('sluggish');
 var validator = require('validator');
 var Article = require('../../../../models/Article');
 var textService = require('../../../../services/text');
@@ -78,7 +79,7 @@ function validate (model, update) {
   function getSlug () {
     var length = 3;
     var input = validator.toString(model.slug);
-    var slug = textService.slug(input);
+    var slug = sluggish(input);
     if (!validator.isLength(slug, length)) {
       var message = util.format('The article slug must be at least %s characters long.', length);
       validation.push(message);

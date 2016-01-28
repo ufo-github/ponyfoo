@@ -1,8 +1,8 @@
 'use strict';
 
+var truncText = require('trunc-text');
 var Presentation = require('../../models/Presentation');
 var presentationService = require('../../services/presentation');
-var textService = require('../../services/text');
 var htmlService = require('../../services/html');
 
 module.exports = function (req, res, next) {
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
       next(); return;
     }
     var descriptionText = htmlService.getText(presentation.descriptionHtml);
-    var description = textService.truncate(descriptionText, 170);
+    var description = truncText(descriptionText, 170);
     var model = presentationService.toModel(presentation);
     res.viewModel = {
       model: {

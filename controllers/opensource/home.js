@@ -1,8 +1,8 @@
 'use strict';
 
+var truncText = require('trunc-text');
 var OpenSourceProject = require('../../models/OpenSourceProject');
 var staticService = require('../../services/static');
-var textService = require('../../services/text');
 var htmlService = require('../../services/html');
 var env = require('../../lib/env');
 var authority = env('AUTHORITY');
@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
     }
     var latest = projects[0];
     var descriptionText = htmlService.getText(latest.descriptionHtml);
-    var description = textService.truncate(descriptionText, 170);
+    var description = truncText(descriptionText, 170);
     res.viewModel = {
       model: {
         title: 'Open-source projects \u2014 Pony Foo',

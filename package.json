@@ -127,6 +127,8 @@
     "tmp": "0.0.28",
     "transports": "1.0.0",
     "trim-emoji": "1.0.0",
+    "trunc-html": "1.0.0",
+    "trunc-text": "1.0.0",
     "twit": "1.1.18",
     "validator": "3.12.0",
     "wemoji": "0.1.9",

@@ -6,6 +6,7 @@ var util = require('util');
 var contra = require('contra');
 var insane = require('insane');
 var estimate = require('estimate');
+var truncHtml = require('trunc-html');
 var env = require('../lib/env');
 var Article = require('../models/Article');
 var commentService = require('./comment');
@@ -251,45 +252,16 @@ function byPublication (a, b) {
 
 function summarize (article) {
   var all = article.teaserHtml + article.introductionHtml;
-  var remainder = 170;
-  var ignoredTags = {
-    blockquote: true,
-    h1: true,
-    h2: true,
-    h3: true,
-    h4: true,
-    h5: true,
-    h6: true,
-    img: true
+  var options = {
+    ignoredTags: ['blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
+    sanitizer: {
+      allowedAttributes: {
+        mark: ['class']
+      }
+    }
   };
-  var plain = '';
-  var html = insane(all, {
-    filter: filter,
-    transformText: transformText,
-    allowedAttributes: {
-      mark: ['class']
-    }
-  });
-  return { html: html, text: plain };
-  function filter (token) {
-    if (token.tag in ignoredTags) {
-      return false;
-    }
-    return remainder > 0;
-  }
-  function transformText (text) {
-    if (remainder <= 0) {
-      return '';
-    }
-    var truncated = textService.truncate(text, remainder, false);
-    if (truncated[truncated.length - 1] === '…') {
-      remainder = 0;
-    } else {
-      remainder -= truncated.length;
-    }
-    plain += truncated;
-    return truncated;
-  }
+  var limit = 170;
+  return truncHtml(all, limit, options);
 }
 
 campaign.email = email;
