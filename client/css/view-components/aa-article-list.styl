@@ -16,11 +16,6 @@
 .aa-visit
   color c-black
 
-.aa-continue
-  display block
-  font-style italic
-
-.aa-continue,
 .aa-history
   color c-pink
 
@@ -71,6 +66,16 @@
   &:nth-child(2n)
     margin-right 0
 
+.aa-continue
+  display block
+  margin 10px -5px
+  padding 5px 15px
+  background-color c-bright-turquoise
+  border-bottom 1px solid c-white
+  color c-white
+  &:hover
+    background-color c-light-turquoise
+
 .aa-title
   overflow-wrap normal
   overflow hidden
@@ -98,6 +103,9 @@
       margin-right 2%
     &:nth-child(3n)
       margin-right 0
+
+  .aa-continue
+    margin 10px -10px
 
 @media screen and (min-width: 725px)
   .aa-container
