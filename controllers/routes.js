@@ -43,6 +43,7 @@ module.exports = [
   { route: '/author/oss/new', action: 'author/oss-new', middleware: authorOnly },
   { route: '/author/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: authorOnly },
   { route: '/author/subscribers', action: 'author/subscribers', middleware: authorOnly },
+  { route: '/privacy', action: 'marketing/privacy' },
   { route: '/offline', action: 'error/offline' },
   { route: '/*', action: 'error/not-found' }
 ];
