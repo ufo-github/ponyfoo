@@ -28,8 +28,8 @@ function remodel (req, res, next) {
       card: card,
       since: since
     };
-    leads(options, found);
-    function found (err, leads) {
+    leads(options, pulled);
+    function pulled (err, leads) {
       if (err) {
         next(err); return;
       }
@@ -51,7 +51,7 @@ function remodel (req, res, next) {
     }
     function done (err) {
       if (err) {
-        next(er); return;
+        next(err); return;
       }
       res.json({});
     }

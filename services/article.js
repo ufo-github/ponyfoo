@@ -21,6 +21,7 @@ var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
 var markupService = require('./markup');
 var authority = env('AUTHORITY');
+var card = env('TWITTER_CAMPAIGN_CARD');
 
 function noop () {}
 
@@ -102,13 +103,13 @@ function email (article, options, done) {
 
 function socialStatus (article, options) {
   var fresh = [
-    'Just %spublished: "%s"',
-    'Fresh %scontent on Pony Foo! "%s"',
-    '%s"%s" contains crisp new words!',
-    '%s"%s" is hot off the press!',
-    'Extra! Extra! %s"%s" has just come out!',
-    '%s"%s" has just been published!',
-    'This just %sout! "%s"'
+    'Just published: "%s"',
+    'Fresh content on Pony Foo! "%s"',
+    '"%s" contains crisp new words!',
+    '"%s" is hot off the press!',
+    'Extra! Extra! "%s" has just come out!',
+    '"%s" has just been published!',
+    'This just out! "%s"'
   ];
   var manual = [
     '%sCheck out "%s" on Pony Foo!',
@@ -117,8 +118,7 @@ function socialStatus (article, options) {
   ];
   var formats = options.reshare ? manual : fresh;
   var fmt = _.sample(formats);
-  var emoji = options.emoji === false ? '' : twitterEmojiService.generate(['people']) + ' ';
-  var status = util.format(fmt, emoji, article.title);
+  var status = util.format(fmt, article.title);
   return status;
 }
 
@@ -126,15 +126,46 @@ function statusLink (article) {
   return util.format('%s/articles/%s', authority, article.slug);
 }
 
+function socialPrefix () {
+  return _.sample([
+    'Just published!',
+    'Fresh content!',
+    'Crisp new words!',
+    'Hot off the press!',
+    'Extra! Extra!',
+    'This just out!'
+  ]);
+}
+
 function tweet (article, options, done) {
-  var tag = '#' + article.tags.slice(0, 2).join(' #');
-  var camelTag = textService.hyphenToCamel(tag);
-  var status = util.format('%s %s %s', socialStatus(article, options), statusLink(article), camelTag);
-  twitterService.tweet(status, done);
+  var firstTag = '#' + article.tags[0];
+  var tags = textService.hyphenToCamel(firstTag);
+  var emoji = twitterEmojiService.generate(['people']);
+  var prefix = socialPrefix();
+  var tweetLength = 0;
+  var tweetLines = [];
+
+  add(3, '➡️️ ' + statusLink(article), 2 + 24);
+  add(1, emoji + ' ' + article.title, 2 + article.title.length);
+  add(4, card, 25);
+  add(0, '📰 ' + prefix, 2 + prefix.length);
+  add(2, '🔖 ' + tags, 2 + tags.length - 1); // no extra new line here
+
+  twitterService.tweet(tweetLines.filter(notEmpty).join('\n'), done);
+
+  function add (i, contents, length) {
+    if (tweetLength + length + 1 > 140) {
+      return false;
+    }
+    tweetLength += length + 1; // one for the next new line
+    tweetLines[i] = contents;
+  }
+  function notEmpty (line) {
+    return line;
+  }
 }
 
 function fbShare (article, options, done) {
-  options.emoji = false;
   facebookService.share(socialStatus(article, options), statusLink(article), done);
 }
 
