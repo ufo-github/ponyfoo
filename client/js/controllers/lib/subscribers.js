@@ -20,6 +20,7 @@ function pullData (subscribers) {
       date: week.format('Do MMMM ’YY'),
       migration: 0,
       unverified: 0,
+      twitter: 0,
       sidebar: 0,
       comment: 0,
       article: 0,
@@ -90,7 +91,7 @@ module.exports = function (viewModel, container) {
 
     var color = d3.scale
       .ordinal()
-      .range(['#cbc5c0', '#1a4d7f', '#900070', '#e92c6c', '#f3720d', '#ffe270']);
+      .range(['#cbc5c0', '#1a4d7f', '#55acee', '#900070', '#e92c6c', '#f3720d', '#ffe270']);
 
     var xAxis = d3.svg
       .axis()
@@ -118,7 +119,7 @@ module.exports = function (viewModel, container) {
     data.forEach(function(d) {
       var y0 = 0;
       d.fragments = color.domain().map(function(name) { return { name: name, y0: y0, y1: y0 += +d[name], d: d }; });
-      d.total = d.unverified + d.migration + d.sidebar + d.comment + d.article + d.landed;
+      d.total = d.unverified + d.migration + d.twitter + d.sidebar + d.comment + d.article + d.landed;
     });
 
     data.sort(function(a, b) { return a.moment.isAfter(b.moment) ? 1 : -1; });

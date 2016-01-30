@@ -32,6 +32,7 @@ var subscriberRemove = require('./api/subscribers/remove');
 var secretOnly = require('./api/secret/only');
 var secretScheduler = require('./api/secret/scheduler');
 var secretRemodel = require('./api/secret/remodel');
+var secretTwitterLeads = require('./api/secret/twitter-leads');
 var apiErrorNotFound = require('./api/error/notFound');
 var lastSentEmail = require('./development/lastSentEmail');
 var cspReport = require('./api/cspReport');
@@ -50,6 +51,7 @@ module.exports = function (app) {
   app.get('/api/status/health', statusHealth);
   app.get('/api/:secret(\\d+)/scheduler', secretOnly, secretScheduler);
   app.get('/api/:secret(\\d+)/remodel', secretOnly, secretRemodel);
+  app.get('/api/:secret(\\d+)/twitter-leads', secretOnly, secretTwitterLeads);
   app.get('/articles/feed', articleFeed);
   app.get('/sitemap.xml', sitemap);
 
