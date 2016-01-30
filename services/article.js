@@ -138,24 +138,27 @@ function socialPrefix () {
 }
 
 function tweet (article, options, done) {
-  var firstTag = '#' + article.tags[0];
-  var tags = textService.hyphenToCamel(firstTag);
+  var tagPair = '#' + article.tags.slice(0, 2).join(' #');
+  var tagText = textService.hyphenToCamel(tagPair);
   var emoji = twitterEmojiService.generate(['people']);
   var prefix = socialPrefix();
   var tweetLength = 0;
   var tweetLines = [];
 
+  // sorted by importance: link, title, cta, headline, tags.
   add(3, '➡️️ ' + statusLink(article), 2 + 24);
   add(1, emoji + ' ' + article.title, 2 + article.title.length);
   add(4, card, 25);
   add(0, '📰 ' + prefix, 2 + prefix.length);
-  add(2, '🔖 ' + tags, 2 + tags.length - 1); // no extra new line here
+  add(2, '🔖 ' + tagText, 2 + tagText.length - 1); // no extra new line here
 
-  twitterService.tweet(tweetLines.filter(notEmpty).join('\n'), done);
+  var status = tweetLines.filter(notEmpty).join('\n');
+
+  twitterService.tweet(status, done);
 
   function add (i, contents, length) {
     if (tweetLength + length + 1 > 140) {
-      return false;
+      return; // avoid going overboard
     }
     tweetLength += length + 1; // one for the next new line
     tweetLines[i] = contents;
