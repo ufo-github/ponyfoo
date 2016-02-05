@@ -1,19 +1,22 @@
 'use strict';
 
+var twemoji = require('twemoji');
+var domador = require('domador');
 var megamark = require('megamark');
 var insane = require('insane');
 var textService = require('./text');
+var env = require('../lib/env');
+var authority = env('AUTHORITY');
 var domains = [
-  '//codepen.io/',
-  '//assets.codepen.io/',
-  'http://codepen.io/',
-  'http://assets.codepen.io/'
+  /^(https?:)?\/\/codepen.io\//i,
+  /^(https?:)?\/\/assets.codepen.io\//i
 ];
 
 megamark.parser.renderer.rules.link_open = link;
 
 module.exports = {
-  compile: compile
+  compile: compile,
+  decompile: decompile
 };
 
 function getLabel (title) {
@@ -55,15 +58,18 @@ function link (tokens, i) {
 
 function filter (token) {
   var unsourced = token.tag !== 'iframe' && token.tag !== 'script';
-  return unsourced || domains.some(starts);
-  function starts (beginning) {
-    var src = attr(token, 'src');
-    return src && src.indexOf(beginning) === 0;
+  return unsourced || startsWithValidDomain(attr(token, 'src'));
+}
+
+function startsWithValidDomain (href) {
+  return domains.some(starts);
+  function starts (reg) {
+    return href && reg.test(href);
   }
 }
 
 function compile (text) {
-  return megamark(text, {
+  var mdOpts = {
     sanitizer: {
       filter: filter,
       allowedTags: insane.defaults.allowedTags.concat('iframe', 'script'),
@@ -73,7 +79,48 @@ function compile (text) {
       },
       allowedClasses: {
         p: ['codepen'],
-        blockquote: ['twitter-tweet']
+        blockquote: ['twitter-tweet'],
+        img: ['tj-emoji']
+      }
+    }
+  };
+  var emojiOpts = {
+    className: 'tj-emoji',
+    size: 72
+  };
+  return twemoji.parse(megamark(text, mdOpts), emojiOpts);
+}
+
+function decompile (html, options) {
+  var langmap = {
+    javascript: 'js',
+    markdown: 'md'
+  };
+  var o = options || {};
+  return domador(html, {
+    href: o.href || authority,
+    absolute: true,
+    fencing: true,
+    fencinglanguage: function (el) {
+      if (el.tagName === 'PRE') {
+        el = el.firstChild;
+      }
+      var match = el.className.match(/md-lang-((?:[^\s]|$)+)/);
+      if (!match) {
+        return;
+      }
+      var lang = match.pop();
+      return langmap[lang] || lang;
+    },
+    allowFrame: function (src) {
+      return startsWithValidDomain(src);
+    },
+    transform: function (el) {
+      if (el.tagName === 'BLOCKQUOTE' && el.className === 'twitter-tweet') {
+        return el.outerHTML;
+      }
+      if (el.tagName === 'IMG' && el.className === 'tj-emoji' && el.alt) {
+        return el.alt;
       }
     }
   });

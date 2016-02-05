@@ -30,7 +30,7 @@ var schema = new mongoose.Schema({
   fb: { type: Boolean, 'default': true },
   echojs: { type: Boolean, 'default': true },
   lobsters: { type: Boolean, 'default': true },
-  hn: { type: Boolean, 'default': true },
+  hn: { type: Boolean, 'default': false },
   hnDiscuss: String
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 

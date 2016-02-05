@@ -1,6 +1,7 @@
 'use strict';
 
 var contra = require('contra');
+var winston = require('winston');
 var User = require('../../models/User');
 
 module.exports = function (req, res, next) {
@@ -12,7 +13,11 @@ module.exports = function (req, res, next) {
       User.findOne({ _id: req.user }, next);
     },
     function (user, next) {
-      next(user && user.author ? null : 'route');
+      var ok = user && user.author;
+      if (!ok) {
+        winston.warn('Unauthorized request to author HTTP resource.');
+      }
+      next(ok ? null : 'route');
     }
   ], function (err) {
     next(err);

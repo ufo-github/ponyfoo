@@ -126,8 +126,12 @@ function statusLink (article) {
   return util.format('%s/articles/%s', authority, article.slug);
 }
 
-function socialPrefix () {
-  return _.sample([
+function socialPrefix (options) {
+  return _.sample(options.reshare ? [
+    'In case you missed it!',
+    'Read this!',
+    'Check this out!'
+  ] : [
     'Just published!',
     'Fresh content!',
     'Crisp new words!',

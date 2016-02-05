@@ -37,6 +37,7 @@ taunus.mount(main, wiring, {
 
 g.$ = $;
 g.md = markdownService.compile;
+g.md.svc = markdownService;
 g.moment = moment;
 
 require('./service-worker-registration')();
