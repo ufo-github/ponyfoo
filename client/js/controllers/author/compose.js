@@ -222,7 +222,8 @@ module.exports = function (viewModel, container, route) {
   }
 
   function discard () {
-    var confirmation = confirm('About to discard /articles/' + route.params.slug + ', are you sure?');
+    var name = route.params.slug ? '/articles/' + route.params.slug : 'draft';
+    var confirmation = confirm('About to discard ' + name + ', are you sure?');
     if (!confirmation) {
       return;
     }
