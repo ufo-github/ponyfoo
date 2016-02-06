@@ -132,8 +132,7 @@ function addRelatedAll (done) {
       contra.each(articles, 3, addRelatedArticles, but(next));
       function addRelatedArticles (article, next) {
         winston.debug('Computing relationships for: "%s"', article.slug);
-        save();
-        // addRelated(article, true, save);
+        addRelated(article, true, save);
         function save (err) {
           if (err) {
             next(err); return;
