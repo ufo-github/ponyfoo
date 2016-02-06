@@ -6,12 +6,15 @@ var moment = require('moment');
 var sluggish = require('sluggish');
 var raf = require('raf');
 var taunus = require('taunus/global');
+var articleSummarizationService = require('../../../../services/articleSummarization');
 var textService = require('../../../../services/text');
 var markdownService = require('../../../../services/markdown');
+var datetimeService = require('../../../../services/datetime');
 var twitterService = require('../../conventions/twitter');
 var storage = require('../../lib/storage');
 var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
+var rstrip = /^\s*<p>\s*|\s*<\/p>\s*/ig;
 
 function noop () {}
 
@@ -25,6 +28,7 @@ module.exports = function (viewModel, container, route) {
   var teaser = $('.ac-teaser');
   var introduction = $('.ac-introduction');
   var body = $('.ac-body');
+  var summary = $('.ac-summary');
   var tags = $('.ac-tags');
   var campaign = $('.ac-campaign');
   var email = $('#ac-campaign-email');
@@ -40,6 +44,7 @@ module.exports = function (viewModel, container, route) {
   var previewTeaser = $('.ac-preview-teaser');
   var previewIntroduction = $('.ac-preview-introduction');
   var previewBody = $('.ac-preview-body');
+  var previewSummary = $.findOne('.ac-preview-summary');
   var previewTags = $.findOne('.ac-preview-tags');
   var previewHtml = $('.ac-preview-html');
   var discardButton = $('.ac-discard');
@@ -51,18 +56,17 @@ module.exports = function (viewModel, container, route) {
   };
   var boundSlug = true;
   var serializeSlowly = editing ? noop : debounce(serialize, 200);
-  var previews = $('.pmk-preview', preview);
-
   var typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
   var typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
   var typingTextSlowly = raf.bind(null, debounce(typingText, 100));
+  var typingSummarySlowly = raf.bind(null, debounce(typingSummary, 100));
   var typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
+  var updatePreviewMarkdownSlowly = raf.bind(null, debounce(updatePreviewMarkdown, 300));
+  var updatePreviewSummarySlowly = raf.bind(null, debounce(updatePreviewSummary, 300));
 
-  previews.i(0).addClass('at-teaser');
-  previews.i(1).addClass('at-introduction');
-  previews.i(2).addClass('at-body');
   title.on('keypress keydown paste input', typingTitleSlowly);
   slug.on('keypress keydown paste input', typingSlugSlowly);
+  summary.on('keypress keydown paste input', typingSummarySlowly);
   texts.on('keypress keydown paste input', typingTextSlowly);
   tags.on('keypress keydown paste input', typingTagsSlowly);
   discardButton.on('click', discard);
@@ -103,7 +107,12 @@ module.exports = function (viewModel, container, route) {
 
   function typingText () {
     serializeSlowly();
-    updatePreviewMarkdown();
+    updatePreviewMarkdownSlowly();
+  }
+
+  function typingSummary () {
+    serializeSlowly();
+    updatePreviewSummarySlowly();
   }
 
   function typingTitle () {
@@ -119,12 +128,23 @@ module.exports = function (viewModel, container, route) {
     serializeSlowly();
   }
 
-  function updateSlug () {
-    slug.value(sluggish(title.value()));
+  function typingSummary () {
+    serializeSlowly();
+    updatePreviewSummarySlowly();
+  }
+
+  function getHtmlTitle () {
+    return getHtml(title).replace(rstrip, '');
   }
 
   function updatePreviewTitle () {
-    previewTitle.text(title.value());
+    previewTitle.html(getHtmlTitle());
+    updatePreviewSummary();
+  }
+
+  function updateSlug () {
+    slug.value(sluggish(title.value()));
+    updatePreviewSummary();
   }
 
   function typingTags () {
@@ -136,12 +156,30 @@ module.exports = function (viewModel, container, route) {
     previewIntroduction.html(getHtml(introduction));
     previewBody.html(getHtml(body));
     twitterService.updateView(preview);
-
-    function getHtml (el) {
-      return markdownService.compile(el.value());
+    if (!summary.value()) {
+      updatePreviewSummary();
     }
   }
 
+  function updatePreviewSummary () {
+    taunus.partial(previewSummary, 'articles/columns', {
+      articles: [{
+        publication: datetimeService.field(moment().add(4, 'days')),
+        commentCount: 0,
+        slug: slug.value(),
+        readingTime: 0,
+        titleHtml: getHtmlTitle(),
+        tags: getTags(),
+        summaryHtml: articleSummarizationService.summarize({
+          summary: summary.value(),
+          teaserHtml: getHtml(teaser),
+          introductionHtml: getHtml(introduction)
+        }).html
+      }]
+    });
+  }
+
+  function getHtml (el) { return markdownService.compile(el.value()); }
   function serialize () { storage.set(defaultKey, getRequestData()); }
   function clear () { storage.remove(defaultKey); }
 
@@ -149,7 +187,7 @@ module.exports = function (viewModel, container, route) {
     var data = source || storage.get(defaultKey) || {
       email: true, tweet: true, fb: true, echojs: true, hn: true, lobsters: true
     };
-    var titleText = data.title || '';
+    var titleText = data.titleMarkdown || '';
     var slugText = data.slug || '';
 
     title.value(titleText);
@@ -157,6 +195,7 @@ module.exports = function (viewModel, container, route) {
     teaser.value(data.teaser || '');
     introduction.value(data.introduction || '');
     body.value(data.body || '');
+    summary.value(data.summary || '');
     tags.value((data.tags || []).join(' '));
     email.value(data.email);
     tweet.value(data.tweet);
@@ -180,12 +219,17 @@ module.exports = function (viewModel, container, route) {
     updatePublication();
   }
 
+  function getTags () {
+    return textService.splitTags(tags.value());
+  }
+
   function getRequestData () {
-    var individualTags = textService.splitTags(tags.value());
+    var individualTags = getTags();
     var state = published ? article.status : status.where(':checked').text();
     var data = {
-      title: title.value(),
+      titleMarkdown: title.value(),
       slug: slug.value(),
+      summary: summary.value(),
       teaser: teaser.value(),
       introduction: introduction.value(),
       body: body.value(),

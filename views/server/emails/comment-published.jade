@@ -1,6 +1,6 @@
 div
   a(href!=domain.authority + article.permalink)
-    h1=article.title
+    h1!=article.titleHtml
 
 p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom: 2px solid #e92c6c;')
   -  site = comment.site && comment.site.replace(/https?:\/\//, '');

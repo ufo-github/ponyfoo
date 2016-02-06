@@ -2,10 +2,10 @@ p
   span='An article has been published on '
   a(href!=domain.authority) Pony Foo
   span='. You can feast your eyes on it by following this link: '
-  a(href!=domain.authority + article.permalink)=article.title
+  a(href!=domain.authority + article.permalink)!=article.titleHtml
   span .
 
-h1(style='padding-top: 25px;')=article.title
+h1(style='padding-top: 25px;')!=article.titleHtml
 
 p
   span(style='padding-right:4px;') Tags:

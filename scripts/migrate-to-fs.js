@@ -28,7 +28,7 @@ function migrate (article, done) {
       next => console.log(date + article.slug), next(),
       next => write('source/metadata.json', JSON.stringify({
         id: article._id,
-        title: article.title,
+        title: article.titleMarkdown,
         slug: article.slug,
         tags: article.tags,
         publication: moment(article.publication).format('DD-MM-YYYY HH:mm'),

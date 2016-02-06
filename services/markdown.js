@@ -117,11 +117,14 @@ function decompile (html, options) {
       return startsWithValidDomain(src);
     },
     transform: function (el) {
-      if (el.tagName === 'BLOCKQUOTE' && el.className === 'twitter-tweet') {
-        return el.outerHTML;
-      }
       if (el.tagName === 'IMG' && el.className === 'tj-emoji' && el.alt) {
         return el.alt;
+      }
+      if (o.plain === true) {
+        return el.textContent || el.innerText || '';
+      }
+      if (el.tagName === 'BLOCKQUOTE' && el.className === 'twitter-tweet') {
+        return el.outerHTML;
       }
     }
   });

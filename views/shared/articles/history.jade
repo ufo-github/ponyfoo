@@ -24,7 +24,7 @@ article.ly-section
         each article in articles
           - pub = article.publication
           li.hy-article
-            a.hy-link(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))=article.title
+            a.hy-link(href!=article.permalink, aria-label='Tagged: ' + article.tags.join(', '))!=article.titleHtml
             span.hy-connector
               span!=' &mdash; published '
               time.hy-publication(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text

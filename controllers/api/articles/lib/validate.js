@@ -17,8 +17,9 @@ function validate (model, update) {
   }
   var sanitized = {
     status: getStatus(),
-    title: getTitle(),
+    titleMarkdown: getTitle(),
     slug: getSlug(),
+    summary: validator.toString(model.summary),
     teaser: getContent('teaser'),
     introduction: getContent('introduction'),
     body: getContent('body'),
@@ -69,8 +70,8 @@ function validate (model, update) {
 
   function getTitle () {
     var length = 3;
-    if (validator.isLength(model.title, length)) {
-      return validator.toString(model.title);
+    if (validator.isLength(model.titleMarkdown, length)) {
+      return validator.toString(model.titleMarkdown);
     }
     var message = util.format('The title must be at least %s characters long.', length);
     validation.push(message);

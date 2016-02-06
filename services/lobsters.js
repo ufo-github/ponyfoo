@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var lob = require('lob-story');
 var env = require('../lib/env');
 var username = env('LOBSTERS_USERNAME');
@@ -9,6 +10,7 @@ function submit (data, done) {
   if (username && password) {
     post();
   } else {
+    winston.info('Lobste.rs: ' + data.title);
     done();
   }
 

@@ -173,7 +173,7 @@ module.exports = function (slug, input, done) {
         permalink: permalinkToComment
       },
       article: {
-        title: data.article.title,
+        titleHtml: data.article.titleHtml,
         permalink: permalinkToArticle
       },
       images: [data.gravatar],

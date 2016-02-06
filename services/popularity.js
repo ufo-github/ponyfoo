@@ -66,7 +66,7 @@ function getArticles (done) {
     Article
       .find(query)
       .lean()
-      .select('-_id publication slug title tags')
+      .select('-_id publication slug titleHtml tags')
       .exec(found);
 
     function found (err, articles) {

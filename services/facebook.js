@@ -23,7 +23,7 @@ function share (status, link, done) {
 }
 
 function fake (status, link, done) {
-  winston.info('FB: ' + status + ', ' + link);
+  winston.info('FB: ' + status + ' ' + link);
   (done || noop)();
 }
 

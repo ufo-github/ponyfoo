@@ -45,7 +45,7 @@ aside.de-sidebar.de-column
               href='/articles/' + article.slug,
               aria-label=moment(article.publication).format('(YYYY)') + ' Tagged: ' + article.tags.join(', ')
             )
-              span.de-hit-text=article.title
+              span.de-hit-text!=article.titleHtml
 
       p.md-markdown
         span='Pony Foo has been online for a while. Maybe you should check out the '

@@ -5,7 +5,7 @@
 - published = article.status === 'published'
 
 header
-  h1.dc-title(itemprop='headline')=article.title
+  h1.dc-title(itemprop='headline')!=article.titleHtml
 
 section.at-teaser
   div.at-teaser-markdown.md-markdown!=article.teaserHtml
@@ -29,9 +29,9 @@ section.at-container.de-host
 
       footer.at-siblings.an-siblings.uv-clearfix
         if article.prev
-          a.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')='« ' + article.prev.title
+          a.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')!='« ' + article.prev.titleHtml
         if article.next
-          a.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')=article.next.title + ' »'
+          a.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')!=article.next.titleHtml + ' »'
 
     form.ly-section.ss-container.at-subscribe(action='/api/subscribers', method='post', name='subscribe')
       div.ss-label

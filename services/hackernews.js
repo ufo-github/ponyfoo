@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var hackerpub = require('hackerpub');
 var env = require('../lib/env');
 var username = env('HN_USERNAME');
@@ -9,6 +10,7 @@ function submit (data, done) {
   if (username && password) {
     post();
   } else {
+    winston.info('HN: ' + data.title);
     done();
   }
 

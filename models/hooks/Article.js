@@ -1,6 +1,7 @@
 'use strict';
 
 var markupService = require('../../services/markup');
+var markdownService = require('../../services/markdown');
 var cryptoService = require('../../services/crypto');
 var feedService = require('../../services/feed');
 var sitemapService = require('../../services/sitemap');
@@ -8,12 +9,21 @@ var articleService = require('../../services/article');
 var articleSearchService = require('../../services/articleSearch');
 var Article = require('../Article');
 var env = require('../../lib/env');
+var rstrip = /^\s*<p>\s*|\s*<\/p>\s*/ig;
 
 Article.schema.pre('save', beforeSave);
 Article.schema.post('save', afterSave);
 
 function computeSignature (a) {
-  return cryptoService.md5([a.title, a.status, a.teaser, a.introduction, a.body].concat(a.tags).join(' '));
+  var bits = [
+    a.titleMarkdown,
+    a.status,
+    a.summary || '',
+    a.teaser,
+    a.introduction,
+    a.body
+  ];
+  return cryptoService.md5(bits.concat(a.tags).join(' '));
 }
 
 function beforeSave (next) {
@@ -22,6 +32,8 @@ function beforeSave (next) {
   var oldSign = article.sign;
 
   article.sign = computeSignature(article);
+  article.titleHtml = toHtml(article.titleMarkdown).replace(rstrip, '');
+  article.title = markdownService.decompile(article.titleHtml, { plain: true });
   article.teaserHtml = toHtml(article.teaser, 1);
   article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);

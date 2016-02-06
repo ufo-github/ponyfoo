@@ -1,6 +1,7 @@
 'use strict';
 
 var contra = require('contra');
+var winston = require('winston');
 var lamernews = require('lamernews-client');
 var client = lamernews.createClient({ api: 'http://www.echojs.com' });
 var env = require('../lib/env');
@@ -11,6 +12,7 @@ function submit (data, done) {
   if (username && password) {
     contra.waterfall([login, post], done);
   } else {
+    winston.info('EchoJS: ' + data.title);
     done();
   }
 

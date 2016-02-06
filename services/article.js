@@ -20,6 +20,8 @@ var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
 var markupService = require('./markup');
+var markdownService = require('./markdown');
+var articleSummarizationService = require('./articleSummarization');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD');
 
@@ -82,7 +84,7 @@ function email (article, options, done) {
     subject: article.title,
     teaser: options.reshare ? 'You can\'t miss this!' : 'Hot off the press!',
     article: {
-      title: article.title,
+      titleHtml: article.titleHtml,
       permalink: relativePermalink,
       tags: article.tags,
       teaserHtml: teaser
@@ -112,9 +114,9 @@ function socialStatus (article, options) {
     'This just out! "%s"'
   ];
   var manual = [
-    '%sCheck out "%s" on Pony Foo!',
-    'ICYMI %s%s',
-    'Have you read %s"%s" yet?'
+    'Check out "%s" on Pony Foo!',
+    'ICYMI %s',
+    'Have you read "%s" yet?'
   ];
   var formats = options.reshare ? manual : fresh;
   var fmt = _.sample(formats);
@@ -145,7 +147,7 @@ function tweet (article, options, done) {
   var tagPair = '#' + article.tags.slice(0, 2).join(' #');
   var tagText = textService.hyphenToCamel(tagPair);
   var emoji = twitterEmojiService.generate(['people']);
-  var prefix = socialPrefix();
+  var prefix = socialPrefix(options);
   var tweetLength = 0;
   var tweetLines = [];
 
@@ -256,6 +258,8 @@ function toJSON (source, options) {
   delete article.teaser;
   delete article.introduction;
   delete article.body;
+  delete article.titleMarkdown;
+  delete article.summary;
   delete article.summaryText;
   delete article.comments;
   delete article.hn;
@@ -268,7 +272,7 @@ function toJSON (source, options) {
 }
 
 function relevant (article) {
-  return { slug: article.slug, title: article.title };
+  return { slug: article.slug, titleHtml: article.titleHtml };
 }
 
 function threads (accumulator, comment) {
@@ -288,20 +292,6 @@ function byPublication (a, b) {
   return a.created - b.created;
 }
 
-function summarize (article) {
-  var all = article.teaserHtml + article.introductionHtml;
-  var options = {
-    ignoredTags: ['blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
-    sanitizer: {
-      allowedAttributes: {
-        mark: ['class']
-      }
-    }
-  };
-  var limit = 170;
-  return truncHtml(all, limit, options);
-}
-
 campaign.email = email;
 campaign.twitter = tweet;
 campaign.facebook = fbShare;
@@ -313,6 +303,6 @@ module.exports = {
   find: find,
   findOne: findOne,
   campaign: campaign,
-  summarize: summarize,
+  summarize: articleSummarizationService.summarize,
   toJSON: toJSON
 };

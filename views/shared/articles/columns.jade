@@ -4,7 +4,7 @@ ol.aa-articles
     - count = article.commentCount
     li.aa-article.dc-colored
       h2.aa-title
-        a.aa-visit(href='/articles/' + article.slug)=article.title
+        a.aa-visit(href='/articles/' + article.slug)!=article.titleHtml
       section.aa-summary
         div.md-markdown.md-markdown-summary!=article.summaryHtml
         a.aa-continue(href='/articles/' + article.slug) Read full article
@@ -12,7 +12,7 @@ ol.aa-articles
         div.aa-trivia-item
           time(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text.toLowerCase()
         div.aa-trivia-item
-          span=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
+          span=moment && moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
           span=' read'
         div.aa-trivia-item
           a.aa-comments(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
