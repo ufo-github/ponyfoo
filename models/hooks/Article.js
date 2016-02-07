@@ -1,5 +1,6 @@
 'use strict';
 
+var beautifyText = require('beautify-text');
 var markupService = require('../../services/markup');
 var markdownService = require('../../services/markdown');
 var cryptoService = require('../../services/crypto');
@@ -33,7 +34,7 @@ function beforeSave (next) {
 
   article.sign = computeSignature(article);
   article.titleHtml = toHtml(article.titleMarkdown).replace(rstrip, '');
-  article.title = markdownService.decompile(article.titleHtml, { plain: true });
+  article.title = beautifyText(markdownService.decompile(article.titleHtml, { plain: true }));
   article.teaserHtml = toHtml(article.teaser, 1);
   article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);
