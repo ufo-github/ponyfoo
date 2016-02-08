@@ -22,7 +22,8 @@ module.exports = function (req, res, next) {
         title: presentation.title,
         presentation: model,
         meta: {
-          description: description
+          description: description,
+          images: presentationService.toCovers(presentation)
         }
       }
     };

@@ -24,9 +24,7 @@ module.exports = function (req, res) {
     descriptionHtml: markupService.compile(body.description),
     youtube: body.youtube,
     vimeo: body.vimeo,
-    speakerdeck: {
-      id: body.speakerdeck_id
-    },
+    speakerdeck: body.speakerdeck,
     resources: body.resources_title.map(toResourceItem)
   };
   new Presentation(model).save(saved);

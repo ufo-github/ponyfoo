@@ -45,13 +45,27 @@
     border-bottom none
     background-color transparent
 
+.osp-list
+  margin-top 50px
+
 @media only screen and (min-width: 680px)
   .osp-container
     display inline-block
     vertical-align top
-    width 50%
+    width 48.7%
+    margin-right 2.6%
     margin-bottom 40px
+
+    &:nth-child(even)
+      margin-right 0
 
 @media only screen and (min-width: 1040px)
   .osp-container
-    width 33.33333%
+    width 32%
+    margin-right 2%
+
+    &:nth-child(even)
+      margin-right 2%
+
+    &:nth-child(3n)
+      margin-right 0

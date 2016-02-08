@@ -5,6 +5,7 @@ var contra = require('contra');
 var queso = require('queso');
 var assign = require('assignment');
 var moment = require('moment');
+var env = require('../../lib/env');
 var browserEnv = require('../../client/js/lib/env');
 var staticService = require('../../services/static');
 var colorService = require('../../services/color');
@@ -13,6 +14,7 @@ var presentationService = require('../../services/presentation');
 var Engagement = require('../../models/Engagement');
 var Presentation = require('../../models/Presentation');
 var mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
+var authority = env('AUTHORITY');
 var pastTagMap = {
   speaking: 'spoke',
   organizing: 'organized',
@@ -33,10 +35,14 @@ function home (req, res, next) {
       model: {
         title: 'Conference Talks presented by Nicolás Bevacqua',
         meta: {
-          canonical: '/speaking',
-          images: [fullMap]
-            .concat(upcomingModels.map(toEngagementMapImage))
-            .concat(staticService.unroll('/img/speaking.jpg'))
+          canonical: authority + '/speaking',
+          images: [
+            staticService.unroll('/img/speaking.jpg'),
+            fullMap
+          ].concat(
+            upcomingModels.map(toEngagementMapImage)
+          ),
+          description: 'Delivering a talk on something I\'m passionate about is fun and exciting. I enjoy speaking about all things JavaScript, performance, maintainable code, and the open web.\n\nI\'ve delivered workshops on web performance before and I\'m also interested in delivering workshops on ES6 as well as all things JavaScript. If you\'d like to discuss the possibility of me running a workshop at your event, please use the contact button below and shoot me an email!'
         },
         engagements: {
           upcoming: upcomingModels,

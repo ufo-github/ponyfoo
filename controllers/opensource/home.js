@@ -34,10 +34,14 @@ module.exports = function (req, res, next) {
         }),
         meta: {
           description: description,
-          images: [latest.screenshot, authority + staticService.unroll('/img/thumbnail.png')]
+          images: projects.map(toScreenshot)
         }
       }
     };
     next();
+
+    function toScreenshot (project) {
+      return project.screenshot;
+    }
   });
 };

@@ -11,7 +11,7 @@ section.pt-embed-container
           mozallowfullscreen,
           webkitallowfullscreen,
           frameborder='0',
-          data-src=presentation.youtube
+          data-src='https://www.youtube.com/embed/' + presentation.youtube
         )
     else if presentation.vimeo
       section.pt-video.pt-vimeo
@@ -21,7 +21,7 @@ section.pt-embed-container
           mozallowfullscreen,
           webkitallowfullscreen,
           frameborder='0',
-          data-src=presentation.vimeo
+          data-src='https://player.vimeo.com/video/' + presentation.vimeo
         )
     else
       section.pt-video.pt-empty

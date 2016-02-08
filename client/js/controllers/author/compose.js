@@ -110,11 +110,6 @@ module.exports = function (viewModel, container, route) {
     updatePreviewMarkdownSlowly();
   }
 
-  function typingSummary () {
-    serializeSlowly();
-    updatePreviewSummarySlowly();
-  }
-
   function typingTitle () {
     if (boundSlug) {
       updateSlug();
