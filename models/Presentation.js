@@ -10,7 +10,7 @@ var schema = new mongoose.Schema({
   descriptionHtml: String,
   youtube: String,
   vimeo: String,
-  speakerdeck: { id: String },
+  speakerdeck: String,
   resources: [{
     title: String,
     titleHtml: String,

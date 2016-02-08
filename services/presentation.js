@@ -31,11 +31,11 @@ function toModel (presentation) {
 
 function toCovers (presentation) {
   var output = [];
-  if (presentation.speakerdeck) {
-    output.push(util.format(slideFormat, presentation.speakerdeck));
-  }
   if (presentation.youtube) {
     output.push(util.format(youtubeFormat, presentation.youtube));
+  }
+  if (presentation.speakerdeck) {
+    output.push(util.format(slideFormat, presentation.speakerdeck));
   }
   return output;
 }
