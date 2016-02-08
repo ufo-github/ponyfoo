@@ -6,7 +6,7 @@ var env = require('../lib/env');
 var datetimeService = require('./datetime');
 var authority = env('AUTHORITY');
 var slideFormat = 'https://speakerd.s3.amazonaws.com/presentations/%s/slide_0.jpg'
-var youtubeFormat = 'http://img.youtube.com/vi/%s/0.jpg'
+var youtubeFormat = 'https://img.youtube.com/vi/%s/0.jpg'
 
 function toModel (presentation) {
   return {
