@@ -5,7 +5,6 @@ var contra = require('contra');
 var queso = require('queso');
 var assign = require('assignment');
 var moment = require('moment');
-var env = require('../../lib/env');
 var browserEnv = require('../../client/js/lib/env');
 var staticService = require('../../services/static');
 var colorService = require('../../services/color');
@@ -14,7 +13,6 @@ var presentationService = require('../../services/presentation');
 var Engagement = require('../../models/Engagement');
 var Presentation = require('../../models/Presentation');
 var mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
-var authority = env('AUTHORITY');
 var pastTagMap = {
   speaking: 'spoke',
   organizing: 'organized',
@@ -35,7 +33,7 @@ function home (req, res, next) {
       model: {
         title: 'Conference Talks presented by Nicolás Bevacqua',
         meta: {
-          canonical: authority + '/speaking',
+          canonical: '/speaking',
           images: [
             staticService.unroll('/img/speaking.jpg'),
             fullMap
