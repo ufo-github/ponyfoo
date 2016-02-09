@@ -51,7 +51,7 @@ function log (options) {
     var difference = options.size - stats.size;
     var diff = prettyBytes(-difference);
     var percentage = -(100 - stats.size * 100 / options.size).toFixed(2);
-    winston.debug('%s was %s, is %s, diff %s [%s%]', options.name, was, is, diff, percentage);
+    winston.info('%s was %s, is %s, diff %s [%s%]', options.name, was, is, diff, percentage);
   });
 }
 
