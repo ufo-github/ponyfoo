@@ -1,19 +1,19 @@
 'use strict';
 
-var pullSubscribers = require('../lib/pullSubscribers');
+var assign = require('assignment');
+var pullData = require('../lib/pullData');
 
 module.exports = function (req, res, next) {
-  pullSubscribers(req, res, function render (err, subscribers) {
+  pullData(function render (err, result) {
     if (err) {
-      next('route'); return;
+      next(err); return;
     }
 
     res.viewModel = {
-      model: {
-        title: 'Subscribers',
-        subscribers: subscribers
-      }
+      model: assign(result, {
+        title: 'Subscribers \u2014 Pony Foo'
+      })
     };
     next();
   });
-}
+};

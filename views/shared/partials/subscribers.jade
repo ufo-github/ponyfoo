@@ -1,5 +1,6 @@
 h1.vw-title
   span Subscribers
-  span=' '
-  span='(' + subscribers.filter(function(s) { return s.verified }).length + ')'
+  if verified !== 0
+    span=' '
+    span='(' + verified + ')'
 section.as-container

@@ -32,15 +32,15 @@ function getArticles (done) {
       'start-date': '2012-12-25',
       'end-date': 'today',
       'max-results': 50,
-      dimensions: 'ga:pagePath',
-      sort: '-ga:pageviews',
       metrics: [
         'ga:pageviews',
         'ga:uniquePageviews',
         'ga:timeOnPage',
         'ga:bounces',
         'ga:entrances,ga:exits',
-      ].join()
+      ].join(),
+      dimensions: 'ga:pagePath',
+      sort: '-ga:pageviews'
     };
     google.analytics('v3').data.ga.get(query, got);
   }
