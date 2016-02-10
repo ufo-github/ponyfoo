@@ -74,7 +74,6 @@ module.exports = function (viewModel, container) {
           return;
         }
         if (status !== gmaps.places.PlacesServiceStatus.OK) {
-          console.error(status, results);
           next();
           return;
         }

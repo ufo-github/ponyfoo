@@ -203,7 +203,6 @@ module.exports = function (viewModel, container) {
     }
 
     function addPageViews (x1, x2) {
-      console.log(x1,x2);
       var peak = 0;
       var pv = cloneDeep(viewModel.pageviews);
 
