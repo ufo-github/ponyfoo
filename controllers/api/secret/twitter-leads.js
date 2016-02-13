@@ -34,7 +34,7 @@ function remodel (req, res, next) {
         next(err); return;
       }
       if (leads.length) {
-        winston.info('Found %s leads via Twitter Cards', leads.length);
+        winston.info('Found %s lead%s via Twitter Cards', leads.length, leads.length === 1 ? '' : 's');
       } else {
         winston.debug('No new leads via Twitter Cards');
       }
