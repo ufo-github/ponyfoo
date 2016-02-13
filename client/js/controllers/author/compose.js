@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
+var estimate = require('estimate');
 var debounce = require('lodash/function/debounce');
 var moment = require('moment');
 var sluggish = require('sluggish');
@@ -157,18 +158,21 @@ module.exports = function (viewModel, container, route) {
   }
 
   function updatePreviewSummary () {
+    var teaserHtml = getHtml(teaser);
+    var introductionHtml = getHtml(introduction);
+    var bodyHtml = getHtml(body);
     taunus.partial(previewSummary, 'articles/columns', {
       articles: [{
         publication: datetimeService.field(moment().add(4, 'days')),
         commentCount: 0,
         slug: slug.value(),
-        readingTime: 0,
+        readingTime: estimate.text([teaserHtml, introductionHtml, bodyHtml].join(' ')),
         titleHtml: getHtmlTitle(),
         tags: getTags(),
         summaryHtml: articleSummarizationService.summarize({
           summary: summary.value(),
-          teaserHtml: getHtml(teaser),
-          introductionHtml: getHtml(introduction)
+          teaserHtml: teaserHtml,
+          introductionHtml: introductionHtml
         }).html
       }]
     });
