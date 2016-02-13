@@ -3,4 +3,9 @@ h1.vw-title
   if verified !== 0
     span=' '
     span='(' + verified + ')'
+section.as-options
+  input.ck-input#as-show-subscribers(type='checkbox', checked)
+  label.ck-checkbox(for='as-show-subscribers') Subscribers
+  input.ck-input#as-show-pageviews(type='checkbox')
+  label.as-check-pv.ck-checkbox(for='as-show-pageviews') Page Views
 section.as-container
