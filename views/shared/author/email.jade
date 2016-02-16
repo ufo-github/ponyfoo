@@ -5,11 +5,18 @@ article.ly-section.vw-maintainer.de-host
       input.ec-subject(placeholder='Email Subject')
       input.ec-teaser(placeholder='Teaser about email contents')
       div
-        textarea.ec-text.ec-body.wk-textarea(placeholder='Main body of your email')
-    footer.ec-actions
+        textarea.ec-body.wk-textarea(placeholder='Main body of your email')
+    section.ec-actions
       span(aria-label='Send out to every subscriber!')
         button.gg-container.bt-button.bt-pink.ec-send(type='submit')
           span.bt-text Send to All
           include ../partials/button-background
+
+    section.ec-preview.md-markdown
+      div.ec-preview-teaser Teaser about email contents
+      img(src='/img/author/email-header.png', alt='')
+      div.ec-preview-contents
+        h1.ec-preview-subject Email Campaign Preview
+        div.ec-preview-body Main body of your email
 
   include ../partials/aside
