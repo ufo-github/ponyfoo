@@ -16,7 +16,8 @@ function share (status, link, done) {
   FB.api(pageId + '/feed', 'post', { message: status, link: link }, normalize);
   function normalize (res) {
     if (!res || res.error) {
-      (done || noop)(new Error(res ? res : res.error)); return;
+      winston.warn(res ? res.error : res);
+      (done || noop)(new Error(res ? res.error : res)); return;
     }
     (done || noop)(null, res);
   }
