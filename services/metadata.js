@@ -32,7 +32,7 @@ function extractImagesFromArticle (article) {
   return htmlService.extractImages(article.slug, article.teaserHtml + article.introductionHtml + article.bodyHtml);
 }
 
-function extractImages (source) {
+function extractImagesFromArticles (source) {
   var many = Array.isArray(source);
   var articles = many ? source : [source];
   var reduced = articles.reduce(articleReducer, {});
@@ -51,5 +51,5 @@ function extractImages (source) {
 module.exports = {
   appendDefaultCover: appendDefaultCover,
   mostCommonTags: mostCommonTags,
-  extractImages: extractImages
+  extractImages: extractImagesFromArticles
 };

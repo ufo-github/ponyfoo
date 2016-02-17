@@ -49,7 +49,7 @@ function extractImages (key, html) {
   }
   var $ = cheerio.load(html);
   var images = $('img[src]').map(src);
-  var result = _(images).uniq().compact().value();
+  var result = _(images).filter(notEmoji).uniq().compact().value();
 
   imageCache[key] = {
     value: result,
@@ -60,6 +60,9 @@ function extractImages (key, html) {
 
   function src () {
     return $(this).attr('src');
+  }
+  function notEmoji (src) {
+    return src.indexOf('https://twemoji.maxcdn.com/') !== 0;
   }
 }
 
