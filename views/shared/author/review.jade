@@ -17,7 +17,7 @@ article.ly-section.vw-maintainer.de-host
           each article in articles
             tr
               td(data-label='Title')
-                a(href!=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
+                a.ar-title(href!=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
               td(data-label='Tags')
                 include ../partials/tags
               td(data-label='Condition', class='ar-status ar-status-' + article.status)
