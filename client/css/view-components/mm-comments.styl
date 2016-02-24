@@ -24,13 +24,16 @@ mm-author-padding = 10px
   display inline-block
   margin mm-author-padding * -1
   padding mm-author-padding
-  color c-pink
-
-  &:hover .mm-gravatar
-    border-top-color rgba(c-pink, 0.6)
-    border-right-color rgba(c-yellow, 0.9)
-    border-bottom-color rgba(c-yellow, 0.5)
-    border-left-color rgba(c-pink, 0.5)
+  .mm-author-name
+    lk-link-normal()
+  &:hover
+    .mm-author-name
+      lk-link-hover()
+    .mm-gravatar
+      border-top-color rgba(c-pink, 0.6)
+      border-right-color rgba(c-yellow, 0.9)
+      border-bottom-color rgba(c-yellow, 0.5)
+      border-left-color rgba(c-pink, 0.5)
 
 .mm-author-name
   margin-left 8px
@@ -123,9 +126,11 @@ mm-author-padding = 10px
 
 .mm-remove
   float right
-  color c-orange-dark
   line-height 22px
   margin-left 10px
+  color c-orange-dark
+  &:hover
+    color c-pink
 
 .mm-wrote,
 .mm-wrote-separator,

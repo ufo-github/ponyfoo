@@ -1,8 +1,12 @@
 .hy-lesson,
 .hy-items
   padding 20px
-  a
-    color c-pink
+
+.ar-title
+  color c-black-text
+
+.ly-custom-subheadings .ar-title
+  font-family f-subheading
 
 .hy-items
   overflow hidden
@@ -15,10 +19,6 @@
   &:first-child
     margin-top 0
 
-.hy-publication,
-.hy-total-duration
-  font-weight bold
-
 .hy-since
   font-style italic
 
@@ -29,8 +29,12 @@
   display inline
   white-space nowrap
 
-.hy-link
+.hy-title
   display inline-block
+  color c-black-text
+
+.ly-custom-subheadings .hy-title
+  font-family f-subheading
 
 .hy-tags
   display none
@@ -45,12 +49,12 @@
     display none
 
   .hy-article
-    margin-top 0
+    margin-top 15px
 
   .hy-connector
     margin-left 20px
 
-  .hy-link
+  .hy-title
     margin-right -20px
 
   .hy-tags

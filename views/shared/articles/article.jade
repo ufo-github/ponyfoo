@@ -36,8 +36,14 @@ section.at-container.de-host
     form.ly-section.ss-container.at-subscribe(action='/api/subscribers', method='post', name='subscribe')
       div.ss-label
         ='Liked the article? Subscribe below to get an email when new articles come out! Also, '
-        a(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
+        a.lk-link(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
         | .
+
+      div.ss-label.ss-unsubscribe
+        sub
+          span One-click unsubscribe, anytime.
+          span=' '
+          a.lk-link(href='/subscribe') Learn more.
 
       noscript
         input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')

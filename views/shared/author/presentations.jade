@@ -3,7 +3,7 @@ article.ly-section.vw-maintainer.de-host
     h1.vw-title Presentations
     section.ae-container
       div.ae-actions
-        a.ae-add.fa.fa-pencil-square-o(href='/author/presentations/new', aria-label='Add a presentation')
+        a.ae-action.lk-icon.fa.fa-pencil-square-o(href='/author/presentations/new', aria-label='Add a presentation')
       table
         thead
           tr
@@ -19,6 +19,6 @@ article.ly-section.vw-maintainer.de-host
               td.ae-buttons(data-label='Actions')
                 form(action='/api/presentations/remove', method='post')
                   input(name='id', type='hidden', value=p.id)
-                  button.ae-remove.fa.fa-remove(aria-label='Delete this presentation', type='submit')
+                  button.lk-icon.fa.fa-remove(aria-label='Delete this presentation', type='submit')
 
   include ../partials/aside

@@ -3,3 +3,32 @@ button,
 input[type='submit']
   cursor pointer
   text-decoration none
+
+lk-link-normal()
+  color c-pink
+  border-bottom 1px solid transparent
+
+lk-link-hover()
+  border-bottom 1px solid c-pink
+
+lk-link()
+  lk-link-normal()
+  &:hover
+    lk-link-hover()
+
+.lk-link
+  lk-link()
+
+.lk-rainbows
+  color c-black-text
+  rainbow-pseudo-on-hover()
+
+.lk-icon
+  color c-black-text
+  &:hover
+    color c-pink
+
+.lk-green
+  color darken(c-green, 25%)
+  &:hover
+    border-bottom-color darken(c-green, 25%)

@@ -3,7 +3,7 @@ article.ly-section.vw-maintainer.de-host
     h1.vw-title Open-Source Projects
     section.ae-container
       div.ae-actions
-        a.ae-add.fa.fa-pencil-square-o(href='/author/oss/new', aria-label='Add an open-source project')
+        a.ae-action.lk-icon.fa.fa-pencil-square-o(href='/author/oss/new', aria-label='Add an open-source project')
       table
         thead
           tr
@@ -16,6 +16,6 @@ article.ly-section.vw-maintainer.de-host
               td.ae-buttons(data-label='Actions')
                 form(action='/api/oss/remove', method='post')
                   input(name='id', type='hidden', value=project.id)
-                  button.ae-remove.fa.fa-remove(aria-label='Delete this project', type='submit')
+                  button.lk-icon.fa.fa-remove(aria-label='Delete this project', type='submit')
 
   include ../partials/aside

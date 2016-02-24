@@ -19,7 +19,7 @@ mixin dateRange (t)
 section.tkfm-container
   img.tkfm-static(src=engagements.fullMap, alt='')
   div.tkfm-interactive
-  div.tkfm-play.tkfm-hidden Want to take a look around?
+  div.tkfm-play.lk-link.tkfm-hidden Want to take a look around?
   div.tkfm-stop.tkfm-hidden
     div.tkfm-stop-button That was neat.
 
@@ -33,7 +33,7 @@ article.tk-container
         span.tk-range(aria-label=t.range.title)
           +dateRange(t)
         div.tku-site-container
-          a.tk-site(href=t.website, target='_blank')=t.conference
+          a.lk-link(href=t.website, target='_blank')=t.conference
         div
           span.tk-venue-connector='At '
           span=t.venue
@@ -61,7 +61,7 @@ article.tk-container
   ol.tkp-list
     each t in engagements.past
       li.tkp-item.uv-clearfix
-        a.tk-site(href=t.website, target='_blank')=t.conference
+        a.tkp-conference.lk-rainbows(href=t.website, target='_blank')=t.conference
         span.tkp-venue-connector.tk-venue-connector=' at '
         a.tkp-venue.tk-venue(href=t.map.link, target='_blank')=t.venue
         ul.tkp-tags.tk-tags
@@ -98,7 +98,7 @@ article
           span=' '
           strong Practical ES6 for the Modern JavaScript Tinkerer
           span=' at '
-          a.tks-image-link(href='http://2015.dotjs.eu/', target='_blank') dotJS in Paris
+          a.lk-link(href='http://2015.dotjs.eu/', target='_blank') dotJS in Paris
           span , 2015.
       div
         p Delivering a talk on something I'm passionate about is fun and exciting. I enjoy speaking about all things JavaScript, performance, maintainable code, and the open web.

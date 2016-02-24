@@ -40,7 +40,7 @@ section.pt-embed-container
       section.pt-speakerdeck.pt-empty
         span.pt-empty-text No presentation slides yet!
 section.pt-description.md-markdown!=presentation.description
-ul.pt-resources
+ul.pt-resources.md-markdown
   each r in presentation.resources
     li.pt-resource
-      a.pt-resource-link.md-markdown(href=r.url, target=r.target)!=r.title
+      a(href=r.url, target=r.target)!=r.title

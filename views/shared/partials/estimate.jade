@@ -2,7 +2,7 @@
 if article.status === 'draft'
   label.at-estimate-label Draft
 if article.status === 'publish'
-  label.at-estimate-label Slated for Publication
+  label.at-estimate-label Slated for publication
   span.at-estimate-value
     span=' '
     time(datetime=publication.datetime, aria-label='Publishing ' + publication.title)=publication.text

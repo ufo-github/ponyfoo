@@ -5,6 +5,7 @@ var raf = require('raf');
 var taunus = require('taunus/global');
 var debounce = require('lodash/function/debounce');
 var markdownService = require('../../../../services/markdown');
+var rparagraph = /^<p>|<\/p>$/ig;
 
 module.exports = function (viewModel) {
   var subject = $('.ec-subject');
@@ -27,7 +28,7 @@ module.exports = function (viewModel) {
     previewTeaser.text(teaser.value() || 'Teaser about email contents');
   }
   function updatePreviewBody () {
-    previewBody.html(getHtml(body).trim().replace(/^<p><\/p>$/, '') || 'Main body of your email');
+    previewBody.html(getHtml(body).trim().replace(rparagraph, '') || 'Main body of your email');
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }

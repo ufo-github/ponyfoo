@@ -135,15 +135,16 @@ module.exports = function (viewModel, container, route) {
 
   function updatePreviewTitle () {
     previewTitle.html(getHtmlTitle());
-    updatePreviewSummary();
+    updatePreviewSummarySlowly();
   }
 
   function updateSlug () {
     slug.value(sluggish(title.value()));
-    updatePreviewSummary();
+    updatePreviewSummarySlowly();
   }
 
   function typingTags () {
+    updatePreviewSummarySlowly();
     serializeSlowly();
   }
 

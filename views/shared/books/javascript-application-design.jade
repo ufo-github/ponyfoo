@@ -5,21 +5,22 @@ header.bk-header
 article.de-host
   section.de-column.bok-container
     div.bok-book
-      img.bok-cover-image(src='/img/javascript-application-design.jpg', alt='')
+      a.bok-cover-link(href='/bf/amazon', target='_blank')
+        img.bok-cover-image(src='/img/javascript-application-design.jpg', alt='')
       sub.bok-cover-footnote
         span='Purchase directly through '
-        a.bok-purchase(href='/bf/manning', target='_blank') Manning
+        a.lk-link(href='/bf/manning', target='_blank') Manning
         span=', or via '
-        a.bok-purchase(href='/bf/amazon', target='_blank') Amazon
+        a.lk-link(href='/bf/amazon', target='_blank') Amazon
         span .
 
     div.bok-description
       div.bok-trivia
         div.bok-factoids
-          span.bok-factoid Published January, 2015
-          span.bok-factoid Has 344 pages
+          span.bok-factoid January, 2015
+          span.bok-factoid 344 Pages
           span.bok-factoid ISBN 9781617291951
-          span.bok-factoid Manning
+          span.bok-factoid Manning Publications
 
         blockquote.bok-quote
           p.bok-quote-text Enjoy the ride through the process of improving your development workflow.
@@ -53,7 +54,7 @@ article.de-host
             li
               span.bok-toc-number='4. '
               span.bok-toc-chapter Release, Deployment, and Monitoring
-              a(href='/bf/ch04', download='javascript-application-design-ch04.pdf', target='_blank', aria-label='Download it directly from the Manning website').bok-sample Free!
+              a.bok-sample(href='/bf/ch04', download='javascript-application-design-ch04.pdf', target='_blank', aria-label='Download it directly from the Manning website') Free!
         li.bok-toc-part
           p.bok-toc-part-title II. Managing Complexity
           ol.bok-toc-chapters

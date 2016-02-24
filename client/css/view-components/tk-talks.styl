@@ -47,7 +47,7 @@ tkfm-container-gradline-height = 4px
   margin-top -20px
   cursor pointer
   background-color c-white
-  color c-pink
+
 .tkfm-play-fadeout
   opacity 0
   pointer-events none
@@ -61,9 +61,11 @@ tkfm-container-gradline-height = 4px
 
 .tkfm-stop-button
   cursor pointer
-  background-color c-black
+  background-color c-black-text
   color c-white
   display block
+  &:hover
+    border-bottom 1px solid c-white
 
 .tkfm-interactive
   opacity 0
@@ -88,9 +90,6 @@ tkfm-container-gradline-height = 4px
   text-align center
   margin 100px 0
   font-size 3em
-
-.tk-site
-  color c-pink
 
 .tk-venue-connector
   font-weight 100
@@ -124,7 +123,7 @@ tkfm-container-gradline-height = 4px
   font-variant small-caps
   border-left 4px solid #999
   background-color #e8e8e8
-  color c-pink
+  color c-dark-turquoise
 
 .tku-list
   list-style-type none
@@ -141,7 +140,8 @@ tkfm-container-gradline-height = 4px
   font-size 24px
   text-align right
 
-.ly-custom-subheadings .tku-site-container
+.ly-custom-subheadings .tku-site-container,
+.ly-custom-subheadings .tkp-conference
   font-family f-subheading
 
 .tku-map
@@ -179,7 +179,7 @@ tkfm-container-gradline-height = 4px
 .tkp-item
   display block
   margin 40px 0
-  .tk-site,
+  .tkp-conference,
   .tk-venue-connector,
   .tk-venue,
   .tk-range
@@ -205,9 +205,6 @@ tkfm-container-gradline-height = 4px
   font-style italic
   font-weight 300
 
-.tks-image-link
-  color c-pink
-
 .tk-presentations-link
   background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-yellow 100%)
   margin-top 60px
@@ -217,10 +214,19 @@ tkfm-container-gradline-height = 4px
   font-family f-subheading
 
 .tk-presentations-anchor
+  position relative
   display block
   color c-pink
   padding 40px
   font-size 20px
+  &:hover:before
+    position absolute
+    left 0
+    right 0
+    bottom 0
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 0, c-pink 88%)
 
 @media only screen and (min-width: 550px)
   .tkfm-play

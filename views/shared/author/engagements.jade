@@ -3,7 +3,7 @@ article.ly-section.vw-maintainer.de-host
     h1.vw-title Engagements
     section.ae-container
       div.ae-actions
-        a.ae-add.fa.fa-pencil-square-o(href='/author/engagements/new', aria-label='Add an engagement')
+        a.ae-action.lk-icon.fa.fa-pencil-square-o(href='/author/engagements/new', aria-label='Add an engagement')
       table
         thead
           tr
@@ -27,6 +27,6 @@ article.ly-section.vw-maintainer.de-host
               td.ae-buttons(data-label='Actions')
                 form(action='/api/engagements/remove', method='post')
                   input(name='id', type='hidden', value=engagement.id)
-                  button.ae-remove.fa.fa-remove(aria-label='Delete this engagement', type='submit')
+                  button.lk-icon.fa.fa-remove(aria-label='Delete this engagement', type='submit')
 
   include ../partials/aside

@@ -7,6 +7,7 @@ var datetimeService = require('./datetime');
 var authority = env('AUTHORITY');
 var slideFormat = 'https://speakerd.s3.amazonaws.com/presentations/%s/slide_0.jpg';
 var youtubeFormat = 'https://img.youtube.com/vi/%s/0.jpg';
+var rparagraph = /^<p>|<\/p>$/ig;
 
 function toModel (presentation) {
   return {
@@ -21,7 +22,7 @@ function toModel (presentation) {
       var absolute = url.resolve(authority, resource.url);
       var target = absolute.indexOf(authority) === 0 ? null : '_blank';
       return {
-        title: resource.titleHtml,
+        title: resource.titleHtml.trim().replace(rparagraph, ''),
         url: resource.url,
         target: target
       };

@@ -12,7 +12,7 @@ function enabled (key) {
 
 function namePair (key) {
   var p = data.providers[key];
-  return { name: p.name, link: p.link };
+  return { name: p.name, link: p.link, css: p.css };
 }
 
 module.exports = function (req, res, next) {

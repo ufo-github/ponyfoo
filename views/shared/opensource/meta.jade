@@ -1,10 +1,2 @@
-em.osp-updated
-  span='(last updated '
-  a.osp-updated-link(
-    href='https://github.com/' + meta.repo + '/commit/' + meta.sha,
-    target='_blank'
-  )
-    time(datetime=meta.updated.datetime, aria-label=meta.updated.title)=meta.updated.text
-  span=')'
 span.fa.fa-star
   span.osp-stars=meta.stars

@@ -19,7 +19,7 @@ section.dm-container.ly-section
     label.dm-label Comments
     span.dm-value
       span=' '
-      a(href='#comments')=commentCount || 'None yet'
+      a.lk-link-lk-green(href='#comments')=commentCount || 'None yet'
 
   div
     label.dm-label.dm-label-block Tagged
@@ -32,4 +32,4 @@ section.dm-container.ly-section
       ul.dm-value.dm-value-block
         each related in article.related
           li.dm-related-item
-            a(href='/articles/' + related.slug, aria-label='Read the article!')!=related.titleHtml
+            a.lk-link-lk-green(href='/articles/' + related.slug, aria-label='Read the article!')!=related.titleHtml
