@@ -56,32 +56,6 @@ lk-link()
   &:hover
     color c-pink
 
-.lk-green
-  /a&,
-  .lk-link
-    color c-dark-green
-
-    &:visited
-      background-color rgba(c-dark-green, 0.1)
-    &:visited .md-code-inline:before
-      background-color c-dark-green
-
-    &:hover
-      border-bottom-color c-dark-green
-
-.lk-black
-  /a&,
-  .lk-link
-    color c-black-text
-
-    &:visited
-      background-color rgba(c-black-text, 0.1)
-    &:visited .md-code-inline:before
-      background-color c-black-text
-
-    &:hover
-      border-bottom-color c-black-text
-
 lk-visitor(selector)
   color c-black-text
   &{selector}
@@ -104,3 +78,44 @@ lk-visitor(selector)
   lk-visitor(':before')
   &:before
     margin-right 5px
+
+.lk-visitor-before-no-underline
+  &:before
+    border-bottom-width 0
+
+.lk-green
+  /a&,
+  .lk-link
+    color c-dark-green
+
+    &:visited
+      background-color rgba(c-dark-green, 0.1)
+    &:visited .md-code-inline:before
+      background-color c-dark-green
+
+    &:hover
+      border-bottom-color c-dark-green
+
+.lk-link-to-green
+  color c-gray
+  &:hover,
+  &:hover:before
+    color c-dark-green-05
+    border-bottom-color c-dark-green
+  &:visited,
+  &:visited:before
+    color c-dark-green
+    background-color c-dark-green
+
+.lk-black
+  /a&,
+  .lk-link
+    color c-black-text
+
+    &:visited
+      background-color rgba(c-black-text, 0.1)
+    &:visited .md-code-inline:before
+      background-color c-black-text
+
+    &:hover
+      border-bottom-color c-black-text

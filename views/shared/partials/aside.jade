@@ -44,7 +44,7 @@ aside.de-sidebar.de-column
       ul.de-hit-list
         each article in popularArticles
           li.de-hit-item
-            a.de-hit-text.lk-link.lk-green(
+            a.de-hit-text.lk-link.lk-link-to-green.lk-visitor-before.lk-visitor-before-no-underline(
               href='/articles/' + article.slug,
               aria-label=moment(article.publication).format('(YYYY)') + ' Tagged: ' + article.tags.join(', ')
             )!=article.titleHtml

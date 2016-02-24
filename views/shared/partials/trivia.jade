@@ -32,4 +32,4 @@ section.dm-container.ly-section
       ul.dm-value.dm-value-block
         each related in article.related
           li.dm-related-item
-            a.lk-link.lk-green(href='/articles/' + related.slug, aria-label='Read the article!')!=related.titleHtml
+            a.lk-link.lk-link-to-green.lk-visitor-before.lk-visitor-before-no-underline(href='/articles/' + related.slug, aria-label='Read the article!')!=related.titleHtml
