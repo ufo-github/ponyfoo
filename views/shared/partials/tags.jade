@@ -1,4 +1,4 @@
 ul.tg-tags
   each tag in article.tags
-    li.tg-tag-item.md-markdown
-      a.tg-tag(href='/articles/tagged/' + tag, aria-label='Find articles tagged "' + tag + '"')=tag
+    li.tg-tag-item
+      a.tg-tag.lk-link(href='/articles/tagged/' + tag, aria-label='Find articles tagged "' + tag + '"')=tag
