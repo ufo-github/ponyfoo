@@ -4,15 +4,43 @@ input[type='submit']
   cursor pointer
   text-decoration none
 
+// prime styles for :visited links
+lk-link-visited-normal()
+  &
+    background-color rgba(#fff, 0.1)
+  & .md-code-inline
+    position relative
+    &:only-child
+      display inline-block
+      line-height 17px
+    &:before
+      content ''
+      position absolute
+      background-color c-yellow
+      top 0
+      left 0
+      right 0
+      bottom 0
+      opacity 0.1
+
+lk-link-visited-already()
+  &
+    background-color rgba(c-pink, 0.1)
+  & .md-code-inline:before
+    background-color c-pink
+
 lk-link-normal()
   color c-pink
   border-bottom 1px solid transparent
+  lk-link-visited-normal()
 
 lk-link-hover()
   border-bottom 1px solid c-pink
 
 lk-link()
   lk-link-normal()
+  &:visited
+    lk-link-visited-already()
   &:hover
     lk-link-hover()
 
@@ -29,7 +57,27 @@ lk-link()
     color c-pink
 
 .lk-green
-  color darken(c-green, 25%)
-  &:hover,
-  &:hover .lk-link
-    border-bottom-color darken(c-green, 25%)
+  /a&,
+  .lk-link
+    color c-dark-green
+
+    &:visited
+      background-color rgba(c-dark-green, 0.1)
+    &:visited .md-code-inline:before
+      background-color c-dark-green
+
+    &:hover
+      border-bottom-color c-dark-green
+
+.lk-black
+  /a&,
+  .lk-link
+    color c-black-text
+
+    &:visited
+      background-color rgba(c-black-text, 0.1)
+    &:visited .md-code-inline:before
+      background-color c-black-text
+
+    &:hover
+      border-bottom-color c-black-text

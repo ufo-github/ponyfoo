@@ -15,7 +15,7 @@ ol.aa-articles
           span=moment && moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
           span=' read'
         div.aa-trivia-item
-          a.aa-comments(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
+          a.aa-comments.lk-link.lk-black(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
       section.aa-tags
         include ../partials/tags
       if article.cover
