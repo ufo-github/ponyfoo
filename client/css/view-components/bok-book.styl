@@ -69,6 +69,16 @@
   margin-top 40px
   padding 0 20px 20px
 
+  li
+    margin-top 20px
+
+    &:first-child
+      margin-top 0
+
+    > ul,
+    > ol
+      margin-top 20px
+
 .bok-header
   text-align center
   margin 100px 0 80px
@@ -90,9 +100,13 @@
   margin-left 10px
   padding 2px 5px
   background-color c-yellow-highlight
-
-.bok-toc-chapters .bok-sample
   border-bottom 1px dotted c-pink
+  color c-pink
+
+  &:visited
+    background-color c-pink-01
+  &:hover
+    border-bottom-style solid
 
 .bok-sale
   margin-top 40px

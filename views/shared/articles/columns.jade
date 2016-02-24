@@ -4,10 +4,10 @@ ol.aa-articles
     - count = article.commentCount
     li.aa-article.dc-colored
       h2.aa-title
-        a.aa-visit(href='/articles/' + article.slug)!=article.titleHtml
+        a.lk-visitor(href='/articles/' + article.slug)!=article.titleHtml
       section.aa-summary
         div.md-markdown.md-markdown-summary!=article.summaryHtml
-        a.aa-continue(href='/articles/' + article.slug) Read full article
+        a.aa-continue.lk-visitor(href='/articles/' + article.slug) Read full article
       section.aa-trivia
         div.aa-trivia-item
           time(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text.toLowerCase()

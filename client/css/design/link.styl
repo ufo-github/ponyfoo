@@ -81,3 +81,26 @@ lk-link()
 
     &:hover
       border-bottom-color c-black-text
+
+lk-visitor(selector)
+  color c-black-text
+  &{selector}
+    font-awesome()
+    content '\f00c'
+    color c-gray
+    border-bottom 1px dotted c-gray
+  &:hover{selector}
+    color c-black-text
+    border-bottom-style solid
+  &:visited{selector}
+    color c-bright-turquoise
+
+.lk-visitor
+  lk-visitor(':after')
+  :after
+    margin-left 5px
+
+.lk-visitor-before
+  lk-visitor(':before')
+  :before
+    margin-right 5px
