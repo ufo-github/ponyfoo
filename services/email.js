@@ -1,20 +1,23 @@
 'use strict';
 
-var _ = require('lodash');
 var util = require('util');
 var path = require('path');
 var campaign = require('campaign');
+var assign = require('assignment');
+var mailgun = require('campaign-mailgun');
 var jade = require('campaign-ponyfoo');
 var winston = require('winston');
+var htmlService = require('./html');
 var env = require('../lib/env');
-var mode = env('MANDRILL_MODE');
-var apiKey = env('MANDRILL_API_KEY');
-var from = env('MANDRILL_SENDER');
-var trap = env('MANDRILL_TRAP');
+var mode = env('MAILGUN_MODE');
+var apiKey = env('MAILGUN_API_KEY');
+var from = env('MAILGUN_SENDER');
+var trap = env('MAILGUN_TRAP');
+var authority = env('AUTHORITY');
 var client = createClient();
 var defaults = {
   domain: {
-    authority: env('AUTHORITY')
+    authority: authority
   },
   social: {
     twitter: {
@@ -52,25 +55,30 @@ function createClient () {
   var options = {
     headerImage: path.resolve('./resources/emails/header.png'),
     templateEngine: jade,
-    mandrill: { apiKey: apiKey },
+    provider: mailgun({ apiKey: apiKey, authority: authority }),
+    formatting: formatting,
     from: from
   };
   if (mode === 'trap') { // staging environments should trap emails
     options.trap = trap;
   } else if (mode === 'debug') { // no reason to send any emails
-    options.provider = campaign.providers.terminal();
+    options.provider = require('campaign-terminal')();
   }
   return campaign(options);
 }
 
 function send (type, model, done) {
-  var extended = _.merge({}, defaults, model);
+  var extended = assign({}, defaults, model);
   var template = path.resolve('.bin/views/server/emails', type);
   client.send(template, extended, done || logger);
   api.getLastEmailHtml = getLastEmailHtml;
   function getLastEmailHtml (done) {
     client.render(template, extended, done);
   }
+}
+
+function formatting (html) {
+  return htmlService.fixedEmojiSize(html);
 }
 
 function logger () {

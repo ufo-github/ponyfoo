@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var assign = require('assignment');
 var util = require('util');
 var contra = require('contra');
 var winston = require('winston');
@@ -43,8 +44,8 @@ function add (data, done) {
           ack(null, true); return;
         }
       }
-      function confirmationSent () {
-        ack(null, true);
+      function confirmationSent (err) {
+        ack(err, true);
       }
       function ack (err, success, existed) {
         if (err) {
@@ -79,10 +80,8 @@ function confirmation (subscriber, done) {
     subject: 'Pony Foo Subscription Invitation!',
     teaser: 'Would you like to subscribe to Pony Foo?',
     confirm: confirm,
-    mandrill: {
-      merge: {
-        locals: [locals(subscriber)]
-      }
+    provider: {
+      merge: locals({}, subscriber)
     },
     linkedData: {
       '@context': 'http://schema.org',
@@ -126,12 +125,10 @@ function send (recipients, template, partialModel, done) {
     function patchModel (documents, next) {
       var subscribers = recipients ? documents.filter(isRecipient) : documents;
       var to = _.pluck(subscribers, 'email');
-      var mandrill = {
-        merge: {
-          locals: subscribers.map(locals)
-        }
+      var provider = {
+        merge: subscribers.reduce(locals, {})
       };
-      var model = _.merge({}, partialModel, { to: to, mandrill: mandrill });
+      var model = assign({}, partialModel, { to: to, provider: provider });
       emailService.send(template, model, next);
     }
   ], done);
@@ -145,20 +142,18 @@ function broadcast (template, model, done) {
   send(null, template, model, done);
 }
 
-function locals (subscriber) {
-  return {
-    email: subscriber.email,
-    model: {
-      name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
-      reason: reasons[subscriber.source],
-      unsubscribe_html: getUnsubscribeHtml(subscriber)
-    }
+function locals (all, subscriber) {
+  all[subscriber.email] = {
+    name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
+    reason: reasons[subscriber.source],
+    unsubscribe_html: getUnsubscribeHtml(subscriber)
   };
+  return all;
 }
 
 function getUnsubscribeHtml (subscriber) {
   var href = util.format('%s/api/subscribers/%s/unsubscribe', authority, getHash(subscriber));
-  return util.format('<a href="%s">unsubscribe</a>', href);
+  return util.format('<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>', href);
 }
 
 module.exports = {

@@ -61,8 +61,27 @@ function extractImages (key, html) {
   function src () {
     return $(this).attr('src');
   }
-  function notEmoji (src) {
-    return src.indexOf('https://twemoji.maxcdn.com/') !== 0;
+}
+
+function isEmoji (src) {
+  return src.indexOf('https://twemoji.maxcdn.com/') === 0;
+}
+
+function notEmoji (src) {
+  return !isEmoji(src);
+}
+
+function fixedEmojiSize (html) {
+  var $ = cheerio.load(html);
+  $('img[src]').filter(isEmojiEl).css({
+    width: '1em',
+    height: '1em',
+    margin: '0 0.05em 0 0.1em',
+    'vertical-align': '-0.1em'
+  });
+  return $.html();
+  function isEmojiEl () {
+    return isEmoji($(this).attr('src'));
   }
 }
 
@@ -131,5 +150,6 @@ module.exports = {
   minify: minify,
   deferImages: deferImages,
   undeferImages: undeferImages,
-  externalizeLinks: externalizeLinks
+  externalizeLinks: externalizeLinks,
+  fixedEmojiSize: fixedEmojiSize
 };
