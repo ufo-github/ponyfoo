@@ -1,0 +1,22 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Site-wide Settings
+    form.asg-container(method='post', action='/api/settings')
+      header.asg-header
+        button.asg-new.lk-icon(type='button')
+          i.fa.fa-plus
+          span=' New Setting'
+
+      section.asg-settings
+        - settings.push({ key: '', value: '' })
+        each setting in settings
+          include setting
+
+      footer.asg-actions
+        a.asg-cancel.lk-link(href='/') Cancel
+        span(aria-label='Commit these changes to site-wide settings')
+          button.gg-container.bt-button.bt-pink(type='submit')
+            span.bt-text Commit
+            include ../partials/button-background
+
+  include ../partials/aside

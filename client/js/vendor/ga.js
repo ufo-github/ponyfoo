@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus/global');
+var taunus = require('taunus');
 var main = $.findOne('.ly-main');
 var env = require('../lib/env');
 var property = env('GA_PROPERTY');

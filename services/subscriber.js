@@ -15,7 +15,12 @@ var reasons = {
   landed: intent,
   article: intent,
   sidebar: intent,
-  comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here\'s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
+  comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here’s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
+};
+var allTopics = ['announcements', 'articles', 'newsletter'];
+var topicDisplayText = {
+  articles: 'articles and comments',
+  newsletter: 'the newsletter'
 };
 
 function noop () {}
@@ -24,34 +29,50 @@ function getHash (subscriber) {
   return subscriber._id.toString() + cryptoService.md5(subscriber.email);
 }
 
-function add (data, done) {
+function add (model, done) {
+  addTopics(model, undefined, done);
+}
+
+function addTopics (model, topics, done) {
+  var valid = validateTopics(topics || allTopics.slice());
   contra.waterfall([
     function findExisting (next) {
-      Subscriber.findOne({ email: data.email }, next);
+      Subscriber.findOne({ email: model.email }, next);
     },
     function bailOrCreate (existing, next) {
       if (existing) {
-        ack(null, false, true); return;
+        existed(); return;
       }
-      new Subscriber(data).save(saved);
+      if (model.verified) {
+        model.topics = valid;
+      }
+      new Subscriber(model).save(saved);
 
+      function existed () {
+        var wants = _.difference(valid, existing.topics);
+        if (wants.length === 0) {
+          ack(null, false, true);
+        } else {
+          invitationConfirmation(existing, wants, invitationConfirmationSent);
+        }
+      }
       function saved (err, subscriber) {
         if (err) {
           ack(err, false);
-        } else if (data.verified !== true) {
-          confirmation(subscriber, confirmationSent);
+        } else if (model.verified !== true) {
+          invitationConfirmation(subscriber, valid, invitationConfirmationSent);
         } else {
           ack(null, true); return;
         }
       }
-      function confirmationSent (err) {
+      function invitationConfirmationSent (err) {
         ack(err, true);
       }
       function ack (err, success, existed) {
         if (err) {
           winston.warn(err);
         } else {
-          winston.info('Email subscription for "%s" %s via %s', data.email, getStatus(), data.source || '(unset)');
+          winston.info('Email subscription for "%s" %s via %s', model.email, getStatus(), model.source || '(unset)');
         }
         next(err, success, existed);
         function getStatus () {
@@ -59,7 +80,7 @@ function add (data, done) {
             return 'was duplicate';
           }
           if (success) {
-            if (data.verified) {
+            if (model.verified) {
               return 'confirmed';
             } else {
               return 'requested';
@@ -72,16 +93,19 @@ function add (data, done) {
   ], done || noop);
 }
 
-function confirmation (subscriber, done) {
+function invitationConfirmation (subscriber, topics, done) {
   var hash = getHash(subscriber);
-  var confirm = util.format('/api/subscribers/%s/confirm', hash);
+  var some = Array.isArray(topics) && topics.length && topics.length < allTopics.length;
+  var query = some ? '?topic=' + topics.join('&topic=') : '';
+  var confirm = util.format('/api/subscribers/%s/confirm%s', hash, query);
   var model = {
     to: subscriber.email,
     subject: 'Pony Foo Subscription Invitation!',
     teaser: 'Would you like to subscribe to Pony Foo?',
     confirm: confirm,
+    topics: topics,
     provider: {
-      merge: locals({}, subscriber)
+      merge: locals()({}, subscriber)
     },
     linkedData: {
       '@context': 'http://schema.org',
@@ -101,65 +125,173 @@ function confirmation (subscriber, done) {
 }
 
 function confirm (email, done) {
-  Subscriber.update({ email: email }, { verified: true }, successback('confirmed', email, done));
+  Subscriber.update({
+    email: email
+  }, {
+    verified: true,
+    topics: allTopics.slice()
+  }, successback({
+   action: 'confirmed',
+   email: email
+  }, done));
 }
 
 function remove (email, done) {
-  Subscriber.remove({ email: email }, successback('withdrawn', email, done));
+  Subscriber.remove({ email: email }, successback({
+   action: 'withdrawn',
+   email: email,
+  }, done));
 }
 
-function successback (action, email, done) {
+function validateTopics (topics) {
+  topics.push('announcements');
+  return _.intersection(allTopics, topics);
+}
+
+function confirmTopics (email, topics, done) {
+  var valid = validateTopics(topics);
+  Subscriber.findOne({ email: email }, found);
+  function found (err, subscriber) {
+    if (err) {
+      bail(topics)(err); return;
+    }
+    if (!subscriber) {
+      bail(topics)(); return;
+    }
+    var wants = _.difference(valid, subscriber.topics);
+    wants.forEach(add);
+    subscriber.verified = true;
+    subscriber.save(bail(wants));
+    function add (want) {
+      subscriber.topics.push(want);
+    }
+  }
+  function bail (topics) {
+    return function (err) {
+      successback({
+       action: 'confirmed',
+       email: email,
+       topic: topics.join(',') || 'unchanged'
+      }, done)(err);
+    };
+  }
+}
+
+function removeTopic (email, topic, done) {
+  Subscriber.findOne({ email: email }, found);
+  function found (err, subscriber) {
+    if (err) {
+      bail(err); return;
+    }
+    if (!subscriber) {
+      remove(email, done); return;
+    }
+    var index = subscriber.topics.indexOf(topic);
+    if (index === -1) {
+      bail(); return;
+    }
+    var topics = subscriber.topics.slice();
+    topics.splice(index, 1);
+    if (topics.length === 0 || (topics.length === 1 && topics[0] === 'announcements')) {
+      remove(email, done);
+    } else {
+      subscriber.topics = topics;
+      subscriber.save(bail);
+    }
+    function bail (err) {
+      successback({
+       action: 'withdrawn',
+       email: email,
+       topic: topic,
+       hash: getHash(subscriber)
+      }, done)(err);
+    }
+  }
+}
+
+function successback (options, done) {
+  var action = options.action;
+  var email = options.email;
+  var topic = options.topic;
+  var hash = options.hash;
   return function proceed (err) {
     if (!err) {
-      winston.info('Email subscription for "%s" %s', email, action);
+      winston.info('Email subscription for "%s" %s [%s]', email, action, topic || '*');
     }
-    done(err, !err);
+    done(err, !err, topic, hash);
   };
 }
 
-function send (recipients, template, partialModel, done) {
-  contra.waterfall([
-    function findVerifiedSubscribers (next) {
-      Subscriber.find({ verified: true }, next);
-    },
-    function patchModel (documents, next) {
-      var subscribers = recipients ? documents.filter(isRecipient) : documents;
-      var to = _.pluck(subscribers, 'email');
-      var provider = {
-        merge: subscribers.reduce(locals, {})
-      };
-      var model = assign({}, partialModel, { to: to, provider: provider });
-      emailService.send(template, model, next);
-    }
-  ], done);
+function send (options, done) {
+  var topic = options.topic;
+  var recipients = options.recipients;
+  var template = options.template;
+  var partialModel = options.model;
 
+  contra.waterfall([findVerifiedSubscribers, patchModel], done);
+
+  function findVerifiedSubscribers (next) {
+    if (topic) {
+      Subscriber.find({ verified: true, topics: topic }, next);
+    } else {
+      Subscriber.find({ verified: true }, next);
+    }
+  }
+  function patchModel (documents, next) {
+    var subscribers = recipients ? documents.filter(isRecipient) : documents;
+    var to = _.pluck(subscribers, 'email');
+    var provider = {
+      merge: subscribers.reduce(locals(topic), {})
+    };
+    var model = assign({}, partialModel, { to: to, provider: provider });
+    emailService.send(template, model, next);
+  }
   function isRecipient (subscriber) {
     return recipients.indexOf(subscriber.email) !== -1;
   }
 }
 
-function broadcast (template, model, done) {
-  send(null, template, model, done);
-}
-
-function locals (all, subscriber) {
-  all[subscriber.email] = {
-    name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
-    reason: reasons[subscriber.source],
-    unsubscribe_html: getUnsubscribeHtml(subscriber)
+function locals (topic) {
+  return function localsForTopic (all, subscriber) {
+    all[subscriber.email] = {
+      name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
+      reason: reasons[subscriber.source],
+      unsubscribe_html: getUnsubscribeHtml(subscriber, topic)
+    };
+    return all;
   };
-  return all;
 }
 
-function getUnsubscribeHtml (subscriber) {
-  var href = util.format('%s/api/subscribers/%s/unsubscribe', authority, getHash(subscriber));
-  return util.format('<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>', href);
+function getUnsubscribeHtml (subscriber, topic) {
+  var urlformat = '%s/api/subscribers/%s/unsubscribe%s';
+  var linkformat = '<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe%s</a>';
+  var href = util.format(urlformat, authority, getHash(subscriber), getHrefTopic());
+  return util.format(linkformat, href, getTextTopic());
+  function getHrefTopic () {
+    if (topic) {
+      return '/' + topic;
+    }
+    return '';
+  }
+  function getTextTopic () {
+    if (topic) {
+      return 'from ' + (topicDisplayText[topic] || topic);
+    }
+    return '';
+  }
+}
+
+function getTopics () {
+  return allTopics.slice();
 }
 
 module.exports = {
   add: add,
+  addTopics: addTopics,
   remove: remove,
+  removeTopic: removeTopic,
   confirm: confirm,
-  send: send,
-  broadcast: broadcast
+  confirmTopics: confirmTopics,
+  getTopics: getTopics,
+  send: send
 };

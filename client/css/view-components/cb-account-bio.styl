@@ -1,5 +1,36 @@
-.cb-preview
-  margin 25px 0
-
 .cb-actions
   text-align right
+
+.cb-preview
+  position relative
+  text-align left
+  padding 25px 10px
+  margin 25px 0
+
+  p
+    margin 20px 0
+    line-height 28px
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 0
+    height 4px
+    content ''
+    background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+
+  &:after
+    position absolute
+    left 0
+    right 0
+    bottom -4px
+    height 4px
+    content ''
+    background linear-gradient(to left, c-white 0, c-yellow-highlight 66%, c-pink 100%)
+
+@media screen and (min-width: 1200px)
+  .cb-preview
+    margin 25px auto
+    width 360px
+    padding 25px 0

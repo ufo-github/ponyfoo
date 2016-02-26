@@ -127,10 +127,10 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
           li.hn-item
             a.hn-link(href=rss, aria-label='Track the RSS feed and be the first to learn about freshly published content.', target='_blank') RSS
 
-    if model.flash
-      include flash
-
     include navigation
+
+    if model.flash
+      include ../../shared/partials/flash
 
     main.ly-main!=partial
 

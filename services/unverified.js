@@ -14,7 +14,7 @@ function validate (input, done) {
   var messages = [];
 
   if (typeof email !== 'string' || email.length === 0) {
-    messages.push('The email address can\'t be empty');
+    messages.push('The email address can’t be empty');
   } else if (!development && !validator.isEmail(email)) {
     messages.push('You must provide a valid email address');
   } else {
@@ -22,7 +22,7 @@ function validate (input, done) {
   }
 
   if (typeof password !== 'string' || password.length === 0) {
-    messages.push('Your password can\'t be empty');
+    messages.push('Your password can’t be empty');
   }
 
   done(null, messages);

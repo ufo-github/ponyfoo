@@ -15,11 +15,11 @@ function remove (req, res, next) {
       next(err); return;
     }
     if (success) {
-      req.flash('success', 'You\'ve unsubscribed from our mailing list successfully!');
+      req.flash('success', 'You’ve successfully unsubscribed from our mailing list!');
     } else {
-      req.flash('error', 'Your unsubscription request was invalid and couldn\'t be fulfilled!');
+      req.flash('error', 'Your unsubscription request was invalid and couldn’t be fulfilled!');
     }
-    res.redirect('/');
+    res.redirect('/unsubscribed');
   }
 }
 

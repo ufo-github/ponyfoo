@@ -55,7 +55,7 @@ function validate (model, update) {
         validation.push('The publication date is invalid.');
       }
       if (when.isBefore(moment())) {
-        validation.push('Pick a publication date in the future. I don\'t have superpowers.');
+        validation.push('Pick a publication date in the future. I don’t have superpowers.');
       }
       return when.toDate();
     }
@@ -86,7 +86,7 @@ function validate (model, update) {
       validation.push(message);
     }
     if (forbidden.test(slug)) {
-      validation.push('The provided slug is reserved and can\'t be used');
+      validation.push('The provided slug is reserved and can’t be used');
     }
     return slug;
   }

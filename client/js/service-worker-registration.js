@@ -20,16 +20,14 @@ function register () {
     swivel.on('view-update', renderUpdate);
 
     function renderUpdate (context, href, data) {
-      if (sw.toggleJSON(href, false) === location.href) {
-        refreshJSON();
+      if (sw.toggleJSON(href, false) !== location.href) {
+        return;
       }
-      function refreshJSON () {
-        var state = taunus.state;
-        var model = data.model;
-        if (JSON.stringify(model) !== JSON.stringify(state.model)) {
-          state.model = taunusClone(model);
-          taunusView(state.container, null, state.model, state.route);
-        }
+      var state = taunus.state;
+      var model = data.model;
+      if (JSON.stringify(model) !== JSON.stringify(state.model)) {
+        state.model = taunusClone(model);
+        taunusView(state.container, null, state.model, state.route);
       }
     }
   }

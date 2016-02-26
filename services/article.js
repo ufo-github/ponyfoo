@@ -82,7 +82,7 @@ function email (article, options, done) {
   var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
   var model = {
     subject: article.title,
-    teaser: options.reshare ? 'You can\'t miss this!' : 'Hot off the press!',
+    teaser: options.reshare ? 'You can’t miss this!' : 'Hot off the press!',
     article: {
       titleHtml: article.titleHtml,
       permalink: relativePermalink,
@@ -100,7 +100,11 @@ function email (article, options, done) {
       description: 'See article – ' + article.title
     }
   };
-  subscriberService.broadcast('article-published', model, done);
+  subscriberService.send({
+    topic: 'articles',
+    template: 'article-published',
+    model: model
+  }, done);
 }
 
 function socialStatus (article, options) {

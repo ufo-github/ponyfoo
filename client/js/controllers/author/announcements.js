@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
-var taunus = require('taunus/global');
+var taunus = require('taunus');
 var debounce = require('lodash/function/debounce');
 var markdownService = require('../../../../services/markdown');
 var rparagraph = /^<p>|<\/p>$/ig;
@@ -11,6 +11,7 @@ module.exports = function (viewModel) {
   var subject = $('.ec-subject');
   var teaser = $('.ec-teaser');
   var body = $('.ec-body');
+  var topic = $('.ec-topic');
   var previewSubject = $('.ec-preview-subject');
   var previewTeaser = $('.ec-preview-teaser');
   var previewBody = $('.ec-preview-body');
@@ -22,7 +23,7 @@ module.exports = function (viewModel) {
   sendButton.on('click', send);
 
   function updatePreviewSubject () {
-    previewSubject.text(subject.value().trim() || 'Email Campaign Preview');
+    previewSubject.text(subject.value().trim() || 'Email Preview');
   }
   function updatePreviewTeaser () {
     previewTeaser.text(teaser.value() || 'Teaser about email contents');
@@ -36,6 +37,7 @@ module.exports = function (viewModel) {
   function send () {
     var model = {
       json: {
+        topic: topic.value(),
         subject: subject.value(),
         teaser: teaser.value(),
         body: body.value()

@@ -1,0 +1,43 @@
+header.un-header
+  h1.un-heading So sad to see you go!
+  div.un-role=description
+
+section.de-host
+  div.de-column.un-container.md-markdown
+    if topic
+      p
+        span We’ve removed you from the
+        span=' '
+        span=listName
+        span=' '
+        span records, and you won’t be receiving any more emails about that.
+
+      if hash
+        blockquote.un-deep
+          p
+            span If you were trying to unsubscribe from
+            span=' '
+            strong all Pony Foo emails
+            em=' \u2014 and not just the ' + listName + ' \u2014 '
+            span please use the following link.
+
+          p
+            a(href='/api/subscribers/' + hash + '/unsubscribe', data-taunus-ignore=true)
+              span Unsubscribe from
+              em=' all '
+              span Pony Foo emails
+
+    else
+      p
+        span We’ve removed you from our records, and you won't be receiving any more emails from us
+        em=' unless '
+        span you decide to interact with Pony Foo again.
+
+      p
+        span If you’ve unsubscribed by mistake you can
+        span=' '
+        a(href='/subscribe', aria-label='Subscribe to our mailing list') subscribe again
+        span . No hard feelings!
+
+
+  include ../partials/aside

@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus/global');
+var taunus = require('taunus');
 var unwrapImages = require('../lib/unwrapImages');
 var body = $('body');
 

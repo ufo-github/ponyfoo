@@ -3,12 +3,14 @@
 var accepts = require('accepts');
 var create = require('./lib/create');
 var httpService = require('../../../services/http');
+var subscriberService = require('../../../services/subscriber');
 
 function insert (req, res, next) {
   var email = req.body.subscriber;
   var source = req.body.source;
+  var topics = req.body.topics || subscriberService.getTopics();
 
-  create(email, source, function (err, statusCode, messages) {
+  create(email, source, topics, function (err, statusCode, messages) {
     if (err) {
       next(err); return;
     }

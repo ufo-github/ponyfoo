@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
-var taunus = require('taunus/global');
+var taunus = require('taunus');
 var debounce = require('lodash/function/debounce');
 var storage = require('../../lib/storage');
 var textService = require('../../../../services/text');

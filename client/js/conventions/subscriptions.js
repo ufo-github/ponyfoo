@@ -9,21 +9,36 @@ function subscriptions () {
 }
 
 function render (container) {
-  var places = $('.ss-container', container);
-  var ajax = measly.layer({ context: places[0] });
-  var source = $('.ss-source', places).value();
-  var input = $('.ss-input', places);
-  var button = $('.ss-button', places);
-  button.on('click', search);
+  $('.ss-container', container).forEach(setupInPlace);
 
-  function search (e) {
-    e.preventDefault();
-    var email = input.value().trim();
-    if (email) {
-      ajax.put('/api/subscribers', {
-        json: { subscriber: email, source: source }
-      });
+  function setupInPlace (place) {
+    var ajax = measly.layer({ context: place });
+    var source = $('.ss-source', place).value();
+    var input = $('.ss-input', place);
+    var topicChecks = $('.ss-topic', place);
+    var button = $('.ss-button', place);
+    button.on('click', search);
+
+    function search (e) {
+      e.preventDefault();
+      var email = input.value().trim();
+      if (!email) {
+        return;
+      }
+      var json = {
+        subscriber: email,
+        source: source,
+        topics: topicChecks.length ? topicChecks.filter(byValue).map(toTopic) : undefined
+      };
+      ajax.put('/api/subscribers', { json: json });
     }
+  }
+
+  function byValue (el) {
+    return $(el).value();
+  }
+  function toTopic (el) {
+    return $(el).text();
   }
 }
 

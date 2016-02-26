@@ -5,6 +5,7 @@ var subscriberService = require('../../../services/subscriber');
 var markupService = require('../../../services/markup');
 
 module.exports = function (req, res) {
+  var topic = req.body.topic;
   var subject = req.body.subject;
   var teaser = req.body.teaser;
   var body = req.body.body;
@@ -15,10 +16,14 @@ module.exports = function (req, res) {
 
   var bodyHtml = markupService.compile(body, { absolutize: true });
 
-  subscriberService.broadcast('raw', {
-    subject: subject,
-    teaser: teaser,
-    rawBody: bodyHtml
+  subscriberService.send({
+    topic: req.body.topic,
+    template: 'raw',
+    model: {
+      subject: subject,
+      teaser: teaser,
+      rawBody: bodyHtml
+    }
   });
   res.json({});
 
@@ -31,7 +36,7 @@ module.exports = function (req, res) {
       teaser = subject;
     }
     if (!validator.isLength(body, 10)) {
-      messages.push('The email body should have some substance, don\'t you think?');
+      messages.push('The email body should have some substance, don’t you think?');
     }
     if (messages.length) {
       res.status(400).json({ messages: messages });

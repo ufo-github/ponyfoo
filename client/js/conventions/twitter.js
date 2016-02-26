@@ -1,6 +1,6 @@
 'use strict';
 
-var taunus = require('taunus/global');
+var taunus = require('taunus');
 
 function updateView (elem) {
   var twitter = global.twttr;

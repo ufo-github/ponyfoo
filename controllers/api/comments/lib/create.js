@@ -60,7 +60,7 @@ module.exports = function (slug, input, done) {
         done(null, 404, ['The comment thread has been deleted!']); return;
       }
       if (parent.parent) {
-        done(null, 400, ['Comments can\'t be nested that deep!']); return;
+        done(null, 400, ['Comments can’t be nested that deep!']); return;
       }
     }
     if (spam(model)) {
@@ -165,7 +165,7 @@ module.exports = function (slug, input, done) {
     var permalinkToComment = permalinkToArticle + '#comment-' + comment._id;
     var email = {
       subject: util.format('Fresh comments on "%s"!', data.article.title),
-      teaser: 'Someone posted a comment on a thread you\'re watching!',
+      teaser: 'Someone posted a comment on a thread you’re watching!',
       comment: {
         author: comment.author,
         content: data.html,
@@ -188,7 +188,12 @@ module.exports = function (slug, input, done) {
         description: 'Reply to Comment – ' + data.article.title
       }
     };
-    subscriberService.send(data.recipients, 'comment-published', email);
+    subscriberService.send({
+      topic: 'articles',
+      template: 'comment-published',
+      recipients: data.recipients,
+      model: email
+    });
   }
 
   function created (err) {

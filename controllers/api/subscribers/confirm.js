@@ -7,8 +7,18 @@ var unfold = require('./lib/unfold');
 function remove (req, res, next) {
   contra.waterfall([
     contra.curry(unfold, req, res),
-    subscriberService.confirm
+    confirm
   ], respond);
+
+  function confirm (email, next) {
+    var topics = req.query.topic;
+    if (typeof topics === 'string') { topics = [topics]; }
+    if (Array.isArray(topics)) {
+      subscriberService.confirmTopics(email, topics, next);
+    } else {
+      subscriberService.confirm(email, next);
+    }
+  }
 
   function respond (err, success) {
     if (err) {
@@ -17,9 +27,9 @@ function remove (req, res, next) {
     if (success) {
       req.flash('success', 'Your subscription to our mailing list is confirmed!');
     } else {
-      req.flash('error', 'Your confirmation request was invalid and couldn\'t be fulfilled!');
+      req.flash('error', 'Your confirmation request was invalid and couldn’t be fulfilled!');
     }
-    res.redirect('/');
+    res.redirect('/subscribe');
   }
 }
 

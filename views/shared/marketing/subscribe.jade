@@ -1,10 +1,11 @@
-header
-  h1.dc-title Get Pony Foo in your inbox
+header.su-header
+  h1.su-heading Get Pony Foo in your inbox!
+  div.su-role Articles about JavaScript & a newsletter about all things web
 
 section.de-host
   div.de-column.ms-container
     form.ly-section.ss-container.at-subscribe(action='/api/subscribers', method='post', name='subscribe')
-      h2 Subscribe with just your email!
+      h2.vw-title Subscribe with just your email!
       div.ss-label
         ='Subscribe below to get an email when new articles come out! Also, '
         a.lk-link(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
@@ -20,6 +21,20 @@ section.de-host
         button.gg-container.bt-button.bt-pink.ss-button(type='submit')
           span.bt-text Subscribe
           include ../partials/button-background
+
+      div.su-topics
+        div.su-topic
+          input.ss-topic.ck-input#su-topic-articles(type='checkbox', name='topic', value='articles', checked)
+          label.ck-checkbox(for='su-topic-articles')
+            span Articles & Comment Replies
+            span.su-topic-notes A single email whenever an article is published
+            span.su-topic-notes A single email whenever one of your comments gets a reply
+        div.su-topic
+          input.ss-topic.ck-input#su-topic-newsletter(type='checkbox', name='topic', value='newsletter', checked)
+          label.su-check-pv.ck-checkbox(for='su-topic-newsletter')
+            span Weekly Newsletter
+            span.su-topic-notes A single email every thursday
+            span.su-topic-notes Discusses front-end web development and related technologies
 
       p.ss-benefits-title When you subscribe, you'll earn access to the following features:
 

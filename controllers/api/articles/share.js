@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
     if (err) {
       end('error', 'An unexpected error occurred.');
     } else if (!article) {
-      end('error', 'The article can\'t be shared.');
+      end('error', 'The article can’t be shared.');
     } else {
       share(article);
     }

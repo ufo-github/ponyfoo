@@ -25,7 +25,7 @@ function collapse (error) {
 }
 
 function divide (error) {
-  return '<div class=\'lg-stack-start\'>' + error.split('\n').join('</div><div>') + '</div>';
+  return '<div class=’lg-stack-start’>' + error.split('\n').join('</div><div>') + '</div>';
 }
 
 module.exports = {

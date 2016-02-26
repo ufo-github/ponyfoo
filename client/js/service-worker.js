@@ -1,14 +1,14 @@
 'use strict';
 
-var version = 'v13::';
+var version = 'v14::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var env = require('../../lib/env');
 var swivel = require('swivel');
 var parse = require('omnibox/querystring').parse;
 var sw = require('./lib/sw');
-var prefixes = ['api', 'author', 'account', 'bf', 's'];
-var rprefixes = new RegExp('^\/(' + prefixes.join('|') + ')(\/|$)', 'i');
+var ignoreprefixes = ['api', 'author', 'account', 'bf', 's', 'subscribe', 'unsubscribed'];
+var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
 var offlineFundamentals = [
   '/',
   '/offline',
@@ -57,7 +57,7 @@ function fetcher (e) {
 
   var url = new URL(request.url);
   var sameorigin = url.origin === location.origin;
-  if (sameorigin && rprefixes.test(url.pathname)) {
+  if (sameorigin && rignoreprefixes.test(url.pathname)) {
     return; // ignore
   }
   if (request.url.indexOf('https://maps.googleapis.com/maps/vt') === 0) {
