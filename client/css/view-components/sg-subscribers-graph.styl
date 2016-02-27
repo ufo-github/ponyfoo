@@ -1,0 +1,54 @@
+.sg-chart svg
+  overflow visible
+
+.sg-axis path,
+.sg-axis line
+  fill none
+  shape-rendering crispEdges
+
+.sg-axis,
+.sg-legend
+  fill c-black-text
+
+.sg-x
+  path
+    display none
+  .tick
+    display none
+    &:nth-child(5n)
+      display block
+
+.sg-legend
+  display none
+
+.sg-tip
+  line-height 1
+  margin-left 15px
+
+.sg-tip-content
+  padding 8px
+  text-align left
+
+.sg-tip-label
+  text-transform capitalize
+
+.sg-pageviews-shadow
+  stroke-width 3px
+  stroke c-white
+  fill transparent
+
+.sg-pageviews
+  stroke url(#sg-pageviews-gradient)
+  stroke-width 1.3px
+  fill transparent
+
+.sg-check-pv
+  margin-left 15px
+
+@media only screen and (min-width: 768px)
+  .sg-legend
+    display block
+    text-transform capitalize
+
+  .sg-x .tick
+    display block

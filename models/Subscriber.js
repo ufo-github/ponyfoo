@@ -10,4 +10,6 @@ var schema = new mongoose.Schema({
   created: { type: Date, require: true, 'default': Date.now }
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
+schema.index({ topics: 1 });
+
 module.exports = mongoose.model('Subscriber', schema);

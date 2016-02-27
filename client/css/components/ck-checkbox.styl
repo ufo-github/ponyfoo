@@ -35,7 +35,17 @@
   color lighten(c-purple, 30%)
 
 .ck-input:checked + .ck-checkbox:before,
-.ck-input:checked + .ck-radio:before
+.ck-input:checked + .ck-radio:before,
+.ck-checkbox-checked:before,
+.ck-radio-checked:before
   color #fff
   text-shadow 1px 1px 1px c-moderate
 
+.ck-readonly
+  cursor default
+  pointer-events none
+  &:before
+    background-color darken(c-purple, 30%)
+
+.ck-alone:before
+  margin 0

@@ -9,6 +9,8 @@ var textService = require('../../../../services/text');
 var colors = ['#cbc5c0', '#1a4d7f', '#55acee', '#900070', '#e92c6c', '#f3720d', '#ffe270'];
 
 module.exports = function (viewModel, container) {
+  var graphData = viewModel.subscriberGraph;
+
   loadD3(loadD3tip.bind(null, loaded));
 
   function loadD3 (next) { loadScript('/js/d3.js', next); }
@@ -22,17 +24,17 @@ module.exports = function (viewModel, container) {
 
     render();
     $(window).on('resize', renderTimely);
-    $('#as-show-subscribers').on('change', render);
-    $('#as-show-pageviews').on('change', render);
+    $('#sg-show-subscribers').on('change', render);
+    $('#sg-show-pageviews').on('change', render);
   }
 
   function render () {
     var d3 = global.d3;
-    var parent = $.findOne('.as-container', container);
-    var showSubscribers = $('#as-show-subscribers', container).value();
-    var showPageViews = $('#as-show-pageviews', container).value();
+    var parent = $.findOne('.sg-container', container);
+    var showSubscribers = $('#sg-show-subscribers', container).value();
+    var showPageViews = $('#sg-show-pageviews', container).value();
 
-    $('.as-chart', container).remove();
+    $('.sg-chart', container).remove();
 
     var rect = parent.getBoundingClientRect();
     var margin = {
@@ -43,9 +45,9 @@ module.exports = function (viewModel, container) {
     var width = dx - margin.left - margin.right;
     var height = Math.max(unboundHeight, 300);
     var svg = d3
-      .select('.as-container')
+      .select('.sg-container')
       .append('div')
-      .classed('as-chart', true)
+      .classed('sg-chart', true)
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
@@ -60,7 +62,7 @@ module.exports = function (viewModel, container) {
       .linear()
       .rangeRound([height - 150, 0]);
 
-    var data = cloneDeep(viewModel.subscribers);
+    var data = cloneDeep(graphData.subscribers);
     var color = d3.scale
       .ordinal()
       .range(colors);
@@ -99,7 +101,7 @@ module.exports = function (viewModel, container) {
         .orient('bottom');
 
       svg.append('g')
-        .attr('class', 'as-x as-axis')
+        .attr('class', 'sg-x sg-axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis)
         .selectAll('text')
@@ -125,13 +127,13 @@ module.exports = function (viewModel, container) {
         var date = svg.selectAll('.date')
           .data(data)
           .enter().append('g')
-          .attr('class', 'as-g')
+          .attr('class', 'sg-g')
           .attr('transform', function (d) { return 'translate(' + x(d.dateText) + ',0)'; });
 
-        date.selectAll('.as-bar')
+        date.selectAll('.sg-bar')
           .data(function (d) { return d.fragments; })
           .enter().append('rect')
-          .attr('class', 'as-bar')
+          .attr('class', 'sg-bar')
           .attr('width', x.rangeBand())
           .attr('y', function (d) { return y(d.y1); })
           .attr('height', function (d) { return y(d.y0) - y(d.y1); })
@@ -149,7 +151,7 @@ module.exports = function (viewModel, container) {
           .tickFormat(d3.format('.2s'));
 
         svg.append('g')
-          .attr('class', 'as-y as-axis')
+          .attr('class', 'sg-y sg-axis')
           .call(yAxis)
           .append('text')
           .attr('transform', 'rotate(-90)')
@@ -163,7 +165,7 @@ module.exports = function (viewModel, container) {
         var legend = svg.selectAll('.legend')
           .data(color.domain().slice().reverse())
           .enter().append('g')
-          .attr('class', 'as-legend')
+          .attr('class', 'sg-legend')
           .attr('transform', function (d, i) { return 'translate(-' + (width - 160) + ',' + i * 20 + ')'; });
 
         legend.append('rect')
@@ -182,7 +184,7 @@ module.exports = function (viewModel, container) {
 
       function addTips () {
         var tip = d3.tip()
-          .attr('class', 'as-tip')
+          .attr('class', 'sg-tip')
           .direction('e')
           .offset([-10, 0])
           .html(function (d) {
@@ -193,9 +195,9 @@ module.exports = function (viewModel, container) {
             var now = full.total - full.unverified;
             var c = color(d.name);
             return textService.format([
-              '<div class="as-tip-content" style="color: %s; background-color: %s;">',
+              '<div class="sg-tip-content" style="color: %s; background-color: %s;">',
                 '<div>',
-                  '<span class="as-tip-label">%s:</span>',
+                  '<span class="sg-tip-label">%s:</span>',
                   ' %s (%s)',
                 '</div>',
                 '<div>Overall: %s (%s)</div>',
@@ -230,7 +232,7 @@ module.exports = function (viewModel, container) {
 
     function addPageViews (x1, x2) {
       var peak = 0;
-      var pv = cloneDeep(viewModel.pageviews);
+      var pv = cloneDeep(graphData.pageviews);
       if (!pv || pv.length === 0) {
         return;
       }
@@ -264,7 +266,7 @@ module.exports = function (viewModel, container) {
           .tickFormat(d3.format('.2s'));
 
         svg.append('g')
-          .attr('class', 'as-y as-axis')
+          .attr('class', 'sg-y sg-axis')
           .call(yAxis)
           .append('text')
           .attr('transform', 'rotate(-90)')
@@ -276,7 +278,7 @@ module.exports = function (viewModel, container) {
 
       function addLinearGradient () {
         svg.append('linearGradient')
-          .attr('id', 'as-pageviews-gradient')
+          .attr('id', 'sg-pageviews-gradient')
           .attr('gradientUnits', 'userSpaceOnUse')
           .attr('x1', 0).attr('y1', y(0))
           .attr('x2', 0).attr('y2', y(peak))
@@ -295,7 +297,7 @@ module.exports = function (viewModel, container) {
         svg
           .append('path')
           .datum(pv)
-          .attr('class', 'as-pageviews-shadow')
+          .attr('class', 'sg-pageviews-shadow')
           .attr('d', line);
       }
 
@@ -303,7 +305,7 @@ module.exports = function (viewModel, container) {
         svg
           .append('path')
           .datum(pv)
-          .attr('class', 'as-pageviews')
+          .attr('class', 'sg-pageviews')
           .attr('d', line);
       }
     }

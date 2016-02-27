@@ -1,4 +1,66 @@
+mixin pager
+  section.an-siblings.uv-clearfix
+    if page > 1
+      a.an-anchor.an-prev(href=page === 2 ? taunus.resolve('author/subscribers') : taunus.resolve('author/subscribers', { page: page - 1 }), rel='prev', aria-label='Go to the previous page') « Newer
+    if more
+      a.an-anchor.an-next(href=taunus.resolve('author/subscribers', { page: page + 1 }), rel='next', aria-label='Go to the next page') Older »
+
+article.ly-section.vw-maintainer.de-host
+  h1.vw-title Subscriber Management
+
+  header.as-actions
+    +pager
+
+  if subscribers.length
+    table
+      thead
+        tr
+          th Created
+          th Source
+          th Email
+          th.as-verified V.
+          th Topics
+          th Actions
+      tbody
+        each s, i in subscribers
+          - api = '/api/subscribers/' + s.hash
+          - returnPath = 'returnTo=/author/subscribers'
+          tr
+            td(data-label='Created')
+              time(datetime=s.created.datetime, aria-label=s.created.title)='On ' + s.created.text
+            td(data-label='Source')
+              span(class='as-source as-source-' + s.source)=s.source
+            td(data-label='Email')
+              a.lk-link.lk-black(href='mailto:' + s.email, target='_blank')=s.email
+            td.as-verified(data-label='Verified')
+              if s.verified
+                div.ck-readonly.ck-alone.ck-checkbox.ck-checkbox-checked()
+              else
+                div.ck-readonly.ck-alone.ck-checkbox()
+            td(data-label='Topics')
+              each t in allTopics
+                if s.topics.indexOf(t) !== -1
+                  a.as-topic.ck-checkbox.ck-checkbox-checked(
+                    href=api + '/unsubscribe?topic=' + t + '&' + returnPath,
+                    data-taunus-ignore=true
+                  )=t
+                else
+                  a.as-topic.ck-checkbox(
+                    href=api + '/confirm?topic=' + t + '&' + returnPath,
+                    data-taunus-ignore=true
+                  )=t
+
+            td(data-label='Actions')
+              a.fa.fa-remove.lk-icon(
+                href=api + '/unsubscribe?' + returnPath,
+                data-taunus-ignore=true
+              )
+
+    footer.as-actions
+      +pager
+
 article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     include ../partials/subscribers
+
 include ../partials/aside

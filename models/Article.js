@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
   publication: Date,
-  status: { type: String, require: true },
+  status: { type: String, index: { unique: false }, require: true },
   title: String,
   titleMarkdown: String,
   titleHtml: String,

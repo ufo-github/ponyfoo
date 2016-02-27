@@ -1,11 +1,11 @@
-h1.vw-title
+h2.vw-title
   span Subscribers
-  if verified !== 0
+  if subscriberGraph.verified !== 0
     span=' '
-    span='(' + verified + ')'
-section.as-options
-  input.ck-input#as-show-subscribers(type='checkbox', checked)
-  label.ck-checkbox(for='as-show-subscribers') Subscribers
-  input.ck-input#as-show-pageviews(type='checkbox')
-  label.as-check-pv.ck-checkbox(for='as-show-pageviews') Page Views
-section.as-container
+    span='(' + subscriberGraph.verified + ')'
+section.sg-options
+  input.ck-input#sg-show-subscribers(type='checkbox', checked)
+  label.ck-checkbox(for='sg-show-subscribers') Subscribers
+  input.ck-input#sg-show-pageviews(type='checkbox')
+  label.sg-check-pv.ck-checkbox(for='sg-show-pageviews') Page Views
+section.sg-container

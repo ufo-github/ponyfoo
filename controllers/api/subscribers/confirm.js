@@ -29,7 +29,11 @@ function remove (req, res, next) {
     } else {
       req.flash('error', 'Your confirmation request was invalid and couldn’t be fulfilled!');
     }
-    res.redirect('/subscribe');
+    if (req.query.returnTo) {
+      res.redirect(req.query.returnTo);
+    } else {
+      res.redirect('/subscribe');
+    }
   }
 }
 

@@ -30,7 +30,6 @@ var commentRemove = require('./api/comments/remove');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
-var subscriberRemoveTopic = require('./api/subscribers/removeTopic');
 var gitOnly = require('./api/git/only');
 var gitPushArticles = require('./api/git/push-articles');
 var secretOnly = require('./api/secret/only');
@@ -77,7 +76,6 @@ module.exports = function (app) {
   app.post('/api/subscribers', verifyForm, subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
-  app.get('/api/subscribers/:hash/unsubscribe/:topic(articles|newsletter)', subscriberRemoveTopic);
 
   app.post('/api/email', authorOnly, authorEmail);
 

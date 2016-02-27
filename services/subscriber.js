@@ -269,7 +269,7 @@ function getUnsubscribeHtml (subscriber, topic) {
   return util.format(linkformat, href, getTextTopic());
   function getHrefTopic () {
     if (topic) {
-      return '/' + topic;
+      return '?topic=' + topic;
     }
     return '';
   }
@@ -292,6 +292,7 @@ module.exports = {
   removeTopic: removeTopic,
   confirm: confirm,
   confirmTopics: confirmTopics,
+  getHash: getHash,
   getTopics: getTopics,
   send: send
 };

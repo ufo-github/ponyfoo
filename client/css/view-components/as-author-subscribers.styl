@@ -1,54 +1,32 @@
-.as-chart svg
-  overflow visible
+.as-verified
+  text-align center
+  width 45px
 
-.as-axis path,
-.as-axis line
-  fill none
-  shape-rendering crispEdges
+.as-actions .an-siblings
+  margin 0
 
-.as-axis,
-.as-legend
-  fill c-black-text
+.as-source
+  padding 2px 4px
+  color c-white
+.as-source-landed
+  background-color c-yellow-highlight
+  color c-black-text
+.as-source-article
+  background-color c-orange-dark
+.as-source-comment
+  background-color c-pink
+.as-source-sidebar
+  background-color c-purple
+.as-source-twitter
+  background-color c-twitter-blue
+.as-source-unverified
+  background-color c-blue
+.as-source-migration
+  background-color c-gray
 
-.as-x
-  path
-    display none
-  .tick
-    display none
-    &:nth-child(5n)
-      display block
-
-.as-legend
-  display none
-
-.as-tip
-  line-height 1
-  margin-left 15px
-
-.as-tip-content
-  padding 8px
-  text-align left
-
-.as-tip-label
+.as-topic
+  color c-black-text
   text-transform capitalize
-
-.as-pageviews-shadow
-  stroke-width 3px
-  stroke c-white
-  fill transparent
-
-.as-pageviews
-  stroke url(#as-pageviews-gradient)
-  stroke-width 1.3px
-  fill transparent
-
-.as-check-pv
-  margin-left 15px
-
-@media only screen and (min-width: 768px)
-  .as-legend
-    display block
-    text-transform capitalize
-
-  .as-x .tick
-    display block
+  margin-right 10px
+  &:last-child
+    margin-right 0
