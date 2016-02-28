@@ -16,10 +16,8 @@
 .aa-continue
   &:hover:after
     color c-black-text
-    border-bottom-color c-black-text
   &:hover:visited:after
     color c-white
-    border-bottom-color c-white
 
 .aa-trivia
   margin 10px 0
@@ -73,8 +71,9 @@
   margin 10px -5px
   padding 5px 15px
   background-color rgba(c-bright-turquoise, 0.2)
-  border-bottom 1px solid c-white
   color c-black-text
+  &:focus
+    outline 1px dotted c-light-turquoise
   &:hover
     background-color c-bright-turquoise
 

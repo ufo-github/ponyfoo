@@ -1,3 +1,19 @@
+.dc-header
+  margin-top 20px
+  margin-bottom 60px
+
+.dc-heading
+  text-align center
+  font-size 4em
+  margin-top 0
+  margin-bottom 10px
+
+.dc-role
+  margin-top 10px
+  text-align center
+  font-style italic
+  color c-gray
+
 .dc-title
   background-color lighten(c-pink, 20%)
   border-bottom 4px solid c-pink
@@ -21,23 +37,23 @@ dc-color(c-border-top, c-background)
   background-color c-background
   .aa-cover-footer:before
     background linear-gradient(to top, c-background 0, rgba(c-background, 0.8) 50%, transparent 100%)
-  .aa-cover-link
-    background-color c-background
 
 .dc-colored
   border-top 9px dotted
-  &:nth-child(6n-5)
-    dc-color(darken(c-yellow-highlight, 25%), c-yellow-005)
-  &:nth-child(6n-4)
-    dc-color(darken(c-orange, 25%), c-orange-005)
-  &:nth-child(6n-3)
-    dc-color(c-pink, c-pink-005)
-  &:nth-child(6n-2)
-    dc-color(c-red, c-red-005)
-  &:nth-child(6n-1)
-    dc-color(c-purple, c-purple-005)
-  &:nth-child(6n-0)
-    dc-color(c-green, c-green-005)
+  &:nth-child(7n-6)
+    dc-color(darken(c-yellow-highlight, 25%), lighten(c-yellow-005, 20%))
+  &:nth-child(7n-5)
+    dc-color(darken(c-orange, 25%), lighten(c-orange-005, 20%))
+  &:nth-child(7n-4)
+    dc-color(c-pink, lighten(c-pink-005, 30%))
+  &:nth-child(7n-3)
+    dc-color(c-red, lighten(c-red-005, 40%))
+  &:nth-child(7n-2)
+    dc-color(c-purple, lighten(c-purple-005, 40%))
+  &:nth-child(7n-1)
+    dc-color(c-dark-turquoise, lighten(c-dark-turquoise, 96%))
+  &:nth-child(7n-0)
+    dc-color(c-green, lighten(c-green-005, 50%))
 
 @media only screen and (min-width: 768px)
   .dc-title

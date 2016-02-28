@@ -25,7 +25,10 @@ section.pt-embed-container
         )
     else
       section.pt-video.pt-empty
-        span.pt-empty-text No live-recorded presentation video yet!
+        span.pt-empty-text
+          span.fa.fa-warning
+          span=' '
+          span No live-recorded presentation video yet!
     if presentation.speakerdeck
       section.pt-speakerdeck
         iframe.pt-speakerdeck-frame(
@@ -38,7 +41,10 @@ section.pt-embed-container
         )
     else
       section.pt-speakerdeck.pt-empty
-        span.pt-empty-text No presentation slides yet!
+        span.pt-empty-text
+          span.fa.fa-warning
+          span=' '
+          span No presentation slides yet!
 section.pt-description.md-markdown!=presentation.description
 ul.pt-resources.md-markdown
   each r in presentation.resources

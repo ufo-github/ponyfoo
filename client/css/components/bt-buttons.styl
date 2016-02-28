@@ -6,6 +6,8 @@
   border none
   background-color transparent
   overflow hidden
+  &:focus
+    outline 1px dotted c-black-text
 
 .ly-custom-subheadings .bt-button
   font-family f-subheading
@@ -27,14 +29,23 @@
   opacity 0.1
   pointer-events none
 
-.bt-purple .bt-text
-  background-color c-purple
-  text-shadow 1px 1px 0 c-purple
+.bt-purple
+  &:focus
+    outline-color c-purple
+  .bt-text
+    background-color c-purple
+    text-shadow 1px 1px 0 c-purple
 
-.bt-pink .bt-text
-  background-color c-pink
-  text-shadow 1px 1px 0 c-pink
+.bt-pink
+  &:focus
+    outline-color c-pink
+  .bt-text
+    background-color c-pink
+    text-shadow 1px 1px 0 c-pink
 
-.bt-red .bt-text
-  background-color c-red
-  text-shadow 1px 1px 0 c-red
+.bt-red
+  &:focus
+    outline-color c-red
+  .bt-text
+    background-color c-red
+    text-shadow 1px 1px 0 c-red

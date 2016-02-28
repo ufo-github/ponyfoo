@@ -1,6 +1,10 @@
+- hasVideo = presentation.youtube || presentation.vimeo
+- rolePrefix = hasVideo ? 'Complete with talk video,' : 'Check out the talk'
 article
-  header
-    h1.dc-title=presentation.title
+  header.dc-header
+    h1.dc-heading=presentation.title
+    div.dc-role=rolePrefix + ' slides, description, and links!'
+
   section.pt-standalone
     include presentation-partial
   footer.tk-presentations-link

@@ -1,0 +1,10 @@
+- hasArticles = !Array.isArray(topics) || topics.indexOf('articles') !== -1
+- hasNewsletter = !Array.isArray(topics) || topics.indexOf('newsletter') !== -1
+if hasArticles
+  li.lsft-topic-articles A single email whenever an article is published
+  li.lsft-topic-articles A single email whenever one of your comments gets a reply
+if hasNewsletter
+  li.lsft-topic-newsletter A single email every thursday, discussing front-end web development and related technologies
+li Occasionally, I’ll send you promotional content that won't be available anywhere else
+li I might also send you discount codes for books or conferences
+li One-click unsubscribe link provided in every email you receive

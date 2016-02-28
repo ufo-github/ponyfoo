@@ -11,9 +11,13 @@ if model.user
       li.nv-item
         a.lk-link(href='/author/review', aria-label='Review articles and drafts') Review
       li.nv-item
+        a.lk-link(href='/author/weeklies/new', aria-label='Prepare a new weekly') Confect
+      li.nv-item
+        a.lk-link(href='/author/weeklies', aria-label='Review weekly newsletter entries') Weekly
+      li.nv-item
         a.lk-link(href='/author/oss', aria-label='View, add, or remove OSS projects') OSS
       li.nv-item
-        a.lk-link(href='/author/engagements', aria-label='View, add, or remove engagements') Engagements
+        a.lk-link(href='/author/engagements', aria-label='View, add, or remove speaking engagements') Talks
       li.nv-item
         a.lk-link(href='/author/presentations', aria-label='View, add, or remove presentations') Presentations
       li.nv-item
@@ -21,6 +25,6 @@ if model.user
       li.nv-item
         a.lk-link(href='/author/subscribers', aria-label='See email subscriber growth') Subscribers
       li.nv-item
-        a.lk-link(href='/author/logs', aria-label='See activity logs') Logs
+        a.lk-icon.fa.fa-bars(href='/author/logs', aria-label='See activity logs')
       li.nv-item
-        a.lk-link(href='/author/settings', aria-label='Change site-wide settings') Settings
+        a.lk-icon.fa.fa-cog(href='/author/settings', aria-label='Change site-wide settings')

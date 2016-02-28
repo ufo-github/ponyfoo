@@ -1,4 +1,8 @@
 a,
+button
+  outline none
+
+a,
 button,
 input[type='submit']
   cursor pointer
@@ -37,12 +41,21 @@ lk-link-normal()
 lk-link-hover()
   border-bottom 1px solid c-pink
 
-lk-link()
-  lk-link-normal()
-  &:visited
+lk-link-focus()
+  outline 1px dotted c-pink
+
+lk-link-rare(child)
+  {child}
+    lk-link-normal()
+  &:focus {child}
+    lk-link-focus()
+  &:visited {child}
     lk-link-visited-already()
-  &:hover
+  &:hover {child}
     lk-link-hover()
+
+lk-link()
+  lk-link-rare('')
 
 .lk-link
   lk-link()
@@ -53,6 +66,8 @@ lk-link()
 
 .lk-icon
   color c-black-text
+  &:focus
+    outline 1px dotted c-dark-gray
   &:hover
     color c-pink
 
@@ -93,11 +108,15 @@ lk-visitor(selector)
     &:visited .md-code-inline:before
       background-color c-dark-green
 
+    &:focus
+      outline-color c-dark-green
     &:hover
       border-bottom-color c-dark-green
 
 .lk-link-to-green
   color c-gray
+  &:focus
+    outline-color c-dark-green
   &:hover,
   &:hover:before
     color c-dark-green-05
@@ -111,6 +130,9 @@ lk-visitor(selector)
   /a&,
   .lk-link
     color c-black-text
+
+    &:focus
+      outline-color c-black-text
 
     &:visited
       background-color rgba(c-black-text, 0.1)

@@ -1,14 +1,15 @@
 article
-  header
-    h2.dc-title Conference Presentations
+  header.dc-header
+    h1.dc-heading Conference Presentations
+    div.dc-role A list of presentations I gave at conferences around the world
 
-    ol.pt-list.pt-list-standalone
-      each presentation in presentations
-        li.pt-item
-          h2.pt-title
-            span=presentation.title
-            a.pt-permalink.fa.fa-arrow-right(href='/presentations/' + presentation.slug, aria-label='Permalink to this presentation')
-          include presentation-partial
+  ol.pt-list.pt-list-standalone
+    each presentation in presentations
+      li.pt-item
+        h2.pt-title
+          span=presentation.title
+          a.pt-permalink.fa.fa-arrow-right(href='/presentations/' + presentation.slug, aria-label='Permalink to this presentation')
+        include presentation-partial
 
   footer.tk-presentations-link
     a.tk-presentations-anchor(href='/speaking') Back to conference appearances
