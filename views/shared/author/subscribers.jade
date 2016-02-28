@@ -1,9 +1,9 @@
 mixin pager
   section.an-siblings.uv-clearfix
     if page > 1
-      a.an-anchor.an-prev(href=page === 2 ? taunus.resolve('author/subscribers') : taunus.resolve('author/subscribers', { page: page - 1 }), rel='prev', aria-label='Go to the previous page') « Newer
+      a.lk-rainbows.an-anchor.an-prev(href=page === 2 ? taunus.resolve('author/subscribers') : taunus.resolve('author/subscribers', { page: page - 1 }), rel='prev', aria-label='Go to the previous page') « Newer
     if more
-      a.an-anchor.an-next(href=taunus.resolve('author/subscribers', { page: page + 1 }), rel='next', aria-label='Go to the next page') Older »
+      a.lk-rainbows.an-anchor.an-next(href=taunus.resolve('author/subscribers', { page: page + 1 }), rel='next', aria-label='Go to the next page') Older »
 
 article.ly-section.vw-maintainer.de-host
   h1.vw-title Subscriber Management

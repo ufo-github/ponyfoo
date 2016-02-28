@@ -1,6 +1,6 @@
 'use strict';
 
-var Article = require('../../models/Article');
+var Article = require('../../../models/Article');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
@@ -8,9 +8,6 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       title: 'Article Composer',
-      meta: {
-        canonical: '/author/compose'
-      },
       article: { tags: [] },
       editing: !!slug
     }

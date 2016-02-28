@@ -1,9 +1,9 @@
 'use strict';
 
 var _ = require('lodash');
-var Article = require('../../models/Article');
-var articleService = require('../../services/article');
-var cryptoService = require('../../services/crypto');
+var Article = require('../../../models/Article');
+var articleService = require('../../../services/article');
+var cryptoService = require('../../../services/crypto');
 
 module.exports = getModel;
 
@@ -26,7 +26,7 @@ function getModel (req, res, next) {
       model: {
         title: 'Article Review',
         meta: {
-          canonical: '/author/review'
+          canonical: '/author/articles'
         },
         articles: sorted
       }

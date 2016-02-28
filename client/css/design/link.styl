@@ -61,8 +61,13 @@ lk-link()
   lk-link()
 
 .lk-rainbows
+  position relative
   color c-black-text
-  rainbow-pseudo-on-hover()
+  margin-bottom 5px
+  &:focus
+    outline 1px dotted c-gray
+  &:hover
+    rainbow-pseudo()
 
 .lk-icon
   color c-black-text
@@ -88,6 +93,11 @@ lk-visitor(selector)
   lk-visitor(':after')
   &:after
     margin-left 5px
+
+.lk-visitor-inside
+  lk-visitor(' .lk-visitor-target:before')
+  .lk-visitor-target:before
+    margin-right 5px
 
 .lk-visitor-before
   lk-visitor(':before')

@@ -7,12 +7,12 @@ var moment = require('moment');
 var sluggish = require('sluggish');
 var raf = require('raf');
 var taunus = require('taunus');
-var articleSummarizationService = require('../../../../services/articleSummarization');
-var textService = require('../../../../services/text');
-var markdownService = require('../../../../services/markdown');
-var datetimeService = require('../../../../services/datetime');
-var twitterService = require('../../conventions/twitter');
-var storage = require('../../lib/storage');
+var articleSummarizationService = require('../../../../../services/articleSummarization');
+var textService = require('../../../../../services/text');
+var markdownService = require('../../../../../services/markdown');
+var datetimeService = require('../../../../../services/datetime');
+var twitterService = require('../../../conventions/twitter');
+var storage = require('../../../lib/storage');
 var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
 var rstrip = /^\s*<p>\s*|\s*<\/p>\s*/ig;
@@ -280,6 +280,6 @@ module.exports = function (viewModel, container, route) {
 
   function leave () {
     clear();
-    taunus.navigate('/author/review');
+    taunus.navigate('/author/articles');
   }
 };

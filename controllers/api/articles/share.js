@@ -37,6 +37,6 @@ module.exports = function (req, res, next) {
 
   function end (type, message) {
     req.flash(type, message);
-    res.redirect('/author/review');
+    res.redirect('/author/articles');
   }
 };
