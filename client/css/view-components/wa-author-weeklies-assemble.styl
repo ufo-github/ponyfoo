@@ -1,0 +1,67 @@
+.wa-actions
+  text-align right
+  margin-top 40px
+
+.wa-cancel,
+.wa-discard
+  display inline-block
+  color c-black-text
+  margin-right 15px
+
+.ly-custom-subheadings
+  .wa-cancel,
+  .wa-discard
+    font-family f-subheading
+
+.wa-tool
+  border-left 2px dashed c-dark-gray
+  display block
+  background-color c-yellow
+  text-align left
+  padding 10px
+
+  &:active
+    outline 1px dotted c-purple
+  &:hover
+    background-color c-yellow-075
+
+.wa-section-header
+  border-right 2px dashed c-dark-gray
+  background-color c-black-text
+  color c-white
+  text-align left
+
+.wa-section-heading,
+.wa-section-toggle,
+.wa-section-remove
+  padding 10px
+
+.wa-section-toggle,
+.wa-section-remove
+  float right
+  cursor pointer
+  &:active
+    outline 1px dotted c-yellow-highlight
+  &:hover
+    background-color c-black-light
+
+.wa-editor
+  border 2px dashed c-dark-gray
+  padding-bottom 300px
+
+.wa-preview
+  margin 60px auto 20px
+  max-width 800px
+
+@media only screen and (min-width: 768px)
+  .wa-editor,
+  .wa-aside
+    vertical-align top
+    display inline-block
+
+  .wa-editor
+    width calc(100% - 225px)
+    margin-right 20px
+
+  .wa-aside
+    width 205px
