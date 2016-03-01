@@ -1,8 +1,15 @@
 'use strict';
 
 var path = require('path');
-var location = path.resolve('.bin/static/sitemap.xml');
+var sitemapService = require('../../services/sitemap');
 
 module.exports = function (req, res) {
-  res.sendFile(location);
+  if (sitemapService.built) {
+    send();
+  } else {
+    sitemapService.once('built', send);
+  }
+  function send () {
+    res.sendFile(sitemapService.location);
+  }
 };

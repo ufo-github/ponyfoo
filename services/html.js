@@ -45,14 +45,14 @@ function fresh (item) {
 
 function extractImages (key, html) {
   if (fresh(imageCache[key])) {
-    return imageCache[key].value;
+    return imageCache[key].value.slice();
   }
   var $ = cheerio.load(html);
   var images = $('img[src]').map(src);
   var result = _(images).filter(notEmoji).uniq().compact().value();
 
   imageCache[key] = {
-    value: result,
+    value: result.slice(),
     expires: moment().add(6, 'hours')
   };
 

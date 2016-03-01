@@ -25,7 +25,9 @@ function go (data) {
 }
 
 function patch (data) {
-  data.ads.forEach(patchAd);
+  if (data.ads) {
+    data.ads.forEach(patchAd);
+  }
   function patchAd (ad) {
     try { // fix unsafe image loading for hosts known to support https
       ad.image = patchUnsafeImageHost(ad.image);

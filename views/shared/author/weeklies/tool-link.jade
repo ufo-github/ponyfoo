@@ -1,0 +1,32 @@
+- code = Math.random().toString(18).substr(2)
+
+div.wa-section(data-tool='link')
+  div.wa-section-header.gu-candidate
+    span.wa-section-heading.fa.fa-anchor=' Link'
+    span.wa-section-remove.fa.fa-remove
+    span.wa-section-toggle.fa.fa-compress
+    span.wa-section-clone.fa.fa-clone
+  div.wa-section-contents
+    input.wa-input-50.wa-link-title(placeholder='What would you like the link title to be?', value=section.title)
+    span.wa-input-50.wa-color-picker
+      - foreground = section.foreground || '#333'
+      - background = section.background || 'transparent'
+      span.wa-color-preview.fa-stack.fa-lg
+        span.fa.fa-square-o.fa-stack-2x(style='color:' + background)
+        span.fa.fa-font.fa-stack-1x(style='color:' + foreground)
+      select.wa-color-select.wa-link-foreground(data-target='.fa-stack-1x')
+        - this.selectedColor = foreground
+        include color-options
+      select.wa-color-select.wa-link-background(data-target='.fa-stack-2x')
+        - this.selectedColor = background
+        include color-options
+
+    input.wa-link-href(placeholder='Paste your link here', value=section.href)
+    input.wa-link-source.wa-input-50(placeholder='Author or source for this link?', value=section.source)
+    div.wa-input-50.wa-link-sponsored-wrapper
+      input.wa-link-sponsored.ck-input(id='wa-sponsored-link-' + code, type='checkbox', checked=section.sponsored)
+      label.ck-checkbox(for='wa-sponsored-link-' + code) Sponsored
+    input.wa-link-image(placeholder='Link to an image', value=section.image)
+    input.wa-link-tags(placeholder='Tags that describe the link', value=(section.tags || []).join(' '))
+    div
+      textarea.wa-link-description.wk-textarea(placeholder='Enter a description here')!=section.description

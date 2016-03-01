@@ -1,0 +1,9 @@
+div.wy-container
+  div.wy-header
+    span.wy-header-text Pony Foo Weekly
+    span.wy-issue
+      span='Issue #' + issue.slug
+      span=' \u2014 '
+      time(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text
+  div.wy-summary!=issue.summaryHtml
+  div.wy-content!=issue.contentHtml

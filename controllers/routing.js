@@ -27,6 +27,11 @@ var articleShare = require('./api/articles/share');
 var articleFeed = require('./articles/feed');
 var commentInsert = require('./api/comments/insert');
 var commentRemove = require('./api/comments/remove');
+var weeklyInsert = require('./api/weeklies/insert');
+var weeklyUpdate = require('./api/weeklies/update');
+var weeklyRemove = require('./api/weeklies/remove');
+var weeklyShare = require('./api/weeklies/share');
+var weeklyFeed = require('./weekly/feed');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
@@ -57,20 +62,26 @@ module.exports = function (app) {
   app.get('/api/:secret(\\d+)/twitter-leads', secretOnly, secretTwitterLeads);
 
   app.get('/articles/feed', articleFeed);
+  app.get('/weekly/feed', weeklyFeed);
   app.get('/sitemap.xml', sitemap);
 
   app.put('/api/markdown/images', markdownImageUpload);
+
+  app.get('/author/compute', authorOnly, authorCompute);
 
   app.put('/api/articles', authorOnly, articleInsert);
   app.patch('/api/articles/:slug', authorOnly, articleUpdate);
   app.delete('/api/articles/:slug', authorOnly, articleRemove);
   app.post('/api/articles/:slug/share/:medium', authorOnly, articleShare);
 
-  app.get('/author/compute', authorOnly, authorCompute);
+  app.put('/api/:type(articles|weeklies)/:slug/comments', commentInsert);
+  app.post('/api/:type(articles|weeklies)/:slug/comments', verifyForm, commentInsert);
+  app.delete('/api/:type(articles|weeklies)/:slug/comments/:id', authorOnly, commentRemove);
 
-  app.put('/api/articles/:slug/comments', commentInsert);
-  app.post('/api/articles/:slug/comments', verifyForm, commentInsert);
-  app.delete('/api/articles/:slug/comments/:id', authorOnly, commentRemove);
+  app.put('/api/weeklies', authorOnly, weeklyInsert);
+  app.patch('/api/weeklies/:slug', authorOnly, weeklyUpdate);
+  app.delete('/api/weeklies/:slug', authorOnly, weeklyRemove);
+  app.post('/api/weeklies/:slug/share/:medium', authorOnly, weeklyShare);
 
   app.put('/api/subscribers', subscriberInsert);
   app.post('/api/subscribers', verifyForm, subscriberInsert);

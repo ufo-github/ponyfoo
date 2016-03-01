@@ -45,10 +45,16 @@ w-ad = 300px
   display inline-block
   overflow hidden
   width 135px
-  height 98px
+  max-height 98px
   font-size 14px
   color c-black-text
   margin-bottom 20px
+
+.carbon-img,
+.carbon-text
+  &:active,
+  &:focus
+    outline 1px dotted c-gray
 
 .carbon-poweredby
   lk-link()

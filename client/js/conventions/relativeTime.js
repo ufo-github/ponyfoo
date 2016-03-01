@@ -14,7 +14,7 @@ function adjustAll () {
 }
 
 function adjust (container) {
-  $('time', container).forEach(relative);
+  $('time', container).but('[data-absolute]').forEach(relative);
 }
 
 function relative (el) {

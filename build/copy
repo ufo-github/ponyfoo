@@ -2,6 +2,7 @@
 
 cp -r client/img .bin/public
 cp -r client/js/inline .bin
+cp -r client/js/static/*.js .bin/public/js
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
 cp client/{manifest.json,*.{ico,png,txt,xml}} .bin/public
 rm -rf .bin/public/img/icons

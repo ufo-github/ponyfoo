@@ -4,7 +4,7 @@ var beautifyText = require('beautify-text');
 var markupService = require('../../services/markup');
 var markdownService = require('../../services/markdown');
 var cryptoService = require('../../services/crypto');
-var feedService = require('../../services/feed');
+var articleFeedService = require('../../services/articleFeed');
 var sitemapService = require('../../services/sitemap');
 var articleService = require('../../services/article');
 var articleSearchService = require('../../services/articleSearch');
@@ -59,7 +59,7 @@ function afterSave () {
   if (bulk) { // trust that these will be rebuilt afterwards
     return;
   }
-  feedService.rebuild();
+  articleFeedService.rebuild();
   sitemapService.rebuild();
 }
 

@@ -19,6 +19,8 @@ module.exports = [
   { route: '/articles/:year(\\d{4})/:month([01]\\d)', action: 'articles/dated' },
   { route: '/articles/:year(\\d{4})', action: 'articles/dated' },
   { route: '/articles/:slug', action: 'articles/article' },
+  { route: '/weekly', action: 'weekly/home' },
+  { route: '/weekly/:slug', action: 'weekly/issue' },
   { route: '/about', action: 'marketing/about' },
   { route: '/speaking', action: 'speaking/home' },
   { route: '/opensource', action: 'opensource/home' },

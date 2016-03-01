@@ -1,8 +1,15 @@
 'use strict';
 
 var path = require('path');
-var location = path.resolve('.bin/static/feed.xml');
+var articleFeedService = require('../../services/articleFeed');
 
 module.exports = function (req, res) {
-  res.sendFile(location);
+  if (articleFeedService.built) {
+    send();
+  } else {
+    articleFeedService.once('built', send);
+  }
+  function send () {
+    res.sendFile(articleFeedService.location);
+  }
 };

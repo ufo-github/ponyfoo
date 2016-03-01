@@ -2,10 +2,12 @@
 
 var _ = require('lodash');
 var util = require('util');
+var assign = require('assignment');
 var insane = require('insane');
 var contra = require('contra');
 var winston = require('winston');
 var Article = require('../../../../models/Article');
+var WeeklyIssue = require('../../../../models/WeeklyIssue');
 var validate = require('./validate');
 var commentService = require('../../../../services/comment');
 var markupService = require('../../../../services/markup');
@@ -17,45 +19,51 @@ var words = env('SPAM_WORDS');
 var delimiters = '[?@,;:.<>{}()\\[\\]\\s_-]';
 var rdelimited = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
 var ranywhere = new RegExp(words, 'i');
-
-function spam (comment) {
-  var caught = (
-    spamIn(comment.content) ||
-    spamIn(comment.site, ranywhere) ||
-    spamIn(comment.author)
-  );
-  return caught;
-  function spamIn (field, target) {
-    return (field || '').match(target || rdelimited);
+var hostTypes = {
+  articles: {
+    name: 'Article',
+    schema: Article,
+    query: { status: 'published' },
+    topic: 'articles'
+  },
+  weeklies: {
+    name: 'Weekly issue',
+    schema: WeeklyIssue,
+    query: { status: 'released' },
+    topic: 'newsletter'
   }
-}
+};
 
-module.exports = function (slug, input, done) {
-  var validation = validate(input);
+module.exports = function (options, done) {
+  var hostType = hostTypes[options.type];
+  var validation = validate(options.model);
   if (validation.length) {
     done(null, 400, validation); return;
   }
   var model = validation.model;
   var comment;
 
-  contra.waterfall([findArticle, decisionTree, create], created);
+  contra.waterfall([findHost, decisionTree, create], created);
 
-  function findArticle (next) {
-    Article.findOne({ slug: slug, status: 'published' }).populate('comments').exec(next);
+  function findHost (next) {
+    hostType.schema
+      .findOne(assign({ slug: options.slug }, hostType.query))
+      .populate('comments')
+      .exec(next);
   }
 
-  function decisionTree (article, next) {
-    if (!article) {
-      done(null, 404, ['Article not found']); return;
+  function decisionTree (host, next) {
+    if (!host) {
+      done(null, 404, [hostType.name + ' not found']); return;
     }
-    next(null, article);
+    next(null, host);
   }
 
-  function create (article, next) {
+  function create (host, next) {
     var parent;
     var parentId = model.parent;
     if (parentId) {
-      parent = article.comments.id(parentId);
+      parent = host.comments.id(parentId);
       if (!parent) {
         done(null, 404, ['The comment thread has been deleted!']); return;
       }
@@ -87,9 +95,9 @@ module.exports = function (slug, input, done) {
     }
     model.content = md;
     model.contentHtml = html;
-    comment = article.comments.create(model);
-    article.comments.push(comment);
-    article.save(saved);
+    comment = host.comments.create(model);
+    host.comments.push(comment);
+    host.save(saved);
 
     function saved (err) {
       if (!err) {
@@ -98,40 +106,40 @@ module.exports = function (slug, input, done) {
           name: comment.author,
           source: 'comment'
         });
-        notify(article);
+        notify(host);
       }
       next(err);
     }
   }
 
-  function notify (article) {
+  function notify (host) {
     contra.concurrent({
-      recipients: contra.curry(findRecipients, article),
+      recipients: contra.curry(findRecipients, host),
       html: absolutizeHtml,
       gravatar: fetchGravatar
     }, function prepare (err, data) {
       if (err) {
         send(err); return;
       }
-      data.article = article;
+      data.host = host;
       send(null, data);
     });
   }
 
-  function findRecipients (article, next) {
+  function findRecipients (host, next) {
     contra.waterfall([hydrate, calculate], next);
 
     function hydrate (next) {
-      article.populate('author', next);
+      host.populate('author', next);
     }
 
-    function calculate (article, next) {
-      var emails = [article.author.email];
+    function calculate (host, next) {
+      var emails = [host.author.email];
       var thread, op;
       var parentId = comment.parent;
       if (parentId) {
-        op = article.comments.id(parentId);
-        thread = article.comments.filter(sameThread);
+        op = host.comments.id(parentId);
+        thread = host.comments.filter(sameThread);
         thread.unshift(op);
         emails = emails.concat(_.pluck(thread, 'email'));
       }
@@ -161,10 +169,10 @@ module.exports = function (slug, input, done) {
       winston.info('An error occurred when preparing comment email notifications', err);
       return;
     }
-    var permalinkToArticle =  '/articles/' + data.article.slug;
-    var permalinkToComment = permalinkToArticle + '#comment-' + comment._id;
+    var permalinkToHost =  util.format('/%s/%s', options.type, data.host.slug);
+    var permalinkToComment = util.format('%s#comment-%s', permalinkToHost, comment._id);
     var email = {
-      subject: util.format('Fresh comments on "%s"!', data.article.title),
+      subject: util.format('Fresh comments on "%s"!', data.host.title),
       teaser: 'Someone posted a comment on a thread you’re watching!',
       comment: {
         author: comment.author,
@@ -172,9 +180,9 @@ module.exports = function (slug, input, done) {
         site: comment.site,
         permalink: permalinkToComment
       },
-      article: {
-        titleHtml: data.article.titleHtml,
-        permalink: permalinkToArticle
+      host: {
+        titleHtml: data.host.titleHtml || data.host.title,
+        permalink: permalinkToHost
       },
       images: [data.gravatar],
       linkedData: {
@@ -185,11 +193,11 @@ module.exports = function (slug, input, done) {
           name: 'Reply',
           target:  authority + permalinkToComment
         },
-        description: 'Reply to Comment – ' + data.article.title
+        description: 'Reply to Comment – ' + data.host.title
       }
     };
     subscriberService.send({
-      topic: 'articles',
+      topic: hostType.topic,
       template: 'comment-published',
       recipients: data.recipients,
       model: email
@@ -203,3 +211,15 @@ module.exports = function (slug, input, done) {
     done(null, 200, ['Your comment was successfully published!'], comment ? commentService.toJSON(comment) : model);
   }
 };
+
+function spam (comment) {
+  var caught = (
+    spamIn(comment.content) ||
+    spamIn(comment.site, ranywhere) ||
+    spamIn(comment.author)
+  );
+  return caught;
+  function spamIn (field, target) {
+    return (field || '').match(target || rdelimited);
+  }
+}

@@ -1,28 +1,48 @@
 'use strict';
 
 var contra = require('contra');
+var assign = require('assignment');
 var Article = require('../../../models/Article');
+var WeeklyIssue = require('../../../models/WeeklyIssue');
+var hostTypes = {
+  articles: {
+    name: 'Article',
+    schema: Article,
+    query: { status: 'published' },
+    topic: 'articles'
+  },
+  weeklies: {
+    name: 'Weekly issue',
+    schema: WeeklyIssue,
+    query: { status: 'released' },
+    topic: 'newsletter'
+  }
+};
 
 function remove (req, res, next) {
+  var hostType = hostTypes[req.params.type];
   var id = req.params.id;
 
   contra.waterfall([lookup, found, removal], handle);
 
   function lookup (next) {
-    Article.findOne({ slug: req.params.slug }).populate('comments').exec(next);
+    hostType.schema
+      .findOne(assign({ slug: req.params.slug }, hostType.query))
+      .populate('comments')
+      .exec(next);
   }
 
-  function found (article, next) {
-    var comment = article.comments.id(id);
+  function found (host, next) {
+    var comment = host.comments.id(id);
     if (!comment) {
       res.status(404).json({ messages: ['Comment not found'] }); return;
     }
-    next(null, article);
+    next(null, host);
   }
 
-  function removal (article, next) {
-    var comment = article.comments.id(id);
-    var children = article.comments.filter(sameThread);
+  function removal (host, next) {
+    var comment = host.comments.id(id);
+    var children = host.comments.filter(sameThread);
 
     function sameThread (comment) {
       return comment.parent && comment.parent.equals(id);
@@ -32,7 +52,7 @@ function remove (req, res, next) {
       comment.remove();
     });
 
-    article.save(saved);
+    host.save(saved);
 
     function saved (err) {
       next(err);

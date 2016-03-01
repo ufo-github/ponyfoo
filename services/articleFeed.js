@@ -15,10 +15,15 @@ var markupService = require('./markup');
 var staticService = require('./static');
 var authority = env('AUTHORITY');
 var contact = 'Nicolás Bevacqua <hello@ponyfoo.com>';
-var location = path.resolve('.bin/static/feed.xml');
+var location = path.resolve('.bin/static/articles.xml');
+var api = contra.emitter({
+  built: false,
+  rebuild: rebuild,
+  location: location
+});
 
 function generate (articles, done) {
-  var htmls = {};
+  var htmls = Object.create(null);
   var tags = _(articles).pluck('tags').flatten().unique().value();
   var now = moment();
   var feed = new RSS({
@@ -90,12 +95,12 @@ function rebuild () {
 
   function done (err) {
     if (err) {
-      winston.warn('Error trying to regenerate RSS feed', err); return;
+      winston.warn('Error trying to regenerate RSS feed (articles)', err); return;
     }
-    winston.debug('Regenerated RSS feed');
+    winston.debug('Regenerated RSS feed (articles)');
+    api.built = true;
+    api.emit('built');
   }
 }
 
-module.exports = {
-  rebuild: rebuild
-};
+module.exports = api;

@@ -11,7 +11,7 @@ var winston = require('winston');
 var common = require('./common_english.json').reduce(toMap, {});
 var env = require('../lib/env');
 var Article = require('../models/Article');
-var feedService = require('./feed');
+var articleFeedService = require('./articleFeed');
 var sitemapService = require('./sitemap');
 var searchLimit = 6;
 var unsafeTerms = /[^\w]+/ig;
@@ -150,7 +150,7 @@ function addRelatedAll (done) {
       done(err); return;
     }
     winston.info('Relationship computation completed');
-    feedService.rebuild();
+    articleFeedService.rebuild();
     sitemapService.rebuild();
     done();
   }

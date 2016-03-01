@@ -32,6 +32,7 @@ function getDefaultViewModel (done) {
     }
 
     done(null, {
+      rss: 'https://feeds.feedburner.com/ponyfoo',
       author: {
         contact: 'Nicolás Bevacqua <hello@ponyfoo.com>',
         twitter: '@nzgb'

@@ -11,6 +11,7 @@ jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
 taunus -o
 NODE_ENV=staging node lib/env BROWSER_ENV | jq . > .env.browser.json
 
+browserify services/weeklyCompiler.js -s weekly-compiler -o .bin/public/js/weekly-compiler.js --debug
 browserify node_modules/rome -s rome -o .bin/public/js/rome.js --debug
 browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js --debug
 browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug

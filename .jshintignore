@@ -1,6 +1,7 @@
 node_modules
 tmp
 .bin
+client/js/static
 client/js/vendor
 client/js/inline
 scripts

@@ -12,8 +12,13 @@ function insert (req, res, next) {
     content: req.body.content,
     parent: req.body.parent
   };
+  var options = {
+    type: req.params.type,
+    slug: req.params.slug,
+    model: model
+  };
 
-  create(req.params.slug, model, function (err, statusCode, messages, inserted) {
+  create(options, function (err, statusCode, messages, inserted) {
     if (err) {
       next(err); return;
     }

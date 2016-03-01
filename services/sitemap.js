@@ -9,26 +9,47 @@ var contra = require('contra');
 var winston = require('winston');
 var moment = require('moment');
 var Article = require('../models/Article');
+var WeeklyIssue = require('../models/WeeklyIssue');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
 var location = path.resolve('.bin/static/sitemap.xml');
+var api = contra.emitter({
+  built: false,
+  rebuild: rebuild,
+  location: location
+});
 
-function generate (articles, done) {
-  var all = articles.map(toObject);
-  var tags = _(all).pluck('tags').flatten().unique().value();
+function getArticleUrls (articles, done) {
+  var tags = _(articles).pluck('tags').flatten().unique().value();
   var tagUrls = tags.map(tagUrl);
-  var dates = _.pluck(all, 'publication').reduce(dateTransformer, { year: {}, month: {}, day: {} });
+  var dates = _.pluck(articles, 'publication').reduce(dateTransformer, { year: {}, month: {}, day: {} });
   var dateUrls = _(dates).values().map(_.values).flatten().value();
-  var articleUrls = all.map(articleUrl);
-  var modified = toLastMod(all[0] ? all[0].updated : Date.now());
+  var articleUrls = articles.map(articleUrl);
+  var modified = toLastMod(articles[0] ? articles[0].updated : Date.now());
   var urls = _.flatten([articleUrls, basics(modified), tagUrls, dateUrls]);
-  var map = sitemap.createSitemap({
-    hostname: authority,
-    cacheTime: 15 * 60 * 1000, // 15 minutes
-    urls: urls
-  });
+  return urls;
+}
 
-  done(null, map.toXML());
+function getWeeklyUrls (weeklies) {
+  return weeklies.map(function (weekly) {
+    return {
+      url: '/weekly/' + weekly.slug,
+      changefreq: 'weekly',
+      priority: 1,
+      lastmod: toLastMod(weekly.updated)
+    };
+  });
+}
+
+function getOtherUrls (modified) {
+  return [
+    { url: '/weekly', changefreq: 'daily', lastmod: modified, priority: 1 },
+    { url: '/books', changefreq: 'weekly', lastmod: modified, priority: 1 },
+    { url: '/books/javascript-application-design', changefreq: 'weekly', lastmod: modified, priority: 1 },
+    { url: '/speaking', changefreq: 'weekly', lastmod: modified, priority: 1 },
+    { url: '/opensource', changefreq: 'weekly', lastmod: modified, priority: 1 },
+    { url: '/about', changefreq: 'weekly', lastmod: modified, priority: 1 }
+  ];
 }
 
 function basics (modified) {
@@ -44,10 +65,6 @@ function tagUrl (tag) {
 
 function articleUrl (article) {
   return { url: '/articles/' + article.slug, changefreq: 'weekly', priority: 1, lastmod: toLastMod(article.updated) };
-}
-
-function toObject (article) {
-  return article.toObject();
 }
 
 function toLastMod (date) {
@@ -73,25 +90,49 @@ function dateTransformer (accumulator, date) {
 }
 
 function rebuild () {
-  contra.waterfall([fetch, generate, persist], done);
+  contra.concurrent({
+    articles: fetchArticles,
+    weeklies: fetchWeeklies
+  }, models);
 
-  function fetch (next) {
-    Article.find({ status: 'published' }).sort('-publication').exec(next);
-  }
-
-  function persist (xml, next) {
-    mkdirp.sync(path.dirname(location));
-    fs.writeFile(location, xml, next);
-  }
-
-  function done (err) {
+  function models (err, result) {
     if (err) {
-      winston.warn('Error trying to regenerate sitemap', err); return;
+      done(err); return;
     }
-    winston.debug('Regenerated sitemap');
+    var modified = toLastMod(result.articles[0] ? result.articles[0].updated : Date.now());
+    var urls = getArticleUrls(result.articles)
+      .concat(getWeeklyUrls(result.weeklies))
+      .concat(getOtherUrls());
+    var map = sitemap.createSitemap({
+      hostname: authority,
+      cacheTime: 15 * 60 * 1000, // 15 minutes
+      urls: urls
+    });
+    var xml = map.toXML();
+    persist(xml, done);
   }
 }
 
-module.exports = {
-  rebuild: rebuild
-};
+function fetchArticles (next) {
+  Article.find({ status: 'published' }).sort('-publication').lean().exec(next);
+}
+
+function fetchWeeklies (next) {
+  WeeklyIssue.find({ status: 'released', statusReach: 'everyone' }).lean().sort('-publication').exec(next);
+}
+
+function persist (xml, next) {
+  mkdirp.sync(path.dirname(location));
+  fs.writeFile(location, xml, next);
+}
+
+function done (err) {
+  if (err) {
+    winston.warn('Error trying to regenerate sitemap', err); return;
+  }
+  winston.debug('Regenerated sitemap');
+  api.built = true;
+  api.emit('built');
+}
+
+module.exports = api;

@@ -13,7 +13,7 @@ function loadScript (url, options, done) {
   var script = document.createElement(tag);
   script.async = true;
   script.src = url;
-  if (done) { script.onload = done; script.onerror = done; }
+  if (done) { script.onload = success; script.onerror = error; }
   if (options.id) { script.id = options.id; }
   if (options.container) {
     options.container.insertBefore(script, options.container.firstChild);
@@ -22,6 +22,12 @@ function loadScript (url, options, done) {
     first.parentNode.insertBefore(script, first);
   }
   return script;
+  function success () {
+    done();
+  }
+  function error () {
+    done(new Error('Error loading script: ' + url));
+  }
 }
 
 module.exports = loadScript;

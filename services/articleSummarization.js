@@ -1,23 +1,13 @@
 'use strict'
 
-var truncHtml = require('trunc-html');
+var summaryService = require('./summary');
 var markdownService = require('./markdown');
 
 function summarize (article) {
-  var options = {
-    ignoredTags: ['blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img'],
-    sanitizer: {
-      allowedAttributes: {
-        mark: ['class']
-      }
-    }
-  };
   if (article.summary) { // author-provided summary
-    return truncHtml(markdownService.compile(article.summary), Infinity, options);
+    return summaryService.summarize(markdownService.compile(article.summary));
   }
-  var all = article.teaserHtml + article.introductionHtml;
-  var limit = 170;
-  return truncHtml(all, limit, options);
+  return summaryService.summarize(article.teaserHtml + article.introductionHtml, 170);
 }
 
 module.exports = {

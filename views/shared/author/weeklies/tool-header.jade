@@ -1,7 +1,28 @@
-div.wa-section
+div.wa-section(data-tool='header')
   div.wa-section-header.gu-candidate
     span.wa-section-heading.fa.fa-header=' Header'
     span.wa-section-remove.fa.fa-remove
     span.wa-section-toggle.fa.fa-compress
+    span.wa-section-clone.fa.fa-clone
   div.wa-section-contents
-    input(placeholder='Enter the heading text here')
+    span.wa-input-50
+      select.wa-header-size
+        option(value='1') H1
+        option(value='2') H2
+        option(value='3', selected) H3
+        option(value='4') H4
+        option(value='5') H5
+        option(value='6') H6
+      input.wa-header-text(placeholder='Enter the heading text here', value=section.text)
+    span.wa-input-50.wa-color-picker
+      - foreground = section.foreground || '#333'
+      - background = section.background || 'transparent'
+      span.wa-color-preview.fa-stack.fa-lg
+        span.fa.fa-square-o.fa-stack-2x(style='color:' + background)
+        span.fa.fa-font.fa-stack-1x(style='color:' + foreground)
+      select.wa-color-select.wa-header-foreground(data-target='.fa-stack-1x')
+        - this.selectedColor = foreground
+        include color-options
+      select.wa-color-select.wa-header-background(data-target='.fa-stack-2x')
+        - this.selectedColor = background
+        include color-options

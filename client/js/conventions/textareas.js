@@ -11,8 +11,8 @@ function textareas () {
   taunus.on('render', activate);
 }
 
-function activate (container, model) {
-  $('.wk-textarea', container).but('.pmk-input').forEach(convert);
+function activate (container) {
+  $('.wk-textarea', container).forEach(convert);
 
   function convert (el) {
     var wel = $(el)
@@ -104,3 +104,4 @@ function before (form) {
 }
 
 module.exports = textareas;
+textareas.activate = activate;

@@ -19,7 +19,6 @@
   background-color c-yellow
   text-align left
   padding 10px
-
   &:active
     outline 1px dotted c-purple
   &:hover
@@ -31,11 +30,27 @@
   color c-white
   text-align left
 
+.wa-section
+  background-color c-orange-005
+  color c-black-text
+  input,
+  textarea,
+  select
+    background-color transparent
+    color inherit
+    &:focus
+      background-color c-orange-06
+  input,
+  textarea
+    placeholders(c-orange-dark)
+
 .wa-section-heading,
+.wa-section-clone,
 .wa-section-toggle,
 .wa-section-remove
   padding 10px
 
+.wa-section-clone,
 .wa-section-toggle,
 .wa-section-remove
   float right
@@ -47,19 +62,56 @@
 
 .wa-editor
   border 2px dashed c-dark-gray
-  padding-bottom 300px
+  min-height 350px
+
+.wa-link-sponsored-wrapper
+  padding 6px 10px 7px
+
+.wa-link-description
+  min-height 50px
 
 .wa-preview
   margin 60px auto 20px
-  max-width 800px
+
+.wa-input-50
+  display inline-block
+  vertical-align middle
+  width 50%
+
+.wa-header-size
+  display inline-block
+  vertical-align middle
+  width 53px
+
+.wa-header-text
+  display inline-block
+  vertical-align middle
+  width calc(100% - 58px)
+  margin-right 5px
+
+.wa-color-select
+  display inline-block
+  vertical-align middle
+  width calc(50% - 17px)
+.wa-color-preview
+  width 34px
+
+.wa-aside
+  line-height 20px
+  p
+    margin 20px 0
+
+  .ac-timing-item,
+  .ac-campaign-item
+    margin 5px 0
 
 @media only screen and (min-width: 768px)
-  .wa-editor,
+  .wa-main,
   .wa-aside
     vertical-align top
     display inline-block
 
-  .wa-editor
+  .wa-main
     width calc(100% - 225px)
     margin-right 20px
 

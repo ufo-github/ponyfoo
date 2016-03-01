@@ -1,0 +1,42 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Newsletter Review
+    header.ar-actions
+      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/weeklies/new', aria-label='Prepare a fresh draft')
+    table
+      thead
+        tr
+          th Last Update
+          th Title
+          th Condition
+          th Sharing
+          th Actions
+      tbody
+        each issue in weeklies
+          tr
+            td(data-label='Last Update')
+              time(datetime=issue.updated.datetime, aria-label=issue.updated.title)='On ' + issue.updated.text
+            td(data-label='Title')
+              a.ar-title.lk-rainbows(href!=issue.permalink, aria-label='Navigate to newsletter issue')=issue.title
+            td(data-label='Condition')
+              include ../../partials/newsletter-condition
+            td.ar-sharing(data-label='Sharing')
+              if issue.status === 'released'
+                - share = '/api/weeklies/' + issue.slug + '/share'
+                form.ar-share(action=share + '/email', method='post')
+                  button.lk-icon.fa.fa-envelope.ar-share-button(aria-label='Send out an email for this newsletter issue')
+                form.ar-share(action=share + '/twitter', method='post')
+                  button.lk-icon.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
+                form.ar-share(action=share + '/facebook', method='post')
+                  button.lk-icon.fa.fa-facebook-official.ar-share-button(aria-label='Share on Facebook Page')
+                form.ar-share(action=share + '/echojs', method='post')
+                  button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
+                form.ar-share(action=share + '/hackernews', method='post')
+                  button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
+                form.ar-share(action=share + '/lobsters', method='post')
+                  button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
+            td.ar-buttons(data-label='Actions')
+              a.ar-button.lk-icon.fa.fa-pencil.wr-edit(href='/author/weeklies/' + issue.slug, aria-label='Edit this newsletter issue')
+              a.ar-button.lk-icon.fa.fa-remove.wr-remove(aria-label='Delete this newsletter issue', data-slug=issue.slug)
+
+  include ../../partials/aside

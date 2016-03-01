@@ -18,7 +18,8 @@ var db = require('./lib/db');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
 var development = require('./lib/development');
-var feedService = require('./services/feed');
+var articleFeedService = require('./services/articleFeed');
+var weeklyFeedService = require('./services/weeklyFeed');
 var sitemapService = require('./services/sitemap');
 var shouldRebuild = !env('APP_REBUILD');
 var port = env('PORT');
@@ -58,7 +59,8 @@ function listening () {
 }
 
 function rebuild () {
-  feedService.rebuild();
+  articleFeedService.rebuild();
+  weeklyFeedService.rebuild();
   sitemapService.rebuild();
 }
 

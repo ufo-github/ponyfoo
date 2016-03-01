@@ -1,5 +1,6 @@
 'use strict';
 
+var correcthorse = require('correcthorse');
 var WeeklyIssue = require('../../../models/WeeklyIssue');
 
 module.exports = function (req, res, next) {
@@ -8,18 +9,23 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       title: 'Weekly Assembler',
-      weeklyIssue: {},
+      weeklyIssue: {
+        sections: [],
+        hn: false,
+        lobsters: false,
+        slug: correcthorse()
+      },
       editing: !!slug
     }
   };
 
   if (slug) {
-    WeeklyIssue.findOne({ slug: slug }).lean().exec(populate);
+    WeeklyIssue.findOne({ slug: slug }).lean().exec(find);
   } else {
     next();
   }
 
-  function populate (err, weeklyIssue) {
+  function find (err, weeklyIssue) {
     if (err) {
       next(err); return;
     }

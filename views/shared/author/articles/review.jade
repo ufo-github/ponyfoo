@@ -1,43 +1,43 @@
 article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     h1.vw-title Article Review
-    section.ar-container
-      div.ar-actions
+    header.ar-actions
         a.ar-action.lk-icon.fa.fa-calculator.ar-recompute(href='/author/compute', aria-label='Recompute related articles')
         a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/articles/new', aria-label='Prepare a fresh draft')
-      table.ar-table
-        thead
+    table
+      thead
+        tr
+          th Title
+          th Tags
+          th Condition
+          th Sharing
+          th Actions
+      tbody
+        each article in articles
           tr
-            th Title
-            th Tags
-            th Condition
-            th Sharing
-            th Actions
-        tbody
-          each article in articles
-            tr
-              td(data-label='Title')
-                a.ar-title.lk-rainbows(href!=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
-              td(data-label='Tags')
-                include ../../partials/tags
-              td(data-label='Condition', class='ar-status ar-status-' + article.status)
-                include ../../partials/estimate
-              td.ar-sharing(data-label='Sharing')
-                if article.status === 'published'
-                  form.ar-share(action='/api/articles/' + article.slug + '/share/email', method='post')
-                    button.lk-icon.fa.fa-envelope.ar-share-button(aria-label='Send out an email about this article')
-                  form.ar-share(action='/api/articles/' + article.slug + '/share/twitter', method='post')
-                    button.lk-icon.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
-                  form.ar-share(action='/api/articles/' + article.slug + '/share/facebook', method='post')
-                    button.lk-icon.fa.fa-facebook-official.ar-share-button(aria-label='Share on Facebook Page')
-                  form.ar-share(action='/api/articles/' + article.slug + '/share/echojs', method='post')
-                    button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
-                  form.ar-share(action='/api/articles/' + article.slug + '/share/hackernews', method='post')
-                    button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
-                  form.ar-share(action='/api/articles/' + article.slug + '/share/lobsters', method='post')
-                    button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
-              td.ar-buttons(data-label='Actions')
-                a.ar-button.lk-icon.fa.fa-pencil.ar-edit(href='/author/articles/' + article.slug, aria-label='Edit this article')
-                a.ar-button.lk-icon.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)
+            td(data-label='Title')
+              a.ar-title.lk-rainbows(href!=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
+            td(data-label='Tags')
+              include ../../partials/tags
+            td(data-label='Condition', class='ar-status ar-status-' + article.status)
+              include ../../partials/estimate
+            td.ar-sharing(data-label='Sharing')
+              if article.status === 'published'
+                - share = '/api/articles/' + article.slug + '/share'
+                form.ar-share(action=share + '/email', method='post')
+                  button.lk-icon.fa.fa-envelope.ar-share-button(aria-label='Send out an email about this article')
+                form.ar-share(action=share + '/twitter', method='post')
+                  button.lk-icon.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
+                form.ar-share(action=share + '/facebook', method='post')
+                  button.lk-icon.fa.fa-facebook-official.ar-share-button(aria-label='Share on Facebook Page')
+                form.ar-share(action=share + '/echojs', method='post')
+                  button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
+                form.ar-share(action=share + '/hackernews', method='post')
+                  button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
+                form.ar-share(action=share + '/lobsters', method='post')
+                  button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
+            td.ar-buttons(data-label='Actions')
+              a.ar-button.lk-icon.fa.fa-pencil.ar-edit(href='/author/articles/' + article.slug, aria-label='Edit this article')
+              a.ar-button.lk-icon.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)
 
   include ../../partials/aside
