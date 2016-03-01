@@ -1,5 +1,11 @@
 article.de-host
   section.de-column
-    include ../partials/newsletter-issue
+    div.wi-container
+      include ../partials/newsletter-issue
+
+    if issue.status === 'released'
+      - this.parent = issue
+      - this.parentType = 'weeklies'
+      include ../comments/all
 
   include ../partials/aside

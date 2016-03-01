@@ -6,7 +6,7 @@ var markdownService = require('../../services/markdown');
 var cryptoService = require('../../services/crypto');
 var articleFeedService = require('../../services/articleFeed');
 var sitemapService = require('../../services/sitemap');
-var articleService = require('../../services/article');
+var articleSummarizationService = require('../../services/articleSummarization');
 var articleSearchService = require('../../services/articleSearch');
 var Article = require('../Article');
 var env = require('../../lib/env');
@@ -38,7 +38,7 @@ function beforeSave (next) {
   article.teaserHtml = toHtml(article.teaser, 1);
   article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);
-  var summary = articleService.summarize(article);
+  var summary = articleSummarizationService.summarize(article);
   article.summaryText = summary.text;
   article.summaryHtml = summary.html;
   article.updated = Date.now();

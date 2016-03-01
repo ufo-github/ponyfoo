@@ -5,5 +5,10 @@ div.wy-container
       span='Issue #' + issue.slug
       span=' \u2014 '
       time(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text
-  div.wy-summary!=issue.summaryHtml
-  div.wy-content!=issue.contentHtml
+  div.wy-summary.md-markdown!=issue.summaryHtml
+  div.wy-content.md-markdown!=issue.contentHtml
+
+//- see on web
+//- styles
+//- link styles
+//- linked data inline in email

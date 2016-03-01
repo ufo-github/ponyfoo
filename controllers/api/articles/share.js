@@ -1,7 +1,7 @@
 'use strict';
 
 var Article = require('../../../models/Article');
-var articleService = require('../../../services/article');
+var articleSharingService = require('../../../services/articleSharing');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
@@ -20,7 +20,7 @@ module.exports = function (req, res, next) {
   }
 
   function share (article) {
-    var channel = articleService.campaign[medium];
+    var channel = articleSharingService[medium];
     if (channel) {
       channel(article, { reshare: true }, done);
     } else {

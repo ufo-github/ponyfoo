@@ -6,7 +6,7 @@ cp -r client/js/static/*.js .bin/public/js
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
 cp client/{manifest.json,*.{ico,png,txt,xml}} .bin/public
 rm -rf .bin/public/img/icons
-mkdir .bin/inlined
+mkdir .bin/{inlined,emails}
 
 # secret
 echo $RANDOM$RANDOM$RANDOM$RANDOM$RANDOM$RANDOM > .bin/secret

@@ -4,32 +4,23 @@ article.ly-section.vw-maintainer.de-host
 
     article.wa-main
       div
-        textarea.wa-summary.wk-textarea(placeholder='Enter your Markdown summary section here')!=weeklyIssue.summary
+        textarea.wa-summary.wk-textarea(placeholder='Enter your Markdown summary section here')!=issue.summary
 
       div.wa-editor
-        if weeklyIssue
-          each section in weeklyIssue.sections
-            if section.type === 'header'
-              include tool-header
-            else if section.type === 'markdown'
-              include tool-markdown
-            else if section.type === 'link'
-              include tool-link
-            else if section.type === 'styles'
-              include tool-styles
+        each section in issue.sections
+          if section.type === 'header'
+            include tool-header
+          else if section.type === 'markdown'
+            include tool-markdown
+          else if section.type === 'link'
+            include tool-link
+          else if section.type === 'styles'
+            include tool-styles
 
-      input.wa-slug(value=weeklyIssue.slug, placeholder='Slug used to refer to this weekly issue')
+      input.wa-slug(value=issue.slug, placeholder='Slug used to refer to this weekly issue')
 
       div.wa-preview
-        div.wy-container
-          div.wy-header
-            span.wy-header-text Pony Foo Weekly
-            span.wy-issue
-              span Issue #123
-              span=' \u2014 '
-              span Jun 12th, 2123
-          div.wy-summary
-          div.wy-content
+        include ../../partials/newsletter-issue
 
     aside.wa-aside
       div.wa-toolbox.gu-candidate
@@ -38,33 +29,33 @@ article.ly-section.vw-maintainer.de-host
         div.wa-tool.fa.fa-anchor(data-tool='link')=' Link'
         div.wa-tool.fa.fa-envelope(data-tool='styles')=' Styles'
 
-      if weeklyIssue.status !== 'released'
+      if issue.status !== 'released'
         p You can save the weekly issue as a draft, or mark it ready for release
         p.wa-timing-item
-          input.ck-input.wa-status#wa-draft-radio(type='radio', name='wa-status', value='draft', checked=weeklyIssue.status === 'draft')
+          input.ck-input.wa-status#wa-draft-radio(type='radio', name='wa-status', value='draft', checked=issue.status === 'draft')
           label.ck-radio(for='wa-draft-radio') Draft
         p.wa-timing-item
-          input.ck-input.wa-status#wa-ready-radio(type='radio', name='wa-status', value='ready', checked=weeklyIssue.status === 'ready' || weeklyIssue.status === void 0)
+          input.ck-input.wa-status#wa-ready-radio(type='radio', name='wa-status', value='ready', checked=issue.status === 'ready' || issue.status === void 0)
           label.ck-radio(for='wa-ready-radio') Ready
 
         p What mediums do you want to use to promote the weekly newsletter?
         p.wa-campaign-item
-          input.ck-input#wa-campaign-email(type='checkbox', checked=weeklyIssue.email !== false)
+          input.ck-input#wa-campaign-email(type='checkbox', checked=issue.email !== false)
           label.ck-checkbox(for='wa-campaign-email') Send an email
         p.wa-campaign-item
-          input.ck-input#wa-campaign-tweet(type='checkbox', checked=weeklyIssue.tweet !== false)
+          input.ck-input#wa-campaign-tweet(type='checkbox', checked=issue.tweet !== false)
           label.ck-checkbox(for='wa-campaign-tweet') Post a Tweet
         p.wa-campaign-item
-          input.ck-input#wa-campaign-fb(type='checkbox', checked=weeklyIssue.fb !== false)
+          input.ck-input#wa-campaign-fb(type='checkbox', checked=issue.fb !== false)
           label.ck-checkbox(for='wa-campaign-fb') Share on Facebook
         p.wa-campaign-item
-          input.ck-input#wa-campaign-echojs(type='checkbox', checked=weeklyIssue.echojs !== false)
+          input.ck-input#wa-campaign-echojs(type='checkbox', checked=issue.echojs !== false)
           label.ck-checkbox(for='wa-campaign-echojs') Submit to EchoJS
         p.wa-campaign-item
-          input.ck-input#wa-campaign-hn(type='checkbox', checked=weeklyIssue.hn !== false)
+          input.ck-input#wa-campaign-hn(type='checkbox', checked=issue.hn !== false)
           label.ck-checkbox(for='wa-campaign-hn') Submit to Hacker News
         p.wa-campaign-item
-          input.ck-input#wa-campaign-lobsters(type='checkbox', checked=weeklyIssue.lobsters !== false)
+          input.ck-input#wa-campaign-lobsters(type='checkbox', checked=issue.lobsters !== false)
           label.ck-checkbox(for='wa-campaign-lobsters') Submit to Lobste.rs
 
     footer.wa-actions

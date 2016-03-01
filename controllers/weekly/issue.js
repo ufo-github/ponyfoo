@@ -8,7 +8,7 @@ var metadataService = require('../../services/metadata');
 
 module.exports = function (req, res, next) {
   var query = { slug: req.params.slug };
-  WeeklyIssue.findOne(query, found);
+  WeeklyIssue.findOne(query).populate('comments').exec(found);
 
   function found (err, issue) {
     if (err || !issue) {

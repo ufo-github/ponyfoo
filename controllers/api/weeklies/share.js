@@ -1,7 +1,7 @@
 'use strict';
 
 var WeeklyIssue = require('../../../models/WeeklyIssue');
-var weeklyService = require('../../../services/weekly');
+var weeklySharingService = require('../../../services/weeklySharing');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
@@ -20,7 +20,7 @@ module.exports = function (req, res, next) {
   }
 
   function share (weekly) {
-    var channel = weeklyService.campaign[medium];
+    var channel = weeklySharingService[medium];
     if (channel) {
       channel(weekly, { reshare: true }, done);
     } else {

@@ -6,7 +6,7 @@ var winston = require('winston');
 var moment = require('moment');
 var Article = require('../../../models/Article');
 var pkg = require('../../../package.json');
-var articleService = require('../../../services/article');
+var articleSharingService = require('../../../services/articleSharing');
 var articlePublishService = require('../../../services/articlePublish');
 var defaultFormat = 'HH:mm:ss -- DD MMMM, YYYY';
 
@@ -49,7 +49,7 @@ function scheduler (req, res) {
             next(err); return;
           }
           amountPublished++;
-          articleService.campaign(article, promoted);
+          articleSharingService.share(article, promoted);
           winston.info('[job] Published "%s".', article.title);
         }
 

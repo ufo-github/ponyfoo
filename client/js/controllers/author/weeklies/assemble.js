@@ -27,7 +27,7 @@ function controller (viewModel, container, route) {
 
 function ready (viewModel, container, route) {
   var weeklyCompiler = global.weeklyCompiler;
-  var weeklyIssue = viewModel.weeklyIssue;
+  var weeklyIssue = viewModel.issue;
   var editing = viewModel.editing;
   var released = editing && weeklyIssue.status === 'released';
   var editor = $.findOne('.wa-editor', container);

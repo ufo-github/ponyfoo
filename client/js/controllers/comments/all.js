@@ -8,22 +8,22 @@ var storage = require('../../lib/storage');
 var textService = require('../../../../services/text');
 var key = 'comment-draft';
 
-module.exports = function (viewModel) {
-  var composer = $('.mc-composer');
-  var name = $('.mc-name');
-  var email = $('.mc-email');
-  var site = $('.mc-site');
-  var content = $('.mc-content');
-  var preview = $.findOne('.mc-preview');
-  var send = $('.mc-send');
+module.exports = function (viewModel, container) {
+  var composer = $('.mc-composer', container);
+  var name = $('.mc-name', container);
+  var email = $('.mc-email', container);
+  var site = $('.mc-site', container);
+  var content = $('.mc-content', container);
+  var preview = $.findOne('.mc-preview', container);
+  var send = $('.mc-send', container);
   var sendText = $('.bt-text', send);
   var serializeSlowly = debounce(serialize, 100);
-  var comments = $('.mm-comments');
-  var cancelReply = $('.mc-cancel-reply');
-  var footer = $('.mm-footer');
-  var gravatars = $('.mm-gravatar');
+  var comments = $('.mm-comments', container);
+  var cancelReply = $('.mc-cancel-reply', container);
+  var footer = $('.mm-footer', container);
+  var gravatars = $('.mm-gravatar', container);
 
-  $('.mm-thread-reply').removeClass('uv-hidden');
+  $('.mm-thread-reply', container).removeClass('uv-hidden');
 
   composer.on('keypress keydown keyup paste input', serializeSlowly);
   send.on('click', comment);
@@ -77,7 +77,7 @@ module.exports = function (viewModel) {
     e.preventDefault();
 
     var thread = send.parents('.mm-thread');
-    var endpoint = textService.format('/api/articles/%s/comments', viewModel.article.slug);
+    var endpoint = textService.format('/api/%s/%s/comments', viewModel.parentType, viewModel.parent.slug);
     var model = {
       json: getCommentData()
     };
@@ -97,8 +97,8 @@ module.exports = function (viewModel) {
       var template, partial;
       var model = {
         user: viewModel.user,
-        article: {
-          author: viewModel.article.author,
+        parent: {
+          author: viewModel.parent.author,
           commentThreads: [{
             comments: [data],
             id: data._id
@@ -107,9 +107,9 @@ module.exports = function (viewModel) {
       };
       if (thread.length) {
         model.comment = data;
-        template = 'articles/comment';
+        template = 'comments/comment';
       } else {
-        template = 'articles/comment-thread';
+        template = 'comments/thread';
       }
       taunus.partial(placeholder[0], template, model);
       partial = placeholder.children();
@@ -126,7 +126,7 @@ module.exports = function (viewModel) {
     var button = $(e.target);
     var comment = button.parents('.mm-comment');
     var id = comment.attr('data-comment');
-    var endpoint = textService.format('/api/articles/%s/comments/%s', viewModel.article.slug, id);
+    var endpoint = textService.format('/api/%s/%s/comments/%s', viewModel.parentType, viewModel.parent.slug, id);
 
     viewModel.measly.delete(endpoint).on('data', cleanup);
 

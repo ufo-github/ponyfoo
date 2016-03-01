@@ -8,6 +8,7 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       title: 'Article Composer',
+      status: 'draft',
       article: { tags: [] },
       editing: !!slug
     }

@@ -25,7 +25,7 @@ article.ly-section.vw-maintainer.de-host
           input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
           label.ck-radio(for='ac-draft-radio') Draft
         p.ac-timing-item
-          input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish' || article.status === void 0)
+          input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish')
           label.ck-radio(for='ac-publish-radio') Publish
         p.ac-timing-item
           input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)

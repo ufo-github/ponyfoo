@@ -3,7 +3,7 @@
 var contra = require('contra');
 var winston = require('winston');
 var Article = require('../../../models/Article');
-var articleService = require('../../../services/article');
+var articleSharingService = require('../../../services/articleSharing');
 var articlePublishService = require('../../../services/articlePublish');
 var respond = require('../lib/respond');
 var validate = require('./lib/validate');
@@ -38,7 +38,7 @@ module.exports = function (req, res, next) {
       }
       function saved (err) {
         if (!err && published) {
-          articleService.campaign(article);
+          articleSharingService.share(article);
         }
         next(err);
       }

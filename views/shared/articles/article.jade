@@ -57,6 +57,8 @@ section.at-container.de-host
           include ../partials/button-background
 
     if published
-      include comments
+      - this.parent = article
+      - this.parentType = 'articles'
+      include ../comments/all
 
   include ../partials/aside

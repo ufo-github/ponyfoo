@@ -47,6 +47,7 @@ browserify_standalone "d3-tip" "node_modules/d3-tip" ".bin/public/js/d3-tip.js"
 
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
+stylus client/css/newsletter.styl -o .bin/emails --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 NODE_ENV=production node lib/env BROWSER_ENV | jq . > .env.browser.json

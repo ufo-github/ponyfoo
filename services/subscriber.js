@@ -264,20 +264,11 @@ function locals (topic) {
 
 function getUnsubscribeHtml (subscriber, topic) {
   var urlformat = '%s/api/subscribers/%s/unsubscribe%s';
-  var linkformat = '<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe%s</a>';
+  var linkformat = '<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>';
   var href = util.format(urlformat, authority, getHash(subscriber), getHrefTopic());
-  return util.format(linkformat, href, getTextTopic());
+  return util.format(linkformat, href);
   function getHrefTopic () {
-    if (topic) {
-      return '?topic=' + topic;
-    }
-    return '';
-  }
-  function getTextTopic () {
-    if (topic) {
-      return 'from ' + (topicDisplayText[topic] || topic);
-    }
-    return '';
+    return topic ? '?topic=' + topic : '';
   }
 }
 

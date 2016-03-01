@@ -3,8 +3,9 @@
 var _ = require('lodash');
 var but = require('but');
 var WeeklyIssue = require('../models/WeeklyIssue');
-var datetimeService = require('./datetime');
 var weeklyCompilerService = require('./weeklyCompiler');
+var commentService = require('./comment');
+var datetimeService = require('./datetime');
 var summaryService = require('./summary');
 var markupService = require('./markup');
 var cryptoService = require('./crypto');
@@ -62,36 +63,6 @@ function update (options, done) {
   }
 }
 
-function campaign (options, done) {
-  done();
-}
-function email (weekly, options, done) {
-  done();
-}
-function twitter (weekly, options, done) {
-  done();
-}
-function facebook (weekly, options, done) {
-  done();
-}
-function echojs (weekly, options, done) {
-  done();
-}
-function hackernews (weekly, options, done) {
-  done();
-}
-function lobsters (weekly, options, done) {
-  done();
-}
-
-campaign.email = email;
-campaign.twitter = twitter;
-campaign.facebook = facebook;
-campaign.echojs = echojs;
-campaign.hackernews = hackernews;
-campaign.lobsters = lobsters;
-
-
 function getAllTags (weeklyIssue) {
   return _(weeklyIssue.sections)
     .map(toTags)
@@ -122,20 +93,19 @@ function toMetadata (doc) {
   };
 }
 
-function toView (doc) {
-  return {
+function toView (doc, comments) {
+  return commentService.hydrate({
     title: doc.title,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication),
     summaryHtml: doc.summaryHtml,
     contentHtml: doc.contentHtml
-  };
+  }, doc);
 }
 
 module.exports = {
   insert: insert,
   update: update,
-  campaign: campaign,
   toMetadata: toMetadata,
   toView: toView,
   getAllTags: getAllTags
