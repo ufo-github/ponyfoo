@@ -1,7 +1,7 @@
 div.wy-link
-  table
+  table.wy-table
     tr
-      td
+      td.wy-td
         div.wy-link-section
           a.wy-link-title(href=href, style='color:' + foreground + '; background-color:' + background, target='_blank', rel='none')=title
           each tag in tags
@@ -21,6 +21,6 @@ div.wy-link
           if sponsored
             span.wy-link-tag.wy-link-sponsor Sponsored
       if image
-        td.wy-link-image-cell
+        td.wy-td.wy-link-image-cell
           a.wy-link-image-anchor(href=href)
             img.wy-link-image(src=image, alt='')

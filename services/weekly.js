@@ -86,7 +86,7 @@ function toMetadata (doc) {
     created: doc.created,
     updated: datetimeService.field(doc.updated),
     publication: datetimeService.field(doc.publication),
-    title: doc.title,
+    name: doc.name,
     slug: doc.slug,
     status: doc.status,
     statusReach: doc.statusReach,
@@ -96,7 +96,6 @@ function toMetadata (doc) {
 
 function toView (doc, comments) {
   return commentService.hydrate({
-    title: doc.title,
     name: doc.name,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication),
@@ -107,7 +106,6 @@ function toView (doc, comments) {
 
 function toHistory (doc) {
   return {
-    title: doc.title,
     name: doc.name,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication)

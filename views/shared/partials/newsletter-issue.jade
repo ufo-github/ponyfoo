@@ -1,13 +1,27 @@
-div.wy-container
-  div.wy-header
-    a.wy-header-text(href=authority + '/weekly') Pony Foo Weekly
-    span.wy-issue
-      span='Issue #' + issue.slug
-      span=' \u2014 '
-      span(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
-  div.wy-summary.md-markdown!=issue.summaryHtml
-  div.wy-content!=issue.contentHtml
+table.wy-table.wy-container
+  tr
+    td.wy-td
+      table.wy-table
+        tr
+          td.wy-td.wy-header
+            a.wy-header-text(href=authority + '/weekly') Pony Foo Weekly
+            a.wy-issue.lk-link.lk-black.lk-clean(href=authority + '/weekly/' + issue.slug)
+              span='Issue #' + issue.slug
+              span=' \u2014 '
+              span(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
+      table.wy-table
+        tr
+          td.wy-td.wy-summary.md-markdown!=issue.summaryHtml
+      table.wy-table
+        tr
+          td.wy-td.wy-content!=issue.contentHtml
 
-//- see on web
-//- styles
-//- linked data inline in email
+      if emailFormat
+        table.wy-table
+          tr
+            td.wy-td.wy-footer(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
+              meta(itemprop='name', content='See web version')
+              meta(itemprop='description', content='See weekly newsletter issue #' + issue.slug + ' on the web – Pony Foo')
+              span(itemprop='target')
+                a.wy-read-online.lk-link.lk-clean(itemprop='url', href!=authority + '/weekly/' + issue.slug) Read this issue on ponyfoo.com
+              span .

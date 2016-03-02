@@ -6,7 +6,7 @@
   },
   "article": {
     "label": "Article",
-    "foreground": "#333",
+    "foreground": "#e4f9e3",
     "background": "#1bc211"
   },
   "tutorial": {

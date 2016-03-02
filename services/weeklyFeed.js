@@ -63,7 +63,7 @@ function generate (weeklies, done) {
 
     weeklies.forEach(function insert (weekly) {
       feed.item({
-        title: weekly.title,
+        title: weekly.name + ' \u2014 Pony Foo Weekly',
         description: htmls[weekly.slug],
         url: authority + '/weekly/' + weekly.slug,
         categories: weeklyService.getAllTags(weekly),

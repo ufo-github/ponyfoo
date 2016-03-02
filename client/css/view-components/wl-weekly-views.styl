@@ -11,5 +11,22 @@
 .ly-custom-subheadings .wl-teaser
    font-family f-subheading
 
+.wl-intro
+  margin 10px 0 30px
+
 .wl-issue
-  margin-bottom 60px
+  position relative
+  margin 20px auto
+  max-width 800px
+
+  &:after
+    position absolute
+    left 0
+    right 0
+    bottom 0
+    height 4px
+    content ''
+    rainbow()
+
+.wl-cta
+  margin 100px 0

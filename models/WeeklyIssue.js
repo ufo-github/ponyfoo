@@ -46,5 +46,5 @@ function computeName () {
 }
 
 function computeTitle () {
-  return this.name + ' \u2014 Pony Foo Weekly';
+  return 'Pony Foo Weekly \u2014 ' + this.name;
 }

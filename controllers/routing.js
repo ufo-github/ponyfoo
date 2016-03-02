@@ -39,6 +39,7 @@ var gitOnly = require('./api/git/only');
 var gitPushArticles = require('./api/git/push-articles');
 var secretOnly = require('./api/secret/only');
 var secretScheduler = require('./api/secret/scheduler');
+var secretWeeklies = require('./api/secret/weeklies');
 var secretRemodel = require('./api/secret/remodel');
 var secretTwitterLeads = require('./api/secret/twitter-leads');
 var apiErrorNotFound = require('./api/error/notFound');
@@ -58,6 +59,7 @@ module.exports = function (app) {
   app.get('/api/csp-report', cspReport);
   app.get('/api/status/health', statusHealth);
   app.get('/api/:secret(\\d+)/scheduler', secretOnly, secretScheduler);
+  app.get('/api/:secret(\\d+)/weeklies', secretOnly, secretWeeklies);
   app.get('/api/:secret(\\d+)/remodel', secretOnly, secretRemodel);
   app.get('/api/:secret(\\d+)/twitter-leads', secretOnly, secretTwitterLeads);
 

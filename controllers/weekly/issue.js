@@ -50,7 +50,7 @@ module.exports = function (req, res, next) {
     var images = metadataService.appendDefaultCover(extracted);
     res.viewModel = {
       model: {
-        title: issue.title,
+        title: issue.name + ' \u2014 Pony Foo Weekly',
         meta: {
           canonical: '/weekly/' + issue.slug,
           description: issue.summaryText,

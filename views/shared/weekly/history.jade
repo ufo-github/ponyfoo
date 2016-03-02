@@ -9,8 +9,6 @@ article.ly-section
 
   section.hy-container.de-host
     div.de-column.wl-container
-      include cta
-
       h2 Past Issues
 
       ol.hy-items
@@ -23,7 +21,6 @@ article.ly-section
               span!=' &mdash; published '
               time.hy-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text
 
-      if issues.length > 10
-        include cta
+      include cta
 
     include ../partials/aside

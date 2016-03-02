@@ -3,7 +3,7 @@ article.ly-section.vw-maintainer.de-host
     h1.vw-title Newsletter Review
     header.ar-actions
       a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/weeklies/new', aria-label='Prepare a fresh draft')
-    table
+    table.wr-container
       thead
         tr
           th Last Update
@@ -17,7 +17,7 @@ article.ly-section.vw-maintainer.de-host
             td(data-label='Last Update')
               time(datetime=issue.updated.datetime, aria-label=issue.updated.title)='On ' + issue.updated.text
             td(data-label='Title')
-              a.ar-title.lk-rainbows(href!=issue.permalink, aria-label='Navigate to newsletter issue')=issue.title
+              a.ar-title.lk-rainbows(href!=issue.permalink, aria-label='Navigate to newsletter issue')=issue.name
             td(data-label='Condition')
               include ../../partials/newsletter-condition
             td.ar-sharing(data-label='Sharing')

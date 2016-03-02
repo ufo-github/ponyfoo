@@ -47,8 +47,9 @@ function email (issue, options, done) {
   var relativePermalink = '/weekly/' + issue.slug;
   var issue = weeklyService.toView(issue, false);
   var model = {
-    subject: issue.title,
-    teaser: options.reshare ? 'You can’t miss this!' : 'Hot off the press!',
+    subject: issue.name + ' \u2014 Pony Foo Weekly',
+    teaser: 'This week’s Web Platform news & inspiration',
+    teaserHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', authority + relativePermalink),
     issue: issue,
     css: css,
     linkedData: {
@@ -56,10 +57,10 @@ function email (issue, options, done) {
       '@type': 'EmailMessage',
       potentialAction: {
         '@type': 'ViewAction',
-        name: 'See issue #' + issue.slug,
+        name: 'See web version',
         target:  authority + relativePermalink
       },
-      description: 'See weekly newsletter issue #' + issue.slug
+      description: 'See weekly newsletter issue #' + issue.slug + ' on the web'
     }
   };
   subscriberService.send({
@@ -92,16 +93,21 @@ function randomMailEmoji () {
   return _.sample(['✉️️', '💌', '📥', '📤', '📬', '📩', '📮', '📪', '📫', '📬', '📭']);
 }
 
+function getTitle (issue) {
+  return 'Pony Foo Weekly \u2014 ' + issue.name;
+}
+
 function tweet (issue, options, done) {
   var tagPair = '#' + issue.tags.slice(0, 2).join(' #');
   var tagText = textService.hyphenToCamel(tagPair);
   var headline = randomHeadline(options);
   var tweetLength = 0;
   var tweetLines = [];
+  var title = getTitle(issue);
 
   // sorted by importance: link, title, cta, headline, hashtag.
   add(3, randomMailEmoji() + ' ' + statusLink(issue), 2 + 24);
-  add(1, randomMailEmoji() + ' ' + issue.title, 2 + issue.title.length);
+  add(1, randomMailEmoji() + ' ' + title, 2 + title.length);
   add(4, card, 25);
   add(0, randomMailEmoji() + ' ' + headline, 2 + headline.length);
   add(2, randomMailEmoji() + ' ' + '#ponyfooweekly', 2 + 14); // no extra new line here
@@ -123,12 +129,12 @@ function tweet (issue, options, done) {
 }
 
 function facebook (issue, options, done) {
-  facebookService.share(issue.title, statusLink(issue), done);
+  facebookService.share(getTitle(issue), statusLink(issue), done);
 }
 
 function echojs (issue, options, done) {
   var data = {
-    title: issue.title,
+    title: getTitle(issue),
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };
   echojsService.submit(data, done);
@@ -136,7 +142,7 @@ function echojs (issue, options, done) {
 
 function hackernews (issue, options, done) {
   var data = {
-    title: issue.title,
+    title: getTitle(issue),
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };
   hackernewsService.submit(data, submitted);
@@ -148,7 +154,7 @@ function hackernews (issue, options, done) {
 
 function lobsters (issue, options, done) {
   var data = {
-    title: issue.title,
+    title: getTitle(issue),
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };
   lobstersService.submit(data, done);

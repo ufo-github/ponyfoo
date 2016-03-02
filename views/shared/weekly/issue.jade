@@ -11,16 +11,22 @@ include navigation
 
 article.de-host
   section.de-column.wl-container
-    include cta
+    div.wl-intro
+      span Below, you can find the Pony Foo Weekly newsletter issue #
+      span=issue.slug
+      span . It was sent to our subscribers
+      span=' '
+      time(datetime=issue.publication.datetime, aria-label=issue.publication.title)='on ' + issue.publication.text
+      span .
 
     div.wl-issue
       include ../partials/newsletter-issue
 
-    if issue.status === 'released'
+    div.wl-cta
       include cta
 
-      - this.parent = issue
-      - this.parentType = 'weeklies'
-      include ../comments/all
+    - this.parent = issue
+    - this.parentType = 'weeklies'
+    include ../comments/all
 
   include ../partials/aside

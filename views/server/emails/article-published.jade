@@ -1,15 +1,12 @@
-p
-  span='An article has been published on '
-  a(href!=authority) Pony Foo
-  span='. You can feast your eyes on it by following this link: '
-  a(href!=authority + article.permalink)!=article.titleHtml
-  span .
-
-h1(style='padding-top: 25px;')!=article.titleHtml
+h1(style='padding-top: 25px;')
+  a(href!=authority + article.permalink, style='color: #333')!=article.titleHtml
 
 p
   each tag in article.tags
     a(href!=authority + '/articles/tagged/' + tag, style='color: #e92c6c; padding: 2px 6px; text-decoration: none; background-color: #FAF0E6; border-bottom: 1px solid; margin-right: 5px;')=tag
+
+p
+  a(href!=authority + article.permalink) Click here to feast your eyes on our latest article!
 
 div(style='padding: 20px; background-color: #fff9f4;')!=article.teaserHtml
 
@@ -17,4 +14,4 @@ div(style='text-align: center;', itemprop='potentialAction', itemscope, itemtype
   meta(itemprop='name', content='See article')
   meta(itemprop='description', content='See article – Pony Foo')
   span(itemprop='target')
-    a(itemprop='url', style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; font-size: 24px; background-color: #e92c6c; color: #fff;', href!=authority + article.permalink) Read More
+    a(itemprop='url', style='margin-top: 25px; padding: 16px; text-align: center; display: inline-block; font-size: 24px; background-color: #e92c6c; color: #fff;', href!=authority + article.permalink) Read More!
