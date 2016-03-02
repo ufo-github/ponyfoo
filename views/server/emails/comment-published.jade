@@ -1,5 +1,5 @@
 div
-  a(href!=domain.authority + host.permalink)
+  a(href!=authority + host.permalink)
     h1!=host.titleHtml
 
 p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom: 2px solid #e92c6c;')
@@ -22,5 +22,5 @@ p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction'
   meta(itemprop='description', content='Reply to Comment – Pony Foo')
   span='Reply using '
   span(itemprop='target')
-    a(itemprop='url', href!=domain.authority + comment.permalink) this link
+    a(itemprop='url', href!=authority + comment.permalink) this link
   span .

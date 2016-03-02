@@ -24,7 +24,7 @@ module.exports = function (req, res, next) {
           keywords: metadataService.mostCommonTags(expanded),
           images: metadataService.appendDefaultCover([])
         },
-        title: 'Publication History on Pony Foo',
+        title: 'Article Publication History on Pony Foo',
         articles: expanded,
         total: _.pluck(expanded, 'readingTime').reduce(sum, 0)
       }

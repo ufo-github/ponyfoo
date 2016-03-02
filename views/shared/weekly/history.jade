@@ -1,0 +1,29 @@
+article.ly-section
+  header.dc-header.vw-title
+    h1.dc-heading
+      a.lk-link.lk-black.lk-clean(href='/weekly', aria-label='One email about the web every thursday.') Pony Foo Weekly
+      span=' Publication History'
+    div.dc-role Every Pony Foo Weekly newsletter issue ever published on Pony Foo can be found listed here
+
+  include navigation
+
+  section.hy-container.de-host
+    div.de-column.wl-container
+      include cta
+
+      h2 Past Issues
+
+      ol.hy-items
+        each issue in issues
+          li.hy-article
+            span.hy-title
+              a.hy-article-link.lk-visitor-inside.lk-rainbows(href='/weekly/' + issue.slug)
+                span.lk-visitor-target!=issue.name
+            span.hy-connector
+              span!=' &mdash; published '
+              time.hy-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text
+
+      if issues.length > 10
+        include cta
+
+    include ../partials/aside

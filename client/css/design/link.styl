@@ -157,3 +157,40 @@ lk-visitor(selector)
 
     &:hover
       border-bottom-color c-black-text
+
+.lk-white
+  /a&,
+  .lk-link
+    color c-white
+
+    &:focus,
+    &:active
+      outline-color c-white
+
+    &:visited
+      background-color rgba(c-white, 0.1)
+    &:visited .md-code-inline:before
+      background-color c-white
+
+    &:hover
+      border-bottom-color c-white
+
+.lk-orange
+  /a&,
+  .lk-link
+    color c-orange-dark
+
+    &:focus,
+    &:active
+      outline-color c-orange-dark
+
+    &:visited
+      background-color rgba(c-orange-dark, 0.1)
+    &:visited .md-code-inline:before
+      background-color c-orange-dark
+
+    &:hover
+      border-bottom-color c-orange-dark
+
+.lk-clean
+  background-color transparent

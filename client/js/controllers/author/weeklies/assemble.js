@@ -66,6 +66,7 @@ function ready (viewModel, container, route) {
     .and(summary)
       .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
 
+  drakeSort.on('drop', updatePreviewSlowly);
   drakeTools
     .on('cloned', clonedTool)
     .on('drop', droppedTool);
@@ -120,6 +121,7 @@ function ready (viewModel, container, route) {
   }
   function removeSection (e) {
     $(e.target).parents('.wa-section').remove();
+    updatePreviewSlowly();
   }
   function toggleSection (e) {
     var toggler = $(e.target);
@@ -144,13 +146,17 @@ function ready (viewModel, container, route) {
     var tool = $(el);
     var toolName = tool.attr('data-tool');
     var action = 'author/weeklies/tool-' + toolName;
-    taunus.partial.replace(el, action, { section: {} });
+    taunus.partial
+      .replace(el, action, { knownTags: viewModel.knownTags, section: {} })
+      .on('render', updatePreviewSlowly);
   }
   function pickedTool (e) {
     var tool = $(e.target);
     var toolName = tool.attr('data-tool');
     var action = 'author/weeklies/tool-' + toolName;
-    taunus.partial.appendTo(editor, action, { section: {} });
+    taunus.partial
+      .appendTo(editor, action, { knownTags: viewModel.knownTags, section: {} })
+      .on('render', updatePreviewSlowly);
     e.preventDefault();
     e.stopPropagation();
   }
@@ -173,7 +179,9 @@ function ready (viewModel, container, route) {
     var toolName = section.attr('data-tool');
     var action = 'author/weeklies/tool-' + toolName;
     var model = getSectionModel(section);
-    taunus.partial.afterOf(section[0], action, { section: model });
+    taunus.partial
+      .afterOf(section[0], action, { knownTags: viewModel.knownTags, section: model })
+      .on('render', updatePreviewSlowly);
   }
   function getSectionModel (section) {
     var mappers = {
@@ -201,6 +209,8 @@ function ready (viewModel, container, route) {
     };
   }
   function getLinkSectionModel (section) {
+    var unknownTags = textService.splitTags($('.wa-link-tags', section).value());
+    var knownTags = $('.wa-link-tag', section).filter(byChecked).map(toValue).filter(unique);
     return {
       type: 'link',
       title: $('.wa-link-title', section).value(),
@@ -208,11 +218,21 @@ function ready (viewModel, container, route) {
       foreground: $('.wa-link-foreground', section).value(),
       background: $('.wa-link-background', section).value(),
       source: $('.wa-link-source', section).value(),
+      sourceHref: $('.wa-link-source-href', section).value(),
       image: $('.wa-link-image', section).value(),
       sponsored: $('.wa-link-sponsored', section).value(),
-      tags: textService.splitTags($('.wa-link-tags', section).value()),
+      tags: unknownTags.concat(knownTags),
       description: $('.wa-link-description', section).value()
     };
+    function byChecked (el) {
+      return $(el).value();
+    }
+    function toValue (el) {
+      return $(el).text();
+    }
+    function unique (tag) {
+      return unknownTags.indexOf(tag) === -1;
+    }
   }
   function getStylesSectionModel (section) {
     return {

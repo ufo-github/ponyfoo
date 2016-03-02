@@ -1,0 +1,26 @@
+div.wy-link
+  table
+    tr
+      td
+        div.wy-link-section
+          a.wy-link-title(href=href, style='color:' + foreground + '; background-color:' + background, target='_blank', rel='none')=title
+          each tag in tags
+            - data = knownTags[tag]
+            if data
+              span.wy-link-tag(style='color:' + data.foreground + '; background-color:' + data.background)=data.label
+            else
+              span.wy-link-tag=tag
+
+        div.wy-link-section
+          div.wy-link-description.md-markdown!=descriptionHtml
+        div.wy-link-section.wy-link-source-section
+          if sourceHref
+            a.wy-link-source(href=sourceHref, target='_blank', rel='none')=source
+          else
+            span.wy-link-source.wy-link-source-plain=source
+          if sponsored
+            span.wy-link-tag.wy-link-sponsor Sponsored
+      if image
+        td.wy-link-image-cell
+          a.wy-link-image-anchor(href=href)
+            img.wy-link-image(src=image, alt='')

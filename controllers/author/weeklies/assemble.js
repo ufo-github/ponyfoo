@@ -2,6 +2,7 @@
 
 var correcthorse = require('correcthorse');
 var WeeklyIssue = require('../../../models/WeeklyIssue');
+var weeklyCompilerService = require('../../../services/weeklyCompiler');
 var datetimeService = require('../../../services/datetime');
 
 module.exports = function (req, res, next) {
@@ -38,7 +39,8 @@ module.exports = function (req, res, next) {
       model: {
         title: 'Weekly Assembler \u2014 Pony Foo',
         issue: issueModel,
-        editing: !!slug
+        editing: !!slug,
+        knownTags: weeklyCompilerService.knownTags
       }
     };
   }

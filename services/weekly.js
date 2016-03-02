@@ -85,6 +85,7 @@ function toMetadata (doc) {
     _id: doc._id,
     created: doc.created,
     updated: datetimeService.field(doc.updated),
+    publication: datetimeService.field(doc.publication),
     title: doc.title,
     slug: doc.slug,
     status: doc.status,
@@ -96,6 +97,7 @@ function toMetadata (doc) {
 function toView (doc, comments) {
   return commentService.hydrate({
     title: doc.title,
+    name: doc.name,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication),
     summaryHtml: doc.summaryHtml,
@@ -103,10 +105,20 @@ function toView (doc, comments) {
   }, doc);
 }
 
+function toHistory (doc) {
+  return {
+    title: doc.title,
+    name: doc.name,
+    slug: doc.slug,
+    publication: datetimeService.field(doc.publication)
+  };
+}
+
 module.exports = {
   insert: insert,
   update: update,
   toMetadata: toMetadata,
   toView: toView,
+  toHistory: toHistory,
   getAllTags: getAllTags
 };

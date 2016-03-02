@@ -1,243 +1,84 @@
 {
-  "/bf": {
-    "url": "/books/javascript-application-design",
-    "status": "301"
-  },
-  "/bf/amazon": {
-    "url": "http://amzn.to/1ETGB65"
-  },
-  "/bf/manning": {
-    "url": "https://www.manning.com/books/javascript-application-design?a_aid=go&a_bid=e6de0d9d"
-  },
-  "/bf/ch04": {
-    "url": "https://manning-content.s3.amazonaws.com/download/1/edc0757-55a1-4d18-9bdb-caf608f7cfe7/JSAD_CH04.pdf"
-  },
-  "/bf/ch05": {
-    "url": "https://manning-content.s3.amazonaws.com/download/3/ea9e2c0-901f-4165-a7fb-195a6eec57ce/JSAD_CH05.pdf"
-  },
-  "/bf/code": {
-    "url": "https://github.com/buildfirst/buildfirst"
-  },
-  "/bf/knight": {
-    "url": "http://pythonsweetness.tumblr.com/post/64740079543/how-to-lose-172-222-a-second-for-45-minutes"
-  },
-  "/bf/apologists": {
-    "url": "http://www.amazon.com/The-Inmates-Are-Running-Asylum/dp/0672326140"
-  },
-  "/bf/browser-errors": {
-    "url": "http://www.codinghorror.com/blog/2007/04/javascript-and-html-forgiveness-by-default.html"
-  },
-  "/bf/lean": {
-    "url": "http://www.amazon.com/The-Lean-Startup-Entrepreneurs-Continuous/dp/0307887898"
-  },
-  "/bf/pragmatic": {
-    "url": "http://www.amazon.com/The-Pragmatic-Programmer-Journeyman-Master/dp/020161622X"
-  },
-  "/bf/node-frontend": {
-    "url": "http://www.nczonline.net/blog/2013/10/07/node-js-and-the-new-web-front-end/"
-  },
-  "/bf/grunt": {
-    "url": "http://gruntjs.com"
-  },
-  "/bf/commonjs": {
-    "url": "http://wiki.commonjs.org/wiki/Modules/1.1"
-  },
-  "/bf/globbing": {
-    "url": "http://gruntjs.com/configuring-tasks#globbing-patterns"
-  },
-  "/bf/speed-matters": {
-    "url": "http://www.codinghorror.com/blog/2006/11/speed-still-matters.html"
-  },
-  "/bf/db-tasks": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch02/10_mysql-tasks"
-  },
-  "/bf/secure-config": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch03/02_rsa-config-encryption"
-  },
-  "/bf/12factor": {
-    "url": "http://12factor.net"
-  },
-  "/bf/heroku-cli": {
-    "url": "https://devcenter.heroku.com/articles/config-vars"
-  },
-  "/bf/watch-out": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch03/05_better-watch-closely"
-  },
-  "/bf/livereload": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch03/07_livereload"
-  },
-  "/bf/interlacing": {
-    "url": "http://www.codinghorror.com/blog/2005/12/progressive-image-rendering.html"
-  },
-  "/bf/semver": {
-    "url": "http://semver.org/"
-  },
-  "/bf/markdown": {
-    "url": "http://daringfireball.net/projects/markdown/"
-  },
-  "/bf/heroku": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch04/05_heroku-deployments"
-  },
-  "/bf/heroku-register": {
-    "url": "https://id.heroku.com/signup/devcenter"
-  },
-  "/bf/heroku-toolbelt": {
-    "url": "https://toolbelt.heroku.com"
-  },
-  "/bf/heroku-environments": {
-    "url": "https://devcenter.heroku.com/articles/multiple-environments"
-  },
-  "/bf/aws": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch04/07_aws-deployments"
-  },
-  "/bf/integration": {
-    "url": "http://www.martinfowler.com/articles/continuousIntegration.html"
-  },
-  "/bf/travis": {
-    "url": "https://github.com/buildfirst/ci-by-example"
-  },
-  "/bf/travis-heroku": {
-    "url": "http://about.travis-ci.org/docs/user/deployment/heroku/"
-  },
-  "/bf/netflix": {
-    "url": "http://techblog.netflix.com/2012/07/chaos-monkey-released-into-wild.html"
-  },
-  "/bf/node-inspector": {
-    "url": "https://github.com/node-inspector/node-inspector#getting-started"
-  },
-  "/bf/node-debugger": {
-    "url": "http://nodejs.org/api/debugger.html"
-  },
-  "/bf/nodetime-register": {
-    "url": "http://nodetime.com/signup"
-  },
-  "/bf/regex": {
-    "url": "/articles/learn-regular-expressions"
-  },
-  "/bf/regexper": {
-    "url": "http://www.regexper.com/#%2F%5Cd%2B%2F"
-  },
-  "/bf/goodparts": {
-    "url": "http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742"
-  },
-  "/bf/strict": {
-    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode"
-  },
-  "/bf/ioc": {
-    "url": "http://martinfowler.com/articles/injection.html"
-  },
-  "/bf/amd": {
-    "url": "http://requirejs.org/docs/whyamd.html"
-  },
-  "/bf/requirejs": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch05/10_requirejs-grunt"
-  },
-  "/bf/angular-di": {
-    "url": "http://docs.angularjs.org/guide/di"
-  },
-  "/bf/component": {
-    "url": "http://tjholowaychuk.tumblr.com/post/27984551477/components"
-  },
-  "/bf/es6-intro": {
-    "url": "http://eviltrout.com/2014/05/03/getting-started-with-es6.html"
-  },
-  "/bf/es6-modules": {
-    "url": "/articles/architecture-of-ecmascript-6-modules"
-  },
-  "/bf/promises": {
-    "url": "https://github.com/jakearchibald/es6-promise"
-  },
-  "/bf/tooling": {
-    "url": "/articles/gulp-grunt-whatever"
-  },
-  "/bf/rest": {
-    "url": "http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"
-  },
-  "/bf/editorconfig": {
-    "url": "http://editorconfig.org"
-  },
-  "/bf/semicolons": {
-    "url": "http://benalman.com/news/2013/01/advice-javascript-semicolon-haters/"
-  },
-  "/bf/asi": {
-    "url": "http://www.2ality.com/2011/05/semicolon-insertion.html"
-  },
-  "/bf/jslint": {
-    "url": "http://www.jslint.com"
-  },
-  "/bf/jshint": {
-    "url": "https://github.com/jshint/jshint"
-  },
-  "/bf/eslint": {
-    "url": "https://github.com/eslint/eslint"
-  },
-  "/bf/util.format": {
-    "url": "http://nodejs.org/api/util.html#util_util_format_format"
-  },
-  "/bf/jade": {
-    "url": "https://github.com/jadejs/jade"
-  },
-  "/bf/gotofail": {
-    "url": "https://www.imperialviolet.org/2014/02/22/applebug.html"
-  },
-  "/bf/equality": {
-    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators"
-  },
-  "/bf/jquery-ternary": {
-    "url": "https://github.com/jquery/jquery/blob/c869a1ef8a031342e817a2c063179a787ff57239/src/ajax.js#L117"
-  },
-  "/bf/fn-declaration": {
-    "url": "http://stackoverflow.com/q/336859/389745"
-  },
-  "/bf/fn-expr": {
-    "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function"
-  },
-  "/bf/hoisting": {
-    "url": "https://github.com/buildfirst/buildfirst/tree/master/ch05/04_hoisting"
-  },
-  "/bf/partial-application": {
-    "url": "http://ejohn.org/blog/partial-functions-in-javascript/"
-  },
-  "/bf/arguments": {
-    "url": "https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#3-managing-arguments"
-  },
-  "/bf/poser": {
-    "url": "https://github.com/bevacqua/poser"
-  },
-  "/bf/arrays": {
-    "url": "/articles/fun-with-native-arrays"
-  },
-  "/bf/contra.emitter": {
-    "url": "https://github.com/bevacqua/contra.emitter"
-  },
-  "/bf/casting": {
-    "url": "http://james.padolsey.com/javascript/truthy-falsey/"
-  },
-  "/bf/polyfill": {
-    "url": "http://remysharp.com/2010/10/08/what-is-a-polyfill/"
-  },
-  "/bf/hq-modules": {
-    "url": "/articles/building-high-quality-front-end-modules"
-  },
-  "/bf/gzip": {
-    "url": "https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer"
-  },
-  "/bf/sourcemap": {
-    "url": "http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/"
-  },
-  "/bf/spider": {
-    "url": "http://thedailywtf.com/articles/The_Spider_of_Doom"
-  },
-  "/bf/api-twitter": {
-    "url": "https://dev.twitter.com/rest/public"
-  },
-  "/bf/api-fb": {
-    "url": "https://developers.facebook.com/docs/graph-api/reference/v2.2"
-  },
-  "/bf/api-github": {
-    "url": "https://developer.github.com/v3/"
-  },
-  "/bf/api-stack": {
-    "url": "https://api.stackexchange.com/docs"
-  }
+  "/s/paypal": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=29CRFXW53HRP2",
+  "/s/patreon": "https://patreon.com/bevacqua",
+  "/bf": "/books/javascript-application-design",
+  "/bf/amazon": "http://amzn.to/1ETGB65",
+  "/bf/manning": "https://www.manning.com/books/javascript-application-design?a_aid=go&a_bid=e6de0d9d",
+  "/bf/ch04": "https://manning-content.s3.amazonaws.com/download/1/edc0757-55a1-4d18-9bdb-caf608f7cfe7/JSAD_CH04.pdf",
+  "/bf/ch05": "https://manning-content.s3.amazonaws.com/download/3/ea9e2c0-901f-4165-a7fb-195a6eec57ce/JSAD_CH05.pdf",
+  "/bf/code": "https://github.com/buildfirst/buildfirst",
+  "/bf/knight": "http://pythonsweetness.tumblr.com/post/64740079543/how-to-lose-172-222-a-second-for-45-minutes",
+  "/bf/apologists": "http://www.amazon.com/The-Inmates-Are-Running-Asylum/dp/0672326140",
+  "/bf/browser-errors": "http://www.codinghorror.com/blog/2007/04/javascript-and-html-forgiveness-by-default.html",
+  "/bf/lean": "http://www.amazon.com/The-Lean-Startup-Entrepreneurs-Continuous/dp/0307887898",
+  "/bf/pragmatic": "http://www.amazon.com/The-Pragmatic-Programmer-Journeyman-Master/dp/020161622X",
+  "/bf/node-frontend": "http://www.nczonline.net/blog/2013/10/07/node-js-and-the-new-web-front-end/",
+  "/bf/grunt": "http://gruntjs.com",
+  "/bf/commonjs": "http://wiki.commonjs.org/wiki/Modules/1.1",
+  "/bf/globbing": "http://gruntjs.com/configuring-tasks#globbing-patterns",
+  "/bf/speed-matters": "http://www.codinghorror.com/blog/2006/11/speed-still-matters.html",
+  "/bf/db-tasks": "https://github.com/buildfirst/buildfirst/tree/master/ch02/10_mysql-tasks",
+  "/bf/secure-config": "https://github.com/buildfirst/buildfirst/tree/master/ch03/02_rsa-config-encryption",
+  "/bf/12factor": "http://12factor.net",
+  "/bf/heroku-cli": "https://devcenter.heroku.com/articles/config-vars",
+  "/bf/watch-out": "https://github.com/buildfirst/buildfirst/tree/master/ch03/05_better-watch-closely",
+  "/bf/livereload": "https://github.com/buildfirst/buildfirst/tree/master/ch03/07_livereload",
+  "/bf/interlacing": "http://www.codinghorror.com/blog/2005/12/progressive-image-rendering.html",
+  "/bf/semver": "http://semver.org/",
+  "/bf/markdown": "http://daringfireball.net/projects/markdown/",
+  "/bf/heroku": "https://github.com/buildfirst/buildfirst/tree/master/ch04/05_heroku-deployments",
+  "/bf/heroku-register": "https://id.heroku.com/signup/devcenter",
+  "/bf/heroku-toolbelt": "https://toolbelt.heroku.com",
+  "/bf/heroku-environments": "https://devcenter.heroku.com/articles/multiple-environments",
+  "/bf/aws": "https://github.com/buildfirst/buildfirst/tree/master/ch04/07_aws-deployments",
+  "/bf/integration": "http://www.martinfowler.com/articles/continuousIntegration.html",
+  "/bf/travis": "https://github.com/buildfirst/ci-by-example",
+  "/bf/travis-heroku": "http://about.travis-ci.org/docs/user/deployment/heroku/",
+  "/bf/netflix": "http://techblog.netflix.com/2012/07/chaos-monkey-released-into-wild.html",
+  "/bf/node-inspector": "https://github.com/node-inspector/node-inspector#getting-started",
+  "/bf/node-debugger": "http://nodejs.org/api/debugger.html",
+  "/bf/nodetime-register": "http://nodetime.com/signup",
+  "/bf/regex": "/articles/learn-regular-expressions",
+  "/bf/regexper": "http://www.regexper.com/#%2F%5Cd%2B%2F",
+  "/bf/goodparts": "http://www.amazon.com/JavaScript-Good-Parts-Douglas-Crockford/dp/0596517742",
+  "/bf/strict": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode",
+  "/bf/ioc": "http://martinfowler.com/articles/injection.html",
+  "/bf/amd": "http://requirejs.org/docs/whyamd.html",
+  "/bf/requirejs": "https://github.com/buildfirst/buildfirst/tree/master/ch05/10_requirejs-grunt",
+  "/bf/angular-di": "http://docs.angularjs.org/guide/di",
+  "/bf/component": "http://tjholowaychuk.tumblr.com/post/27984551477/components",
+  "/bf/es6-intro": "http://eviltrout.com/2014/05/03/getting-started-with-es6.html",
+  "/bf/es6-modules": "/articles/architecture-of-ecmascript-6-modules",
+  "/bf/promises": "https://github.com/jakearchibald/es6-promise",
+  "/bf/tooling": "/articles/gulp-grunt-whatever",
+  "/bf/rest": "http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm",
+  "/bf/editorconfig": "http://editorconfig.org",
+  "/bf/semicolons": "http://benalman.com/news/2013/01/advice-javascript-semicolon-haters/",
+  "/bf/asi": "http://www.2ality.com/2011/05/semicolon-insertion.html",
+  "/bf/jslint": "http://www.jslint.com",
+  "/bf/jshint": "https://github.com/jshint/jshint",
+  "/bf/eslint": "https://github.com/eslint/eslint",
+  "/bf/util.format": "http://nodejs.org/api/util.html#util_util_format_format",
+  "/bf/jade": "https://github.com/jadejs/jade",
+  "/bf/gotofail": "https://www.imperialviolet.org/2014/02/22/applebug.html",
+  "/bf/equality": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators",
+  "/bf/jquery-ternary": "https://github.com/jquery/jquery/blob/c869a1ef8a031342e817a2c063179a787ff57239/src/ajax.js#L117",
+  "/bf/fn-declaration": "http://stackoverflow.com/q/336859/389745",
+  "/bf/fn-expr": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function",
+  "/bf/hoisting": "https://github.com/buildfirst/buildfirst/tree/master/ch05/04_hoisting",
+  "/bf/partial-application": "http://ejohn.org/blog/partial-functions-in-javascript/",
+  "/bf/arguments": "https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#3-managing-arguments",
+  "/bf/poser": "https://github.com/bevacqua/poser",
+  "/bf/arrays": "/articles/fun-with-native-arrays",
+  "/bf/contra.emitter": "https://github.com/bevacqua/contra.emitter",
+  "/bf/casting": "http://james.padolsey.com/javascript/truthy-falsey/",
+  "/bf/polyfill": "http://remysharp.com/2010/10/08/what-is-a-polyfill/",
+  "/bf/hq-modules": "/articles/building-high-quality-front-end-modules",
+  "/bf/gzip": "https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer",
+  "/bf/sourcemap": "http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/",
+  "/bf/spider": "http://thedailywtf.com/articles/The_Spider_of_Doom",
+  "/bf/api-twitter": "https://dev.twitter.com/rest/public",
+  "/bf/api-fb": "https://developers.facebook.com/docs/graph-api/reference/v2.2",
+  "/bf/api-github": "https://developer.github.com/v3/",
+  "/bf/api-stack": "https://api.stackexchange.com/docs"
 }

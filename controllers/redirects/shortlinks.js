@@ -13,8 +13,7 @@ function expander (req, res, next) {
     next(); return;
   }
   var link = links[path];
-  var status = Number(link.status) || 302;
-  res.status(status).redirect(link.url);
+  res.status(302).redirect(link);
 }
 
 module.exports = {

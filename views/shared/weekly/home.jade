@@ -1,9 +1,33 @@
-header.dc-header
-  h1.dc-heading Pony Foo Weekly Newsletter
-  div.dc-role A newsletter about the open web, based around a new theme every week.
+header.dc-header.vw-title
+  h1.dc-heading Pony Foo Weekly
+  div.dc-role A newsletter about the open web, highlighting the most important news about the web every thursday
+
+include navigation
 
 article.de-host
-  section.de-column
-    p Foo
+  section.de-column.wl-container
+    p Pony Foo Weekly is a newsletter discussing interesting and trending topics around the web platform. It comes out once a week, on thursdays.
+
+    p.wl-teaser
+      span='Check out '
+      a.lk-link(href='/weekly/last') the latest issue
+      span=' of Pony Foo Weekly to get an idea of what the newsletter is like.'
+
+    include cta
+
+    h2 Sponsorship Opportunities
+
+    p
+      span='If you’d like to collaborate, you could make a contribution on '
+      a.lk-link(href='/s/patreon', target='_blank') Patreon
+      span=' or more directly, via '
+      a.lk-link(href='/s/paypal', target='_blank') PayPal
+      span .
+    p
+      span='For sponsorship opportunities, reach us '
+      a.lk-link(data-email='mailto:weekly+sponsorship@ponyfoo.com', target='_blank') via email
+      span='. We have great engagement rates and over a thousand subscribers. We keep track of '
+      a.lk-link(href='/subscribe', target='_blank') a few statistics
+      span=' about our subscribers.'
 
   include ../partials/aside

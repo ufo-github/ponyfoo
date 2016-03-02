@@ -29,6 +29,7 @@ var schema = new mongoose.Schema({
   hnDiscuss: String
 });
 
+schema.virtual('name').get(computeName);
 schema.virtual('title').get(computeTitle);
 
 var model = mongoose.model('WeeklyIssue', schema);
@@ -37,9 +38,13 @@ model.validStatuses = ['draft', 'ready', 'released'];
 
 module.exports = model;
 
-function computeTitle () {
+function computeName () {
   if (this.issue) {
-    return 'Issue #' + this.issue + ' \u2014 Pony Foo Weekly';
+    return 'Issue #' + this.issue;
   }
-  return this.slug + ' \u2014 Pony Foo Weekly';
+  return this.slug;
+}
+
+function computeTitle () {
+  return this.name + ' \u2014 Pony Foo Weekly';
 }

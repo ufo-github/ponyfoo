@@ -1,9 +1,24 @@
+header.dc-header.vw-title
+  h1.dc-heading
+    span=issue.name
+    span=' \u2014 '
+    a.lk-link.lk-black.lk-clean(href='/weekly', aria-label='One email about the web every thursday.') Pony Foo Weekly
+  div.dc-role
+    span='This issue was originally published on '
+    time(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text
+
+include navigation
+
 article.de-host
-  section.de-column
-    div.wi-container
+  section.de-column.wl-container
+    include cta
+
+    div.wl-issue
       include ../partials/newsletter-issue
 
     if issue.status === 'released'
+      include cta
+
       - this.parent = issue
       - this.parentType = 'weeklies'
       include ../comments/all

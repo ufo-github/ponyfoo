@@ -4,7 +4,7 @@
   max-width 800px
 
 .wy-header
-  background-color c-yellow-highlight
+  background-color c-pink-01
   border-bottom 1px solid c-pink
   padding 10px
 
@@ -13,10 +13,83 @@
   line-height 24px
 
 .wy-header-text
+  color c-pink
   font-weight bold
   font-size 24px
+  &:focus,
+  &:active
+    outline 1px dotted c-pink
+
+.wy-content
+  a
+    &:focus,
+    &:active
+      outline 1px dotted c-gray
 
 .wy-issue
   float right
   color c-black-text
   font-size 12px
+
+.wy-link
+  margin 25px 0
+  td
+    padding 0
+
+.wy-link-title
+  vertical-align middle
+  border-bottom 1px solid
+  font-size 20px
+
+.wy-link-tag
+  display inline-block
+  vertical-align middle
+  background-color c-blue
+  color c-white
+  text-transform uppercase
+  font-size 13px
+  margin-left 5px
+  padding 2px 4px
+
+.wy-link-description
+  font-size 15px
+  color #444
+
+.wy-link-source-section
+  margin-top 10px
+
+.wy-link-source
+  vertical-align middle
+  color c-twitter-blue
+
+.wy-link-source-plain
+  color c-black-text
+
+.wy-link-sponsor
+  background-color c-orange-light
+  color c-orange-dark
+
+.wy-link-image-cell
+  width 200px
+
+.wy-link-image-anchor
+  display block
+  overflow hidden
+  max-height 300px
+
+.wy-link-image
+  display block
+
+// .wy-link-section
+
+// .wy-link-title
+// .wy-link-tag
+// .wy-link-section
+
+// .wy-link-description
+// .wy-link-section
+
+// .wy-link-source
+//
+// .wy-link-image-wrapper
+// .wy-link-image-anchor

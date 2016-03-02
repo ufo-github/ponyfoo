@@ -1,5 +1,6 @@
 - code = Math.random().toString(18).substr(2)
-
+- tags = section.tags || []
+- unknownTags = tags.filter(function (t) { return !knownTags[t] })
 div.wa-section(data-tool='link')
   div.wa-section-header.gu-candidate
     span.wa-section-heading.fa.fa-anchor=' Link'
@@ -9,7 +10,7 @@ div.wa-section(data-tool='link')
   div.wa-section-contents
     input.wa-input-50.wa-link-title(placeholder='What would you like the link title to be?', value=section.title)
     span.wa-input-50.wa-color-picker
-      - foreground = section.foreground || '#333'
+      - foreground = section.foreground || '#e92c6c'
       - background = section.background || 'transparent'
       span.wa-color-preview.fa-stack.fa-lg
         span.fa.fa-square-o.fa-stack-2x(style='color:' + background)
@@ -22,11 +23,22 @@ div.wa-section(data-tool='link')
         include color-options
 
     input.wa-link-href(placeholder='Paste your link here', value=section.href)
+
     input.wa-link-source.wa-input-50(placeholder='Author or source for this link?', value=section.source)
-    div.wa-input-50.wa-link-sponsored-wrapper
+    input.wa-link-source-href.wa-input-50(placeholder='A link to the author or source?', value=section.sourceHref)
+
+    input.wa-link-image(placeholder='Link to an image', value=section.image)
+
+    input.wa-link-tags(placeholder='Tags that describe the link', value=unknownTags.join(' '))
+
+    div.wa-input-25.wa-link-checkbox-wrapper
       input.wa-link-sponsored.ck-input(id='wa-sponsored-link-' + code, type='checkbox', checked=section.sponsored)
       label.ck-checkbox(for='wa-sponsored-link-' + code) Sponsored
-    input.wa-link-image(placeholder='Link to an image', value=section.image)
-    input.wa-link-tags(placeholder='Tags that describe the link', value=(section.tags || []).join(' '))
+
+    each knownTag in Object.keys(knownTags)
+      div.wa-input-25.wa-link-checkbox-wrapper
+        input.wa-link-tag.ck-input(id='wa-sponsored-link-' + code +'-kt-' + knownTag, type='checkbox', checked=tags.indexOf(knownTag) !== -1, value=knownTag)
+        label.ck-checkbox(for='wa-sponsored-link-' + code +'-kt-' + knownTag)=knownTags[knownTag].label
+
     div
       textarea.wa-link-description.wk-textarea(placeholder='Enter a description here')!=section.description

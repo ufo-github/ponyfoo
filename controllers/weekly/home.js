@@ -6,7 +6,6 @@ var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   res.viewModel = {
-    rss: 'https://feeds.feedburner.com/ponyfooweekly',
     model: {
       title: 'Pony Foo Weekly Newsletter',
       meta: {

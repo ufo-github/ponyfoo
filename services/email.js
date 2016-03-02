@@ -16,9 +16,7 @@ var trap = env('MAILGUN_TRAP');
 var authority = env('AUTHORITY');
 var client = createClient();
 var defaults = {
-  domain: {
-    authority: authority
-  },
+  authority: authority,
   social: {
     twitter: {
       url: 'https://twitter.com/ponyfoo',
@@ -26,9 +24,8 @@ var defaults = {
     },
     landing: {
       url: 'https://ponyfoo.com',
-      name: 'Pony Foo'
-    },
-    name: 'Pony Foo'
+      name: 'ponyfoo.com'
+    }
   },
   styles: {
     layoutBackgroundColor: '#fcfcfc',

@@ -1,8 +1,11 @@
 'use strict';
 
+var assign = require('assignment');
 var map = require('contra/map');
 var stylus = require('./lib/stylus');
 var textService = require('./text');
+var linkSectionView = require('../.bin/views/shared/partials/weekly/link');
+var knownTags = require('./lib/knownNewsletterTags.json');
 
 function compile (sections, options, done) {
   var compilers = {
@@ -31,10 +34,13 @@ function compile (sections, options, done) {
     ));
   }
   function toMarkdownSectionHtml (section, next) {
-    next(null, options.markdown.compile(section.text));
+    var html = options.markdown.compile(section.text);
+    next(null, textService.format('<div class="md-markdown">%s</div>', html));
   }
   function toLinkSectionHtml (section, next) {
-    next(null, '');
+    var descriptionHtml = options.markdown.compile(section.description);
+    var base = { knownTags: knownTags, descriptionHtml: descriptionHtml };
+    next(null, linkSectionView(assign(base, section)));
   }
   function toStylesSectionHtml (section, next) {
     stylus.render(section.styles, { filename: 'inline-styles.css' }, compiled);
@@ -45,5 +51,6 @@ function compile (sections, options, done) {
 }
 
 module.exports = {
-  compile: compile
+  compile: compile,
+  knownTags: knownTags
 };

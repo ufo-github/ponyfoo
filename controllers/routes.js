@@ -20,6 +20,11 @@ module.exports = [
   { route: '/articles/:year(\\d{4})', action: 'articles/dated' },
   { route: '/articles/:slug', action: 'articles/article' },
   { route: '/weekly', action: 'weekly/home' },
+  { route: '/weekly/feed', ignore: true },
+  { route: '/weekly/history', action: 'weekly/history' },
+  { route: '/weekly/first', action: 'weekly/first' },
+  { route: '/weekly/last', action: 'weekly/last' },
+  { route: '/weekly/random', action: 'weekly/random' },
   { route: '/weekly/:slug', action: 'weekly/issue' },
   { route: '/about', action: 'marketing/about' },
   { route: '/speaking', action: 'speaking/home' },
@@ -51,6 +56,7 @@ module.exports = [
   { route: '/author/subscribers/:page([1-9][0-9]{0,})?', action: 'author/subscribers', middleware: authorOnly },
   { route: '/author/settings', action: 'author/settings', middleware: authorOnly },
   { route: '/privacy', action: 'marketing/privacy' },
+  { route: '/s/:shortlink', ignore: true },
   { route: '/offline', action: 'error/offline' },
   { route: '/*', action: 'error/not-found' }
 ];

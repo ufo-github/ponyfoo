@@ -12,6 +12,7 @@ var env = require('../lib/env');
 var authority = env('AUTHORITY');
 var intent = 'Thanks for your interest in becoming a subscriber of our mailing list!';
 var reasons = {
+  weekly: intent,
   landed: intent,
   article: intent,
   sidebar: intent,

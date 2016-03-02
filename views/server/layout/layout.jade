@@ -52,10 +52,10 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     link(rel='apple-touch-icon-precomposed', href='/apple-touch-icon-precomposed.png')
 
     link(rel='alternate', type='application/rss+xml', href=rss)
-    link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.env.authority + '/opensearch.xml')
+    link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.authority + '/opensearch.xml')
 
     if model.meta.canonical
-      link(rel='canonical', href!=model.env.authority + model.meta.canonical)
+      link(rel='canonical', href!=model.authority + model.meta.canonical)
 
     link(rel='manifest', href='/manifest.json')
     meta(name='mobile-web-app-capable', content='yes')
@@ -75,7 +75,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     meta(property='og:site_name', content='Pony Foo')
 
     if model.meta.canonical
-      meta(property='og:url', itemprop='url', content=model.env.authority + model.meta.canonical)
+      meta(property='og:url', itemprop='url', content=model.authority + model.meta.canonical)
 
     meta(name='twitter:title', itemprop='name', property='og:title', content=model.title)
     meta(name='twitter:description', content=model.meta.description)

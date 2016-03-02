@@ -6,7 +6,7 @@ var moment = require('moment');
 var debounce = require('lodash/function/debounce');
 var loadScript = require('../../lib/loadScript');
 var textService = require('../../../../services/text');
-var colors = ['#cbc5c0', '#1a4d7f', '#55acee', '#900070', '#e92c6c', '#f3720d', '#ffe270'];
+var colors = ['#cbc5c0', '#1a4d7f', '#55acee', '#1bc211', '#900070', '#e92c6c', '#f3720d', '#ffe270'];
 
 module.exports = function (viewModel, container) {
   var graphData = viewModel.subscriberGraph;
@@ -86,7 +86,7 @@ module.exports = function (viewModel, container) {
         d.fragments = color.domain().map(function (name) {
           return { name: name, y0: y0, y1: y0 += +d[name], d: d };
         });
-        d.total = d.unverified + d.migration + d.twitter + d.sidebar + d.comment + d.article + d.landed;
+        d.total = d.unverified + d.migration + d.twitter + d.sidebar + d.comment + d.article + d.landed + d.weekly;
       });
       data.sort(function (a, b) { return moment(a.date).isAfter(b.date) ? 1 : -1; });
 

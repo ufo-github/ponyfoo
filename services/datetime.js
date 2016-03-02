@@ -10,7 +10,7 @@ var formats = {
   },
   default: {
     title: 'hh:mm A, MMM D, YYYY ([GMT] Z)',
-    text: 'MMM D, YYYY'
+    text: 'MMMM D, YYYY'
   }
 };
 

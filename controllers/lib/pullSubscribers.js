@@ -36,6 +36,7 @@ function toWeeklyDataModel (subscribers) {
       migration: 0,
       unverified: 0,
       twitter: 0,
+      weekly: 0,
       sidebar: 0,
       comment: 0,
       article: 0,

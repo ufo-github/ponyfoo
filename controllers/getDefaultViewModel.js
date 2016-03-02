@@ -4,7 +4,6 @@ var fs = require('fs');
 var contra = require('contra');
 var pkg = require('../package.json');
 var env = require('../lib/env');
-var name = env('NODE_ENV');
 var authority = env('AUTHORITY');
 var authorEmail = env('AUTHOR_EMAIL');
 var bioService = require('../services/bio');
@@ -39,13 +38,10 @@ function getDefaultViewModel (done) {
       },
       description: '',
       model: {
+        authority: authority,
         title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolás Bevacqua',
         pkg: {
           version: pkg.version
-        },
-        env: {
-          name: name,
-          authority: authority
         },
         meta: {
           description: 'Pony Foo is a technical blog maintained by Nicolás Bevacqua, where he shares his thoughts on JavaScript and the web. Nico likes writing, public speaking, and open-source.',

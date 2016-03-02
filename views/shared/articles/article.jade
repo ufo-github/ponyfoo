@@ -17,7 +17,7 @@ section.at-container.de-host
       meta(itemprop='dateModified', content=modified.format())
       meta(itemprop='datePublished', content=when.datetime)
       meta(itemprop='keywords', content=article.tags.join(','))
-      meta(itemprop='discussionUrl', content=env.authority + article.permalink + '#comments')
+      meta(itemprop='discussionUrl', content=authority + article.permalink + '#comments')
 
       - commentCount = article.commentCount
       if commentCount
@@ -33,7 +33,7 @@ section.at-container.de-host
         if article.next
           a.lk-rainbows.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')!=article.next.titleHtml + ' »'
 
-    form.ly-section.ss-container.at-subscribe(action='/api/subscribers', method='post', name='subscribe')
+    form.ly-section.ss-container.at-subscribe.wt-cta(action='/api/subscribers', method='post', name='subscribe')
       div.ss-label
         ='Liked the article? Subscribe below to get an email when new articles come out! Also, '
         a.lk-link(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
@@ -49,9 +49,9 @@ section.at-container.de-host
         input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
 
       input.ss-source(type='hidden', name='source', value='article')
-      input.de-input.ss-input(placeholder='you@provider.io', name='subscriber')
+      input.wt-input.ss-input(placeholder='you@provider.io', name='subscriber')
 
-      span.de-button(aria-label='As easy as clicking this button and confirming via email!')
+      span.wt-submit(aria-label='As easy as clicking this button and confirming via email!')
         button.gg-container.bt-button.bt-pink.ss-button(type='submit')
           span.bt-text Subscribe
           include ../partials/button-background

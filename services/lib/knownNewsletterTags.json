@@ -1,0 +1,77 @@
+{
+  "news": {
+    "label": "News",
+    "foreground": "#1bc211",
+    "background": "#e4f9e3"
+  },
+  "article": {
+    "label": "Article",
+    "foreground": "#333",
+    "background": "#1bc211"
+  },
+  "tutorial": {
+    "label": "Tutorial",
+    "foreground": "#5aa9bc",
+    "background": "#333"
+  },
+  "deep-dive": {
+    "label": "Deep Dive",
+    "foreground": "#f7f0f5",
+    "background": "#900070"
+  },
+  "introductory": {
+    "label": "Introductory",
+    "foreground": "#900070",
+    "background": "#f7f0f5"
+  },
+  "course": {
+    "label": "Course",
+    "foreground": "#fcfcfc",
+    "background": "#1686a2"
+  },
+  "best-practices": {
+    "label": "Best Practices",
+    "foreground": "#900070",
+    "background": "#ffe270"
+  },
+  "rant": {
+    "label": "Rant",
+    "foreground": "#fcf0f4",
+    "background": "#ff0056"
+  },
+  "point-of-view": {
+    "label": "Point of View",
+    "foreground": "#f3720d",
+    "background": "#ffeada"
+  },
+  "code": {
+    "label": "Code",
+    "foreground": "#1a4d7f",
+    "background": "#ffe270"
+  },
+  "demo": {
+    "label": "Demo",
+    "foreground": "#fcfcfc",
+    "background": "#f3720d"
+  },
+  "talk": {
+    "label": "Talk",
+    "foreground": "#fbf2f5",
+    "background": "#e92c6c"
+  },
+  "slides": {
+    "label": "Slides",
+    "foreground": "#fbf2f5",
+    "background": "#f4a5c0"
+  },
+  "podcast": {
+    "label": "Podcast",
+    "foreground": "#f3720d",
+    "background": "#f8f2bc"
+  },
+  "screencast": {
+    "label": "Screencast",
+    "foreground": "#1a4d7f",
+    "background": "#f8f2bc"
+  }
+}
