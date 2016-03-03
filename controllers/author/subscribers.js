@@ -38,7 +38,7 @@ module.exports = function (req, res, next) {
       created: datetimeService.field(subscriber.created),
       email: subscriber.email,
       topics: subscriber.topics,
-      source: subscriber.source,
+      source: subscriber.source.split('+')[0],
       verified: subscriber.verified,
       hash: subscriberService.getHash(subscriber)
     };
