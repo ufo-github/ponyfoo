@@ -7,8 +7,6 @@ var Article = require('../models/Article');
 var commentService = require('./comment');
 var datetimeService = require('./datetime');
 
-function noop () {}
-
 function findInternal (method, query, options, done) {
   if (done === void 0) {
     done = options; options = {};
@@ -34,29 +32,6 @@ function findInternal (method, query, options, done) {
 
 var find = findInternal.bind(null, 'find');
 var findOne = findInternal.bind(null, 'findOne');
-
-function campaign (article, done) {
-  if (done === void 0) {
-    done = noop;
-  }
-  contra.concurrent([
-    curried('email', email),
-    curried('tweet', tweet),
-    curried('fb', fbShare),
-    curried('echojs', echojs),
-    curried('hn', hackernews),
-    curried('lobsters', lobsters)
-  ], done);
-
-  function curried (key, fn) {
-    return function sharing (next) {
-      if (article[key] === false) {
-        next(); return;
-      }
-      fn(article, {}, next);
-    };
-  }
-}
 
 function toJSON (source, options) {
   var o = options || {};

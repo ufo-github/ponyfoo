@@ -35,15 +35,21 @@
   color lighten(c-purple, 30%)
 
 .ck-input:active + .ck-checkbox,
-.ck-input:active + .ck-radio
+.ck-input:active + .ck-radio,
+.ck-input:focus + .ck-checkbox,
+.ck-input:focus + .ck-radio
   outline 1px dotted c-dark-gray
 
-.ck-input:checked + .ck-checkbox:before,
-.ck-input:checked + .ck-radio:before,
-.ck-checkbox-checked:before,
-.ck-radio-checked:before
-  color #fff
-  text-shadow 1px 1px 1px c-moderate
+.ck-input:checked + .ck-checkbox,
+.ck-input:checked + .ck-radio,
+.ck-checkbox-checked,
+.ck-radio-checked
+  &:before
+    color c-true-white
+    text-shadow 1px 1px 1px c-moderate
+  &:hover:before
+    color c-light-gray
+    text-shadow 1px 1px 1px c-dark-gray
 
 .ck-readonly
   cursor default

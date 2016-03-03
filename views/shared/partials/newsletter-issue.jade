@@ -1,3 +1,4 @@
+- permalink = permalink || authority + '/weekly/' + issue.slug
 table.wy-table.wy-container
   tr
     td.wy-td
@@ -5,10 +6,17 @@ table.wy-table.wy-container
         tr
           td.wy-td.wy-header
             a.wy-header-text(href=authority + '/weekly') Pony Foo Weekly
-            a.wy-issue.lk-link.lk-black.lk-clean(href=authority + '/weekly/' + issue.slug)
+            a.wy-issue.lk-link.lk-black.lk-clean(href=permalink)
               span='Issue #' + issue.slug
               span=' \u2014 '
               span(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
+      if thanks
+        table.wy-table
+          tr
+            td.wy-td
+              div.wy-thanks
+                div As a token of our appreciation for your patronage of Pony Foo, we’re delivering Pony Foo Weekly to you a full day in advance of everyone else!
+                div.wy-thanks-again Thank you so much for your support.
       table.wy-table
         tr
           td.wy-td.wy-summary.md-markdown!=issue.summaryHtml
@@ -23,5 +31,5 @@ table.wy-table.wy-container
               meta(itemprop='name', content='See web version')
               meta(itemprop='description', content='See weekly newsletter issue #' + issue.slug + ' on the web – Pony Foo')
               span(itemprop='target')
-                a.wy-read-online.lk-link.lk-clean(itemprop='url', href!=authority + '/weekly/' + issue.slug) Read this issue on ponyfoo.com
+                a.wy-read-online.lk-link.lk-clean(itemprop='url', href!=permalink) Read this issue on ponyfoo.com
               span .

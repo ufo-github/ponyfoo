@@ -34,9 +34,9 @@ article.ly-section.vw-maintainer.de-host
               a.lk-link.lk-black(href='mailto:' + s.email, target='_blank')=s.email
             td.as-verified(data-label='Verified')
               if s.verified
-                div.ck-readonly.ck-alone.ck-checkbox.ck-checkbox-checked()
+                div.ck-readonly.ck-alone.ck-checkbox.ck-checkbox-checked
               else
-                div.ck-readonly.ck-alone.ck-checkbox()
+                div.ck-readonly.ck-alone.ck-checkbox
             td(data-label='Topics')
               each t in allTopics
                 if s.topics.indexOf(t) !== -1

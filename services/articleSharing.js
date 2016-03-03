@@ -17,6 +17,8 @@ var markupService = require('./markup');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_ARTICLES');
 
+function noop () {}
+
 function share (article, done) {
   if (done === void 0) {
     done = noop;

@@ -7,6 +7,7 @@ var htmlService = require('../../services/html');
 var metadataService = require('../../services/metadata');
 
 module.exports = function (req, res, next) {
+  var thanks = req.query.thanks;
   var query = { slug: req.params.slug };
   WeeklyIssue.findOne(query).populate('comments').exec(found);
 
@@ -14,13 +15,13 @@ module.exports = function (req, res, next) {
     if (err || !issue) {
       notFound(); return;
     }
-    var bird = req.query.bird;
     if (issue.status === 'released') {
       if (issue.statusReach === 'everyone') {
         done(); return;
       }
-      if (issue.statusReach === 'early birds' && bird && bird === cryptoService.md5(issue._id + issue.bird)) {
-        done(); return;
+      var challenge = cryptoService.md5(issue._id + issue.thanks);
+      if (issue.statusReach === 'patrons' && thanks && thanks === challenge) {
+        done(null, issue, challenge); return;
       }
     }
     var verify = req.query.verify;
@@ -29,14 +30,14 @@ module.exports = function (req, res, next) {
     }
     notFound();
     function done () {
-      handle(err, issue);
+      handle(null, issue);
     }
     function notFound () {
       handle(err, null);
     }
   }
 
-  function handle (err, issue) {
+  function handle (err, issue, challenge) {
     if (err) {
       next(err); return;
     }
@@ -46,17 +47,21 @@ module.exports = function (req, res, next) {
       };
       next(); return;
     }
+    var canonical = '/weekly/' + issue.slug;
+    var permalink = canonical + (challenge ? ('?thanks=' + challenge) : '');
     var extracted = htmlService.extractImages('/weekly/' + issue.slug, issue.summaryText + issue.contentHtml);
     var images = metadataService.appendDefaultCover(extracted);
     res.viewModel = {
       model: {
         title: issue.name + ' \u2014 Pony Foo Weekly',
         meta: {
-          canonical: '/weekly/' + issue.slug,
+          canonical: canonical,
           description: issue.summaryText,
           keywords: weeklyService.getAllTags(issue),
           images: images
         },
+        permalink: permalink,
+        thanks: challenge,
         issue: weeklyService.toView(issue)
       }
     };

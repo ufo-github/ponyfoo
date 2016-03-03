@@ -3,14 +3,42 @@
 var but = require('but');
 var contra = require('contra');
 var Setting = require('../models/Setting');
+var api = contra.emitter({
+  get: get,
+  getKey: getKey,
+  setKey: setKey,
+  save: save,
+  toModel: toModel
+});
 
-function get (next) {
+function get (done) {
   Setting.findOne({}).sort('-created').lean().exec(found);
   function found (err, setting) {
     if (err) {
-      next(err); return;
+      done(err); return;
     }
-    next(null, setting && setting.items || {});
+    done(null, setting && setting.items || {});
+  }
+}
+
+function getKey (key, done) {
+  get(found);
+  function found (err, settings) {
+    if (err) {
+      done(err); return;
+    }
+    done(null, settings[key]);
+  }
+}
+
+function setKey (key, value, done) {
+  get(found);
+  function found (err, settings) {
+    if (err) {
+      done(err); return;
+    }
+    settings[key] = value;
+    save(settings, done);
   }
 }
 
@@ -22,6 +50,7 @@ function save (settings, done) {
     if (err) {
       done(err); return;
     }
+    api.emit('save', settings);
     Setting
       .find({
         created: { $lt: model.created }
@@ -50,8 +79,4 @@ function toModel (settings) {
   }
 }
 
-module.exports = {
-  get: get,
-  save: save,
-  toModel: toModel
-};
+module.exports = api;

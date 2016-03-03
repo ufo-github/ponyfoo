@@ -11,8 +11,8 @@ var schema = new mongoose.Schema({
   slug: { type: String, index: { unique: true }, require: true },
   publication: Date,
   status: { type: String, index: { unique: false }, require: true },
-  statusReach: String, // [undefined, 'early birds', 'everyone']
-  bird: String,
+  statusReach: String, // [undefined, 'scheduled', 'patrons', 'everyone']
+  thanks: String,
   issue: { type: Number, index: { unique: true, sparse: true }, require: false },
   summary: String,
   summaryText: String,

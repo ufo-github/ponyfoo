@@ -11,7 +11,7 @@ include navigation
 
 article.de-host
   section.de-column.wl-container
-    div.wl-intro
+    p.wl-intro
       span Below, you can find the Pony Foo Weekly newsletter issue #
       span=issue.slug
       span . It was sent to our subscribers
@@ -25,8 +25,9 @@ article.de-host
     div.wl-cta
       include cta
 
-    - this.parent = issue
-    - this.parentType = 'weeklies'
-    include ../comments/all
+    if issue.status === 'released'
+      - this.parent = issue
+      - this.parentType = 'weeklies'
+      include ../comments/all
 
   include ../partials/aside

@@ -13,6 +13,7 @@ var nullLatLng = {
 
 module.exports = function (viewModel, container) {
   loadScript(source, function () {
+    var google = global.google;
     var gmaps = google.maps;
     var playButton = $('.tkfm-play');
     var stopContainer = $('.tkfm-stop');

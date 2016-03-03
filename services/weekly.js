@@ -99,6 +99,7 @@ function toView (doc, comments) {
     name: doc.name,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication),
+    status: doc.status,
     summaryHtml: doc.summaryHtml,
     contentHtml: doc.contentHtml
   }, doc);

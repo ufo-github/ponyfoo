@@ -1,11 +1,25 @@
 'use strict';
 
 var $ = require('dominus');
+var taunus = require('taunus');
 
-module.exports = function (viewModel) {
-  var container = $('.wr-container');
+module.exports = function (viewModel, container) {
+  var liveCheck = $('.wr-live', container);
+  var table = $('.wr-container', container);
 
-  container.on('click', '.wr-remove', remove);
+  liveCheck.on('click', toggle);
+  table.on('click', '.wr-remove', remove);
+
+  function toggle () {
+    viewModel.measly
+      .post('/api/settings/PONYFOOWEEKLY_CRON', {
+        json: { value: !viewModel.live }
+      })
+      .on('data', refresh);
+    function refresh () {
+      taunus.navigate('/author/weeklies', { force: true });
+    }
+  }
 
   function remove (e) {
     var target = $(e.target);

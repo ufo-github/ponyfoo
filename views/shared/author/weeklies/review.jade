@@ -2,6 +2,10 @@ article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     h1.vw-title Newsletter Review
     header.ar-actions
+      if live
+        span.wr-live.ck-checkbox.ck-checkbox-checked Cron Job
+      else
+        span.wr-live.ck-checkbox Cron Job
       a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/weeklies/new', aria-label='Prepare a fresh draft')
     table.wr-container
       thead

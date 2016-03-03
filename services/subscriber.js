@@ -227,16 +227,22 @@ function send (options, done) {
   var topic = options.topic;
   var recipients = options.recipients;
   var template = options.template;
+  var patrons = options.patrons;
   var partialModel = options.model;
 
   contra.waterfall([findVerifiedSubscribers, patchModel], done);
 
   function findVerifiedSubscribers (next) {
+    var query = { verified: true };
     if (topic) {
-      Subscriber.find({ verified: true, topics: topic }, next);
-    } else {
-      Subscriber.find({ verified: true }, next);
+      query.topics = topic;
     }
+    if (patrons === 'no') {
+      query.patron = false;
+    } else if (patrons === 'only') {
+      query.patron = true;
+    }
+    Subscriber.find(query, next);
   }
   function patchModel (documents, next) {
     var subscribers = recipients ? documents.filter(isRecipient) : documents;

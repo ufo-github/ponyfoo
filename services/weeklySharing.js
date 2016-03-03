@@ -8,6 +8,7 @@ var contra = require('contra');
 var env = require('../lib/env');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
+var cryptoService = require('./crypto');
 var facebookService = require('./facebook');
 var twitterService = require('./twitter');
 var twitterEmojiService = require('./twitterEmoji');
@@ -19,6 +20,8 @@ var weeklyService = require('./weekly');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
 var css = fs.readFileSync('.bin/emails/newsletter.css', 'utf8');
+
+function noop () {}
 
 function share (issue, done) {
   if (done === void 0) {
@@ -44,21 +47,26 @@ function share (issue, done) {
 }
 
 function email (issue, options, done) {
-  var relativePermalink = '/weekly/' + issue.slug;
-  var issue = weeklyService.toView(issue, false);
+  var thanks = options.thanks ? ('?thanks=' + cryptoService.md5(issue._id + options.thanks)) : '';
+  var relativePermalink = '/weekly/' + issue.slug + thanks;
+  var permalink = authority + relativePermalink;
+  var issueModel = weeklyService.toView(issue, false);
   var model = {
     subject: issue.name + ' \u2014 Pony Foo Weekly',
     teaser: 'This week’s Web Platform news & inspiration',
-    teaserHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', authority + relativePermalink),
-    issue: issue,
+    teaserHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
     css: css,
+    permalink: permalink,
+    thanks: !!thanks,
+    issue: issueModel,
+    emailFormat: true,
     linkedData: {
       '@context': 'http://schema.org',
       '@type': 'EmailMessage',
       potentialAction: {
         '@type': 'ViewAction',
         name: 'See web version',
-        target:  authority + relativePermalink
+        target:  permalink
       },
       description: 'See weekly newsletter issue #' + issue.slug + ' on the web'
     }
@@ -66,6 +74,7 @@ function email (issue, options, done) {
   subscriberService.send({
     topic: 'newsletter',
     template: 'newsletter-issue',
+    patrons: options.patrons,
     model: model
   }, done);
 }

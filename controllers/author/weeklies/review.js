@@ -1,19 +1,28 @@
 'use strict';
 
 var _ = require('lodash');
+var contra = require('contra');
 var WeeklyIssue = require('../../../models/WeeklyIssue');
 var weeklyService = require('../../../services/weekly');
+var settingService = require('../../../services/setting');
 
 module.exports = getModel;
 
 function getModel (req, res, next) {
-  WeeklyIssue.find({}).sort('-publication').exec(respond);
+  contra.concurrent({
+    live: function (next) {
+      settingService.getKey('PONYFOOWEEKLY_CRON', next);
+    },
+    weeklies: function (next) {
+      WeeklyIssue.find({}).sort([['publication', -1], ['updated', -1]]).exec(next);
+    }
+  }, respond);
 
-  function respond (err, weeklies) {
+  function respond (err, result) {
     if (err) {
       next(err); return;
     }
-    var models = weeklies.map(weeklyService.toMetadata);
+    var models = result.weeklies.map(weeklyService.toMetadata);
     var sorted = _.sortBy(models, sortByStatus);
     res.viewModel = {
       model: {
@@ -21,7 +30,8 @@ function getModel (req, res, next) {
         meta: {
           canonical: '/author/weeklies'
         },
-        weeklies: sorted
+        weeklies: sorted,
+        live: result.live
       }
     };
     next();
@@ -30,6 +40,6 @@ function getModel (req, res, next) {
 
 function sortByStatus (weekly) {
   var state = { draft: 0, ready: 1, released: 2 }[weekly.status];
-  var reach = { undefined: 0, 'early birds': 1, everyone: 2 }[weekly.statusReach];
+  var reach = { undefined: 0, scheduled: 1, patrons: 2, everyone: 3 }[weekly.statusReach];
   return state + reach;
 }

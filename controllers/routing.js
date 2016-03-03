@@ -6,6 +6,7 @@ var taunusExpress = require('taunus-express');
 var transports = require('transports');
 var routes = require('./routes');
 var statusHealth = require('./api/status/health');
+var authorSaveSetting = require('./api/author/setting');
 var authorSaveSettings = require('./api/author/settings');
 var authorEngagementsNew = require('./api/author/engagements-new');
 var authorEngagementsRemove = require('./api/author/engagements-remove');
@@ -99,6 +100,7 @@ module.exports = function (app) {
   app.post('/api/oss/new', authorOnly, authorOpenSourceProjectNew);
   app.post('/api/oss/remove', authorOnly, authorOpenSourceProjectRemove);
   app.post('/api/settings', authorOnly, authorSaveSettings);
+  app.post('/api/settings/:key', authorOnly, authorSaveSetting);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
   app.post('/api/twitter-lead', twitterLead);
