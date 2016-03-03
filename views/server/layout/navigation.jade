@@ -4,23 +4,31 @@ if model.user
       a.nv-logon-anchor(href='/account/logout') Logout
 
     ul.nv-items
-      if model.roles.owner
-        li.nv-item
-          a.lk-link(href='/account/bio', aria-label='Edit your biography') Bio
-
       if model.roles.owner || model.roles.articles
+        li.nv-item
+          span='[ '
         li.nv-item
           a.lk-link(href='/author/articles/new', aria-label='Prepare a fresh draft') Compose
         li.nv-item
           a.lk-link(href='/author/articles', aria-label='Review articles and drafts') Review
+        li.nv-item
+          span=' ]'
 
       if model.roles.owner || model.roles.weeklies
+        li.nv-item
+          span='[ '
         li.nv-item
           a.lk-link(href='/author/weeklies/new', aria-label='Prepare a new weekly') Assemble
         li.nv-item
           a.lk-link(href='/author/weeklies', aria-label='Review weekly newsletter entries') Weeklies
+        li.nv-item
+          span=' ]'
 
       if model.roles.owner
+        li.nv-item
+          span='[ '
+        li.nv-item
+          a.lk-link(href='/account/bio', aria-label='Edit your biography') Bio
         li.nv-item
           a.lk-link(href='/author/oss', aria-label='View, add, or remove OSS projects') OSS
         li.nv-item
@@ -35,3 +43,5 @@ if model.user
           a.lk-icon.fa.fa-bars(href='/author/logs', aria-label='See activity logs')
         li.nv-item
           a.lk-icon.fa.fa-cog(href='/author/settings', aria-label='Change site-wide settings')
+        li.nv-item
+          span=' ]'
