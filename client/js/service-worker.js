@@ -1,6 +1,6 @@
 'use strict';
 
-var version = 'v14::';
+var version = 'v15::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var env = require('../../lib/env');
