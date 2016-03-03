@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
           images: [authority + staticService.unroll('/img/ponyfooweekly-sample.png')],
           description: 'Pony Foo Weekly is a newsletter discussing interesting and trending topics around the web platform. It comes out once a week, on thursdays.'
         },
-        any: any
+        any: count > 0
       }
     };
     next();

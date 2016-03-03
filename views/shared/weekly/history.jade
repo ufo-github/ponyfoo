@@ -9,10 +9,10 @@ article.ly-section
 
   section.hy-container.de-host
     div.de-column.wl-container
-      h2 Past Issues
+      h2.wl-top Past Issues
 
       ol.hy-items
-        if !issues.length
+        if any
           each issue in issues
             li.hy-article
               span.hy-title
@@ -22,7 +22,11 @@ article.ly-section
                 span!=' &mdash; published '
                 time.hy-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text
         else
-          li.hy-article Nothing has been published yet. Hurry up, subscribe to Pony Foo Weekly!
+          li.hy-article
+            span Nothing has been published yet. Hurry up, subscribe to
+            span=' '
+            a.lk-link.lk-black.lk-clean(href='/weekly', aria-label='One email about the web every thursday.') Pony Foo Weekly
+            span !
 
       include cta
 

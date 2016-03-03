@@ -6,22 +6,28 @@ include navigation
 
 article.de-host
   section.de-column.wl-container
-    p Pony Foo Weekly is a newsletter discussing interesting and trending topics around the web platform. It comes out once a week, on thursdays.
+    p.wl-top Pony Foo Weekly is a newsletter discussing interesting and trending topics around the web platform. It comes out once a week, on thursdays.
 
-    p.wl-teaser
-      span='Check out '
-      a.lk-link(href='/weekly/last') the latest issue
-      span=' of Pony Foo Weekly to get an idea of what the newsletter is like.'
+    if any
+      p.wl-teaser
+        span='Check out '
+        a.lk-link(href='/weekly/last') the latest issue
+        span=' of Pony Foo Weekly to get an idea of what the newsletter is like.'
+    else
+      p.wl-teaser
+        strong Pony Foo Weekly
+        span=' '
+        span hasn’t launched yet! Subscribe below and get ahead of the pack.
 
     p.wl-sample
       img(src='/img/ponyfooweekly-sample.png', alt='')
 
     include cta
 
-    h2 Tips?
+    h2 Got Tips?
 
     p
-      span We are always looking for great articles and inspiration to share with our subscribers. If you have something you'd like us to consider,
+      span We are always looking for great articles and inspiration to share with our subscribers. If you have something you’d like us to consider,
       span=' '
       a.lk-link(data-email='mailto:tips@ponyfoo.com', target='_blank') please let us know!
 
@@ -37,8 +43,12 @@ article.de-host
     p
       span Verified patrons will receive Pony Foo Weekly
       span=' '
-      strong a full day before everyone else
-      span .
+      strong a full day before everyone else &mdash; on wednesdays
+      span . To become a verified patron, pledge
+      em=' $2 or more '
+      span='on '
+      a.lk-link(href='/s/patreon', target='_blank') Patreon
+      span . Ensure your Patreon email and your Pony Foo Weekly email are the same.
 
     p
       span='For sponsorship opportunities, reach us '

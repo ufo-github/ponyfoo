@@ -25,7 +25,8 @@ module.exports = function (req, res, next) {
           images: [authority + staticService.unroll('/img/ponyfooweekly-sample.png')]
         },
         title: 'Pony Foo Weekly Publication History',
-        issues: models
+        issues: models,
+        any: issues.length > 0
       }
     };
     next();
