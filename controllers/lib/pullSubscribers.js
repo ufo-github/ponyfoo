@@ -62,10 +62,13 @@ function toWeeklyDataModel (subscribers) {
     current[source()]++;
   }
   function source () {
-    if (subscriber.verified) {
-      return subscriber.source === 'intent' ? 'sidebar' : subscriber.source;
+    if (!subscriber.verified) {
+      return 'unverified';
     }
-    return 'unverified';
+    if (subscriber.source === 'intent') {
+      return 'sidebar';
+    }
+    return subscriber.source.split('+')[0];
   }
   function isVerified (s) {
     return s.verified;

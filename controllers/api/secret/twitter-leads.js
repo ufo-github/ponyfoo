@@ -20,54 +20,61 @@ function remodel (req, res, next) {
 
   var tasks = [];
   if (articles) {
-    tasks.push(pull('articles', articles));
+    tasks.push(makeTask('', articles));
   }
   if (newsletter) {
-    tasks.push(pull('newsletter', newsletter));
+    tasks.push(makeTask('+newsletter', newsletter));
   }
-  contra.concurrent(tasks);
+  contra.concurrent(tasks, completed);
 
-  function pull (key, id) {
-    Subscriber.findOne({ source: 'twitter:articles' }).sort('-created').exec(function found (err, last) {
-      if (err) {
-        next(err); return;
+  function makeTask (key, id) {
+    return function pull (next) {
+      Subscriber
+        .findOne({ source: 'twitter' + key })
+        .sort('-created')
+        .exec(found);
+      function found (err, last) {
+        if (err) {
+          next(err); return;
+        }
+        var since = last ? last.created : new Date(0);
+        var options = {
+          username: username,
+          password: password,
+          ads: ads,
+          card: id,
+          since: since
+        };
+        leads(options, pulled);
       }
-      var since = last ? last.created : new Date(0);
-      var options = {
-        username: username,
-        password: password,
-        ads: ads,
-        card: card,
-        since: since
-      };
-      leads(options, pulled);
       function pulled (err, leads) {
         if (err) {
           next(err); return;
         }
         if (leads.length) {
-          winston.info('Found %s lead%s via Twitter Cards', leads.length, leads.length === 1 ? '' : 's');
+          winston.info('Found %s lead%s via Twitter Cards %s', leads.length, leads.length === 1 ? '' : 's', key || '+articles');
         } else {
-          winston.debug('No new leads via Twitter Cards');
+          winston.debug('No new leads via Twitter Cards %s', key || '+articles');
         }
-        contra.each(leads, 3, follow, done);
-        function follow (lead, next) {
-          subscriberService.add({
-            created: lead.time,
-            email: lead.email,
-            name: lead.name,
-            source: 'twitter',
-            verified: true
-          }, next);
-        }
+        contra.each(leads, 3, follow, next);
       }
-      function done (err) {
-        if (err) {
-          next(err); return;
-        }
-        res.json({});
+      function follow (lead, next) {
+        subscriberService.add({
+          created: lead.time,
+          email: lead.email,
+          name: lead.name,
+          source: 'twitter' + key,
+          verified: true
+        }, next);
       }
-    });
+    };
+  }
+
+  function completed (err) {
+    if (err) {
+      next(err); return;
+    }
+    res.json({});
   }
 }
 
