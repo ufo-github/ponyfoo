@@ -39,18 +39,18 @@ uglifyjs_alone() {
     --output $2
 }
 
-# deferred libraries
-browserify_standalone "weekly-compiler" "services/weeklyCompiler.js" ".bin/public/js/weekly-compiler.js"
-browserify_standalone "rome" "node_modules/rome" ".bin/public/js/rome.js"
-browserify_standalone "d3" "node_modules/d3" ".bin/public/js/d3.js"
-browserify_standalone "d3-tip" "node_modules/d3-tip" ".bin/public/js/d3-tip.js"
-
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 stylus client/css/newsletter.styl -o .bin/emails --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 taunus -o
 NODE_ENV=production node lib/env BROWSER_ENV | jq . > .env.browser.json
+
+# deferred libraries
+browserify_standalone "weekly-compiler" "services/weeklyCompiler.js" ".bin/public/js/weekly-compiler.js"
+browserify_standalone "rome" "node_modules/rome" ".bin/public/js/rome.js"
+browserify_standalone "d3" "node_modules/d3" ".bin/public/js/d3.js"
+browserify_standalone "d3-tip" "node_modules/d3-tip" ".bin/public/js/d3-tip.js"
 
 # compile client-side app and service worker
 browserify_alone "client/js/main.js" "$DIST/js/all.js"
