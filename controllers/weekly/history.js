@@ -1,8 +1,10 @@
 'use strict';
 
+var env = require('../../lib/env');
+var staticService = require('../../services/static');
 var WeeklyIssue = require('../../models/WeeklyIssue');
 var weeklyService = require('../../services/weekly');
-var metadataService = require('../../services/metadata');
+var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   var query = { status: 'released', statusReach: 'everyone' };
@@ -20,7 +22,7 @@ module.exports = function (req, res, next) {
           canonical: '/weekly/history',
           description: 'Every Pony Foo Weekly newsletter issue ever published on Pony Foo can be found listed here!',
           keywords: weeklyService.getAllTags(issues),
-          images: metadataService.appendDefaultCover([])
+          images: [authority + staticService.unroll('/img/ponyfooweekly-sample.png')]
         },
         title: 'Pony Foo Weekly Publication History',
         issues: models

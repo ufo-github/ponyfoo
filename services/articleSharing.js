@@ -56,7 +56,7 @@ function emailSelf (article, options, done) {
       done(new Error('User not found.')); return;
     }
     options.recipients = [user.email];
-    email(issue, options, done);
+    email(article, options, done);
   }
 }
 

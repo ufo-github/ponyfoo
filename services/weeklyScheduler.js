@@ -83,7 +83,7 @@ function run (done) {
       issue.publication = target;
       issue.statusReach = 'scheduled';
       issue.slug = number.toString();
-      issue.number = number;
+      issue.issue = number;
       issue.save(saved);
       function saved (err) {
         if (err) {

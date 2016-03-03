@@ -1,10 +1,13 @@
 'use strict';
 
+var env = require('../../lib/env');
+var staticService = require('../../services/static');
 var WeeklyIssue = require('../../models/WeeklyIssue');
 var weeklyService = require('../../services/weekly');
 var cryptoService = require('../../services/crypto');
 var htmlService = require('../../services/html');
 var metadataService = require('../../services/metadata');
+var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   var thanks = req.query.thanks;
@@ -50,7 +53,8 @@ module.exports = function (req, res, next) {
     var canonical = '/weekly/' + issue.slug;
     var permalink = canonical + (challenge ? ('?thanks=' + challenge) : '');
     var extracted = htmlService.extractImages('/weekly/' + issue.slug, issue.summaryText + issue.contentHtml);
-    var images = metadataService.appendDefaultCover(extracted);
+    var images = extracted.concat(authority + staticService.unroll('/img/ponyfooweekly-sample.png'));
+
     res.viewModel = {
       model: {
         title: issue.name + ' \u2014 Pony Foo Weekly',

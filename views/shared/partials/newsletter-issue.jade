@@ -13,16 +13,18 @@ table.wy-table.wy-container
       if thanks
         table.wy-table
           tr
-            td.wy-td
-              div.wy-thanks
-                div As a token of our appreciation for your patronage of Pony Foo, we’re delivering Pony Foo Weekly to you a full day in advance of everyone else!
-                div.wy-thanks-again Thank you so much for your support.
+            td.wy-td.md-markdown
+              div.wy-section-thanks
+                p As a token of our appreciation for your patronage of Pony Foo, we’re delivering Pony Foo Weekly to you a full day in advance of everyone else!
+                p.wy-thanks-again Thank you so much for your support.
       table.wy-table
         tr
-          td.wy-td.wy-summary.md-markdown!=issue.summaryHtml
+          td.wy-td.md-markdown
+            div.wy-section-summary!=issue.summaryHtml
       table.wy-table
         tr
-          td.wy-td.wy-content!=issue.contentHtml
+          td.wy-td
+            div.wy-content!=issue.contentHtml
 
       if emailFormat
         table.wy-table

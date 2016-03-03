@@ -3,6 +3,15 @@
   padding 20px 0
   max-width 800px
 
+  .md-markdown
+    p
+      line-height 22px
+      margin 10px 0
+      &:first-child
+        margin-top 0
+      &:last-child
+        margin-bottom 0
+
 .wy-table
   width 100%
   padding 0
@@ -15,18 +24,32 @@
   border-bottom 1px solid c-pink
   padding 10px
 
-.wy-thanks
-  margin-top 25px
+.wy-section-thanks,
+.wy-section-summary,
+.wy-section-link,
+.wy-section-markdown
+  padding-top 25px
+
+.wy-section-thanks
   padding 10px
   font-size 15px
   background-color c-light-green
 
-.wy-thanks-again
-  margin-top 10px
-
 .wy-header-text,
 .wy-issue
   line-height 24px
+
+.wy-section-header
+  padding-top 40px
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+    margin 0
+  p
+    line-height inherit
 
 .wy-header-text
   color c-pink
@@ -37,6 +60,7 @@
     outline 1px dotted c-pink
 
 .wy-content
+  padding-bottom 25px
   a
     &:focus,
     &:active
@@ -45,9 +69,6 @@
 .wy-issue
   float right
   font-size 12px
-
-.wy-link
-  margin 25px 0
 
 .wy-link-title
   vertical-align middle

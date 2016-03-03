@@ -25,7 +25,7 @@ function compile (sections, options, done) {
     done(null, result.join(''));
   }
   function toHeaderSectionHtml (section, next) {
-    next(null, textService.format('<h%s style="color:%s;background-color:%s;padding:10px;">%s</h%s>',
+    next(null, textService.format('<div class=" wy-section-header"><h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">%s</h%s></div>',
       section.size,
       section.foreground,
       section.background,
@@ -35,7 +35,7 @@ function compile (sections, options, done) {
   }
   function toMarkdownSectionHtml (section, next) {
     var html = options.markdown.compile(section.text);
-    next(null, textService.format('<div class="md-markdown">%s</div>', html));
+    next(null, textService.format('<div class="wy-section-markdown md-markdown">%s</div>', html));
   }
   function toLinkSectionHtml (section, next) {
     var descriptionHtml = options.markdown.compile(section.description);
