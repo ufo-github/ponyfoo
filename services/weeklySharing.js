@@ -17,6 +17,7 @@ var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
 var markupService = require('./markup');
 var weeklyService = require('./weekly');
+var User = require('../models/User');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
 var css = fs.readFileSync('.bin/emails/newsletter.css', 'utf8');
@@ -46,7 +47,28 @@ function share (issue, done) {
   }
 }
 
+function emailSelf (issue, options, done) {
+  if (!options.userId) {
+    done(new Error('User not provided.')); return;
+  }
+  User.findOne({ _id: options.userId }).select('email').exec(found);
+  function found (err, user) {
+    if (err) {
+      done(err); return;
+    }
+    if (!user) {
+      done(new Error('User not found.')); return;
+    }
+    options.reshare = false; // sending to self is perfectly fine.
+    options.recipients = [user.email];
+    email(issue, options, done);
+  }
+}
+
 function email (issue, options, done) {
+  if (options.reshare) {
+    done(new Error('The weekly newsletter cannot be reshared.')); return;
+  }
   var thanks = options.thanks ? ('?thanks=' + cryptoService.md5(issue._id + options.thanks)) : '';
   var relativePermalink = '/weekly/' + issue.slug + thanks;
   var permalink = authority + relativePermalink;
@@ -75,6 +97,7 @@ function email (issue, options, done) {
     topic: 'newsletter',
     template: 'newsletter-issue',
     patrons: options.patrons,
+    recipients: options.recipients,
     model: model
   }, done);
 }
@@ -171,6 +194,7 @@ function lobsters (issue, options, done) {
 
 module.exports = {
   share: share,
+  'email-self': emailSelf,
   email: email,
   twitter: tweet,
   facebook: facebook,

@@ -2,9 +2,15 @@
 if issue.status === 'draft'
   label.at-estimate-label Draft
 else if issue.status === 'ready'
-  label.at-estimate-label Ready for release
+  if issue.statusReach === 'scheduled'
+    label.at-estimate-label Scheduled for release
+    span.at-estimate-value
+      span=' '
+      time(datetime=publication.datetime, aria-label='Published ' + publication.title)='on ' + publication.text
+  else
+    label.at-estimate-label Ready for release
 else if issue.status === 'released'
   label.at-estimate-label='Released to ' + issue.statusReach
   span.at-estimate-value
-    span=' '
-    time(datetime=publication.datetime, aria-label='Published ' + publication.title)=publication.text
+    span='. Publication '
+    time(datetime=publication.datetime, aria-label='Published ' + publication.title)='on ' + publication.text

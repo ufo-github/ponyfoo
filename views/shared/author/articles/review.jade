@@ -2,8 +2,9 @@ article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     h1.vw-title Article Review
     header.ar-actions
+      if roles.owner
         a.ar-action.lk-icon.fa.fa-calculator.ar-recompute(href='/author/compute', aria-label='Recompute related articles')
-        a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/articles/new', aria-label='Prepare a fresh draft')
+      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/articles/new', aria-label='Prepare a fresh draft')
     table.ar-container
       thead
         tr

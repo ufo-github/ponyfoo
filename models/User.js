@@ -15,7 +15,7 @@ var schema = new mongoose.Schema({
   linkedinId: String,
   bio: String,
   bioHtml: String,
-  author: { type: Boolean, 'default': false }
+  roles: [String] // ['owner', 'articles', 'weeklies', 'moderator']
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatar').get(computeGravatar);

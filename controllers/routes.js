@@ -1,7 +1,9 @@
 'use strict';
 
 var authOnly = require('./account/only');
-var authorOnly = require('./author/only');
+var ownerOnly = require('./author/roleOnly')(['owner']);
+var articlesOnly = require('./author/roleOnly')(['owner', 'articles']);
+var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 
 module.exports = [
   { route: '/', action: 'articles/home' },
@@ -39,22 +41,22 @@ module.exports = [
   { route: '/account/login/:provider', ignore: true },
   { route: '/account/logout', ignore: true },
   { route: '/account/bio', action: 'account/bio', middleware: authOnly },
-  { route: '/author/articles', action: 'author/articles/review', middleware: authorOnly },
-  { route: '/author/articles/new', action: 'author/articles/compose', middleware: authorOnly },
-  { route: '/author/articles/:slug', action: 'author/articles/compose', middleware: authorOnly },
-  { route: '/author/weeklies', action: 'author/weeklies/review', middleware: authorOnly },
-  { route: '/author/weeklies/new', action: 'author/weeklies/assemble', middleware: authorOnly },
-  { route: '/author/weeklies/:slug', action: 'author/weeklies/assemble', middleware: authorOnly },
-  { route: '/author/announcements', action: 'author/announcements', middleware: authorOnly },
-  { route: '/author/engagements', action: 'author/engagements', middleware: authorOnly },
-  { route: '/author/engagements/new', action: 'author/engagements-new', middleware: authorOnly },
-  { route: '/author/presentations', action: 'author/presentations', middleware: authorOnly },
-  { route: '/author/presentations/new', action: 'author/presentations-new', middleware: authorOnly },
-  { route: '/author/oss', action: 'author/oss', middleware: authorOnly },
-  { route: '/author/oss/new', action: 'author/oss-new', middleware: authorOnly },
-  { route: '/author/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: authorOnly },
-  { route: '/author/subscribers/:page([1-9][0-9]{0,})?', action: 'author/subscribers', middleware: authorOnly },
-  { route: '/author/settings', action: 'author/settings', middleware: authorOnly },
+  { route: '/author/articles', action: 'author/articles/review', middleware: articlesOnly },
+  { route: '/author/articles/new', action: 'author/articles/compose', middleware: articlesOnly },
+  { route: '/author/articles/:slug', action: 'author/articles/compose', middleware: articlesOnly },
+  { route: '/author/weeklies', action: 'author/weeklies/review', middleware: weekliesOnly },
+  { route: '/author/weeklies/new', action: 'author/weeklies/assemble', middleware: weekliesOnly },
+  { route: '/author/weeklies/:slug', action: 'author/weeklies/assemble', middleware: weekliesOnly },
+  { route: '/author/announcements', action: 'author/announcements', middleware: ownerOnly },
+  { route: '/author/engagements', action: 'author/engagements', middleware: ownerOnly },
+  { route: '/author/engagements/new', action: 'author/engagements-new', middleware: ownerOnly },
+  { route: '/author/presentations', action: 'author/presentations', middleware: ownerOnly },
+  { route: '/author/presentations/new', action: 'author/presentations-new', middleware: ownerOnly },
+  { route: '/author/oss', action: 'author/oss', middleware: ownerOnly },
+  { route: '/author/oss/new', action: 'author/oss-new', middleware: ownerOnly },
+  { route: '/author/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: ownerOnly },
+  { route: '/author/subscribers/:page([1-9][0-9]{0,})?', action: 'author/subscribers', middleware: ownerOnly },
+  { route: '/author/settings', action: 'author/settings', middleware: ownerOnly },
   { route: '/privacy', action: 'marketing/privacy' },
   { route: '/s/:shortlink', ignore: true },
   { route: '/offline', action: 'error/offline' },

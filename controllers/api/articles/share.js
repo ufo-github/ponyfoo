@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
   function share (article) {
     var channel = articleSharingService[medium];
     if (channel) {
-      channel(article, { reshare: true }, done);
+      channel(article, { reshare: true, userId: req.user }, done);
     } else {
       end('error', 'Sharing medium "' + medium + '" is unknown.');
     }

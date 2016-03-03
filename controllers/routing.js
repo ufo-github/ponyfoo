@@ -48,10 +48,15 @@ var lastSentEmail = require('./development/lastSentEmail');
 var cspReport = require('./api/cspReport');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
-var authorOnly = require('./author/only');
+var ownerOnly = require('./author/roleOnly')(['owner']);
+var articlesOnly = require('./author/roleOnly')(['owner', 'articles']);
+var articlesModeratorOnly = require('./author/roleOnly')(['owner', 'articles', 'moderator']);
+var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
+var weekliesModeratorOnly = require('./author/roleOnly')(['owner', 'weeklies', 'moderator']);
 var env = require('../lib/env');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
+var hydrateRequestWithRoles = require('./hydrateRequestWithRoles');
 var verifyForm = require('./verifyForm');
 var layout = require('../.bin/views/server/layout/layout');
 var production = env('NODE_ENV') === 'production';
@@ -70,37 +75,38 @@ module.exports = function (app) {
 
   app.put('/api/markdown/images', markdownImageUpload);
 
-  app.get('/author/compute', authorOnly, authorCompute);
+  app.get('/author/compute', ownerOnly, authorCompute);
 
-  app.put('/api/articles', authorOnly, articleInsert);
-  app.patch('/api/articles/:slug', authorOnly, articleUpdate);
-  app.delete('/api/articles/:slug', authorOnly, articleRemove);
-  app.post('/api/articles/:slug/share/:medium', authorOnly, articleShare);
+  app.put('/api/articles', articlesOnly, articleInsert);
+  app.patch('/api/articles/:slug', articlesOnly, articleUpdate);
+  app.delete('/api/articles/:slug', articlesOnly, articleRemove);
+  app.post('/api/articles/:slug/share/:medium', articlesOnly, articleShare);
 
   app.put('/api/:type(articles|weeklies)/:slug/comments', commentInsert);
   app.post('/api/:type(articles|weeklies)/:slug/comments', verifyForm, commentInsert);
-  app.delete('/api/:type(articles|weeklies)/:slug/comments/:id', authorOnly, commentRemove);
+  app.delete('/api/:type(articles)/:slug/comments/:id', articlesModeratorOnly, commentRemove);
+  app.delete('/api/:type(weeklies)/:slug/comments/:id', weekliesModeratorOnly, commentRemove);
 
-  app.put('/api/weeklies', authorOnly, weeklyInsert);
-  app.patch('/api/weeklies/:slug', authorOnly, weeklyUpdate);
-  app.delete('/api/weeklies/:slug', authorOnly, weeklyRemove);
-  app.post('/api/weeklies/:slug/share/:medium', authorOnly, weeklyShare);
+  app.put('/api/weeklies', weekliesOnly, weeklyInsert);
+  app.patch('/api/weeklies/:slug', weekliesOnly, weeklyUpdate);
+  app.delete('/api/weeklies/:slug', weekliesOnly, weeklyRemove);
+  app.post('/api/weeklies/:slug/share/:medium', weekliesOnly, weeklyShare);
 
   app.put('/api/subscribers', subscriberInsert);
   app.post('/api/subscribers', verifyForm, subscriberInsert);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
 
-  app.post('/api/email', authorOnly, authorEmail);
+  app.post('/api/email', ownerOnly, authorEmail);
 
-  app.post('/api/engagements/new', authorOnly, authorEngagementsNew);
-  app.post('/api/engagements/remove', authorOnly, authorEngagementsRemove);
-  app.post('/api/presentations/new', authorOnly, authorPresentationsNew);
-  app.post('/api/presentations/remove', authorOnly, authorPresentationsRemove);
-  app.post('/api/oss/new', authorOnly, authorOpenSourceProjectNew);
-  app.post('/api/oss/remove', authorOnly, authorOpenSourceProjectRemove);
-  app.post('/api/settings', authorOnly, authorSaveSettings);
-  app.post('/api/settings/:key', authorOnly, authorSaveSetting);
+  app.post('/api/engagements/new', ownerOnly, authorEngagementsNew);
+  app.post('/api/engagements/remove', ownerOnly, authorEngagementsRemove);
+  app.post('/api/presentations/new', ownerOnly, authorPresentationsNew);
+  app.post('/api/presentations/remove', ownerOnly, authorPresentationsRemove);
+  app.post('/api/oss/new', ownerOnly, authorOpenSourceProjectNew);
+  app.post('/api/oss/remove', ownerOnly, authorOpenSourceProjectRemove);
+  app.post('/api/settings', ownerOnly, authorSaveSettings);
+  app.post('/api/settings/:key', ownerOnly, authorSaveSetting);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
   app.post('/api/twitter-lead', twitterLead);
@@ -122,6 +128,7 @@ module.exports = function (app) {
     routes: routes,
     layout: layout,
     getDefaultViewModel: getDefaultViewModel,
+    beforeRender: hydrateRequestWithRoles,
     plaintext: {
       root: 'article', ignore: 'footer,.mm-count,.at-meta'
     },

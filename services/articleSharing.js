@@ -14,6 +14,7 @@ var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
 var markupService = require('./markup');
+var User = require('../models/User');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_ARTICLES');
 
@@ -39,6 +40,23 @@ function share (article, done) {
       }
       fn(article, {}, next);
     };
+  }
+}
+
+function emailSelf (article, options, done) {
+  if (!options.userId) {
+    done(new Error('User not provided.')); return;
+  }
+  User.findOne({ _id: options.userId }).select('email').exec(found);
+  function found (err, user) {
+    if (err) {
+      done(err); return;
+    }
+    if (!user) {
+      done(new Error('User not found.')); return;
+    }
+    options.recipients = [user.email];
+    email(issue, options, done);
   }
 }
 
@@ -178,6 +196,7 @@ function lobsters (article, options, done) {
 
 module.exports = {
   share: share,
+  'email-self': emailSelf,
   email: email,
   twitter: tweet,
   facebook: facebook,

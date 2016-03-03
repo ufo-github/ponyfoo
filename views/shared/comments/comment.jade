@@ -6,7 +6,7 @@ mixin author
 
 section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment._id)
   header.mm-author.uv-clearfix
-    if user
+    if roles.owner || roles.moderator || roles[parentType]
       a.mm-remove.fa.fa-remove(aria-label='Delete this comment')
 
     -  site = comment.site && comment.site.replace(/https?:\/\//, '');

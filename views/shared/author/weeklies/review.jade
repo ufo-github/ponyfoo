@@ -2,10 +2,11 @@ article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     h1.vw-title Newsletter Review
     header.ar-actions
-      if live
-        span.wr-live.ck-checkbox.ck-checkbox-checked Cron Job
-      else
-        span.wr-live.ck-checkbox Cron Job
+      if roles.owner
+        if live
+          span.wr-live.ck-checkbox.ck-checkbox-checked Cron Job
+        else
+          span.wr-live.ck-checkbox Cron Job
       a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/weeklies/new', aria-label='Prepare a fresh draft')
     table.wr-container
       thead
@@ -25,10 +26,10 @@ article.ly-section.vw-maintainer.de-host
             td(data-label='Condition')
               include ../../partials/newsletter-condition
             td.ar-sharing(data-label='Sharing')
-              if issue.status === 'released'
-                - share = '/api/weeklies/' + issue.slug + '/share'
-                form.ar-share(action=share + '/email', method='post')
-                  button.lk-icon.fa.fa-envelope.ar-share-button(aria-label='Send out an email for this newsletter issue')
+              - share = '/api/weeklies/' + issue.slug + '/share'
+              form.ar-share(action=share + '/email-self', method='post')
+                button.lk-icon.fa.fa-envelope-o.ar-share-button(aria-label='Send yourself a test email for this newsletter issue')
+              if issue.status === 'released' && issue.statusReach === 'everyone'
                 form.ar-share(action=share + '/twitter', method='post')
                   button.lk-icon.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
                 form.ar-share(action=share + '/facebook', method='post')
