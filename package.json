@@ -164,7 +164,7 @@
     "nodemon": "1.4.0",
     "normalize.css": "3.0.1",
     "penthouse": "0.3.6",
-    "phantomjs": "git+https://github.com/dtothefp/phantomjs.git#7053c397caf6fdc8f9f65690e7e8dbfa1c35bcbb",
+    "phantomjs-prebuilt": "2.1.4",
     "process-finder": "1.0.0",
     "reaver": "2.0.0",
     "scourge": "1.0.1",
