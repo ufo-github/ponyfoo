@@ -1,7 +1,8 @@
 'use strict';
 
-var assign = require('assignment');
 var map = require('contra/map');
+var assign = require('assignment');
+var beautifyText = require('beautify-text');
 var stylus = require('./lib/stylus');
 var textService = require('./text');
 var linkSectionView = require('../.bin/views/shared/partials/weekly/link');
@@ -25,7 +26,7 @@ function compile (sections, options, done) {
     done(null, result.join(''));
   }
   function toHeaderSectionHtml (section, next) {
-    next(null, textService.format('<div class=" wy-section-header"><h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">%s</h%s></div>',
+    next(null, textService.format('<div class="wy-section-header"><h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">%s</h%s></div>',
       section.size,
       section.foreground,
       section.background,
@@ -40,7 +41,11 @@ function compile (sections, options, done) {
   function toLinkSectionHtml (section, next) {
     var descriptionHtml = options.markdown.compile(section.description);
     var base = { knownTags: knownTags, descriptionHtml: descriptionHtml };
-    next(null, linkSectionView(assign(base, section)));
+    var extended = assign(base, section, {
+      title: beautifyText(section.title),
+      source: beautifyText(section.source)
+    });
+    next(null, linkSectionView(extended));
   }
   function toStylesSectionHtml (section, next) {
     stylus.render(section.styles, { filename: 'inline-styles.css' }, compiled);
