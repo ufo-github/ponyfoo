@@ -1,7 +1,7 @@
 div.wy-section-link
   table.wy-table
     tr
-      td.wy-td
+      td(class='wy-td' + image ? 'wy-link-cell-before-image' : '')
         div.wy-link-section
           a.wy-link-title(href=href, style='color:' + foreground + '; background-color:' + background, target='_blank', rel='none')=title
           each tag in tags
