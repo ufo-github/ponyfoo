@@ -168,7 +168,7 @@ function run (done) {
   }
   function log (err) {
     if (err) {
-      winston.warn('Error in weekly scheduler after setting update', err);
+      winston.warn('Weekly scheduler error.', err);
     }
   }
 }
