@@ -26,7 +26,7 @@ module.exports = function (viewModel, container) {
   function toggleLevel () {
     viewModel.measly
       .post('/api/settings/PONYFOOWEEKLY_CRON_LEVEL', {
-        json: { value: viewModel.level !== 'debug' ? 'debug' : 'info' }
+        json: { value: viewModel.level === 'info' ? 'debug' : 'info' }
       })
       .on('data', refresh);
     function refresh () {
