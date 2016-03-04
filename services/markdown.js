@@ -85,7 +85,7 @@ function compile (text) {
     }
   };
   var emojiOpts = {
-    base: 'https://twemoji.maxcdn.com/',
+    base: 'https://twemoji.maxcdn.com/2/',
     className: 'tj-emoji',
     size: 72
   };
