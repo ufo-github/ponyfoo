@@ -59,7 +59,6 @@ function emailSelf (issue, options, done) {
     if (!user) {
       done(new Error('User not found.')); return;
     }
-    options.reshare = false; // sending to self is perfectly fine.
     options.recipients = [user.email];
     email(issue, options, done);
   }

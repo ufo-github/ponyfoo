@@ -10,24 +10,26 @@ var friendlyShared = {
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
   var medium = req.params.medium;
-  WeeklyIssue.findOne({ slug: slug, status: 'released' }, found);
+  WeeklyIssue.findOne({ slug: slug }, found);
 
   function found (err, weekly) {
     if (err) {
       end('error', 'An unexpected error occurred.');
     } else if (!weekly) {
       end('error', 'That weekly issue can’t be shared.');
-    } else if (medium !== 'email-self' && weekly.statusReach !== 'everyone') {
-      end('error', 'That weekly issue can’t be shared via social media yet.');
+    } else if (medium === 'email-self') {
+      share(weekly, false);
+    } else if (weekly.status === 'released' && weekly.statusReach === 'everyone') {
+      share(weekly, true);
     } else {
-      share(weekly);
+      end('error', 'That weekly issue can’t be shared via social media yet.');
     }
   }
 
-  function share (weekly) {
+  function share (weekly, reshare) {
     var channel = weeklySharingService[medium];
     if (channel) {
-      channel(weekly, { reshare: true, userId: req.user }, done);
+      channel(weekly, { reshare: reshare, userId: req.user }, done);
     } else {
       end('error', 'Sharing medium "' + medium + '" is unknown.');
     }
