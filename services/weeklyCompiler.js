@@ -26,7 +26,13 @@ function compile (sections, options, done) {
     done(null, result.join(''));
   }
   function toHeaderSectionHtml (section, next) {
-    next(null, textService.format('<div class="wy-section-header"><h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">%s</h%s></div>',
+    next(null, textService.format([
+      '<div class="wy-section-header">',
+        '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
+          '%s',
+        '</h%s>',
+      '</div>'
+      ].join(''),
       section.size,
       section.foreground,
       section.background,
