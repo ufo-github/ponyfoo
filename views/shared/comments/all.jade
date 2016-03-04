@@ -12,7 +12,7 @@ section#comments.mm-comments
     form.mc-composer.ly-section(action='/api/' + parentType + '/' + parent.slug + '/comments', method='post', name='comment')
       div.mc-author
         input.mc-name(placeholder='John Doe', name='name')
-        input.mc-email(placeholder='hello@johndoe.io', name='email')
+        input.mc-email(placeholder='hello@johndoe.io', name='email', type='email')
         input.mc-site(placeholder='johndoe.io (optional)', name='site')
       noscript
         input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
