@@ -13,6 +13,9 @@ function getModel (req, res, next) {
     live: function (next) {
       settingService.getKey('PONYFOOWEEKLY_CRON', next);
     },
+    level: function (next) {
+      settingService.getKey('PONYFOOWEEKLY_CRON_LEVEL', next);
+    },
     weeklies: function (next) {
       WeeklyIssue.find({}).sort([['publication', -1], ['updated', -1]]).exec(next);
     }
@@ -31,7 +34,8 @@ function getModel (req, res, next) {
           canonical: '/author/weeklies'
         },
         weeklies: sorted,
-        live: result.live
+        live: result.live,
+        level: result.level
       }
     };
     next();

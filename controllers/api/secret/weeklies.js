@@ -2,13 +2,16 @@
 
 var settingService = require('../../../services/setting');
 var weeklySchedulerService = require('../../../services/weeklyScheduler');
+var wasEnabledLastTime = false;
 
 settingService.on('save', saved);
 
 function saved (settings) {
-  if (settings.PONYFOOWEEKLY_CRON === true) {
+  var enabled = settings.PONYFOOWEEKLY_CRON === true;
+  if (!wasEnabledLastTime && enabled) {
     weeklySchedulerService.run();
   }
+  wasEnabledLastTime = enabled;
 }
 
 function weeklies (req, res, next) {

@@ -3,6 +3,11 @@ article.ly-section.vw-maintainer.de-host
     h1.vw-title Newsletter Review
     header.ar-actions
       if roles.owner
+        if level === 'info'
+          span.wr-level.ck-checkbox.ck-checkbox-checked Watching
+        else
+          span.wr-level.ck-checkbox Not Watching
+
         if live
           span.wr-live.ck-checkbox.ck-checkbox-checked Cron Job
         else

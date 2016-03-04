@@ -5,15 +5,28 @@ var taunus = require('taunus');
 
 module.exports = function (viewModel, container) {
   var liveCheck = $('.wr-live', container);
+  var levelCheck = $('.wr-level', container);
   var table = $('.wr-container', container);
 
-  liveCheck.on('click', toggle);
+  liveCheck.on('click', toggleCron);
+  levelCheck.on('click', toggleLevel);
   table.on('click', '.wr-remove', remove);
 
-  function toggle () {
+  function toggleCron () {
     viewModel.measly
       .post('/api/settings/PONYFOOWEEKLY_CRON', {
         json: { value: !viewModel.live }
+      })
+      .on('data', refresh);
+    function refresh () {
+      taunus.navigate('/author/weeklies', { force: true });
+    }
+  }
+
+  function toggleLevel () {
+    viewModel.measly
+      .post('/api/settings/PONYFOOWEEKLY_CRON_LEVEL', {
+        json: { value: viewModel.level !== 'debug' ? 'debug' : 'info' }
       })
       .on('data', refresh);
     function refresh () {
