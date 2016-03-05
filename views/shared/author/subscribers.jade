@@ -8,6 +8,9 @@ mixin pager
 article.ly-section.vw-maintainer.de-host
   h1.vw-title Subscriber Management
 
+  div.as-commands
+    a.lk-icon.fa.fa-refresh(href='/api/subscribers/poll-twitter-cards', aria-label='Refresh subscribers using Twitter card data')=' Pull from Twitter cards'
+
   header.as-actions
     +pager
 

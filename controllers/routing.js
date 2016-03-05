@@ -36,6 +36,7 @@ var weeklyFeed = require('./weekly/feed');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
+var subscriberPollTwitterCards = require('./api/subscribers/poll-twitter-cards');
 var gitOnly = require('./api/git/only');
 var gitPushArticles = require('./api/git/push-articles');
 var secretOnly = require('./api/secret/only');
@@ -94,6 +95,7 @@ module.exports = function (app) {
 
   app.put('/api/subscribers', subscriberInsert);
   app.post('/api/subscribers', verifyForm, subscriberInsert);
+  app.get('/api/subscribers/poll-twitter-cards', ownerOnly, subscriberPollTwitterCards);
   app.get('/api/subscribers/:hash/confirm', subscriberConfirm);
   app.get('/api/subscribers/:hash/unsubscribe', subscriberRemove);
 
