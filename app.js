@@ -24,6 +24,8 @@ var sitemapService = require('./services/sitemap');
 var shouldRebuild = !env('APP_REBUILD');
 var port = env('PORT');
 
+require('./services/fullFeed'); // listens for events and auto-rebuilds.
+
 function listen () {
   var app = express();
   var server = http.createServer(app);

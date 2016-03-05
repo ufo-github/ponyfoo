@@ -15,7 +15,6 @@ var newsletter = env('TWITTER_LEADS_CARD_ID_NEWSLETTER');
 function pollCards (done) {
   if (!username || !password || !ads || (!articles && !newsletter)) {
     done(new Error('Method not implemented.')); return;
-    return;
   }
 
   var tasks = [];

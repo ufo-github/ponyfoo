@@ -19,20 +19,19 @@ var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
 var markdownImageUpload = require('./api/markdown/images');
+var rssFeed = require('./feeds/rss');
 var authorEmail = require('./api/author/email');
 var authorCompute = require('./author/compute');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
 var articleShare = require('./api/articles/share');
-var articleFeed = require('./articles/feed');
 var commentInsert = require('./api/comments/insert');
 var commentRemove = require('./api/comments/remove');
 var weeklyInsert = require('./api/weeklies/insert');
 var weeklyUpdate = require('./api/weeklies/update');
 var weeklyRemove = require('./api/weeklies/remove');
 var weeklyShare = require('./api/weeklies/share');
-var weeklyFeed = require('./weekly/feed');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
@@ -70,8 +69,7 @@ module.exports = function (app) {
   app.get('/api/:secret(\\d+)/remodel', secretOnly, secretRemodel);
   app.get('/api/:secret(\\d+)/twitter-leads', secretOnly, secretTwitterLeads);
 
-  app.get('/articles/feed', articleFeed);
-  app.get('/weekly/feed', weeklyFeed);
+  app.get('/:id(articles|weekly|all)/feed', rssFeed);
   app.get('/sitemap.xml', sitemap);
 
   app.put('/api/markdown/images', markdownImageUpload);
