@@ -22,7 +22,7 @@ module.exports = function (viewModel, container) {
   var cancelReply = $('.mc-cancel-reply', container);
   var footer = $('.mm-footer', container);
   var gravatars = $('.mm-gravatar', container);
-console.log(comments)
+
   $('.mm-thread-reply', container).removeClass('uv-hidden');
 
   composer.on('keypress keydown keyup paste input', serializeSlowly);

@@ -111,86 +111,55 @@ lk-visitor(selector)
   &:before
     border-bottom-width 0
 
-.lk-green
-  /a&,
-  .lk-link
-    color c-dark-green
-
-    &:visited
-      background-color rgba(c-dark-green, 0.1)
-    &:visited .md-code-inline:before
-      background-color c-dark-green
-
-    &:focus,
-    &:active
-      outline-color c-dark-green
-    &:hover
-      border-bottom-color c-dark-green
-
 .lk-link-to-green
   color c-gray
-  &:focus,
-  &:active
-    outline-color c-dark-green
-  &:hover,
-  &:hover:before
-    color c-dark-green-05
-    border-bottom-color c-dark-green
+
   &:visited,
   &:visited:before
     color c-dark-green
     background-color c-dark-green
 
-.lk-black
+  &:focus,
+  &:active
+    outline-color c-dark-green
+
+  &:hover,
+  &:hover:before
+    color c-dark-green-05
+    border-bottom-color c-dark-green
+
+lk-color(c-color)
   /a&,
   .lk-link
-    color c-black-text
+    color c-color
+
+    if c-color != inherit
+      &:visited
+        background-color rgba(c-color, 0.1)
+      &:visited .md-code-inline:before
+        background-color c-color
 
     &:focus,
     &:active
-      outline-color c-black-text
-
-    &:visited
-      background-color rgba(c-black-text, 0.1)
-    &:visited .md-code-inline:before
-      background-color c-black-text
+      outline-color c-color
 
     &:hover
-      border-bottom-color c-black-text
+      border-bottom-color c-color
+
+.lk-green
+  lk-color(c-dark-green)
+
+.lk-black
+  lk-color(c-black-text)
 
 .lk-white
-  /a&,
-  .lk-link
-    color c-white
-
-    &:focus,
-    &:active
-      outline-color c-white
-
-    &:visited
-      background-color rgba(c-white, 0.1)
-    &:visited .md-code-inline:before
-      background-color c-white
-
-    &:hover
-      border-bottom-color c-white
+  lk-color(c-white)
 
 .lk-orange
-  /a&,
-  .lk-link
-    color c-orange-dark
+  lk-color(c-orange-dark)
 
-    &:focus,
-    &:active
-      outline-color c-orange-dark
-
-    &:visited
-      background-color rgba(c-orange-dark, 0.1)
-    &:visited .md-code-inline:before
-      background-color c-orange-dark
-
-    &:hover
-      border-bottom-color c-orange-dark
+.lk-inherited
+  lk-color(inherit)
 
 .lk-clean
   background-color transparent

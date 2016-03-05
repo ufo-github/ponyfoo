@@ -17,15 +17,12 @@ function render (container) {
     })
     .on('mouseleave', function (e) {
       $(e.target).parent().removeClass('md-heading-hover')
-    })
-    .on('click', changeHash)
+    });
 
   function wrapInline (el) {
-    return $(el).html('<span class="md-heading">' + $(el).html() + '</span>')
-  }
-
-  function changeHash (e) {
-    location.hash = $(e.target).parents('[id]').attr('id');
+    var $el = $(el);
+    var id = $el.attr('id');
+    return $el.html('<a href="#' + id + '" class="md-heading">' + $el.html() + '</a>')
   }
 }
 

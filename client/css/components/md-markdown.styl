@@ -63,7 +63,7 @@
     > ol
       margin-top 20px
 
-  a
+  a:not(.md-heading)
     lk-link()
 
   thead
@@ -84,6 +84,12 @@
     margin-left -20px
     margin-right -20px
     padding 10px 40px
+
+.md-heading
+  color inherit
+  &:focus,
+  &:active
+    outline 1px dotted c-dark-gray
 
 .md-markdown-inline
   display inline
