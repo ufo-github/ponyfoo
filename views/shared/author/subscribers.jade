@@ -37,21 +37,22 @@ article.ly-section.vw-maintainer.de-host
               a.lk-link.lk-black(href='mailto:' + s.email, target='_blank')=s.email
             td.as-verified(data-label='Verified')
               if s.verified
-                div.ck-readonly.ck-alone.ck-checkbox.ck-checkbox-checked
+                div.ck-readonly.ck-alone.ck-checkbox.ck-checked
               else
                 div.ck-readonly.ck-alone.ck-checkbox
             td(data-label='Topics')
-              each t in allTopics
-                if s.topics.indexOf(t) !== -1
-                  a.as-topic.ck-checkbox.ck-checkbox-checked(
-                    href=api + '/unsubscribe?topic=' + t + '&' + returnPath,
-                    data-taunus-ignore=true
-                  )=t
-                else
-                  a.as-topic.ck-checkbox(
-                    href=api + '/confirm?topic=' + t + '&' + returnPath,
-                    data-taunus-ignore=true
-                  )=t
+              div.as-topics
+                each t in allTopics
+                  if s.topics.indexOf(t) !== -1
+                    a.as-topic.ck-checkbox.ck-checked(
+                      href=api + '/unsubscribe?topic=' + t + '&' + returnPath,
+                      data-taunus-ignore=true
+                    )=t
+                  else
+                    a.as-topic.ck-checkbox(
+                      href=api + '/confirm?topic=' + t + '&' + returnPath,
+                      data-taunus-ignore=true
+                    )=t
 
             td(data-label='Actions')
               a.fa.fa-remove.lk-icon(

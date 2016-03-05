@@ -7,6 +7,8 @@
   background-color transparent
   overflow hidden
   &:focus
+    outline 1px dotted c-gray
+  &:active
     outline 1px dotted c-black-text
 
 .ly-custom-subheadings .bt-button
@@ -30,21 +32,21 @@
   pointer-events none
 
 .bt-purple
-  &:focus
+  &:active
     outline-color c-purple
   .bt-text
     background-color c-purple
     text-shadow 1px 1px 0 c-purple
 
 .bt-pink
-  &:focus
+  &:active
     outline-color c-pink
   .bt-text
     background-color c-pink
     text-shadow 1px 1px 0 c-pink
 
 .bt-red
-  &:focus
+  &:active
     outline-color c-red
   .bt-text
     background-color c-red

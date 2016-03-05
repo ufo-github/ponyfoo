@@ -38,22 +38,17 @@ lk-link-normal()
   border-bottom 1px solid transparent
   lk-link-visited-normal()
 
-lk-link-hover()
-  border-bottom 1px solid c-pink
-
-lk-link-focus()
-  outline 1px dotted c-pink
-
 lk-link-rare(child)
   {child}
     lk-link-normal()
-  &:focus {child},
+  &:focus {child}
+    outline 1px dotted c-gray
   &:active {child}
-    lk-link-focus()
+    outline 1px dotted c-pink
   &:visited {child}
     lk-link-visited-already()
   &:hover {child}
-    lk-link-hover()
+    border-bottom 1px solid c-pink
 
 lk-link()
   lk-link-rare('')
@@ -65,15 +60,17 @@ lk-link()
   position relative
   color c-black-text
   margin-bottom 5px
-  &:focus,
-  &:active
+  &:focus
     outline 1px dotted c-gray
+  &:active
+    outline 1px dotted c-dark-gray
   &:hover
     rainbow-pseudo()
 
 .lk-icon
   color c-black-text
-  &:focus,
+  &:focus
+    outline 1px dotted c-gray
   &:active
     outline 1px dotted c-dark-gray
   &:hover
@@ -119,7 +116,8 @@ lk-visitor(selector)
     color c-dark-green
     background-color c-dark-green
 
-  &:focus,
+  &:focus
+    outline 1px dotted c-gray
   &:active
     outline-color c-dark-green
 
@@ -139,7 +137,6 @@ lk-color(c-color)
       &:visited .md-code-inline:before
         background-color c-color
 
-    &:focus,
     &:active
       outline-color c-color
 

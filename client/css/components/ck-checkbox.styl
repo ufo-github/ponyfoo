@@ -36,16 +36,21 @@
 .ck-radio:hover:before
   color lighten(c-purple, 30%)
 
+.ck-input:focus + .ck-checkbox,
+.ck-input:focus + .ck-radio,
+.ck-checkbox:focus,
+.ck-radio:focus
+  outline 1px dotted c-gray
+
 .ck-input:active + .ck-checkbox,
 .ck-input:active + .ck-radio,
-.ck-input:focus + .ck-checkbox,
-.ck-input:focus + .ck-radio
+.ck-checkbox:active,
+.ck-radio:active
   outline 1px dotted c-dark-gray
 
 .ck-input:checked + .ck-checkbox,
 .ck-input:checked + .ck-radio,
-.ck-checkbox-checked,
-.ck-radio-checked
+.ck-checked
   &:before
     color c-true-white
     text-shadow 1px 1px 1px c-moderate
