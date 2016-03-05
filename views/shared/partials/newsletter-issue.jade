@@ -29,9 +29,11 @@ table.wy-table.wy-container
       if emailFormat
         table.wy-table
           tr
-            td.wy-td.wy-footer(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
+            td.wy-td.wy-footer-cell(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
               meta(itemprop='name', content='See web version')
               meta(itemprop='description', content='See weekly newsletter issue #' + issue.slug + ' on the web – Pony Foo')
               span(itemprop='target')
                 a.wy-read-online.lk-link.lk-clean(itemprop='url', href!=permalink) Read this issue on ponyfoo.com
-              span .
+          tr
+            td.wy-td.wy-footer-cell
+              span You can leave your feedback, comments, or suggestions in there, too!
