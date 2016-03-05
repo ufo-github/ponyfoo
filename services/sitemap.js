@@ -34,7 +34,7 @@ function getWeeklyUrls (weeklies) {
   return weeklies.map(function (weekly) {
     return {
       url: '/weekly/' + weekly.slug,
-      changefreq: 'weekly',
+      changefreq: 'daily',
       priority: 1,
       lastmod: toLastMod(weekly.updated)
     };
@@ -44,6 +44,7 @@ function getWeeklyUrls (weeklies) {
 function getOtherUrls (modified) {
   return [
     { url: '/weekly', changefreq: 'daily', lastmod: modified, priority: 1 },
+    { url: '/weekly/history', changefreq: 'daily', lastmod: modified, priority: 1 },
     { url: '/books', changefreq: 'weekly', lastmod: modified, priority: 1 },
     { url: '/books/javascript-application-design', changefreq: 'weekly', lastmod: modified, priority: 1 },
     { url: '/speaking', changefreq: 'weekly', lastmod: modified, priority: 1 },

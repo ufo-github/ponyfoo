@@ -8,6 +8,7 @@ var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 module.exports = [
   { route: '/', action: 'articles/home' },
   { route: '/p/:page([1-9][0-9]{0,})', action: 'articles/home' },
+  { route: '/all/feed', ignore: true },
   { route: '/articles/feed', ignore: true },
   { route: '/articles/history', action: 'articles/history' },
   { route: '/articles/archives', ignore: true },
