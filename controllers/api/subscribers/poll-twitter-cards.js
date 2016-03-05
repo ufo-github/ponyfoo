@@ -8,9 +8,9 @@ module.exports = function (req, res, next) {
   function completed (err) {
     if (err) {
       winston.warn(err);
-      res.flash('error', 'An error occurred while retrieving Twitter card data.');
+      req.flash('error', 'An error occurred while retrieving Twitter card data.');
     } else {
-      res.flash('success', 'Pulled interested parties from Twitter cards.');
+      req.flash('success', 'Pulled interested parties from Twitter cards.');
     }
     res.redirect('/author/subscribers');
   }
