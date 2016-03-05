@@ -41,8 +41,6 @@ lk-link-normal()
 lk-link-rare(child)
   {child}
     lk-link-normal()
-  &:focus {child}
-    outline 1px dotted c-gray
   &:active {child}
     outline 1px dotted c-pink
   &:visited {child}
@@ -60,8 +58,6 @@ lk-link()
   position relative
   color c-black-text
   margin-bottom 5px
-  &:focus
-    outline 1px dotted c-gray
   &:active
     outline 1px dotted c-dark-gray
   &:hover
@@ -69,8 +65,6 @@ lk-link()
 
 .lk-icon
   color c-black-text
-  &:focus
-    outline 1px dotted c-gray
   &:active
     outline 1px dotted c-dark-gray
   &:hover
@@ -116,8 +110,6 @@ lk-visitor(selector)
     color c-dark-green
     background-color c-dark-green
 
-  &:focus
-    outline 1px dotted c-gray
   &:active
     outline-color c-dark-green
 

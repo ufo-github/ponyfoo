@@ -4,7 +4,7 @@ ol.aa-articles
     - count = article.commentCount
     li.aa-article.dc-colored
       h2.aa-title
-        a.lk-visitor(href='/articles/' + article.slug)!=article.titleHtml
+        a.aa-title-link.lk-visitor(href='/articles/' + article.slug)!=article.titleHtml
       section.aa-summary
         div.md-markdown.md-markdown-summary!=article.summaryHtml
         a.aa-continue.lk-visitor(href='/articles/' + article.slug) Read full article
