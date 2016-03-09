@@ -24,7 +24,7 @@ module.exports = function (req, res, next) {
       }
       var challenge = cryptoService.md5(issue._id + issue.thanks);
       if (issue.statusReach === 'patrons' && thanks && thanks === challenge) {
-        done(null, issue, challenge); return;
+        handle(null, issue, challenge); return;
       }
     }
     var verify = req.query.verify;

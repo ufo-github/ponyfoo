@@ -76,7 +76,7 @@ function getAllTags (weeklyIssue) {
 }
 
 function toMetadata (doc) {
-  var released = doc.status === 'released';
+  var released = doc.status === 'released' && doc.statusReach === 'everyone';
   var permalink = '/weekly/' + doc.slug;
   if (!released) {
     permalink += '?verify=' + cryptoService.md5(doc._id + doc.created);

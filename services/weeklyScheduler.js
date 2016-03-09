@@ -48,7 +48,7 @@ function run (done) {
       findScheduledOrReady();
       return;
     }
-    if (moment(issue.publication).isBefore(moment())) {
+    if (moment().isBefore(moment(issue.publication))) {
       winston[level]('Found weekly "%s" in "patrons" status. Not ready for "everyone" yet.', issue.slug);
       end();
       return;
@@ -71,7 +71,7 @@ function run (done) {
       return;
     }
     if (issue.publication) {
-      if (moment(issue.publication).subtract(1, 'days').isBefore(moment())) {
+      if (moment().isBefore(moment(issue.publication).subtract(1, 'days'))) {
         winston[level]('Found weekly "%s" in "ready" status. Not ready for "patrons" yet!', issue.slug);
         end();
         return;
