@@ -3,13 +3,17 @@ header.dc-header
   div.dc-role Articles about JavaScript & a newsletter about all things web
 
 section.de-host
-  div.de-column.ms-container
-    form.ly-section.ss-container.at-subscribe.wt-cta(action='/api/subscribers', method='post', name='subscribe')
+  div.de-column.de-column-padded
+    form.ly-section.ss-container.wt-cta(action='/api/subscribers', method='post', name='subscribe')
       h2.vw-title Subscribe with just your email!
       div.ss-label
         ='Subscribe below to get an email when new articles come out! Also, '
         a.lk-link(href='https://twitter.com/nzgb', target='_blank') follow me on Twitter
         | .
+
+      div.ss-label.ss-unsubscribe
+        sub
+          span One-click unsubscribe, anytime.
 
       noscript
         input.uv-verify(name='verify', value='Promise not to be a bot? Clear this field!', placeholder='This field is only for tricksters...')
@@ -36,7 +40,7 @@ section.de-host
             span.su-topic-notes A single email every thursday
             span.su-topic-notes Discusses front-end web development and related technologies
 
-    div.at-subscribe
+    div
       p.ss-features-title When you subscribe, you’ll earn access to the following features:
 
       ul.ss-features

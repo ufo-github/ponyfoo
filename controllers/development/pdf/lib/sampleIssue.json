@@ -1,0 +1,226 @@
+{
+  "slug": "1",
+  "publication": {
+    "text": "March 10, 2016",
+    "title": "11:53 AM, Mar 11, 2016 (GMT -8)",
+    "datetime": "2016-03-11T19:53:57.997Z"
+  },
+  "summary": "Welcome to the first edition of **Pony Foo Weekly!**\n\nPony Foo Weekly is a newsletter discussing interesting and trending topics around the web platform. It comes out every thursday. You can learn more at [ponyfoo.com/weekly](https://ponyfoo.com/weekly).",
+  "sections": [{
+    "type": "header",
+    "size": 3,
+    "text": "Must Read",
+    "foreground": "#333",
+    "background": "#ffe270"
+  }, {
+    "type": "link",
+    "title": "How to Deploy Software",
+    "href": "https://zachholman.com/posts/deploying-software",
+    "foreground": "#e92c6c",
+    "background": "transparent",
+    "source": "Zach Holman",
+    "sourceHref": "http://twitter.com/holman",
+    "image": "",
+    "sponsored": false,
+    "tags": ["deep-dive"],
+    "description": "Zach gives a thorough -- no-frills -- deep dive into the world of deploying software.  \n_Block off a couple hours in your calendar and give this a read!_"
+  }, {
+    "type": "link",
+    "title": "How to Level-up as a Developer",
+    "href": "https://medium.freecodecamp.com/how-to-level-up-as-a-developer-87344584777c",
+    "foreground": "#e92c6c",
+    "background": "transparent",
+    "source": "Will Hughes -- Facebook",
+    "sourceHref": "https://www.facebook.com/lliw",
+    "image": "",
+    "sponsored": false,
+    "tags": ["best-practices"],
+    "description": "A Facebook engineer goes deep into what matters in moving forward in your career as a Software Engineer."
+  }, {
+    "type": "link",
+    "title": "Server-side Rendering with React, Node and Express",
+    "href": "https://www.smashingmagazine.com/2016/03/server-side-rendering-react-node-express/",
+    "foreground": "#e92c6c",
+    "background": "transparent",
+    "source": "Dmitry Nutels -- Smashing Magazine",
+    "sourceHref": "https://www.smashingmagazine.com/author/dmitrynutels/",
+    "image": "",
+    "sponsored": false,
+    "tags": ["tutorial"],
+    "description": "It's no secret I'm a big proponent of server-side rendering. Here's an excellent guide to server-side rendering when it comes to Node.js and React."
+  }, {
+    "type": "link",
+    "title": "Tumblr Performance Case Study",
+    "href": "https://docs.google.com/document/d/1E2w0UQ4RhId5cMYsDcdcNwsgL0gP_S6SDv27yi1mCEY/edit",
+    "foreground": "#e92c6c",
+    "background": "transparent",
+    "source": "Sam Saccone -- Google",
+    "sourceHref": "https://twitter.com/samccone",
+    "image": "https://i.imgur.com/yoDUFEe.png",
+    "sponsored": false,
+    "tags": ["performance"],
+    "description": "Lately, Sam has analyzed the performance for half a dozen sites and providing detailed -- actionable -- feedback on how the situation could be improved. Keep an eye out for his case studies."
+  }, {
+    "type": "link",
+    "title": "ES6 Overview in 350 Bullet Points",
+    "href": "https://ponyfoo.com/articles/es6",
+    "foreground": "#e92c6c",
+    "background": "transparent",
+    "source": "Nicolás Bevacqua -- Pony Foo",
+    "sourceHref": "http://twitter.com/nzgb",
+    "image": "",
+    "sponsored": false,
+    "tags": ["article"],
+    "description": "Playing catch up with the latest and greatest in JavaScript? Read through this article where you can quickly learn about every feature in ES6. Note that there's also [a series of articles on ES6](https://ponyfoo.com/articles/tagged/es6-in-depth \"ES6 in Depth\") that go more in depth if that's your cup of tea.\n\nWhen you're done, maybe also [learn about ES2016](https://ponyfoo.com/articles/es2016-features-and-ecmascript-as-a-living-standard \"ES2016 Features & ECMAScript as a Living Standard\")."
+  }, {
+    "type": "header",
+    "size": 3,
+    "text": "Inspiration",
+    "foreground": "#f2fcf2",
+    "background": "#1bc211"
+  }, {
+    "type": "link",
+    "title": "Art and Math and Science, Oh My!",
+    "href": "https://medium.com/@sailorhg/art-and-math-and-science-oh-my-f1dc4ebb3223",
+    "foreground": "#1bc211",
+    "background": "transparent",
+    "source": "Amy W. -- Medium",
+    "sourceHref": "https://twitter.com/sailorhg",
+    "image": "",
+    "sponsored": false,
+    "tags": ["point-of-view"],
+    "description": "Amy wrote a brilliant piece on Medium about her passions: art and science. It's a very inspirational piece and I don't want to spoil it for you _-- go read it!_"
+  }, {
+    "type": "link",
+    "title": "Low Poly Tree Generator",
+    "href": "http://codepen.io/Yakudoo/pen/pgPgeb",
+    "foreground": "#1bc211",
+    "background": "transparent",
+    "source": "Karim Maaloul -- CodePen",
+    "sourceHref": "http://codepen.io/Yakudoo/",
+    "image": "https://i.imgur.com/0faqfVv.png",
+    "sponsored": false,
+    "tags": ["demo"],
+    "description": "It doesn't get much more inspirational than this polygon tree generator. Karim is always sharing this kind of stuff on CodePen, so you might want to [visit his profile](http://codepen.io/Yakudoo/) once in a while for a dose of web-based inspiration."
+  }, {
+    "type": "link",
+    "title": "Build the Virtual Reality Web with A-Frame",
+    "href": "https://hacks.mozilla.org/2016/03/build-the-virtual-reality-web-with-a-frame/",
+    "foreground": "#1bc211",
+    "background": "transparent",
+    "source": "Kevin Ngo -- Mozilla",
+    "sourceHref": "https://twitter.com/ngokevin_",
+    "image": "https://i.imgur.com/MZMlmLR.png",
+    "sponsored": false,
+    "tags": ["news"],
+    "description": "Mozilla just released [`A-Frame`](https://hacks.mozilla.org/2016/03/build-the-virtual-reality-web-with-a-frame/ \"Building blocks for the\nvirtual reality web\"), which allows you to create **3D and VR experiences** on the Web. It looks pretty A-Mazing."
+  }, {
+    "type": "link",
+    "title": "GPU rendering in Servo with WebRender",
+    "href": "https://air.mozilla.org/bay-area-rust-meetup-february-2016/",
+    "foreground": "#1bc211",
+    "background": "transparent",
+    "source": "Patrick Walton -- Mozilla",
+    "sourceHref": "https://twitter.com/pcwalton",
+    "image": "",
+    "sponsored": false,
+    "tags": ["talk"],
+    "description": "Mozilla again, this time with a talk about Servo -- their next-generation browser engine in the works. This highly technical talk describes how WebRender can deliver high performance graphics even in the most bloated animation scenarios.\n\n> We've essentially removed painting as a bottleneck in Servo.\n  \n<sub>The talk starts at 1:50.</sub>"
+  }, {
+    "type": "header",
+    "size": 3,
+    "text": "Web Animations",
+    "foreground": "#fcf0f4",
+    "background": "#ff0056"
+  }, {
+    "type": "markdown",
+    "text": "I've been meaning to learn more about web animations. Particularly, I was interested in learning the fundamentals of what makes a *good animation* (tm). [I asked on Twitter](https://twitter.com/nzgb/status/702692180670992384) and I got several links to great articles on animating content for the web."
+  }, {
+    "type": "link",
+    "title": "Animation Principles for the Web",
+    "href": "https://cssanimation.rocks/principles/",
+    "foreground": "#ff0056",
+    "background": "transparent",
+    "source": "Donovan Hutchinson -- cssanimation.rocks",
+    "sourceHref": "https://twitter.com/donovanh",
+    "image": "",
+    "sponsored": false,
+    "tags": ["introductory"],
+    "description": "Disney's 12 basic principles of animation applied to CSS with beautiful examples and transition animations.  \nIf you only have to pick one article about CSS animation -- make it this one!"
+  }, {
+    "type": "link",
+    "title": "The Importance of Context-Shifting in UX Patterns",
+    "href": "https://css-tricks.com/the-importance-of-context-shifting-in-ux-patterns/",
+    "foreground": "#ff0056",
+    "background": "transparent",
+    "source": "Sarah Drasner -- CSS-Tricks",
+    "sourceHref": "https://twitter.com/sarah_edo",
+    "image": "",
+    "sponsored": false,
+    "tags": ["article"],
+    "description": "Sarah underpins the importance of making context changes more clear through the use of transition animations.  \nYou may also want to read [About Face (book)](http://amzn.to/1SD0KXQ), if you're interested in learning more about UX and generally treating \"users\" as if they were humans."
+  }, {
+    "type": "link",
+    "title": "Icon Animations Powered by mo.js",
+    "href": "http://tympanus.net/codrops/2016/02/23/icon-animations-powered-by-mo-js/",
+    "foreground": "#ff0056",
+    "background": "transparent",
+    "source": "Mary Lou -- Codrops",
+    "sourceHref": "https://twitter.com/crnacura",
+    "image": "",
+    "sponsored": false,
+    "tags": ["demo"],
+    "description": "A tutorial about a powerful animations library. While I wouldn't be particularly fond of using a library for this type of feature, the article positively brims with ideas. Check out [the demos](http://tympanus.net/Development/Animocons/ \"Animated Icons with mo.js\")."
+  }, {
+    "type": "header",
+    "size": 3,
+    "text": "Open-Source",
+    "foreground": "#fcf8f5",
+    "background": "#f3720d"
+  }, {
+    "type": "link",
+    "title": "What's New in jQuery 3",
+    "href": "http://developer.telerik.com/featured/whats-new-in-jquery-3/",
+    "foreground": "#f3720d",
+    "background": "transparent",
+    "source": "Aurelio De Rosa -- Telerik",
+    "sourceHref": "https://twitter.com/AurelioDeRosa",
+    "image": "",
+    "sponsored": false,
+    "tags": ["news"],
+    "description": "jQuery 3 is here and -- although it didn't change a whole lot -- there's enough changes to the API that you might want to take a glance at this article, to cover your ground."
+  }, {
+    "type": "link",
+    "title": "Babel's Architectural Roadmap",
+    "href": "https://phabricator.babeljs.io/T7154#75322",
+    "foreground": "#f3720d",
+    "background": "transparent",
+    "source": "Amjad Masad -- Facebook",
+    "sourceHref": "https://twitter.com/amasad",
+    "image": "",
+    "sponsored": false,
+    "tags": ["open-source"],
+    "description": "Amjad sheds some light into what Babel core team members are thinking in terms of the future of Babel's internal architecture."
+  }, {
+    "type": "link",
+    "title": "domenic/especially",
+    "href": "https://github.com/domenic/especially",
+    "foreground": "#f3720d",
+    "background": "transparent",
+    "source": "Domenic Denicola -- Google",
+    "sourceHref": "https://twitter.com/domenic",
+    "image": "",
+    "sponsored": false,
+    "tags": ["code"],
+    "description": "Abstract operations and other functions drawn from the ECMAScript specification."
+  }, {
+    "type": "header",
+    "size": 3,
+    "text": "Helping Hands Wanted!",
+    "foreground": "#f7f0f5",
+    "background": "#900070"
+  }, {
+    "type": "markdown",
+    "text": "Feel free to send interesting links our way: [tips@ponyfoo.com](mailto:tips@ponyfoo.com).\n\nYou can [become a patron](https://www.patreon.com/bevacqua) and get the newsletter a full day earlier.\n\nThere's also sponsorship opportunities for companies, feel free to contact us at: [sponsor@ponyfoo.com](mailto:sponsor@ponyfoo.com)."
+  }]
+}

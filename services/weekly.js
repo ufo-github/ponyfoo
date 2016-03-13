@@ -8,17 +8,28 @@ var commentService = require('./comment');
 var datetimeService = require('./datetime');
 var summaryService = require('./summary');
 var markupService = require('./markup');
+var htmlService = require('./html');
 var cryptoService = require('./crypto');
 
-function insert (model, done) {
+function compile (model, done) {
   weeklyCompilerService.compile(model.sections, { markdown: markupService }, compiled);
   function compiled (err, html) {
     if (err) {
       done(err); return;
     }
-    model.summaryHtml = markupService.compile(model.summary);
+    model.summaryHtml = markupService.compile(model.summary, { absolutize: true });
     model.summaryText = summaryService.summarize(model.summaryHtml).text;
-    model.contentHtml = html;
+    model.contentHtml = htmlService.absolutize(html);
+    done(null, model);
+  }
+}
+
+function insert (model, done) {
+  compile(model, compiled);
+  function compiled (err, model) {
+    if (err) {
+      done(err); return;
+    }
     var doc = new WeeklyIssue(model);
     doc.save(but(done));
   }
@@ -37,21 +48,21 @@ function update (options, done) {
     if (!issue) {
       done(new Error('Weekly issue not found.')); return;
     }
-    weeklyCompilerService.compile(model.sections, { markdown: markupService }, compiled);
-    function compiled (err, html) {
+    compile(model, compiled);
+    function compiled (err, model) {
       if (err) {
         done(err); return;
+      }
+      if (issue.status !== 'released') {
+        issue.status = model.status;
       }
       issue.updated = Date.now();
       issue.slug = model.slug;
       issue.sections = model.sections;
-      issue.contentHtml = html;
-      if (issue.status !== 'released') {
-        issue.status = model.status;
-      }
       issue.summary = model.summary;
-      issue.summaryHtml = markupService.compile(issue.summary);
-      issue.summaryText = summaryService.summarize(issue.summaryHtml).text;
+      issue.summaryHtml = model.summaryHtml;
+      issue.summaryText = model.summaryText;
+      issue.contentHtml = model.contentHtml;
       issue.email = model.email;
       issue.tweet = model.tweet;
       issue.fb = model.fb;
@@ -94,7 +105,7 @@ function toMetadata (doc) {
   };
 }
 
-function toView (doc, comments) {
+function toView (doc) {
   return commentService.hydrate({
     name: doc.name,
     slug: doc.slug,
@@ -114,6 +125,7 @@ function toHistory (doc) {
 }
 
 module.exports = {
+  compile: compile,
   insert: insert,
   update: update,
   toMetadata: toMetadata,

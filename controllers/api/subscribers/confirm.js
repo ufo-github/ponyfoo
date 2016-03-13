@@ -5,14 +5,15 @@ var subscriberService = require('../../../services/subscriber');
 var unfold = require('./lib/unfold');
 
 function remove (req, res, next) {
+  var topics = req.query.topic;
+  if (typeof topics === 'string') { topics = [topics]; }
+
   contra.waterfall([
     contra.curry(unfold, req, res),
     confirm
   ], respond);
 
   function confirm (email, next) {
-    var topics = req.query.topic;
-    if (typeof topics === 'string') { topics = [topics]; }
     if (Array.isArray(topics)) {
       subscriberService.confirmTopics(email, topics, next);
     } else {
@@ -31,9 +32,15 @@ function remove (req, res, next) {
     }
     if (req.query.returnTo) {
       res.redirect(req.query.returnTo);
+    } else if (Array.isArray(topics)) {
+      res.redirect('/subscribed' + topics.reduce(toKeyValue, ''));
     } else {
-      res.redirect('/subscribe');
+      res.redirect('/subscribed');
     }
+  }
+  function toKeyValue (query, topic, i) {
+    var connector = i === 0 ? '?' : '&';
+    return query + connector + topic;
   }
 }
 

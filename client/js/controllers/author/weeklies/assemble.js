@@ -35,6 +35,7 @@ function ready (viewModel, container, route) {
   var tools = $('.wa-tool', toolbox);
   var slug = $('.wa-slug');
   var status = $('.wa-status');
+  var summaryEditor = $.findOne('.wa-summary-editor', container);
   var summary = $('.wa-summary');
   var email = $('#wa-campaign-email');
   var tweet = $('#wa-campaign-tweet');
@@ -45,7 +46,6 @@ function ready (viewModel, container, route) {
   var discardButton = $('.wa-discard');
   var saveButton = $('.wa-save');
   var preview = $('.wa-preview');
-  var previewSummary = $('.wy-summary', preview);
   var previewHtml = $('.wy-content', preview);
   var drakeTools = dragula([editor, toolbox], {
     moves: toolMoves,
@@ -63,7 +63,7 @@ function ready (viewModel, container, route) {
     .on('click', '.wa-section-toggle', toggleSection)
     .on('click', '.wa-section-clone', cloneSection)
     .on('change', '.wa-color-picker', pickedColor)
-    .and(summary)
+    .and(summaryEditor)
       .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
 
   drakeSort.on('drop', updatePreviewSlowly);
@@ -100,12 +100,14 @@ function ready (viewModel, container, route) {
 
   function updatePreview () {
     weeklyCompiler.compile(getModel().sections, { markdown: markdownService }, compiled);
-    previewSummary.html(markdownService.compile(summary.value()));
     function compiled (err, html) {
       if (err) {
         html = textService.format('<pre class="wa-error">%s</pre>', err);
       }
       previewHtml.html(html);
+      var previewSummary = $('.wy-section-summary', preview);
+      var summaryHtml = markdownService.compile(summary.value());
+      previewSummary.html(summaryHtml);
     }
   }
 

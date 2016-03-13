@@ -4,6 +4,9 @@ var notFound = '/not-found';
 var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
+  if (res.ignoreNotFound) {
+    next(); return;
+  }
   res.status(404);
   res.viewModel = {
     model: {

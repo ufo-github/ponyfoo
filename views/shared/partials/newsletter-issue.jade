@@ -1,5 +1,5 @@
 - permalink = permalink || authority + '/weekly/' + issue.slug
-table.wy-table.wy-container
+table.wy-table.wy-container.table-not-responsive
   tr
     td.wy-td
       table.wy-table
@@ -9,7 +9,7 @@ table.wy-table.wy-container
             a.wy-issue.lk-link.lk-black.lk-clean(href=permalink)
               span='Issue #' + issue.slug
               span=' \u2014 '
-              span(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
+              span.wy-issue-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
       if thanks
         table.wy-table
           tr

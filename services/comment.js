@@ -17,10 +17,10 @@ function toJSON (comment) {
 }
 
 function hydrate (target, doc) {
-  if (doc.populated('comments')) {
+  if (doc.populated && doc.populated('comments')) {
     target.commentThreads = doc.comments.sort(byPublication).reduce(threads, []);
   }
-  target.commentCount = doc.comments.length;
+  target.commentCount = doc.comments ? doc.comments.length : 0;
   return target;
 }
 

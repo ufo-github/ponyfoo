@@ -1,0 +1,77 @@
+article.mki-container
+  header.mk-header
+    div.mk-header-piece.mk-header-logo.go-logo-container
+      a.go-anchor.gg-container(href=authority)
+        img.go-logo-image(src=authority + '/img/ponyfoo.png', alt='Pony Foo')
+      span.mk-header-domain.go-text
+        a.lk-rainbows(href=authority) ponyfoo.com
+
+    div.mk-header-piece.mk-title
+      h1.dc-heading Media Kit &mdash; Pony Foo
+      div.dc-role Learn everything about our sponsorship opportunities!
+
+  div.mki-intro We strive to help the front-end development community by maintaining an up-to-date blog filled with editorials, walk-throughs, and insight into the latest web technologies.
+
+img(src=authority + '/img/articles.png', alt='')
+
+article.mk-section.mka-container
+  div.mka-content
+    h1.mk-section-title.mka-title
+      a.lk-link.lk-green.lk-clean(href=authority) Pony Foo
+      span=' '
+      span launched in 2012.
+    div.mka-description.md-markdown
+      p
+        span Pony Foo delivers fresh content every week to an audience of over 30,000 front-end engineers and developers. Our publications often contain practical insight & advice, how-to guides, performance analysis, exploration of library internals, and easily digestible interpretations of complex specifications &mdash; meant for a broader audience.
+      p
+        em='Today, '
+        span Pony Foo houses a weekly newsletter, as well as a showcase for open-source projects, books, and conference presentations.
+
+  div.mka-book
+    img(src=authority + '/img/javascript-application-design.jpg', alt='')
+
+  div.mka-speaking
+    img.mka-speaking-image(src=authority + '/img/speaking.jpg', alt='')
+
+article.mk-section.mk-weekly
+  h1.mk-section-title.mk-weekly-title Pony Foo Weekly
+  h2.mk-section-teaser.mk-weekly-teaser
+    span The best content around the web
+    span=' '
+    em &mdash; every week.
+
+  section.mk-section-third
+    div.cr-overflow
+      div.cr-wrapper
+        div.cr-titlebar
+          span.cr-icon.cr-close
+          span.cr-icon.cr-minimize
+          span.cr-icon.cr-maximize
+          span.cr-title
+            img.cr-favicon(src=authority + '/img/ponyfoo.png', alt='Pony Foo')
+            span='Issue #' + issue.slug
+            span=' \u2014 Pony Foo Weekly'
+        div.cr-content
+          include ../../shared/partials/newsletter-issue
+
+  section.mk-section-third.mk-weekly-features
+    ul
+      li A single email delivered every thursday
+      li Tailored by & for web platform engineers
+      li Inspirational & educational content
+      li Commentary providing additional insight
+      li Accessible via email, web, mobile, & RSS
+      li.mk-weekly-ad
+        span Highly targeted &
+        strong=' relevant '
+        span advertisement
+
+  section.mk-section-third.mk-weekly-email-sample
+    img(src=authority + '/img/ponyfooweekly-sample.png', alt='')
+
+//- Page about sponsorship opportunities
+article.mk-section
+
+//- Cta: email to sponsor@ponyfoo.com
+article.mk-section
+

@@ -28,8 +28,8 @@ function share (issue, done) {
   if (done === void 0) {
     done = noop;
   }
+  // NOTE: for weekly newsletters, sharing does not include emails.
   contra.concurrent([
-    curried('email', email),
     curried('tweet', tweet),
     curried('fb', facebook),
     curried('echojs', echojs),
@@ -71,7 +71,7 @@ function email (issue, options, done) {
   var thanks = options.thanks ? ('?thanks=' + cryptoService.md5(issue._id + options.thanks)) : '';
   var relativePermalink = '/weekly/' + issue.slug + thanks;
   var permalink = authority + relativePermalink;
-  var issueModel = weeklyService.toView(issue, false);
+  var issueModel = weeklyService.toView(issue);
   var model = {
     subject: issue.name + ' \u2014 Pony Foo Weekly',
     teaser: 'This week’s Web Platform news & inspiration',
@@ -129,8 +129,6 @@ function getTitle (issue) {
 }
 
 function tweet (issue, options, done) {
-  var tagPair = '#' + issue.tags.slice(0, 2).join(' #');
-  var tagText = textService.hyphenToCamel(tagPair);
   var headline = randomHeadline(options);
   var tweetLength = 0;
   var tweetLines = [];
@@ -138,16 +136,16 @@ function tweet (issue, options, done) {
 
   // sorted by importance: link, title, cta, headline, hashtag.
   add(3, randomMailEmoji() + ' ' + statusLink(issue), 2 + 24);
-  add(1, randomMailEmoji() + ' ' + title, 2 + title.length);
+  add(0, randomMailEmoji() + ' ' + title, 2 + title.length);
   add(4, card, 25);
-  add(0, randomMailEmoji() + ' ' + headline, 2 + headline.length);
-  add(2, randomMailEmoji() + ' ' + '#ponyfooweekly', 2 + 14); // no extra new line here
+  add(1, randomMailEmoji() + ' ' + '#ponyfooweekly', 2 + 14); // no extra new line here
+  add(2, randomMailEmoji() + ' ' + 'Read, comment & subscribe ⤵️', 2 + 28);
 
   var status = tweetLines.filter(notEmpty).join('\n');
 
   twitterService.tweet(status, done);
 
-  function add (i, contents, length) {
+  function add (i, contents, length) {console.log(tweetLength)
     if (tweetLength + length + 1 > 140) {
       return; // avoid going overboard
     }

@@ -37,6 +37,7 @@ module.exports = [
   { route: '/presentations', action: 'speaking/presentations' },
   { route: '/presentations/:slug', action: 'speaking/presentation' },
   { route: '/subscribe', action: 'marketing/subscribe' },
+  { route: '/subscribed', action: 'marketing/subscribed' },
   { route: '/unsubscribed', action: 'marketing/unsubscribed' },
   { route: '/account/login', action: 'account/login' },
   { route: '/account/login/:provider', ignore: true },
@@ -59,7 +60,8 @@ module.exports = [
   { route: '/author/subscribers/:page([1-9][0-9]{0,})?', action: 'author/subscribers', middleware: ownerOnly },
   { route: '/author/settings', action: 'author/settings', middleware: ownerOnly },
   { route: '/privacy', action: 'marketing/privacy' },
-  { route: '/s/:shortlink', ignore: true },
+  { route: '/bf/:shortlink?', ignore: true },
+  { route: '/s/:shortlink?', ignore: true },
   { route: '/offline', action: 'error/offline' },
   { route: '/*', action: 'error/not-found' }
 ];

@@ -1,14 +1,12 @@
 'use strict';
 
-var version = 'v16::';
+var version = 'v19::';
 var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
 var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var env = require('../../lib/env');
 var swivel = require('swivel');
 var parse = require('omnibox/querystring').parse;
 var sw = require('./lib/sw');
-var ignoreprefixes = ['api', 'author', 'account', 'bf', 's', 'subscribe', 'unsubscribed'];
-var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
 var offlineFundamentals = [
   '/',
   '/offline',
@@ -17,6 +15,20 @@ var offlineFundamentals = [
   mysteryMan,
   rainbows
 ];
+var ignoreprefixes = [
+  'api',
+  'bf',
+  's'
+];
+var fetchfirstprefixes = [
+  'author',
+  'account',
+  'subscribe',
+  'subscribed',
+  'unsubscribed'
+];
+var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
+var rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
 
 self.addEventListener('install', installer);
 self.addEventListener('activate', activator);
@@ -60,15 +72,28 @@ function fetcher (e) {
   if (sameorigin && rignoreprefixes.test(url.pathname)) {
     return; // ignore
   }
+  if (sameorigin && rfetchfirstprefixes.test(url.pathname)) {
+    e.respondWith(caches.match(request).then(fetchFirst)); return;
+  }
   if (request.url.indexOf('https://maps.googleapis.com/maps/vt') === 0) {
     return; // ignore
   }
-  e.respondWith(caches.match(request).then(queriedCache));
+  e.respondWith(caches.match(request).then(cacheFirst));
 
-  function queriedCache (cached) {
+  function fetchFirst (cached) {
+    return respondBasedOnCache(cached, true);
+  }
+  function cacheFirst (cached) {
+    return respondBasedOnCache(cached, false);
+  }
+  function respondBasedOnCache (cached, fetchFirst) {
     var networked = fetch(request)
       .then(fetchedFromNetwork, unableToResolve)
       .catch(unableToResolve);
+
+    if (fetchFirst) {
+      return networked;
+    }
     return cached || networked;
 
     function fetchedFromNetwork (response) {
@@ -118,30 +143,33 @@ function fetcher (e) {
         });
       }
     }
+
+    function unableToResolve () {
+      if (fetchFirst && cached) {
+        return cached;
+      }
+      var accepts = request.headers.get('Accept');
+      if (sameorigin && accepts.indexOf('application/json') !== -1) {
+        return offlineView();
+      }
+      if (accepts.indexOf('image') !== -1) {
+        if (url.host === 'www.gravatar.com') {
+          return caches.match(mysteryMan);
+        }
+        if (accepts.indexOf('html') === -1) {
+          return caches.match(rainbows);
+        }
+      }
+      if (sameorigin) {
+        return caches.match('/offline');
+      }
+      return offlineResponse();
+    }
   }
 
   function matchesType (response, type) {
     var contentType = response.headers.get('Content-Type');
     return contentType && contentType.indexOf(type) !== -1;
-  }
-
-  function unableToResolve () {
-    var accepts = request.headers.get('Accept');
-    if (sameorigin && accepts.indexOf('application/json') !== -1) {
-      return offlineView();
-    }
-    if (accepts.indexOf('image') !== -1) {
-      if (url.host === 'www.gravatar.com') {
-        return caches.match(mysteryMan);
-      }
-      if (accepts.indexOf('html') === -1) {
-        return caches.match(rainbows);
-      }
-    }
-    if (sameorigin) {
-      return caches.match('/offline');
-    }
-    return offlineResponse();
   }
 
   function offlineView () {

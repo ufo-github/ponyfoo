@@ -3,8 +3,8 @@
 var links = require('../../dat/shortlinks.json');
 
 function setup (app) {
-  app.get('/bf/:shortlink', expander);
-  app.get('/s/:shortlink', expander);
+  app.get('/bf/:shortlink?', expander);
+  app.get('/s/:shortlink?', expander);
 }
 
 function expander (req, res, next) {

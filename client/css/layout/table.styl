@@ -14,17 +14,35 @@ td
     display block
   tr
     display block
-    margin-bottom 30px
     background-color rgba(c-yellow-highlight, 0.1)
+    margin-bottom 30px
     &:nth-child(even)
       background-color rgba(c-yellow, 0.2)
-  tr:last-child
-    margin-bottom 0
+    &:last-child
+      margin-bottom 0
   td
     display block
-  td:before
-    display block
-    content attr(data-label)
-    color c-blue
-    font-size 13px
-    margin 0 0 5px
+    &:before
+      display block
+      content attr(data-label)
+      color c-blue
+      font-size 13px
+      margin 0 0 5px
+
+.table-not-responsive
+  table
+    display table
+  thead
+    display table-row-group
+  tbody
+    display table-row-group
+  tr
+    display table-row
+    background-color transparent
+    margin-bottom 0
+    &:nth-child(even)
+      background-color transparent
+  td
+    display table-cell
+    &:before
+      content none

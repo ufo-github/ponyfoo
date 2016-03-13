@@ -9,7 +9,7 @@ var listNames = {
 };
 
 module.exports = function (req, res, next) {
-  var topic = req.params.topic;
+  var topic = req.query.topic;
   var topicText = topic ? topicTexts[topic] || topic : 'our mailing list';
   var description = 'You’ve successfully unsubscribed from ' + topicText + '!';
   var listName = listNames[topic] || topic;

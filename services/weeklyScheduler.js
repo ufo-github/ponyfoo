@@ -159,7 +159,13 @@ function run (done) {
   }
   function sendToEveryoneElse (issue) {
     winston[level]('Weekly "%s" being emailed to everyone.', issue.slug);
-    weeklySharingService.email(issue, { patrons: 'no' }, end);
+    weeklySharingService.email(issue, { patrons: 'no' }, postToSocialMedia);
+    function postToSocialMedia (err) {
+      if (err) {
+        end(err); return;
+      }
+      weeklySharingService.share(issue, end);
+    }
   }
   function end (err) {
     log(err);

@@ -7,11 +7,12 @@ var Article = require('../models/Article');
 var email = env('GA_EMAIL');
 var privateKey = env('GA_PRIVATE_KEY');
 var profile = env('GA_PROFILE');
+var enabled = env('POPULAR_ARTICLES');
 var analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
 var rdigits = /^[\d.]+$/;
 
 function getArticles (done) {
-  if (!email || !privateKey || !profile) {
+  if (!enabled || !email || !privateKey || !profile) {
     done(null, []); return;
   }
   var jwt = new google.auth.JWT(

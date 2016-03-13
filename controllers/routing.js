@@ -45,6 +45,7 @@ var secretRemodel = require('./api/secret/remodel');
 var secretTwitterLeads = require('./api/secret/twitter-leads');
 var apiErrorNotFound = require('./api/error/notFound');
 var lastSentEmail = require('./development/lastSentEmail');
+var mediaKit = require('./development/pdf/mediakit');
 var cspReport = require('./api/cspReport');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
@@ -115,6 +116,7 @@ module.exports = function (app) {
   app.get('/account/verify-email/:token([a-f0-9]{24})', verifyAccountEmail);
 
   if (!production) {
+    app.get('/dev/mediakit', mediaKit);
     app.get('/dev/last-email', lastSentEmail);
   }
 
