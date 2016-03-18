@@ -43,6 +43,7 @@ function ready (viewModel, container, route) {
   var echojs = $('#wa-campaign-echojs');
   var hn = $('#wa-campaign-hn');
   var lobsters = $('#wa-campaign-lobsters');
+  var toggleSectionsButton = $('.wa-toggle-sections');
   var discardButton = $('.wa-discard');
   var saveButton = $('.wa-save');
   var preview = $('.wa-preview');
@@ -75,8 +76,20 @@ function ready (viewModel, container, route) {
   tools.on('click', pickedTool);
   discardButton.on('click', discard);
   saveButton.on('click', save);
+  toggleSectionsButton.on('click', toggleSections);
   updatePublication();
   updatePreview();
+
+  function toggleSections () {
+    var sections = $('.wa-section', editor).but('[data-tool="header"]');
+    var contents = sections.find('.wa-section-contents');
+    var hidden = contents.where('.uv-hidden');
+    if (hidden.length === contents.length) {
+      contents.removeClass('uv-hidden');
+    } else {
+      contents.addClass('uv-hidden');
+    }
+  }
 
   function updatePublication () {
     if (released) {

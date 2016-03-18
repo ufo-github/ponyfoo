@@ -2,7 +2,7 @@ article.mki-container
   header.mk-header
     div.mk-header-piece.mk-header-logo.go-logo-container
       a.go-anchor.gg-container(href=authority)
-        img.go-logo-image(src=authority + '/img/ponyfoo.png', alt='Pony Foo')
+        img.go-logo-image(src='/img/ponyfoo.png', alt='Pony Foo')
       span.mk-header-domain.go-text
         a.lk-rainbows(href=authority) ponyfoo.com
 
@@ -12,7 +12,7 @@ article.mki-container
 
   div.mki-intro We strive to help the front-end development community by maintaining an up-to-date blog filled with editorials, walk-throughs, and insight into the latest web technologies.
 
-img(src=authority + '/img/articles.png', alt='')
+img(src='/img/articles.png', alt='')
 
 article.mk-section.mka-container
   div.mka-content
@@ -28,19 +28,20 @@ article.mk-section.mka-container
         span Pony Foo houses a weekly newsletter, as well as a showcase for open-source projects, books, and conference presentations.
 
   div.mka-book
-    img(src=authority + '/img/javascript-application-design.jpg', alt='')
+    a(href=authority + '/books/javascript-application-design')
+      img(src='/img/javascript-application-design.jpg', alt='')
 
   div.mka-speaking
-    img.mka-speaking-image(src=authority + '/img/speaking.jpg', alt='')
+    img.mka-speaking-image(src='/img/speaking.jpg', alt='')
 
-article.mk-section.mk-weekly
-  h1.mk-section-title.mk-weekly-title Pony Foo Weekly
-  h2.mk-section-teaser.mk-weekly-teaser
+article.mk-section.mkw-container
+  h1.mk-section-title.mkw-title Pony Foo Weekly
+  h2.mk-section-teaser.mkw-teaser
     span The best content around the web
     span=' '
     em &mdash; every week.
 
-  section.mk-section-third
+  section.mk-section-third.mkw-reader
     div.cr-overflow
       div.cr-wrapper
         div.cr-titlebar
@@ -48,30 +49,85 @@ article.mk-section.mk-weekly
           span.cr-icon.cr-minimize
           span.cr-icon.cr-maximize
           span.cr-title
-            img.cr-favicon(src=authority + '/img/ponyfoo.png', alt='Pony Foo')
-            span='Issue #' + issue.slug
+            img.cr-favicon(src='/img/ponyfoo.png', alt='Pony Foo')
+            span='Issue #' + sampleIssue.slug
             span=' \u2014 Pony Foo Weekly'
         div.cr-content
+          - this.issue = sampleIssue
           include ../../shared/partials/newsletter-issue
 
-  section.mk-section-third.mk-weekly-features
+  section.mk-section-third.mkw-features
     ul
       li A single email delivered every thursday
       li Tailored by & for web platform engineers
       li Inspirational & educational content
       li Commentary providing additional insight
       li Accessible via email, web, mobile, & RSS
-      li.mk-weekly-ad
+      li.mkw-ad
         span Highly targeted &
         strong=' relevant '
         span advertisement
 
-  section.mk-section-third.mk-weekly-email-sample
-    img(src=authority + '/img/ponyfooweekly-sample.png', alt='')
+  section.mk-section-third.mkw-email-sample
+    img(src='/img/ponyfooweekly-sample.png', alt='')
 
-//- Page about sponsorship opportunities
+article.mk-section.mks-container
+  header
+    h1.mks-header Pony Foo Weekly Sponsorship Tiers
+  section.mk-section-third.mks-section
+    h1.mks-section-header
+      div.mks-heading Primary Sponsorship
+      div.mks-pricing $60
+
+    div.mks-description
+      div A prominent link, along with a description, an image, and your company name. Links in this tier look just like the rest of our content, but are marked as sponsored content.
+      div
+        span Guaranteed to be
+        em=' inserted within the top 8 links '
+        span of any given newsletter issue.
+
+  section.mk-section-third.mks-section
+    h1.mks-section-header
+      div.mks-heading Sponsored Link
+      div.mks-pricing $40
+
+    div.mks-description
+      div A link, along with a description, your company name, and a content type tag. Links in this tier look just like the rest of our content, but are marked as sponsored content.
+      div Insertion position is not guaranteed. Sponsored links are scattered throughout each newsletter issue.
+
+  section.mk-section-third.mks-section
+    h1.mks-section-header
+      div.mks-heading Job Listing
+      div.mks-pricing $25
+
+    div.mks-description
+      div A link, along with a description, and your company name. Solely for companies seeking to offer jobs (full-time, part-time, or contract) or hiring-related services.
+      div Job listings are grouped together around the middle of each newsletter issue.
+
+article.mk-section.mks-container.mks-separator
+  section.mk-section-third.mks-section.mks-primary
+    div.mks-example
+      - this.knownTags = knownTags
+      - this.item = samplePrimary
+      include ../../shared/partials/weekly/link
+
+  section.mk-section-third.mks-section
+    div.mks-example
+      - this.knownTags = knownTags
+      - this.item = sampleLink
+      include ../../shared/partials/weekly/link
+
+  section.mk-section-third.mks-section.mks-jobs
+    div.mks-example
+      - this.knownTags = knownTags
+      - this.item = sampleJobListing
+      include ../../shared/partials/weekly/link
+
 article.mk-section
-
-//- Cta: email to sponsor@ponyfoo.com
-article.mk-section
-
+  div.mk-cta
+    div Have any questions?
+    div Want to start a conversation?
+    div Ready to request a sponsorship tier?
+    div Reach us via email!
+    div.mk-cta-email
+      a.lk-link.lk-inherited.lk-clean(href='mailto:sponsor@ponyfoo.com') sponsor@ponyfoo.com

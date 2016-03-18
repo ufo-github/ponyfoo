@@ -1,5 +1,6 @@
 'use strict';
 
+var winston = require('winston');
 var weeklyService = require('../../../services/weekly');
 
 module.exports = function (req, res, next) {
@@ -11,6 +12,7 @@ module.exports = function (req, res, next) {
   weeklyService.update(options, inserted);
   function inserted (err) {
     if (err) {
+      winston.warn(err);
       res.status(500).json({ messages: ['Oops. Something went terribly wrong!'] });
       return;
     }

@@ -1,3 +1,20 @@
+.wa-main
+  position relative
+
+.wa-toggle-sections
+  position absolute
+  top 0
+  right 0
+  padding 5px
+  z-index z-weekly-assembler-section-toggler
+  background-color c-orange-dark
+  color c-white
+  &:hover
+    color c-white
+    background-color lighten(c-orange-dark, 20%)
+  &:active
+    outline 1px dotted c-orange
+
 .wa-actions
   text-align right
   margin-top 40px

@@ -1,26 +1,33 @@
 div.wy-section-link
   table.wy-table
     tr
-      td(class='wy-td' + image ? 'wy-link-cell-before-image' : '')
-        div.wy-link-section
-          a.wy-link-title(href=href, style='color:' + foreground + '; background-color:' + background, target='_blank', rel='none')=title
-          each tag in tags
-            - data = knownTags[tag]
-            if data
-              span.wy-link-tag(style='color:' + data.foreground + '; background-color:' + data.background)=data.label
+      td.wy-td
+        div.wy-link-title-section
+          - fg = item.foreground ? 'color:' + item.foreground + ';' : ''
+          - bg = item.background ? 'background-color:' + item.background : ''
+          a.wy-link-title(href=item.href, style=fg + bg, target='_blank', rel='none')=item.title
+          each tag in item.tags
+            - tagInfo = knownTags[tag]
+            if tagInfo
+              - fg = tagInfo.foreground ? 'color:' + tagInfo.foreground + ';' : ''
+              - bg = tagInfo.background ? 'background-color:' + tagInfo.background : ''
+              span.wy-link-tag(style=fg + bg)=tagInfo.label
             else
               span.wy-link-tag=tag
 
-        div.wy-link-section
-          div.wy-link-description.md-markdown!=descriptionHtml
-        div.wy-link-section.wy-link-source-section
-          if sourceHref
-            a.wy-link-source(href=sourceHref, target='_blank', rel='none')=source
-          else
-            span.wy-link-source.wy-link-source-plain=source
-          if sponsored
-            span.wy-link-tag.wy-link-sponsor Sponsored
-      if image
-        td.wy-td.wy-link-image-cell
-          a.wy-link-image-anchor(href=href)
-            img.wy-link-image(src=image, alt='')
+        table
+          tr
+            td(class='wy-td ' + (item.image ? 'wy-link-cell-before-image' : ''))
+              div.wy-link-description-section
+                div.wy-link-description.md-markdown!=item.descriptionHtml
+              div.wy-link-source-section
+                if item.sourceHref
+                  a.wy-link-source(href=item.sourceHref, target='_blank', rel='none')=item.source
+                else
+                  span.wy-link-source.wy-link-source-plain=item.source
+                if item.sponsored
+                  span.wy-link-tag.wy-link-sponsor Sponsored
+            if item.image
+              td.wy-td.wy-link-cell-image
+                a.wy-link-image-anchor(href=item.href)
+                  img.wy-link-image(src=item.image, alt='')

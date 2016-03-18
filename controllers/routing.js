@@ -32,6 +32,7 @@ var weeklyInsert = require('./api/weeklies/insert');
 var weeklyUpdate = require('./api/weeklies/update');
 var weeklyRemove = require('./api/weeklies/remove');
 var weeklyShare = require('./api/weeklies/share');
+var weeklyMediakit = require('./weekly/mediakit');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
@@ -119,6 +120,8 @@ module.exports = function (app) {
     app.get('/dev/mediakit', mediaKit);
     app.get('/dev/last-email', lastSentEmail);
   }
+
+  app.get('/weekly/sponsor/mediakit.pdf', weeklyMediakit);
 
   app.get('/api/git/push/articles', gitOnly, gitPushArticles);
 

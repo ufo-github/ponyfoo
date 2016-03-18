@@ -36,11 +36,9 @@ function insert (model, done) {
 }
 
 function update (options, done) {
+  var query = { slug: options.slug };
   var model = options.model;
-  WeeklyIssue.findOne({
-    author: options.author,
-    slug: options.slug
-  }, found);
+  WeeklyIssue.findOne(query, found);
   function found (err, issue) {
     if (err) {
       done(err); return;
@@ -111,6 +109,7 @@ function toView (doc) {
     slug: doc.slug,
     publication: datetimeService.field(doc.publication),
     status: doc.status,
+    statusReach: doc.statusReach,
     summaryHtml: doc.summaryHtml,
     contentHtml: doc.contentHtml
   }, doc);

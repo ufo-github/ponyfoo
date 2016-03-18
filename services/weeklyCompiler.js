@@ -46,12 +46,18 @@ function compile (sections, options, done) {
   }
   function toLinkSectionHtml (section, next) {
     var descriptionHtml = options.markdown.compile(section.description);
-    var base = { knownTags: knownTags, descriptionHtml: descriptionHtml };
+    var base = {
+      descriptionHtml: descriptionHtml
+    };
     var extended = assign(base, section, {
       title: beautifyText(section.title),
       source: beautifyText(section.source)
     });
-    next(null, linkSectionView(extended));
+    var model = {
+      item: extended,
+      knownTags: knownTags
+    };
+    next(null, linkSectionView(model));
   }
   function toStylesSectionHtml (section, next) {
     stylus.render(section.styles, { filename: 'inline-styles.css' }, compiled);

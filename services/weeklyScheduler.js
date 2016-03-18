@@ -144,6 +144,7 @@ function run (done) {
   function releaseToEveryoneElse (issue) {
     winston[level]('Weekly "%s" being released to everyone.', issue.slug);
     issue.statusReach = 'everyone';
+    issue.publication = new Date();
     issue.save(saved);
     function saved (err) {
       if (err) {

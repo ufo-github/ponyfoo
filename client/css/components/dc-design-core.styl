@@ -17,15 +17,17 @@
   font-style italic
   color c-gray
 
+.dc-title-container
+  background linear-gradient(to bottom, c-pink 0, lighten(c-pink, 30%) 40%, lighten(c-pink, 50%) 60%, c-white 100%)
+
 .dc-title
-  background-color lighten(c-pink, 20%)
-  border-bottom 4px solid c-pink
+  border-bottom 4px solid rgba(lighten(c-pink, 60%), 0.4)
   padding 20px
   margin-top 40px
   margin-bottom 0
   font-size 2.6em
   text-align center
-  color c-white
+  color lighten(c-pink, 90%)
   transition color 0.1s ease-in-out
 
   /.ly-custom-headings &
@@ -62,7 +64,6 @@ dc-color(c-border-top, c-background)
 
 @media only screen and (min-width: 768px)
   .dc-title
-    background linear-gradient(to bottom right, lighten(c-pink, 20%) 0, lighten(c-pink, 20%) 30%, c-pink 80%, darken(c-pink, 20%) 100%)
     padding 20px 40px 30px
     font-size 3em
     text-align inherit

@@ -27,13 +27,25 @@
 
 .wt-input,
 .wt-submit
-  display inline-block
-  vertical-align top
   height 48px
 
 .wt-input
   font-size 23px
-  width calc(100% - 156px)
 
 .wt-submit
-  width 156px
+  width 100%
+
+  .ss-button
+    width 100%
+
+@media only screen and (min-width: 435px)
+  .wt-input,
+  .wt-submit
+    display inline-block
+    vertical-align top
+
+  .wt-input
+    width calc(100% - 156px)
+
+  .wt-submit
+    width 156px

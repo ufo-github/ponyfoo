@@ -24,6 +24,7 @@ module.exports = [
   { route: '/articles/:slug', action: 'articles/article' },
   { route: '/weekly', action: 'weekly/home' },
   { route: '/weekly/feed', ignore: true },
+  { route: '/weekly/sponsor', action: 'weekly/sponsor' },
   { route: '/weekly/history', action: 'weekly/history' },
   { route: '/weekly/first', action: 'weekly/first' },
   { route: '/weekly/last', action: 'weekly/last' },

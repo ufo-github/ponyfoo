@@ -14,7 +14,11 @@ article.de-host
     p.wl-top.wl-intro
       span Below, you can find the Pony Foo Weekly newsletter issue #
       span=issue.slug
-      span . It was sent to our subscribers
+      span='. '
+      if issue.statusReach === 'patrons'
+        span It will be released publicly to our subscribers
+      else
+        span It was sent to our subscribers
       span=' '
       time(datetime=issue.publication.datetime, aria-label=issue.publication.title)='on ' + issue.publication.text
       span .

@@ -10,12 +10,8 @@ var cryptoService = require('./crypto');
 var Subscriber = require('../models/Subscriber');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
-var intent = 'Thanks for your interest in becoming a subscriber of our mailing list!';
 var reasons = {
-  weekly: intent,
-  landed: intent,
-  article: intent,
-  sidebar: intent,
+  default: 'Thanks for your interest in becoming a subscriber of our mailing list!',
   comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here’s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
 };
 var allTopics = ['announcements', 'articles', 'newsletter'];
@@ -262,7 +258,7 @@ function locals (topic) {
   return function localsForTopic (all, subscriber) {
     all[subscriber.email] = {
       name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
-      reason: reasons[subscriber.source],
+      reason: reasons[subscriber.source] || reasons.default,
       unsubscribe_html: getUnsubscribeHtml(subscriber, topic)
     };
     return all;

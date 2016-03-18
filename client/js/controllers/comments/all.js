@@ -5,6 +5,7 @@ var raf = require('raf');
 var taunus = require('taunus');
 var debounce = require('lodash/function/debounce');
 var storage = require('../../lib/storage');
+var userService = require('../../services/user');
 var textService = require('../../../../services/text');
 var key = 'comment-draft';
 
@@ -97,6 +98,7 @@ module.exports = function (viewModel, container) {
       var template, partial;
       var model = {
         user: viewModel.user,
+        roles: userService.getRoles(),
         parent: {
           author: viewModel.parent.author,
           commentThreads: [{

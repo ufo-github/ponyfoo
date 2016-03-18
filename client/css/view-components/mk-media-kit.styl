@@ -46,14 +46,24 @@
 .ly-custom-subheadings .mk-section-teaser
   font-family f-subheading
 
-.mk-weekly-title
+.mkw-container
+  .cr-overflow
+    padding 50px 40px
+    width 600px
+    transform scaleX(0.5) scaleY(0.55)
+    transform-origin top left
+
+  .cr-content
+    height 700px
+
+.mkw-title
   font-size 100px
   color c-bright-turquoise
-.mk-weekly-teaser
+.mkw-teaser
   padding 10px 0
   background-color c-orange-dark
   color c-white
-.mk-weekly-features
+.mkw-features
   margin-top 50px
   color c-blue
   li
@@ -63,22 +73,17 @@
       font-awesome()
       content '\f00c'
       margin 0 5px
-.mk-weekly-ad
+.mkw-ad
   background-color c-blue
   color c-white
-
-.mk-weekly-email-sample
+.mkw-email-sample
   margin-top 50px
-
-.mk-weekly
-  .cr-overflow
-    padding 50px 40px
-    width 600px
-    transform scaleX(0.5) scaleY(0.55)
-    transform-origin top left
-
-  .cr-content
-    height 700px
+.mkw-reader
+  width 30%
+  height 450px
+.mkw-features
+  width 36.666666%
+  padding-right 2%
 
 .mka-content,
 .mka-book
@@ -109,3 +114,63 @@
 .mka-speaking-image
   display block
   margin-top -300px
+
+.mks-section
+  padding 10px
+
+.mks-header
+  margin-bottom 0
+  text-align center
+  color c-red
+
+.mks-section-header
+  margin-bottom 0
+.mks-heading,
+.mks-pricing
+  padding 10px
+  text-align center
+.mks-heading
+  background-color c-red
+  color c-white
+.mks-pricing
+  background-color c-red-005
+  color c-red
+
+.mks-separator .mks-section
+  padding-top 0
+  &:before
+    display block
+    border-bottom 1px dashed c-red
+    height 1px
+    content ''
+.mks-description
+  padding 10px 10px 0 10px
+  line-height 26px
+  div
+    margin-bottom 20px
+    &:last-child
+      margin-bottom 15px
+.mks-primary
+  .wy-section-link
+    position relative
+  .wy-link-description-section
+    padding-top 40px
+  .wy-link-title
+    position absolute
+    left 10px
+    right 10px
+.mks-jobs .wy-link-title
+  font-size 14px
+.mk-cta
+  text-align center
+  margin-top 60px
+  font-size 55px
+  line-height 80px
+
+.mk-cta-email
+  margin-top 30px
+  font-size 75px
+  line-height 1em
+  padding 30px
+  background-color c-purple
+  color c-white

@@ -42,6 +42,10 @@
   margin 10px 0
   line-height 24px
 
+.wy-issue
+  float right
+  font-size 12px
+
 .wy-section-header
   padding-top 40px
   h1,
@@ -65,10 +69,6 @@
   padding-bottom 25px
   a:active
     outline 1px dotted c-dark-gray
-
-.wy-issue
-  float right
-  font-size 12px
 
 .wy-link-title
   display inline-block
@@ -114,9 +114,10 @@
   color c-orange-dark
 
 .wy-link-cell-before-image
+  vertical-align top
   width 70%
 
-.wy-link-image-cell
+.wy-link-cell-image
   padding-left 10px
 
 .wy-link-image-anchor
@@ -132,3 +133,8 @@
 
 .wy-read-online
   font-size 13px
+
+@media only screen and (max-width: 500px)
+  .wy-issue-separator,
+  .wy-issue-publication
+    display none
