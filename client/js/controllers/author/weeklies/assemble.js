@@ -154,27 +154,6 @@ function ready (viewModel, container, route) {
   function clonedTool (clone) {
     $(clone).addClass('wa-section-header');
   }
-  function droppedTool (el, target) {
-    if (target !== editor) {
-      return;
-    }
-    var tool = $(el);
-    var toolName = tool.attr('data-tool');
-    var action = 'author/weeklies/tool-' + toolName;
-    taunus.partial
-      .replace(el, action, { knownTags: viewModel.knownTags, section: {} })
-      .on('render', updatePreviewSlowly);
-  }
-  function pickedTool (e) {
-    var tool = $(e.target);
-    var toolName = tool.attr('data-tool');
-    var action = 'author/weeklies/tool-' + toolName;
-    taunus.partial
-      .appendTo(editor, action, { knownTags: viewModel.knownTags, section: {} })
-      .on('render', updatePreviewSlowly);
-    e.preventDefault();
-    e.stopPropagation();
-  }
   function cancellations (e) {
     if (e.which === 27) {
       drakeTools.cancel(true);
@@ -189,14 +168,49 @@ function ready (viewModel, container, route) {
       .find(select.attr('data-target'))
       .css('color', color);
   }
+  function droppedTool (el, target) {
+    if (target !== editor) {
+      return;
+    }
+    var tool = $(el);
+    var toolName = tool.attr('data-tool');
+    var action = 'author/weeklies/tool-' + toolName;
+    insertingPartial(taunus.partial.replace(el, action, {
+      knownTags: viewModel.knownTags,
+      section: {}
+    }));
+  }
+  function pickedTool (e) {
+    var tool = $(e.target);
+    var toolName = tool.attr('data-tool');
+    var action = 'author/weeklies/tool-' + toolName;
+    insertingPartial(taunus.partial.appendTo(editor, action, {
+      knownTags: viewModel.knownTags,
+      section: {}
+    }));
+    e.preventDefault();
+    e.stopPropagation();
+  }
   function cloneSection (e) {
     var section = $(e.target).parents('.wa-section');
     var toolName = section.attr('data-tool');
     var action = 'author/weeklies/tool-' + toolName;
     var model = getSectionModel(section);
-    taunus.partial
-      .afterOf(section[0], action, { knownTags: viewModel.knownTags, section: model })
+    insertingPartial(taunus.partial.afterOf(section[0], action, {
+      knownTags: viewModel.knownTags,
+      section: model
+    }));
+  }
+  function insertingPartial (partial) {
+    partial
+      .on('render', displayDetails)
       .on('render', updatePreviewSlowly);
+    function displayDetails (html, container) {
+      displayLinkDetails(container);
+    }
+  }
+  function displayLinkDetails (container) {
+    $('.wa-section-contents', container).removeClass('uv-hidden');
   }
   function getSectionModel (section) {
     var mappers = {
