@@ -17,7 +17,10 @@ function compile (model, done) {
     if (err) {
       done(err); return;
     }
-    model.summaryHtml = markupService.compile(model.summary, { absolutize: true });
+    model.summaryHtml = markupService.compile(model.summary, {
+      absolutize: true,
+      linkThrough: weeklyCompilerService.linkThrough
+    });
     model.summaryText = summaryService.summarize(model.summaryHtml).text;
     model.contentHtml = htmlService.absolutize(html);
     done(null, model);

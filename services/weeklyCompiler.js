@@ -2,11 +2,32 @@
 
 var map = require('contra/map');
 var assign = require('assignment');
+var omnibox = require('omnibox');
+var queso = require('queso');
 var beautifyText = require('beautify-text');
 var stylus = require('./lib/stylus');
 var textService = require('./text');
 var linkSectionView = require('../.bin/views/shared/partials/weekly/link');
 var knownTags = require('./lib/knownNewsletterTags.json');
+
+function linkThrough (href) {
+  if (!href) {
+    return href;
+  }
+  var u = omnibox.parse(href);
+  if (u.protocol !== 'http' && u.protocol !== 'https') {
+    return href;
+  }
+  u.query.utm_source = 'ponyfoo+weekly';
+  u.query.utm_medium = 'email';
+  var host = u.host ? u.protocol + '://' + u.host : '';
+  return (
+    host +
+    u.pathname +
+    queso.stringify(u.query).replace(/(%2B|\s)/ig, '+') +
+    (u.hash || '')
+  );
+}
 
 function compile (sections, options, done) {
   var compilers = {
@@ -36,22 +57,30 @@ function compile (sections, options, done) {
       section.size,
       section.foreground,
       section.background,
-      options.markdown.compile(section.text),
+      options.markdown.compile(section.text, {
+        linkThrough: linkThrough
+      }),
       section.size
     ));
   }
   function toMarkdownSectionHtml (section, next) {
-    var html = options.markdown.compile(section.text);
+    var html = options.markdown.compile(section.text, {
+      linkThrough: linkThrough
+    });
     next(null, textService.format('<div class="wy-section-markdown md-markdown">%s</div>', html));
   }
   function toLinkSectionHtml (section, next) {
-    var descriptionHtml = options.markdown.compile(section.description);
+    var descriptionHtml = options.markdown.compile(section.description, {
+      linkThrough: linkThrough
+    });
     var base = {
       descriptionHtml: descriptionHtml
     };
     var extended = assign(base, section, {
       title: beautifyText(section.title),
-      source: beautifyText(section.source)
+      href: linkThrough(section.href),
+      source: beautifyText(section.source),
+      sourceHref: linkThrough(section.sourceHref)
     });
     var model = {
       item: extended,
@@ -67,7 +96,10 @@ function compile (sections, options, done) {
   }
 }
 
+function noop () {}
+
 module.exports = {
   compile: compile,
-  knownTags: knownTags
+  knownTags: knownTags,
+  linkThrough: linkThrough
 };

@@ -143,6 +143,20 @@ function externalizeLinks (html) {
   return $.html();
 }
 
+function linkThrough (html, mapper) {
+  if (!html) {
+    return html;
+  }
+  var $ = cheerio.load(html);
+  $('a[href]').each(update);
+  return $.html();
+  function update () {
+    var elem = $(this);
+    var href = elem.attr('href');
+    elem.attr('href', mapper(href));
+  }
+}
+
 module.exports = {
   absolutize: absolutize,
   extractImages: extractImages,
@@ -151,5 +165,6 @@ module.exports = {
   deferImages: deferImages,
   undeferImages: undeferImages,
   externalizeLinks: externalizeLinks,
-  fixedEmojiSize: fixedEmojiSize
+  fixedEmojiSize: fixedEmojiSize,
+  linkThrough: linkThrough
 };

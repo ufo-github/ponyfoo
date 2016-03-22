@@ -8,6 +8,7 @@ function compile (md, options) {
   var methods = [];
   var o = options || {};
 
+  add(o.linkThrough, linkThrough);
   add(o.minify !== false, htmlService.minify);
   add(o.absolutize, htmlService.absolutize);
   add(o.deferImages, deferImages);
@@ -19,14 +20,16 @@ function compile (md, options) {
   return html;
 
   function add (conditional, fn) {
-    if (conditional) {
-      methods.push(fn);
-    }
+    if (conditional) { methods.push(fn); }
   }
 
   function deferImages (html) {
     var i = typeof o.deferImages === 'number' && o.deferImages;
     return htmlService.deferImages(html, i);
+  }
+
+  function linkThrough (html) {
+    return htmlService.linkThrough(html, o.linkThrough);
   }
 }
 

@@ -15,10 +15,10 @@ article.de-host
       span Below, you can find the Pony Foo Weekly newsletter issue #
       span=issue.slug
       span='. '
-      if issue.statusReach === 'patrons'
-        span It will be released publicly to our subscribers
-      else
+      if issue.statusReach === 'everyone'
         span It was sent to our subscribers
+      else
+        span It will be released to every subscriber
       span=' '
       time(datetime=issue.publication.datetime, aria-label=issue.publication.title)='on ' + issue.publication.text
       span .

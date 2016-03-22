@@ -50,7 +50,7 @@ var api = {
 
 function createClient () {
   var options = {
-    headerImage: path.resolve('./resources/emails/header.png'),
+    headerImage: path.resolve('./client/img/emails/header.png'),
     templateEngine: jade,
     provider: mailgun({ apiKey: apiKey, authority: authority }),
     formatting: formatting,

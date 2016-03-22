@@ -43,6 +43,7 @@ uglifyjs_alone() {
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
 stylus client/css/newsletter.styl -o .bin/emails --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
+jadum resources/**/*.jade -o .bin --no-debug --obj '{"basedir":"resources"}'
 taunus -o
 NODE_ENV=production node lib/env BROWSER_ENV | jq . > .env.browser.json
 
@@ -88,6 +89,6 @@ kill $! # kills `node app`
 cleancss $ALL_CSS -o $ALL_CSS --s0
 
 # asset hashing
-reaver $DIST/img/* --manifest | scourge .bin/{views,public/{css,js}} --base-path $DIST --domain $DOMAIN
+reaver $DIST/img/* --manifest | scourge .bin/{views,resources,public/{css,js}} --base-path $DIST --domain $DOMAIN
 reaver $DIST/{css,js}/* --consider $DIST/service-worker.js --manifest | scourge .bin/{inline,views/server,public} --base-path $DIST --domain $DOMAIN
 reaver $DIST/service-worker.js --manifest | scourge $DIST/js --base-path $DIST --domain $DOMAIN

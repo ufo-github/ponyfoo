@@ -35,8 +35,8 @@ function welcome (version) {
   ].join('\n');
 
   var logoFont = 'font-family: Arial; font-size: 11px;';
-  var green = 'color: #26EF00; ' + logoFont;
-  var greenIris = 'color: #26E400; ' + logoFont;
+  var green = 'color: #26ef00; ' + logoFont;
+  var greenIris = 'color: #26e400; ' + logoFont;
   var oneas = 'color: #1a1a1a; ' + logoFont;
   var threes = 'color: #333333; ' + logoFont;
   var fourds = 'color: #4d4d4d; ' + logoFont;

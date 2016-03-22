@@ -145,7 +145,7 @@ function tweet (issue, options, done) {
 
   twitterService.tweet(status, done);
 
-  function add (i, contents, length) {console.log(tweetLength)
+  function add (i, contents, length) {
     if (tweetLength + length + 1 > 140) {
       return; // avoid going overboard
     }

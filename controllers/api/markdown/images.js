@@ -1,5 +1,6 @@
 'use strict';
 
+var correcthorse = require('correcthorse');
 var winston = require('winston');
 var path = require('path');
 var fs = require('fs');
@@ -9,78 +10,12 @@ var taunus = require('taunus');
 var contra = require('contra');
 var imageService = require('../../../services/image');
 var env = require('../../../lib/env');
-var defaultLocal = path.resolve('./tmp/images');
-var imgur = require('imgur-client');
-var imgurClient;
+var localPath = path.resolve('./tmp/images');
+var imgur = require('imgur');
+var imgurClientId = env('IMGUR_CLIENT_ID');
 var production = process.env.NODE_ENV === 'production';
 
-function defaultLocalUrl (local, file) {
-  return file.replace(local, '/img/uploads');
-}
-
-function imageUpload (options, done) {
-  var o = {
-    image: options.image,
-    imgur: options.imgur,
-    local: options.local || defaultLocal,
-    localUrl: options.localUrl || defaultLocalUrl,
-    production: options.production || production
-  };
-  if (o.imgur) {
-    imgurClient = imgur(o.imgur);
-  }
-  if (!o.production) {
-    mkdirp.sync(o.local);
-  }
-
-  if (!o.image) {
-    done(new Error('No image received on the back-end'));
-  } else if (imgurClient) {
-    imgurUpload(o, done);
-  } else if (!o.production) {
-    fileUpload(o, done);
-  } else {
-    done(new Error('Misconfigured image upload!'));
-  }
-}
-
-function imgurUpload (o, done) {
-  imgurClient.upload(o.image.path, function (err, data) {
-    if (err) {
-      done(err); return;
-    }
-    done(null, {
-      alt: o.image.originalname,
-      url: data.links.original
-    });
-  });
-}
-
-function fileUpload (o, done) {
-  var template = path.join(o.local, 'XXXXXX' + o.image.extension);
-
-  contra.waterfall([
-    function (next) {
-      tmp.tmpName({ template: template }, next);
-    },
-    function (temp, next) {
-      fs.rename(o.image.path, temp, function (err) {
-        next(err, temp);
-      });
-    }
-  ], function (err, temp) {
-    if (err) {
-      done(err); return;
-    }
-    var url = o.localUrl(o.local, temp);
-    done(null, {
-      alt: o.image.originalname,
-      url: url
-    });
-  });
-}
-
-module.exports = function (req, res) {
+function images (req, res) {
   var image = req.files && req.files.woofmark_upload;
   if (!image) {
     errored('Image upload failed!', new Error('Image upload failed!')); return;
@@ -97,11 +32,7 @@ module.exports = function (req, res) {
   }
 
   function upload (next) {
-    var options = {
-      imgur: env('IMGUR_API_KEY'),
-      image: image
-    };
-    imageUpload(options, next);
+    imageUpload(image, next);
   }
 
   function uploaded (err, result) {
@@ -109,8 +40,8 @@ module.exports = function (req, res) {
       errored(err.message, err); return;
     }
     var href = result.url && result.url.indexOf('http://i.imgur.com/') === 0 ?
-                'https' + result.url.slice(4) :
-                          result.url;
+      'https' + result.url.slice(4) :
+                result.url;
     winston.info('Image uploaded to', href);
     respond(200, {
       href: href,
@@ -130,4 +61,60 @@ module.exports = function (req, res) {
   function respond (status, message) {
     res.status(status).json(message);
   }
-};
+}
+
+function toLocalUrl (local, file) {
+  return file.replace(local, '/img/uploads');
+}
+
+function imageUpload (source, done) {
+  if (!source) {
+    done(new Error('No image source received on the back-end'));
+  } else if (imgurClientId) {
+    imgurUpload(source, done);
+  } else if (!production) {
+    fileUpload(source, done);
+  } else {
+    done(new Error('Misconfigured image upload!'));
+  }
+}
+
+function imgurUpload (source, done) {
+  imgur.setClientId(imgurClientId);
+  imgur
+    .uploadFile(source.path)
+    .then(function (res) {
+      done(null, {
+        alt: source.originalname,
+        url: res.data.link.replace(/^http:/, 'https:')
+      });
+    })
+    .catch(done);
+}
+
+function fileUpload (source, done) {
+  contra.waterfall([
+    function (next) {
+      mkdirp(localPath);
+    },
+    function (next) {
+      var template = path.join(localPath, correcthorse() + '-X.' + source.extension);
+      tmp.tmpName({ template: template }, next);
+    },
+    function (temp, next) {
+      fs.rename(source.path, temp, function (err) {
+        next(err, temp);
+      });
+    }
+  ], function (err, temp) {
+    if (err) {
+      done(err); return;
+    }
+    done(null, {
+      alt: source.originalname,
+      url: toLocalUrl(localPath, temp)
+    });
+  });
+}
+
+module.exports = images;
