@@ -39,12 +39,9 @@ function images (req, res) {
     if (err) {
       errored(err.message, err); return;
     }
-    var href = result.url && result.url.indexOf('http://i.imgur.com/') === 0 ?
-      'https' + result.url.slice(4) :
-                result.url;
-    winston.info('Image uploaded to', href);
+    winston.info('Image uploaded to', result.url);
     respond(200, {
-      href: href,
+      href: result.url,
       title: result.alt,
       version: taunus.state.version
     });
