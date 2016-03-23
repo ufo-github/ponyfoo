@@ -2,6 +2,8 @@
   this.logoOpts = {
     name: this.text ? 'random-text' : 'random',
     getFill: function (x, y, defaultColor, group) {
+      if (group === 'eye') { return '#ffe270'; }
+      if (group) { return defaultColor; }
       var random = Math.random();
       if (random > 0.91) { return '#6ecce2'; }
       if (random > 0.83) { return '#1686a2'; }
@@ -13,8 +15,8 @@
       if (random > 0.33) { return '#e92c6c'; }
       if (random > 0.25) { return '#f8ab6f'; }
       if (random > 0.16) { return '#f3720d'; }
-      if (random > 0.08) { return '#ffe270'; }
-      return '#ff0056';
+      if (random > 0.08) { return '#cbc5c0'; }
+      return '#8be186';
     },
     hasText: this.text ? true : false,
     textColor: this.text

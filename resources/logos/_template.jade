@@ -30,8 +30,9 @@
   else
     fallbackImage = '/img/logos/' + (options.name || 'original') + '.png'
 
-  getFill = options.getFill ? options.getFill : function (x, y, defaultColor, group) {
-    if (defaultColor) { return defaultColor; }
+  function getFill (x, y, defaultColor, group) {
+    var color = options.getFill ? options.getFill(x, y, defaultColor, group) : defaultColor
+    if (color) { return color; }
     return false;
   }
 
@@ -90,8 +91,8 @@ svg(
   rect(width='1', height='1', y='5', x='3', fill=getFill(3, 5))
   rect(width='1', height='1', y='5', x='4', fill=getFill(4, 5))
   rect(width='1', height='1', y='5', x='5', fill=getFill(5, 5))
-  rect(width='1', height='1', y='5', x='6', fill=getFill(6, 5, '#26ef00'))
-  rect(width='1', height='1', y='5', x='7', fill=getFill(7, 5, '#26e400'))
+  rect(width='1', height='1', y='5', x='6', fill=getFill(6, 5, '#26ef00', 'eye'))
+  rect(width='1', height='1', y='5', x='7', fill=getFill(7, 5, '#26e400', 'eye'))
   rect(width='1', height='1', y='5', x='8', fill=getFill(8, 5))
   rect(width='1', height='1', y='5', x='9', fill=getFill(9, 5))
   rect(width='1', height='1', y='5', x='10', fill=getFill(10, 5, '#1a1a1a'))
@@ -101,8 +102,8 @@ svg(
   rect(width='1', height='1', y='6', x='3', fill=getFill(3, 6))
   rect(width='1', height='1', y='6', x='4', fill=getFill(4, 6))
   rect(width='1', height='1', y='6', x='5', fill=getFill(5, 6))
-  rect(width='1', height='1', y='6', x='6', fill=getFill(6, 6, '#26ef00'))
-  rect(width='1', height='1', y='6', x='7', fill=getFill(7, 6, '#26ef00'))
+  rect(width='1', height='1', y='6', x='6', fill=getFill(6, 6, '#26ef00', 'eye'))
+  rect(width='1', height='1', y='6', x='7', fill=getFill(7, 6, '#26ef00', 'eye'))
   rect(width='1', height='1', y='6', x='8', fill=getFill(8, 6))
   rect(width='1', height='1', y='6', x='9', fill=getFill(9, 6))
   rect(width='1', height='1', y='7', fill=getFill(0, 7))

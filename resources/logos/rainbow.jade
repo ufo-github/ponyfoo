@@ -2,6 +2,8 @@
   this.logoOpts = {
     name: this.text ? 'rainbow-text' : 'rainbow',
     getFill: function (x, y, defaultColor, group) {
+      if (group === 'eye') { return '#ffe270'; }
+      if (group) { return defaultColor; }
       if (y === 0) { return '#6ecce2'; }
       if (y === 1) { return '#1686a2'; }
       if (y === 2) { return '#1a4d7f'; }

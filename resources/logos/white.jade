@@ -2,6 +2,7 @@
   this.logoOpts = {
     name: this.text ? 'white-text' : 'white',
     getFill: function (x, y, defaultColor, group) {
+      if (group) { return defaultColor; }
       if (defaultColor === '#666') { return '#aaa'; }
       if (defaultColor === '#1a1a1a') { return '#e6e6e6'; }
       if (defaultColor === '#4d4d4d') { return '#b3b3b3'; }

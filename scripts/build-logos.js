@@ -70,7 +70,8 @@ pglob('resources/logos/**/*.jade')
     .value()
   )
   .then(src => psprite({
-    src, padding: 10
+    src,
+    padding: 10
   }))
   .then(result => pwriteFile('resources/logos/generated/all.png', result.image))
   .catch(reason => console.error(reason));
