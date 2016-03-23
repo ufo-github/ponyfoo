@@ -15,7 +15,7 @@ function linkThrough (href) {
     return href;
   }
   var u = omnibox.parse(href);
-  if (u.protocol !== 'http' && u.protocol !== 'https') {
+  if (u.protocol && u.protocol !== 'http' && u.protocol !== 'https') {
     return href;
   }
   u.query.utm_source = 'ponyfoo+weekly';
