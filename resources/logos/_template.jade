@@ -1,9 +1,20 @@
+block mixin_vars
+block template_vars
+
 -
+  options = options || {}
+  options.hat = hat;
+  options.paddingColor = padding;
+  options.hasText = text ? true : false;
+  options.textColor = text
+
   unit = 13
-  options = this.logoOpts ? this.logoOpts : {}
   width = options.width ? options.width : 12 * unit
   height = options.height ? options.height : 12 * unit
   viewbox = options.viewbox ? options.viewbox : '0 0 ' + unit + ' ' + unit
+  viewbox = viewbox.split(' ').map(function (x) {
+    return parseInt(x, 10)
+  })
   classes = options.classes ? options.classes : {
     svg: 'go-logo',
     fallback: 'go-logo-image'
@@ -15,20 +26,23 @@
 
   textColor = options.textColor ? options.textColor : '#fff'
 
+  paddingColor = options.paddingColor ? options.paddingColor : false
   hasText = options.hasText ? options.hasText : false
   hasLink = options.hasLink ? options.hasLink : true
 
   if (hasText) {
-    viewbox = viewbox.split(' ')
-    viewbox[viewbox.length - 1] = (parseInt(viewbox[viewbox.length - 1]) + 3).toString()
-    viewbox = viewbox.join(' ')
+    viewbox[viewbox.length - 1] += 3
     height += unit * 2
   }
 
-  if (options.fallbackImage === false)
-    fallbackImage = false
-  else
-    fallbackImage = '/img/logos/' + (options.name || 'original') + '.png'
+  if (paddingColor) {
+    viewbox[0]--
+    viewbox[1]--
+    viewbox[2] += 2
+    viewbox[3] += 2
+  }
+
+  viewbox = viewbox.join(' ')
 
   function getFill (x, y, defaultColor, group) {
     var color = options.getFill ? options.getFill(x, y, defaultColor, group) : defaultColor
@@ -58,244 +72,96 @@ svg(
         }
       style(type='text/css')!='text{fill:' + textColor + '}'
 
-  rect(width='1', height='1', x='11', fill=getFill(11, 0, '#666'))
-  rect(width='1', height='1', x='12', fill=getFill(12, 0, '#1a1a1a'))
-  rect(width='1', height='1', y='1', x='10', fill=getFill(10, 1, '#4d4d4d'))
-  rect(width='1', height='1', y='1', x='11', fill=getFill(11, 1))
-  rect(width='1', height='1', y='2', x='3', fill=getFill(3, 2, '#333'))
-  rect(width='1', height='1', y='2', x='4', fill=getFill(4, 2))
-  rect(width='1', height='1', y='2', x='5', fill=getFill(5, 2, '#1a1a1a'))
-  rect(width='1', height='1', y='2', x='7', fill=getFill(7, 2, '#1a1a1a'))
-  rect(width='1', height='1', y='2', x='9', fill=getFill(9, 2, '#333'))
-  rect(width='1', height='1', y='2', x='10', fill=getFill(10, 2))
-  rect(width='1', height='1', y='3', x='2', fill=getFill(2, 3, '#333'))
-  rect(width='1', height='1', y='3', x='3', fill=getFill(3, 3))
-  rect(width='1', height='1', y='3', x='4', fill=getFill(4, 3))
-  rect(width='1', height='1', y='3', x='5', fill=getFill(5, 3))
-  rect(width='1', height='1', y='3', x='6', fill=getFill(6, 3))
-  rect(width='1', height='1', y='3', x='7', fill=getFill(7, 3))
-  rect(width='1', height='1', y='3', x='8', fill=getFill(8, 3))
-  rect(width='1', height='1', y='3', x='9', fill=getFill(9, 3))
-  rect(width='1', height='1', y='4', x='1', fill=getFill(1, 4, '#333'))
-  rect(width='1', height='1', y='4', x='2', fill=getFill(2, 4, '#1a1a1a'))
-  rect(width='1', height='1', y='4', x='3', fill=getFill(3, 4))
-  rect(width='1', height='1', y='4', x='4', fill=getFill(4, 4))
-  rect(width='1', height='1', y='4', x='5', fill=getFill(5, 4))
-  rect(width='1', height='1', y='4', x='6', fill=getFill(6, 4))
-  rect(width='1', height='1', y='4', x='7', fill=getFill(7, 4))
-  rect(width='1', height='1', y='4', x='8', fill=getFill(8, 4))
-  rect(width='1', height='1', y='4', x='9', fill=getFill(9, 4))
-  rect(width='1', height='1', y='5', fill=getFill(0, 5, '#333'))
-  rect(width='1', height='1', y='5', x='1', fill=getFill(1, 5, '#1a1a1a'))
-  rect(width='1', height='1', y='5', x='2', fill=getFill(2, 5))
-  rect(width='1', height='1', y='5', x='3', fill=getFill(3, 5))
-  rect(width='1', height='1', y='5', x='4', fill=getFill(4, 5))
-  rect(width='1', height='1', y='5', x='5', fill=getFill(5, 5))
-  rect(width='1', height='1', y='5', x='6', fill=getFill(6, 5, '#26ef00', 'eye'))
-  rect(width='1', height='1', y='5', x='7', fill=getFill(7, 5, '#26e400', 'eye'))
-  rect(width='1', height='1', y='5', x='8', fill=getFill(8, 5))
-  rect(width='1', height='1', y='5', x='9', fill=getFill(9, 5))
-  rect(width='1', height='1', y='5', x='10', fill=getFill(10, 5, '#1a1a1a'))
-  rect(width='1', height='1', y='6', fill=getFill(0, 6))
-  rect(width='1', height='1', y='6', x='1', fill=getFill(1, 6))
-  rect(width='1', height='1', y='6', x='2', fill=getFill(2, 6))
-  rect(width='1', height='1', y='6', x='3', fill=getFill(3, 6))
-  rect(width='1', height='1', y='6', x='4', fill=getFill(4, 6))
-  rect(width='1', height='1', y='6', x='5', fill=getFill(5, 6))
-  rect(width='1', height='1', y='6', x='6', fill=getFill(6, 6, '#26ef00', 'eye'))
-  rect(width='1', height='1', y='6', x='7', fill=getFill(7, 6, '#26ef00', 'eye'))
-  rect(width='1', height='1', y='6', x='8', fill=getFill(8, 6))
-  rect(width='1', height='1', y='6', x='9', fill=getFill(9, 6))
-  rect(width='1', height='1', y='7', fill=getFill(0, 7))
-  rect(width='1', height='1', y='7', x='1', fill=getFill(1, 7))
-  rect(width='1', height='1', y='7', x='2', fill=getFill(2, 7))
-  rect(width='1', height='1', y='7', x='3', fill=getFill(3, 7))
-  rect(width='1', height='1', y='7', x='4', fill=getFill(4, 7))
-  rect(width='1', height='1', y='7', x='5', fill=getFill(5, 7))
-  rect(width='1', height='1', y='7', x='6', fill=getFill(6, 7))
-  rect(width='1', height='1', y='7', x='7', fill=getFill(7, 7))
-  rect(width='1', height='1', y='7', x='8', fill=getFill(8, 7))
-  rect(width='1', height='1', y='7', x='9', fill=getFill(9, 7))
-  rect(width='1', height='1', y='8', fill=getFill(0, 8))
-  rect(width='1', height='1', y='8', x='1', fill=getFill(1, 8))
-  rect(width='1', height='1', y='8', x='2', fill=getFill(2, 8))
-  rect(width='1', height='1', y='8', x='3', fill=getFill(3, 8))
-  rect(width='1', height='1', y='8', x='4', fill=getFill(4, 8))
-  rect(width='1', height='1', y='8', x='5', fill=getFill(5, 8))
-  rect(width='1', height='1', y='8', x='6', fill=getFill(6, 8))
-  rect(width='1', height='1', y='8', x='7', fill=getFill(7, 8))
-  rect(width='1', height='1', y='8', x='8', fill=getFill(8, 8))
-  rect(width='1', height='1', y='8', x='9', fill=getFill(9, 8))
-  rect(width='1', height='1', y='8', x='10', fill=getFill(10, 8, '#333'))
-  rect(width='1', height='1', y='9', fill=getFill(0, 9))
-  rect(width='1', height='1', y='9', x='1', fill=getFill(1, 9))
-  rect(width='1', height='1', y='9', x='2', fill=getFill(2, 9))
-  rect(width='1', height='1', y='9', x='3', fill=getFill(3, 9))
-  rect(width='1', height='1', y='9', x='4', fill=getFill(4, 9))
-  rect(width='1', height='1', y='9', x='5', fill=getFill(5, 9))
-  rect(width='1', height='1', y='9', x='6', fill=getFill(6, 9))
-  rect(width='1', height='1', y='9', x='7', fill=getFill(7, 9))
-  rect(width='1', height='1', y='9', x='8', fill=getFill(8, 9))
-  rect(width='1', height='1', y='9', x='9', fill=getFill(9, 9))
-  rect(width='1', height='1', y='9', x='10', fill=getFill(10, 9))
-  rect(width='1', height='1', y='10', fill=getFill(0, 10))
-  rect(width='1', height='1', y='10', x='1', fill=getFill(1, 10))
-  rect(width='1', height='1', y='10', x='2', fill=getFill(2, 10))
-  rect(width='1', height='1', y='10', x='3', fill=getFill(3, 10))
-  rect(width='1', height='1', y='10', x='4', fill=getFill(4, 10))
-  rect(width='1', height='1', y='10', x='5', fill=getFill(5, 10))
-  rect(width='1', height='1', y='10', x='6', fill=getFill(6, 10, '#333'))
-  rect(width='1', height='1', y='10', x='8', fill=getFill(8, 10))
-  rect(width='1', height='1', y='10', x='9', fill=getFill(9, 10))
-  rect(width='1', height='1', y='10', x='10', fill=getFill(10, 10))
-  rect(width='1', height='1', y='11', fill=getFill(0, 11))
-  rect(width='1', height='1', y='11', x='1', fill=getFill(1, 11))
-  rect(width='1', height='1', y='11', x='2', fill=getFill(2, 11))
-  rect(width='1', height='1', y='11', x='3', fill=getFill(3, 11))
-  rect(width='1', height='1', y='11', x='4', fill=getFill(4, 11))
-  rect(width='1', height='1', y='11', x='5', fill=getFill(5, 11))
-  rect(width='1', height='1', y='11', x='6', fill=getFill(6, 11))
-  rect(width='1', height='1', y='11', x='7', fill=getFill(7, 11, '#333'))
-  rect(width='1', height='1', y='12', fill=getFill(0, 12))
-  rect(width='1', height='1', y='12', x='1', fill=getFill(1, 12))
-  rect(width='1', height='1', y='12', x='2', fill=getFill(2, 12))
-  rect(width='1', height='1', y='12', x='3', fill=getFill(3, 12))
-  rect(width='1', height='1', y='12', x='4', fill=getFill(4, 12))
-  rect(width='1', height='1', y='12', x='5', fill=getFill(5, 12))
-  rect(width='1', height='1', y='12', x='6', fill=getFill(6, 12))
-  rect(width='1', height='1', y='12', x='7', fill=getFill(7, 12))
-  rect(width='1', height='1', y='12', x='8', fill=getFill(8, 12, '#333'))
+  -
+    rects = []
+    rects.push.apply(rects, [
+      [ 0, [                                  11, 12], [['#666'], ['#1a1a1a']]],
+      [ 1, [                              10, 11],     [['#4d4d4d']]],
+      [ 2, [         3, 4, 5,    7,    9, 10],         [['#333'], [], ['#1a1a1a'], ['#1a1a1a'], ['#333']]],
+      [ 3, [      2, 3, 4, 5, 6, 7, 8, 9],             [['#333']]],
+      [ 4, [   1, 2, 3, 4, 5, 6, 7, 8, 9],             [['#333'], ['#1a1a1a']]],
+      [ 5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         [['#333'], ['#1a1a1a'],,,,, ['#26ef00', 'eye'], ['#26e400', 'eye'],,, ['#1a1a1a']]],
+      [ 6, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],             [,,,,,, ['#26ef00', 'eye'], ['#26ef00', 'eye']]],
+      [ 7, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],             []],
+      [ 8, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         [,,,,,,,,,, ['#333']]],
+      [ 9, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         []],
+      [10, [0, 1, 2, 3, 4, 5, 6,    8, 9, 10],         [,,,,,, ['#333']]],
+      [11, [0, 1, 2, 3, 4, 5, 6, 7],                   [,,,,,,, ['#333']]],
+      [12, [0, 1, 2, 3, 4, 5, 6, 7, 8],                [,,,,,,,, ['#333']]]
+    ]
+      .reduce(function (cells, row) {
+        cells.push.apply(cells, row[1].map(function (x, i) { return [row[0], x, row[2][i]] }))
+        return cells
+      }, [])
+      .map(function (cell) {
+        var c2 = cell[2] || [];
+        return { y: cell[0], x: cell[1], fill: c2[0], group: c2[1] }
+      })
+    )
 
-  if hat
-    rect(width=hatScale, height=hatScale, x='4', fill=getFill(4, 0, '#c78386', 'hat'))
-    rect(width=hatScale, height=hatScale, x='4.4', fill=getFill(4.4, 0, '#c6161c', 'hat'))
+    if (paddingColor) {
+      rects.push.apply(rects, [
+        [-1, [                                  10, 11, 12, 13]],
+        [ 0, [                               9, 10,         13]],
+        [ 1, [          2, 3, 4, 5, 6, 7, 8, 9,         12, 13]],
+        [ 2, [       1, 2,          6,    8,        11, 12]],
+        [ 3, [    0, 1,                         10, 11]],
+        [ 4, [-1, 0,                            10, 11]],
+        [ 5, [-1,                                   11]],
+        [ 6, [-1,                               10, 11]],
+        [ 7, [-1,                               10, 11]],
+        [ 8, [-1,                                   11]],
+        [ 9, [-1,                                   11]],
+        [10, [-1,                      7,           11]],
+        [11, [-1,                         8, 9, 10, 11]],
+        [12, [-1,                            9]],
+        [13, [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
+      ]
+        .reduce(function (cells, row) {
+          cells.push.apply(cells, row[1].map(function (x) { return [row[0], x] }))
+          return cells
+        }, [])
+        .map(function (cell) {
+          return { y: cell[0], x: cell[1], fill: paddingColor, group: 'padding' }
+        })
+      )
+    }
 
-    rect(width=hatScale, height=hatScale, y='0.4', x='3.2', fill=getFill(3.2, 0.4, '#a70c12', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.4', x='3.6', fill=getFill(3.6, 0.4, '#b21015', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.4', x='4', fill=getFill(4, 0.4, '#be131a', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.4', x='4.4', fill=getFill(4.4, 0.4, '#d91820', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.4', x='4.8', fill=getFill(4.8, 0.4, '#bc131a', 'hat'))
+    if (hat) {
+      rects.push.apply(rects, [
+        [0  , [                                 4, 4.4],                             ['#c78386', '#c6161c']],
+        [0.4, [                       3.2, 3.6, 4, 4.4, 4.8],                        ['#a70c12', '#b21015', '#be131a', '#d91820', '#bc131a']],
+        [0.8, [                  2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2],                   ['#b61217', '#b91319', '#c0141b', '#b81218', '#b30f16', '#ae0f15', '#c3151c']],
+        [1.2, [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6],              ['#b85358', '#cd161f', '#c6161d', '#d3171f', '#e31a22', '#e31a22', '#e31a22', '#c7161d', '#a90d13']],
+        [1.6, [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6],           ['#ac0f14', '#a60e12', '#c4161d', '#af1015', '#c1151b', '#cb161d', '#cb161d', '#c1141b', '#ad0f16', '#c2777c']],
+        [2  , [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#c3151c', '#dde0e0', '#dde9ea', '#e5e6e6', '#e3e4e5', '#e6e7e8', '#e2eced', '#d9ddde', '#dce1e2', '#dedfe0', '#e9eaea']],
+        [2.4, [     1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#e8e9ea', '#f0f0f2', '#e0eaeb', '#d7d8da', '#f3f4f4', '#ecedee', '#eceded', '#f0f0f1', '#f5f5f6', '#f1f1f2', '#eeeeef', '#eceded', '#ecedec']],
+        [2.8, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#e2e3e4', '#fafafa', '#fbfbfb', '#efefef', '#d4d5d6', '#eceded', '#efeff0', '#f4f4f5', '#f8f9f9', '#f9f9f9', '#eeefef', '#f9f9f9', '#fcfcfc', '#ececed']],
+        [3.2, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#e8e9ea', '#e9eaeb', '#f4f5f5', '#f3f3f3', '#dadbdc', '#eaebec', '#eaebec', '#edeeee', '#f4f4f4', '#f8f8f8', '#f4f5f5', '#f5f6f6', '#f2f2f3', '#f0f0f1', '#d6d6d8']],
+        [3.6, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#dadada', '#e8e9ea', '#e6e7e7', '#c1c1c1', '#d2d3d5', '#e1e2e3', '#eeeeef', '#eff0f0', '#edeeee', '#eeefef', '#f1f1f2', '#eaebeb', '#e1e2e4', '#dedfe0', '#d5d6d7']],
+        [4  , [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#dbdbdb', '#cecece', '#c6c6c6', '#bebdbd', '#a6a6a6', '#969696', '#8c8b8b', '#858484', '#7f7e7e', '#807f7f', '#848383', '#908f8f', '#a0a0a0', '#b0b0b0', '#c0bfbf']],
+      ]
+        .reduce(function (cells, row) {
+          cells.push.apply(cells, row[1].map(function (x, i) { return [row[0], x, row[2][i]] }))
+          return cells
+        }, [])
+        .map(function (cell) {
+          return { y: cell[0], x: cell[1], fill: cell[2], group: 'hat', scale: 0.4 }
+        })
+      )
+    }
 
-    rect(width=hatScale, height=hatScale, y='0.8', x='2.8', fill=getFill(2.8, 0.8, '#b61217', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.8', x='3.2', fill=getFill(3.2, 0.8, '#b91319', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.8', x='3.6', fill=getFill(3.6, 0.8, '#c0141b', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.8', x='4', fill=getFill(4, 0.8, '#b81218', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.8', x='4.4', fill=getFill(4.4, 0.8, '#b30f16', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.8', x='4.8', fill=getFill(4.8, 0.8, '#ae0f15', 'hat'))
-    rect(width=hatScale, height=hatScale, y='0.8', x='5.2', fill=getFill(5.2, 0.8, '#c3151c', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='1.2', x='2.4', fill=getFill(2.4, 1.2, '#b85358', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='2.8', fill=getFill(2.8, 1.2, '#cd161f', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='3.2', fill=getFill(3.2, 1.2, '#c6161d', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='3.6', fill=getFill(3.6, 1.2, '#d3171f', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='4', fill=getFill(4, 1.2, '#e31a22', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='4.4', fill=getFill(4.4, 1.2, '#e31a22', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='4.8', fill=getFill(4.8, 1.2, '#e31a22', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='5.2', fill=getFill(5.2, 1.2, '#c7161d', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.2', x='5.6', fill=getFill(5.6, 1.2, '#a90d13', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='1.6', x='2.4', fill=getFill(2.4, 1.6, '#ac0f14', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='2.8', fill=getFill(2.8, 1.6, '#a60e12', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='3.2', fill=getFill(3.2, 1.6, '#c4161d', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='3.6', fill=getFill(3.6, 1.6, '#af1015', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='4', fill=getFill(4, 1.6, '#c1151b', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='4.4', fill=getFill(4.4, 1.6, '#cb161d', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='4.8', fill=getFill(4.8, 1.6, '#cb161d', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='5.2', fill=getFill(5.2, 1.6, '#c1141b', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='5.6', fill=getFill(5.6, 1.6, '#ad0f16', 'hat'))
-    rect(width=hatScale, height=hatScale, y='1.6', x='6', fill=getFill(6, 1.6, '#c2777c', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='2', x='2.4', fill=getFill(2.4, 2, '#c3151c', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='2.8', fill=getFill(2.8, 2, '#dde0e0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='3.2', fill=getFill(3.2, 2, '#dde9ea', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='3.6', fill=getFill(3.6, 2, '#e5e6e6', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='4', fill=getFill(4, 2, '#e3e4e5', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='4.4', fill=getFill(4.4, 2, '#e6e7e8', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='4.8', fill=getFill(4.8, 2, '#e2eced', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='5.2', fill=getFill(5.2, 2, '#d9ddde', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='5.6', fill=getFill(5.6, 2, '#dce1e2', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='6', fill=getFill(6, 2, '#dedfe0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2', x='6.4', fill=getFill(6.4, 2, '#e9eaea', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='2.4', x='1.6', fill=getFill(1.6, 2.4, '#e8e9ea', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='2', fill=getFill(2, 2.4, '#f0f0f2', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='2.4', fill=getFill(2.4, 2.4, '#e0eaeb', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='2.8', fill=getFill(2.8, 2.4, '#d7d8da', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='3.2', fill=getFill(3.2, 2.4, '#f3f4f4', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='3.6', fill=getFill(3.6, 2.4, '#ecedee', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='4', fill=getFill(4, 2.4, '#eceded', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='4.4', fill=getFill(4.4, 2.4, '#f0f0f1', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='4.8', fill=getFill(4.8, 2.4, '#f5f5f6', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='5.2', fill=getFill(5.2, 2.4, '#f1f1f2', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='5.6', fill=getFill(5.6, 2.4, '#eeeeef', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='6', fill=getFill(6, 2.4, '#eceded', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.4', x='6.4', fill=getFill(6.4, 2.4, '#ecedec', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='2.8', x='1.2', fill=getFill(1.2, 2.8, '#e2e3e4', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='1.6', fill=getFill(1.6, 2.8, '#fafafa', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='2', fill=getFill(2, 2.8, '#fbfbfb', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='2.4', fill=getFill(2.4, 2.8, '#efefef', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='2.8', fill=getFill(2.8, 2.8, '#d4d5d6', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='3.2', fill=getFill(3.2, 2.8, '#eceded', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='3.6', fill=getFill(3.6, 2.8, '#efeff0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='4', fill=getFill(4, 2.8, '#f4f4f5', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='4.4', fill=getFill(4.4, 2.8, '#f8f9f9', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='4.8', fill=getFill(4.8, 2.8, '#f9f9f9', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='5.2', fill=getFill(5.2, 2.8, '#eeefef', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='5.6', fill=getFill(5.6, 2.8, '#f9f9f9', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='6', fill=getFill(6, 2.8, '#fcfcfc', 'hat'))
-    rect(width=hatScale, height=hatScale, y='2.8', x='6.4', fill=getFill(6.4, 2.8, '#ececed', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='3.2', x='1.2', fill=getFill(1.2, 3.2, '#e8e9ea', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='1.6', fill=getFill(1.6, 3.2, '#e9eaeb', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='2', fill=getFill(2, 3.2, '#f4f5f5', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='2.4', fill=getFill(2.4, 3.2, '#f3f3f3', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='2.8', fill=getFill(2.8, 3.2, '#dadbdc', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='3.2', fill=getFill(3.2, 3.2, '#eaebec', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='3.6', fill=getFill(3.6, 3.2, '#eaebec', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='4', fill=getFill(4, 3.2, '#edeeee', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='4.4', fill=getFill(4.4, 3.2, '#f4f4f4', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='4.8', fill=getFill(4.8, 3.2, '#f8f8f8', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='5.2', fill=getFill(5.2, 3.2, '#f4f5f5', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='5.6', fill=getFill(5.6, 3.2, '#f5f6f6', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='6', fill=getFill(6, 3.2, '#f2f2f3', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='6.4', fill=getFill(6.4, 3.2, '#f0f0f1', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.2', x='6.8', fill=getFill(6.8, 3.2, '#d6d6d8', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='3.6', x='1.2', fill=getFill(1.2, 3.6, '#dadada', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='1.6', fill=getFill(1.6, 3.6, '#e8e9ea', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='2', fill=getFill(2, 3.6, '#e6e7e7', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='2.4', fill=getFill(2.4, 3.6, '#c1c1c1', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='2.8', fill=getFill(2.8, 3.6, '#d2d3d5', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='3.2', fill=getFill(3.2, 3.6, '#e1e2e3', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='3.6', fill=getFill(3.6, 3.6, '#eeeeef', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='4', fill=getFill(4, 3.6, '#eff0f0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='4.4', fill=getFill(4.4, 3.6, '#edeeee', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='4.8', fill=getFill(4.8, 3.6, '#eeefef', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='5.2', fill=getFill(5.2, 3.6, '#f1f1f2', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='5.6', fill=getFill(5.6, 3.6, '#eaebeb', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='6', fill=getFill(6, 3.6, '#e1e2e4', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='6.4', fill=getFill(6.4, 3.6, '#dedfe0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='3.6', x='6.8', fill=getFill(6.8, 3.6, '#d5d6d7', 'hat'))
-
-    rect(width=hatScale, height=hatScale, y='4', x='1.2', fill=getFill(1.2, 4, '#dbdbdb', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='1.6', fill=getFill(1.6, 4, '#cecece', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='2', fill=getFill(2, 4, '#c6c6c6', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='2.4', fill=getFill(2.4, 4, '#bebdbd', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='2.8', fill=getFill(2.8, 4, '#a6a6a6', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='3.2', fill=getFill(3.2, 4, '#969696', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='3.6', fill=getFill(3.6, 4, '#8c8b8b', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='4', fill=getFill(4, 4, '#858484', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='4.4', fill=getFill(4.4, 4, '#7f7e7e', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='4.8', fill=getFill(4.8, 4, '#807f7f', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='5.2', fill=getFill(5.2, 4, '#848383', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='5.6', fill=getFill(5.6, 4, '#908f8f', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='6', fill=getFill(6, 4, '#a0a0a0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='6.4', fill=getFill(6.4, 4, '#b0b0b0', 'hat'))
-    rect(width=hatScale, height=hatScale, y='4', x='6.8', fill=getFill(6.8, 4, '#c0bfbf', 'hat'))
+  each rect in rects
+    -
+      scale = rect.scale || 1
+      x = rect.x || false
+      y = rect.y || false
+      fill = rect.fill || null
+      group = rect.group || null
+    rect(width=scale, height=scale, x=x, y=y, fill=getFill(rect.x, rect.y, fill, group))
 
   if hasText
-    text(y='15') ponyfoo.com
+    text(x=paddingColor ? 1 : false, y=paddingColor ? 16 : 15) ponyfoo.com
 
   if hasLink
     a(xlink:href='/', aria-hidden='false', role='link', title='Pony Foo')

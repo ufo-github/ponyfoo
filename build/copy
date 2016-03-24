@@ -6,7 +6,7 @@ mkdir -p .bin/{public/img/logos,inlined,emails}
 
 cp -r client/img .bin/public
 cp -r resources/logos/generated/touch-icons/*.png .bin/public
-cp -r resources/logos/generated/{full,icons}/*.{png,svg} .bin/public/img/logos
+cp -r resources/logos/generated/{text,icons}/*.{png,svg} .bin/public/img/logos
 cp -r client/js/inline .bin
 cp -r client/js/static/*.js .bin/public/js
 cp -r node_modules/font-awesome-stylus/fonts .bin/public

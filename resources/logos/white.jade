@@ -1,16 +1,15 @@
--
-  this.logoOpts = {
-    name: this.text ? 'white-text' : 'white',
-    getFill: function (x, y, defaultColor, group) {
-      if (group) { return defaultColor; }
-      if (defaultColor === '#666') { return '#aaa'; }
-      if (defaultColor === '#1a1a1a') { return '#e6e6e6'; }
-      if (defaultColor === '#4d4d4d') { return '#b3b3b3'; }
-      if (defaultColor === '#333') { return '#ddd'; }
-      if (defaultColor) { return defaultColor; }
-      return '#fff';
-    },
-    hasText: this.text ? true : false,
-    textColor: this.text
-  }
-include _template
+extends _template
+block template_vars
+  -
+    fallbackImage = fallbackImage || '/img/logos/white.png'
+    options = {
+      getFill: function (x, y, defaultColor, group) {
+        if (group) { return defaultColor; }
+        if (defaultColor === '#666') { return '#aaa'; }
+        if (defaultColor === '#1a1a1a') { return '#e6e6e6'; }
+        if (defaultColor === '#4d4d4d') { return '#b3b3b3'; }
+        if (defaultColor === '#333') { return '#ddd'; }
+        if (defaultColor) { return defaultColor; }
+        return '#fff';
+      }
+    }

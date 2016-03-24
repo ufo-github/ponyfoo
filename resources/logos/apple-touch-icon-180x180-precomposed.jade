@@ -1,2 +1,8 @@
-- this.logoOpts = { width: 180, height: 180 }
-include _template
+extends _template
+block template_vars
+  -
+    fallbackImage = '/apple-touch-icon-180x180-precomposed.png'
+    options = {
+      width: 180,
+      height: 180
+    }

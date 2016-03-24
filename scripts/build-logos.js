@@ -24,27 +24,22 @@ const argv = minimist(process.argv.slice(2), {
   }
 });
 const rtouch = /touch-icon/i;
-const rtext = /-text\.svg$/i;
+const rtext = /-text/i;
+const rpadded = /-padded/i;
 const rwidth = /width="(\d+)"/i;
 const rheight = /height="(\d+)"/i;
 const rext = /\.[a-z]+$/i;
 
 pglob('resources/logos/**/*.jade')
   .then(files => files.filter(file => path.basename(file)[0] !== '_'))
-  .then(files => _.sortBy(files, file => {
-    const base = path.basename(file, '.jade') + '.svg';
-    if (rtext.test(base)) { return 2; }
-    if (rtouch.test(base)) { return 1; }
-    return 0;
-  }))
   .then(files => files.map(file => {
     const base = path.basename(file, '.jade') + '.svg';
     const html = jadum.renderFile(file, {
       pretty: argv.debug,
       compileDebug: argv.debug,
-      cache: false
+      cache: true
     });
-    const type = rtouch.test(base) ? 'touch-icons' : rtext.test(base) ? 'full' : 'icons';
+    const type = rtouch.test(base) ? 'touch-icons' : rtext.test(base) ? 'text' : 'icons';
     return {
       source: file,
       destination: path.join('resources/logos/generated', type, base),
@@ -60,15 +55,7 @@ pglob('resources/logos/**/*.jade')
     }))
     .then(buffer => pwriteFile(extchange(file.destination, '.png'), buffer))
   ))
-  .then(files => _(files)
-    .map(file => extchange(file.destination, '.png'))
-    .sortBy(file => {
-      if (rtext.test(file)) { return 0; }
-      if (rtouch.test(file)) { return 1; }
-      return 2;
-    })
-    .value()
-  )
+  .then(files => files.map(file => extchange(file.destination, '.png')))
   .then(src => psprite({
     src,
     padding: 10

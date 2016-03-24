@@ -1,7 +1,5 @@
--
-  this.logoOpts = {
-    name: this.text ? 'original-text' : 'original',
-    hasText: this.text ? true : false,
-    textColor: this.text
-  }
-include _template
+extends _template
+block template_vars
+  -
+    fallbackImage = fallbackImage || '/img/logos/original.png'
+    options = {}
