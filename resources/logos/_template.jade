@@ -43,11 +43,88 @@ block template_vars
   }
 
   viewbox = viewbox.join(' ')
+  pixels = []
+  pixels.push.apply(pixels, [
+    [ 0, [                                  11, 12], [['#666'], ['#1a1a1a']]],
+    [ 1, [                              10, 11],     [['#4d4d4d']]],
+    [ 2, [         3, 4, 5,    7,    9, 10],         [['#333'], [], ['#1a1a1a'], ['#1a1a1a'], ['#333']]],
+    [ 3, [      2, 3, 4, 5, 6, 7, 8, 9],             [['#333']]],
+    [ 4, [   1, 2, 3, 4, 5, 6, 7, 8, 9],             [['#333'], ['#1a1a1a']]],
+    [ 5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         [['#333'], ['#1a1a1a'],,,,, ['#26ef00', 'eye'], ['#26e400', 'eye'],,, ['#1a1a1a']]],
+    [ 6, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],             [,,,,,, ['#26ef00', 'eye'], ['#26ef00', 'eye']]],
+    [ 7, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],             []],
+    [ 8, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         [,,,,,,,,,, ['#333']]],
+    [ 9, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         []],
+    [10, [0, 1, 2, 3, 4, 5, 6,    8, 9, 10],         [,,,,,, ['#333']]],
+    [11, [0, 1, 2, 3, 4, 5, 6, 7],                   [,,,,,,, ['#333']]],
+    [12, [0, 1, 2, 3, 4, 5, 6, 7, 8],                [,,,,,,,, ['#333']]]
+  ]
+    .reduce(function (cells, row) {
+      cells.push.apply(cells, row[1].map(function (x, i) { return [row[0], x, row[2][i]] }))
+      return cells
+    }, [])
+    .map(function (cell) {
+      var c2 = cell[2] || [];
+      return { y: cell[0], x: cell[1], fill: c2[0], group: c2[1] }
+    })
+  )
+
+  if (paddingColor) {
+    pixels.push.apply(pixels, [
+      [-1, [                                  10, 11, 12, 13]],
+      [ 0, [                               9, 10,         13]],
+      [ 1, [          2, 3, 4, 5, 6, 7, 8, 9,         12, 13]],
+      [ 2, [       1, 2,          6,    8,        11, 12]],
+      [ 3, [    0, 1,                         10, 11]],
+      [ 4, [-1, 0,                            10, 11]],
+      [ 5, [-1,                                   11]],
+      [ 6, [-1,                               10, 11]],
+      [ 7, [-1,                               10, 11]],
+      [ 8, [-1,                                   11]],
+      [ 9, [-1,                                   11]],
+      [10, [-1,                      7,           11]],
+      [11, [-1,                         8, 9, 10, 11]],
+      [12, [-1,                            9]],
+      [13, [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
+    ]
+      .reduce(function (cells, row) {
+        cells.push.apply(cells, row[1].map(function (x) { return [row[0], x] }))
+        return cells
+      }, [])
+      .map(function (cell) {
+        return { y: cell[0], x: cell[1], fill: paddingColor, group: 'padding' }
+      })
+    )
+  }
 
   function getFill (x, y, defaultColor, group) {
     var color = options.getFill ? options.getFill(x, y, defaultColor, group) : defaultColor
     if (color) { return color; }
     return false;
+  }
+
+  if (hat) {
+    pixels.push.apply(pixels, [
+      [0  , [                                 4, 4.4],                             ['#c78386', '#c6161c']],
+      [0.4, [                       3.2, 3.6, 4, 4.4, 4.8],                        ['#a70c12', '#b21015', '#be131a', '#d91820', '#bc131a']],
+      [0.8, [                  2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2],                   ['#b61217', '#b91319', '#c0141b', '#b81218', '#b30f16', '#ae0f15', '#c3151c']],
+      [1.2, [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6],              ['#b85358', '#cd161f', '#c6161d', '#d3171f', '#e31a22', '#e31a22', '#e31a22', '#c7161d', '#a90d13']],
+      [1.6, [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6],           ['#ac0f14', '#a60e12', '#c4161d', '#af1015', '#c1151b', '#cb161d', '#cb161d', '#c1141b', '#ad0f16', '#c2777c']],
+      [2  , [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#c3151c', '#dde0e0', '#dde9ea', '#e5e6e6', '#e3e4e5', '#e6e7e8', '#e2eced', '#d9ddde', '#dce1e2', '#dedfe0', '#e9eaea']],
+      [2.4, [     1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#e8e9ea', '#f0f0f2', '#e0eaeb', '#d7d8da', '#f3f4f4', '#ecedee', '#eceded', '#f0f0f1', '#f5f5f6', '#f1f1f2', '#eeeeef', '#eceded', '#ecedec']],
+      [2.8, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#e2e3e4', '#fafafa', '#fbfbfb', '#efefef', '#d4d5d6', '#eceded', '#efeff0', '#f4f4f5', '#f8f9f9', '#f9f9f9', '#eeefef', '#f9f9f9', '#fcfcfc', '#ececed']],
+      [3.2, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#e8e9ea', '#e9eaeb', '#f4f5f5', '#f3f3f3', '#dadbdc', '#eaebec', '#eaebec', '#edeeee', '#f4f4f4', '#f8f8f8', '#f4f5f5', '#f5f6f6', '#f2f2f3', '#f0f0f1', '#d6d6d8']],
+      [3.6, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#dadada', '#e8e9ea', '#e6e7e7', '#c1c1c1', '#d2d3d5', '#e1e2e3', '#eeeeef', '#eff0f0', '#edeeee', '#eeefef', '#f1f1f2', '#eaebeb', '#e1e2e4', '#dedfe0', '#d5d6d7']],
+      [4  , [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#dbdbdb', '#cecece', '#c6c6c6', '#bebdbd', '#a6a6a6', '#969696', '#8c8b8b', '#858484', '#7f7e7e', '#807f7f', '#848383', '#908f8f', '#a0a0a0', '#b0b0b0', '#c0bfbf']],
+    ]
+      .reduce(function (cells, row) {
+        cells.push.apply(cells, row[1].map(function (x, i) { return [row[0], x, row[2][i]] }))
+        return cells
+      }, [])
+      .map(function (cell) {
+        return { y: cell[0], x: cell[1], fill: cell[2], group: 'hat', scale: 0.4 }
+      })
+    )
   }
 
 svg(
@@ -72,93 +149,14 @@ svg(
         }
       style(type='text/css')!='text{fill:' + textColor + '}'
 
-  -
-    rects = []
-    rects.push.apply(rects, [
-      [ 0, [                                  11, 12], [['#666'], ['#1a1a1a']]],
-      [ 1, [                              10, 11],     [['#4d4d4d']]],
-      [ 2, [         3, 4, 5,    7,    9, 10],         [['#333'], [], ['#1a1a1a'], ['#1a1a1a'], ['#333']]],
-      [ 3, [      2, 3, 4, 5, 6, 7, 8, 9],             [['#333']]],
-      [ 4, [   1, 2, 3, 4, 5, 6, 7, 8, 9],             [['#333'], ['#1a1a1a']]],
-      [ 5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         [['#333'], ['#1a1a1a'],,,,, ['#26ef00', 'eye'], ['#26e400', 'eye'],,, ['#1a1a1a']]],
-      [ 6, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],             [,,,,,, ['#26ef00', 'eye'], ['#26ef00', 'eye']]],
-      [ 7, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],             []],
-      [ 8, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         [,,,,,,,,,, ['#333']]],
-      [ 9, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],         []],
-      [10, [0, 1, 2, 3, 4, 5, 6,    8, 9, 10],         [,,,,,, ['#333']]],
-      [11, [0, 1, 2, 3, 4, 5, 6, 7],                   [,,,,,,, ['#333']]],
-      [12, [0, 1, 2, 3, 4, 5, 6, 7, 8],                [,,,,,,,, ['#333']]]
-    ]
-      .reduce(function (cells, row) {
-        cells.push.apply(cells, row[1].map(function (x, i) { return [row[0], x, row[2][i]] }))
-        return cells
-      }, [])
-      .map(function (cell) {
-        var c2 = cell[2] || [];
-        return { y: cell[0], x: cell[1], fill: c2[0], group: c2[1] }
-      })
-    )
-
-    if (paddingColor) {
-      rects.push.apply(rects, [
-        [-1, [                                  10, 11, 12, 13]],
-        [ 0, [                               9, 10,         13]],
-        [ 1, [          2, 3, 4, 5, 6, 7, 8, 9,         12, 13]],
-        [ 2, [       1, 2,          6,    8,        11, 12]],
-        [ 3, [    0, 1,                         10, 11]],
-        [ 4, [-1, 0,                            10, 11]],
-        [ 5, [-1,                                   11]],
-        [ 6, [-1,                               10, 11]],
-        [ 7, [-1,                               10, 11]],
-        [ 8, [-1,                                   11]],
-        [ 9, [-1,                                   11]],
-        [10, [-1,                      7,           11]],
-        [11, [-1,                         8, 9, 10, 11]],
-        [12, [-1,                            9]],
-        [13, [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
-      ]
-        .reduce(function (cells, row) {
-          cells.push.apply(cells, row[1].map(function (x) { return [row[0], x] }))
-          return cells
-        }, [])
-        .map(function (cell) {
-          return { y: cell[0], x: cell[1], fill: paddingColor, group: 'padding' }
-        })
-      )
-    }
-
-    if (hat) {
-      rects.push.apply(rects, [
-        [0  , [                                 4, 4.4],                             ['#c78386', '#c6161c']],
-        [0.4, [                       3.2, 3.6, 4, 4.4, 4.8],                        ['#a70c12', '#b21015', '#be131a', '#d91820', '#bc131a']],
-        [0.8, [                  2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2],                   ['#b61217', '#b91319', '#c0141b', '#b81218', '#b30f16', '#ae0f15', '#c3151c']],
-        [1.2, [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6],              ['#b85358', '#cd161f', '#c6161d', '#d3171f', '#e31a22', '#e31a22', '#e31a22', '#c7161d', '#a90d13']],
-        [1.6, [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6],           ['#ac0f14', '#a60e12', '#c4161d', '#af1015', '#c1151b', '#cb161d', '#cb161d', '#c1141b', '#ad0f16', '#c2777c']],
-        [2  , [             2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#c3151c', '#dde0e0', '#dde9ea', '#e5e6e6', '#e3e4e5', '#e6e7e8', '#e2eced', '#d9ddde', '#dce1e2', '#dedfe0', '#e9eaea']],
-        [2.4, [     1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#e8e9ea', '#f0f0f2', '#e0eaeb', '#d7d8da', '#f3f4f4', '#ecedee', '#eceded', '#f0f0f1', '#f5f5f6', '#f1f1f2', '#eeeeef', '#eceded', '#ecedec']],
-        [2.8, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4],      ['#e2e3e4', '#fafafa', '#fbfbfb', '#efefef', '#d4d5d6', '#eceded', '#efeff0', '#f4f4f5', '#f8f9f9', '#f9f9f9', '#eeefef', '#f9f9f9', '#fcfcfc', '#ececed']],
-        [3.2, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#e8e9ea', '#e9eaeb', '#f4f5f5', '#f3f3f3', '#dadbdc', '#eaebec', '#eaebec', '#edeeee', '#f4f4f4', '#f8f8f8', '#f4f5f5', '#f5f6f6', '#f2f2f3', '#f0f0f1', '#d6d6d8']],
-        [3.6, [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#dadada', '#e8e9ea', '#e6e7e7', '#c1c1c1', '#d2d3d5', '#e1e2e3', '#eeeeef', '#eff0f0', '#edeeee', '#eeefef', '#f1f1f2', '#eaebeb', '#e1e2e4', '#dedfe0', '#d5d6d7']],
-        [4  , [1.2, 1.6, 2, 2.4, 2.8, 3.2, 3.6, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8], ['#dbdbdb', '#cecece', '#c6c6c6', '#bebdbd', '#a6a6a6', '#969696', '#8c8b8b', '#858484', '#7f7e7e', '#807f7f', '#848383', '#908f8f', '#a0a0a0', '#b0b0b0', '#c0bfbf']],
-      ]
-        .reduce(function (cells, row) {
-          cells.push.apply(cells, row[1].map(function (x, i) { return [row[0], x, row[2][i]] }))
-          return cells
-        }, [])
-        .map(function (cell) {
-          return { y: cell[0], x: cell[1], fill: cell[2], group: 'hat', scale: 0.4 }
-        })
-      )
-    }
-
-  each rect in rects
+  each pixel in pixels
     -
-      scale = rect.scale || 1
-      x = rect.x || false
-      y = rect.y || false
-      fill = rect.fill || null
-      group = rect.group || null
-    rect(width=scale, height=scale, x=x, y=y, fill=getFill(rect.x, rect.y, fill, group))
+      scale = pixel.scale || 1
+      x = pixel.x || false
+      y = pixel.y || false
+      fill = pixel.fill || null
+      group = pixel.group || null
+    rect(width=scale, height=scale, x=x, y=y, fill=getFill(pixel.x, pixel.y, fill, group))
 
   if hasText
     text(x=paddingColor ? 1 : false, y=paddingColor ? 16 : 15) ponyfoo.com

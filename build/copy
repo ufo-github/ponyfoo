@@ -1,10 +1,12 @@
 #!/bin/bash
 
+npm run build-banners
 npm run build-logos
 
-mkdir -p .bin/{public/img/logos,inlined,emails}
+mkdir -p .bin/{public/img/{banners,logos},inlined,emails}
 
 cp -r client/img .bin/public
+cp -r resources/banners/generated/*.png .bin/public/img/banners
 cp -r resources/logos/generated/touch-icons/*.png .bin/public
 cp -r resources/logos/generated/{text,icons}/*.{png,svg} .bin/public/img/logos
 cp -r client/js/inline .bin

@@ -1,0 +1,9 @@
+extends _template
+block template_vars
+  -
+    fallbackImage = '/img/banners/branded.png'
+    options = {
+      getFill: function (pixel) {
+        return pixel.brand;
+      }
+    }

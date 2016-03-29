@@ -156,10 +156,10 @@ function confirmTopics (email, topics, done) {
       bail(topics)(); return;
     }
     var wants = _.difference(valid, subscriber.topics);
-    wants.forEach(add);
+    wants.forEach(addWant);
     subscriber.verified = true;
     subscriber.save(bail(wants));
-    function add (want) {
+    function addWant (want) {
       subscriber.topics.push(want);
     }
   }
