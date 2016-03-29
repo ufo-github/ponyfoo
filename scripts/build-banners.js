@@ -1,33 +1,32 @@
 'use strict';
 
 const fs = require('fs');
-const cf = require('colorformat');
 const nearest = require('nearest-color');
-const hexrgb = require('hexrgb');
+const color = require('color');
 const cd = require('color-difference');
-const ops = require('color-ops');
 const PNG = require('pngjs').PNG;
 const pixels = [];
 const brandColors = augmentColors({
-  'c-black': '#000',
-  'c-black-text': '#333',
-  'c-black-light': '#555',
-  'c-blue': '#1a4d7f',
-  'c-twitter-blue': '#55acee',
-  'c-light-turquoise': '#5aa9bc',
-  'c-dark-turquoise': '#1686a2',
-  'c-bright-turquoise': '#6ecce2',
+  'c-black': '#000000',
+  'c-black-text': '#333333',
+  'c-black-light': '#555555',
+  'c-landscape': '#559',
+  // 'c-blue': '#1a4d7f',
+  // 'c-twitter-blue': '#55acee',
+  // 'c-light-turquoise': '#5aa9bc',
+  // 'c-dark-turquoise': '#1686a2',
+  // 'c-bright-turquoise': '#6ecce2',
   'c-gray': '#cbc5c0',
   'c-browser-gray': '#f6f6f6',
-  'c-light-gray': '#ddd',
-  'c-dark-gray': '#999',
-  'c-darker-gray': '#777',
-  'c-green': '#37ed2c',
+  'c-light-gray': '#dddddd',
+  'c-dark-gray': '#999999',
+  'c-darker-gray': '#777777',
+  // 'c-green': '#37ed2c',
   'c-dark-green': '#1bc211', // darken(c-green, 25%)
-  'c-dark-green-01': '#e4f9e3',
-  'c-dark-green-05': '#8be186',
-  'c-light-green': '#c3f0c1',
-  'c-green-005': '#f2fcf2',
+  // 'c-dark-green-01': '#e4f9e3',
+  // 'c-dark-green-05': '#8be186',
+  // 'c-light-green': '#c3f0c1',
+  // 'c-green-005': '#f2fcf2',
   'c-light': '#f3f3f3',
   'c-light-orange': '#fefaf6',
   'c-orange': '#f8ab6f',
@@ -43,7 +42,7 @@ const brandColors = augmentColors({
   'c-purple-005': '#f7f0f5',
   'c-red': '#ff0056',
   'c-red-005': '#fcf0f4',
-  'c-true-white': '#fff',
+  'c-true-white': '#ffffff',
   'c-white': '#fcfcfc',
   'c-yellow': '#f1e05a',
   'c-yellow-075': '#f4e98c',
@@ -64,11 +63,11 @@ fs.createReadStream('resources/banners/_template-source.png')
     for (let y = 5; y < this.height; y += 10) {
       for (let x = 5; x < this.width; x += 10) {
         const idx = (this.width * y + x) << 2;
-        const original = cf.rgbToHex(
-          this.data[idx],
-          this.data[idx + 1],
-          this.data[idx + 2]
-        );
+        const original = color({
+          r: this.data[idx],
+          g: this.data[idx + 1],
+          b: this.data[idx + 2]
+        }).hexString();
         const brand = nearestFromBrand(original).value;
         const diff = cd.compare(original, brand);
         pixels.push({
@@ -76,7 +75,7 @@ fs.createReadStream('resources/banners/_template-source.png')
           x: (x - 5) / 10,
           original,
           brand,
-          diff
+          diff: parseFloat(diff.toFixed(2))
         });
       }
     }
@@ -108,6 +107,7 @@ block template_vars
           .replace(/}$/, ` }`)
         )
         .join(',\n    ')
+        .toLowerCase()
     }
   ]
 
@@ -138,16 +138,15 @@ svg(
 
 function augmentColors (colors) {
   Object.keys(colors).forEach(name => {
-    const rgb = hexrgb.hex2rgb(colors[name], true);
-    rgb.push(1);
-    many(-20, 60, i => addColor(name, ops.lighten(rgb, i)));
-    many(-20, 60, i => addColor(name, ops.spin(rgb, i)));
-    many(-10, 10, i => addColor(name, ops.saturate(rgb, i)));
+    many(-65, 60, i => addColor(name, 'lighten', i));
+    many(-30, 90, i => addColor(name, 'saturate', i));
+    many(-60, 60, i => addColor(name, 'whiten', i));
+    many(-30, 60, i => addColor(name, 'clearer', i));
+    many(-30, 20, i => addColor(name, 'rotate', i * 100));
   });
   return colors;
-  function addColor(name, color) {
-    const hex = hexrgb.rgb2hex(color);
-    if (hex.length !== 7) { return; }
+  function addColor(name, fn, i) {
+    const hex = color(colors[name])[fn](i * 0.01).hexString();
     let key;
     while (true) {
       key = `${name}-${getCode()}`;
