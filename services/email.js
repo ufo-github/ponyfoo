@@ -8,6 +8,7 @@ var mailgun = require('campaign-mailgun');
 var jade = require('campaign-ponyfoo');
 var winston = require('winston');
 var htmlService = require('./html');
+var staticService = require('./static');
 var env = require('../lib/env');
 var mode = env('MAILGUN_MODE');
 var apiKey = env('MAILGUN_API_KEY');
@@ -50,7 +51,7 @@ var api = {
 
 function createClient () {
   var options = {
-    headerImage: path.resolve('./client/img/emails/header.png'),
+    headerImage: path.join('.bin/public', staticService.unroll('/img/banners/branded.png')),
     templateEngine: jade,
     provider: mailgun({ apiKey: apiKey, authority: authority }),
     formatting: formatting,

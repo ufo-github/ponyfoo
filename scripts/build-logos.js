@@ -5,11 +5,13 @@ const minimist = require('minimist');
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
+const SVGO = require('svgo');
 const jadum = require('jadum');
 const mkdirp = require('mkdirp');
 const svg2png = require('svg2png');
 const spritesmith = require('spritesmith');
 const promisify = require('bluebird').promisify;
+const svgo = new SVGO();
 const pglob = promisify(glob);
 const pmkdirp = promisify(mkdirp);
 const pwriteFile = promisify(fs.writeFile);
@@ -38,31 +40,37 @@ pglob(`resources/${resOpen + resourceTypes + resClose}/**/*.jade`)
   .then(files => files.filter(file => path.basename(file)[0] !== '_'))
   .then(files => files.map(source => {
     const dir = path.dirname(source);
-    const base = path.basename(source, '.jade') + '.svg';
-    const html = jadum.renderFile(source, {
+    const base = path.basename(source, '.jade');
+    const raw = base + '.svg';
+    const optimized = base + '.min.svg';
+    const markup = jadum.renderFile(source, {
       pretty: argv.debug,
       compileDebug: argv.debug,
       cache: true
     });
-    const destination = getDestination();
-    return { source, destination, html };
-    function getDestination () {
+    const destination = getDestination(raw);
+    const dest_optim = getDestination(optimized);
+    return { source, destination, dest_optim, markup };
+    function getDestination (file) {
       const banner = rbanner.test(dir);
       if (banner) {
-        return path.join(dir, 'generated', base);
+        return path.join(dir, 'generated', file);
       }
-      const touch = rtouch.test(base);
-      const text = rtext.test(base);
+      const touch = rtouch.test(file);
+      const text = rtext.test(file);
       const type = touch ? 'touch-icons' : text ? 'text' : 'icons';
-      return path.join(dir, 'generated', type, base);
+      return path.join(dir, 'generated', type, file);
     }
   }))
   .then(resolveAll(file => pmkdirp(path.dirname(file.destination))))
-  .then(resolveAll(file => pwriteFile(file.destination, file.html.trim() + '\n')))
+  .then(resolveAll(file => new Promise(resolve => svgo.optimize(file.markup, resolve))
+    .then(r => pwriteFile(file.dest_optim, r.data + '\n'))
+  ))
+  .then(resolveAll(file => pwriteFile(file.destination, file.markup.trim() + '\n')))
   .then(resolveAll(file => preadFile(file.destination)
     .then(buffer => svg2png(buffer, {
-      width: parseInt(file.html.match(rwidth)[1]),
-      height: parseInt(file.html.match(rheight)[1])
+      width: parseInt(file.markup.match(rwidth)[1]),
+      height: parseInt(file.markup.match(rheight)[1])
     }))
     .then(buffer => pwriteFile(changeExtension(file.destination, '.png'), buffer))
   ))

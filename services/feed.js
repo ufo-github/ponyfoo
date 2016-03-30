@@ -41,7 +41,7 @@ function from (options) {
       description: options.description,
       feed_url: authority + options.href,
       site_url: authority,
-      image_url: authority + staticService.unroll('/img/thumbnail.png'),
+      image_url: authority + staticService.unroll('/img/banners/branded.png'),
       author: contact,
       managingEditor: contact,
       webMaster: contact,

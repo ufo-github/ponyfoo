@@ -6,7 +6,7 @@ var env = require('../lib/env');
 var rhash = /(.*)\.[a-f0-9]{8}\.(.*)$/;
 var hashmap = {};
 var base = '.bin/public';
-var pattern = base + '/{{img,css,js}/*,service-worker.*.js}';
+var pattern = base + '/{{img,css,js}/**/*,service-worker.*.js}';
 var production = env('BUILD_ENV') === 'production';
 if (production) {
   hashmap = glob.sync(pattern, { nodir: true }).reduce(toMap, {});

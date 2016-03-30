@@ -76,6 +76,7 @@ function email (issue, options, done) {
     subject: issue.name + ' \u2014 Pony Foo Weekly',
     teaser: 'This week’s Web Platform news & inspiration',
     teaserHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
+    headerImage: false,
     css: css,
     permalink: permalink,
     thanks: !!thanks,

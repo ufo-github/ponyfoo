@@ -10,12 +10,11 @@ const brandColors = augmentColors({
   'c-black': '#000000',
   'c-black-text': '#333333',
   'c-black-light': '#555555',
-  'c-landscape': '#559',
-  // 'c-blue': '#1a4d7f',
-  // 'c-twitter-blue': '#55acee',
-  // 'c-light-turquoise': '#5aa9bc',
-  // 'c-dark-turquoise': '#1686a2',
-  // 'c-bright-turquoise': '#6ecce2',
+  'c-blue': '#1a4d7f',
+  'c-twitter-blue': '#55acee',
+  'c-light-turquoise': '#5aa9bc',
+  'c-dark-turquoise': '#1686a2',
+  'c-bright-turquoise': '#6ecce2',
   'c-gray': '#cbc5c0',
   'c-browser-gray': '#f6f6f6',
   'c-light-gray': '#dddddd',
@@ -87,14 +86,19 @@ block template_vars
 -
   options = options || {}
 
+  flipX = options.flipX ? options.flipX : false
+  startX = options.startX ? options.startX : 0
+  startY = options.startY ? options.startY : 0
+  offsetX = options.offsetX ? options.offsetX : 0
+  offsetY = options.offsetY ? options.offsetY : 0
   unit = 10
-  unitsX = 150
-  unitsY = 50
+  unitsX = options.unitsX ? options.unitsX : 150 - startX
+  unitsY = options.unitsY ? options.unitsY : 50 - startY
   width = options.width ? options.width : unitsX * unit
   height = options.height ? options.height : unitsY * unit
   viewbox = options.viewbox ? options.viewbox : '0 0 ' + unitsX + ' ' + unitsY
   viewbox = viewbox.split(' ').map(function (x) {
-    return parseInt(x, 10)
+    return parseFloat(x, 10)
   })
   viewbox = viewbox.join(' ')
 
@@ -109,7 +113,12 @@ block template_vars
         .join(',\n    ')
         .toLowerCase()
     }
-  ]
+  ].sort(function (a, b) {
+    if (a.y - b.y > 0) { return 1; }
+    if (a.y - b.y < 0) { return -1; }
+    if (flipX) { return b.x - a.x; }
+    return a.x - b.x;
+  })
 
   function getFill (pixel) {
     var color = options.getFill ? options.getFill(pixel) : pixel.original
@@ -128,9 +137,11 @@ svg(
 )
   each pixel in pixels
     -
-      x = pixel.x || false
-      y = pixel.y || false
-    rect(width=1, height=1, x=x, y=y, fill=getFill(pixel))
+      x = pixel.x - startX + offsetX
+      y = pixel.y - startY + offsetY
+      if (flipX) { x = unitsX - x - 1 }
+    if x >= 0 && y >= 0
+      rect(width=1, height=1, x=x || false, y=y || false, fill=getFill(pixel))
 `;
 
     fs.writeFile('resources/banners/_template.jade', template.trim() + '\n', 'utf8');
@@ -138,11 +149,12 @@ svg(
 
 function augmentColors (colors) {
   Object.keys(colors).forEach(name => {
-    many(-65, 60, i => addColor(name, 'lighten', i));
-    many(-30, 90, i => addColor(name, 'saturate', i));
-    many(-60, 60, i => addColor(name, 'whiten', i));
+    many(-65, 60, i => addColor(name, 'greyscale'));
+    many(-25, 60, i => addColor(name, 'lighten', i));
     many(-30, 60, i => addColor(name, 'clearer', i));
-    many(-30, 20, i => addColor(name, 'rotate', i * 100));
+  });
+  Object.keys(colors).forEach(name => { // true black is a bad color
+    if (colors[name] === '#000000') { delete colors[name]; }
   });
   return colors;
   function addColor(name, fn, i) {

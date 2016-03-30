@@ -5,11 +5,25 @@ table.wy-table.wy-container.table-not-responsive
       table.wy-table
         tr
           td.wy-td.wy-header
-            a.wy-header-text(href=authority + '/weekly') Pony Foo Weekly
-            a.wy-issue.lk-link.lk-black.lk-clean(href=permalink)
-              span='Issue #' + issue.slug
-              span.wy-issue-separator=' \u2014 '
-              span.wy-issue-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
+            table(cellpadding='0', cellspacing='0', border='0', width='100%')
+              tr
+                td.wy-header-td(background=authority + '/img/banners/branded-shorter.png', bgcolor='#e92c6c', valign='top')
+                  <!--[if gte mso 9]>
+                  <v:rect xmlns:v='urn:schemas-microsoft-com:vml' fill='true' stroke='false' style='mso-width-percent:1000;'>
+                  <v:fill type='tile' src=authority + '/img/banners/branded-shorter.png' color='#e92c6c' />
+                  <v:textbox style='mso-fit-shape-to-text:true' inset='0,0,0,0'>
+                  <![endif]-->
+                  div.wy-header-content
+                    a.wy-header-text(href=authority + '/weekly') Pony Foo Weekly
+                    a.wy-issue.lk-link.lk-black.lk-clean(href=permalink)
+                      span.wy-issue-content
+                        span='Issue #' + issue.slug
+                        span.wy-issue-separator=' \u2014 '
+                        span.wy-issue-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title)=issue.publication.text
+                  <!--[if gte mso 9]>
+                  </v:textbox>
+                  </v:rect>
+                  <![endif]-->
       if thanks
         table.wy-table
           tr

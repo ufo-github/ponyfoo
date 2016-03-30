@@ -19,11 +19,6 @@
 .wy-td
   padding 0
 
-.wy-header
-  background-color c-pink-01
-  border-bottom 1px solid c-pink
-  padding 10px
-
 .wy-section-summary,
 .wy-section-link,
 .wy-section-markdown
@@ -46,6 +41,11 @@
   float right
   font-size 12px
 
+.wy-issue-content
+  display block
+  padding 0 5px
+  background-color c-white
+
 .wy-section-header
   padding-top 40px
   h1,
@@ -58,12 +58,19 @@
   p
     line-height inherit
 
+.wy-header-td
+  padding 0
+
+.wy-header-content
+  margin 0 10px
+
 .wy-header-text
-  color c-pink
+  color c-white
+  text-shadow 1px 1px 0px c-blue
   font-weight bold
   font-size 24px
   &:active
-    outline 1px dotted c-pink
+    outline 1px dotted c-white
 
 .wy-content
   padding-bottom 25px

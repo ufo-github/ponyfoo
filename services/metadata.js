@@ -5,7 +5,7 @@ var env = require('../lib/env');
 var htmlService = require('./html');
 var staticService = require('./static');
 var authority = env('AUTHORITY');
-var defaultCover = authority + staticService.unroll('/img/thumbnail.png');
+var defaultCover = authority + staticService.unroll('/img/banners/branded.png');
 
 function appendDefaultCover (list) {
   list.push(defaultCover);

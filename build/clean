@@ -3,7 +3,7 @@
 # cleanup
 rm -rf tmp
 rm -rf .bin
-rm -rf resources/logos/generated
+rm -rf resources/{banners,logos}/generated
 mkdir -p .bin/{lib,temp,inline}
 mkdir -p .bin/public/{js,css}
 mkdir tmp

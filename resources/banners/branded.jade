@@ -1,9 +1,21 @@
 extends _template
 block template_vars
   -
-    fallbackImage = '/img/banners/branded.png'
+    fallbackImage = fallbackImage || '/img/banners/branded.png'
     options = {
       getFill: function (pixel) {
-        return pixel.brand;
+        return pixel.brand
       }
+    }
+    if (shorter) {
+      options.flipX = true
+      options.width = 1000
+      options.height = 200
+      options.startX = 50
+      options.startY = 30
+    }
+    if (header) {
+      options.flipX = true
+      options.startX = 50
+      options.startY = 30
     }
