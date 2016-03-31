@@ -27,18 +27,20 @@ div.wa-section(data-tool='link')
     input.wa-link-source.wa-input-50(placeholder='Author or source for this link?', value=section.source)
     input.wa-link-source-href.wa-input-50(placeholder='A link to the author or source?', value=section.sourceHref)
 
-    input.wa-link-image(placeholder='Link to an image', value=section.image)
+    div.wa-link-tags-container
+      input.wa-link-image.wa-input-50(placeholder='Link to an image', value=section.image)
+      input.wa-link-tags.wa-input-50(placeholder='Tags that describe the link', value=unknownTags.join(' '))
+      a.wa-link-toggle-tags.wa-toggler.lk-icon.fa.fa-adjust.fa-rotate-90
 
-    input.wa-link-tags(placeholder='Tags that describe the link', value=unknownTags.join(' '))
-
-    div.wa-input-25.wa-link-checkbox-wrapper
-      input.wa-link-sponsored.ck-input(id='wa-sponsored-link-' + code, type='checkbox', checked=section.sponsored)
-      label.ck-checkbox(for='wa-sponsored-link-' + code) Sponsored
-
-    each knownTag in Object.keys(knownTags)
+    div.wa-link-tag-list.uv-hidden
       div.wa-input-25.wa-link-checkbox-wrapper
-        input.wa-link-tag.ck-input(id='wa-sponsored-link-' + code +'-kt-' + knownTag, type='checkbox', checked=tags.indexOf(knownTag) !== -1, value=knownTag)
-        label.ck-checkbox(for='wa-sponsored-link-' + code +'-kt-' + knownTag)=knownTags[knownTag].label
+        input.wa-link-sponsored.ck-input(id='wa-sponsored-link-' + code, type='checkbox', checked=section.sponsored)
+        label.ck-checkbox(for='wa-sponsored-link-' + code) Sponsored
+
+      each knownTag in Object.keys(knownTags)
+        div.wa-input-25.wa-link-checkbox-wrapper
+          input.wa-link-tag.ck-input(id='wa-sponsored-link-' + code +'-kt-' + knownTag, type='checkbox', checked=tags.indexOf(knownTag) !== -1, value=knownTag)
+          label.ck-checkbox(for='wa-sponsored-link-' + code +'-kt-' + knownTag)=knownTags[knownTag].label
 
     div
       textarea.wa-link-description.wk-textarea(placeholder='Enter a description here')!=section.description

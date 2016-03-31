@@ -64,6 +64,7 @@ function ready (viewModel, container, route) {
     .on('click', '.wa-section-toggle', toggleSection)
     .on('click', '.wa-section-clone', cloneSection)
     .on('change', '.wa-color-picker', pickedColor)
+    .on('click', '.wa-link-toggle-tags', toggleTags)
     .and(summaryEditor)
       .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
 
@@ -141,14 +142,22 @@ function ready (viewModel, container, route) {
   function toggleSection (e) {
     var toggler = $(e.target);
     var content = toggler.parents('.wa-section').find('.wa-section-contents');
+    toggleUsingButton(content, toggler, ['fa-compress', 'fa-expand']);
+  }
+  function toggleTags (e) {
+    var toggler = $(e.target);
+    var content = toggler.parents('.wa-section').find('.wa-link-tag-list');
+    toggleUsingButton(content, toggler, ['fa-flip-horizontal', 'fa-rotate-90']);
+  }
+  function toggleUsingButton (content, button, classes) {
     if (content.hasClass('uv-hidden')) {
       content.removeClass('uv-hidden');
-      toggler.removeClass('fa-expand');
-      toggler.addClass('fa-compress');
+      button.removeClass(classes[1]);
+      button.addClass(classes[0]);
     } else {
       content.addClass('uv-hidden');
-      toggler.addClass('fa-expand');
-      toggler.removeClass('fa-compress');
+      button.addClass(classes[1]);
+      button.removeClass(classes[0]);
     }
   }
   function clonedTool (clone) {
