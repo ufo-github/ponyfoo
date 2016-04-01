@@ -5,6 +5,7 @@ var fs = require('fs');
 var but = require('but');
 var util = require('util');
 var contra = require('contra');
+var winston = require('winston');
 var env = require('../lib/env');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
@@ -40,8 +41,10 @@ function share (issue, done) {
   function curried (key, fn) {
     return function shareVia (next) {
       if (issue[key] === false) {
+        winston.info('Sharing turned off via "%s" channel for weekly issue %s.', key, issue.name);
         next(); return;
       }
+      winston.info('Sharing weekly issue %s via "%s" channel.', issue.name, key);
       fn(issue, {}, next);
     };
   }

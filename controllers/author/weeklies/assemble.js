@@ -29,9 +29,7 @@ module.exports = function (req, res, next) {
     var defaults = {
       status: 'draft',
       slug: correcthorse(),
-      sections: [],
-      hn: false,
-      lobsters: false
+      sections: []
     };
     var issueModel = issue || defaults;
     issueModel.publication = datetimeService.field(issueModel.publication || new Date());

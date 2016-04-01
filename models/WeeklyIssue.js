@@ -24,8 +24,8 @@ var schema = new mongoose.Schema({
   tweet: { type: Boolean, 'default': true },
   fb: { type: Boolean, 'default': true },
   echojs: { type: Boolean, 'default': true },
-  lobsters: { type: Boolean, 'default': false },
-  hn: { type: Boolean, 'default': false },
+  lobsters: { type: Boolean, 'default': true },
+  hn: { type: Boolean, 'default': true },
   hnDiscuss: String
 });
 

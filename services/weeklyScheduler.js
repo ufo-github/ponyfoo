@@ -165,6 +165,7 @@ function run (done) {
       if (err) {
         end(err); return;
       }
+      winston[level]('Weekly "%s" being shared via social media.', issue.slug);
       weeklySharingService.share(issue, end);
     }
   }
