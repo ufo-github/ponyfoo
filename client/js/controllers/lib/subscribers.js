@@ -226,7 +226,7 @@ module.exports = function (viewModel, container) {
             if (d.y1 - d.y0 > 0) { tip.show(d); }
           });
 
-        $(parent).on('click', tip.hide);
+        $(parent).on('mouseleave', tip.hide);
       }
     }
 
