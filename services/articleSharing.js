@@ -144,7 +144,7 @@ function tweet (article, options, done) {
   add(1, emoji + ' ' + article.title, 2 + article.title.length);
   add(4, card, 25);
   add(0, '📰 ' + prefix, 2 + prefix.length);
-  add(2, '🔖 ' + tagText, 2 + tagText.length - 1); // no extra new line here
+  add(2, '🏷 ' + tagText, 2 + tagText.length - 1); // no extra new line here
 
   var status = tweetLines.filter(notEmpty).join('\n');
 

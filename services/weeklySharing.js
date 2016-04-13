@@ -142,7 +142,7 @@ function tweet (issue, options, done) {
   add(3, randomMailEmoji() + ' ' + statusLink(issue), 2 + 24);
   add(0, randomMailEmoji() + ' ' + title, 2 + title.length);
   add(4, card, 25);
-  add(1, randomMailEmoji() + ' ' + '#ponyfooweekly', 2 + 14); // no extra new line here
+  add(1, '🏷 #ponyfooweekly', 16); // no extra new line here
   add(2, randomMailEmoji() + ' ' + 'Read, comment & subscribe ⤵️', 2 + 28);
 
   var status = tweetLines.filter(notEmpty).join('\n');
