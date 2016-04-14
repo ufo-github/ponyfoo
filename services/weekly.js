@@ -64,13 +64,19 @@ function update (options, done) {
       issue.summaryHtml = model.summaryHtml;
       issue.summaryText = model.summaryText;
       issue.contentHtml = model.contentHtml;
-      issue.email = model.email;
-      issue.tweet = model.tweet;
-      issue.fb = model.fb;
-      issue.echojs = model.echojs;
-      issue.lobsters = model.lobsters;
-      issue.hn = model.hn;
+      updateFlag('email');
+      updateFlag('tweet');
+      updateFlag('fb');
+      updateFlag('echojs');
+      updateFlag('lobsters');
+      updateFlag('hn');
       issue.save(but(done));
+
+      function updateFlag (key) {
+        if (typeof model[key] === 'boolean') {
+          issue[key] = model[key];
+        }
+      }
     }
   }
 }
