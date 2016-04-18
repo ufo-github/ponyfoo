@@ -94,20 +94,22 @@ function getAllTags (weeklyIssue) {
 }
 
 function toMetadata (doc) {
-  var released = doc.status === 'released' && doc.statusReach === 'everyone';
+  var released = doc.status === 'released';
+  var patrons = doc.statusReach === 'patrons';
+  var everyone = doc.statusReach === 'everyone';
   var permalink = '/weekly/' + doc.slug;
   if (!released) {
     permalink += '?verify=' + cryptoService.md5(doc._id + doc.created);
+  } else if (patrons) {
+    permalink += '?thanks=' + cryptoService.md5(doc._id + doc.created);
   }
   return {
-    _id: doc._id,
-    created: doc.created,
+    created: datetimeService.field(doc.created),
     updated: datetimeService.field(doc.updated),
     publication: datetimeService.field(doc.publication),
     name: doc.name,
     slug: doc.slug,
-    status: doc.status,
-    statusReach: doc.statusReach,
+    shareable: released && everyone,
     permalink: permalink
   };
 }

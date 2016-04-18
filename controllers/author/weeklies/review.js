@@ -28,15 +28,15 @@ function getModel (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var models = result.weeklies.map(weeklyService.toMetadata);
-    var sorted = _.sortBy(models, sortByStatus);
+    var sorted = _.sortBy(result.weeklies, sortByStatus);
+    var models = sorted.map(weeklyService.toMetadata);
     res.viewModel = {
       model: {
         title: 'Newsletter Review',
         meta: {
           canonical: '/author/weeklies'
         },
-        weeklies: sorted,
+        weeklies: models,
         live: result.live,
         level: result.level
       }
@@ -45,8 +45,8 @@ function getModel (req, res, next) {
   }
 }
 
-function sortByStatus (weekly) {
-  var state = { draft: 0, ready: 1, released: 2 }[weekly.status];
-  var reach = { undefined: 0, scheduled: 1, patrons: 2, everyone: 3 }[weekly.statusReach];
+function sortByStatus (doc) {
+  var state = { draft: 0, ready: 1, released: 2 }[doc.status];
+  var reach = { undefined: 0, scheduled: 1, patrons: 2, everyone: 3 }[doc.statusReach];
   return state + reach;
 }
