@@ -17,7 +17,10 @@ function getModel (req, res, next) {
       settingService.getKey('PONYFOOWEEKLY_CRON_LEVEL', next);
     },
     weeklies: function (next) {
-      WeeklyIssue.find({}).sort([['publication', -1], ['updated', -1]]).exec(next);
+      WeeklyIssue
+        .find({})
+        .sort([['publication', -1], ['created', -1]])
+        .exec(next);
     }
   }, respond);
 

@@ -36,7 +36,7 @@ function run (done) {
   function findReleasedToPatrons () {
     WeeklyIssue
       .findOne({ status: 'released', statusReach: 'patrons' })
-      .sort([['publication', -1], ['updated', -1]])
+      .sort([['publication', -1], ['created', -1]])
       .exec(foundReleasedToPatrons);
   }
   function foundReleasedToPatrons (err, issue) {
@@ -58,7 +58,7 @@ function run (done) {
   function findScheduledOrReady () {
     WeeklyIssue
       .findOne({ status: 'ready' })
-      .sort([['publication', -1], ['updated', -1]])
+      .sort([['publication', -1], ['created', -1]])
       .exec(foundScheduledOrReady);
   }
   function foundScheduledOrReady (err, issue) {
@@ -96,11 +96,11 @@ function run (done) {
         end(err); return;
       }
       var latest = latestIssue && latestIssue.issue || 0;
-      var number = latest + 1;
+      var current = latest + 1;
       issue.statusReach = 'scheduled';
       issue.publication = target.toDate();
-      issue.slug = number.toString();
-      issue.issue = number;
+      issue.slug = current.toString();
+      issue.issue = current;
       issue.save(saved);
       function saved (err) {
         if (err) {
