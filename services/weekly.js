@@ -109,6 +109,8 @@ function toMetadata (doc) {
     publication: datetimeService.field(doc.publication),
     name: doc.name,
     slug: doc.slug,
+    status: doc.status,
+    statusReach: doc.statusReach,
     shareable: released && everyone,
     permalink: permalink
   };
