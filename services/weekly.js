@@ -97,12 +97,7 @@ function toMetadata (doc) {
   var released = doc.status === 'released';
   var patrons = doc.statusReach === 'patrons';
   var everyone = doc.statusReach === 'everyone';
-  var permalink = '/weekly/' + doc.slug;
-  if (!released) {
-    permalink += '?verify=' + cryptoService.md5(doc._id + doc.created);
-  } else if (patrons) {
-    permalink += '?thanks=' + cryptoService.md5(doc._id + doc.created);
-  }
+  var permalink = getPermalink();
   return {
     created: datetimeService.field(doc.created),
     updated: datetimeService.field(doc.updated),
@@ -114,6 +109,18 @@ function toMetadata (doc) {
     shareable: released && everyone,
     permalink: permalink
   };
+  function getPermalink () {
+    var base = '/weekly/' + doc.slug;
+    if (!released) {
+      return base + '?verify=' + hash(doc.created);
+    } else if (patrons) {
+      return base + '?thanks=' + hash(doc.thanks);
+    }
+    return base;
+  }
+  function hash (value) {
+    return cryptoService.md5(doc._id + value);
+  }
 }
 
 function toView (doc) {
