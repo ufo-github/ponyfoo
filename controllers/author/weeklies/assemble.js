@@ -29,7 +29,44 @@ module.exports = function (req, res, next) {
     var defaults = {
       status: 'draft',
       slug: correcthorse(),
-      sections: []
+      summary: [
+        'We\'re glad you could make it this week! 💌',
+        '',
+        'If you have any tips, feel free to email us at [tips@ponyfoo.com][tips] _-- or just reply to this email._ You can leave comments on the website.',
+        '',
+        '[tips]: mailto:tips@ponyfoo.com'
+      ].join('\n'),
+      sections: [{
+        type: 'header',
+        text: 'Example Header'
+      }, {
+        type: 'link',
+        title: 'Example link #1',
+        href: 'https://example.com/1/'
+      }, {
+        type: 'link',
+        title: 'Example link #2',
+        href: 'https://example.com/2/'
+      }, {
+        type: 'header',
+        text: 'Helping Hands Wanted',
+        foreground: '#f3f3f3',
+        background: '#1a4d7f'
+      }, {
+        type: 'markdown',
+        text: [
+          'Sponsorship opportunities! [Check out our media kit][kit] and reach us at: [sponsor@ponyfoo.com][sponsor].',
+          '',
+          '[Become a patron][patron] and get the newsletter a full day earlier!',
+          '',
+          'Feel free to send interesting links our way: [tips@ponyfoo.com][tips].',
+          '',
+          '[kit]: /weekly/sponsor',
+          '[patron]: https://www.patreon.com/bevacqua',
+          '[sponsor]: mailto:sponsor@ponyfoo.com',
+          '[tips]: mailto:tips@ponyfoo.com'
+        ].join('\n')
+      }]
     };
     var issueModel = issue || defaults;
     issueModel.publication = datetimeService.field(issueModel.publication || new Date());
