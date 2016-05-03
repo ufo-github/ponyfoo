@@ -77,7 +77,9 @@ function compile (sections, options, done) {
       descriptionHtml: descriptionHtml
     };
     var extended = assign(base, section, {
-      title: beautifyText(section.title),
+      titleHtml: options.markdown.compile(section.title, {
+        linkThrough: linkThrough
+      }),
       href: linkThrough(section.href),
       source: beautifyText(section.source),
       sourceHref: linkThrough(section.sourceHref)

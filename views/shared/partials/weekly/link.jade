@@ -5,7 +5,7 @@ div.wy-section-link
         div.wy-link-title-section
           - fg = item.foreground ? 'color:' + item.foreground + ';' : ''
           - bg = item.background ? 'background-color:' + item.background : ''
-          a.wy-link-title(href=item.href, style=fg + bg, target='_blank', rel='none')=item.title
+          a.wy-link-title.md-markdown.md-markdown-inline(href=item.href, style=fg + bg, target='_blank', rel='none')!=item.titleHtml
           each tag in item.tags
             - tagInfo = knownTags[tag]
             if tagInfo
