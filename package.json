@@ -109,7 +109,7 @@
     "mkdirp": "0.5.1",
     "moment": "2.8.3",
     "mongodb-uri": "0.9.7",
-    "mongoose": "4.2.3",
+    "mongoose": "4.4.14",
     "morgan": "1.6.1",
     "multer": "0.1.0",
     "nconf": "0.7.1",
@@ -145,7 +145,7 @@
     "validator": "3.12.0",
     "wemoji": "0.1.9",
     "winston": "2.0.0",
-    "winston-mongodb": "1.2.0",
+    "winston-mongodb": "1.4.0",
     "woofmark": "4.0.2",
     "x-xss-protection": "0.1.2"
   },
