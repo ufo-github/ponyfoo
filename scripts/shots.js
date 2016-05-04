@@ -1,6 +1,6 @@
 'use strict';
 
-const shots = require('../../shots').default;
+const shots = require('shots').default;
 
 shots({
   dest: 'resources/shots',
