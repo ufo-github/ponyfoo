@@ -2,6 +2,12 @@
 
 > Open-source blogging platform
 
+## Evolution
+
+Watch history unfold!
+
+[![][evo]][web]
+
 ## Development
 
 Merely install dependencies and run the application using `npm start`. The `start` command will compile and bundle all necessary assets, set up file watchers, as well as `nodemon` and `browser-sync` so that you’re able to continuously develop.
@@ -25,7 +31,7 @@ Then configure it with your AWS credentials. Make sure to leave the default JSON
 aws configure
 ```
 
-You’ll probably want to create an instance on EC2. The command below will spin up a new instance, give it an IP address, and set it up for `node` and `nginx`. Note that the database server must be hosted separately. For this purpose I chose [MongoLab][3] as my DBaaS provider of choice, the free tier should suffice.
+You’ll probably want to create an instance on EC2. The command below will spin up a new instance, give it an IP address, and set it up for `node` and `nginx`. Note that the database server must be hosted separately. For this purpose I chose [mLab][mlab] as my DBaaS provider of choice, the free tier should suffice.
 
 ```shell
 npm run launch
@@ -57,7 +63,7 @@ npm run ssh
 
 ## Usage
 
-To access the production site visit [ponyfoo.com][4], or use `curl` to get a plaintext edition.
+To access the production site visit [ponyfoo.com][code], or use `curl` to get a plaintext edition.
 
 ```shell
 curl -L -H "Accept: text/plain" ponyfoo.com/articles/last
@@ -67,5 +73,7 @@ curl -L -H "Accept: text/plain" ponyfoo.com/articles/last
 
 MIT
 
-  [3]: http://mongolab.com/
-  [4]: https://github.com/ponyfoo/ponyfoo
+[evo]: https://github.com/ponyfoo/ponyfoo/blob/master/resources/shots/output/1024x768.gif
+[web]: https://ponyfoo.com
+[mlab]: http://mlab.com/
+[code]: https://github.com/ponyfoo/ponyfoo

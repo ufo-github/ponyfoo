@@ -35,7 +35,8 @@
     "shutdown": "deploy/shutdown",
     "start": "npm run build-development",
     "test": "build/test",
-    "preinstall": "npm install node-gyp-install && ./node_modules/node-gyp-install/bin.js"
+    "preinstall": "npm install node-gyp-install && ./node_modules/node-gyp-install/bin.js",
+    "shots": "node scripts/shots"
   },
   "browser": {
     "fontfaceonload": "./node_modules/fontfaceonload/dist/fontfaceonload.js",
@@ -178,6 +179,7 @@
     "scourge": "1.0.1",
     "serve-favicon": "2.0.1",
     "serve-static": "1.1.0",
+    "shots": "1.0.0",
     "sinon": "1.9.1",
     "spritesmith": "3.1.0",
     "svg2png": "3.0.0",
