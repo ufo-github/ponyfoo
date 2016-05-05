@@ -1,0 +1,8 @@
+#!/bin/bash
+
+npm run shots-generate
+cp resources/shots/output/1024x768.gif ../retro-ponyfoo/1024x768.gif
+cd ../retro-ponyfoo
+git commit 1024x768.gif -m "updated animated gif! :tada:"
+git push
+cd ../ponyfoo

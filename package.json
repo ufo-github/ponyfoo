@@ -36,7 +36,8 @@
     "start": "npm run build-development",
     "test": "build/test",
     "preinstall": "npm install node-gyp-install && ./node_modules/node-gyp-install/bin.js",
-    "shots": "node scripts/shots"
+    "shots-generate": "node scripts/shots-generate",
+    "shots": "scripts/shots"
   },
   "browser": {
     "fontfaceonload": "./node_modules/fontfaceonload/dist/fontfaceonload.js",
