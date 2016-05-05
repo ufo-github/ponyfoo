@@ -1,0 +1,3 @@
+#!/bin/bash
+
+shots -vo resources/shots blog.ponyfoo.com www.ponyfoo.com ponyfoo.com
