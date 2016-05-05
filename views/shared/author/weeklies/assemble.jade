@@ -50,13 +50,13 @@ article.ly-section.vw-maintainer.de-host
           input.ck-input#wa-campaign-fb(type='checkbox', checked=issue.fb !== false)
           label.ck-checkbox(for='wa-campaign-fb') Share on Facebook
         p.wa-campaign-item
-          input.ck-input#wa-campaign-echojs(type='checkbox', checked=issue.echojs !== false)
+          input.ck-input#wa-campaign-echojs(type='checkbox', checked=!!issue.echojs)
           label.ck-checkbox(for='wa-campaign-echojs') Submit to EchoJS
         p.wa-campaign-item
-          input.ck-input#wa-campaign-hn(type='checkbox', checked=issue.hn !== false)
+          input.ck-input#wa-campaign-hn(type='checkbox', checked=!!issue.hn)
           label.ck-checkbox(for='wa-campaign-hn') Submit to Hacker News
         p.wa-campaign-item
-          input.ck-input#wa-campaign-lobsters(type='checkbox', checked=issue.lobsters !== false)
+          input.ck-input#wa-campaign-lobsters(type='checkbox', checked=!!issue.lobsters)
           label.ck-checkbox(for='wa-campaign-lobsters') Submit to Lobste.rs
 
     footer.wa-actions
