@@ -8,6 +8,9 @@ function summarize (html, limit) {
     sanitizer: {
       allowedAttributes: {
         mark: ['class']
+      },
+      allowedClasses: {
+        img: ['tj-emoji']
       }
     }
   };

@@ -42,11 +42,13 @@ module.exports = function (req, res, next) {
       }, {
         type: 'link',
         title: 'Example link #1',
-        href: 'https://example.com/1/'
+        href: 'https://example.com/1/',
+        sourceHref: 'https://twitter.com/'
       }, {
         type: 'link',
         title: 'Example link #2',
-        href: 'https://example.com/2/'
+        href: 'https://example.com/2/',
+        sourceHref: 'https://twitter.com/'
       }, {
         type: 'header',
         text: 'Helping Hands Wanted',

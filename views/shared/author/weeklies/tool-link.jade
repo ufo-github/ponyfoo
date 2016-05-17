@@ -3,7 +3,9 @@
 - unknownTags = tags.filter(function (t) { return !knownTags[t] })
 div.wa-section(data-tool='link')
   div.wa-section-header.gu-candidate
-    span.wa-section-heading.fa.fa-anchor=' Link'
+    span.wa-section-heading.fa.fa-anchor
+      span=' Link'
+      span.wa-link-preview.md-markdown.md-markdown-inline
     span.wa-section-remove.fa.fa-remove
     span.wa-section-toggle.fa.fa-compress
     span.wa-section-clone.fa.fa-clone

@@ -11,7 +11,9 @@ var debounce = require('lodash/function/debounce');
 var textareas = require('../../../conventions/textareas');
 var markdownService = require('../../../../../services/markdown');
 var textService = require('../../../../../services/text');
+var summaryService = require('../../../../../services/summary');
 var loadScript = require('../../../lib/loadScript');
+var rparagraph = /^<p>|<\/p>$/i;
 
 module.exports = controller;
 
@@ -122,7 +124,19 @@ function ready (viewModel, container, route) {
       var previewSummary = $('.wy-section-summary', preview);
       var summaryHtml = markdownService.compile(summary.value());
       previewSummary.html(summaryHtml);
+      updateLinkSections();
     }
+  }
+
+  function updateLinkSections () {
+    $('.wa-section').where('[data-tool="link"]').forEach(function (el) {
+      var preview = $('.wa-link-preview', el);
+      var titleEl = $('.wa-link-title', el);
+      var title = markdownService.compile(titleEl.value()).replace(rparagraph, '');
+      var summary = summaryService.summarize(title, 30).html.trim();
+      var postfix = summary ? ': ' + summary : '';
+      preview.html(postfix);
+    });
   }
 
   function toolMoves (el, source) {
@@ -186,7 +200,7 @@ function ready (viewModel, container, route) {
     var action = 'author/weeklies/tool-' + toolName;
     insertingPartial(taunus.partial.replace(el, action, {
       knownTags: viewModel.knownTags,
-      section: {}
+      section: getDefaultSectionModel(toolName)
     }));
   }
   function pickedTool (e) {
@@ -195,10 +209,18 @@ function ready (viewModel, container, route) {
     var action = 'author/weeklies/tool-' + toolName;
     insertingPartial(taunus.partial.appendTo(editor, action, {
       knownTags: viewModel.knownTags,
-      section: {}
+      section: getDefaultSectionModel(toolName)
     }));
     e.preventDefault();
     e.stopPropagation();
+  }
+  function getDefaultSectionModel (toolName) {
+    if (toolName === 'link') {
+      return {
+        sourceHref: 'https://twitter.com/'
+      };
+    }
+    return {};
   }
   function cloneSection (e) {
     var section = $(e.target).parents('.wa-section');
