@@ -146,7 +146,8 @@ function ready (viewModel, container, route) {
     var $handle = $(handle);
     return (
       $handle.hasClass('wa-section-header') ||
-      $handle.hasClass('wa-section-heading')
+      $handle.hasClass('wa-section-heading') ||
+      $handle.parents('.wa-section-heading').length > 0
     );
   }
   function removeSection (e) {
