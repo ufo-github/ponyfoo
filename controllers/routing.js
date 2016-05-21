@@ -20,6 +20,7 @@ var registerAccount = require('./account/register');
 var bioUpdate = require('./api/account/bioUpdate');
 var markdownImageUpload = require('./api/markdown/images');
 var rssFeed = require('./feeds/rss');
+var metadataScrape = require('./api/metadata/scrape');
 var authorEmail = require('./api/author/email');
 var authorCompute = require('./author/compute');
 var articleInsert = require('./api/articles/insert');
@@ -92,6 +93,7 @@ module.exports = function (app) {
   app.patch('/api/weeklies/:slug', weekliesOnly, weeklyUpdate);
   app.delete('/api/weeklies/:slug', weekliesOnly, weeklyRemove);
   app.post('/api/weeklies/:slug/share/:medium', weekliesOnly, weeklyShare);
+  app.get('/api/metadata/scrape', weekliesOnly, metadataScrape);
 
   app.put('/api/subscribers', subscriberInsert);
   app.post('/api/subscribers', verifyForm, subscriberInsert);

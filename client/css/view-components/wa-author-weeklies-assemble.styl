@@ -1,7 +1,8 @@
 .wa-main
   position relative
 
-.wa-toggler
+.wa-toggler,
+.wa-scraper
   position absolute
   top 0
   right 0
@@ -14,6 +15,12 @@
     background-color lighten(c-orange-dark, 20%)
   &:active
     outline 1px dotted c-orange
+
+.wa-scraper-off
+  background-color c-black-light
+
+.wa-scraper
+  right 35px
 
 .wa-actions
   text-align right

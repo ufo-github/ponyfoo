@@ -58,6 +58,8 @@ function ready (viewModel, container, route) {
     moves: editorSectionMoves
   });
   var updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
+  var scrapeLinkSlowly = debounce(scrapeLink, 500);
+  var scraping = true;
 
   $(document.documentElement).on('keyup', cancellations);
 
@@ -66,6 +68,9 @@ function ready (viewModel, container, route) {
     .on('click', '.wa-section-toggle', toggleSection)
     .on('click', '.wa-section-clone', cloneSection)
     .on('change', '.wa-color-picker', pickedColor)
+    .on('change keypress keydown paste input', '.wa-link-href', function (e) {
+      scrapeLinkSlowly(e.target);
+    })
     .on('click', '.wa-link-toggle-tags', toggleTags)
     .and(summaryEditor)
       .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
@@ -80,6 +85,7 @@ function ready (viewModel, container, route) {
   discardButton.on('click', discard);
   saveButton.on('click', save);
   toggleSectionsButton.on('click', toggleSections);
+  $('.wa-scraper').on('click', toggleScraping);
   updatePublication();
   updatePreview();
 
@@ -316,6 +322,59 @@ function ready (viewModel, container, route) {
       lobsters: lobsters.value()
     };
     return data;
+  }
+
+  function toggleScraping (e) {
+    scraping = !scraping;
+    if (scraping) {
+      $(e.target).removeClass('wa-scraper-off');
+    } else {
+      $(e.target).addClass('wa-scraper-off');
+    }
+  }
+
+  function scrapeLink (el) {
+    if (scraping === false) {
+      return;
+    }
+    var $el = $(el);
+    var $parent = $el.parents('.wa-section-contents');
+    var old = $el.attr('data-value');
+    var url = $el.value().trim();
+    $el.attr('data-value', url);
+    if (url.length === 0 || url === old) {
+      return;
+    }
+    var options = {
+      url: '/api/metadata/scrape?url=' + url, json: true
+    };
+    taunus.xhr(options, scraped);
+
+    function scraped (err, data) {
+      if (err) {
+        return;
+      }
+      var firstImage = data.images.shift() || '';
+      var description = getDescription();
+      var sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
+
+      $('.wa-link-title', $parent).value(data.title || '(untitled)');
+      $('.wa-link-description', $parent).value(description);
+      $('.wa-link-source', $parent).value(data.source || '');
+      $('.wa-link-source-href', $parent).value(sourceHref);
+      $('.wa-link-image', $parent).value(firstImage);
+      $('.wa-link-tags', $parent).value('');
+      $('.wa-link-tag', $parent).value(false);
+      $('.wa-link-sponsored', $parent).value(false);
+
+      function getDescription () {
+        return (
+            data.images.join('\n')
+          + '\n\n'
+          + (data.description || '')
+        ).trim();
+      }
+    }
   }
 
   function save () {
