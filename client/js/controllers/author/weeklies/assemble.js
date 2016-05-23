@@ -338,7 +338,7 @@ function ready (viewModel, container, route) {
       return;
     }
     var $el = $(el);
-    var $parent = $el.parents('.wa-section-contents');
+    var $parent = $el.parent('.wa-section-contents');
     var old = $el.attr('data-value');
     var url = $el.value().trim();
     $el.attr('data-value', url);
@@ -358,7 +358,7 @@ function ready (viewModel, container, route) {
       var description = getDescription();
       var sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
 
-      $('.wa-link-title', $parent).value(data.title || '(untitled)');
+      $('.wa-link-title', $parent).value(data.title || '');
       $('.wa-link-description', $parent).value(description);
       $('.wa-link-source', $parent).value(data.source || '');
       $('.wa-link-source-href', $parent).value(sourceHref);
