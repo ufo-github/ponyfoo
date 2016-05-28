@@ -2,7 +2,7 @@
 
 var extract = require('meta-extractor');
 
-module.exports = function (req, res) {
+module.exports = function (req, res, next) {
   var url = req.query.url;
 
   extract({ uri: url }, extracted);

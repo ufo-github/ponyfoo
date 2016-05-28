@@ -7,7 +7,8 @@ var articleSearchService = require('../../services/articleSearch');
 var separator = /[+/,_: -]+/ig;
 
 module.exports = function (req, res, next) {
-  var terms = req.params.terms.split(separator);
+  var input = req.params.terms;
+  var terms = input.split(separator);
   var title = util.format('Search results for "%s"', terms.join('", "'));
   var handle = articleListHandler(res, { search: true }, searchResults(res, next));
 
@@ -23,5 +24,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleSearchService.query(terms, handle);
+  articleSearchService.query(input, handle);
 };

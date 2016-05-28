@@ -44,7 +44,7 @@ function beforeSave (next) {
   article.updated = Date.now();
 
   if (!bulk && oldSign !== article.sign && article.status === 'published') {
-    articleSearchService.addRelated(article, next);
+    articleSearchService.update(article, next);
   } else {
     next();
   }

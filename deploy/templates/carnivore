@@ -12,7 +12,11 @@ sudo ln -sfn $HOME/app/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo ln -sfn $HOME/app/nginx/site.conf /etc/nginx/sites-enabled/$NAME.conf
 sudo rm /etc/nginx/sites-enabled/default
 
+echo "packer: firing up nginx"
 sudo service nginx restart || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
+
+echo "packer: firing up elasticsearch"
+sudo service elasticsearch restart || sudo service elasticsearch start || (sudo cat /var/log/elasticsearch/error.log && exit 1)
 
 echo "packer: installing appserver daemon..."
 echo "#!/bin/bash" > $HOME/app/start

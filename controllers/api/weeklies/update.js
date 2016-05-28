@@ -16,6 +16,6 @@ module.exports = function (req, res, next) {
       res.status(500).json({ messages: ['Oops. Something went terribly wrong!'] });
       return;
     }
-    res.status(200).json({ messages: [] }); return;
+    res.status(200).json({});
   }
 };

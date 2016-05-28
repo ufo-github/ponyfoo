@@ -3,8 +3,8 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${RAW_AMI:="ami-cc6e53a6"}"
-: "${PRIMAL_AMI:="ami-c06954aa"}"
+# : "${RAW_AMI:="ami-8a13e3e7"}"
+# : "${PRIMAL_AMI:="ami-xxxxxxxx"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
@@ -61,7 +61,7 @@ then
     -var VPC_ID=$VPC_ID \
     -var SUBNET_ID=$SUBNET_ID \
     -var SOURCE_AMI=$RAW_AMI \
-    -var NODE_VERSION=$(jq -r .engines.node < package.json) \
+    -var NODE_VERSION=$(cat .node-version) \
     deploy/templates/primal.json | tee deploy/log/packer-primal.log
 
   PRIMAL_AMI=$(tail -1 < deploy/log/packer-primal.log | cut -d ' ' -f 2)

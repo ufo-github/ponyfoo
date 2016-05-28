@@ -15,6 +15,7 @@ var models = require('./models');
 var pkg = require('./package.json');
 var logging = require('./lib/logging');
 var db = require('./lib/db');
+var elasticsearch = require('./lib/elasticsearch');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
 var development = require('./lib/development');
@@ -36,13 +37,14 @@ function listen () {
 
   app.locals.settings['x-powered-by'] = false;
 
-  db(operational);
+  db(dbOperational);
 
-  function operational () {
+  function dbOperational () {
     logging.configure();
     winston.info('Worker %s executing app@%s', process.pid, pkg.version);
     process.on('uncaughtException', fatal);
     models();
+    elasticsearch();
     middleware(app);
     development.statics(app);
     routing(app);

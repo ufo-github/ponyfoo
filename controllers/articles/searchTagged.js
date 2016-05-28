@@ -8,8 +8,9 @@ var tagSeparator = /[+/,_: ]+/ig;
 var termSeparator = /[+/,_: -]+/ig;
 
 module.exports = function (req, res, next) {
+  var input = req.params.terms;
   var tags = req.params.tags.split(tagSeparator);
-  var terms = req.params.terms.split(termSeparator);
+  var terms = input.split(termSeparator);
   var handle = articleListHandler(res, { search: true }, searchResults(res, next));
   var fmt = 'Search results for "%s" in articles tagged "%s"';
   var title = util.format(fmt, terms.join('", "'), tags.join('", "'));
@@ -26,5 +27,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleSearchService.query(terms, { tags: tags }, handle);
+  articleSearchService.query(input, { tags: tags }, handle);
 };

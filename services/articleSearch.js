@@ -4,53 +4,28 @@ var _ = require('lodash');
 var moment = require('moment');
 var contra = require('contra');
 var but = require('but');
-var freq = require('freq');
 var util = require('util');
-var hget = require('hget');
 var winston = require('winston');
-var common = require('./common_english.json').reduce(toMap, {});
 var env = require('../lib/env');
 var Article = require('../models/Article');
+var articleElasticsearchService = require('./articleElasticsearch');
 var articleFeedService = require('./articleFeed');
 var sitemapService = require('./sitemap');
-var searchLimit = 6;
-var unsafeTerms = /[^\w]+/ig;
-var irrelevant = [
-  'javascript', 'js', 'css', 'web', 'https', 'com',
-  'performance', 'github', 'taunus', 'http',
-  'ponyfoo', 'pony', 'foo', 'mark', 'google'
-];
 var processing = {};
 
-function sanitizeTerm (term) {
-  return term.replace(unsafeTerms, '');
-}
-
 function query (input, options, done) {
-  var terms = input.map(sanitizeTerm);
   if (done === void 0) {
-    done = options; options = {};
+    done = options;
+    options = {};
   }
-  var q = { status: 'published' };
-
-  if (options.oldest) {
-    q.created = { $gt: options.oldest };
+  articleElasticsearchService.query(input, options, queried);
+  function queried (err, result) {
+    if (err) {
+      done(err); return;
+    }
+    var q = { _id: { $in: _.pluck(result, '_id') } };
+    Article.find(q).sort('-publication').exec(done);
   }
-  if (options.tags && options.tags.length) {
-    q.tags = { $all: options.tags };
-  }
-
-  q.$text = { $search: terms.join(' ') };
-
-  var cursor = Article
-    .find(q)
-    .sort('-publication');
-
-  if (options.unlimited !== true) {
-    cursor = cursor.limit(searchLimit);
-  }
-
-  cursor.exec(done);
 }
 
 function bracket (tag) {
@@ -61,8 +36,14 @@ function format (terms, tags) {
   return util.format('"%s"', tags.map(bracket).concat(terms).join(' '));
 }
 
-function insanely (html) {
-  return hget('<div>' + html + '</div>');
+function update (article, done) {
+  articleElasticsearchService.update(article, updated);
+  function updated (err, exists) {
+    if (err) {
+      done(err); return;
+    }
+    addRelated(article, done);
+  }
 }
 
 function addRelated (article, forced, done) {
@@ -83,36 +64,17 @@ function addRelated (article, forced, done) {
   }
   processing[article._id] = true;
 
-  var text = [
-    article.title,
-    article.tags.join(' '),
-    insanely(article.bodyHtml),
-    insanely(article.teaserHtml),
-    insanely(article.introductionHtml)
-  ].join(' ');
-  var relevant = text.replace(/([-_*`\[\]\/}{=><:]|<\/?(kbd|mark)>|https?|www\.?|\.com)/g, ' ');
-  var frequencies = freq(relevant).filter(sanely);
-  var sorted = _.sortByOrder(frequencies, ['count'], ['desc']);
-  var filtered = sorted.slice(0, 6);
-  var terms = _.pluck(filtered, 'word');
   var options = {
-    unlimited: true,
-    oldest: moment('2014-01-01', 'YYYY-MM-DD').toDate() // avoid terrible articles
+    since: moment('2014-01-01', 'YYYY-MM-DD').toDate() // avoid floating terrible articles
   };
-  query(terms, options, queried);
 
-  function queried (err, articles) {
+  articleElasticsearchService.related(article, options, queried);
+
+  function queried (err, result) {
     if (err) {
-      winston.warn(err); done(err); return;
+      done(err); return;
     }
-    var ids = _(articles)
-      .sample(searchLimit)
-      .pluck('_id')
-      .reject(article._id)
-      .value();
-
-    article.related = ids;
-
+    article.related = _.pluck(result, '_id');
     if (forced) {
       article.save(but(done));
     } else {
@@ -156,17 +118,10 @@ function addRelatedAll (done) {
   }
 }
 
-function sanely (entry) {
-  return !common[entry.word] && entry.word.length > 1 && irrelevant.indexOf(entry.word) === -1;
-}
-
-function toMap (map, word) {
-  map[word] = 1; return map;
-}
-
 module.exports = {
   query: query,
   format: format,
+  update: update,
   addRelated: addRelated,
   addRelatedAll: addRelatedAll
 };
