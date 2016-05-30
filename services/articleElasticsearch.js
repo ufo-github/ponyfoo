@@ -3,94 +3,58 @@
 var winston = require('winston');
 var Article = require('../models/Article');
 var es = require('../lib/elasticsearch');
+var indexService = require('./articleElasticsearchIndex');
 var indexName = 'ponyfoo';
 var typeName = 'article';
-var mapping = {
-  properties: {
-    created: { type: 'date' },
-    title: { type: 'string' },
-    slug: { type: 'string' },
-    teaser: { type: 'string' },
-    introduction: { type: 'string' },
-    body: { type: 'string' },
-    tags: { type: 'string' }
-  }
-};
 var relatedArticlesLimit = 6;
-var ensured = false;
 
-es.on('start', ensure(warn));
-
-function initialize (done) {
-  es.client.indices.exists({ index: indexName }, existed);
-
-  function existed (err, exists) {
-    if (err) {
-      done(err); return;
-    }
-    if (exists) {
-      done(null); return;
-    }
-    es.client.indices.create({ index: indexName }, createdIndex);
-  }
-
-  function createdIndex (err) {
-    if (err) {
-      done(err); return;
-    }
-    var op = {
-      index: indexName,
-      type: typeName,
-      body: mapping
-    };
-    es.client.indices.putMapping(op, createdMapping);
-  }
-
-  function createdMapping (err) {
-    if (err) {
-      done(err); return;
-    }
-    bulkIndexAllArticles(done);
-  }
-}
-
-function bulkIndexAllArticles (done) {
-  Article.find({}).exec(found);
-  function found (err, articles) {
-    if (err) {
-      done(err); return;
-    }
-    var op = {
-      body: articles.reduce(toBulk, [])
-    };
-    es.client.bulk(op, done);
-  }
-}
-
-function ensure (next) {
+function ensureIndex (next) {
   return function wrapper () {
     var args = Array.prototype.slice.call(arguments);
 
     if (ensured) {
       through(); return;
     }
-
     var last = args[args.length - 1];
     var done = typeof last === 'function' ? last : warn;
+
+    if (ensuring) {
+      ensureQueue.push({
+        process: next,
+        args: args,
+        done: done
+      });
+      return;
+    }
+    ensuring = true;
 
     initialize(initialized);
 
     function initialized (err) {
       if (err) {
-        done(err); return;
+        done(err); deplete(err); return;
       }
       winston.info('ensured elasticsearch index exists.');
       ensured = true;
       through();
+      deplete();
     }
 
     function through () {
       next.apply(null, args);
+    }
+
+    function deplete (err) {
+      while (ensureQueue.length) {
+        dequeue(ensureQueue.shift());
+      }
+      ensuring = false;
+      function dequeue (item) {
+        if (err) {
+          item.done.call(null, err); return;
+        }
+        item.process.apply(null, item.args);
+      }
     }
   };
 }
@@ -101,7 +65,7 @@ function update (article, done) {
     type: typeName,
     id: article._id.toString(),
     body: {
-      doc: toIndex(article)
+      doc: indexService.toIndex(article)
     }
   }, done);
 }
@@ -171,26 +135,6 @@ function filters (options) {
   return result;
 }
 
-function toBulk (body, article) {
-  body.push({
-    index: { _index: indexName, _type: typeName, _id: article._id }
-  });
-  body.push(toIndex(article));
-  return body;
-}
-
-function toIndex (article) {
-  return {
-    created: article.created,
-    title: article.title,
-    slug: article.slug,
-    teaser: article.teaser,
-    introduction: article.introduction,
-    body: article.body,
-    tags: article.tags
-  };
-}
-
 function searchHitToResult (hit) {
   return {
     _id: hit._id,
@@ -204,7 +148,8 @@ function tagToFilter (tag) {
 }
 
 module.exports = {
-  query: query,
-  update: update,
-  related: related
+  ensureIndex: indexService.ensureIndex,
+  query: indexService.ensureIndexThen(query),
+  update: indexService.ensureIndexThen(update),
+  related: indexService.ensureIndexThen(related)
 };

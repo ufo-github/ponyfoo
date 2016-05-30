@@ -10,6 +10,7 @@ function compile (md, options) {
 
   add(o.linkThrough, linkThrough);
   add(o.minify !== false, htmlService.minify);
+  add(o.fixEmojiSize, htmlService.fixedEmojiSize);
   add(o.absolutize, htmlService.absolutize);
   add(o.deferImages, deferImages);
   add(o.externalize, htmlService.externalizeLinks);

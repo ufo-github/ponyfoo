@@ -41,6 +41,7 @@ var subscriberPollTwitterCards = require('./api/subscribers/poll-twitter-cards')
 var gitOnly = require('./api/git/only');
 var gitPushArticles = require('./api/git/push-articles');
 var secretOnly = require('./api/secret/only');
+var secretElasticsearchIndex = require('./api/secret/elasticsearch-index');
 var secretScheduler = require('./api/secret/scheduler');
 var secretWeeklies = require('./api/secret/weeklies');
 var secretRemodel = require('./api/secret/remodel');
@@ -67,6 +68,7 @@ var production = env('NODE_ENV') === 'production';
 module.exports = function (app) {
   app.get('/api/csp-report', cspReport);
   app.get('/api/status/health', statusHealth);
+  app.get('/api/:secret(\\d+)/elasticsearch', secretOnly, secretElasticsearchIndex);
   app.get('/api/:secret(\\d+)/scheduler', secretOnly, secretScheduler);
   app.get('/api/:secret(\\d+)/weeklies', secretOnly, secretWeeklies);
   app.get('/api/:secret(\\d+)/remodel', secretOnly, secretRemodel);

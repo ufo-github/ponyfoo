@@ -26,7 +26,8 @@ function getFeed (done) {
       var fullHtml = '<div>' + issue.contentHtml + '</div>';
       var description = markupService.compile(fullHtml, {
         markdown: false,
-        absolutize: true
+        absolutize: true,
+        fixEmojiSize: true
       });
       var item = {
         title: issue.name + ' \u2014 Pony Foo Weekly',

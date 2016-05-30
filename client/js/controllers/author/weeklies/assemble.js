@@ -140,7 +140,7 @@ function ready (viewModel, container, route) {
       var titleEl = $('.wa-link-title', el);
       var title = markdownService.compile(titleEl.value()).replace(rparagraph, '');
       var summary = summaryService.summarize(title, 30).html.trim();
-      var postfix = summary ? ': ' + summary : '';
+      var postfix = summary ? ' – ' + summary : '';
       preview.html(postfix);
     });
   }
@@ -327,9 +327,9 @@ function ready (viewModel, container, route) {
   function toggleScraping (e) {
     scraping = !scraping;
     if (scraping) {
-      $(e.target).removeClass('wa-scraper-off');
+      $(e.target).removeClass('wa-toggler-off');
     } else {
-      $(e.target).addClass('wa-scraper-off');
+      $(e.target).addClass('wa-toggler-off');
     }
   }
 
@@ -354,25 +354,72 @@ function ready (viewModel, container, route) {
       if (err) {
         return;
       }
-      var firstImage = data.images.shift() || '';
-      var description = getDescription();
+      var firstImage = data.images[0] || '';
+      var description = (data.description || '').trim();
       var sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
+      var imageInput = $('.wa-link-image', $parent);
+      var imageInputContainer = $('.wa-link-image-container', $parent);
 
-      $('.wa-link-title', $parent).value(data.title || '');
-      $('.wa-link-description', $parent).value(description);
-      $('.wa-link-source', $parent).value(data.source || '');
-      $('.wa-link-source-href', $parent).value(sourceHref);
-      $('.wa-link-image', $parent).value(firstImage);
-      $('.wa-link-tags', $parent).value('');
-      $('.wa-link-tag', $parent).value(false);
-      $('.wa-link-sponsored', $parent).value(false);
+      updateInputs();
+      updateImageSwapper();
+      updatePreview();
 
-      function getDescription () {
-        return (
-            data.images.join('\n')
-          + '\n\n'
-          + (data.description || '')
-        ).trim();
+      function updateInputs () {
+        $('.wa-link-title', $parent).value(data.title || '');
+        $('.wa-link-description', $parent).value(description);
+        $('.wa-link-source', $parent).value(data.source || '');
+        $('.wa-link-source-href', $parent).value(sourceHref);
+        $('.wa-link-image', $parent).value(firstImage);
+        $('.wa-link-tags', $parent).value('');
+        $('.wa-link-tag', $parent).value(false);
+        $('.wa-link-sponsored', $parent).value(false);
+      }
+
+      function updateImageSwapper () {
+        var swapper = data.images.length > 1;
+        if (swapper) {
+          swapperOn();
+        } else {
+          swapperOff();
+        }
+      }
+
+      function swapperOff () {
+        $('.wa-toggler', imageInputContainer)
+          .addClass('uv-hidden')
+          .off('click');
+      }
+
+      function swapperOn () {
+        var togglerLeft = $('.wa-link-image-left', imageInputContainer);
+        var togglerRight = $('.wa-link-image-right', imageInputContainer);
+        var index = 0;
+
+        togglerLeft.addClass('wa-toggler-off');
+        togglerRight.removeClass('wa-toggler-off');
+
+        $('.wa-toggler', imageInputContainer)
+          .removeClass('uv-hidden')
+          .on('click', swap);
+
+        function swap (e) {
+          var $el = $(e.target);
+          if ($el.hasClass('wa-toggler-off')) {
+            return;
+          }
+          var left = e.target === togglerLeft[0];
+          index += left ? -1 : 1;
+          imageInput.value(data.images[index] || '');
+          invalidate(-1, togglerLeft);
+          invalidate(1, togglerRight);
+          updatePreview();
+        }
+
+        function invalidate (offset, $el) {
+          var on = typeof data.images[index + offset] === 'string';
+          var op = on ? 'removeClass' : 'addClass';
+          $el[op]('wa-toggler-off');
+        }
       }
     }
   }

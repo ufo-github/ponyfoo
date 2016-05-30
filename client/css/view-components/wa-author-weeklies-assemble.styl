@@ -16,8 +16,14 @@
   &:active
     outline 1px dotted c-orange
 
-.wa-scraper-off
-  background-color c-black-light
+.wa-toggler-off
+  &,
+  &:hover,
+  &:active
+    cursor default
+    background-color c-black-light
+    color c-white
+    outline none
 
 .wa-scraper
   right 35px
@@ -101,8 +107,19 @@
 .wa-link-description
   min-height 50px
 
+.wa-link-image-container,
 .wa-link-tags-container
   position relative
+
+.wa-link-image-left,
+.wa-link-image-right
+  cursor pointer
+  top -2px
+
+.wa-link-image-left
+  right 31px
+.wa-link-image-right
+  right 6px
 
 .wa-link-toggle-tags
   top 6px
