@@ -29,12 +29,14 @@ div.wa-section(data-tool='link')
     input.wa-link-source.wa-input-50(placeholder='Author or source for this link?', value=section.source)
     input.wa-link-source-href.wa-input-50(placeholder='A link to the author or source?', value=section.sourceHref)
 
-    div.wa-link-tags-container
-      span.wa-link-image-container
-        input.wa-link-image.wa-input-50(placeholder='Link to an image', value=section.image)
+    span.wa-link-image-container.wa-input-50
+      input.wa-link-image(placeholder='Link to an image', value=section.image)
+      span.wa-link-image-preview-container
+        img.wa-link-image-preview.uv-hidden(alt='')
         span.wa-toggler.wa-link-image-left.fa.fa-arrow-left.uv-hidden
         span.wa-toggler.wa-link-image-right.fa.fa-arrow-right.uv-hidden
-      input.wa-link-tags.wa-input-50(placeholder='Tags that describe the link', value=unknownTags.join(' '))
+    span.wa-link-tags-container.wa-input-50
+      input.wa-link-tags(placeholder='Tags that describe the link', value=unknownTags.join(' '))
       a.wa-link-toggle-tags.wa-toggler.lk-icon.fa.fa-adjust.fa-rotate-90
 
     div.wa-link-tag-list.uv-hidden

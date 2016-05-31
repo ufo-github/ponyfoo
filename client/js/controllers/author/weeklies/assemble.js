@@ -136,12 +136,23 @@ function ready (viewModel, container, route) {
 
   function updateLinkSections () {
     $('.wa-section').where('[data-tool="link"]').forEach(function (el) {
-      var preview = $('.wa-link-preview', el);
-      var titleEl = $('.wa-link-title', el);
-      var title = markdownService.compile(titleEl.value()).replace(rparagraph, '');
+      var $linkPreview = $('.wa-link-preview', el);
+      var $title = $('.wa-link-title', el);
+      var $image = $('.wa-link-image', el);
+      var $imagePreview = $('.wa-link-image-preview', el);
+      var title = markdownService.compile($title.value()).replace(rparagraph, '');
       var summary = summaryService.summarize(title, 30).html.trim();
       var postfix = summary ? ' – ' + summary : '';
-      preview.html(postfix);
+      var imageValue = $image.value().trim();
+
+      $linkPreview.html(postfix);
+      $imagePreview.attr('src', imageValue);
+
+      if (imageValue.length) {
+        $imagePreview.removeClass('uv-hidden');
+      } else {
+        $imagePreview.addClass('uv-hidden');
+      }
     });
   }
 

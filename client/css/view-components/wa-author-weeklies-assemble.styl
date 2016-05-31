@@ -114,16 +114,33 @@
 .wa-link-image-left,
 .wa-link-image-right
   cursor pointer
-  top -2px
+  top initial
+  right initial
+  bottom 0
+  padding 2px
+  font-size 13px
 
 .wa-link-image-left
-  right 31px
+  left 0
 .wa-link-image-right
-  right 6px
+  right 0
+
+.wa-link-image-preview-container
+  position absolute
+  top 0
+  right 0
+  padding 3px
+  height 38px
+  min-width 38px
+  background-color rgba(c-orange-dark, 0.1)
+
+.wa-link-image-preview
+  display block
+  height 100%
 
 .wa-link-toggle-tags
   top 6px
-  right 8px
+  right 6px
 
 .wa-preview
   margin 60px auto 20px
