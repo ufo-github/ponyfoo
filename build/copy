@@ -8,6 +8,9 @@ mkdir -p .bin/{public/img/{banners,logos},inlined,emails}
 cp -r client/img .bin/public
 cp -r resources/banners/generated/*.png .bin/public/img/banners
 cp -r resources/logos/generated/touch-icons/*.png .bin/public
+cp -r resources/logos/generated/icons/favicon-*.png .bin/public
+cp -r resources/logos/generated/icons/mask-*.svg .bin/public
+cp -r resources/logos/generated/icons/{mstile,android}-*.png .bin/public
 cp -r resources/logos/generated/{text,icons}/*.{png,svg} .bin/public/img/logos
 cp -r client/js/inline .bin
 cp -r client/js/static/*.js .bin/public/js

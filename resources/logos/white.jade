@@ -5,11 +5,11 @@ block template_vars
     options = {
       getFill: function (x, y, defaultColor, group) {
         if (group) { return defaultColor; }
-        if (defaultColor === '#666') { return '#aaa'; }
+        if (defaultColor === '#666666') { return '#aaaaaa'; }
         if (defaultColor === '#1a1a1a') { return '#e6e6e6'; }
         if (defaultColor === '#4d4d4d') { return '#b3b3b3'; }
-        if (defaultColor === '#333') { return '#ddd'; }
+        if (defaultColor === '#333333') { return '#dddddd'; }
         if (defaultColor) { return defaultColor; }
-        return '#fff';
+        return '#ffffff';
       }
     }
