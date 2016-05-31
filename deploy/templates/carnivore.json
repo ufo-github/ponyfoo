@@ -22,6 +22,10 @@
   }],
   "provisioners": [{
     "type": "file",
+    "source": "deploy/mailtube",
+    "destination": "/tmp/mailtube"
+  }, {
+    "type": "file",
     "source": "tmp/appserver",
     "destination": "/tmp/appserver"
   }, {
