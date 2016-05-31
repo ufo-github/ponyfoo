@@ -29,9 +29,9 @@ function query (input, options, done) {
     type: typeName,
     body: {
       query: {
-        filtered: {
+        bool: {
           filter: filters(options),
-          query: {
+          must: {
             multi_match: {
               query: input,
               fields: ['title^3', 'teaser', 'introduction', 'content']
@@ -53,9 +53,11 @@ function related (article, options, done) {
     type: typeName,
     body: {
       query: {
-        filtered: {
+        bool: {
           filter: filters(options),
-          query: { more_like_this: { like: { _id: article._id.toString() } } }
+          must: {
+            more_like_this: { like: { _id: article._id.toString() } }
+          }
         }
       },
       size: relatedArticlesLimit
