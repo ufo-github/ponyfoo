@@ -5,10 +5,15 @@ sudo apt-key update
 sudo apt-get update
 sudo apt-get -y remove apt-listchanges
 sudo apt-get -y install git make g++ graphicsmagick curl python-software-properties software-properties-common lsof libkrb5-dev
-sudo add-apt-repository -y ppa:nginx/stable
 
 echo "packer: java"
-sudo apt-get -y install default-jre
+JAVA_PACK=jdk-8u92-linux-x64.tar.gz
+JAVA_VERSION=jdk1.8.0_92
+wget -nv --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u92-b14/$JAVA_PACK
+sudo mkdir /opt/jdk
+sudo tar -zxf $JAVA_PACK -C /opt/jdk
+sudo update-alternatives --install /usr/bin/java java /opt/jdk/$JAVA_VERSION/bin/java 100
+sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/$JAVA_VERSION/bin/javac 100
 
 echo "packer: elasticsearch"
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -

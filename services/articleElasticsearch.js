@@ -8,57 +8,6 @@ var indexName = 'ponyfoo';
 var typeName = 'article';
 var relatedArticlesLimit = 6;
 
-function ensureIndex (next) {
-  return function wrapper () {
-    var args = Array.prototype.slice.call(arguments);
-
-    if (ensured) {
-      through(); return;
-    }
-    var last = args[args.length - 1];
-    var done = typeof last === 'function' ? last : warn;
-
-    if (ensuring) {
-      ensureQueue.push({
-        process: next,
-        args: args,
-        done: done
-      });
-      return;
-    }
-    ensuring = true;
-
-    initialize(initialized);
-
-    function initialized (err) {
-      if (err) {
-        done(err); deplete(err); return;
-      }
-      winston.info('ensured elasticsearch index exists.');
-      ensured = true;
-      through();
-      deplete();
-    }
-
-    function through () {
-      next.apply(null, args);
-    }
-
-    function deplete (err) {
-      while (ensureQueue.length) {
-        dequeue(ensureQueue.shift());
-      }
-      ensuring = false;
-      function dequeue (item) {
-        if (err) {
-          item.done.call(null, err); return;
-        }
-        item.process.apply(null, item.args);
-      }
-    }
-  };
-}
-
 function update (article, done) {
   es.client.update({
     index: indexName,
@@ -70,12 +19,13 @@ function update (article, done) {
   }, done);
 }
 
-function query(input, options, done) {
+function query (input, options, done) {
   if (done === void 0) {
     done = options;
     options = {};
   }
   es.client.search({
+    index: indexName,
     type: typeName,
     body: {
       query: {
@@ -99,15 +49,18 @@ function related (article, options, done) {
     options = {};
   }
   es.client.search({
+    index: indexName,
     type: typeName,
     body: {
-      size: relatedArticlesLimit,
-      filtered: {
-        filter: filters(options),
-        query: { more_like_this: { like: { _id: article._id.toString() } } }
-      }
+      query: {
+        filtered: {
+          filter: filters(options),
+          query: { more_like_this: { like: { _id: article._id.toString() } } }
+        }
+      },
+      size: relatedArticlesLimit
     }
-  }, done);
+  }, found(done));
 }
 
 function found (done) {
@@ -137,6 +90,7 @@ function filters (options) {
 
 function searchHitToResult (hit) {
   return {
+    _score: hit._score,
     _id: hit._id,
     title: hit._source.title,
     slug: hit._source.slug

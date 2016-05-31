@@ -46,21 +46,10 @@ function update (article, done) {
   }
 }
 
-function addRelated (article, forced, done) {
-  if (done === void 0) {
-    done = forced;
-    forced = false;
-  }
-
+function addRelated (article, done) {
   if (processing[article._id]) {
     processing[article._id] = false;
     done(); return;
-  }
-  if (!forced) {
-    done();
-    if (article.related && article.related.length) {
-      return;
-   }
   }
   processing[article._id] = true;
 
@@ -75,11 +64,7 @@ function addRelated (article, forced, done) {
       done(err); return;
     }
     article.related = _.pluck(result, '_id');
-    if (forced) {
-      article.save(but(done));
-    } else {
-      article.save();
-    }
+    article.save(but(done));
   }
 }
 

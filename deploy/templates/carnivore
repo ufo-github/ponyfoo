@@ -14,6 +14,11 @@ sudo rm /etc/nginx/sites-enabled/default
 
 echo "packer: firing up nginx"
 sudo service nginx restart || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
+sudo service nginx status
+
+echo "packer: firing up elasticsearch"
+sudo service elasticsearch restart || sudo service elasticsearch start || (sudo cat /var/log/elasticsearch/error.log && exit 1)
+sudo service elasticsearch status
 
 echo "packer: installing appserver daemon..."
 echo "#!/bin/bash" > $HOME/app/start
@@ -66,13 +71,3 @@ crontab -l | { cat; echo "*/6 * * * * curl http://localhost:$PORT/api/`cat $HOME
 crontab -l | { cat; echo "0 */2 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/weeklies"; } | crontab -
 crontab -l | { cat; echo "0 */6 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/remodel"; } | crontab -
 crontab -l | { cat; echo "0 */8 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/twitter-leads"; } | crontab -
-
-echo "packer: sleeping 5s"
-sleep 5s
-echo "packer: firing up elasticsearch"
-sudo service elasticsearch start || sudo service elasticsearch restart || (sudo cat /var/log/elasticsearch/*.log && exit 1)
-
-echo "packer: sleeping 5s"
-sleep 5s
-echo "packer: warming up elasticsearch index"
-curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/elasticsearch

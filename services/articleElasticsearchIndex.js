@@ -165,6 +165,7 @@ function ensureIndex (done) {
 }
 
 module.exports = {
+  toIndex: toIndex,
   ensureIndex: ensureIndex,
   ensureIndexThen: ensureIndexThen
 };
