@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
       description: data.ogDescription || data.twitterDescription || data.description || null,
       twitter: data.twitterCreator || data.twitterSite || null,
       source: data.ogSiteName || data.host,
-      images: Array.from(data.images).slice(0, 6).map(absolute)
+      images: Array.from(data.images || []).slice(0, 6).map(absolute)
     });
   }
 
