@@ -13,12 +13,26 @@ var mapping = {
     teaser: { type: 'string' },
     introduction: { type: 'string' },
     body: { type: 'string' },
-    tags: { type: 'string' }
+    tags: { type: 'string' },
+    status: { type: 'string' }
   }
 };
 var ensuring = false;
 var ensured = false;
 var ensureQueue = [];
+
+function toIndex (article) {
+  return {
+    created: article.created,
+    title: article.title,
+    slug: article.slug,
+    teaser: article.teaser,
+    introduction: article.introduction,
+    body: article.body,
+    tags: article.tags,
+    status: article.status
+  };
+}
 
 function initialize (done) {
   es.client.indices.exists({ index: indexName }, existed);
@@ -143,18 +157,6 @@ function toBulk (body, article) { // bulk follows [command,document] pattern
   });
   body.push(toIndex(article));
   return body;
-}
-
-function toIndex (article) {
-  return {
-    created: article.created,
-    title: article.title,
-    slug: article.slug,
-    teaser: article.teaser,
-    introduction: article.introduction,
-    body: article.body,
-    tags: article.tags
-  };
 }
 
 function ensureIndex (done) {

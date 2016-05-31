@@ -77,10 +77,17 @@ function warn (err) {
 }
 
 function filters (options) {
-  var result = {};
+  var bePublished = {
+    term: { status: 'published' }
+  };
+  var result = {
+    bool: {
+      must: [bePublished]
+    }
+  };
   var tags = Array.isArray(options.tags) ? options.tags : [];
   if (tags.length) {
-    result.bool = { must: tags.map(tagToFilter) };
+    result.bool.must = result.bool.must.concat(tags.map(tagToFilter));
   }
   if (options.since) {
     result.range = { created: { gte: options.since } };
