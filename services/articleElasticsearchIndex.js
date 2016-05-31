@@ -149,13 +149,16 @@ function warn (err) {
 
 function toBulk (body, article) { // bulk follows [command,document] pattern
   body.push({
-    index: {
+    update: {
       _index: indexName,
       _type: typeName,
       _id: article._id
     }
   });
-  body.push(toIndex(article));
+  body.push({
+    doc: toIndex(article),
+    doc_as_upsert: true
+  });
   return body;
 }
 

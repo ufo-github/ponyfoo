@@ -14,7 +14,8 @@ function update (article, done) {
     type: typeName,
     id: article._id.toString(),
     body: {
-      doc: indexService.toIndex(article)
+      doc: indexService.toIndex(article),
+      doc_as_upsert: true
     }
   }, done);
 }
@@ -79,22 +80,22 @@ function warn (err) {
 }
 
 function filters (options) {
+  var tags = Array.isArray(options.tags) ? options.tags : [];
   var bePublished = {
     term: { status: 'published' }
   };
   var result = {
     bool: {
-      must: [bePublished]
+      must: [bePublished].concat(tags.map(tagToFilter))
     }
   };
-  var tags = Array.isArray(options.tags) ? options.tags : [];
-  if (tags.length) {
-    result.bool.must = result.bool.must.concat(tags.map(tagToFilter));
-  }
   if (options.since) {
-    result.range = { created: { gte: options.since } };
+    result.bool.must.unshift(since(options.since));
   }
   return result;
+  function since (date) {
+    return { range: { created: { gte: date } } };
+  }
 }
 
 function searchHitToResult (hit) {
