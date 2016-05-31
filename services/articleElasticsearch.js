@@ -81,18 +81,17 @@ function warn (err) {
 
 function filters (options) {
   var tags = Array.isArray(options.tags) ? options.tags : [];
-  var bePublished = {
-    term: { status: 'published' }
-  };
-  var result = {
-    bool: {
-      must: [bePublished].concat(tags.map(tagToFilter))
-    }
-  };
+  var clauses = [status('published')].concat(tags.map(tagToFilter));
   if (options.since) {
-    result.bool.must.unshift(since(options.since));
+    clauses.unshift(since(options.since));
   }
-  return result;
+  return all(clauses);
+  function all (clauses) {
+    return { bool: { must: clauses } };
+  }
+  function status (value) {
+    return { term: { status: value } };
+  }
   function since (date) {
     return { range: { created: { gte: date } } };
   }
