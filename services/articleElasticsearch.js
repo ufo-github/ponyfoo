@@ -86,15 +86,15 @@ function filters (options) {
     clauses.unshift(since(options.since));
   }
   return all(clauses);
-  function all (clauses) {
-    return { bool: { must: clauses } };
-  }
-  function status (value) {
-    return { term: { status: value } };
-  }
-  function since (date) {
-    return { range: { created: { gte: date } } };
-  }
+}
+function all (clauses) {
+  return { bool: { must: clauses } };
+}
+function status (value) {
+  return { term: { status: value } };
+}
+function since (date) {
+  return { range: { created: { gte: date } } };
 }
 
 function searchHitToResult (hit) {
