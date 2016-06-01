@@ -31,7 +31,8 @@
       "NGINX_WORKERS={{user `NGINX_WORKERS`}}",
       "SERVER_NAME={{user `SERVER_NAME`}}",
       "NODE_ENV={{user `NODE_ENV`}}",
-      "NAME=ponyfoo-{{user `NODE_ENV`}}"
+      "NAME=ponyfoo-{{user `NODE_ENV`}}",
+      "PORT=3000"
     ],
     "script": "deploy/templates/carnivore"
   }]

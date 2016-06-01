@@ -54,8 +54,6 @@ then
   exit 1
 fi
 
-PORT=3000
-
 echo "packer: booting appserver daemon..."
 sudo service $NAME start
 
