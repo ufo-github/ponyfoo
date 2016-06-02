@@ -13,8 +13,8 @@ var mapping = {
     teaser: { type: 'string' },
     introduction: { type: 'string' },
     body: { type: 'string' },
-    tags: { type: 'string' },
-    status: { type: 'string' }
+    tags: { type: 'string', index: 'not_analyzed' },
+    status: { type: 'string', index: 'not_analyzed' }
   }
 };
 var ensuring = false;
