@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "packer: elasticsearch as a service"
-sudo update-rc.d elasticsearch defaults 95 10
+echo "packer: elasticsearch and kibana as services"
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
+sudo /bin/systemctl enable kibana.service
 
 echo "packer: nginx"
 sudo mkdir -p /var/log/nginx
