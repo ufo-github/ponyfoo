@@ -19,6 +19,7 @@ sudo rm /etc/nginx/sites-enabled/default
 echo "packer: updating logstash configuration"
 cp -r $HOME/app/mailtube/logstash $HOME/app/logstash
 
+sed -i "s#{SERVER_NAME}#$SERVER_NAME#g" $HOME/app/logstash/config/logstash.conf
 sed -i "s#{NAME}#$NAME#g" $HOME/app/logstash/config/logstash.conf
 
 sudo mkdir -p /opt/logstash/patterns
