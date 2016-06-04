@@ -1,2 +1,2 @@
 NODE_TIME %{MONTHDAY} %{MONTH} %{TIME}
-NODE_APP %{NODE_TIME:timestamp} - %{LOGLEVEL:level}: %{GREEDYDATA:message}
+NODE_APP %{NODE_TIME:timestamp} - %{LOGLEVEL:level}: %{GREEDYDATA:description}

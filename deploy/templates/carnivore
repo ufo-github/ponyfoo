@@ -17,7 +17,7 @@ cp -r $HOME/app/mailtube/logstash $HOME/app/logstash
 
 sed -i "s#{NAME}#$NAME#g" $HOME/app/logstash/config/node.conf
 
-mkdir -p /opt/logstash/patterns
+sudo mkdir -p /opt/logstash/patterns
 sudo ln -sfn $HOME/app/logstash/config/*.conf /etc/logstash/conf.d/
 sudo ln -sfn $HOME/app/logstash/patterns/* /opt/logstash/patterns/
 
