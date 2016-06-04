@@ -12,6 +12,15 @@ sudo ln -sfn $HOME/app/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo ln -sfn $HOME/app/nginx/site.conf /etc/nginx/sites-enabled/$NAME.conf
 sudo rm /etc/nginx/sites-enabled/default
 
+echo "packer: updating logstash configuration"
+cp -r $HOME/app/mailtube/logstash $HOME/app/logstash
+
+sed -i "s#{NAME}#$NAME#g" $HOME/app/logstash/config/node.conf
+
+mkdir -p /opt/logstash/patterns
+sudo ln -sfn $HOME/app/logstash/config/*.conf /etc/logstash/conf.d/
+sudo ln -sfn $HOME/app/logstash/patterns/* /opt/logstash/patterns/
+
 echo "packer: firing up nginx"
 sudo service nginx restart || sudo service nginx start || (sudo cat /var/log/nginx/error.log && exit 1)
 sudo service nginx status
@@ -19,6 +28,10 @@ sudo service nginx status
 echo "packer: firing up elasticsearch"
 sudo service elasticsearch restart || sudo service elasticsearch start || (sudo cat /var/log/elasticsearch/error.log && exit 1)
 sudo service elasticsearch status
+
+echo "packer: firing up logstash"
+sudo service logstash restart || sudo service logstash start || (sudo cat /var/log/logstash/error.log && exit 1)
+sudo service logstash status
 
 echo "packer: firing up kibana"
 sudo service kibana restart || sudo service kibana start || (sudo cat /var/log/kibana/error.log && exit 1)

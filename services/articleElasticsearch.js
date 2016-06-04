@@ -94,7 +94,7 @@ function status (value) {
   return { term: { status: value } };
 }
 function since (date) {
-  return { range: { created: { gte: date } } };
+  return { range: { timestamp: { gte: date } } };
 }
 
 function searchHitToResult (hit) {

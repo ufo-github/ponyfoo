@@ -7,7 +7,7 @@ var indexName = 'ponyfoo';
 var typeName = 'article';
 var mapping = {
   properties: {
-    created: { type: 'date' },
+    timestamp: { type: 'date' },
     title: { type: 'string' },
     slug: { type: 'string' },
     teaser: { type: 'string' },
@@ -23,7 +23,7 @@ var ensureQueue = [];
 
 function toIndex (article) {
   return {
-    created: article.created,
+    timestamp: article.created,
     title: article.title,
     slug: article.slug,
     teaser: article.teaser,

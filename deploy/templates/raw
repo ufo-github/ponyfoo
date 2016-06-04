@@ -15,12 +15,13 @@ sudo tar -zxf $JAVA_PACK -C /opt/jdk
 sudo update-alternatives --install /usr/bin/java java /opt/jdk/$JAVA_VERSION/bin/java 100
 sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/$JAVA_VERSION/bin/javac 100
 
-echo "packer: elasticsearch + kibana"
+echo "packer: elasticsearch + logstash + kibana"
 wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
-echo "deb http://packages.elastic.co/kibana/4.5/debian stable main" | sudo tee -a /etc/apt/sources.list
+echo "deb https://packages.elastic.co/elasticsearch/5.x/debian stable main" | sudo tee -a /etc/apt/sources.list
+echo "deb https://packages.elastic.co/logstash/5.0/debian stable main" | sudo tee -a /etc/apt/sources.list
+echo "deb https://packages.elastic.co/kibana/5.0.0-alpha/debian stable main" | sudo tee -a /etc/apt/sources.list
 sudo apt-get update
-sudo apt-get -y install elasticsearch kibana
+sudo apt-get -y install elasticsearch logstash kibana
 
 echo "packer: creating swap space"
 sudo mkdir -p /media/fasthdd
