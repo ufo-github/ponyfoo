@@ -32,7 +32,9 @@
       "SERVER_NAME={{user `SERVER_NAME`}}",
       "NODE_ENV={{user `NODE_ENV`}}",
       "NAME=ponyfoo-{{user `NODE_ENV`}}",
-      "PORT=3000"
+      "PORT=3000",
+      "ANALYTICS_USERNAME={{user `ANALYTICS_USERNAME`}}",
+      "ANALYTICS_PASSWORD={{user `ANALYTICS_PASSWORD`}}"
     ],
     "script": "deploy/templates/carnivore"
   }]

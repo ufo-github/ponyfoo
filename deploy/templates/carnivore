@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SECRET=`cat $HOME/app/server/.bin/secret`
+
 echo "packer: updating nginx configuration"
 cp -r $HOME/app/mailtube/nginx $HOME/app/nginx
 
@@ -7,6 +9,8 @@ sed -i "s#{NGINX_USER}#$INSTANCE_USER#g" $HOME/app/nginx/nginx.conf
 sed -i "s#{NGINX_WORKERS}#$NGINX_WORKERS#g" $HOME/app/nginx/nginx.conf
 sed -i "s#{SERVER_NAME}#$SERVER_NAME#g" $HOME/app/nginx/site.conf
 sed -i "s#{STATIC_ROOT}#$HOME/app/server/.bin/public#g" $HOME/app/nginx/site.conf
+sed -i "s#{ANALYTICS_AUTH_FILE}#$HOME/app/nginx/htpasswd_analytics#g" $HOME/app/nginx/site.conf
+sudo htpasswd -nb $ANALYTICS_USERNAME $ANALYTICS_PASSWORD > $HOME/app/nginx/htpasswd_analytics
 
 sudo ln -sfn $HOME/app/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo ln -sfn $HOME/app/nginx/site.conf /etc/nginx/sites-enabled/$NAME.conf
@@ -15,7 +19,7 @@ sudo rm /etc/nginx/sites-enabled/default
 echo "packer: updating logstash configuration"
 cp -r $HOME/app/mailtube/logstash $HOME/app/logstash
 
-sed -i "s#{NAME}#$NAME#g" $HOME/app/logstash/config/node.conf
+sed -i "s#{NAME}#$NAME#g" $HOME/app/logstash/config/logstash.conf
 
 sudo mkdir -p /opt/logstash/patterns
 sudo ln -sfn $HOME/app/logstash/config/*.conf /etc/logstash/conf.d/
@@ -28,6 +32,9 @@ sudo service nginx status
 echo "packer: firing up elasticsearch"
 sudo service elasticsearch restart || sudo service elasticsearch start || (sudo cat /var/log/elasticsearch/error.log && exit 1)
 sudo service elasticsearch status
+
+echo "packer: giving elasticsearch some runway, sleep 10s"
+sleep 10s
 
 echo "packer: firing up logstash"
 sudo service logstash restart || sudo service logstash start || (sudo cat /var/log/logstash/error.log && exit 1)
@@ -82,7 +89,7 @@ done
 
 echo "packer: application managed to listen on port $PORT"
 echo "packer: setting up cron jobs"
-crontab -l | { cat; echo "*/6 * * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/scheduler"; } | crontab -
-crontab -l | { cat; echo "0 */2 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/weeklies"; } | crontab -
-crontab -l | { cat; echo "0 */6 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/remodel"; } | crontab -
-crontab -l | { cat; echo "0 */8 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/twitter-leads"; } | crontab -
+crontab -l | { cat; echo "*/6 * * * * curl http://localhost:$PORT/api/$SECRET/scheduler"; } | crontab -
+crontab -l | { cat; echo "0 */2 * * * curl http://localhost:$PORT/api/$SECRET/weeklies"; } | crontab -
+crontab -l | { cat; echo "0 */6 * * * curl http://localhost:$PORT/api/$SECRET/remodel"; } | crontab -
+crontab -l | { cat; echo "0 */8 * * * curl http://localhost:$PORT/api/$SECRET/twitter-leads"; } | crontab -

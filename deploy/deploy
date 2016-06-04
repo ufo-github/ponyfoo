@@ -3,7 +3,7 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-# : "${RAW_AMI:="ami-xxxxxxxx"}"
+: "${RAW_AMI:="ami-9b38c7f6"}"
 # : "${PRIMAL_AMI:="ami-xxxxxxxx"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
@@ -82,6 +82,8 @@ then
     -var SUBNET_ID=$SUBNET_ID \
     -var SOURCE_AMI=$PRIMAL_AMI \
     -var NODE_ENV=$NODE_ENV \
+    -var ANALYTICS_USERNAME=`jq -r .KIBANA_USERNAME deploy/env/.env.production.json` \
+    -var ANALYTICS_PASSWORD=`jq -r .KIBANA_PASSWORD deploy/env/.env.production.json` \
     deploy/templates/carnivore.json | tee deploy/log/packer-carnivore.log
 
   CARNIVORE_AMI=$(tail -1 < deploy/log/packer-carnivore.log | cut -d ' ' -f 2)
