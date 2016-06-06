@@ -3,14 +3,18 @@
 require('./preconfigure');
 require('./chdir');
 
+var os = require('os');
 var winston = require('winston');
 var lipstick = require('lipstick');
-var cores = require('os').cpus().length;
-var workers = Math.max(cores, 2);
 var env = require('./lib/env');
-var db = require('./lib/db');
-var logging = require('./lib/logging');
+var boot = require('./lib/boot');
+var cores = os.cpus().length;
+var workers = Math.max(cores, 2);
 var port = env('PORT');
+var options = {
+  port: port,
+  workers: workers
+};
 
 if (module.parent) {
   module.exports = start;
@@ -19,22 +23,16 @@ if (module.parent) {
 }
 
 function start () {
-  lipstick({
-    port: port,
-    workers: workers
-  });
-  db(operational);
+  boot(booted);
 }
 
-function operational () {
-  logging.configure();
-  process.on('uncaughtException', fatal);
+function booted () {
+  lipstick(options, listening);
 }
 
-function fatal (err) {
-  winston.error('Uncaught exception (cluster)', { stack: err.stack || err.message || err || '(unknown)' }, exit);
-}
-
-function exit () {
-  process.exit(1);
+function listening (err, port) {
+  if (err) {
+    winston.error('unhandled cluster error', err.stack || err); return;
+  }
+  winston.info('cluster listening on port %s.', port);
 }

@@ -11,11 +11,7 @@ var express = require('express');
 var moment = require('moment');
 var winston = require('winston');
 var lipstick = require('lipstick');
-var models = require('./models');
-var pkg = require('./package.json');
-var logging = require('./lib/logging');
-var db = require('./lib/db');
-var elasticsearch = require('./lib/elasticsearch');
+var boot = require('./lib/boot');
 var middleware = require('./lib/middleware');
 var routing = require('./controllers/routing');
 var development = require('./lib/development');
@@ -37,14 +33,9 @@ function listen () {
 
   app.locals.settings['x-powered-by'] = false;
 
-  db(dbOperational);
+  boot(booted);
 
-  function dbOperational () {
-    logging.configure();
-    winston.info('Worker %s executing app@%s', process.pid, pkg.version);
-    process.on('uncaughtException', fatal);
-    models();
-    elasticsearch();
+  function booted () {
     middleware(app);
     development.statics(app);
     routing(app);
@@ -66,14 +57,6 @@ function rebuild () {
   articleFeedService.rebuild();
   weeklyFeedService.rebuild();
   sitemapService.rebuild();
-}
-
-function fatal (err) {
-  winston.error('Uncaught exception', { stack: err.stack || err.message || err || '(unknown)' }, exit);
-}
-
-function exit () {
-  process.exit(1);
 }
 
 function random (min, max) {

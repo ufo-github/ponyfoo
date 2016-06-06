@@ -79,6 +79,9 @@ then
   exit 1
 fi
 
+echo "packer: pre-filling elasticsearch with articles"
+node $HOME/app/server/scripts/articles-elasticsearch >> /var/log/$NAME.log
+
 echo "packer: booting appserver daemon..."
 sudo service $NAME start
 
