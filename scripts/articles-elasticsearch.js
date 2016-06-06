@@ -8,7 +8,7 @@ var indexService = require('../services/articleElasticsearchIndex');
 boot(booted);
 
 function booted () {
-  winston.debug('Ensuring elasticsearch index exists.');
+  winston.info('Script is ensuring elasticsearch index exists.');
   indexService.ensureIndex(ensured);
 }
 
@@ -18,7 +18,7 @@ function ensured (err) {
     end();
     return;
   }
-  winston.info('Ensured elasticsearch index exists.');
+  winston.info('Script ensured elasticsearch index exists.');
   end();
 }
 

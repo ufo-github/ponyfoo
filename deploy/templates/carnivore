@@ -2,6 +2,9 @@
 
 SECRET=`cat $HOME/app/server/.bin/secret`
 
+echo "packer: pulling down mailtube"
+cp -r /tmp/mailtube $HOME/app/mailtube
+
 echo "packer: updating nginx configuration"
 cp -r $HOME/app/mailtube/nginx $HOME/app/nginx
 
@@ -36,6 +39,9 @@ sudo service elasticsearch status
 
 echo "packer: giving elasticsearch some runway, sleep 10s"
 sleep 10s
+
+echo "packer: ensuring access to nginx logfiles"
+sudo chmod o+x /var/log/nginx
 
 echo "packer: firing up logstash"
 sudo service logstash restart || sudo service logstash start || (sudo cat /var/log/logstash/error.log && exit 1)

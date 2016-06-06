@@ -68,6 +68,7 @@ function ready (viewModel, container, route) {
     .on('click', '.wa-section-toggle', toggleSection)
     .on('click', '.wa-section-clone', cloneSection)
     .on('change', '.wa-color-picker', pickedColor)
+    .on('change', '.wa-header-background', updateLinkColors)
     .on('change keypress keydown paste input', '.wa-link-href', function (e) {
       scrapeLinkSlowly(e.target);
     })
@@ -154,6 +155,20 @@ function ready (viewModel, container, route) {
         $imagePreview.addClass('uv-hidden');
       }
     });
+  }
+
+  function updateLinkColors (e) {
+    var $el = $(e.target);
+    var $header = $el.parents('.wa-section');
+    var color = $el.value();
+    var $link = $header;
+
+    do {
+      $link = $link.next('[data-tool="link"]');
+      $link.find('.wa-link-foreground').value(color);
+    } while ($link.length);
+
+    updatePreview();
   }
 
   function toolMoves (el, source) {
