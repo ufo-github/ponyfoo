@@ -11,7 +11,7 @@ sed -i "s#{NGINX_WORKERS}#$NGINX_WORKERS#g" $HOME/app/nginx/nginx.conf
 sed -i "s#{SERVER_NAME}#$SERVER_NAME#g" $HOME/app/nginx/site.conf
 sed -i "s#{STATIC_ROOT}#$HOME/app/server/.bin/public#g" $HOME/app/nginx/site.conf
 sed -i "s#{ANALYTICS_AUTH_FILE}#$HOME/app/nginx/htpasswd_analytics#g" $HOME/app/nginx/site.conf
-sudo htpasswd -nb $ANALYTICS_USERNAME $ANALYTICS_PASSWORD > $HOME/app/nginx/htpasswd_analytics
+htpasswd -nb $ANALYTICS_USERNAME $ANALYTICS_PASSWORD > $HOME/app/nginx/htpasswd_analytics
 
 sudo ln -sfn $HOME/app/nginx/nginx.conf /etc/nginx/nginx.conf
 sudo ln -sfn $HOME/app/nginx/site.conf /etc/nginx/sites-enabled/$NAME.conf
