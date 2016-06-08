@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SECRET=`cat $HOME/app/server/.bin/secret`
-
 echo "packer: pulling down mailtube"
 cp -r /tmp/mailtube $HOME/app/mailtube
 
@@ -86,7 +84,7 @@ then
 fi
 
 echo "packer: pre-filling elasticsearch with articles"
-node $HOME/app/server/scripts/articles-elasticsearch >> /var/log/$NAME.log
+node $HOME/app/server/scripts/articles-elasticsearch
 
 echo "packer: booting appserver daemon..."
 sudo service $NAME start
@@ -99,7 +97,7 @@ done
 
 echo "packer: application managed to listen on port $PORT"
 echo "packer: setting up cron jobs"
-crontab -l | { cat; echo "*/6 * * * * curl http://localhost:$PORT/api/$SECRET/scheduler"; } | crontab -
-crontab -l | { cat; echo "0 */2 * * * curl http://localhost:$PORT/api/$SECRET/weeklies"; } | crontab -
-crontab -l | { cat; echo "0 */6 * * * curl http://localhost:$PORT/api/$SECRET/remodel"; } | crontab -
-crontab -l | { cat; echo "0 */8 * * * curl http://localhost:$PORT/api/$SECRET/twitter-leads"; } | crontab -
+crontab -l | { cat; echo "*/6 * * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/scheduler"; } | crontab -
+crontab -l | { cat; echo "0 */2 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/weeklies"; } | crontab -
+crontab -l | { cat; echo "0 */6 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/remodel"; } | crontab -
+crontab -l | { cat; echo "0 */8 * * * curl http://localhost:$PORT/api/`cat $HOME/app/server/.bin/secret`/twitter-leads"; } | crontab -
