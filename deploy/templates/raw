@@ -7,11 +7,12 @@ sudo apt-get -y remove apt-listchanges
 sudo apt-get -y install git make g++ graphicsmagick curl python-software-properties software-properties-common lsof libkrb5-dev apache2-utils
 
 echo "packer: java 8"
-JAVA_PACK=jdk-8u92-linux-x64.tar.gz
-JAVA_VERSION=jdk1.8.0_92
-wget -nv --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u92-b14/$JAVA_PACK
+export JAVA_DIST=8u92-b14
+export JAVA_RESOURCE=jdk-8u92-linux-x64.tar.gz
+export JAVA_VERSION=jdk1.8.0_92
+wget -nv --header "Cookie: oraclelicense=accept-securebackup-cookie" -O /tmp/java-jdk.tar.gz http://download.oracle.com/otn-pub/java/jdk/$JAVA_DIST/$JAVA_RESOURCE
 sudo mkdir /opt/jdk
-sudo tar -zxf $JAVA_PACK -C /opt/jdk
+sudo tar -zxf /tmp/java-jdk.tar.gz -C /opt/jdk
 sudo update-alternatives --install /usr/bin/java java /opt/jdk/$JAVA_VERSION/bin/java 100
 sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/$JAVA_VERSION/bin/javac 100
 
