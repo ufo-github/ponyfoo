@@ -6,6 +6,7 @@ var campaign = require('campaign');
 var assign = require('assignment');
 var mailgun = require('campaign-mailgun');
 var jade = require('campaign-ponyfoo');
+var term = require('campaign-terminal');
 var winston = require('winston');
 var htmlService = require('./html');
 var staticService = require('./static');
@@ -50,17 +51,20 @@ var api = {
 };
 
 function createClient () {
+  var brandedHeader = staticService.unroll('/img/banners/branded.png');
+  var headerImage = path.join('.bin/public', brandedHeader);
+  var emails = mailgun({ apiKey: apiKey, authority: authority });
   var options = {
-    headerImage: path.join('.bin/public', staticService.unroll('/img/banners/branded.png')),
+    headerImage: headerImage,
     templateEngine: jade,
-    provider: mailgun({ apiKey: apiKey, authority: authority }),
+    provider: emails,
     formatting: formatting,
     from: from
   };
   if (mode === 'trap') { // staging environments should trap emails
     options.trap = trap;
   } else if (mode === 'debug') { // no reason to send any emails
-    options.provider = require('campaign-terminal')();
+    options.provider = term();
   }
   return campaign(options);
 }

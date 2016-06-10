@@ -7,6 +7,7 @@ block template_vars
   options.paddingColor = padding;
   options.hasText = text ? true : false;
   options.textColor = text
+  options.textOnColor = textOnColor
 
   unit = 13
   width = options.width ? options.width : 12 * unit
@@ -29,6 +30,7 @@ block template_vars
   paddingColor = options.paddingColor ? options.paddingColor : false
   hasText = options.hasText ? options.hasText : false
   hasLink = options.hasLink ? options.hasLink : true
+  textOnColor = options.textOnColor || false
 
   if (hasText) {
     viewbox[viewbox.length - 1] += 3
@@ -147,8 +149,6 @@ svg(
           font-weight: bold;
           font-size: 2px;
         }
-      style(type='text/css')!='text{fill:' + textColor + '}'
-
   each pixel in pixels
     -
       scale = pixel.scale || 1
@@ -159,7 +159,10 @@ svg(
     rect(width=scale, height=scale, x=x, y=y, fill=getFill(pixel.x, pixel.y, fill, group))
 
   if hasText
-    text(x=paddingColor ? 1 : false, y=paddingColor ? 16 : 15) ponyfoo.com
+    - y = paddingColor ? 16 : 15
+    if textOnColor
+      text(y=y, stroke=textOnColor, stroke-width='2px') ponyfoo.com
+    text(y=y, fill=textColor) ponyfoo.com
 
   if hasLink
     a(xlink:href='/', aria-hidden='false', role='link', title='Pony Foo')
