@@ -37,19 +37,22 @@ function format (terms, tags) {
 }
 
 function update (article, done) {
+  var end = done || log;
   articleElasticsearchService.update(article, updated);
   function updated (err, exists) {
     if (err) {
-      done(err); return;
+      end(err); return;
     }
-    addRelated(article, done);
+    addRelated(article, end);
   }
 }
 
 function addRelated (article, done) {
+  var end = done || log;
   if (processing[article._id]) {
     processing[article._id] = false;
-    done(); return;
+    end(null);
+    return;
   }
   processing[article._id] = true;
 
@@ -61,14 +64,15 @@ function addRelated (article, done) {
 
   function queried (err, result) {
     if (err) {
-      done(err); return;
+      end(err); return;
     }
     article.related = _.pluck(result, '_id');
-    article.save(but(done));
+    article.save(but(end));
   }
 }
 
 function addRelatedAll (done) {
+  var end = done || log;
   env('BULK_INSERT', true);
   winston.info('Computing relationships for articles site-wide');
   contra.waterfall([
@@ -94,12 +98,18 @@ function addRelatedAll (done) {
     env('BULK_INSERT', false);
     if (err) {
       winston.warn('Error computing relationships', err);
-      done(err); return;
+      end(err); return;
     }
     winston.info('Relationship computation completed');
     articleFeedService.rebuild();
     sitemapService.rebuild();
-    done();
+    end(null);
+  }
+}
+
+function log (err) {
+  if (err) {
+    winston.error(err);
   }
 }
 
