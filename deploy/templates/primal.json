@@ -28,7 +28,10 @@
     "environment_vars": [
       "INSTANCE_USER={{user `INSTANCE_USER`}}",
       "NVM_VERSION={{user `NVM_VERSION`}}",
-      "NODE_VERSION={{user `NODE_VERSION`}}"
+      "NODE_VERSION={{user `NODE_VERSION`}}",
+      "ES_LICENSE={{user `ES_LICENSE`}}",
+      "ES_USERNAME={{user `ES_USERNAME`}}",
+      "ES_PASSWORD={{user `ES_PASSWORD`}}"
     ],
     "script": "deploy/templates/primal"
   }]

@@ -1,10 +1,40 @@
 #!/bin/bash
-
 echo "packer: elasticsearch + logstash + kibana as services"
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl enable logstash.service
 sudo /bin/systemctl enable kibana.service
+
+echo "packer: elasticsearch x-pack"
+sudo service elasticsearch stop
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack --batch
+sudo service elasticsearch start
+sleep 20s
+
+echo "packer: elasticsearch password"
+KIBANA_CONF=/opt/kibana/config/kibana.yml
+
+curl \
+  -XPUT \
+  -u $ES_USERNAME:changeme \
+  -d "{ \"password\": \"$ES_PASSWORD\" }" \
+    "http://localhost:9200/_xpack/security/user/$ES_USERNAME/_password"
+
+echo "elasticsearch.username: \"$ES_USERNAME\"" | sudo tee -a $KIBANA_CONF > /dev/null
+echo "elasticsearch.password: \"$ES_PASSWORD\"" | sudo tee -a $KIBANA_CONF > /dev/null
+
+echo "packer: elasticsearch license"
+ES_LICENSE_FILE=/tmp/es-license
+echo $ES_LICENSE > $ES_LICENSE_FILE
+curl \
+  -XPUT \
+  -u $ES_USERNAME:$ES_PASSWORD \
+  -d @$ES_LICENSE_FILE \
+  "http://localhost:9200/_xpack/license"
+sudo rm $ES_LICENSE_FILE
+
+echo "packer: kibana x-pack"
+sudo /opt/kibana/bin/kibana-plugin install x-pack
 
 echo "packer: nginx"
 sudo mkdir -p /var/log/nginx
