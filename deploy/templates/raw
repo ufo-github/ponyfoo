@@ -4,7 +4,7 @@ echo "packer: updating aptitude"
 sudo apt-key update
 sudo apt-get update
 sudo apt-get -y remove apt-listchanges
-sudo apt-get -y install git make g++ graphicsmagick curl python-software-properties software-properties-common lsof libkrb5-dev apache2-utils
+sudo apt-get -y install git make g++ graphicsmagick curl python-software-properties software-properties-common lsof libkrb5-dev apache2-utils bzip2
 
 echo "packer: java 8"
 export JAVA_DIST=8u92-b14

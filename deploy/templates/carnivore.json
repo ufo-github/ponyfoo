@@ -36,7 +36,9 @@
       "SERVER_NAME={{user `SERVER_NAME`}}",
       "NODE_ENV={{user `NODE_ENV`}}",
       "NAME=ponyfoo-{{user `NODE_ENV`}}",
-      "PORT=3000"
+      "PORT=3000",
+      "ES_USERNAME={{user `ES_USERNAME`}}",
+      "ES_PASSWORD={{user `ES_PASSWORD`}}"
     ],
     "script": "deploy/templates/carnivore"
   }]

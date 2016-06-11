@@ -3,8 +3,8 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${RAW_AMI:="ami-0ee31d63"}"
-: "${PRIMAL_AMI:="ami-12af557f"}"
+# : "${RAW_AMI:="ami-0ee31d63"}"
+# : "${PRIMAL_AMI:="ami-12af557f"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
