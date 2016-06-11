@@ -29,11 +29,10 @@ echo "elasticsearch.username: \"$ES_USERNAME\"" | sudo tee -a $KIBANA_CONF > /de
 echo "elasticsearch.password: \"$ES_PASSWORD\"" | sudo tee -a $KIBANA_CONF > /dev/null
 
 echo "packer: elasticsearch license"
-ES_LICENSE_FILE=$HOME/app/mailtube/elasticsearch/license.json
 curl \
   -XPUT \
   -u $ES_USERNAME:$ES_PASSWORD \
-  -d @$ES_LICENSE_FILE \
+  -d @$HOME/app/mailtube/elasticsearch/license.json \
   "http://localhost:9200/_xpack/license"
 
 echo "packer: kibana x-pack"
