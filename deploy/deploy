@@ -4,7 +4,7 @@ set -e
 
 : "${NODE_ENV:="staging"}"
 : "${RAW_AMI:="ami-0ee31d63"}"
-# : "${PRIMAL_AMI:="ami-xxxxxxxx"}"
+: "${PRIMAL_AMI:="ami-12af557f"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
@@ -55,21 +55,25 @@ fi
 if [ -z ${PRIMAL_AMI+x} ]
 then
   echo "deploy: building primal image with packer..."
-  cp package.json deploy/mailtube
+
   NODE_VERSION=$(cat .node-version)
   ES_USERNAME=$(jq -r .ELASTICSEARCH_USERNAME deploy/env/.env.$NODE_ENV.json)
   ES_PASSWORD=$(jq -r .ELASTICSEARCH_PASSWORD deploy/env/.env.$NODE_ENV.json)
   ES_LICENSE=$(jq -r .ELASTICSEARCH_LICENSE deploy/env/.env.$NODE_ENV.json)
-  PACKER_BUILD_PRIMAL="packer build \
+
+  mkdir -p deploy/mailtube/elasticsearch
+  echo $ES_LICENSE > deploy/mailtube/elasticsearch/license.json
+  cp package.json deploy/mailtube
+
+  packer build \
     -var VPC_ID=$VPC_ID \
     -var SUBNET_ID=$SUBNET_ID \
     -var SOURCE_AMI=$RAW_AMI \
     -var NODE_VERSION=$NODE_VERSION \
     -var ES_USERNAME=$ES_USERNAME \
     -var ES_PASSWORD=$ES_PASSWORD \
-    -var 'ES_LICENSE=$(echo $ES_LICENSE)' \
-    deploy/templates/primal.json | tee deploy/log/packer-primal.log"
-  eval $PACKER_BUILD_PRIMAL
+    deploy/templates/primal.json | tee deploy/log/packer-primal.log
+
   PRIMAL_AMI=$(tail -1 < deploy/log/packer-primal.log | cut -d ' ' -f 2)
   echo "deploy: built image $PRIMAL_AMI"
 else

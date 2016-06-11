@@ -1,4 +1,9 @@
 #!/bin/bash
+
+echo "packer: pulling up mailtube"
+mkdir -p $HOME/app/mailtube
+cp -r /tmp/mailtube $HOME/app/mailtube
+
 echo "packer: elasticsearch + logstash + kibana as services"
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
@@ -24,14 +29,12 @@ echo "elasticsearch.username: \"$ES_USERNAME\"" | sudo tee -a $KIBANA_CONF > /de
 echo "elasticsearch.password: \"$ES_PASSWORD\"" | sudo tee -a $KIBANA_CONF > /dev/null
 
 echo "packer: elasticsearch license"
-ES_LICENSE_FILE=/tmp/es-license
-echo $ES_LICENSE > $ES_LICENSE_FILE
+ES_LICENSE_FILE=$HOME/app/mailtube/elasticsearch/license.json
 curl \
   -XPUT \
   -u $ES_USERNAME:$ES_PASSWORD \
   -d @$ES_LICENSE_FILE \
   "http://localhost:9200/_xpack/license"
-sudo rm $ES_LICENSE_FILE
 
 echo "packer: kibana x-pack"
 sudo /opt/kibana/bin/kibana-plugin install x-pack
@@ -58,7 +61,6 @@ npm update -g npm
 
 echo "packer: precaching server dependencies"
 mkdir -p $HOME/app/precache
-cp -r /tmp/mailtube $HOME/app/mailtube
 cp $HOME/app/mailtube/package.json $HOME/app/precache
 cd $HOME/app/precache
 npm install --production
