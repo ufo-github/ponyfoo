@@ -39,6 +39,7 @@ echo "packer: kibana x-pack"
 sudo /opt/kibana/bin/kibana-plugin install x-pack
 sudo tar jxf /opt/kibana/installedPlugins/x-pack/.phantom/phantomjs-1.9.8-linux-x86_64.tar.bz2
 sudo chown -R kibana:kibana /opt/kibana
+sudo service kibana restart
 
 echo "packer: nginx"
 sudo mkdir -p /var/log/nginx
