@@ -27,6 +27,9 @@ sudo mkdir -p /opt/logstash/patterns
 sudo ln -sfn $HOME/app/logstash/config/*.conf /etc/logstash/conf.d/
 sudo ln -sfn $HOME/app/logstash/patterns/* /opt/logstash/patterns/
 
+echo "packer: ensuring access to nginx logfiles"
+sudo chmod o+x /var/log/nginx
+
 echo "packer: firing up nginx"
 sudo service nginx restart || sudo service nginx start
 sudo service nginx status
@@ -37,9 +40,6 @@ sudo service elasticsearch status
 
 echo "packer: giving elasticsearch some runway, sleep 25s"
 sleep 25s
-
-echo "packer: ensuring access to nginx logfiles"
-sudo chmod o+x /var/log/nginx
 
 echo "packer: firing up logstash"
 sudo service logstash restart || sudo service logstash start
