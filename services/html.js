@@ -9,7 +9,8 @@ var minifyHtml = require('html-minifier').minify;
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
 var minifierOptions = {
-  collapseWhitespace: true
+  collapseWhitespace: true,
+  conservativeCollapse: true
 };
 var imageCache = {};
 
