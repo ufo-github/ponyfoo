@@ -24,11 +24,6 @@ curl \
   -d "{ \"password\": \"$ES_PASSWORD\" }" \
     "http://localhost:9200/_xpack/security/user/$ES_USERNAME/_password"
 
-echo "packer: logstash x-pack"
-sed -i "s#{ES_USERNAME}#$ES_USERNAME#g" $HOME/app/logstash/config/logstash.conf
-sed -i "s#{ES_PASSWORD}#$ES_PASSWORD#g" $HOME/app/logstash/config/logstash.conf
-sudo service logstash restart
-
 echo "packer: kibana x-pack"
 KIBANA_CONF=/opt/kibana/config/kibana.yml
 echo "elasticsearch.username: \"$ES_USERNAME\"" | sudo tee -a $KIBANA_CONF > /dev/null
