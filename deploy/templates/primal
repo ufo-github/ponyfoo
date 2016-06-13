@@ -10,8 +10,9 @@ sudo /bin/systemctl enable elasticsearch.service
 sudo /bin/systemctl enable logstash.service
 sudo /bin/systemctl enable kibana.service
 
-echo "packer: elasticsearch x-pack"
+echo "packer: elasticsearch configuration and x-pack"
 sudo service elasticsearch stop
+echo "indices.fielddata.cache.size: 500mb" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack --batch
 sudo service elasticsearch start
 sleep 20s

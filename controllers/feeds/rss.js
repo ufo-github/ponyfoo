@@ -1,6 +1,7 @@
 'use strict';
 
 var feedService = require('../../services/feed');
+var maxAge = 15 * 60 * 1000; // 15 minutes
 
 module.exports = function (req, res) {
   var id = req.params.id;
@@ -13,6 +14,8 @@ module.exports = function (req, res) {
     feedService.feeds[id].once('built', send);
   }
   function send () {
-    res.sendFile(feedService.feeds[id].location);
+    res.sendFile(feedService.feeds[id].location, {
+      maxAge: maxAge
+    });
   }
 };
