@@ -52,13 +52,14 @@ else
   echo "deploy: skipping raw image build, using $RAW_AMI"
 fi
 
+ES_USERNAME=$(jq -r .ELASTICSEARCH_USERNAME deploy/env/.env.$NODE_ENV.json)
+ES_PASSWORD=$(jq -r .ELASTICSEARCH_PASSWORD deploy/env/.env.$NODE_ENV.json)
+
 if [ -z ${PRIMAL_AMI+x} ]
 then
   echo "deploy: building primal image with packer..."
 
   NODE_VERSION=$(cat .node-version)
-  ES_USERNAME=$(jq -r .ELASTICSEARCH_USERNAME deploy/env/.env.$NODE_ENV.json)
-  ES_PASSWORD=$(jq -r .ELASTICSEARCH_PASSWORD deploy/env/.env.$NODE_ENV.json)
   ES_LICENSE=$(jq -r .ELASTICSEARCH_LICENSE deploy/env/.env.$NODE_ENV.json)
 
   mkdir -p deploy/mailtube/elasticsearch
