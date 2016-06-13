@@ -37,17 +37,17 @@ sudo service nginx status
 echo "packer: firing up elasticsearch"
 sudo service elasticsearch restart || sudo service elasticsearch start
 sudo service elasticsearch status
-
-echo "packer: giving elasticsearch some runway, sleep 25s"
 sleep 25s
 
 echo "packer: firing up logstash"
 sudo service logstash restart || sudo service logstash start
 sudo service logstash status
+sleep 5s
 
 echo "packer: firing up kibana"
 sudo service kibana restart || sudo service kibana start
 sudo service kibana status
+sleep 5s
 
 echo "packer: installing appserver daemon..."
 echo "#!/bin/bash" > $HOME/app/start
