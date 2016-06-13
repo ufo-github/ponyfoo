@@ -35,8 +35,8 @@ echo "packer: firing up elasticsearch"
 sudo service elasticsearch restart || sudo service elasticsearch start
 sudo service elasticsearch status
 
-echo "packer: giving elasticsearch some runway, sleep 15s"
-sleep 15s
+echo "packer: giving elasticsearch some runway, sleep 25s"
+sleep 25s
 
 echo "packer: ensuring access to nginx logfiles"
 sudo chmod o+x /var/log/nginx
