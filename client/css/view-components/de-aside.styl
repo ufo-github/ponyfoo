@@ -44,10 +44,14 @@
 .de-search-label
   font-style italic
   margin-bottom 10px
+  border-bottom 1px dotted c-purple
 
 .de-search,
 .de-subscribe
   padding 10px
+
+.de-search
+  background linear-gradient(to bottom, rgba(c-purple, 0.3) 0, rgba(c-yellow-highlight, 0.4) 100%)
 
 .de-bio
   position relative
@@ -124,10 +128,12 @@
     &:before
       content none
 
-  .de-search,
   .de-subscribe
   .de-hits
     padding 0
+
+  .de-search
+    margin 10px -10px
 
   .de-bio
     padding 25px 0
