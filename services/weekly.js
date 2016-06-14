@@ -10,9 +10,10 @@ var summaryService = require('./summary');
 var markupService = require('./markup');
 var htmlService = require('./html');
 var cryptoService = require('./crypto');
+var rdigits = /^\d+$/;
 
 function compile (model, done) {
-  var slug = model.issue ? 'issue-' + model.issue : model.slug;
+  var slug = rdigits.test(model.slug) ? 'issue-' + model.slug : model.slug;
   var options = {
     markdown: markupService,
     slug: slug
