@@ -14,6 +14,7 @@ var textService = require('../../../../../services/text');
 var summaryService = require('../../../../../services/summary');
 var loadScript = require('../../../lib/loadScript');
 var rparagraph = /^<p>|<\/p>$/i;
+var rdigits = /^\d+$/;
 
 module.exports = controller;
 
@@ -28,7 +29,7 @@ function controller (viewModel, container, route) {
 }
 
 function ready (viewModel, container, route) {
-  var weeklyCompiler = global.weeklyCompiler;
+  var weeklyCompilerService = global.weeklyCompiler;
   var weeklyIssue = viewModel.issue;
   var editing = viewModel.editing;
   var released = editing && weeklyIssue.status === 'released';
@@ -122,7 +123,13 @@ function ready (viewModel, container, route) {
   }
 
   function updatePreview () {
-    weeklyCompiler.compile(getModel().sections, { markdown: markdownService }, compiled);
+    var model = getModel();
+    var slug = rdigits.test(model.slug) ? 'issue-' + model.slug : model.slug;
+    var options = {
+      markdown: markdownService,
+      slug: slug
+    };
+    weeklyCompilerService.compile(model.sections, options, compiled);
     function compiled (err, html) {
       if (err) {
         html = textService.format('<pre class="wa-error">%s</pre>', err);

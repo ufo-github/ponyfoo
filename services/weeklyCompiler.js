@@ -10,26 +10,40 @@ var textService = require('./text');
 var linkSectionView = require('../.bin/views/shared/partials/weekly/link');
 var knownTags = require('./lib/knownNewsletterTags.json');
 
-function linkThrough (href) {
-  if (!href) {
-    return href;
-  }
-  var u = omnibox.parse(href);
-  if (u.protocol && u.protocol !== 'http' && u.protocol !== 'https') {
-    return href;
-  }
-  u.query.utm_source = 'ponyfoo+weekly';
-  u.query.utm_medium = 'email';
-  var host = u.host ? u.protocol + '://' + u.host : '';
-  return (
-    host +
-    u.pathname +
-    queso.stringify(u.query).replace(/(%2B|\s)/ig, '+') +
-    (u.hash || '')
-  );
+function linkThroughForSlug (slug) {
+  return function linkThrough (href) {
+    if (!href) {
+      return href;
+    }
+    var u = omnibox.parse(href);
+    if (u.protocol && u.protocol !== 'http' && u.protocol !== 'https') {
+      return href;
+    }
+    Object
+      .keys(u.query)
+      .filter(function (key) {
+        return key.slice(0, 4) === 'utm_';
+      })
+      .forEach(function (key) {
+        delete u.query[key];
+      });
+    u.query.utm_source = 'ponyfoo+weekly';
+    u.query.utm_medium = 'email';
+    if (slug) {
+      u.query.utm_campaign = slug;
+    }
+    var host = u.host ? u.protocol + '://' + u.host : '';
+    return (
+      host +
+      u.pathname +
+      queso.stringify(u.query).replace(/(%2B|\s)/ig, '+') +
+      (u.hash || '')
+    );
+  };
 }
 
 function compile (sections, options, done) {
+  var linkThrough = linkThroughForSlug(options.slug);
   var compilers = {
     header: toHeaderSectionHtml,
     markdown: toMarkdownSectionHtml,
@@ -103,5 +117,5 @@ function noop () {}
 module.exports = {
   compile: compile,
   knownTags: knownTags,
-  linkThrough: linkThrough
+  linkThroughForSlug: linkThroughForSlug
 };

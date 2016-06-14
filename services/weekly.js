@@ -12,14 +12,20 @@ var htmlService = require('./html');
 var cryptoService = require('./crypto');
 
 function compile (model, done) {
-  weeklyCompilerService.compile(model.sections, { markdown: markupService }, compiled);
+  var slug = model.issue ? 'issue-' + model.issue : model.slug;
+  var options = {
+    markdown: markupService,
+    slug: slug
+  };
+  weeklyCompilerService.compile(model.sections, options, compiled);
   function compiled (err, html) {
     if (err) {
       done(err); return;
     }
+    var linkThrough = weeklyCompilerService.linkThroughForSlug(slug);
     model.summaryHtml = markupService.compile(model.summary, {
       absolutize: true,
-      linkThrough: weeklyCompilerService.linkThrough
+      linkThrough: linkThrough
     });
     model.summaryText = summaryService.summarize(model.summaryHtml).text;
     model.contentHtml = htmlService.absolutize(html);

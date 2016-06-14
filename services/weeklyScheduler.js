@@ -4,6 +4,7 @@ var moment = require('moment');
 var winston = require('winston');
 var correcthorse = require('correcthorse');
 var WeeklyIssue = require('../models/WeeklyIssue');
+var weeklyService = require('./weekly');
 var weeklyFeedService = require('./weeklyFeed');
 var weeklySharingService = require('./weeklySharing');
 var settingService = require('./setting');
@@ -101,7 +102,7 @@ function run (done) {
       issue.publication = target.toDate();
       issue.slug = current.toString();
       issue.issue = current;
-      issue.save(saved);
+      recompileAndSave(issue, saved);
       function saved (err) {
         if (err) {
           end(err); return;
@@ -133,7 +134,7 @@ function run (done) {
     issue.status = 'released';
     issue.statusReach = 'patrons';
     issue.thanks = correcthorse();
-    issue.save(saved);
+    recompileAndSave(issue, saved);
     function saved (err) {
       if (err) {
         end(err); return;
@@ -145,7 +146,7 @@ function run (done) {
     winston[level]('Weekly "%s" being released to everyone.', issue.slug);
     issue.statusReach = 'everyone';
     issue.publication = new Date();
-    issue.save(saved);
+    recompileAndSave(issue, saved);
     function saved (err) {
       if (err) {
         end(err); return;
@@ -167,6 +168,15 @@ function run (done) {
       }
       winston[level]('Weekly "%s" being shared via social media.', issue.slug);
       weeklySharingService.share(issue, end);
+    }
+  }
+  function recompileAndSave (issue, done) {
+    weeklyService.compile(issue, save);
+    function save (err) {
+      if (err) {
+        end(err); return;
+      }
+      issue.save(done);
     }
   }
   function end (err) {
