@@ -486,6 +486,6 @@ function ready (viewModel, container, route) {
   }
 
   function leave () {
-    taunus.navigate('/author/weeklies');
+    taunus.navigate('/weekly/review');
   }
 }

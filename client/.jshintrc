@@ -20,5 +20,6 @@
   "trailing": true,
   "undef": true,
   "unused": false,
-  "validthis": true
+  "validthis": true,
+  "predef": ["confirm", "self", "caches", "Promise", "Headers", "Response"]
 }

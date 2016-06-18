@@ -12,7 +12,10 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       title: 'Subscribed to Pony Foo!',
-      topics: allTopics.slice().filter(byQuery)
+      topics: allTopics.slice().filter(byQuery),
+      meta: {
+        canonical: '/subscribed'
+      }
     }
   };
   next();

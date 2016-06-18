@@ -22,6 +22,7 @@ module.exports = function (req, res, next) {
         title: presentation.title,
         presentation: model,
         meta: {
+          canonical: '/presentations/' + req.params.slug,
           description: description,
           images: presentationService.toCovers(presentation)
         }

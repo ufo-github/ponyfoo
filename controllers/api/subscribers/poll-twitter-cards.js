@@ -12,6 +12,6 @@ module.exports = function (req, res, next) {
     } else {
       req.flash('success', 'Pulled interested parties from Twitter cards.');
     }
-    res.redirect('/author/subscribers');
+    res.redirect('/owner/subscribers');
   }
 };

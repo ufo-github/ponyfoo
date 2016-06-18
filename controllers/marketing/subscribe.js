@@ -13,7 +13,10 @@ module.exports = function (req, res, next) {
       model: {
         title: 'Subscribe to Pony Foo!',
         subscriberGraph: result,
-        topics: subscriberService.getTopics()
+        topics: subscriberService.getTopics(),
+        meta: {
+          canonical: '/subscribe'
+        }
       }
     };
     next();

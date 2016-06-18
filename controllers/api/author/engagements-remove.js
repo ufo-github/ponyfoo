@@ -9,9 +9,7 @@ module.exports = function (req, res) {
   function saved (err) {
     if (err) {
       winston.error(err);
-      res.redirect('/author/engagements');
-    } else {
-      res.redirect('/author/engagements');
     }
+    res.redirect('/speaking/review');
   }
 };

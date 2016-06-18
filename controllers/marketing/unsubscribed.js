@@ -20,7 +20,10 @@ module.exports = function (req, res, next) {
       topic: topic,
       listName: listName,
       description: description,
-      hash: req.query.hash
+      hash: req.query.hash,
+      meta: {
+        canonical: '/unsubscribed'
+      }
     }
   };
   next();

@@ -280,6 +280,6 @@ module.exports = function (viewModel, container, route) {
 
   function leave () {
     clear();
-    taunus.navigate('/author/articles');
+    taunus.navigate('/articles/review');
   }
 };

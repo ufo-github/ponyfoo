@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
       model: {
         title: 'Site-wide Settings \u2014 Pony Foo',
         meta: {
-          canonical: '/author/settings'
+          canonical: '/owner/settings'
         },
         settings: settingService.toModel(settings)
       }

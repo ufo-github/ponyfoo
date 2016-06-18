@@ -33,6 +33,7 @@ module.exports = function (req, res, next) {
           };
         }),
         meta: {
+          canonical: '/opensource',
           description: description,
           images: projects.map(toScreenshot)
         }

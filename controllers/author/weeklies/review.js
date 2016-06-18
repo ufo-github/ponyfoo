@@ -34,7 +34,7 @@ function getModel (req, res, next) {
       model: {
         title: 'Newsletter Review',
         meta: {
-          canonical: '/author/weeklies'
+          canonical: '/weekly/review'
         },
         weeklies: models,
         live: result.live,

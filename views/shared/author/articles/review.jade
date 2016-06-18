@@ -3,8 +3,8 @@ article.ly-section.vw-maintainer.de-host
     h1.vw-title Article Review
     header.ar-actions
       if roles.owner
-        a.ar-action.lk-icon.fa.fa-calculator.ar-recompute(href='/author/compute', aria-label='Recompute related articles')
-      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/articles/new', aria-label='Prepare a fresh draft')
+        a.ar-action.lk-icon.fa.fa-calculator.ar-recompute(href='/owner/articles/compute', aria-label='Recompute related articles')
+      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/articles/new', aria-label='Prepare a fresh draft')
     table.ar-container
       thead
         tr
@@ -38,7 +38,7 @@ article.ly-section.vw-maintainer.de-host
                 form.ar-share(action=share + '/lobsters', method='post')
                   button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
             td.ar-buttons(data-label='Actions')
-              a.ar-button.lk-icon.fa.fa-pencil.ar-edit(href='/author/articles/' + article.slug, aria-label='Edit this article')
+              a.ar-button.lk-icon.fa.fa-pencil.ar-edit(href='/articles/' + article.slug + '/edit', aria-label='Edit this article')
               a.ar-button.lk-icon.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)
 
   include ../../partials/aside

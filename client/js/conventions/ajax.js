@@ -44,7 +44,14 @@ function renderOrClean (data) {
 }
 
 function getMessages (err, body) {
-  return body && body.messages || !body && defaultMessages;
+  var singleMessage = body && body.error && body.error.message;
+  if (singleMessage) {
+    return [singleMessage];
+  }
+  if (body) {
+    return body.messages || defaultMessages;
+  }
+  return defaultMessages;
 }
 
 function render (err, body) {

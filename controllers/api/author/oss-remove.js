@@ -9,9 +9,7 @@ module.exports = function (req, res) {
   function saved (err) {
     if (err) {
       winston.error(err);
-      res.redirect('/author/oss');
-    } else {
-      res.redirect('/author/oss');
     }
+    res.redirect('/opensource/review');
   }
 };

@@ -22,9 +22,9 @@ module.exports = function (req, res) {
   function saved (err) {
     if (err) {
       winston.error(err);
-      res.redirect('/author/engagements/new');
+      res.redirect('/speaking/new');
     } else {
-      res.redirect('/author/engagements');
+      res.redirect('/speaking/review');
     }
   }
 };

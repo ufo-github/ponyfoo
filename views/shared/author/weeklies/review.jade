@@ -12,7 +12,7 @@ article.ly-section.vw-maintainer.de-host
           span.wr-live.ck-checkbox.ck-checked Cron Job
         else
           span.wr-live.ck-checkbox Cron Job
-      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/author/weeklies/new', aria-label='Prepare a fresh draft')
+      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/weekly/new', aria-label='Prepare a fresh draft')
     table.wr-container
       thead
         tr
@@ -49,7 +49,7 @@ article.ly-section.vw-maintainer.de-host
                 form.ar-share(action=share + '/lobsters', method='post')
                   button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
             td.ar-buttons(data-label='Actions')
-              a.ar-button.lk-icon.fa.fa-pencil.wr-edit(href='/author/weeklies/' + issue.slug, aria-label='Edit this newsletter issue')
+              a.ar-button.lk-icon.fa.fa-pencil.wr-edit(href='/weekly/' + issue.slug + '/edit', aria-label='Edit this newsletter issue')
               a.ar-button.lk-icon.fa.fa-remove.wr-remove(aria-label='Delete this newsletter issue', data-slug=issue.slug)
 
   include ../../partials/aside

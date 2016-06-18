@@ -26,7 +26,7 @@ function getModel (req, res, next) {
       model: {
         title: 'Article Review',
         meta: {
-          canonical: '/author/articles'
+          canonical: '/articles/review'
         },
         articles: sorted
       }

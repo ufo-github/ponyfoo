@@ -27,7 +27,7 @@ article.ly-section.vw-maintainer
       tbody
         each s, i in subscribers
           - api = '/api/subscribers/' + s.hash
-          - returnPath = 'returnTo=/author/subscribers'
+          - returnPath = 'returnTo=/owner/subscribers'
           tr
             td(data-label='Created')
               time(datetime=s.created.datetime, aria-label=s.created.title)='On ' + s.created.text

@@ -9,6 +9,7 @@ module.exports = function (req, res, next) {
     model: {
       title: 'JavaScript Application Design (2015) \u2014 Pony Foo',
       meta: {
+        canonical: '/books/javascript-application-design',
         images: [
           authority + staticService.unroll('/img/javascript-application-design.jpg'),
           authority + staticService.unroll('/img/banners/branded.png')

@@ -21,14 +21,20 @@ var ignoreprefixes = [
   's'
 ];
 var fetchfirstprefixes = [
-  'author',
+  'owner',
   'account',
   'subscribe',
   'subscribed',
   'unsubscribed'
 ];
+var fetchfirstsuffixes = [
+  'review',
+  'edit',
+  'new'
+];
 var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
 var rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
+var rfetchfirstsuffixes = new RegExp('\/(' + fetchfirstsuffixes.join('|') + ')($)', 'i');
 
 self.addEventListener('install', installer);
 self.addEventListener('activate', activator);
@@ -72,7 +78,7 @@ function fetcher (e) {
   if (sameorigin && rignoreprefixes.test(url.pathname)) {
     return; // ignore
   }
-  if (sameorigin && rfetchfirstprefixes.test(url.pathname)) {
+  if (sameorigin && (rfetchfirstprefixes.test(url.pathname) || rfetchfirstsuffixes.test(url.pathname))) {
     e.respondWith(caches.match(request).then(fetchFirst)); return;
   }
   if (request.url.indexOf('https://maps.googleapis.com/maps/vt') === 0) {

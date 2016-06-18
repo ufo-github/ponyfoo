@@ -19,7 +19,7 @@ module.exports = function (viewModel, container) {
       })
       .on('data', refresh);
     function refresh () {
-      taunus.navigate('/author/weeklies', { force: true });
+      taunus.navigate('/weekly/review', { force: true });
     }
   }
 
@@ -30,7 +30,7 @@ module.exports = function (viewModel, container) {
       })
       .on('data', refresh);
     function refresh () {
-      taunus.navigate('/author/weeklies', { force: true });
+      taunus.navigate('/weekly/review', { force: true });
     }
   }
 

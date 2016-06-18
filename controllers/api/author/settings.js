@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.redirect('/author/settings');
+    res.redirect('/owner/settings');
   }
 };
 

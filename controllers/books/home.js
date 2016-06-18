@@ -9,6 +9,7 @@ module.exports = function (req, res, next) {
     model: {
       title: 'Books written by Nicolás Bevacqua \u2014 Pony Foo',
       meta: {
+        canonical: '/books',
         images: [
           authority + staticService.unroll('/img/javascript-application-design.jpg'),
           authority + staticService.unroll('/img/banners/branded.png')

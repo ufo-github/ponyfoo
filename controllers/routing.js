@@ -79,7 +79,7 @@ module.exports = function (app) {
 
   app.put('/api/markdown/images', markdownImageUpload);
 
-  app.get('/author/compute', ownerOnly, authorCompute);
+  app.get('/owner/articles/compute', ownerOnly, authorCompute);
 
   app.put('/api/articles', articlesOnly, articleInsert);
   app.patch('/api/articles/:slug', articlesOnly, articleUpdate);
