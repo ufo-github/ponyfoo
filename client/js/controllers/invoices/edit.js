@@ -31,6 +31,7 @@ module.exports = function (viewModel, container, route) {
     date.on('keypress keydown paste input', typingDateSlowly);
     customerName.on('keypress keydown paste input', typingCustomerSlowly);
     addItem.on('click', appendItemPartial);
+    updatePreview();
 
     $('.ig-container')
       .on('keypress keydown paste input change', 'input,textarea', updatePreviewSlowly)
