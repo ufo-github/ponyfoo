@@ -5,6 +5,7 @@ var raf = require('raf');
 var moment = require('moment');
 var taunus = require('taunus');
 var sluggish = require('sluggish');
+var find = require('lodash/collection/find');
 var debounce = require('lodash/function/debounce');
 var loadScript = require('../../lib/loadScript');
 var invoiceModelService = require('../../../../services/invoiceModel');
@@ -36,6 +37,8 @@ module.exports = function (viewModel, container, route) {
       .on('click', '.ive-item-remove', removeItem);
 
     $('.ive-save').on('click', save);
+    $('.ive-customer-frequent').on('change', prefilledPartyHandler('customer'));
+    $('.ive-payment-frequent').on('change', prefilledPartyHandler('payment'));
 
     function typingSlug () { boundSlug = false; updatePreviewSlowly(); }
     function typingDate () { updateSlug(); }
@@ -51,6 +54,26 @@ module.exports = function (viewModel, container, route) {
       var datestamp = moment(date.value(), 'DD-MM-YYYY').format('YYMMDD');
       var slug = companySlug + '-' + datestamp;
       return slug;
+    }
+
+    function prefilledPartyHandler (party) {
+      return setParty;
+      function setParty (e) {
+        var el = $(e.target);
+        var slug = el.value();
+        var item = find(viewModel.parties[party], { slug: slug });
+        var section = el.parents('.ive-party-section');
+        var name = section.find('.ive-party-name');
+        var details = section.find('.ive-party-details');
+        if (item) {
+          name.value(item.name);
+          details.value(item.details.join('\n'));
+        } else {
+          name.value('');
+          details.value('');
+        }
+        el.value('');
+      }
     }
 
     function appendItemPartial () {

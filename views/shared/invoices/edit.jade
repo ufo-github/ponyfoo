@@ -10,25 +10,25 @@ article.ly-section.vw-maintainer
       input.ive-half.ive-date(placeholder='DD-MM-YYYY', value=moment(invoice.date).format('DD-MM-YYYY'))
       input.ive-half.ive-slug(placeholder='invoice-0001', value=invoice.slug)
 
-      section.ive-from
-        if parties.customer.length && parties.payment.length
-          select.ive-customer-frequent
-            each option in parties.customer
-              option(value=option.slug)=option.title
+      section.ive-party-section.ive-from
+        select.ive-customer-frequent
+          option(value='') Use a frequent invoice customer party?
+          each option in parties.customer
+            option(value=option.slug)=option.title
 
-        input.ive-customer-name(placeholder='Sample Company', value=invoice.customer && invoice.customer.name)
-        textarea.ive-customer-details(placeholder='123 Strange St.')=invoice.customer && invoice.customer.details.join('\n')
+        input.ive-party-name.ive-customer-name(placeholder='Sample Company', value=invoice.customer && invoice.customer.name)
+        textarea.ive-party-details.ive-customer-details(placeholder='123 Strange St.')=invoice.customer && invoice.customer.details.join('\n')
 
-      section.ive-to
-        if parties.customer.length && parties.payment.length
-          select.ive-payment-frequent
-            each option in parties.payment
-              option(value=option.slug)=option.title
+      section.ive-party-section.ive-to
+        select.ive-payment-frequent
+          option(value='') Use a frequent invoice payment party?
+          each option in parties.payment
+            option(value=option.slug)=option.title
 
-        input.ive-payment-name(placeholder='Billing Name', value=invoice.payment && invoice.payment.name)
-        textarea.ive-payment-details(placeholder='Billing address and payment details')=invoice.payment && invoice.payment.details.join('\n')
+        input.ive-party-name.ive-payment-name(placeholder='Billing Name', value=invoice.payment && invoice.payment.name)
+        textarea.ive-party-details.ive-payment-details(placeholder='Billing address and payment details')=invoice.payment && invoice.payment.details.join('\n')
 
-      section.ive-items
+      section.ive-items.ive-half
         header.ive-actions
           a.fa.fa-plus.ive-add-item
 
@@ -38,8 +38,9 @@ article.ly-section.vw-maintainer
         if invoice.items.length === 0
           include add-item
 
-      input.ck-input.ive-paid#ive-paid-invoice(type='checkbox', checked=invoice.paid)
-      label.ck-checkbox(for='ive-paid-invoice') Paid
+      section.ive-half.ive-paid-container
+        input.ck-input.ive-paid#ive-paid-invoice(type='checkbox', checked=invoice.paid)
+        label.ck-checkbox(for='ive-paid-invoice') Paid
 
       footer.ive-footer.ive-actions
         a.ive-cancel.lk-link(href='/invoices', aria-label='Back to list of invoices') Cancel
