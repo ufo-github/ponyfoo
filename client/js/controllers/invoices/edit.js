@@ -73,6 +73,7 @@ module.exports = function (viewModel, container, route) {
           details.value('');
         }
         el.value('');
+        updatePreviewSlowly();
       }
     }
 
