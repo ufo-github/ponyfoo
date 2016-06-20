@@ -38,7 +38,7 @@ article.ly-section.vw-maintainer.de-host
                 form.ar-share(action=share + '/lobsters', method='post')
                   button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
             td.ar-buttons(data-label='Actions')
-              a.ar-button.lk-icon.fa.fa-pencil.ar-edit(href='/articles/' + article.slug + '/edit', aria-label='Edit this article')
+              a.ar-button.lk-icon.fa.fa-pencil(href='/articles/' + article.slug + '/edit', aria-label='Edit this article')
               a.ar-button.lk-icon.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)
 
   include ../../partials/aside

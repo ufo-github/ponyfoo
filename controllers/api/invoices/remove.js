@@ -1,14 +1,14 @@
 'use strict';
 
 var winston = require('winston');
-var OpenSourceProject = require('../../../models/OpenSourceProject');
+var Invoice = require('../../../models/Invoice');
 
 module.exports = function (req, res) {
-  OpenSourceProject.remove({ _id: req.body.id }, saved);
+  Invoice.remove({ slug: req.params.slug }, saved);
   function saved (err) {
     if (err) {
       winston.error(err);
     }
-    res.redirect('/opensource/review');
+    res.redirect('/invoices');
   }
 };

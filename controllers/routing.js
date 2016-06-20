@@ -14,6 +14,12 @@ var authorPresentationsNew = require('./api/author/presentations-new');
 var authorPresentationsRemove = require('./api/author/presentations-remove');
 var authorOpenSourceProjectNew = require('./api/author/oss-new');
 var authorOpenSourceProjectRemove = require('./api/author/oss-remove');
+var invoiceNew = require('./api/invoices/create');
+var invoiceUpdate = require('./api/invoices/update');
+var invoiceRemove = require('./api/invoices/remove');
+var invoicePartyNew = require('./api/invoices/party/create');
+var invoicePartyUpdate = require('./api/invoices/party/update');
+var invoicePartyRemove = require('./api/invoices/party/remove');
 var twitterLead = require('./api/twitter/lead');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
@@ -53,6 +59,7 @@ var cspReport = require('./api/cspReport');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var ownerOnly = require('./author/roleOnly')(['owner']);
+var invoiceOnly = require('./author/roleOnly')(['owner']);
 var articlesOnly = require('./author/roleOnly')(['owner', 'articles']);
 var articlesModeratorOnly = require('./author/roleOnly')(['owner', 'articles', 'moderator']);
 var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
@@ -113,6 +120,13 @@ module.exports = function (app) {
   app.post('/api/oss/remove', ownerOnly, authorOpenSourceProjectRemove);
   app.post('/api/settings', ownerOnly, authorSaveSettings);
   app.post('/api/settings/:key', ownerOnly, authorSaveSetting);
+
+  app.post('/api/invoices/parties/new', invoiceOnly, invoicePartyNew);
+  app.post('/api/invoices/parties/:slug/edit', invoiceOnly, invoicePartyUpdate);
+  app.post('/api/invoices/parties/:slug/remove', invoiceOnly, invoicePartyRemove);
+  app.post('/api/invoices/new', invoiceOnly, invoiceNew);
+  app.post('/api/invoices/:slug/edit', invoiceOnly, invoiceUpdate);
+  app.post('/api/invoices/:slug/remove', invoiceOnly, invoiceRemove);
 
   app.patch('/api/account/bio', authOnly, bioUpdate);
   app.post('/api/twitter-lead', twitterLead);

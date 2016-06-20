@@ -1,0 +1,22 @@
+article.ly-section.vw-maintainer.de-host
+  - formAction = invoiceParty.slug ? '/' + invoiceParty.slug + '/edit' : '/new'
+  form.vw-maintainer-content.de-column(
+    action='/api/invoices/parties' + formAction,
+    method='post'
+  )
+    h1.vw-title=invoiceParty.slug ? 'Editing Invoice Party' : 'New Invoice Party'
+    select.ivp-type(name='type')
+      option(value='customer', selected=invoiceParty.type === 'customer') Customer
+      option(value='payment', selected=invoiceParty.type === 'payment') Payment
+    input.ivp-name(name='name', placeholder='Sample Company', value=invoiceParty.name)
+    input.ivp-title(name='title', placeholder='Sample Company', value=invoiceParty.title)
+    input.ivp-slug(name='slug', placeholder='sample-company', value=invoiceParty.slug)
+    textarea.ivp-details(name='details', placeholder='123 Strange St.')=invoiceParty.details.join('\n')
+    footer.ivp-actions
+      a.ivp-cancel.lk-link(href='/invoices/parties', aria-label='Back to list of invoice parties') Cancel
+      span(aria-label='Save this invoice party')
+        button.gg-container.bt-button.bt-pink(type='submit')
+          span.bt-text=invoiceParty.slug ? 'Save' : 'Create'
+          include ../../partials/button-background
+
+  include ../../partials/aside

@@ -1,0 +1,5 @@
+div.ive-item-container
+  input.ive-item-summary(placeholder='Brief item description', value=item && item.summary)
+  input.ive-item-amount(placeholder='Amount of this item billed', value=item && item.amount || 1)
+  input.ive-item-rate(placeholder='Rate charged for each unit', value=item && item.rate)
+  a.ive-item-remove.fa.fa-close

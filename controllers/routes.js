@@ -2,6 +2,7 @@
 
 var authOnly = require('./account/only');
 var ownerOnly = require('./author/roleOnly')(['owner']);
+var invoiceOnly = require('./author/roleOnly')(['owner']);
 var articlesOnly = require('./author/roleOnly')(['owner', 'articles']);
 var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 
@@ -56,7 +57,12 @@ module.exports = [
   { route: '/account/login/:provider', ignore: true },
   { route: '/account/logout', ignore: true },
   { route: '/account/bio', action: 'account/bio', middleware: authOnly },
-  { route: '/owner/invoicing', action: 'finances/invoicing', middleware: ownerOnly },
+  { route: '/invoices', action: 'invoices/review', middleware: invoiceOnly },
+  { route: '/invoices/parties', action: 'invoices/parties/review', middleware: invoiceOnly },
+  { route: '/invoices/parties/new', action: 'invoices/parties/edit', middleware: invoiceOnly },
+  { route: '/invoices/parties/:slug/edit', action: 'invoices/parties/edit', middleware: invoiceOnly },
+  { route: '/invoices/new', action: 'invoices/edit', middleware: invoiceOnly },
+  { route: '/invoices/:slug/edit', action: 'invoices/edit', middleware: invoiceOnly },
   { route: '/owner/announcements', action: 'author/announcements', middleware: ownerOnly },
   { route: '/owner/logs/:page([1-9][0-9]{0,})?', action: 'author/logs', middleware: ownerOnly },
   { route: '/owner/subscribers/:page([1-9][0-9]{0,})?', action: 'author/subscribers', middleware: ownerOnly },

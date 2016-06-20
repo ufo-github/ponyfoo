@@ -1,0 +1,50 @@
+article.ly-section.vw-maintainer
+  section.ig-container
+    h1.vw-title Invoice Generator
+
+    - formAction = editing ? '/' + invoice.slug + '/edit' : '/new'
+    form.ig-form(
+      action='/api/invoices' + formAction,
+      method='post'
+    )
+      input.ive-half.ive-date(placeholder='DD-MM-YYYY', value=moment(invoice.date).format('DD-MM-YYYY'))
+      input.ive-half.ive-slug(placeholder='invoice-0001', value=invoice.slug)
+
+      section.ive-from
+        select.ive-customer-frequent
+          each option in parties.customer
+            option(value=option.slug)=option.title
+
+        input.ive-customer-name(placeholder='Sample Company', value=invoice.customer && invoice.customer.name)
+        textarea.ive-customer-details(placeholder='123 Strange St.')=invoice.customer && invoice.customer.details.join('\n')
+
+      section.ive-to
+        select.ive-payment-frequent
+          each option in parties.payment
+            option(value=option.slug)=option.title
+
+        input.ive-payment-name(placeholder='Billing Name', value=invoice.payment && invoice.payment.name)
+        textarea.ive-payment-details(placeholder='Billing address and payment details')=invoice.payment && invoice.payment.details.join('\n')
+
+      section.ive-items
+        header.ive-actions
+          a.fa.fa-plus.ive-add-item
+
+        each item in invoice.items
+          include add-item
+
+        if invoice.items.length === 0
+          include add-item
+
+      input.ck-input.ive-paid#ive-paid-invoice(type='checkbox', checked=invoice.paid)
+      label.ck-checkbox(for='ive-paid-invoice') Paid
+
+      footer.ive-footer.ive-actions
+        a.ive-cancel.lk-link(href='/invoices', aria-label='Back to list of invoices') Cancel
+        span(aria-label='Save this invoice')
+          button.gg-container.bt-button.bt-pink.ive-save(type='submit')
+            span.bt-text=editing ? 'Save' : 'Create'
+            include ../partials/button-background
+
+  section.ive-container
+    include invoice

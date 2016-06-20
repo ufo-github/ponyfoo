@@ -1,0 +1,26 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Invoice Parties
+    section.ivpr-container
+      div.ivpr-actions
+        a.ivpr-action.lk-icon.fa.fa-pencil-square-o(href='/invoices/parties/new', aria-label='Generate a new invoice party')
+      table
+        thead
+          tr
+            th Created
+            th Type
+            th Title
+            th Actions
+        tbody
+          each invoiceParty in invoiceParties
+            tr
+              td.ivpr-date(data-label='Created')
+                time(datetime=invoiceParty.created.datetime, aria-label='Created ' + invoiceParty.created.title)=invoiceParty.created.text
+              td.ivpr-type(data-label='Type')=invoiceParty.type
+              td(data-label='Title')=invoiceParty.title
+              td.ivpr-buttons(data-label='Actions')
+                a.ar-button.lk-icon.fa.fa-pencil(href='/invoices/parties/' + invoiceParty.slug + '/edit', aria-label='Edit this invoice party')
+                form.ivpr-remove-form(action='/api/invoices/parties/' + invoiceParty.slug + '/remove', method='post')
+                  button.lk-icon.fa.fa-remove(aria-label='Delete this invoice party', type='submit')
+
+  include ../../partials/aside

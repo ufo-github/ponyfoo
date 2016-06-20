@@ -1,0 +1,31 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Invoices
+    section.ae-container
+      div.ae-actions
+        a.ae-action.lk-icon.fa.fa-male(href='/invoices/parties', aria-label='Manage frequent invoice parties')
+        a.ae-action.lk-icon.fa.fa-pencil-square-o(href='/invoices/new', aria-label='Generate a new invoice')
+      table
+        thead
+          tr
+            th ID
+            th Date Filed
+            th Customer
+            th Billed
+            th Paid
+            th Actions
+        tbody
+          each invoice in invoices
+            tr
+              td(data-label='ID')=invoice.slug
+              td(data-label='Date Filed')
+                time(datetime=invoice.date.datetime, aria-label='Filed for ' + invoice.date.title)=invoice.date.text
+              td(data-label='Customer')=invoice.customer.name
+              td(data-label='Billed')=invoice.totalMoney
+              td(data-label='Paid')=invoice.paid ? 'Yes' : 'No'
+              td.ive-buttons(data-label='Actions')
+                a.ar-button.lk-icon.fa.fa-pencil(href='/invoices/' + invoice.slug + '/edit', aria-label='Edit this invoice')
+                form.ive-remove-form(action='/api/invoices/' + invoice.slug + '/remove', method='post')
+                  button.lk-icon.fa.fa-remove(aria-label='Delete this invoice', type='submit')
+
+  include ../partials/aside
