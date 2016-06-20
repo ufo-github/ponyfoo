@@ -5,7 +5,7 @@ var sluggish = require('sluggish');
 var InvoiceParty = require('../../../../models/InvoiceParty');
 var invoicePartyTypes = ['customer', 'payment'];
 
-module.exports = function (req, res) {
+module.exports = function (req, res, next) {
   var slug = req.params.slug;
   InvoiceParty.findOne({ slug: slug }).exec(found);
   function found (err, invoiceParty) {

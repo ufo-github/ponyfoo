@@ -2,6 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
+var moment = require('moment');
 var taunus = require('taunus');
 var sluggish = require('sluggish');
 var debounce = require('lodash/function/debounce');
