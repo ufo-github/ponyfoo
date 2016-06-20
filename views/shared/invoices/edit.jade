@@ -11,17 +11,19 @@ article.ly-section.vw-maintainer
       input.ive-half.ive-slug(placeholder='invoice-0001', value=invoice.slug)
 
       section.ive-from
-        select.ive-customer-frequent
-          each option in parties.customer
-            option(value=option.slug)=option.title
+        if parties.customer.length && parties.payment.length
+          select.ive-customer-frequent
+            each option in parties.customer
+              option(value=option.slug)=option.title
 
         input.ive-customer-name(placeholder='Sample Company', value=invoice.customer && invoice.customer.name)
         textarea.ive-customer-details(placeholder='123 Strange St.')=invoice.customer && invoice.customer.details.join('\n')
 
       section.ive-to
-        select.ive-payment-frequent
-          each option in parties.payment
-            option(value=option.slug)=option.title
+        if parties.customer.length && parties.payment.length
+          select.ive-payment-frequent
+            each option in parties.payment
+              option(value=option.slug)=option.title
 
         input.ive-payment-name(placeholder='Billing Name', value=invoice.payment && invoice.payment.name)
         textarea.ive-payment-details(placeholder='Billing address and payment details')=invoice.payment && invoice.payment.details.join('\n')
