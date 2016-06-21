@@ -15,15 +15,17 @@ function validate (model, update) {
     validation.push('Invalid request.');
     return validation;
   }
+  var status = getStatus();
+  var draft = status === 'draft';
   var sanitized = {
-    status: getStatus(),
+    status: status,
     titleMarkdown: getTitle(),
     slug: getSlug(),
     summary: validator.toString(model.summary),
-    teaser: getContent('teaser'),
-    introduction: getContent('introduction'),
-    body: getContent('body'),
-    tags: getTags(),
+    teaser: getContent('teaser', draft),
+    introduction: getContent('introduction', draft),
+    body: getContent('body', draft),
+    tags: draft ? getTagsRaw() : getTags(),
     comments: [],
     related: [],
     email: !!model.email,
@@ -91,27 +93,33 @@ function validate (model, update) {
     return slug;
   }
 
-  function getContent (prop) {
+  function getContent (prop, suppress) {
     var length = 3;
     var message;
     var input = validator.toString(model[prop]);
     if (!validator.isLength(input, length)) {
       message = util.format('The article %s must be at least %s characters long.', prop, length);
-      validation.push(message);
-      return;
+      if (!suppress) {
+        validation.push(message);
+      }
     }
     return input.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
   }
 
   function getTags () {
-    var input = Array.isArray(model.tags) ? model.tags.join(' ') : validator.toString(model.tags);
-    var tags = textService.splitTags(input);
-    if (tags.length > 6) {
+    var raw = getTagsRaw();
+    if (raw.length > 6) {
       validation.push('You can choose 6 categories at most.'); return;
     }
-    if (tags.length === 0) {
+    if (raw.length === 0) {
       validation.push('The article must be tagged under at least one category.'); return;
     }
+    return raw;
+  }
+
+  function getTagsRaw () {
+    var input = Array.isArray(model.tags) ? model.tags.join(' ') : validator.toString(model.tags);
+    var tags = textService.splitTags(input);
     return tags;
   }
 }

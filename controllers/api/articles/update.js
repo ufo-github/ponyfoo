@@ -5,11 +5,18 @@ var winston = require('winston');
 var Article = require('../../../models/Article');
 var articleSharingService = require('../../../services/articleSharing');
 var articlePublishService = require('../../../services/articlePublish');
+var userService = require('../../../services/user');
 var respond = require('../lib/respond');
 var validate = require('./lib/validate');
+var editorRoles = ['owner', 'editor'];
 
 module.exports = function (req, res, next) {
-  var validation = validate(req.body, true);
+  var editor = userService.hasRole(req.userObject, editorRoles);
+  var body = req.body;
+  if (body.status !== 'draft' && !editor) {
+    respond.invalid(res, ['Authors are only allowed to write drafts. An editor must publish the article.']); return;
+  }
+  var validation = validate(body, true);
   if (validation.length) {
     respond.invalid(res, validation); return;
   }

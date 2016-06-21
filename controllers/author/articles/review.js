@@ -1,14 +1,18 @@
 'use strict';
 
 var _ = require('lodash');
-var Article = require('../../../models/Article');
 var articleService = require('../../../services/article');
 var cryptoService = require('../../../services/crypto');
+var userService = require('../../../services/user');
+var editorRoles = ['owner', 'editor'];
 
 module.exports = getModel;
 
 function getModel (req, res, next) {
-  Article.find({}).sort('-publication').exec(respond);
+  var editor = userService.hasRole(req.userObject, editorRoles);
+  var query = editor ? {} : { author: req.user };
+
+  articleService.find(query, respond);
 
   function respond (err, articles) {
     if (err) {
@@ -28,7 +32,8 @@ function getModel (req, res, next) {
         meta: {
           canonical: '/articles/review'
         },
-        articles: sorted
+        articles: sorted,
+        userIsEditor: editor
       }
     };
     next();

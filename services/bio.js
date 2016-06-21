@@ -36,9 +36,10 @@ function getHtml (email, done) {
   get(email, 'bioHtml', done);
 }
 
-function update (email, md, html) {
+function update (email, md, html, text) {
   updateInternal(email, 'bio', md);
   updateInternal(email, 'bioHtml', html);
+  updateInternal(email, 'bioText', text);
 }
 
 module.exports = {

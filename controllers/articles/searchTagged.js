@@ -27,5 +27,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleSearchService.query(input, { tags: tags }, handle);
+  articleSearchService.query(input, { tags: tags, populate: 'author' }, handle);
 };

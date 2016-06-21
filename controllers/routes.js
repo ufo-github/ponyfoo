@@ -3,7 +3,7 @@
 var authOnly = require('./account/only');
 var ownerOnly = require('./author/roleOnly')(['owner']);
 var invoiceOnly = require('./author/roleOnly')(['owner']);
-var articlesOnly = require('./author/roleOnly')(['owner', 'articles']);
+var articlesOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
 var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 
 module.exports = [
@@ -37,6 +37,8 @@ module.exports = [
   { route: '/weekly/new', action: 'author/weeklies/assemble', middleware: weekliesOnly },
   { route: '/weekly/:slug/edit', action: 'author/weeklies/assemble', middleware: weekliesOnly },
   { route: '/weekly/:slug', action: 'weekly/issue' },
+  { route: '/writers', action: 'marketing/writers' },
+  { route: '/writers/:slug', action: 'marketing/writer' },
   { route: '/about', action: 'marketing/about' },
   { route: '/speaking', action: 'speaking/home' },
   { route: '/speaking/review', action: 'author/engagements', middleware: ownerOnly },
@@ -56,7 +58,7 @@ module.exports = [
   { route: '/account/login', action: 'account/login' },
   { route: '/account/login/:provider', ignore: true },
   { route: '/account/logout', ignore: true },
-  { route: '/account/bio', action: 'account/bio', middleware: authOnly },
+  { route: '/account/profile', action: 'account/profile', middleware: authOnly },
   { route: '/invoices', action: 'invoices/review', middleware: invoiceOnly },
   { route: '/invoices/parties', action: 'invoices/parties/review', middleware: invoiceOnly },
   { route: '/invoices/parties/new', action: 'invoices/parties/edit', middleware: invoiceOnly },

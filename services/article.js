@@ -6,6 +6,7 @@ var env = require('../lib/env');
 var Article = require('../models/Article');
 var commentService = require('./comment');
 var datetimeService = require('./datetime');
+var metadataService = require('./metadata');
 
 function findInternal (method, query, options, done) {
   if (done === void 0) {
@@ -43,7 +44,12 @@ function toJSON (source, options) {
   article.readingTime = estimate.text(text);
 
   if (source.populated('author')) {
-    article.author = article.author.toString();
+    article.author = {
+      displayName: article.author.displayName,
+      slug: article.author.slug,
+      twitter: article.author.twitter,
+      website: article.author.website
+    };
   } else {
     delete article.author;
   }
@@ -99,8 +105,27 @@ function relevant (article) {
   return { slug: article.slug, titleHtml: article.titleHtml };
 }
 
+function expandForListView (articles) {
+  var extracted = metadataService.extractImages(articles);
+  var expanded = articles.map(expand);
+  return {
+    articles: expanded,
+    extracted: extracted
+  };
+  function expand (article) {
+    var config = {meta: true, summary: true, id: false };
+    var model = toJSON(article, config);
+    var images = extracted.map[article._id];
+    if (images && images.length) {
+      model.cover = images[0];
+    }
+    return model;
+  }
+}
+
 module.exports = {
   find: find,
   findOne: findOne,
-  toJSON: toJSON
+  toJSON: toJSON,
+  expandForListView: expandForListView
 };

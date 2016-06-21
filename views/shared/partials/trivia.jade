@@ -6,6 +6,27 @@ section.dm-container.ly-section
     h3.dm-title Trivia Box
 
   div
+    label.dm-label Author
+    span.dm-value
+      span=' '
+      if article.author.slug
+        a.lk-link.lk-green(href='/writers/' + article.author.slug)=article.author.displayName
+      else
+        span=article.author.displayName
+
+      if article.author.twitter
+        a.dm-author-social.lk-link.lk-twitter.fa.fa-twitter(
+          href='https://twitter.com/' + article.author.twitter,
+          target='_blank'
+        )
+
+      if article.author.website
+        a.dm-author-social.lk-link.lk-black.fa.fa-bookmark(
+          href=article.author.website,
+          target='_blank'
+        )
+
+  div
     include estimate
 
   div

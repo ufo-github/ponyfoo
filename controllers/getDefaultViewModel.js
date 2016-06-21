@@ -5,8 +5,7 @@ var contra = require('contra');
 var pkg = require('../package.json');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
-var authorEmail = env('AUTHOR_EMAIL');
-var bioService = require('../services/bio');
+var ownerEmail = env('OWNER_EMAIL');
 var staticService = require('../services/static');
 var popularityService = require('../services/popularity');
 
@@ -18,7 +17,6 @@ function read (file) {
 
 function getDefaultViewModel (done) {
   contra.concurrent({
-    bioHtml: bioService.getHtml.bind(null, authorEmail),
     popularArticles: popularityService.getArticles,
     javascriptLoader: read('.bin/inline/javascript.js'),
     styleLoader: read('.bin/inline/styles.js'),
@@ -48,7 +46,6 @@ function getDefaultViewModel (done) {
           images: [authority + staticService.unroll('/img/banners/branded.png')],
           keywords: []
         },
-        bioHtml: data.bioHtml,
         popularArticles: data.popularArticles
       },
       javascriptLoader: data.javascriptLoader,

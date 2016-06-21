@@ -1,0 +1,21 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Profile Editor
+    section
+      input.cb-name(placeholder='Your name, please', value=profile.displayName)
+      input.cb-slug(placeholder='Your username, used in /writers/your-username', value=profile.slug)
+      input.cb-twitter(placeholder='Your Twitter username, as in @ponyfoo', value=profile.twitter)
+      input.cb-website(placeholder='Your website, if any', value=profile.website)
+      div
+        textarea.wk-textarea.cb-bio(placeholder='Your bio goes here!')=profile.bio
+
+    h2 Bio Preview
+    section.cb-preview.md-markdown
+
+    footer.cb-actions
+      a.lk-link(href='/', aria-label='Back to home page') Cancel
+      button.gg-container.bt-button.bt-pink.cb-save(type='submit')
+        span.bt-text Save
+        include ../partials/button-background
+
+  include ../partials/aside

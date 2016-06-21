@@ -1,3 +1,4 @@
+- userIsEditor = roles.owner || roles.editor
 article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     h1.vw-title Article Composer
@@ -19,7 +20,7 @@ article.ly-section.vw-maintainer.de-host
     - published = article.status === 'published'
 
     aside.ac-aside
-      if !published
+      if userIsEditor && !published
         p You can save the article as a draft, publish it, or slate it for publication at a later date
         p.ac-timing-item
           input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')

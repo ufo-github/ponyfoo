@@ -12,14 +12,18 @@ var textService = require('../../../../../services/text');
 var markdownService = require('../../../../../services/markdown');
 var datetimeService = require('../../../../../services/datetime');
 var twitterService = require('../../../conventions/twitter');
+var userService = require('../../../services/user');
 var storage = require('../../../lib/storage');
 var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
 var rstrip = /^\s*<p>\s*|\s*<\/p>\s*/ig;
+var editorRoles = ['owner', 'editor'];
 
 function noop () {}
 
 module.exports = function (viewModel, container, route) {
+  var user = { roles: viewModel.roles };
+  var userIsEditor = userService.hasRole(user, editorRoles);
   var article = viewModel.article;
   var editing = viewModel.editing;
   var published = editing && article.status === 'published';
@@ -89,7 +93,7 @@ module.exports = function (viewModel, container, route) {
       return;
     }
     var state = status.where(':checked').text();
-    if (state === 'draft') {
+    if (state === 'draft' || !userIsEditor) {
       saveButton.find('.bt-text').text('Save Draft');
       saveButton.parent().attr('aria-label', 'You can access your drafts at any time');
       return;
@@ -206,7 +210,7 @@ module.exports = function (viewModel, container, route) {
 
     boundSlug = sluggish(titleText) === slugText;
 
-    if (data.status !== 'published') {
+    if (data.status !== 'published' && userIsEditor) {
       statusRadio[data.status || 'publish'].value(true);
 
       if ('publication' in data) {
@@ -225,7 +229,7 @@ module.exports = function (viewModel, container, route) {
 
   function getRequestData () {
     var individualTags = getTags();
-    var state = published ? article.status : status.where(':checked').text();
+    var state = (published || !userIsEditor) ? article.status : status.where(':checked').text();
     var data = {
       titleMarkdown: title.value(),
       slug: slug.value(),
@@ -243,7 +247,7 @@ module.exports = function (viewModel, container, route) {
       lobsters: lobsters.value()
     };
     var scheduled = schedule.value();
-    if (scheduled && !published) {
+    if (scheduled && !published && userIsEditor) {
       data.publication = moment(publication.value(), publicationFormat).format();
     }
     return data;

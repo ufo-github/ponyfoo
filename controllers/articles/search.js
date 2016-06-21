@@ -24,5 +24,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleSearchService.query(input, handle);
+  articleSearchService.query(input, { populate: 'author' }, handle);
 };

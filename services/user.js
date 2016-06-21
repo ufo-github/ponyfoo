@@ -1,6 +1,7 @@
 'use strict';
 
 var User = require('../models/User');
+var gravatarService = require('./gravatar');
 
 function getModel (email, password, bypass) {
   return {
@@ -9,6 +10,21 @@ function getModel (email, password, bypass) {
     bypassEncryption: bypass,
     displayName: email.split('@')[0]
   };
+}
+
+function getProfile (user, options) {
+  var gravatar = gravatarService.format(user.email);
+  var profile = {
+    gravatar: gravatar,
+    displayName: user.displayName,
+    slug: user.slug,
+    twitter: user.twitter,
+    website: user.website
+  };
+  if (options.withBio) {
+    profile.bioHtml = user.bioHtml;
+  }
+  return profile;
 }
 
 function create (bypass) {
@@ -22,23 +38,38 @@ function create (bypass) {
   };
 }
 
+function findById (id, done) {
+  User.findOne({ _id: id }, done);
+}
+
+function findOne (query, done) {
+  User.findOne(query, done);
+}
+
+function setPassword (userId, password, done) {
+  User.findOne({ _id: userId }, function found (err, user) {
+    if(err || !user){
+      return done(err, false);
+    }
+
+    user.password = password;
+    user.save(done);
+  });
+}
+
+function hasRole (user, roles) {
+  return roles.some(userHasRole);
+  function userHasRole (role) {
+    return user.roles.indexOf(role) !== -1;
+  }
+}
+
 module.exports = {
-  findById: function (id, done) {
-    User.findOne({ _id: id }, done);
-  },
-  findOne: function (query, done) {
-    User.findOne(query, done);
-  },
+  findById: findById,
+  findOne: findOne,
   create: create(false),
   createUsingEncryptedPassword: create(true),
-  setPassword: function (userId, password, done) {
-    User.findOne({ _id: userId }, function found (err, user) {
-      if(err || !user){
-        return done(err, false);
-      }
-
-      user.password = password;
-      user.save(done);
-    });
-  }
+  setPassword: setPassword,
+  getProfile: getProfile,
+  hasRole: hasRole
 };

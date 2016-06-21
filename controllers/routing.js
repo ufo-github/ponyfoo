@@ -23,7 +23,7 @@ var invoicePartyRemove = require('./api/invoices/party/remove');
 var twitterLead = require('./api/twitter/lead');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
-var bioUpdate = require('./api/account/bioUpdate');
+var updateProfile = require('./api/account/updateProfile');
 var markdownImageUpload = require('./api/markdown/images');
 var rssFeed = require('./feeds/rss');
 var metadataScrape = require('./api/metadata/scrape');
@@ -60,8 +60,9 @@ var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var ownerOnly = require('./author/roleOnly')(['owner']);
 var invoiceOnly = require('./author/roleOnly')(['owner']);
-var articlesOnly = require('./author/roleOnly')(['owner', 'articles']);
-var articlesModeratorOnly = require('./author/roleOnly')(['owner', 'articles', 'moderator']);
+var articlesOnly = require('./author/roleOnly')(['owner', 'editor']);
+var articlesEditorOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
+var articlesModeratorOnly = require('./author/roleOnly')(['owner', 'editor', 'articles', 'moderator']);
 var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 var weekliesModeratorOnly = require('./author/roleOnly')(['owner', 'weeklies', 'moderator']);
 var env = require('../lib/env');
@@ -91,7 +92,7 @@ module.exports = function (app) {
   app.put('/api/articles', articlesOnly, articleInsert);
   app.patch('/api/articles/:slug', articlesOnly, articleUpdate);
   app.delete('/api/articles/:slug', articlesOnly, articleRemove);
-  app.post('/api/articles/:slug/share/:medium', articlesOnly, articleShare);
+  app.post('/api/articles/:slug/share/:medium', articlesEditorOnly, articleShare);
 
   app.put('/api/:type(articles|weeklies)/:slug/comments', commentInsert);
   app.post('/api/:type(articles|weeklies)/:slug/comments', verifyForm, commentInsert);
@@ -128,7 +129,7 @@ module.exports = function (app) {
   app.post('/api/invoices/:slug/edit', invoiceOnly, invoiceUpdate);
   app.post('/api/invoices/:slug/remove', invoiceOnly, invoiceRemove);
 
-  app.patch('/api/account/bio', authOnly, bioUpdate);
+  app.patch('/api/account/profile', authOnly, updateProfile);
   app.post('/api/twitter-lead', twitterLead);
   app.all('/api/*', apiErrorNotFound);
 

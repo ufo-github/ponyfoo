@@ -25,23 +25,12 @@ function factory (res, options, next) {
     }
 
     var keywords = metadataService.mostCommonTags(articles);
-    var imagesResult = metadataService.extractImages(articles);
-    var expanded = articles.map(expand);
-    model.articles = expanded;
+    var expanded = articleService.expandForListView(articles);
+    model.articles = expanded.articles;
     model.meta.keywords = keywords;
-    model.meta.images = imagesResult.images;
+    model.meta.images = expanded.extracted.images;
     inliningService.addStyles(model, options.search ? 'search' : 'summaries');
     next();
-
-    function expand (article) {
-      var config = { meta: true, summary: true, id: false };
-      var model = articleService.toJSON(article, config);
-      var images = imagesResult.map[article._id];
-      if (images && images.length) {
-        model.cover = images[0];
-      }
-      return model;
-    }
   };
 }
 

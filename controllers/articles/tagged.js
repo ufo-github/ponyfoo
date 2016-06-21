@@ -28,5 +28,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleService.find(query, handle);
+  articleService.find(query, { populate: 'author' }, handle);
 };

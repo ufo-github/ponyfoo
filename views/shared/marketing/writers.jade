@@ -1,0 +1,12 @@
+header.dc-header
+  h1.dc-heading Writers
+  div.dc-role Contributing writers in collaboration with Pony Foo
+
+article.de-host
+  section.de-column.de-column-padded
+    ul.rts-writers
+      each profile in profiles
+        li.rts-writer
+          include writer-profile
+
+  include ../partials/aside

@@ -14,8 +14,9 @@ div.de-column.aa-articles-column
     if articles.length === limit
       a.lk-rainbows.an-anchor.an-next(href='/p/' + (page + 1), rel='next', aria-label='Go to the next page') Older »
 
-  footer.aa-footer.ly-section
-    span Can’t find what you were looking for? Try searching the
-    span=' '
-    a.lk-link(href='/articles/history', aria-label='Pony Foo has been online for a while. Get access to the full publication history from here') full publication history
-    span .
+  if !profilePage
+    footer.aa-footer.ly-section
+      span Can’t find what you were looking for? Try searching the
+      span=' '
+      a.lk-link(href='/articles/history', aria-label='Pony Foo has been online for a while. Get access to the full publication history from here') full publication history
+      span .

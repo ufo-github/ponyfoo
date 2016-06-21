@@ -8,6 +8,7 @@ var schema = new mongoose.Schema({
   password: { type: String, require: true },
   bypassEncryption: { type: Boolean, 'default': true },
   created: { type: Date, require: true, 'default': Date.now },
+  slug: String,
   displayName: String,
   facebookId: String,
   githubId: String,
@@ -15,6 +16,9 @@ var schema = new mongoose.Schema({
   linkedinId: String,
   bio: String,
   bioHtml: String,
+  bioText: String,
+  twitter: String,
+  website: String,
   roles: [String] // ['owner', 'articles', 'weeklies', 'moderator']
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 

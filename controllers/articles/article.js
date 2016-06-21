@@ -9,7 +9,7 @@ var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   var query = { slug: req.params.slug };
-  var options = { populate: 'prev next related comments' };
+  var options = { populate: 'prev next related comments author' };
   res.viewModel = {
     model: {
       title: 'Pony Foo'
@@ -63,7 +63,6 @@ module.exports = function (req, res, next) {
     };
     model.article = articleService.toJSON(article);
     inliningService.addStyles(res.viewModel.model, 'article');
-    req.header('cache-control');
     next();
   }
 };

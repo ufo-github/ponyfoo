@@ -8,17 +8,26 @@ module.exports = function (req, res, next) {
   contra.waterfall([getUser, getBio], respond);
 
   function getUser (next) {
-    User.findOne({ _id: req.user }, 'email', next);
+    User.findOne({ _id: req.user }).exec(next);
   }
 
   function getBio (user, next) {
-    if (user === null) {
+    if (!user) {
       next(new Error('Please log out and authenticate again!')); return;
     }
-    bioService.getMarkdown(user.email, next);
+    bioService.getMarkdown(user.email, got);
+    function got (err, bio) {
+      next(err, {
+        displayName: user.displayName,
+        slug: user.slug,
+        twitter: user.twitter,
+        website: user.website,
+        bio: bio
+      });
+    }
   }
 
-  function respond (err, bio) {
+  function respond (err, profile) {
     if (err) {
       next(err); return;
     }
@@ -28,7 +37,7 @@ module.exports = function (req, res, next) {
         meta: {
           canonical: '/account/bio'
         },
-        bio: bio
+        profile: profile
       }
     };
     next();

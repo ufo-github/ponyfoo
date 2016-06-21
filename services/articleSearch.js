@@ -10,6 +10,7 @@ var env = require('../lib/env');
 var Article = require('../models/Article');
 var articleElasticsearchService = require('./articleElasticsearch');
 var articleFeedService = require('./articleFeed');
+var articleService = require('./article');
 var sitemapService = require('./sitemap');
 var processing = {};
 
@@ -23,8 +24,12 @@ function query (input, options, done) {
     if (err) {
       done(err); return;
     }
-    var q = { _id: { $in: _.pluck(result, '_id') } };
-    Article.find(q).sort('-publication').exec(done);
+    var q = {
+      _id: {
+        $in: _.pluck(result, '_id')
+      }
+    };
+    articleService.find(q, options, done);
   }
 }
 
