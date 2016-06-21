@@ -1,0 +1,17 @@
+header.dc-header
+  h1.dc-heading Contributors
+  div.dc-role Contributors and writers in collaboration with Pony Foo
+
+article.de-host
+  section.de-column.de-column-padded
+    ul.ibs-contributors
+      each profile in profiles
+        li.ibs-contributor
+          include contributor-profile
+
+    div.ibs-join-us.ib-articles-text
+      span Have you considered
+      span=' '
+      a.lk-link(href='/contributors/join-us') joining us?
+
+  include ../partials/aside

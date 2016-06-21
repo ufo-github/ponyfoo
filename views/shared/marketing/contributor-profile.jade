@@ -1,0 +1,34 @@
+mixin avatar
+  img.ib-avatar(src=profile.gravatar, alt='')
+
+article.ib-profile-section
+  section.ib-avatar-section
+    if !profilePage
+      a(href='/contributors/' + profile.slug, aria-label='Check out their profile page!')
+        +avatar
+    else if profile.twitter
+      a(href='https://twitter.com/' + profile.twitter, target='_blank', aria-label='Follow them on Twitter!')
+        +avatar
+    else if profile.website
+      a(href=profile.website, target='_blank', aria-label='Check out their website!')
+        +avatar
+    else
+      +avatar
+
+  if !profilePage
+    section.ibs-contributor-name
+      a.lk-link(href='/contributors/' + profile.slug, aria-label='Check out their profile page!')=profile.displayName
+
+  if profile.twitter || profile.website
+    section.ib-social
+      if profile.twitter
+        a.ib-social-link.lk-link.lk-twitter.fa.fa-twitter(
+          href='https://twitter.com/' + profile.twitter,
+          target='_blank'
+        )
+
+      if profile.website
+        a.ib-social-link.lk-link.lk-black.fa.fa-bookmark(
+          href=profile.website,
+          target='_blank'
+        )

@@ -1,0 +1,57 @@
+header.dc-header
+  h1.dc-heading=profile.displayName
+  div.dc-role
+    span Contributing writer.
+    span=' '
+    if articleCount
+      span Wrote
+      span=' '
+      span=articleCount
+      span=' '
+      span articles for Pony Foo.
+    if profile.twitter
+      span=' '
+      span Tweets as
+      span=' '
+      a.lk-link.lk-twitter(href='https://twitter.com/' + profile.twitter, target='_blank', aria-label='Follow them on Twitter!')='@' + profile.twitter
+      span .
+
+article.de-host
+  section.de-column.de-column-padded
+    aside.ib-profile
+      include contributor-profile
+
+      section.ib-bio.md-markdown!=profile.bioHtml
+
+    article.ib-articles
+      if articleCount
+        include ../articles/list
+        footer.ib-articles-text
+          div
+            span Find every Pony Foo contributing author in our
+            span=' '
+            a.lk-link(href='/contributors', aria-label='Back to Pony Foo contributing author list') list of contributors
+            span .
+          div
+            span Have you considered
+            span=' '
+            a.lk-link(href='/contributors/join-us') joining us?
+      else
+        section.ib-articles-text
+          div There are no published articles authored by this writer yet.
+          div
+            span How did you even get here!?
+            span=' '
+            img.tj-emoji(draggable='false', alt='🌬', src='https://twemoji.maxcdn.com/2/72x72/1f32c.png')
+            span=' Shoo, shoo!'
+          div.ib-back-note
+            span Anyways, you may want to go back to the
+            span=' '
+            a.lk-link(href='/contributors', aria-label='Back to Pony Foo contributing author list') list of contributors
+            span .
+          div
+            span Have you considered
+            span=' '
+            a.lk-link(href='/contributors/join-us') joining us?
+
+  include ../partials/aside
