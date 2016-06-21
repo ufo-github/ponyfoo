@@ -31,8 +31,6 @@ function listen () {
 
   global.moment = moment;
 
-  app.locals.settings['x-powered-by'] = false;
-
   boot(booted);
 
   function booted () {

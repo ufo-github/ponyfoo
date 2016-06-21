@@ -63,6 +63,7 @@ module.exports = function (req, res, next) {
     };
     model.article = articleService.toJSON(article);
     inliningService.addStyles(res.viewModel.model, 'article');
+    req.header('cache-control');
     next();
   }
 };
