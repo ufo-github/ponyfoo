@@ -22,6 +22,7 @@ module.exports = function (req, res, next) {
         slug: user.slug,
         twitter: user.twitter,
         website: user.website,
+        avatar: user.avatar,
         bio: bio
       });
     }

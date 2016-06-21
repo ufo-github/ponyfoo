@@ -13,9 +13,9 @@ function getModel (email, password, bypass) {
 }
 
 function getProfile (user, options) {
-  var gravatar = gravatarService.format(user.email);
+  var avatar = user.avatar || user.gravatar;
   var profile = {
-    gravatar: gravatar,
+    avatar: avatar,
     displayName: user.displayName,
     slug: user.slug,
     twitter: user.twitter,

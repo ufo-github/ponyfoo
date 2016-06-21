@@ -19,6 +19,7 @@ var schema = new mongoose.Schema({
   bioText: String,
   twitter: String,
   website: String,
+  avatar: String,
   roles: [String] // ['owner', 'articles', 'weeklies', 'moderator']
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 

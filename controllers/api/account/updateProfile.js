@@ -40,7 +40,8 @@ module.exports = function (req, res, next) {
     user.displayName = displayName;
     user.slug = slug;
     user.twitter = parseTwitter(body.twitter);
-    user.website = parseWebsite(body.website);
+    user.website = parseLink(body.website);
+    user.avatar = parseLink(body.avatar);
     user.bio = bio;
     user.bioHtml = bioHtml;
     user.bioText = bioText;
@@ -56,7 +57,7 @@ module.exports = function (req, res, next) {
       .replace(rtwitter_legacy, '');
   }
 
-  function parseWebsite (value) {
+  function parseLink (value) {
     if (!value) {
       return null;
     }

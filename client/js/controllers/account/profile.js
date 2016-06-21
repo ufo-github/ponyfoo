@@ -15,6 +15,7 @@ module.exports = function (viewModel, container) {
   var twitter = $('.cb-twitter', container);
   var website = $('.cb-website', container);
   var preview = $('.cb-preview', container);
+  var avatar = $('.cb-avatar', container);
   var saveButton = $('.cb-save', container);
   var updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 200));
   var updateSlugSlowly = raf.bind(null, debounce(updateSlug, 200));
@@ -48,7 +49,8 @@ module.exports = function (viewModel, container) {
         slug: slug.value(),
         bio: bio.value(),
         twitter: twitter.value(),
-        website: website.value()
+        website: website.value(),
+        avatar: avatar.value()
       }
     };
     viewModel.measly.patch('/api/account/profile', data).on('data', leave);

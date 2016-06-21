@@ -5,7 +5,8 @@ article.ly-section.vw-maintainer.de-host
       input.cb-name(placeholder='Your name, please', value=profile.displayName)
       input.cb-slug(placeholder='Your username, used in /contributors/your-username', value=profile.slug)
       input.cb-twitter(placeholder='Your Twitter username, as in @ponyfoo', value=profile.twitter)
-      input.cb-website(placeholder='Your website, if any', value=profile.website)
+      input.cb-website(placeholder='A link to your website', value=profile.website)
+      input.cb-avatar(placeholder='A link to an avatar image. Defaults to a gravatar.', value=profile.avatar)
       div
         textarea.wk-textarea.cb-bio(placeholder='Your bio goes here!')=profile.bio
 

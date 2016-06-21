@@ -5,23 +5,22 @@ var contra = require('contra');
 var env = require('../../lib/env');
 var markupService = require('../../services/markup');
 var staticService = require('../../services/static');
+var guidelines = './dat/contributing-guidelines.md';
 var cached;
 
 module.exports = function (req, res, next) {
   if (cached) {
     respond(null, cached); return;
   }
-  contra.waterfall([
-    function readFile (next) {
-      fs.readFile('./dat/contributing-guidelines.md', 'utf8', next);
-    },
-    function compileMarkdown (md, next) {
-      cached = staticService.unrollAll(markupService.compile(md));
-      next(null, cached);
-    }
-  ], respond)
+  contra.waterfall([readFile, compileMarkdown], respond);
 
-
+  function readFile (next) {
+    fs.readFile(guidelines, 'utf8', next);
+  }
+  function compileMarkdown (md, next) {
+    cached = staticService.unrollAll(markupService.compile(md));
+    next(null, cached);
+  }
   function respond (err, guidelines) {
     if (err) {
       next(err); return;
