@@ -81,7 +81,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     if model.meta.canonical
       link(rel='canonical', href!=model.authority + model.meta.canonical)
 
-    meta(name='author', itemprop='creator', content!=author.contact)
+    meta(name='author', itemprop='creator', content!=founder.contact)
 
     if model.meta.keywords && model.meta.keywords.length
       meta(name='keywords', content=model.meta.keywords.join(','))
@@ -96,7 +96,7 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog')
     meta(name='twitter:description', content=model.meta.description)
     meta(name='twitter:card', content='summary')
     meta(name='twitter:site', content='@ponyfoo')
-    meta(name='twitter:creator', content=author.twitter)
+    meta(name='twitter:creator', content=founder.twitter)
 
     each image, i in model.meta.images
       meta(property='og:image', itemprop=i === 0 && 'images', content=image)

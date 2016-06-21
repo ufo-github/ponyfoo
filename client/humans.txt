@@ -1,6 +1,6 @@
 /* TEAM */
     Chef: Nicolás Bevacqua
-    Contact: hello@ponyfoo.com
+    Contact: nico@ponyfoo.com
     Twitter: @nzgb
     GitHub: bevacqua
     Origin: Buenos Aires, Argentina
