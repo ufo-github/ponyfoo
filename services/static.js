@@ -2,6 +2,7 @@
 
 var glob = require('glob');
 var path = require('path');
+var escapeRegExp = require('escape-regexp');
 var env = require('../lib/env');
 var rhash = /(.*)\.[a-f0-9]{8}\.(.*)$/;
 var hashmap = {};
@@ -24,10 +25,20 @@ function unroll (relative) {
   return hashmap[relative] || relative;
 }
 
-function noroll (relative) {
-  return relative;
+function unrollAll (input) {
+  return Object.keys(hashmap).reduce(replacer, input);
+  function replacer (input, unhashed) {
+    var hashed = hashmap[unhashed];
+    var regexp = new RegExp(escapeRegExp(unhashed), 'g');
+    return input.replace(regexp, hashed);
+  }
+}
+
+function identity (value) {
+  return value;
 }
 
 module.exports = {
-  unroll: production ? unroll : noroll
+  unroll: production ? unroll : identity,
+  unrollAll: production ? unrollAll : identity
 };

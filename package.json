@@ -77,6 +77,7 @@
     "dragula": "3.6.8",
     "elasticsearch": "11.0.1",
     "emoji-random": "0.1.2",
+    "escape-regexp": "0.0.1",
     "estimate": "1.0.0",
     "express": "4.13.2",
     "express-session": "1.7.6",

@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
       fs.readFile('./dat/contributing-guidelines.md', 'utf8', next);
     },
     function compileMarkdown (md, next) {
-      cached = markupService.compile(md);
+      cached = staticService.unrollAll(markupService.compile(md));
       next(null, cached);
     }
   ], respond)
