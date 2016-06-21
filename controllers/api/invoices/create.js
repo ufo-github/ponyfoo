@@ -11,11 +11,11 @@ module.exports = function (req, res) {
   model.slug = sluggish(body.slug);
   model.customer = {
     name: body.customer.name,
-    details: body.customer.details.split('\n')
+    details: body.customer.details
   };
   model.payment = {
     name: body.payment.name,
-    details: body.payment.details.split('\n')
+    details: body.payment.details
   };
   model.items = body.items;
   model.paid = body.paid;

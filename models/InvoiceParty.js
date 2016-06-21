@@ -7,7 +7,7 @@ var schema = new mongoose.Schema({
   slug: { type: String, index: { unique: true }, require: true },
   type: String, // ['customer', 'payment']
   name: String,
-  details: [String]
+  details: String
 });
 
 module.exports = mongoose.model('InvoiceParty', schema);

@@ -17,7 +17,7 @@ article.ly-section.vw-maintainer
             option(value=option.slug)=option.title
 
         input.ive-party-name.ive-customer-name(placeholder='Sample Company', value=invoice.customer && invoice.customer.name)
-        textarea.ive-party-details.ive-customer-details(placeholder='123 Strange St.')=invoice.customer && invoice.customer.details.join('\n')
+        textarea.ive-party-details.ive-customer-details(placeholder='123 Strange St.')=invoice.customer && invoice.customer.details
 
       section.ive-party-section.ive-to
         select.ive-payment-frequent
@@ -26,7 +26,7 @@ article.ly-section.vw-maintainer
             option(value=option.slug)=option.title
 
         input.ive-party-name.ive-payment-name(placeholder='Billing Name', value=invoice.payment && invoice.payment.name)
-        textarea.ive-party-details.ive-payment-details(placeholder='Billing address and payment details')=invoice.payment && invoice.payment.details.join('\n')
+        textarea.ive-party-details.ive-payment-details(placeholder='Billing address and payment details')=invoice.payment && invoice.payment.details
 
       section.ive-items.ive-half
         header.ive-actions

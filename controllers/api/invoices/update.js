@@ -20,11 +20,11 @@ module.exports = function (req, res, next) {
     invoice.slug = sluggish(body.slug);
     invoice.customer = {
       name: body.customer.name,
-      details: body.customer.details.split('\n')
+      details: body.customer.details
     };
     invoice.payment = {
       name: body.payment.name,
-      details: body.payment.details.split('\n')
+      details: body.payment.details
     };
     invoice.items = body.items;
     invoice.paid = body.paid;

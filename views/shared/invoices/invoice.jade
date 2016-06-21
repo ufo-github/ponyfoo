@@ -1,6 +1,4 @@
 section.iv-container
-  link(rel='stylesheet', href='/css/invoice.css')
-
   a.iv-logo(href='https://ponyfoo.com')
     img(src='/img/logos/original-padded-text-white.png', alt='')
 
@@ -11,18 +9,16 @@ section.iv-container
     section.ff-client
       header.iv-header Customer:
       if invoice.customer
-        p=invoice.customer.name
-        each line in invoice.customer.details
-          p=line
+        section.md-markdown!=invoice.customer.nameHtml
+        section.md-markdown!=invoice.customer.detailsHtml
     section.ff-billing
       if invoice.paid
         header.iv-header Payment Received by:
       else
         header.iv-header Please Send Payment to:
       if invoice.payment
-        p=invoice.payment.name
-        each line in invoice.payment.details
-          p=line
+        section.md-markdown!=invoice.payment.nameHtml
+        section.md-markdown!=invoice.payment.detailsHtml
 
   table.iv-table
     thead.iv-head
@@ -34,7 +30,8 @@ section.iv-container
     tbody
       each item in invoice.items
         tr.iv-item
-          td.bl-summary=item.summary
+          td.bl-summary
+            section.md-markdown.md-markdown-inline!=item.summaryHtml
           td.bl-number=item.amount
           td.bl-number=item.rateMoney
           td.bl-number=item.priceMoney
@@ -49,3 +46,7 @@ section.iv-container
       span='We\'d love for you to '
       a.lk-link(href='mailto:testimonials@ponyfoo.com') send us a testimonial
       span=' describing how you liked our work.'
+
+  if invoice.paid
+    section.iv-paid
+      span.iv-paid-text PAID!

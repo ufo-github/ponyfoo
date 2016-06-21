@@ -14,7 +14,7 @@ module.exports = function (req, res) {
     slug: sluggish(body.slug),
     type: type,
     name: body.name,
-    details: body.details.split('\n')
+    details: body.details
   };
   new InvoiceParty(model).save(saved);
   function saved (err) {

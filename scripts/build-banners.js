@@ -34,7 +34,7 @@ const brandColors = augmentColors({
   'c-orange-005': '#fcf8f5',
   'c-orange-dark': '#f3720d',
   'c-pink': '#e92c6c',
-  'c-pink-light': '#f4a5c0',
+  'c-pink-light': '#ea6c93',
   'c-pink-01': '#fceaf0',
   'c-pink-005': '#fbf2f5',
   'c-purple': '#900070',

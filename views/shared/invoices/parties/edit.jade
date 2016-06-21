@@ -11,7 +11,7 @@ article.ly-section.vw-maintainer.de-host
     input.ivp-name(name='name', placeholder='Sample Company', value=invoiceParty.name)
     input.ivp-title(name='title', placeholder='Sample Company', value=invoiceParty.title)
     input.ivp-slug(name='slug', placeholder='sample-company', value=invoiceParty.slug)
-    textarea.ivp-details(name='details', placeholder='123 Strange St.')=invoiceParty.details.join('\n')
+    textarea.ivp-details(name='details', placeholder='123 Strange St.')=invoiceParty.details
     footer.ivp-actions
       a.ivp-cancel.lk-link(href='/invoices/parties', aria-label='Back to list of invoice parties') Cancel
       span(aria-label='Save this invoice party')

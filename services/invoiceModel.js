@@ -5,6 +5,7 @@ var assign = require('assignment');
 var sluggish = require('sluggish');
 var numberService = require('./number');
 var datetimeService = require('./datetime');
+var markdownService = require('./markdown');
 
 function generateModel (data) {
   var date = moment(data.date);
@@ -14,12 +15,24 @@ function generateModel (data) {
   return {
     slug: slug,
     date: datetimeService.field(date),
-    customer: data.customer,
-    payment: data.payment,
+    customer: generatePartyModel(data.customer),
+    payment: generatePartyModel(data.payment),
     items: items,
     paid: 'paid' in data ? data.paid : false,
     total: total,
     totalMoney: numberService.toMoney(total)
+  };
+}
+
+function generatePartyModel (party) {
+  if (!party) {
+    return party;
+  }
+  return {
+    name: party.name,
+    nameHtml: markdownService.compile(party.name),
+    details: party.details,
+    detailsHtml: markdownService.compile(party.details)
   };
 }
 
@@ -40,12 +53,13 @@ function sum (accumulator, item) {
 }
 
 function generateItem (item) {
-  var summary = item.summary || '(no description)';
+  var summary = item.summary || '_(no description)_';
   var amount = item.amount || 1;
   var rate = item.rate || 0;
   var price = amount * rate;
   return {
     summary: summary,
+    summaryHtml: markdownService.compile(summary),
     amount: amount,
     price: price,
     priceMoney: numberService.toMoney(price),

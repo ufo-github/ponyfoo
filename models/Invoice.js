@@ -7,11 +7,11 @@ var schema = new mongoose.Schema({
   date: Date,
   customer: {
     name: String,
-    details: [String]
+    details: String
   },
   payment: {
     name: String,
-    details: [String]
+    details: String
   },
   items: [{
     summary: String,

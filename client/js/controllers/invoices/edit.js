@@ -68,7 +68,7 @@ module.exports = function (viewModel, container, route) {
         var details = section.find('.ive-party-details');
         if (item) {
           name.value(item.name);
-          details.value(item.details.join('\n'));
+          details.value(item.details);
         } else {
           name.value('');
           details.value('');
@@ -121,8 +121,8 @@ module.exports = function (viewModel, container, route) {
     function updatePreview () {
       var el = $.findOne('.ive-container');
       var model = getModel();
-      model.customer.details = model.customer.details.split('\n');
-      model.payment.details = model.payment.details.split('\n');
+      model.customer.details = model.customer.details;
+      model.payment.details = model.payment.details;
       var invoice = invoiceModelService.generateModel(model);
       var vm = {
         invoice: invoice,

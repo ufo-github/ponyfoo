@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
     invoiceParty.slug = sluggish(body.slug);
     invoiceParty.type = type;
     invoiceParty.name = body.name;
-    invoiceParty.details = body.details.split('\n');
+    invoiceParty.details = body.details;
     invoiceParty.save(saved);
     function saved (err) {
       if (err) {
