@@ -16,14 +16,12 @@ var userService = require('../../../services/user');
 var storage = require('../../../lib/storage');
 var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
-var rstrip = /^\s*<p>\s*|\s*<\/p>\s*/ig;
+var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
 var editorRoles = ['owner', 'editor'];
 
 function noop () {}
 
 module.exports = function (viewModel, container, route) {
-  var user = { roles: viewModel.roles };
-  var userIsEditor = userService.hasRole(user, editorRoles);
   var article = viewModel.article;
   var editing = viewModel.editing;
   var published = editing && article.status === 'published';
@@ -31,6 +29,7 @@ module.exports = function (viewModel, container, route) {
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
   var teaser = $('.ac-teaser');
+  var editorNote = $('.ac-editor-note');
   var introduction = $('.ac-introduction');
   var body = $('.ac-body');
   var summary = $('.ac-summary');
@@ -47,6 +46,7 @@ module.exports = function (viewModel, container, route) {
   var preview = $.findOne('.ac-preview');
   var previewTitle = $('.ac-preview-title');
   var previewTeaser = $('.ac-preview-teaser');
+  var previewEditorNote = $('.ac-preview-editor-note');
   var previewIntroduction = $('.ac-preview-introduction');
   var previewBody = $('.ac-preview-body');
   var previewSummary = $.findOne('.ac-preview-summary');
@@ -82,6 +82,10 @@ module.exports = function (viewModel, container, route) {
 
   deserialize(editing && article);
 
+  function getCurrentState () {
+    return status.where(':checked').text() || 'draft';
+  }
+
   function updatePublication () {
     serializeSlowly();
 
@@ -92,8 +96,8 @@ module.exports = function (viewModel, container, route) {
       discardButton.attr('aria-label', 'Permanently delete this article');
       return;
     }
-    var state = status.where(':checked').text();
-    if (state === 'draft' || !userIsEditor) {
+    var state = getCurrentState();
+    if (state === 'draft') {
       saveButton.find('.bt-text').text('Save Draft');
       saveButton.parent().attr('aria-label', 'You can access your drafts at any time');
       return;
@@ -154,6 +158,12 @@ module.exports = function (viewModel, container, route) {
 
   function updatePreviewMarkdown () {
     previewTeaser.html(getHtml(teaser));
+    var note = getHtml(editorNote).replace(rstrip, '');
+    if (note.length) {
+      previewEditorNote.removeClass('uv-hidden').html(note);
+    } else {
+      previewEditorNote.addClass('uv-hidden');
+    }
     previewIntroduction.html(getHtml(introduction));
     previewBody.html(getHtml(body));
     twitterService.updateView(preview);
@@ -164,6 +174,7 @@ module.exports = function (viewModel, container, route) {
 
   function updatePreviewSummary () {
     var teaserHtml = getHtml(teaser);
+    var editorNoteHtml = getHtml(editorNote);
     var introductionHtml = getHtml(introduction);
     var bodyHtml = getHtml(body);
     taunus.partial(previewSummary, 'articles/columns', {
@@ -171,7 +182,7 @@ module.exports = function (viewModel, container, route) {
         publication: datetimeService.field(moment().add(4, 'days')),
         commentCount: 0,
         slug: slug.value(),
-        readingTime: estimate.text([teaserHtml, introductionHtml, bodyHtml].join(' ')),
+        readingTime: estimate.text([teaserHtml, editorNoteHtml, introductionHtml, bodyHtml].join(' ')),
         titleHtml: getHtmlTitle(),
         tags: getTags(),
         summaryHtml: articleSummarizationService.summarize({
@@ -198,6 +209,7 @@ module.exports = function (viewModel, container, route) {
     slug.value(slugText);
     teaser.value(data.teaser || '');
     introduction.value(data.introduction || '');
+    editorNote.value(data.editorNote || '');
     body.value(data.body || '');
     summary.value(data.summary || '');
     tags.value((data.tags || []).join(' '));
@@ -210,7 +222,7 @@ module.exports = function (viewModel, container, route) {
 
     boundSlug = sluggish(titleText) === slugText;
 
-    if (data.status !== 'published' && userIsEditor) {
+    if (data.status !== 'published') {
       statusRadio[data.status || 'publish'].value(true);
 
       if ('publication' in data) {
@@ -229,12 +241,13 @@ module.exports = function (viewModel, container, route) {
 
   function getRequestData () {
     var individualTags = getTags();
-    var state = (published || !userIsEditor) ? article.status : status.where(':checked').text();
+    var state = published ? article.status : getCurrentState();
     var data = {
       titleMarkdown: title.value(),
       slug: slug.value(),
       summary: summary.value(),
       teaser: teaser.value(),
+      editorNote: editorNote.value(),
       introduction: introduction.value(),
       body: body.value(),
       tags: individualTags,
@@ -247,7 +260,7 @@ module.exports = function (viewModel, container, route) {
       lobsters: lobsters.value()
     };
     var scheduled = schedule.value();
-    if (scheduled && !published && userIsEditor) {
+    if (scheduled && !published) {
       data.publication = moment(publication.value(), publicationFormat).format();
     }
     return data;

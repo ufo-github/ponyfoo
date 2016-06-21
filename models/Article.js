@@ -16,6 +16,8 @@ var schema = new mongoose.Schema({
   sign: String,
   teaser: String,
   teaserHtml: String,
+  editorNote: String,
+  editorNoteHtml: String,
   introduction: String,
   introductionHtml: String,
   summary: String,

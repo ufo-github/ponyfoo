@@ -16,7 +16,7 @@ function scheduler (req, res) {
 
   fs.writeFile('.job.scheduler', moment().format(defaultFormat) + '\n');
   winston.debug('[job] Worker %s executing job@%s', process.pid, pkg.version);
-  Article.find({ status: 'publish' }, found);
+  Article.find({ status: 'publish' }).populate('author').exec(found);
 
   function found (err, articles) {
     if (err || !articles || articles.length === 0) {

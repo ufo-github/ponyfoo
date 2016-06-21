@@ -15,9 +15,11 @@ function findInternal (method, query, options, done) {
   if (!options.sort) { options.sort = '-publication'; }
 
   var cursor = Article[method](query);
-
-  if (options.populate) {
-    cursor = cursor.populate(options.populate);
+  var populations = options.populate;
+  var populationSteps;
+  if (populations) {
+    populationSteps = Array.isArray(populations) ? populations : [[populations]];
+    cursor = populationSteps.reduce(populateCursor, cursor);
   }
   if (options.sort) {
     cursor = cursor.sort(options.sort);
@@ -29,6 +31,9 @@ function findInternal (method, query, options, done) {
     cursor = cursor.limit(options.limit);
   }
   cursor.exec(done);
+  function populateCursor (cursor, options) {
+    return cursor.populate.apply(cursor, options);
+  }
 }
 
 var find = findInternal.bind(null, 'find');
@@ -80,6 +85,7 @@ function toJSON (source, options) {
   }
   if (o.meta) {
     delete article.teaserHtml;
+    delete article.editorNoteHtml;
     delete article.introductionHtml;
     delete article.bodyHtml;
   }

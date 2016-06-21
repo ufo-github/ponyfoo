@@ -18,7 +18,7 @@ ol.aa-articles
           a.aa-comments.lk-link.lk-black(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
         if !profilePage && article.author && article.author.slug
           div.aa-trivia-item
-            a.aa-comments.lk-link.lk-black(href='/writers/' + article.author.slug)='by ' + article.author.displayName
+            a.aa-comments.lk-link.lk-black(href='/contributors/' + article.author.slug)='by ' + article.author.displayName
       section.aa-tags
         include ../partials/tags
       if article.cover

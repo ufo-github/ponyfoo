@@ -1,6 +1,10 @@
 h1(style='padding-top: 25px;')
   a(href!=authority + article.permalink, style='color: #333')!=article.titleHtml
 
+if article.author && article.author.slug
+  p
+    a(href!=authority + '/contributors/' + article.author.slug, style='color: #333; !important')='Published by ' + article.author.displayName + '.'
+
 p
   each tag in article.tags
     a(href!=authority + '/articles/tagged/' + tag, style='color: #e92c6c; padding: 2px 6px; text-decoration: none; background-color: #FAF0E6; border-bottom: 1px solid; margin-right: 5px;')=tag

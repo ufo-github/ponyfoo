@@ -64,6 +64,7 @@ function email (article, options, done) {
   var relativePermalink = '/articles/' + article.slug;
   var intro = article.teaserHtml + article.introductionHtml;
   var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
+  console.log(article.author);
   var model = {
     subject: article.title,
     teaser: options.reshare ? 'You can’t miss this!' : 'Hot off the press!',
@@ -71,6 +72,10 @@ function email (article, options, done) {
       titleHtml: article.titleHtml,
       permalink: relativePermalink,
       tags: article.tags,
+      author: {
+        displayName: article.author.displayName,
+        slug: article.author.slug
+      },
       teaserHtml: teaser
     },
     linkedData: {
@@ -140,11 +145,16 @@ function tweet (article, options, done) {
   var tweetLines = [];
 
   // sorted by importance: link, title, cta, headline, tags.
-  add(3, '➡️️ ' + statusLink(article), 2 + 24);
+  add(4, '➡️️ ' + statusLink(article), 2 + 24);
   add(1, emoji + ' ' + article.title, 2 + article.title.length);
-  add(4, card, 25);
+  add(5, card, 25);
   add(0, '📰 ' + prefix, 2 + prefix.length);
-  add(2, '🏷 ' + tagText, 2 + tagText.length - 1); // no extra new line here
+
+  if (article.author.twitter) {
+    add(2, '✍ By @' + article.author.twitter, 6 + article.author.twitter.length);
+  }
+
+  add(3, '🏷 ' + tagText, 2 + tagText.length - 1); // no extra new line here
 
   var status = tweetLines.filter(notEmpty).join('\n');
 

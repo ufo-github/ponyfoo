@@ -7,7 +7,10 @@ module.exports = function (req, res, next) {
   var slug = req.params.slug;
   var medium = req.params.medium;
 
-  Article.findOne({ slug: slug, status: 'published' }, found);
+  Article
+    .findOne({ slug: slug, status: 'published' })
+    .populate('author')
+    .exec(found);
 
   function found (err, article) {
     if (err) {

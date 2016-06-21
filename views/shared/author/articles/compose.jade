@@ -7,6 +7,9 @@ article.ly-section.vw-maintainer.de-host
       input.ac-slug(placeholder='a-thoughtful-catchy-title', value=article.slug)
       div
         textarea.wk-textarea.ac-text.ac-teaser(placeholder='Tease the reader about your article. Used for marketing, search snippets, etc.')=article.teaser
+      if userIsEditor
+        div
+          textarea.wk-textarea.ac-text.ac-editor-note(placeholder='Write a special note from the editor.')=article.editorNote
       div
         textarea.wk-textarea.ac-text.ac-introduction(placeholder='Write the introduction to the topics presented in your article. Included in emails.')=article.introduction
       div
@@ -21,37 +24,38 @@ article.ly-section.vw-maintainer.de-host
 
     aside.ac-aside
       if userIsEditor && !published
-        p You can save the article as a draft, publish it, or slate it for publication at a later date
-        p.ac-timing-item
-          input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
-          label.ck-radio(for='ac-draft-radio') Draft
-        p.ac-timing-item
-          input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish')
-          label.ck-radio(for='ac-publish-radio') Publish
-        p.ac-timing-item
-          input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
-          label.ck-checkbox(for='ac-schedule-checkbox') Schedule
-          input.ac-publication(value=publication.format(publicationFormat), placeholder=publicationFormat)
+        section.ac-timing
+          p You can save the article as a draft, publish it, or slate it for publication at a later date
+          p.ac-timing-item
+            input.ck-input.ac-status#ac-draft-radio(type='radio', name='ac-status', value='draft', checked=article.status === 'draft')
+            label.ck-radio(for='ac-draft-radio') Draft
+          p.ac-timing-item
+            input.ck-input.ac-status#ac-publish-radio(type='radio', name='ac-status', value='publish', checked=article.status === 'publish')
+            label.ck-radio(for='ac-publish-radio') Publish
+          p.ac-timing-item
+            input.ck-input.ac-schedule#ac-schedule-checkbox(type='checkbox', checked=!!article.publication)
+            label.ck-checkbox(for='ac-schedule-checkbox') Schedule
+            input.ac-publication(value=publication.format(publicationFormat), placeholder=publicationFormat)
 
-        p What mediums do you want to use to promote the article?
-        p.ac-campaign-item
-          input.ck-input#ac-campaign-email(type='checkbox', checked=article.email !== false)
-          label.ck-checkbox(for='ac-campaign-email') Send an email
-        p.ac-campaign-item
-          input.ck-input#ac-campaign-tweet(type='checkbox', checked=article.tweet !== false)
-          label.ck-checkbox(for='ac-campaign-tweet') Post a Tweet
-        p.ac-campaign-item
-          input.ck-input#ac-campaign-fb(type='checkbox', checked=article.fb !== false)
-          label.ck-checkbox(for='ac-campaign-fb') Share on Facebook
-        p.ac-campaign-item
-          input.ck-input#ac-campaign-echojs(type='checkbox', checked=article.echojs !== false)
-          label.ck-checkbox(for='ac-campaign-echojs') Submit to EchoJS
-        p.ac-campaign-item
-          input.ck-input#ac-campaign-hn(type='checkbox', checked=article.hn !== false)
-          label.ck-checkbox(for='ac-campaign-hn') Submit to Hacker News
-        p.ac-campaign-item
-          input.ck-input#ac-campaign-lobsters(type='checkbox', checked=article.lobsters !== false)
-          label.ck-checkbox(for='ac-campaign-lobsters') Submit to Lobste.rs
+          p What mediums do you want to use to promote the article?
+          p.ac-campaign-item
+            input.ck-input#ac-campaign-email(type='checkbox', checked=article.email !== false)
+            label.ck-checkbox(for='ac-campaign-email') Send an email
+          p.ac-campaign-item
+            input.ck-input#ac-campaign-tweet(type='checkbox', checked=article.tweet !== false)
+            label.ck-checkbox(for='ac-campaign-tweet') Post a Tweet
+          p.ac-campaign-item
+            input.ck-input#ac-campaign-fb(type='checkbox', checked=article.fb !== false)
+            label.ck-checkbox(for='ac-campaign-fb') Share on Facebook
+          p.ac-campaign-item
+            input.ck-input#ac-campaign-echojs(type='checkbox', checked=article.echojs !== false)
+            label.ck-checkbox(for='ac-campaign-echojs') Submit to EchoJS
+          p.ac-campaign-item
+            input.ck-input#ac-campaign-hn(type='checkbox', checked=article.hn !== false)
+            label.ck-checkbox(for='ac-campaign-hn') Submit to Hacker News
+          p.ac-campaign-item
+            input.ck-input#ac-campaign-lobsters(type='checkbox', checked=article.lobsters !== false)
+            label.ck-checkbox(for='ac-campaign-lobsters') Submit to Lobste.rs
 
       section.ac-preview-summary
 
@@ -61,6 +65,7 @@ article.ly-section.vw-maintainer.de-host
         section.at-teaser
           div.ac-preview-teaser.at-teaser-markdown
 
+      section.ac-preview-editor-note.at-editor-note
       section.ac-preview-introduction.at-introduction
       section.ac-preview-body.at-body
 

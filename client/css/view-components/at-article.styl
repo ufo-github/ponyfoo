@@ -13,7 +13,23 @@
     content ''
     rainbow()
 
+.at-header
+  margin-bottom 40px
+
+.at-editor-note
+  background-color c-yellow-highlight-01
+  &:after
+    display block
+    text-align right
+    font-style italic
+    content '— Editor’s note.'
+    margin-top 10px
+
+.ly-custom-subheadings .at-editor-note:after
+  font-family f-subheading
+
 .at-teaser-markdown,
+.at-editor-note,
 .at-introduction,
 .at-body
   padding 20px 20px
@@ -40,6 +56,7 @@
 
 @media screen and (min-width: 768px)
   .at-teaser-markdown,
+  .at-editor-note,
   .at-introduction,
   .at-body
     padding 20px 40px

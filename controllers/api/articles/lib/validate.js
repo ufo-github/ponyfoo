@@ -22,9 +22,10 @@ function validate (model, update) {
     titleMarkdown: getTitle(),
     slug: getSlug(),
     summary: validator.toString(model.summary),
-    teaser: getContent('teaser', draft),
-    introduction: getContent('introduction', draft),
-    body: getContent('body', draft),
+    teaser: getContent('teaser', { required: !draft }),
+    editorNote: getContent('editorNote', { required: false }),
+    introduction: getContent('introduction', { required: !draft }),
+    body: getContent('body', { required: !draft }),
     tags: draft ? getTagsRaw() : getTags(),
     comments: [],
     related: [],
@@ -93,13 +94,13 @@ function validate (model, update) {
     return slug;
   }
 
-  function getContent (prop, suppress) {
+  function getContent (prop, options) {
     var length = 3;
     var message;
     var input = validator.toString(model[prop]);
     if (!validator.isLength(input, length)) {
       message = util.format('The article %s must be at least %s characters long.', prop, length);
-      if (!suppress) {
+      if (options.required) {
         validation.push(message);
       }
     }

@@ -10,7 +10,7 @@ var articleSummarizationService = require('../../services/articleSummarization')
 var articleSearchService = require('../../services/articleSearch');
 var Article = require('../Article');
 var env = require('../../lib/env');
-var rstrip = /^\s*<p>\s*|\s*<\/p>\s*/ig;
+var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
 
 Article.schema.pre('save', beforeSave);
 Article.schema.post('save', afterSave);
@@ -21,6 +21,7 @@ function computeSignature (a) {
     a.status,
     a.summary || '',
     a.teaser,
+    a.editorNote || '',
     a.introduction,
     a.body
   ];
@@ -36,6 +37,7 @@ function beforeSave (next) {
   article.titleHtml = toHtml(article.titleMarkdown).replace(rstrip, '');
   article.title = beautifyText(markdownService.decompile(article.titleHtml, { plain: true }));
   article.teaserHtml = toHtml(article.teaser, 1);
+  article.editorNoteHtml = toHtml(article.editorNote || '', 1).replace(rstrip, '');
   article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);
   var summary = articleSummarizationService.summarize(article);
@@ -51,7 +53,7 @@ function beforeSave (next) {
 }
 
 function toHtml (md, i) {
-  return markupService.compile(md, { deferImages: i });
+  return markupService.compile(md, { deferImages: i }).trim();
 }
 
 function afterSave () {

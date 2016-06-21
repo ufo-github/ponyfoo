@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
       if (!editor) {
         query.author = req.user;
       }
-      Article.findOne(query, next);
+      Article.findOne(query).populate('author').exec(next);
     },
     function found (article, next) {
       if (!article) {

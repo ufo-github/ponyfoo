@@ -1,6 +1,7 @@
 'use strict';
 
 var contra = require('contra');
+var winston = require('winston');
 var Article = require('../../../models/Article');
 var articleSharingService = require('../../../services/articleSharing');
 var articlePublishService = require('../../../services/articlePublish');
@@ -23,7 +24,7 @@ module.exports = function (req, res, next) {
 
   contra.waterfall([
     function lookupSlug (next) {
-      Article.findOne({ slug: model.slug }, next);
+      Article.findOne({ slug: model.slug }).exec(next);
     },
     function validateSlug (article, next) {
       if (article) {
@@ -40,9 +41,15 @@ module.exports = function (req, res, next) {
 
       function saved (err) {
         if (!err && published) {
-          articleSharingService.share(model);
+          model.populate('author', populated);
         }
         next(err);
+      }
+      function populated (err) {
+        if (err) {
+          winston.warn('Error populating before article can be shared.', err); return;
+        }
+        articleSharingService.share(model);
       }
     }
   ], function response (err) {

@@ -25,6 +25,7 @@ function getFeed (done) {
       var fullHtml = (
         '<div>' +
           article.teaserHtml +
+          article.editorNoteHtml +
           article.introductionHtml +
           article.bodyHtml +
         '</div>'

@@ -24,6 +24,8 @@ section.at-container.de-host
         meta(itemprop='interactionCount', content=commentCount + ' UserComments')
 
       section.at-corpus(itemprop='articleBody')
+        if article.editorNoteHtml
+          section.md-markdown.at-editor-note!=article.editorNoteHtml
         section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml
         section.md-markdown.at-body!=article.bodyHtml
 

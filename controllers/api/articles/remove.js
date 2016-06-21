@@ -6,10 +6,11 @@ var userService = require('../../../services/user');
 var editorRoles = ['owner', 'editor'];
 
 function remove (req, res, next) {
+  var editor = userService.hasRole(req.userObject, editorRoles);
+
   contra.waterfall([lookupArticle, found], handle);
 
   function lookupArticle (next) {
-    var editor = userService.hasRole(req.userObject, editorRoles);
     var query = { slug: req.params.slug };
     if (!editor) {
       query.author = req.user;
