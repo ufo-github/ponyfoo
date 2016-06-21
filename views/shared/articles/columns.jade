@@ -2,7 +2,7 @@ ol.aa-articles
   each article in articles
     - pub = article.publication
     - count = article.commentCount
-    li.aa-article.dc-colored
+    li(class='dc-colored aa-article' + (profilePage ? ' aa-article-in-profile' : ''))
       h2.aa-title
         a.aa-title-link.lk-visitor(href='/articles/' + article.slug)!=article.titleHtml
       section.aa-summary

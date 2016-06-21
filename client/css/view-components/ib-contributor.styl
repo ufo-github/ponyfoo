@@ -4,7 +4,6 @@
   vertical-align top
 
 .ib-profile
-  width 200px
   padding 20px 10px
   background-color c-yellow-highlight-01
   border-top 2px solid c-yellow-highlight
@@ -21,6 +20,7 @@
   border-right  4px dotted c-purple
   border-bottom 4px groove c-yellow-highlight
   border-left 4px solid c-pink
+  background-color c-yellow-highlight-04
 
 .ib-social
   margin-top 5px
@@ -34,9 +34,6 @@
 .ib-bio
   margin-top 20px
 
-.ib-articles
-  width calc(100% - 200px)
-
 .ib-articles-text
   text-align center
   font-size 32px
@@ -45,3 +42,10 @@
 
 .ib-back-note
   margin-top 30px
+
+@media screen and (min-width: 725px)
+  .ib-profile
+    width 360px
+
+  .ib-articles
+    width calc(100% - 360px)

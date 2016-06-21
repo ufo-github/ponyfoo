@@ -36,7 +36,7 @@ module.exports = function (req, res, next) {
     contra.concurrent(tasks, found);
     function getArticleList (next) {
       var options = {
-        limit: 10
+        limit: 9
       };
       articleService.find(query, options, next);
     }

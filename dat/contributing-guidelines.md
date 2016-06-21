@@ -1,5 +1,7 @@
 We're always looking for great content writers looking to contribute articles to Pony Foo. We love guest authors. It's obviously awesome for the site, because we can produce content more frequently. It's sweet for you, as you get to expand your horizons onto a well-known and liked publication. It's definitely great for our readers, whose thirst for knowledge is only paralleled by their love of the web platform. Guest posting on Pony Foo is great for everyone involved. And we'd love for you to get involved.
 
+> Check out [the team of contributors][team] behind Pony Foo. _You're in great company._ 🦄
+
 ## Topic Ideas
 
 Writing articles for Pony Foo is a craft of love. The single most important aspect of writing an article for Pony Foo is that you choose *a topic you feel passionate about*. Suppose you have studied a topic in depth, you'd like to share what you know, and you're excited about it. There's nothing stopping you from sharing that accumulated knowledge, then!
@@ -46,3 +48,4 @@ When you're ready, drop us a message at [hello@ponyfoo.com][hello]. Please inclu
 [es6]: /articles/tagged/es6 "Articles tagged 'es6' on Pony Foo"
 [articles]: /img/articles.png
 [banner]: /img/banner.png
+[team]: /contributors "See existing contributors"
