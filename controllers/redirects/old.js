@@ -10,6 +10,7 @@ function setup (app) {
   app.get('/search/tagged/:tags', redirect('/articles/tagged/:tags'));
   app.get('/search/:terms', redirect('/articles/search/:terms'));
   app.get('/articles', redirect('/'));
+  app.get('/articles/archives', redirect('/articles/history'));
   app.get('/articles/search', searchTerms);
   app.get('/articles/rss', redirect('/articles/feed'));
   app.get('/rss/latest.xml', redirect('/articles/feed'));

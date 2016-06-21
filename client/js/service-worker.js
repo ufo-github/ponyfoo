@@ -31,7 +31,10 @@ var fetchfirstprefixes = [
 var fetchfirstsuffixes = [
   'review',
   'edit',
-  'new'
+  'new',
+  'last',
+  'first',
+  'random'
 ];
 var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
 var rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
