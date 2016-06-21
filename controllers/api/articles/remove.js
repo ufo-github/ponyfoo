@@ -9,7 +9,11 @@ function remove (req, res, next) {
   contra.waterfall([lookupArticle, found], handle);
 
   function lookupArticle (next) {
+    var editor = userService.hasRole(req.userObject, editorRoles);
     var query = { slug: req.params.slug };
+    if (!editor) {
+      query.author = req.user;
+    }
     Article
       .findOne(query)
       .populate('prev next')
@@ -20,7 +24,6 @@ function remove (req, res, next) {
     if (!article) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
-    var editor = userService.hasRole(req.userObject, editorRoles);
     if (article.status !== 'draft' && !editor) {
       res.status(401).json({ messages: ['Only an editor can delete articles after they are published or scheduled.'] }); return;
     }

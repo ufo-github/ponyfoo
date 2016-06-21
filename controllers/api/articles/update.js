@@ -24,7 +24,11 @@ module.exports = function (req, res, next) {
 
   contra.waterfall([
     function lookup (next) {
-      Article.findOne({ slug: req.params.slug }, next);
+      var query = { slug: req.params.slug };
+      if (!editor) {
+        query.author = req.user;
+      }
+      Article.findOne(query, next);
     },
     function found (article, next) {
       if (!article) {

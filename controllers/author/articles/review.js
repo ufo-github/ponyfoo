@@ -10,8 +10,10 @@ module.exports = getModel;
 
 function getModel (req, res, next) {
   var editor = userService.hasRole(req.userObject, editorRoles);
-  var query = editor ? {} : { author: req.user };
-
+  var query = {};
+  if (!editor) {
+    query.author = req.user;
+  }
   articleService.find(query, respond);
 
   function respond (err, articles) {
