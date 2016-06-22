@@ -16,11 +16,19 @@ var funEmoji = [
   '🍕', '🍟', '🍝', '🍛', '🍤', '🍣', '🍥',
   '🍻', '🍸', '🍹', '🍷'
 ];
+var mailEmoji = [
+  '✉️️', '💌', '📥', '📤', '📬', '📩', '📮', '📪', '📫', '📬', '📭'
+];
 
 function randomFun () {
   return _.sample(funEmoji);
 }
 
+function randomMailEmoji () {
+  return _.sample(mailEmoji);
+}
+
 module.exports = {
-  randomFun: randomFun
+  randomFun: randomFun,
+  randomMailEmoji: randomMailEmoji
 };

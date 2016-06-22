@@ -124,10 +124,6 @@ function randomHeadline (options) {
   ]);
 }
 
-function randomMailEmoji () {
-  return _.sample(['✉️️', '💌', '📥', '📤', '📬', '📩', '📮', '📪', '📫', '📬', '📭']);
-}
-
 function getTitle (issue) {
   return 'Pony Foo Weekly \u2014 ' + issue.name;
 }
@@ -138,12 +134,14 @@ function tweet (issue, options, done) {
   var tweetLines = [];
   var title = getTitle(issue);
   var emoji = emojiService.randomFun();
+  var mail1 = emojiService.randomMailEmoji();
+  var mail2 = emojiService.randomMailEmoji();
 
-  add(3, randomMailEmoji() + ' ' + statusLink(issue), 2 + 24);
+  add(3, mail1 + ' ' + statusLink(issue), 2 + 24);
   add(0, emoji + ' ' + title, 2 + title.length);
   add(4, card, 25);
   add(1, '🏷 #ponyfooweekly', 16); // no extra new line here
-  add(2, randomMailEmoji() + ' ' + 'Read, comment & subscribe ⤵️', 2 + 28);
+  add(2, mail2 + ' ' + 'Read, comment & subscribe ⤵️', 2 + 28);
 
   var status = tweetLines.filter(notEmpty).join('\n');
 
