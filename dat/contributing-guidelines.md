@@ -8,7 +8,7 @@ Writing articles for Pony Foo is a craft of love. The single most important aspe
 
 [![Some of the articles in Pony Foo][articles]][es6]
 
-When it comes to topics we _-- at Pony Foo --_ are interested in, that's all things web development. Just to give you an extremely incomplete list of examples, you could write about: JavaScript, performance, testing, Progressive Web Apps, frameworks, tooling _--- or anything else you find irresistible._
+The topics we are interested in are: **all things web development**. Just to give you an extremely incomplete list of examples, you could write about: JavaScript, performance, testing, Progressive Web Apps, frameworks, tooling _--- or anything else you find irresistible._ As long as you're passionate about the subject, and the thinkpiece you write is related to the web platform, that's what matters the most.
 
 ## Voice and Formatting
 
@@ -18,7 +18,7 @@ When it comes to written materials, we're looking for articles that contain a he
 
 ![Some of the articles in Pony Foo][banner]
 
-To give you an idea of what we're looking for, we suggest checking out these inspiring writers: [Sara Soueidan][sara], [Zach Holman][holman], [Zach Leatherman][zach], and [Jeff Atwood][jeff]'s older articles. The best way to learn how to write immersing prose is, unsurprisingly, to read a lot. Maybe check out [The Sense of Style][sense], while you're at it.
+To give you an idea of what we're looking for, we suggest checking out these inspiring writers: [Sara Soueidan][sara], [Zach Holman][holman], [Zach Leatherman][zach], and [Jeff Atwood][jeff]. The best way to learn how to write immersing prose is, unsurprisingly, to read a lot. Maybe check out [The Sense of Style][sense], while you're at it.
 
 There isn't a required word count or minimum amount of images you need to meet. We're looking for well-rounded articles, but a specific word count isn't imposed.
 
@@ -28,12 +28,12 @@ We have a friendly and easy-going process. It generally plays out like this:
 
 - You come to us, or we approach you
 - You pitch the concept for an article and lay out an outline
-- We approve that
+- We give you the go ahead
 - You draft the article
 - We edit it
 - It is published
 
-That being said, none of that is written in stone.
+That being said, none of this is written in stone.
 
 ## All of the above sounds amazing? Reach out!
 
