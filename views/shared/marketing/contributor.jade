@@ -17,7 +17,7 @@ header.dc-header
       span .
 
 article.de-host
-  section.de-column.de-column-padded
+  section.de-column.ib-contributor
     aside.ib-profile
       include contributor-profile
 
@@ -26,16 +26,6 @@ article.de-host
     article.ib-articles
       if articleCount
         include ../articles/list
-        footer.ib-articles-text
-          div
-            span Find every Pony Foo author in our
-            span=' '
-            a.lk-link(href='/contributors', aria-label='Back to Pony Foo contributing author list') list of contributors
-            span .
-          div
-            span Have you considered
-            span=' '
-            a.lk-link(href='/contributors/join-us') joining us?
       else
         section.ib-articles-text
           div There are no published articles authored by this writer yet.
@@ -53,5 +43,17 @@ article.de-host
             span Have you considered
             span=' '
             a.lk-link(href='/contributors/join-us') joining us?
+
+    if articleCount
+      footer.ib-footer.ib-articles-text
+        div
+          span Find every Pony Foo author in our
+          span=' '
+          a.lk-link(href='/contributors', aria-label='Back to Pony Foo contributing author list') list of contributors
+          span .
+        div
+          span Have you considered
+          span=' '
+          a.lk-link(href='/contributors/join-us') joining us?
 
   include ../partials/aside
