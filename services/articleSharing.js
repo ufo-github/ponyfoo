@@ -64,7 +64,6 @@ function email (article, options, done) {
   var relativePermalink = '/articles/' + article.slug;
   var intro = article.teaserHtml + article.introductionHtml;
   var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
-  console.log(article.author);
   var model = {
     subject: article.title,
     teaser: options.reshare ? 'You can’t miss this!' : 'Hot off the press!',
@@ -92,7 +91,8 @@ function email (article, options, done) {
   subscriberService.send({
     topic: 'articles',
     template: 'article-published',
-    model: model
+    model: model,
+    recipients: options.recipients
   }, done);
 }
 
