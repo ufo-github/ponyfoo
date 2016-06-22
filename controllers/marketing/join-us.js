@@ -1,26 +1,14 @@
 'use strict';
 
-var fs = require('fs');
-var contra = require('contra');
 var env = require('../../lib/env');
-var markupService = require('../../services/markup');
 var staticService = require('../../services/static');
-var guidelines = './dat/contributing-guidelines.md';
-var cached;
+var markdownFileService = require('../../services/markdownFile');
+var authority = env('AUTHORITY');
+var guidelinesFile = './dat/contributing-guidelines.md';
 
 module.exports = function (req, res, next) {
-  if (cached) {
-    respond(null, cached); return;
-  }
-  contra.waterfall([readFile, compileMarkdown], respond);
+  markdownFileService.read(guidelinesFile, respond);
 
-  function readFile (next) {
-    fs.readFile(guidelines, 'utf8', next);
-  }
-  function compileMarkdown (md, next) {
-    cached = staticService.unrollAll(markupService.compile(md));
-    next(null, cached);
-  }
   function respond (err, guidelines) {
     if (err) {
       next(err); return;
@@ -30,7 +18,8 @@ module.exports = function (req, res, next) {
         title: 'Join Our Team! \u2014 Pony Foo',
         meta: {
           canonical: '/contributors/join-us',
-          description: 'Join the contributors and writers collaborating on Pony Foo!'
+          description: 'Join the contributors and writers collaborating on Pony Foo!',
+          images: [authority + staticService.unroll('/img/articles.png')]
         },
         guidelines: guidelines
       }

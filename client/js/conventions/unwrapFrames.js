@@ -2,8 +2,10 @@
 
 var $ = require('dominus');
 var taunus = require('taunus');
+var body = $.findOne('body');
 
 function bind () {
+  taunus.on('start', unwrapFrames.bind(null, body));
   taunus.on('render', unwrapFrames);
 }
 

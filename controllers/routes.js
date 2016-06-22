@@ -71,6 +71,7 @@ module.exports = [
   { route: '/owner/subscribers/:page([1-9][0-9]{0,})?', action: 'author/subscribers', middleware: ownerOnly },
   { route: '/owner/settings', action: 'author/settings', middleware: ownerOnly },
   { route: '/privacy', action: 'marketing/privacy' },
+  { route: '/license', action: 'marketing/license' },
   { route: '/bf/:shortlink?', ignore: true },
   { route: '/s/:shortlink?', ignore: true },
   { route: '/offline', action: 'error/offline' },
