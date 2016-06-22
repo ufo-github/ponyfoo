@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
   var medium = req.params.medium;
 
   Article
-    .findOne({ slug: slug, status: 'published' })
+    .findOne({ slug: slug })
     .populate('author')
     .exec(found);
 
@@ -16,6 +16,8 @@ module.exports = function (req, res, next) {
     if (err) {
       end('error', 'An unexpected error occurred.');
     } else if (!article) {
+      end('error', 'Article not found.');
+    } else if (article.status !== 'published' && medium !== 'email-self') {
       end('error', 'The article can’t be shared.');
     } else {
       share(article);
