@@ -24,7 +24,7 @@ var twitterLead = require('./api/twitter/lead');
 var verifyAccountEmail = require('./account/verifyEmail');
 var registerAccount = require('./account/register');
 var updateProfile = require('./api/account/updateProfile');
-var markdownImageUpload = require('./api/markdown/images');
+var imageUpload = require('./api/images/upload');
 var rssFeed = require('./feeds/rss');
 var metadataScrape = require('./api/metadata/scrape');
 var authorEmail = require('./api/author/email');
@@ -60,11 +60,10 @@ var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
 var ownerOnly = require('./author/roleOnly')(['owner']);
 var invoiceOnly = require('./author/roleOnly')(['owner']);
-var articlesOnly = require('./author/roleOnly')(['owner', 'editor']);
-var articlesEditorOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
-var articlesModeratorOnly = require('./author/roleOnly')(['owner', 'editor', 'articles', 'moderator']);
+var articlesOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
+var articlesEditorOnly = require('./author/roleOnly')(['owner', 'editor']);
+var moderatorOnly = require('./author/roleOnly')(['owner', 'editor', 'moderator']);
 var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
-var weekliesModeratorOnly = require('./author/roleOnly')(['owner', 'weeklies', 'moderator']);
 var env = require('../lib/env');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
@@ -85,7 +84,7 @@ module.exports = function (app) {
   app.get('/:id(articles|weekly|all)/feed', rssFeed);
   app.get('/sitemap.xml', sitemap);
 
-  app.put('/api/markdown/images', markdownImageUpload);
+  app.put('/api/images', imageUpload);
 
   app.get('/owner/articles/compute', ownerOnly, authorCompute);
 
@@ -96,8 +95,7 @@ module.exports = function (app) {
 
   app.put('/api/:type(articles|weeklies)/:slug/comments', commentInsert);
   app.post('/api/:type(articles|weeklies)/:slug/comments', verifyForm, commentInsert);
-  app.delete('/api/:type(articles)/:slug/comments/:id', articlesModeratorOnly, commentRemove);
-  app.delete('/api/:type(weeklies)/:slug/comments/:id', weekliesModeratorOnly, commentRemove);
+  app.delete('/api/:type(articles|weeklies)/:slug/comments/:id', moderatorOnly, commentRemove);
 
   app.put('/api/weeklies', weekliesOnly, weeklyInsert);
   app.patch('/api/weeklies/:slug', weekliesOnly, weeklyUpdate);

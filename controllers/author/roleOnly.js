@@ -22,7 +22,7 @@ module.exports = function roleOnly (roles) {
           return;
         }
         req.userObject = {
-          roles: roles
+          roles: user.roles
         };
         next(null);
       }

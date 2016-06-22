@@ -18,6 +18,7 @@ function getProfile (user, options) {
     avatar: avatar,
     displayName: user.displayName,
     slug: user.slug,
+    role: humanReadableRole(user.roles),
     twitter: user.twitter,
     website: user.website
   };
@@ -25,6 +26,39 @@ function getProfile (user, options) {
     profile.bioHtml = user.bioHtml;
   }
   return profile;
+}
+
+function humanReadableRole (roles) {
+  var terms = [];
+  if (roles.indexOf('articles') !== -1) {
+    terms.push('Contributing Author');
+  }
+  if (roles.indexOf('moderator') !== -1) {
+    terms.push('Contributing Editor');
+  }
+  if (roles.indexOf('moderator') !== -1) {
+    terms.push('Moderator');
+  }
+  if (roles.indexOf('weeklies') !== -1) {
+    terms.push('Pony Foo Weekly');
+  }
+  if (roles.indexOf('owner') !== -1) {
+    return 'Founder';
+  }
+  if (terms.length) {
+    return concatenate();
+  }
+  return 'Contributor';
+  function concatenate () {
+    var firstTerm = terms.shift();
+    var len = terms.length;
+    return terms.reduce(join, firstTerm);
+    function join (all, term, i, terms) {
+      var separator = len > 1 ? ', ' : ' ';
+      var joiner = len === i + 1 ? 'and ' : '';
+      return all + separator + joiner + term;
+    }
+  }
 }
 
 function create (bypass) {

@@ -6,11 +6,7 @@ var User = require('../../models/User');
 var userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
-  var query = {
-    roles: {
-      $in: ['owner', 'articles']
-    }
-  };
+  var query = {};
   User.find(query).sort('created').lean().exec(found);
   function found (err, users) {
     if (err) {
@@ -19,7 +15,7 @@ module.exports = function (req, res, next) {
     if (!users || !users.length) {
       next('route'); return;
     }
-    var profiles = users.map(toProfile);
+    var profiles = users.filter(whereSlug).map(toProfile);
     var images = _.pluck(profiles, 'gravatar');
     res.viewModel = {
       model: {
@@ -34,6 +30,10 @@ module.exports = function (req, res, next) {
     };
     next();
   }
+}
+
+function whereSlug (user) {
+  return !!user.slug;
 }
 
 function toProfile (user) {

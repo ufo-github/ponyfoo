@@ -10,9 +10,6 @@ var articleService = require('../../services/article');
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
   var query = {
-    roles: {
-      $in: ['owner', 'articles']
-    },
     slug: slug
   };
   contra.waterfall([findUser, findArticles], respond);

@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
   if (body.status !== 'draft' && !editor) {
     respond.invalid(res, ['Authors are only allowed to write drafts. An editor must publish the article.']); return;
   }
-  var validation = validate(body);
+  var validation = validate(body, { update: false, editor: editor, originalAuthor: true });
   if (validation.length) {
     respond.invalid(res, validation); return;
   }

@@ -12,7 +12,7 @@ test('routes should match expectation', function (t) {
 
   plan('get', '/sitemap.xml', './sitemap/sitemap');
 
-  plan('put', '/api/markdown/images', './api/markdown/images');
+  plan('put', '/api/images', './api/images');
 
   plan('put', '/api/articles', './author/only', './api/articles/insert');
   plan('patch', '/api/articles/:slug', './author/only', './api/articles/update');

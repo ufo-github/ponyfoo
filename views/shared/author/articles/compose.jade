@@ -7,7 +7,7 @@ article.ly-section.vw-maintainer.de-host
       input.ac-slug(placeholder='a-thoughtful-catchy-title', value=article.slug)
       div
         textarea.wk-textarea.ac-text.ac-teaser(placeholder='Tease the reader about your article. Used for marketing, search snippets, etc.')=article.teaser
-      if userIsEditor
+      if userIsEditor && !originalAuthor
         div
           textarea.wk-textarea.ac-text.ac-editor-note(placeholder='Write a special note from the editor.')=article.editorNote
       div

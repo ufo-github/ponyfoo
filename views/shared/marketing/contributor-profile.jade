@@ -17,7 +17,9 @@ article.ib-profile-section
 
   if !profilePage
     section.ibs-contributor-name
-      a.lk-link(href='/contributors/' + profile.slug, aria-label='Check out their profile page!')=profile.displayName
+      a.lk-link.lk-black.lk-clean(href='/contributors/' + profile.slug, aria-label='Check out their profile page!')=profile.displayName
+
+    section.ibs-contributor-role!=profile.role
 
   if profile.twitter || profile.website
     section.ib-social

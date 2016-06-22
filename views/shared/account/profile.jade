@@ -14,7 +14,10 @@ article.ly-section.vw-maintainer.de-host
     section.cb-preview.md-markdown
 
     footer.cb-actions
-      a.lk-link(href='/', aria-label='Back to home page') Cancel
+      if profile.slug
+        a.lk-link(href='/contributors/' + profile.slug, aria-label='Back to contributor profile view') Back to Profile
+      else
+        a.lk-link(href='/', aria-label='Back to home page') Cancel
       button.gg-container.bt-button.bt-pink.cb-save(type='submit')
         span.bt-text Save
         include ../partials/button-background

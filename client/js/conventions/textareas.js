@@ -32,7 +32,7 @@ function activate (container) {
         commands: renderCommands
       },
       images: {
-        url: '/api/markdown/images',
+        url: '/api/images',
         restriction: 'GIF, JPG, and PNG images'
       },
       xhr: xhr,

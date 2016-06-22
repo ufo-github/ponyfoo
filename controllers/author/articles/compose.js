@@ -27,8 +27,10 @@ module.exports = function (req, res, next) {
     if (!article) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
-    res.viewModel.model.article = article;
-    res.viewModel.model.article.tags = article.tags || [];
+    var model = res.viewModel.model;
+    model.originalAuthor = article.author.equals(req.user);
+    model.article = article;
+    model.article.tags = article.tags || [];
     next();
   }
 };

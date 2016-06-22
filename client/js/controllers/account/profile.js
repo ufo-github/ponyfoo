@@ -43,10 +43,11 @@ module.exports = function (viewModel, container) {
   }
 
   function save () {
+    var slug = sluggish(slug.value());
     var data = {
       json: {
         displayName: displayName.value(),
-        slug: slug.value(),
+        slug: slug,
         bio: bio.value(),
         twitter: twitter.value(),
         website: website.value(),
@@ -56,7 +57,7 @@ module.exports = function (viewModel, container) {
     viewModel.measly.patch('/api/account/profile', data).on('data', leave);
 
     function leave () {
-      taunus.navigate('/');
+      taunus.navigate('/contributors/' + slug);
     }
   }
 };

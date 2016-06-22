@@ -8,9 +8,9 @@ if model.user
         li.nv-item.nv-open
           span.nv-opener
         li.nv-item
-          a.lk-link(href='/articles/new', aria-label='Prepare a fresh draft') Compose
+          a.lk-link.lk-blue.lk-clean(href='/articles/new', aria-label='Prepare a fresh draft') Compose
         li.nv-item
-          a.lk-link(href='/articles/review', aria-label='Manage articles and drafts') Review
+          a.lk-link.lk-blue.lk-clean(href='/articles/review', aria-label='Manage articles and drafts') Review
         li.nv-item.nv-close
           span.nv-closer
 
@@ -18,35 +18,40 @@ if model.user
         li.nv-item.nv-open
           span.nv-opener
         li.nv-item
-          a.lk-link(href='/weekly/new', aria-label='Prepare a new weekly') Assemble
+          a.lk-link.lk-blue.lk-clean(href='/weekly/new', aria-label='Prepare a new weekly') Assemble
         li.nv-item
-          a.lk-link(href='/weekly/review', aria-label='Manage weekly newsletter entries') Weeklies
+          a.lk-link.lk-blue.lk-clean(href='/weekly/review', aria-label='Manage weekly newsletter entries') Weeklies
         li.nv-item.nv-close
           span.nv-closer
+
+      li.nv-item.nv-open
+        span.nv-opener
+      li.nv-item
+        a.lk-link.lk-blue.lk-clean(href='/account/profile', aria-label='Update your profile') Profile
+      li.nv-item.nv-open
+        span.nv-closer
 
       if model.roles.owner
         li.nv-item.nv-open
           span.nv-opener
         li.nv-item
-          a.lk-link(href='/opensource/review', aria-label='Manage open-source projects') OSS
+          a.lk-link.lk-blue.lk-clean(href='/opensource/review', aria-label='Manage open-source projects') OSS
         li.nv-item
-          a.lk-link(href='/speaking/review', aria-label='Manage speaking engagements') Talks
+          a.lk-link.lk-blue.lk-clean(href='/speaking/review', aria-label='Manage speaking engagements') Talks
         li.nv-item
-          a.lk-link(href='/presentations/review', aria-label='Manage presentations') Presentations
+          a.lk-link.lk-blue.lk-clean(href='/presentations/review', aria-label='Manage presentations') Presentations
         li.nv-item.nv-close
           span.nv-closer
         li.nv-item.nv-open
           span.nv-opener
         li.nv-item
-          a.lk-link(href='/account/profile', aria-label='Update your profile') Profile
+          a.lk-link.lk-blue.lk-clean(href='/owner/announcements', aria-label='Prepare and send out an email announcement') Announcements
         li.nv-item
-          a.lk-link(href='/owner/announcements', aria-label='Prepare and send out an email announcement') Announcements
-        li.nv-item
-          a.lk-link(href='/owner/subscribers', aria-label='See email subscriber growth') Subscribers
-        li.nv-item
-          a.lk-icon.fa.fa-bars(href='/owner/logs', aria-label='Check out activity logs')
+          a.lk-link.lk-blue.lk-clean(href='/owner/subscribers', aria-label='See email subscriber growth') Subscribers
         li.nv-item
           a.lk-icon.fa.fa-credit-card(href='/invoices', aria-label='Generate Pony Foo invoices')
+        li.nv-item
+          a.lk-icon.fa.fa-bars(href='/owner/logs', aria-label='Check out activity logs')
         li.nv-item
           a.lk-icon.fa.fa-cog(href='/owner/settings', aria-label='Change site-wide settings')
         li.nv-item.nv-close

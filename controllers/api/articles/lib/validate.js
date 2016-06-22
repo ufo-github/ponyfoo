@@ -9,7 +9,7 @@ var textService = require('../../../../services/text');
 var statuses = Article.validStatuses;
 var forbidden = /^feed|archives|history$/ig;
 
-function validate (model, update) {
+function validate (model, options) {
   var validation = [];
   if (!model || typeof model !== 'object') {
     validation.push('Invalid request.');
@@ -23,7 +23,6 @@ function validate (model, update) {
     slug: getSlug(),
     summary: validator.toString(model.summary),
     teaser: getContent('teaser', { required: !draft }),
-    editorNote: getContent('editorNote', { required: false }),
     introduction: getContent('introduction', { required: !draft }),
     body: getContent('body', { required: !draft }),
     tags: draft ? getTagsRaw() : getTags(),
@@ -42,13 +41,22 @@ function validate (model, update) {
   } else if (model.status !== 'published') {
     sanitized.publication = void 0;
   }
-  validation.model = sanitized;
-
-  if (update) {
+  if (options.editor && !options.originalAuthor) { // prevent drafters from overwriting data they can't see
+    sanitized.editorNote = getContent('editorNote', { required: false });
+  }
+  if (options.update) {
     delete sanitized.comments;
     delete sanitized.related;
+    if (!options.editor) { // prevent drafters from overwriting data they can't see
+      delete sanitized.email;
+      delete sanitized.tweet;
+      delete sanitized.fb;
+      delete sanitized.echojs;
+      delete sanitized.hn;
+      delete sanitized.lobsters;
+    }
   }
-
+  validation.model = sanitized;
   return validation;
 
   function getPublicationDate () {
