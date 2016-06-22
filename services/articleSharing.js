@@ -9,7 +9,7 @@ var subscriberService = require('./subscriber');
 var textService = require('./text');
 var facebookService = require('./facebook');
 var twitterService = require('./twitter');
-var twitterEmojiService = require('./twitterEmoji');
+var emojiService = require('./emoji');
 var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
@@ -139,12 +139,11 @@ function socialPrefix (options) {
 function tweet (article, options, done) {
   var tagPair = '#' + article.tags.slice(0, 2).join(' #');
   var tagText = textService.hyphenToCamel(tagPair);
-  var emoji = twitterEmojiService.generate(['people']);
+  var emoji = emojiService.randomFun();
   var prefix = socialPrefix(options);
   var tweetLength = 0;
   var tweetLines = [];
 
-  // sorted by importance: link, title, cta, headline, tags.
   add(4, '➡️️ ' + statusLink(article), 2 + 24);
   add(1, emoji + ' ' + article.title, 2 + article.title.length);
   add(5, card, 25);

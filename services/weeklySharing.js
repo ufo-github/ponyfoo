@@ -12,7 +12,7 @@ var textService = require('./text');
 var cryptoService = require('./crypto');
 var facebookService = require('./facebook');
 var twitterService = require('./twitter');
-var twitterEmojiService = require('./twitterEmoji');
+var emojiService = require('./emoji');
 var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
 var lobstersService = require('./lobsters');
@@ -137,10 +137,10 @@ function tweet (issue, options, done) {
   var tweetLength = 0;
   var tweetLines = [];
   var title = getTitle(issue);
+  var emoji = emojiService.randomFun();
 
-  // sorted by importance: link, title, cta, headline, hashtag.
   add(3, randomMailEmoji() + ' ' + statusLink(issue), 2 + 24);
-  add(0, randomMailEmoji() + ' ' + title, 2 + title.length);
+  add(0, emoji + ' ' + title, 2 + title.length);
   add(4, card, 25);
   add(1, '🏷 #ponyfooweekly', 16); // no extra new line here
   add(2, randomMailEmoji() + ' ' + 'Read, comment & subscribe ⤵️', 2 + 28);
