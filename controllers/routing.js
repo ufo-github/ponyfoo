@@ -4,6 +4,7 @@ var winston = require('winston');
 var taunus = require('taunus');
 var taunusExpress = require('taunus-express');
 var transports = require('transports');
+var multer = require('multer');
 var routes = require('./routes');
 var statusHealth = require('./api/status/health');
 var authorSaveSetting = require('./api/author/setting');
@@ -71,6 +72,7 @@ var hydrateRequestWithRoles = require('./hydrateRequestWithRoles');
 var verifyForm = require('./verifyForm');
 var layout = require('../.bin/views/server/layout/layout');
 var production = env('NODE_ENV') === 'production';
+var upload = multer({ dest: '.bin/uploads' });
 
 module.exports = function (app) {
   app.get('/api/csp-report', cspReport);
@@ -84,7 +86,7 @@ module.exports = function (app) {
   app.get('/:id(articles|weekly|all)/feed', rssFeed);
   app.get('/sitemap.xml', sitemap);
 
-  app.put('/api/images', imageUpload);
+  app.put('/api/images', upload.single('woofmark_upload'), imageUpload);
 
   app.get('/owner/articles/compute', ownerOnly, authorCompute);
 

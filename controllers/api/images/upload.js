@@ -16,7 +16,7 @@ var imgurClientId = env('IMGUR_CLIENT_ID');
 var production = process.env.NODE_ENV === 'production';
 
 function images (req, res) {
-  var image = req.files && req.files.woofmark_upload;
+  var image = req.file;
   if (!image) {
     errored('Image upload failed!', new Error('Image upload failed!')); return;
   }
