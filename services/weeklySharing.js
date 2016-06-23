@@ -21,7 +21,7 @@ var weeklyService = require('./weekly');
 var User = require('../models/User');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
-var css = fs.readFileSync('.bin/emails/newsletter.css', 'utf8');
+var css = fs.readFileSync('.bin/static/newsletter.css', 'utf8');
 
 function noop () {}
 

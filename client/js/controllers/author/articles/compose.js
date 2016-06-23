@@ -183,7 +183,7 @@ module.exports = function (viewModel, container, route) {
         publication: datetimeService.field(moment().add(4, 'days')),
         commentCount: 0,
         slug: slug.value(),
-        readingTime: estimate.text([teaserHtml, editorNoteHtml, introductionHtml, bodyHtml].join(' ')),
+        readingTime: estimate.text([teaserHtml, editorNoteHtml || '', introductionHtml, bodyHtml].join(' ')),
         titleHtml: getHtmlTitle(),
         tags: getTags(),
         summaryHtml: articleSummarizationService.summarize({

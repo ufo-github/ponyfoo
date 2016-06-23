@@ -41,8 +41,8 @@ uglifyjs_alone() {
 
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
-stylus client/css/invoice.styl -o $DIST/css --include-css --include client/css --compress
-stylus client/css/newsletter.styl -o .bin/emails --include-css --include client/css --compress
+stylus client/css/article.styl -o .bin/static --include-css --include client/css --compress
+stylus client/css/newsletter.styl -o .bin/static --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'
 jadum resources/**/*.jade -o .bin --no-debug --obj '{"basedir":"resources"}'
 taunus -o
@@ -88,8 +88,7 @@ gather "/not-found" "errors"
 echo "penthouse: killing node app"
 kill $! # kills `node app`
 cleancss $ALL_CSS -o $ALL_CSS --s0
-cleancss $DIST/css/invoice.css -o $DIST/css/invoice.css --s0
-cleancss .bin/emails/newsletter.css -o .bin/emails/newsletter.css --s0
+cleancss .bin/static/newsletter.css -o .bin/static/newsletter.css --s0
 
 # asset hashing
 reaver $DIST/img/{,*/}* --manifest | scourge .bin/{views,resources,public/{css,js}} --base-path $DIST --domain $DOMAIN

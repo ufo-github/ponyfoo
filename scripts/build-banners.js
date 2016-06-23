@@ -1,12 +1,16 @@
 'use strict';
 
 const fs = require('fs');
-const nearest = require('nearest-color');
+const path = require('path');
+const mkdirp = require('mkdirp');
 const color = require('color');
+const hashSum = require('hash-sum');
+const assign = require('assignment');
 const cd = require('color-difference');
+const nearest = require('nearest-color');
 const PNG = require('pngjs').PNG;
 const pixels = [];
-const brandColors = augmentColors({
+const baseColors = {
   'c-black': '#000000',
   'c-black-text': '#333333',
   'c-black-light': '#555555',
@@ -52,8 +56,13 @@ const brandColors = augmentColors({
   'c-yellow-highlight': '#ffe270',
   'c-yellow-highlight-08': '#fee68b',
   'c-yellow-highlight-04': '#fef2c5'
-});
+};
+const brandColors = augmentColors(assign({}, baseColors));
 const nearestFromBrand = nearest.from(brandColors);
+
+if (maybeSkip()) {
+  return;
+}
 
 fs.createReadStream('resources/banners/_template-source.png')
   .pipe(new PNG({ filterType: 4 }))
@@ -175,4 +184,19 @@ function getCode () {
 
 function many (start, end, fn) {
   Array(end - start).fill().map((_, i) => i + start).filter(i => i !== 0).forEach(fn);
+}
+
+function maybeSkip () {
+  const hash = hashSum(baseColors);
+  const hashfile = 'resources/banners/generated/hash';
+  const oldHash = fs.existsSync(hashfile) && fs.readFileSync(hashfile, 'utf8');
+  const forceRebuild = !!process.env.REBUILD;
+
+  if (oldHash === hash && !forceRebuild) {
+    console.log('Skipping banner builder task: "%s".', hash);
+    return true;
+  }
+  console.log('Running banner builder task: "%s".', hash);
+  mkdirp.sync(path.dirname(hashfile));
+  fs.writeFileSync(hashfile, hash);
 }

@@ -9,6 +9,7 @@ const SVGO = require('svgo');
 const jadum = require('jadum');
 const mkdirp = require('mkdirp');
 const svg2png = require('svg2png');
+const hashSum = require('hash-sum');
 const spritesmith = require('spritesmith');
 const promisify = require('bluebird').promisify;
 const svgo = new SVGO();
@@ -38,6 +39,7 @@ const resClose = resourceTypes.indexOf(',') !== -1 ? '}' : '';
 
 pglob(`resources/${resOpen + resourceTypes + resClose}/**/*.jade`)
   .then(files => files.filter(file => path.basename(file)[0] !== '_'))
+  .then(files => maybeSkip(files))
   .then(files => files.map(source => {
     const dir = path.dirname(source);
     const base = path.basename(source, '.jade');
@@ -101,4 +103,21 @@ function resolveAll (fn, mapper) {
 
 function changeExtension (file, ext) {
   return file.replace(rext, ext);
+}
+
+function maybeSkip (files) {
+  const hash = hashSum(files);
+  const hashfile = 'resources/logos/generated/hash';
+  const oldHash = fs.existsSync(hashfile) && fs.readFileSync(hashfile, 'utf8');
+  const forceRebuild = !!process.env.REBUILD;
+
+  if (oldHash === hash && !forceRebuild) {
+    console.log('Skipping logo builder task: "%s".', hash);
+    return [];
+  }
+  console.log('Running logo builder task: "%s".', hash);
+  mkdirp.sync(path.dirname(hashfile));
+  fs.writeFileSync(hashfile, hash);
+
+  return files;
 }
