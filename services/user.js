@@ -2,7 +2,6 @@
 
 var User = require('../models/User');
 var gravatarService = require('./gravatar');
-var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
 
 function getModel (email, password, bypass) {
   return {
@@ -14,6 +13,7 @@ function getModel (email, password, bypass) {
 }
 
 function getProfile (user, options) {
+  var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
   var avatar = user.avatar || user.gravatar;
   var profile = {
     avatar: avatar,

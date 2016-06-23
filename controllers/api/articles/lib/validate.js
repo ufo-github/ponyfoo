@@ -7,7 +7,6 @@ var validator = require('validator');
 var Article = require('../../../../models/Article');
 var textService = require('../../../../services/text');
 var statuses = Article.validStatuses;
-var forbidden = /^feed|archives|history$/ig;
 
 function validate (model, options) {
   var validation = [];
@@ -96,7 +95,8 @@ function validate (model, options) {
       var message = util.format('The article slug must be at least %s characters long.', length);
       validation.push(message);
     }
-    if (forbidden.test(slug)) {
+    var rforbidden = /^feed|archives|history$/ig;
+    if (rforbidden.test(slug)) {
       validation.push('The provided slug is reserved and can’t be used');
     }
     return slug;

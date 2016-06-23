@@ -1,8 +1,6 @@
 'use strict';
 
 var sluggish = require('sluggish');
-var hyphenated = /-([a-z])/g;
-var spaces = /\s+/g;
 
 function truthy (value) {
   return !!value;
@@ -16,6 +14,7 @@ function unique (results, item) {
 }
 
 function splitTags (text) {
+  var spaces = /\s+/g;
   return text.trim().toLowerCase().split(spaces).filter(truthy).reduce(unique, []);
 }
 
@@ -30,7 +29,8 @@ function format () {
 }
 
 function hyphenToCamel (text) {
-  return text.replace(hyphenated, upperCase);
+  var rhyphenated = /-([a-z])/g;
+  return text.replace(rhyphenated, upperCase);
 }
 
 function upperCase (m, g) {

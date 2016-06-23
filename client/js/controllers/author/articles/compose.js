@@ -16,7 +16,6 @@ var userService = require('../../../services/user');
 var storage = require('../../../lib/storage');
 var defaultKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
-var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
 var editorRoles = ['owner', 'editor'];
 
 function noop () {}
@@ -138,6 +137,7 @@ module.exports = function (viewModel, container, route) {
   }
 
   function getHtmlTitle () {
+    var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
     return getHtml(title).replace(rstrip, '');
   }
 
@@ -157,6 +157,7 @@ module.exports = function (viewModel, container, route) {
   }
 
   function updatePreviewMarkdown () {
+    var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
     previewTeaser.html(getHtml(teaser));
     var note = getHtml(editorNote).replace(rstrip, '');
     if (note.length) {

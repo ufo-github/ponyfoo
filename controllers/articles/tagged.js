@@ -5,10 +5,10 @@ var articleService = require('../../services/article');
 var articleSearchService = require('../../services/articleSearch');
 var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');
-var separator = /[+/,_: ]+/ig;
 
 module.exports = function (req, res, next) {
-  var tags = req.params.tags.split(separator);
+  var rseparator = /[+/,_: ]+/ig;
+  var tags = req.params.tags.split(rseparator);
   var title = util.format('Articles tagged "%s"', tags.join('", "'));
   var query = {
     status: 'published',

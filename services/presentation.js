@@ -7,9 +7,9 @@ var datetimeService = require('./datetime');
 var authority = env('AUTHORITY');
 var slideFormat = 'https://speakerd.s3.amazonaws.com/presentations/%s/slide_0.jpg';
 var youtubeFormat = 'https://img.youtube.com/vi/%s/0.jpg';
-var rparagraph = /^<p>|<\/p>$/ig;
 
 function toModel (presentation) {
+  var rparagraph = /^<p>|<\/p>$/ig;
   return {
     presented: datetimeService.field(presentation.presented),
     title: presentation.title,

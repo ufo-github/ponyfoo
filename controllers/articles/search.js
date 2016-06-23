@@ -4,11 +4,11 @@ var util = require('util');
 var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');
 var articleSearchService = require('../../services/articleSearch');
-var separator = /[+/,_: -]+/ig;
 
 module.exports = function (req, res, next) {
+  var rseparator = /[+/,_: -]+/ig;
   var input = req.params.terms;
-  var terms = input.split(separator);
+  var terms = input.split(rseparator);
   var title = util.format('Search results for "%s"', terms.join('", "'));
   var handle = articleListHandler(res, { search: true }, searchResults(res, next));
 

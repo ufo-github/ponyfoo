@@ -5,7 +5,6 @@ var sluggish = require('sluggish');
 var moment = require('moment');
 var Presentation = require('../../../models/Presentation');
 var markupService = require('../../../services/markup');
-var rparagraph = /^<p>|<\/p>$/ig;
 
 module.exports = function (req, res) {
   var body = req.body;
@@ -30,6 +29,7 @@ module.exports = function (req, res) {
   };
   new Presentation(model).save(saved);
   function toResourceItem (title, i) {
+    var rparagraph = /^<p>|<\/p>$/ig;
     return {
       title: title,
       titleHtml: markupService.compile(title).trim().replace(rparagraph, ''),

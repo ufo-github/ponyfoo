@@ -10,7 +10,6 @@ var articleSummarizationService = require('../../services/articleSummarization')
 var articleSearchService = require('../../services/articleSearch');
 var Article = require('../Article');
 var env = require('../../lib/env');
-var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
 
 Article.schema.pre('save', beforeSave);
 Article.schema.post('save', afterSave);
@@ -29,6 +28,7 @@ function computeSignature (a) {
 }
 
 function beforeSave (next) {
+  var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
   var bulk = env('BULK_INSERT');
   var article = this;
   var oldSign = article.sign;

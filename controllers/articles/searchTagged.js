@@ -4,13 +4,13 @@ var util = require('util');
 var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');
 var articleSearchService = require('../../services/articleSearch');
-var tagSeparator = /[+/,_: ]+/ig;
-var termSeparator = /[+/,_: -]+/ig;
 
 module.exports = function (req, res, next) {
+  var rtagSeparator = /[+/,_: ]+/ig;
+  var rtermSeparator = /[+/,_: -]+/ig;
   var input = req.params.terms;
-  var tags = req.params.tags.split(tagSeparator);
-  var terms = input.split(termSeparator);
+  var tags = req.params.tags.split(rtagSeparator);
+  var terms = input.split(rtermSeparator);
   var handle = articleListHandler(res, { search: true }, searchResults(res, next));
   var fmt = 'Search results for "%s" in articles tagged "%s"';
   var title = util.format(fmt, terms.join('", "'), tags.join('", "'));

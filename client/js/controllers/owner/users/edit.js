@@ -6,7 +6,6 @@ var taunus = require('taunus');
 var sluggish = require('sluggish');
 var debounce = require('lodash/function/debounce');
 var markdownService = require('../../../../../services/markdown');
-var rparagraph = /^<p>|<\/p>$/ig;
 
 module.exports = function (viewModel, container) {
   var email = $('.cb-email', container);
@@ -39,6 +38,7 @@ module.exports = function (viewModel, container) {
   }
 
   function updatePreview () {
+    var rparagraph = /^<p>|<\/p>$/ig;
     preview.html(getHtml(bio).trim().replace(rparagraph, '') || 'Main body of your bio');
   }
 

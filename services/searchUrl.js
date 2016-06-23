@@ -1,8 +1,6 @@
 'use strict';
 
 var spaces = /\s+/;
-var tagExtract = /\[([^\s[\]]+)\]/g;
-var tagUnwrap = /^\[(\S+)\]$/;
 
 function compile (input) {
   var builder = ['/articles'];
@@ -27,6 +25,7 @@ function compile (input) {
 }
 
 function extract (result, keyword) {
+  var tagExtract = /\[([^\s[\]]+)\]/g;
   var tags = keyword.match(tagExtract);
   if (tags) {
     result.tags.push.apply(result.tags, tags);
@@ -61,6 +60,7 @@ function unique (collection, item) {
 }
 
 function unwrap (tag) {
+  var tagUnwrap = /^\[(\S+)\]$/;
   return tag.replace(tagUnwrap, '$1');
 }
 
