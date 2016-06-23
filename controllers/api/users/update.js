@@ -38,6 +38,9 @@ module.exports = function (req, res, next) {
     if (!validEmail) {
       res.status(400).json({ messages: ['Use a valid email address.'] }); return;
     }
+    if (body.roles.length < 1) {
+      res.status(400).json({ messages: ['The user must have some role.'] }); return;
+    }
     user.email = body.email;
     user.displayName = displayName;
     user.slug = slug;
