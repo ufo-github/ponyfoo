@@ -28,7 +28,7 @@ function getFeed (done) {
 
     contra.map(issues, toFeedItem, done);
     function toFeedItem (issue, next) {
-      formatContent(issue.contentHtml, formatted);
+      formatContent(md(issue.summaryHtml) + issue.contentHtml, formatted);
       function formatted (err, description) {
         if (err) {
           next(err); return;
@@ -42,6 +42,9 @@ function getFeed (done) {
           date: issue.publication
         });
       }
+    }
+    function md (html) {
+      return '<div class="md-markdown">' + html + '</div>';
     }
     function formatContent (contentHtml, done) {
       var compilerOpts = {
