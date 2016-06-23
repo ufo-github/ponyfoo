@@ -22,7 +22,8 @@ article.ly-section.vw-maintainer.de-host
                   a.lk-rainbows(href='/contributors/' + user.slug, aria-label='Check out their contributor profile')=user.displayName
                 else
                   span=user.displayName
-              td(data-label='Email')=user.email
+              td(data-label='Email')
+                a.lk-rainbows(href='mailto:' + user.email, aria-label='Send them an email.')=user.email
               td.usr-roles(data-label='Roles')!=user.roles
               td.usr-buttons(data-label='Actions')
                 a.ar-button.lk-icon.fa.fa-pencil(href='/users/' + user.id + '/edit', aria-label='Edit this user')
