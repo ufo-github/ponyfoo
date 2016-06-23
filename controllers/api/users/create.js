@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
   if (password.length < 4) {
     res.status(400).json({ messages: ['The password must be at least 4 characters long.'] }); return;
   }
-    var validEmail = validator.isEmail(model.email);
+    var validEmail = validator.isEmail(body.email);
     if (!validEmail) {
       res.status(400).json({ messages: ['Use a valid email address.'] }); return;
     }

@@ -34,7 +34,7 @@ module.exports = function (req, res, next) {
     if (slug.length < 4) {
       res.status(400).json({ messages: ['Your username must be at least 4 characters long.'] }); return;
     }
-    var validEmail = validator.isEmail(model.email);
+    var validEmail = validator.isEmail(body.email);
     if (!validEmail) {
       res.status(400).json({ messages: ['Use a valid email address.'] }); return;
     }
