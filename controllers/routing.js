@@ -15,6 +15,9 @@ var authorPresentationsNew = require('./api/author/presentations-new');
 var authorPresentationsRemove = require('./api/author/presentations-remove');
 var authorOpenSourceProjectNew = require('./api/author/oss-new');
 var authorOpenSourceProjectRemove = require('./api/author/oss-remove');
+var userCreate = require('./api/users/create');
+var userUpdate = require('./api/users/update');
+var userRemove = require('./api/users/remove');
 var invoiceNew = require('./api/invoices/create');
 var invoiceUpdate = require('./api/invoices/update');
 var invoiceRemove = require('./api/invoices/remove');
@@ -128,6 +131,10 @@ module.exports = function (app) {
   app.post('/api/invoices/new', invoiceOnly, invoiceNew);
   app.post('/api/invoices/:slug/edit', invoiceOnly, invoiceUpdate);
   app.post('/api/invoices/:slug/remove', invoiceOnly, invoiceRemove);
+
+  app.put('/api/users', ownerOnly, userCreate);
+  app.patch('/api/users/:id', ownerOnly, userUpdate);
+  app.delete('/api/users/:id', ownerOnly, userRemove);
 
   app.patch('/api/account/profile', authOnly, updateProfile);
   app.post('/api/twitter-lead', twitterLead);

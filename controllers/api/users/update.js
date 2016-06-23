@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
   var bioHtml = markupService.compile(bio, { deferImages: true });
   var bioText = summaryService.summarize(bioHtml, 200).text;
 
-  User.findOne({ _id: req.user }, update);
+  User.findOne({ _id: req.params.id }, update);
 
   function update (err, user) {
     if (err) {
@@ -28,17 +28,19 @@ module.exports = function (req, res, next) {
     }
     var displayName = body.displayName;
     if (displayName.length < 4) {
-      res.status(400).json({ messages: ['Your name must be at least 4 characters long.'] }); return;
+      res.status(400).json({ messages: ['The name must be at least 4 characters long.'] }); return;
     }
     var slug = sluggish(body.slug);
     if (slug.length < 4) {
-      res.status(400).json({ messages: ['Your username must be at least 4 characters long.'] }); return;
+      res.status(400).json({ messages: ['The username must be at least 4 characters long.'] }); return;
     }
+    user.email = body.email;
     user.displayName = displayName;
     user.slug = slug;
     user.twitter = parseTwitter(body.twitter);
     user.website = parseLink(body.website);
     user.avatar = parseLink(body.avatar);
+    user.roles = body.roles;
     user.bio = bio;
     user.bioHtml = bioHtml;
     user.bioText = bioText;

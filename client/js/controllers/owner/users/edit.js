@@ -5,7 +5,7 @@ var raf = require('raf');
 var taunus = require('taunus');
 var sluggish = require('sluggish');
 var debounce = require('lodash/function/debounce');
-var markdownService = require('../../../../services/markdown');
+var markdownService = require('../../../../../services/markdown');
 var rparagraph = /^<p>|<\/p>$/ig;
 
 module.exports = function (viewModel, container) {
@@ -19,6 +19,7 @@ module.exports = function (viewModel, container) {
   var website = $('.cb-website', container);
   var preview = $('.cb-preview', container);
   var avatar = $('.cb-avatar', container);
+  var roles = $('.cb-role-input', container);
   var saveButton = $('.cb-save', container);
   var updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 200));
   var updateSlugSlowly = raf.bind(null, debounce(updateSlug, 200));
@@ -46,26 +47,36 @@ module.exports = function (viewModel, container) {
   }
 
   function save () {
-    var slugValue = sluggish(slug.value());
     var model = {
       email: email.value(),
       displayName: displayName.value(),
-      slug: slugValue,
+      slug: sluggish(slug.value()),
       bio: bio.value(),
       twitter: twitter.value(),
       website: website.value(),
-      avatar: avatar.value()
+      avatar: avatar.value(),
+      roles: roles.filter(isChecked).map(intoRoleValue)
     };
     var pwd = password.value();
     if (pwd.length) {
       model.password = pwd;
-      model.oldPassword = oldPassword.value();
+      if (viewModel.editing) {
+        model.oldPassword = oldPassword.value();
+      }
     }
     var data = { json: model };
-    viewModel.measly.patch('/api/account/profile', data).on('data', leave);
+    var id = saveButton.attr('data-id');
+    if (viewModel.editing) {
+      viewModel.measly.patch('/api/users/' + id, data).on('data', leave);
+    } else {
+      viewModel.measly.put('/api/users', data).on('data', leave);
+    }
 
     function leave () {
-      taunus.navigate('/contributors/' + slugValue);
+      taunus.navigate('/users');
     }
+
+    function isChecked (el) { return $(el).value(); }
+    function intoRoleValue (el) { return $(el).text(); }
   }
 };

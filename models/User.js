@@ -20,7 +20,7 @@ var schema = new mongoose.Schema({
   twitter: String,
   website: String,
   avatar: String,
-  roles: [String] // ['owner', 'articles', 'weeklies', 'moderator']
+  roles: [String] // ['owner', 'editor', 'articles', 'weeklies', 'moderator']
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
 schema.virtual('gravatar').get(computeGravatar);

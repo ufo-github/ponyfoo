@@ -1,0 +1,27 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Users
+    section.usr-container
+      div.usr-actions
+        a.usr-action.lk-icon.fa.fa-pencil-square-o(href='/users/new', aria-label='Generate a new user')
+      table
+        thead
+          tr
+            th Created
+            th Name
+            th Email
+            th Roles
+            th Actions
+        tbody
+          each user in users
+            tr
+              td.usr-date(data-label='Created')
+                time(datetime=user.created.datetime, aria-label='Created ' + user.created.title)=user.created.text
+              td(data-label='Name')=user.displayName
+              td(data-label='Email')=user.email
+              td.usr-roles(data-label='Roles')!=user.roles
+              td.usr-buttons(data-label='Actions')
+                a.ar-button.lk-icon.fa.fa-pencil(href='/users/' + user.id + '/edit', aria-label='Edit this user')
+                a.ar-button.lk-icon.fa.fa-remove.lk-icon.fa.fa-remove.usr-remove(aria-label='Delete this user', type='submit', data-id=user.id)
+
+  include ../../partials/aside

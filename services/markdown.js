@@ -1,10 +1,10 @@
 'use strict';
 
-var twemoji = require('twemoji');
 var domador = require('domador');
 var megamark = require('megamark');
 var insane = require('insane');
 var textService = require('./text');
+var emojiService = require('./emoji');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
 var domains = [
@@ -84,12 +84,8 @@ function compile (text) {
       }
     }
   };
-  var emojiOpts = {
-    base: 'https://twemoji.maxcdn.com/2/',
-    className: 'tj-emoji',
-    size: 72
-  };
-  return twemoji.parse(megamark(text, mdOpts), emojiOpts);
+  var html = megamark(text, mdOpts);
+  return emojiService.compile(html);
 }
 
 function decompile (html, options) {

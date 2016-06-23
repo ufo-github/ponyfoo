@@ -1,0 +1,37 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title=editing ? 'Edit User' : 'Create User'
+    section
+      input.cb-email(placeholder='Their email, please', value=profile.email)
+      if editing
+        input.cb-old-password.cb-half(placeholder='Their old password, only if you wish to change it', type='password')
+      input(class='cb-password' + (editing ? ' cb-half' : ''), placeholder='Their new password', type='password')
+      input.cb-name(placeholder='Their name, please', value=profile.displayName)
+      input.cb-slug.cb-half(placeholder='Their username, used in /contributors/your-username', value=profile.slug)
+      input.cb-twitter.cb-half(placeholder='Their Twitter username, as in @ponyfoo', value=profile.twitter)
+      input.cb-website(placeholder='A link to your website', value=profile.website)
+      input.cb-avatar(placeholder='A link to an avatar image. Defaults to a gravatar.', value=profile.avatar)
+    section.cb-roles
+      input.cb-role-input.ck-input#cb-role-owner(type='checkbox', value='owner', checked=profile.roles.indexOf('owner') !== -1)
+      label.cb-role.ck-checkbox(for='cb-role-owner') Owner
+      input.cb-role-input.ck-input#cb-role-editor(type='checkbox', value='editor', checked=profile.roles.indexOf('editor') !== -1)
+      label.cb-role.ck-checkbox(for='cb-role-editor') Editor
+      input.cb-role-input.ck-input#cb-role-articles(type='checkbox', value='articles', checked=profile.roles.indexOf('articles') !== -1)
+      label.cb-role.ck-checkbox(for='cb-role-articles') Articles
+      input.cb-role-input.ck-input#cb-role-weeklies(type='checkbox', value='weeklies', checked=profile.roles.indexOf('weeklies') !== -1)
+      label.cb-role.ck-checkbox(for='cb-role-weeklies') Weeklies
+      input.cb-role-input.ck-input#cb-role-moderator(type='checkbox', value='moderator', checked=profile.roles.indexOf('moderator') !== -1)
+      label.cb-role.ck-checkbox(for='cb-role-moderator') Moderator
+    div
+      textarea.wk-textarea.cb-bio(placeholder='Their bio goes here!')=profile.bio
+
+    h2 Bio Preview
+    section.cb-preview.md-markdown
+
+    footer.cb-actions
+      a.lk-link(href='/users', aria-label='Back to user list') Cancel
+      button.gg-container.bt-button.bt-pink.cb-save(type='submit', data-id=profile.id)
+        span.bt-text Save
+        include ../../partials/button-background
+
+  include ../../partials/aside
