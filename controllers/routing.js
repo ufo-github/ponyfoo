@@ -68,7 +68,7 @@ var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 var env = require('../lib/env');
 var redirects = require('./redirects');
 var getDefaultViewModel = require('./getDefaultViewModel');
-var hydrateRequestWithRoles = require('./hydrateRequestWithRoles');
+var hydrateRequestModel = require('./hydrateRequestModel');
 var verifyForm = require('./verifyForm');
 var layout = require('../.bin/views/server/layout/layout');
 var production = env('NODE_ENV') === 'production';
@@ -152,7 +152,7 @@ module.exports = function (app) {
     routes: routes,
     layout: layout,
     getDefaultViewModel: getDefaultViewModel,
-    beforeRender: hydrateRequestWithRoles,
+    beforeRender: hydrateRequestModel,
     plaintext: {
       root: 'article', ignore: 'footer,.mm-count,.at-meta'
     },

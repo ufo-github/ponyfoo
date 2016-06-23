@@ -306,6 +306,7 @@ module.exports = function (viewModel, container) {
           .append('path')
           .datum(pv)
           .attr('class', 'sg-pageviews')
+          .attr('stroke', 'url(#sg-pageviews-gradient)') // relative url in css is relative to stylesheet, better have it here
           .attr('d', line);
       }
     }
