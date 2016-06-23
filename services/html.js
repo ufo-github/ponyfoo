@@ -86,6 +86,15 @@ function fixedEmojiSize (html) {
   }
 }
 
+function removeEmoji (html) {
+  var $ = cheerio.load(html);
+  $('img[src]').filter(isEmojiEl).remove();
+  return $.html();
+  function isEmojiEl () {
+    return isEmoji($(this).attr('src'));
+  }
+}
+
 function getText (html) {
   return cheerio.load(html)('*').text();
 }
@@ -167,5 +176,6 @@ module.exports = {
   undeferImages: undeferImages,
   externalizeLinks: externalizeLinks,
   fixedEmojiSize: fixedEmojiSize,
+  removeEmoji: removeEmoji,
   linkThrough: linkThrough
 };

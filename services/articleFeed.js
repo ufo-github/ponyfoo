@@ -33,7 +33,7 @@ function getFeed (done) {
       var description = markupService.compile(fullHtml, {
         markdown: false,
         absolutize: true,
-        fixEmojiSize: true
+        removeEmoji: true
       });
       var item = {
         title: article.title,
