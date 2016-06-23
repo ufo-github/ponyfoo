@@ -49,7 +49,7 @@ function humanReadableRole (roles) {
   if (terms.length) {
     return concatenate();
   }
-  return 'Contributor';
+  return 'Collaborator';
   function concatenate () {
     var firstTerm = terms.shift();
     var len = terms.length;
