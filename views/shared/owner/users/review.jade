@@ -17,7 +17,11 @@ article.ly-section.vw-maintainer.de-host
             tr
               td.usr-date(data-label='Created')
                 time(datetime=user.created.datetime, aria-label='Created ' + user.created.title)=user.created.text
-              td(data-label='Name')=user.displayName
+              td(data-label='Name')
+                if user.slug
+                  a.lk-rainbows(href='/contributors/' + user.slug, aria-label='Check out their contributor profile')=user.displayName
+                else
+                  span=user.displayName
               td(data-label='Email')=user.email
               td.usr-roles(data-label='Roles')!=user.roles
               td.usr-buttons(data-label='Actions')

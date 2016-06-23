@@ -30,7 +30,8 @@ function toUserModel (user) {
     created: datetimeService.field(user.created),
     roles: user.roles.map(roleAsEmoji).join(' '),
     displayName: user.displayName,
-    email: user.email
+    email: user.email,
+    slug: user.slug
   };
 }
 
