@@ -18,6 +18,7 @@ module.exports = function (req, res, next) {
     bioService.getMarkdown(user.email, got);
     function got (err, bio) {
       next(err, {
+        email: user.email,
         displayName: user.displayName,
         slug: user.slug,
         twitter: user.twitter,
