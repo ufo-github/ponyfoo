@@ -21,7 +21,8 @@ article.de-host
     aside.ib-profile
       include contributor-profile
 
-      section.ib-bio.md-markdown!=profile.bioHtml
+      if profile.bioHtml
+        section.ib-bio.md-markdown!=profile.bioHtml
 
     article.ib-articles
       if articleCount

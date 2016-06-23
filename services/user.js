@@ -2,6 +2,7 @@
 
 var User = require('../models/User');
 var gravatarService = require('./gravatar');
+var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
 
 function getModel (email, password, bypass) {
   return {
@@ -23,7 +24,7 @@ function getProfile (user, options) {
     website: user.website
   };
   if (options.withBio) {
-    profile.bioHtml = user.bioHtml;
+    profile.bioHtml = user.bioHtml.replace(rstrip, '');
   }
   return profile;
 }
