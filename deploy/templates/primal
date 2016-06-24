@@ -7,12 +7,10 @@ cp -r /tmp/mailtube $HOME/app/mailtube
 echo "packer: elasticsearch + logstash + kibana as services"
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
-sudo /bin/systemctl enable logstash.service
-sudo /bin/systemctl enable kibana.service
 
 echo "packer: elasticsearch configuration and x-pack"
 sudo service elasticsearch stop
-echo "indices.fielddata.cache.size: 500mb" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
+echo "indices.fielddata.cache.size: 300mb" | sudo tee -a /etc/elasticsearch/elasticsearch.yml
 sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack --batch
 sudo service elasticsearch start
 sleep 20s
@@ -31,7 +29,7 @@ echo "elasticsearch.password: \"$ES_PASSWORD\"" | sudo tee -a $KIBANA_CONF > /de
 sudo /opt/kibana/bin/kibana-plugin install x-pack
 sudo tar jxf /opt/kibana/installedPlugins/x-pack/.phantom/phantomjs-1.9.8-linux-x86_64.tar.bz2
 sudo chown -R kibana:kibana /opt/kibana
-sudo service kibana restart
+sudo /bin/systemctl enable kibana.service
 
 echo "packer: elasticsearch license"
 curl \
