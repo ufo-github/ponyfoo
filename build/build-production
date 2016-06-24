@@ -41,6 +41,7 @@ uglifyjs_alone() {
 
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
+stylus client/css/email.styl -o .bin/static --include-css --include client/css --compress
 stylus client/css/article.styl -o .bin/static --include-css --include client/css --compress
 stylus client/css/newsletter.styl -o .bin/static --include-css --include client/css --compress
 jadum views/**/*.jade -o .bin --no-debug --obj '{"basedir":"views"}'

@@ -1,12 +1,13 @@
 'use strict';
 
-var util = require('util');
+var fs = require('fs');
 var path = require('path');
+var util = require('util');
 var campaign = require('campaign');
 var assign = require('assignment');
 var mailgun = require('campaign-mailgun');
-var jade = require('campaign-ponyfoo');
 var term = require('campaign-terminal');
+var jadum = require('jadum');
 var winston = require('winston');
 var htmlService = require('./html');
 var staticService = require('./static');
@@ -16,7 +17,9 @@ var apiKey = env('MAILGUN_API_KEY');
 var from = env('MAILGUN_SENDER');
 var trap = env('MAILGUN_TRAP');
 var authority = env('AUTHORITY');
-var client = createClient();
+var cssFile = path.resolve(__dirname, '../.bin/static/email.css');
+var css = fs.readFileSync(cssFile, 'utf8');
+var layoutFile = '../.bin/views/server/emails/layout.js';
 var defaults = {
   authority: authority,
   social: {
@@ -29,26 +32,18 @@ var defaults = {
       name: 'ponyfoo.com'
     }
   },
-  styles: {
-    layoutBackgroundColor: '#fcfcfc',
-    bodyBackgroundColor: '#fcfcfc',
-    footerBackgroundColor: '#fcfcfc',
-    layoutTextColor: '#000',
-    bodyTextColor: '#000',
-    headerColor: '#000',
-    horizontalBorderColor: 'transparent',
-    linkColor: '#e92c6c',
-    quoteBorderColor: '#ffe270',
-    quoteBackgroundColor: '#fef2c5',
-    codeBorderRightColor: '#f3720d',
-    codeBorderBottomColor: '#ffb77e',
-    codeBackgroundColor: '#ffeadb'
-  }
+  styles: { base: css }
 };
 var api = {
   send: send,
   logger: logger
 };
+var templateEngine = {
+  defaultLayout: layoutFile,
+  render: renderTemplate,
+  renderString: renderTemplateString
+};
+var client = createClient();
 
 function createClient () {
   var brandedHeader = staticService.unroll('/img/banners/branded.png');
@@ -56,7 +51,7 @@ function createClient () {
   var emails = mailgun({ apiKey: apiKey, authority: authority });
   var options = {
     headerImage: headerImage,
-    templateEngine: jade,
+    templateEngine: templateEngine,
     provider: emails,
     formatting: formatting,
     from: from
@@ -92,6 +87,12 @@ function logger () {
   } else {
     winston.debug('Email sent!');
   }
+}
+function renderTemplate (file, model, done) {
+  done(null, require(file)(model));
+}
+function renderTemplateString (template, model, done) {
+  done(null, jadum.render(template, model));
 }
 
 module.exports = api;

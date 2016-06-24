@@ -15,7 +15,7 @@ p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom:
     span=' ' + comment.author
   span=' posted a new comment!'
 
-div(style='padding: 20px; background-color: #fff9f4;')!=comment.content
+div.md-markdown(style='padding: 20px; background-color: #fff9f4;')!=comment.content
 
 p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
   meta(itemprop='name', content='Reply')
