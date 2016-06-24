@@ -63,11 +63,6 @@ function getFeed (done) {
 
       function inlinedCss (inlined) {
         var $ = cheerio.load(inlined);
-        $('blockquote').css({
-          'border-left': '5px solid #900070',
-          'background-color': '#f7f0f5',
-          padding: '12px'
-        });
         var html = $.html();
         done(null, html);
       }
