@@ -17,26 +17,6 @@
   font-style italic
   color c-gray
 
-.dc-title-container
-  background linear-gradient(to bottom, c-pink 0, lighten(c-pink, 30%) 40%, lighten(c-pink, 50%) 60%, c-white 100%)
-
-.dc-title
-  border-bottom 4px solid rgba(lighten(c-pink, 60%), 0.4)
-  padding 20px
-  margin-top 40px
-  margin-bottom 0
-  font-size 2.6em
-  text-align center
-  color lighten(c-pink, 90%)
-  transition color 0.1s ease-in-out
-
-  /.ly-custom-headings &
-    font-size 3em
-
-  .md-code
-    background-color rgba(c-black, 0.2)
-    color c-white
-
 dc-color(c-border-top, c-background)
   border-color c-border-top
   background-color c-background
@@ -67,12 +47,3 @@ dc-color(c-border-top, c-background)
     dc-color(c-dark-turquoise, lighten(c-dark-turquoise, 96%))
   &:nth-child(7n-0)
     dc-color(c-green, lighten(c-green-005, 50%))
-
-@media only screen and (min-width: 768px)
-  .dc-title
-    padding 20px 40px 30px
-    font-size 3em
-    text-align inherit
-
-    /.ly-custom-headings &
-      font-size 4em

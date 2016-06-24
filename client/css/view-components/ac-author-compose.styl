@@ -1,11 +1,25 @@
 .ac-aside
+  max-width 400px
   line-height 20px
-  p
-    margin 20px 0
+  margin 30px auto
 
-  .ac-timing-item,
-  .ac-campaign-item
-    margin 5px 0
+.ac-timing-title,
+.ac-campaign-title
+  margin 20px 0
+
+.ac-timing-item,
+.ac-campaign-item
+  margin 5px 0
+
+.ac-timing-title,
+.ac-campaign-title,
+.ac-timing-item,
+.ac-campaign-item
+  &:first-child
+    margin-top 0
+
+.ac-timing
+  margin-bottom 40px
 
 .ac-cancel,
 .ac-discard
@@ -30,7 +44,7 @@
 
 .ac-actions
   text-align right
-  margin-top 40px
+  padding 40px
 
 .ac-publication
   display none
@@ -42,24 +56,14 @@
 .ac-preview-title:empty:before
   content 'Article Preview'
 
-.ac-preview
-  margin-top 25px
+.ac-preview-heading
+  margin-top 40px
 
 .ac-tags
   margin-top 20px
 
-.ac-preview-title.dc-title
-  max-width 100%
-  margin 0
-
-.ac-preview-body:before
-  margin 0
-
 .ac-summary
   min-height 100px
-
-.ac-timing
-  margin-bottom 40px
 
 .ac-preview-summary
   pointer-events none
@@ -70,17 +74,6 @@
   .ac-slug
     margin-bottom 20px
 
-  .ac-container,
+@media only screen and (min-width: 1200px)
   .ac-aside
-    vertical-align top
-    display inline-block
-
-  .ac-container
-    width calc(100% - 225px)
-    margin-right 20px
-
-  .ac-aside
-    width 205px
-
-    p:first-child
-      margin-top 0
+    margin-top 65px

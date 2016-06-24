@@ -42,7 +42,7 @@ module.exports = function (viewModel, container, route) {
   var lobsters = $('#ac-campaign-lobsters');
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
-  var preview = $.findOne('.ac-preview');
+  var preview = $('.ac-preview');
   var previewTitle = $('.ac-preview-title');
   var previewTeaser = $('.ac-preview-teaser');
   var previewEditorNote = $('.ac-preview-editor-note');
@@ -167,7 +167,7 @@ module.exports = function (viewModel, container, route) {
     }
     previewIntroduction.html(getHtml(introduction));
     previewBody.html(getHtml(body));
-    twitterService.updateView(preview);
+    preview.forEach(twitterService.updateView);
     if (!summary.value()) {
       updatePreviewSummary();
     }

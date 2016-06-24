@@ -4,10 +4,10 @@
 - created = moment(article.created)
 - published = article.status === 'published'
 
-header.at-header.dc-title-container
-  h1.dc-title(itemprop='headline')!=article.titleHtml
+header.at-header.dc-header
+  h1.at-title.dc-heading(itemprop='headline')!=article.titleHtml
 
-  section.at-teaser
+  section.at-teaser.dc-role
     div.at-teaser-markdown.md-markdown!=article.teaserHtml
 
 section.at-container.de-host
