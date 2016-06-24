@@ -31,14 +31,14 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                             tr
                               td.body-header-image-td(valign='top')
                                 if social.landing.url
-                                  a(href=social.landing.url)
+                                  a.body-header-image-link(href=social.landing.url)
                                     img.body-header-image(src='cid:_header', alt='')
                                 else
                                   img.body-header-image(src='cid:_header', alt='')
 
                     tr
                       td(align='center', valign='top')
-                        table.body-container(border='0', cellpadding='0', cellspacing='0', width='100%')
+                        table(class='body-container' + (_header ? ' body-had-header-image' : ''), border='0', cellpadding='0', cellspacing='0', width='100%')
                           tr
                             td.body-content(valign='top')
                               div!=body

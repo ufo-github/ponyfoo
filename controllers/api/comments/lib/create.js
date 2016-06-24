@@ -15,6 +15,7 @@ var gravatarService = require('../../../../services/gravatar');
 var subscriberService = require('../../../../services/subscriber');
 var env = require('../../../../lib/env');
 var authority = env('AUTHORITY');
+var ownerEmail = env('OWNER_EMAIL');
 var words = env('SPAM_WORDS');
 var delimiters = '[?@,;:.<>{}()\\[\\]\\s_-]';
 var rdelimited = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
@@ -23,7 +24,7 @@ var hostTypes = {
   articles: {
     name: 'Article',
     schema: Article,
-    query: { status: 'published' },
+    query: {},
     topic: 'articles'
   },
   weeklies: {
@@ -74,11 +75,16 @@ module.exports = function (options, done) {
     if (spam(model)) {
       next(null); return;
     }
+    if (options.type === 'articles' && host.status !== 'published' && !options.user) {
+      done(null, 400, ['You can’t comment on article drafts!']); return;
+    }
     var opts = {
       deferImages: true,
       externalize: true
     };
-    var md = model.content.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
+    var rimgur = /http:\/\/i\.imgur\.com\//g;
+    var secureImgur = 'https://i.imgur.com/';
+    var md = model.content.replace(rimgur, secureImgur);
     var html = markupService.compile(model.content, opts);
     var runsafe = /^\s*http:\/\//i;
     var unsafeImages = false;
@@ -134,7 +140,7 @@ module.exports = function (options, done) {
     }
 
     function calculate (host, next) {
-      var emails = [host.author.email];
+      var emails = [ownerEmail, host.author.email];
       var thread, op;
       var parentId = comment.parent;
       if (parentId) {

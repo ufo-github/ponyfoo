@@ -4,10 +4,10 @@ var $ = require('dominus');
 var comments = require('../comments/all');
 
 module.exports = function (viewModel, container) {
-  if (viewModel.issue.status !== 'released') {
+  var composer = $('.mc-composer', container);
+  if (!composer.length) {
     return;
   }
-  var composer = $('.mc-composer', container);
   var commentsModel = {
     user: viewModel.user,
     parent: viewModel.issue,

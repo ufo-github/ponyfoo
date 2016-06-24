@@ -58,7 +58,7 @@ section.at-container.de-host
           span.bt-text Subscribe
           include ../partials/button-background
 
-    if published
+    if published || user
       - this.parent = article
       - this.parentType = 'articles'
       include ../comments/all

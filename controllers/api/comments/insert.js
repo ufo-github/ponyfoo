@@ -15,7 +15,8 @@ function insert (req, res, next) {
   var options = {
     type: req.params.type,
     slug: req.params.slug,
-    model: model
+    model: model,
+    user: req.user
   };
 
   create(options, function (err, statusCode, messages, inserted) {

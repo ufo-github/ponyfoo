@@ -21,6 +21,7 @@ function publish (model, done) {
     }
     model.publication = Date.now();
     model.status = 'published';
+    model.comments = [];
 
     next(null, prev);
   }
