@@ -10,7 +10,8 @@ module.exports = function (req, res, next) {
       title: 'Article Composer',
       status: 'draft',
       article: { tags: [] },
-      editing: !!slug
+      editing: !!slug,
+      originalAuthor: true
     }
   };
 
