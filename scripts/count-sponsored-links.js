@@ -35,7 +35,6 @@ function found (err, issues) {
   end();
 }
 
-
 function end () {
   db.disconnect();
 }
