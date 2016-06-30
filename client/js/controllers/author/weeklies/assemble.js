@@ -9,6 +9,7 @@ var dragula = require('dragula');
 var taunus = require('taunus');
 var debounce = require('lodash/function/debounce');
 var textareas = require('../../../conventions/textareas');
+var scrapeCompletionService = require('../../../services/scrapeCompletion');
 var markdownService = require('../../../../../services/markdown');
 var textService = require('../../../../../services/text');
 var summaryService = require('../../../../../services/summary');
@@ -70,6 +71,7 @@ function ready (viewModel, container, route) {
     .on('click', '.wa-section-clone', cloneSection)
     .on('change', '.wa-color-picker', pickedColor)
     .on('change', '.wa-header-background', updateLinkColors)
+    .on('change keypress keydown paste input', '.wa-link-image', updateThumbnailImage)
     .on('change keypress keydown paste input', '.wa-link-href', function (e) {
       scrapeLinkSlowly(e.target);
     })
@@ -146,21 +148,11 @@ function ready (viewModel, container, route) {
     $('.wa-section').where('[data-tool="link"]').forEach(function (el) {
       var $linkPreview = $('.wa-link-preview', el);
       var $title = $('.wa-link-title', el);
-      var $image = $('.wa-link-image', el);
-      var $imagePreview = $('.wa-link-image-preview', el);
       var title = markdownService.compile($title.value()).replace(rparagraph, '');
       var summary = summaryService.summarize(title, 30).html.trim();
       var postfix = summary ? ' – ' + summary : '';
-      var imageValue = $image.value().trim();
 
       $linkPreview.html(postfix);
-      $imagePreview.attr('src', imageValue);
-
-      if (imageValue.length) {
-        $imagePreview.removeClass('uv-hidden');
-      } else {
-        $imagePreview.addClass('uv-hidden');
-      }
     });
   }
 
@@ -366,95 +358,22 @@ function ready (viewModel, container, route) {
     }
   }
 
+  function updateThumbnailImage (e) {
+    var $container = $(e.target).parents('.wa-section-contents');
+    scrapeCompletionService.updateThumbnail($container);
+  }
+
   function scrapeLink (el) {
     if (scraping === false) {
       return;
     }
     var $el = $(el);
-    var $parent = $el.parent('.wa-section-contents');
-    var old = $el.attr('data-value');
-    var url = $el.value().trim();
-    $el.attr('data-value', url);
-    if (url.length === 0 || url === old) {
-      return;
-    }
-    var options = {
-      url: '/api/metadata/scrape?url=' + url, json: true
-    };
-    taunus.xhr(options, scraped);
-
-    function scraped (err, data) {
-      if (err) {
-        return;
-      }
-      var firstImage = data.images[0] || '';
-      var description = (data.description || '').trim();
-      var sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
-      var imageInput = $('.wa-link-image', $parent);
-      var imageInputContainer = $('.wa-link-image-container', $parent);
-
-      updateInputs();
-      updateImageSwapper();
-      updatePreview();
-
-      function updateInputs () {
-        $('.wa-link-title', $parent).value(data.title || '');
-        $('.wa-link-description', $parent).value(description);
-        $('.wa-link-source', $parent).value(data.source || '');
-        $('.wa-link-source-href', $parent).value(sourceHref);
-        $('.wa-link-image', $parent).value(firstImage);
-        $('.wa-link-tags', $parent).value('');
-        $('.wa-link-tag', $parent).value(false);
-        $('.wa-link-sponsored', $parent).value(false);
-      }
-
-      function updateImageSwapper () {
-        var swapper = data.images.length > 1;
-        if (swapper) {
-          swapperOn();
-        } else {
-          swapperOff();
-        }
-      }
-
-      function swapperOff () {
-        $('.wa-toggler', imageInputContainer)
-          .addClass('uv-hidden')
-          .off('click');
-      }
-
-      function swapperOn () {
-        var togglerLeft = $('.wa-link-image-left', imageInputContainer);
-        var togglerRight = $('.wa-link-image-right', imageInputContainer);
-        var index = 0;
-
-        togglerLeft.addClass('wa-toggler-off');
-        togglerRight.removeClass('wa-toggler-off');
-
-        $('.wa-toggler', imageInputContainer)
-          .removeClass('uv-hidden')
-          .on('click', swap);
-
-        function swap (e) {
-          var $el = $(e.target);
-          if ($el.hasClass('wa-toggler-off')) {
-            return;
-          }
-          var left = e.target === togglerLeft[0];
-          index += left ? -1 : 1;
-          imageInput.value(data.images[index] || '');
-          invalidate(-1, togglerLeft);
-          invalidate(1, togglerRight);
-          updatePreview();
-        }
-
-        function invalidate (offset, $el) {
-          var on = typeof data.images[index + offset] === 'string';
-          var op = on ? 'removeClass' : 'addClass';
-          $el[op]('wa-toggler-off');
-        }
-      }
-    }
+    scrapeCompletionService.scrape({
+      source: el,
+      url: $el.value(),
+      container: $el.parents('.wa-section-contents'),
+      updatePreview: updatePreview
+    });
   }
 
   function save () {

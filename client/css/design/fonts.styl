@@ -4,7 +4,7 @@
 .f-mono
   font-family f-mono
 
-.ly-custom-headings
+.ly-custom-heading
   .f-heading,
   h1,
   h2,
@@ -14,6 +14,14 @@
   h6
     font-family f-heading
 
-.ly-custom-subheadings
+.ly-custom-subheading
   .f-subheading
+    font-family f-subheading
+
+f-use-heading()
+  /.ly-custom-heading &
+    font-family f-heading
+
+f-use-subheading()
+  /.ly-custom-subheading &
     font-family f-subheading

@@ -19,6 +19,8 @@
   background-color c-purple
   color lighten(c-purple, 20%)
   text-shadow none
+  font-style normal
+  font-size 16px
   line-height 18px
   margin-right 5px
 
@@ -44,17 +46,17 @@
 .ck-input:active + .ck-radio,
 .ck-checkbox:active,
 .ck-radio:active
-  outline 1px dotted c-dark-gray
+  outline 1px dotted c-darker-gray
 
 .ck-input:checked + .ck-checkbox,
 .ck-input:checked + .ck-radio,
 .ck-checked
   &:before
     color c-true-white
-    text-shadow 1px 1px 1px c-moderate
+    text-shadow 1px 1px 1px c-light
   &:hover:before
     color c-light-gray
-    text-shadow 1px 1px 1px c-dark-gray
+    text-shadow 1px 1px 1px c-darker-gray
 
 .ck-readonly
   cursor default

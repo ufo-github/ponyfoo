@@ -20,7 +20,7 @@ module.exports = function (req, res, next) {
         knownTags: weeklyCompilerService.knownTags,
         sampleIssue: sampleIssue,
         samplePrimary: {
-          title: 'JavaScript Developer Survey',
+          titleHtml: 'JavaScript Developer Survey',
           href: 'https://ponyfoo.com/articles/javascript-developer-survey-results',
           image: 'https://i.imgur.com/1sPjnYr.png',
           sponsored: true,
@@ -31,7 +31,7 @@ module.exports = function (req, res, next) {
           tags: []
         },
         sampleLink: {
-          title: 'JavaScript Developer Survey',
+          titleHtml: 'JavaScript Developer Survey',
           href: 'https://ponyfoo.com/articles/javascript-developer-survey-results',
           sponsored: true,
           source: 'Company, Inc.',
@@ -41,7 +41,7 @@ module.exports = function (req, res, next) {
           tags: ['survey']
         },
         sampleJobListing: {
-          title: 'Senior Front-End Engineer at Company, Inc.',
+          titleHtml: 'Senior Front-End Engineer at Company, Inc.',
           href: 'https://example.com/jobs/senior-software-engineer',
           source: 'Company, Inc.',
           sourceHref: 'https://example.com',

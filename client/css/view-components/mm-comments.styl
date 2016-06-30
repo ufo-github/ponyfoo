@@ -26,6 +26,7 @@ mm-author-padding = 10px
 
 .mm-author
   padding mm-author-padding
+  f-use-subheading()
 
 .mm-author-site
   display inline-block
@@ -41,9 +42,6 @@ mm-author-padding = 10px
 
 .mm-author-name
   margin-left 8px
-
-.ly-custom-subheadings .mm-author
-  font-family f-subheading
 
 .mm-gravatar,
 .mm-author-name
@@ -121,12 +119,10 @@ mm-author-padding = 10px
 .mm-footer-title
   margin 40px 10px
   text-align center
+  f-use-subheading()
 
   &:only-child
     display none
-
-.ly-custom-subheadings .mm-footer-title
-  font-family f-subheading
 
 .mm-remove
   float right

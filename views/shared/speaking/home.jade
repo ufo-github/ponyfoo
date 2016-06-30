@@ -1,9 +1,8 @@
 mixin speakingCta
   span.tku-map
     img(src=engagements.fullMap, alt='')
-    a.tkf-contact.gg-container.bt-button.bt-pink(aria-label='Shoot me an email and we’ll discuss it.', data-email='mailto:speaking@ponyfoo.com')
+    a.tkf-contact.bt-button.bt-pink(aria-label='Shoot me an email and we’ll discuss it.', data-email='mailto:speaking@ponyfoo.com')
       span.bt-text Let’s talk!
-      include ../partials/button-background
 
 mixin dateRange (t)
   each date, i in t.range.dates

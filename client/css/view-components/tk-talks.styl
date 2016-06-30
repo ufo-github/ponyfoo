@@ -139,10 +139,10 @@ tkfm-container-gradline-height = 4px
   font-weight 700
   font-size 24px
   text-align right
+  f-use-subheading()
 
-.ly-custom-subheadings .tku-site-container,
-.ly-custom-subheadings .tkp-conference
-  font-family f-subheading
+.tkp-conference
+  f-use-subheading()
 
 .tku-map
   position relative
@@ -209,9 +209,7 @@ tkfm-container-gradline-height = 4px
   background linear-gradient(to right, c-white 0, c-yellow-highlight 66%, c-yellow 100%)
   margin-top 60px
   text-align center
-
-.ly-custom-subheadings .tk-presentations-link
-  font-family f-subheading
+  f-use-subheading()
 
 .tk-presentations-anchor
   position relative

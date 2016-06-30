@@ -34,8 +34,6 @@ schema.virtual('title').get(computeTitle);
 
 var model = mongoose.model('WeeklyIssue', schema);
 
-model.validStatuses = ['draft', 'ready', 'released'];
-
 module.exports = model;
 
 function computeName () {

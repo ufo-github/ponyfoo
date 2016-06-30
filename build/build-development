@@ -14,7 +14,8 @@ browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
 stylus client/css/email.styl -o .bin/static --include-css --include client/css --watch &
 stylus client/css/article.styl -o .bin/static --include-css --include client/css --watch &
-stylus client/css/newsletter.styl -o .bin/static --include-css --include client/css --watch &
+stylus client/css/newsletter-rss.styl -o .bin/static --include-css --include client/css --watch &
+stylus client/css/newsletter-email.styl -o .bin/static --include-css --include client/css --watch &
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}' --watch &
 jadum resources/**/*.jade -o .bin --obj '{"basedir":"resources"}'

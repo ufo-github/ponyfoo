@@ -37,11 +37,7 @@
   display inline-block
   color c-black-text
   margin-right 15px
-
-.ly-custom-subheadings
-  .wa-cancel,
-  .wa-discard
-    font-family f-subheading
+  f-use-subheading()
 
 .wa-summary
   min-height 150px
@@ -150,11 +146,7 @@
 .wa-input-25
   display inline-block
   vertical-align middle
-
-.wa-input-50
-  width 50%
-.wa-input-25
-  width 25%
+  width 100%
 
 .wa-header-size
   display inline-block
@@ -195,3 +187,8 @@
 
   .wa-aside
     width 205px
+
+  .wa-input-50
+    width 50%
+  .wa-input-25
+    width 25%

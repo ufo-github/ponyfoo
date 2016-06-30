@@ -1,0 +1,34 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Link Submissions
+    header.ar-actions
+      a.ar-action.lk-icon.fa.fa-pencil-square-o(href='/weekly/submissions', aria-label='Create a new link submission')
+    table.wur-container
+      thead
+        tr
+          th Created
+          th Title
+          th Status
+          th Type
+          th Submitter
+          th Actions
+      tbody
+        each submission in submissions
+          tr
+            td(data-label='Created')
+              time(datetime=submission.created.datetime, aria-label=submission.created.title)='On ' + submission.created.text
+            td(data-label='Title')=submission.title
+            td.wur-status(data-label='Status')=submission.status
+            td(data-label='Type')=submission.type
+            td(data-label='Submitter')
+              a.lk-rainbows(href='mailto:' + submission.email, target='_blank')=submission.submitter || submission.email
+
+            td.wur-buttons(data-label='Actions')
+              if submission.status !== 'accepted'
+                a.ar-button.lk-icon.fa.fa-check-square-o(href='/api/weeklies/submissions/' + submission.slug + '/accept', aria-label='Mark this link submission as accepted', data-taunus-ignore)
+              else
+                a.ar-button.lk-icon.fa.fa-square(href='/api/weeklies/submissions/' + submission.slug + '/use', aria-label='Mark this link submission as used', data-taunus-ignore)
+              a.ar-button.lk-icon.fa.fa-pencil(href='/weekly/submissions/' + submission.slug + '/edit', aria-label='Edit this link submission')
+              a.ar-button.lk-icon.fa.fa-remove.wur-remove(aria-label='Delete this link submission', data-slug=submission.slug)
+
+  include ../../partials/aside

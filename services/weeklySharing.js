@@ -21,7 +21,7 @@ var weeklyService = require('./weekly');
 var User = require('../models/User');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
-var css = fs.readFileSync('.bin/static/newsletter.css', 'utf8');
+var css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
 
 function noop () {}
 
@@ -78,7 +78,7 @@ function email (issue, options, done) {
   var model = {
     subject: issue.name + ' \u2014 Pony Foo Weekly',
     teaser: 'This week’s Web Platform news & inspiration',
-    teaserHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
+    teaserRightHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
     headerImage: false,
     css: css,
     permalink: permalink,

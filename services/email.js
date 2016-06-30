@@ -32,7 +32,8 @@ var defaults = {
       name: 'ponyfoo.com'
     }
   },
-  styles: { base: css }
+  styles: { base: css },
+  provider: { merge: { '*': { unsubscribe_html: '' } } }
 };
 var api = {
   send: send,

@@ -1,0 +1,160 @@
+article.ly-section
+  header.dc-header.vw-title
+    h1.dc-heading
+      a.lk-link.lk-black.lk-clean(href='/weekly', aria-label='One email about the web every thursday.') Pony Foo Weekly
+      span=' Submissions'
+    div.dc-role Suggest links or provide us with your sponsored content requests!
+
+  include navigation
+
+  div.hy-container.de-host
+    section.de-column.wl-container
+      h2.wl-top What type of content would you like to submit?
+      div.wu-section-note.md-markdown
+        p
+          span To get an idea of what makes a great submission, check out some of the Pony Foo Weekly newsletter issues
+          span=' '
+          a(href='/weekly/history', aria-label='The full Pony Foo Weekly publication history.') published every thursday
+          span . Submitting cool resources for consideration is free of charge. Sponsored links and job listings cost a few bucks.
+        p
+          span To get a better idea about the different advertising opportunities for Pony Foo Weekly, please take a look at the
+          a(href='/sponsor', aria-label='Learn about our sponsorship opportunities and advertise with us!') sponsorship page
+          span .
+
+      ul.wu-types
+        li.wu-type-item.wu-color-suggestion
+          input.ck-input.wu-type#wu-type-suggestion(type='radio', name='wu-type', value='suggestion', checked=submission.subtype === 'suggestion')
+          label.ck-radio.wu-type-radio.wu-colored-border(for='wu-type-suggestion')
+            h3.wu-type-name
+              span=' '
+              span A Cool Resource
+            div.wu-type-description
+              div
+                span An article, conference talk, open-source library, or otherwise cool resource related to the web, design, art, or hacks.
+              div
+                em No sales pitches allowed.
+            div.wu-type-cost $0
+        li.wu-type-item.wu-color-primary
+          input.ck-input.wu-type#wu-type-primary(type='radio', name='wu-type', value='primary', checked=submission.subtype === 'primary')
+          label.ck-radio.wu-type-radio.wu-colored-border(for='wu-type-primary')
+            h3.wu-type-name
+              span=' '
+              span Primary Sponsorship
+            div.wu-type-description
+              div A product, service, or a piece of content you’d like us to promote on Pony Foo Weekly.
+              div
+                em Link gets inserted near the top of the newsletter issue.
+            div.wu-type-cost $70
+        li.wu-type-item.wu-color-secondary
+          input.ck-input.wu-type#wu-type-secondary(type='radio', name='wu-type', value='secondary', checked=submission.subtype === 'secondary')
+          label.ck-radio.wu-type-radio.wu-colored-border(for='wu-type-secondary')
+            h3.wu-type-name
+              span=' '
+              span Sponsored Link
+            div.wu-type-description
+              div A promotional piece of content you’d like us to advertise on Pony Foo Weekly.
+              div
+                em Not as prominent as a primary sponsorship, but cheaper.
+            div.wu-type-cost $50
+        li.wu-type-item.wu-color-job
+          input.ck-input.wu-type#wu-type-job(type='radio', name='wu-type', value='job', checked=submission.subtype === 'job')
+          label.ck-radio.wu-type-radio.wu-colored-border(for='wu-type-job')
+            h3.wu-type-name
+              span=' '
+              span Job Listing
+            div.wu-type-description
+              div
+                span A job offering
+                em=' – relevant to the tech sector – '
+                span that you’re looking to draw attention to.
+              div
+                em Job listings are grouped together around the middle of the newsletter issue.
+            div.wu-type-cost $35
+
+      article.wu-colored
+        section.wu-link-container
+          label.wu-label(for='wu-link') Okay, okay. Show us what you have!
+          input.wu-link.wu-colored-border#wu-link(placeholder='Paste your link here!', value=submission.section.href, data-last-scraped=submission.section.href)
+
+        section(class='wu-data wa-section-contents' + (editing ? '' : ' uv-opaque uv-opaque-transition'))
+          header.wu-section-header
+            h2 Please fill out the following additional information
+            div.wu-section-note Any additional information you can provide about a link will help our readers understand why they should be interested in the link. For paid links, additional information will also help your conversion rates.
+
+          input.wa-link-title.wu-colored-border(placeholder='What would you like the link title to be?', value=submission.section.title)
+          input.wa-link-source.wa-input-50(placeholder='Is there an author or source for this link?', value=submission.section.source)
+          input.wa-link-source-href.wa-input-50(placeholder='Link to a source or the author’s Twitter profile', value=submission.section.sourceHref)
+
+          span.wa-link-image-container.wa-input-50
+            input.wa-link-image(placeholder='Link to an image we can display alongside the description', value=submission.section.image)
+            span.wa-link-image-preview-container
+              img.wa-link-image-preview.uv-hidden(alt='')
+              span.wa-toggler.wa-link-image-left.fa.fa-arrow-left.uv-hidden
+              span.wa-toggler.wa-link-image-right.fa.fa-arrow-right.uv-hidden
+
+          div
+            textarea.wa-link-description.wk-textarea(placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.')=submission.section.description
+
+          section.wu-preview
+            header.wu-section-header
+              h2 Make sure that the rendered preview is awesome!
+              div.wu-section-note This is exactly how the link would be displayed in our email newsletters if we were to include it unmodified. The better it looks, the better a chance you have of getting the link accepted without any modifications.
+
+            div.wu-preview-link-container
+              div.table-unobtrusive.wu-preview-link
+
+          - sponsored = submission.type === 'sponsor'
+          section(class='wu-sponsor' + (sponsored ? '' : ' uv-hidden'))
+            header.wu-section-header
+              h2 Sponsorship Details
+              div.wu-section-note
+                span Glad to have you onboard. Please specify how many newsletter issues you plan on advertising on, as well as your preferred dates. This information is
+                span=' '
+                strong optional
+                span , but it helps us plan how to schedule your sponsored content.
+
+            div.wu-sponsor-amount
+              label.wu-label(for='wu-sponsor-amount') During how many weeks do you plan on running this ad?
+              input.wu-sponsor-amount-input#wu-sponsor-amount(type='number', value=sponsored ? submission.amount : '1')
+
+            div.wu-sponsor-invoice
+              input.ck-input.wu-sponsor-invoice-input#wu-sponsor-invoice(type='checkbox', checked=sponsored ? submission.invoice : true)
+              label.ck-checkbox.wu-label.wu-label-invoice(for='wu-sponsor-invoice') Would you like to receive an invoice via email?
+
+            div.wu-sponsor-dates-container
+              label.wu-label.wu-label-picker Do you have any specific dates in mind? One or two should suffice!
+              div.wu-sponsor-date-picker.table-unobtrusive
+              div.wu-sponsor-dates
+                h3.wu-sponsor-dates-header Proposed Dates
+                ul.wu-dates
+                  each date in submission.dates
+                    li.wu-sponsor-date(data-date=moment(date).format('YYYY-MM-DD'))
+                      span.wu-sponsor-date-description=moment(date).format('MMMM Do')
+                      i.fa.fa-remove.wu-sponsor-date-removal
+
+          section.wu-contact
+            header.wu-section-header
+              h2 Contact Information
+              div.wu-section-note We’re almost done! All we need now is a bit of information about you.
+
+            input.wu-name.wu-colored-border(placeholder='What is your name? We’d like to get to know you.', value=submission.submitter)
+            input.wu-email(placeholder='What is your email address? We’ll keep it safe.', value=submission.email)
+            div
+              textarea.wu-comment.wk-textarea(placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.')=submission.comment
+
+            footer.wu-section-footer
+              div.wu-section-note.md-markdown
+                p You’ll be getting an email confirmation about you submission. We’ll be copied on that email, so that we can discuss the contents of your submission!
+                p
+                  em Thank you so much!
+                  span=' '
+                  img.tj-emoji(draggable='false', alt='🎉', src='https://twemoji.maxcdn.com/2/72x72/1f389.png')
+
+          section.wu-actions
+            if editing
+              a.lk-rainbows(href=roles && roles.owner ? '/weekly/submissions/review' : '/weekly') Cancel
+
+            button.bt-button.bt-pink.wu-submit
+              span.bt-text=editing ? 'Save' : 'Submit to Pony Foo Weekly!'
+
+    include ../partials/aside

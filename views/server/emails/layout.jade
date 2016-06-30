@@ -13,13 +13,19 @@ html(xmlns='http://www.w3.org/1999/xhtml')
       table.layout-table(align='center', border='0', cellpadding='0', cellspacing='0', height='100%', width='100%')
         tr
           td.layout-td(align='center', valign='top')
-            table(border='0', cellpadding='0', cellspacing='0', class='layout-inside')
+            table.layout-inside(border='0', cellpadding='0', cellspacing='0')
               tr
                 td(align='center', valign='top')
                   table.layout-header(border='0', cellpadding='0', cellspacing='0', width='100%')
                     tr
-                      td.layout-header-content(valign='top')=teaser
-                      td.layout-header-content.layout-header-content-right(valign='top')!=teaserHtml
+                      if teaserHtml
+                        td.layout-header-content(valign='top')!=teaserHtml
+                      else
+                        td.layout-header-content(valign='top')=teaser
+                      if teaserRightHtml
+                        td.layout-header-content.layout-header-content-right(valign='top')!=teaserRightHtml
+                      else
+                        td.layout-header-content.layout-header-content-right(valign='top')=teaserRight
 
               tr
                 td(align='center', valign='top')

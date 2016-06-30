@@ -9,7 +9,8 @@ NODE_ENV=staging npm run copy
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css
 stylus client/css/email.styl -o .bin/static --include-css --include client/css
 stylus client/css/article.styl -o .bin/static --include-css --include client/css
-stylus client/css/newsletter.styl -o .bin/static --include-css --include client/css
+stylus client/css/newsletter-rss.styl -o .bin/static --include-css --include client/css
+stylus client/css/newsletter-email.styl -o .bin/static --include-css --include client/css
 jadum views/**/*.jade -o .bin --obj '{"basedir":"views"}'
 jadum resources/**/*.jade -o .bin --obj '{"basedir":"resources"}'
 taunus -o

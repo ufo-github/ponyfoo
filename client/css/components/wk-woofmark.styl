@@ -45,9 +45,7 @@
   background-color c-yellow-highlight
   color c-purple
   padding-top 40px
-
-.ly-custom-subheadings .wk-container-dragging
-  font-family f-subheading
+  f-use-subheading()
 
 .wk-prompt
   background linear-gradient(to bottom right, lighten(c-yellow-highlight, 70%) 0, lighten(c-yellow-highlight, 20%) 100%)
@@ -69,8 +67,8 @@
   &:focus
     background-color c-purple
 
-.ly-custom-subheadings .wk-prompt-buttons
-  font-family f-subheading
+.wk-prompt-buttons
+  f-use-subheading()
 
 .wk-prompt-ok
   background-color c-purple
@@ -103,12 +101,10 @@
   padding-top 60px
   background-color lighten(c-purple, 10%)
   color c-white
+  f-use-subheading()
 
   .wk-prompt-drop-icon
     display block
-
-.ly-custom-subheadings .wk-prompt-upload-dragging
-  font-family f-subheading
 
 .wk-prompt-uploading
   position absolute
@@ -121,9 +117,7 @@
   text-align center
   padding 140px 0
   font-size 24px
-
-.ly-custom-subheadings .wk-prompt-uploading
-  font-family f-subheading
+  f-use-subheading()
 
 .wk-prompt-browse
   font-weight normal

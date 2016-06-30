@@ -8,15 +8,16 @@
 .mk-header-domain
   font-weight bold
 
+.mka-container
+  margin-top 40px
+
 .mki-intro
   background-color c-purple
   color c-white
   font-size 40px
   padding 20px
   margin-bottom 20px
-
-.ly-custom-subheadings .mki-intro
-  font-family f-subheading
+  f-use-subheading()
 
 .mk-title
   text-align center
@@ -42,9 +43,7 @@
   font-size 28px
   text-align center
   color rgba(c-white, 0.4)
-
-.ly-custom-subheadings .mk-section-teaser
-  font-family f-subheading
+  f-use-subheading()
 
 .mkw-container
   .cr-overflow
@@ -98,9 +97,8 @@
   width 30%
 .mka-title
   color c-dark-green
-.ly-custom-subheadings .mka-description
-  font-family f-subheading
 .mka-description
+  f-use-subheading()
   p
     margin 20px 0
 .mka-speaking
@@ -119,6 +117,7 @@
   padding 10px
 
 .mks-header
+  margin-top 100px
   margin-bottom 0
   text-align center
   color c-red
@@ -161,9 +160,10 @@
     right 10px
 .mks-jobs .wy-link-title
   font-size 14px
+
 .mk-cta
   text-align center
-  margin-top 60px
+  margin-top 120px
   font-size 55px
   line-height 80px
 

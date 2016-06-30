@@ -7,9 +7,8 @@ aside.de-sidebar.de-column
     input.de-input.sr-input(placeholder='e.g JavaScript', name='terms', value=query && query.replace(/"/g,''))
 
     span.de-button(aria-label='Pro Tip: use "[js]" to search for article tags!')
-      button.gg-container.bt-button.bt-pink.sr-button(type='submit')
+      button.bt-button.bt-pink.sr-button(type='submit')
         span.bt-text Search
-        include ../partials/button-background
 
   if full
     include trivia
@@ -31,9 +30,8 @@ aside.de-sidebar.de-column
     input.de-input.ss-input(placeholder='you@provider.io', name='subscriber', type='email')
 
     span.de-button(aria-label='As easy as clicking this button and confirming via email!')
-      button.gg-container.bt-button.bt-pink.ss-button(type='submit')
+      button.bt-button.bt-pink.ss-button(type='submit')
         span.bt-text Subscribe
-        include ../partials/button-background
 
   if popularArticles && popularArticles.length
     section.ly-section.de-hits

@@ -39,25 +39,6 @@ module.exports = function (req, res, next) {
       sections: [{
         type: 'header',
         text: 'Oh, hai! 🎉'
-      }, {
-        type: 'header',
-        text: 'Helping Hands Wanted',
-        foreground: '#f3f3f3',
-        background: '#1a4d7f'
-      }, {
-        type: 'markdown',
-        text: [
-          'Sponsorship opportunities! [Check out our media kit][kit] and reach us at: [sponsor@ponyfoo.com][sponsor].',
-          '',
-          '[Become a patron][patron] and get the newsletter a full day earlier!',
-          '',
-          'Feel free to send interesting links our way: [tips@ponyfoo.com][tips].',
-          '',
-          '[kit]: /weekly/sponsor',
-          '[patron]: https://www.patreon.com/bevacqua',
-          '[sponsor]: mailto:sponsor@ponyfoo.com',
-          '[tips]: mailto:tips@ponyfoo.com'
-        ].join('\n')
       }]
     };
     var issueModel = issue || defaults;

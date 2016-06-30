@@ -43,6 +43,9 @@ var weeklyInsert = require('./api/weeklies/insert');
 var weeklyUpdate = require('./api/weeklies/update');
 var weeklyRemove = require('./api/weeklies/remove');
 var weeklyShare = require('./api/weeklies/share');
+var weeklySubmission = require('./api/weeklies/submissions');
+var weeklySubmissionRemove = require('./api/weeklies/submissions/remove');
+var weeklySubmissionMark = require('./api/weeklies/submissions/mark');
 var weeklyMediakit = require('./weekly/mediakit');
 var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
@@ -90,6 +93,7 @@ module.exports = function (app) {
   app.get('/sitemap.xml', sitemap);
 
   app.put('/api/images', upload.single('woofmark_upload'), imageUpload);
+  app.get('/api/metadata/scrape', metadataScrape);
 
   app.get('/owner/articles/compute', ownerOnly, authorCompute);
 
@@ -102,11 +106,15 @@ module.exports = function (app) {
   app.post('/api/:type(articles|weeklies)/:slug/comments', verifyForm, commentInsert);
   app.delete('/api/:type(articles|weeklies)/:slug/comments/:id', moderatorOnly, commentRemove);
 
+  app.post('/api/weeklies/submissions', weeklySubmission);
+  app.post('/api/weeklies/submissions/:slug', weeklySubmission);
+  app.delete('/api/weeklies/submissions/:slug', ownerOnly, weeklySubmissionRemove);
+  app.get('/api/weeklies/submissions/:slug/:action(accept|use)', ownerOnly, weeklySubmissionMark);
+
   app.put('/api/weeklies', weekliesOnly, weeklyInsert);
   app.patch('/api/weeklies/:slug', weekliesOnly, weeklyUpdate);
   app.delete('/api/weeklies/:slug', weekliesOnly, weeklyRemove);
   app.post('/api/weeklies/:slug/share/:medium', weekliesOnly, weeklyShare);
-  app.get('/api/metadata/scrape', weekliesOnly, metadataScrape);
 
   app.put('/api/subscribers', subscriberInsert);
   app.post('/api/subscribers', verifyForm, subscriberInsert);

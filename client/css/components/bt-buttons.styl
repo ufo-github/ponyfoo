@@ -6,11 +6,9 @@
   border none
   background-color transparent
   overflow hidden
+  f-use-subheading()
   &:active
     outline 1px dotted c-black-text
-
-.ly-custom-subheadings .bt-button
-  font-family f-subheading
 
 .bt-text
   display block
@@ -20,32 +18,17 @@
   padding 0 20px
   color c-white
 
-.bt-background
-  position absolute
-  top 0
-  left 0
-  right 0
-  bottom 0
-  opacity 0.1
-  pointer-events none
+bt-color(c-color)
+  &:active
+    outline-color c-color
+  .bt-text
+    background-color c-color
+  &:hover .bt-text
+    background-color lighten(c-color, 10%)
 
 .bt-purple
-  &:active
-    outline-color c-purple
-  .bt-text
-    background-color c-purple
-    text-shadow 1px 1px 0 c-purple
-
+  bt-color(c-purple)
 .bt-pink
-  &:active
-    outline-color c-pink
-  .bt-text
-    background-color c-pink
-    text-shadow 1px 1px 0 c-pink
-
+  bt-color(c-pink)
 .bt-red
-  &:active
-    outline-color c-red
-  .bt-text
-    background-color c-red
-    text-shadow 1px 1px 0 c-red
+  bt-color(c-red)

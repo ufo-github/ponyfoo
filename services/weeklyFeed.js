@@ -11,7 +11,7 @@ var weeklyService = require('./weekly');
 var WeeklyIssue = require('../models/WeeklyIssue');
 var env = require('../lib/env');
 var authority = env('AUTHORITY');
-var css = fs.readFileSync('.bin/static/newsletter.css', 'utf8');
+var css = fs.readFileSync('.bin/static/newsletter-rss.css', 'utf8');
 
 function getFeed (done) {
   WeeklyIssue

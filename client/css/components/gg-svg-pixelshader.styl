@@ -9,7 +9,7 @@
   animation-duration 0.7s
   animation-iteration-count infinite
 
-  for offset in (1..180) // 107 for logo, 180 for button-background
+  for offset in (1..107)
     &:nth-child({offset})
       animation-name logo-0
       animation-duration round(0.7s + offset * 0.01, 4)
