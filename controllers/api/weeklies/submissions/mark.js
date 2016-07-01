@@ -3,6 +3,7 @@
 var but = require('but');
 var contra = require('contra');
 var WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
+var weeklySubmissionService = require('../../../../services/weeklySubmission');
 var actions = {
   accept: 'accepted',
   use: 'used'
@@ -22,9 +23,23 @@ function remove (req, res, next) {
       res.redirect('/weekly/submissions/review');
       return;
     }
-    var status = actions[req.params.action];
+    var action = req.params.action;
+    var status = actions[action];
+    var accepting = status === 'accepted' && !submission.accepted;
+    if (accepting) {
+      submission.accepted = true;
+    }
     submission.status = status;
-    submission.save(but(next));
+    submission.save(saved);
+    function saved (err) {
+      if (err) {
+        next(err); return;
+      }
+      if (accepting) {
+        weeklySubmissionService.notifyAccepted(submission);
+      }
+      next(null);
+    }
   }
 
   function handle (err) {

@@ -52,7 +52,7 @@ function post (req, res, next) {
     if (err) {
       next(err); return;
     }
-    weeklySubmissionService.notify(submission);
+    weeklySubmissionService.notifyReceived(submission);
     saved(null);
   }
   function saved (err) {

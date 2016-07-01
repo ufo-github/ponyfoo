@@ -1,13 +1,13 @@
 style(type='text/css')!=css
 
 if submission.submitter
-  div
+  div(style='margin-bottom: 20px;')
     span Hey
     span=' '
     span=submission.submitter
     span ,
 
-div(style='margin: 20px 0;')
+div(style='margin-bottom: 20px;')
   span We just got your
   span=' '
   span=submission.type
@@ -43,13 +43,6 @@ div(style='margin: 20px 0;')
   span=' '
   em before it gets accepted into Pony Foo Weekly
   span .
-
-if submission.invoice
-  div(style='margin: 20px 0;') We’ve attached an invoice for your records. You’ll find payment instructions in the invoice attachment. Feel free to send payment at your earliest convenience.
-
-if submission.paymentLink
-  div(style='margin: 20px 0; text-align: center;')
-    a(href=authority + submission.paymentLink, style='padding: 20px; background-color: #1686a2; color: #fff; border-bottom: 2px solid #5aa9bc; display: inline-block; font-size: 28px;') Pay now
 
 div(style='margin: 20px 0; font-style: italic;') Thanks for taking the time, we know how annoying it can be to fill out that big submission form!
 

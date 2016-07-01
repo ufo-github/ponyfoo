@@ -9,11 +9,12 @@ var moment = require('moment');
 var winston = require('winston');
 var sluggish = require('sluggish');
 var User = require('../models/User');
+var gravatarService = require('./gravatar');
+var summaryService = require('./summary');
 var cryptoService = require('./crypto');
 var markupService = require('./markup');
 var emailService = require('./email');
 var viewService = require('./view');
-var gravatarService = require('./gravatar');
 var weeklyCompilerService = require('./weeklyCompiler');
 var invoiceModelService = require('./invoiceModel');
 var Invoice = require('../models/Invoice');
@@ -78,42 +79,43 @@ function getToken (submission) {
   return cryptoService.md5(submission._id + submission.created);
 }
 
-function notify (submission, done) {
-  var tasks = {
-    owners: findOwners,
-    previewHtml: compilePreview,
-    gravatar: fetchGravatar,
-    invoice: generateInvoice
-  };
-  contra.concurrent(tasks, prepareModel);
+function findOwners (next) {
+  var ownerQuery = { roles: 'owner' };
+  User
+    .find(ownerQuery)
+    .select('email')
+    .lean()
+    .exec(next);
+}
 
-  function findOwners (next) {
-    var ownerQuery = { roles: 'owner' };
-    User
-      .find(ownerQuery)
-      .select('email')
-      .lean()
-      .exec(next);
-  }
-
-  function compilePreview (next) {
+function compilePreview (submission) {
+  return compiler;
+  function compiler (next) {
     var options = {
       markdown: markupService,
       slug: 'submission-preview'
     };
-    weeklyCompilerService.compile([submission.section], options, next);
-  }
-
-  function fetchGravatar (next) {
-    gravatarService.fetch(submission.email, fetched);
-    function fetched (err, gravatar) {
+    weeklyCompilerService.toLinkSectionModel(submission.section, options, gotModel);
+    function gotModel (err, model) {
       if (err) {
         next(err); return;
       }
-      gravatar.name = 'gravatar';
-      next(null, gravatar);
+      var html = weeklyCompilerService.compileLinkSectionModel(model);
+      next(null, {
+        html: html,
+        model: model.item
+      });
     }
   }
+}
+
+function notifyAccepted (submission, done) {
+  var tasks = {
+    owners: findOwners,
+    preview: compilePreview(submission),
+    invoice: generateInvoice
+  };
+  contra.concurrent(tasks, prepareModel);
 
   function generateInvoice (next) {
     if (!submission.invoice) {
@@ -201,37 +203,83 @@ function notify (submission, done) {
     if (err) {
       error(err); return;
     }
+    var maxTitleLength = 50;
+    var everyone = [submission.email].concat(result.owners.map(toEmail));
+    var attachments = result.invoice ? [result.invoice] : [];
+    var type = submissionTypes[submission.subtype];
+    var titleSummary = summaryService.summarize(result.preview.model.titleHtml, maxTitleLength);
+    var titleText = titleSummary.text;
+    var model = {
+      to: submission.email,
+      cc: everyone,
+      subject: util.format('“%s” was accepted into Pony Foo Weekly! 🎉', titleText),
+      teaserHtml: util.format('Your %s will be included in future newsletters.', type),
+      css: css,
+      attachments: attachments,
+      submission: {
+        type: type,
+        submitter: submission.submitter,
+        titleText: titleText,
+        previewHtml: result.preview.html,
+        invoice: submission.invoice
+      }
+    };
+    emailService.send('newsletter-submission-accepted', model, done);
+  }
+
+  function error (err) {
+    (done || logger)(err);
+  }
+}
+
+function notifyReceived (submission, done) {
+  var tasks = {
+    owners: findOwners,
+    preview: compilePreview(submission),
+    gravatar: fetchGravatar
+  };
+  contra.concurrent(tasks, prepareModel);
+
+  function fetchGravatar (next) {
+    gravatarService.fetch(submission.email, fetched);
+    function fetched (err, gravatar) {
+      if (err) {
+        next(err); return;
+      }
+      gravatar.name = 'gravatar';
+      next(null, gravatar);
+    }
+  }
+
+  function prepareModel (err, result) {
+    if (err) {
+      error(err); return;
+    }
     var verify = getToken(submission);
     var permalink = util.format('/weekly/submissions/%s/edit?verify=%s', submission.slug, verify);
     var everyone = [submission.email].concat(result.owners.map(toEmail));
-    var attachments = result.invoice ? [result.invoice] : [];
     var model = {
       to: submission.email,
       cc: everyone,
       subject: 'We got your submission to Pony Foo Weekly! 🎉',
-      teaserHtml: util.format('Here’s a link to  <a href="%s">review your submission</a>.', authority + permalink),
+      teaserHtml: util.format('Here’s a link to <a href="%s">review your submission</a>.', authority + permalink),
       teaserRight: 'We’ll be in touch soon!',
       css: css,
       permalink: permalink,
-      images: [result.gravatar],
-      attachments: attachments,
+      images: submission.commentHtml ? [result.gravatar] : [],
       submission: {
         type: submissionTypes[submission.subtype],
         submitter: submission.submitter,
         commentHtml: submission.commentHtml,
-        previewHtml: result.previewHtml,
-        invoice: submission.invoice
+        previewHtml: result.preview.html
       },
       linkedData: {
         '@context': 'http://schema.org',
         '@type': 'EmailMessage',
         potentialAction: {
-          '@type': 'ConfirmAction',
+          '@type': 'ViewAction',
           name: 'Review Submission',
-          handler: {
-            '@type': 'HttpActionHandler',
-            url: authority + permalink
-          }
+          target: authority + permalink
         },
         description: 'Review Submission – Pony Foo'
       }
@@ -261,5 +309,6 @@ function getRandomCode () {
 module.exports = {
   isEditable: isEditable,
   getToken: getToken,
-  notify: notify
+  notifyReceived: notifyReceived,
+  notifyAccepted: notifyAccepted
 };

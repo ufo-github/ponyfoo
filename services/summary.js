@@ -1,5 +1,6 @@
 'use strict'
 
+var he = require('he');
 var truncHtml = require('trunc-html');
 
 function summarize (html, limit) {
@@ -14,7 +15,9 @@ function summarize (html, limit) {
       }
     }
   };
-  return truncHtml(html, limit || Infinity, options);
+  var result = truncHtml(html, limit || Infinity, options);
+  result.text = he.decode(result.text);
+  return result;
 }
 
 module.exports = {

@@ -14,6 +14,7 @@ var schema = new mongoose.Schema({
   subtype: String, // ['suggestion', 'primary', 'secondary', 'job']
   amount: Number,
   invoice: Boolean,
+  accepted: Boolean,
   dates: [Date],
   section: Mixed
 });

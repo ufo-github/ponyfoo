@@ -1,0 +1,39 @@
+style(type='text/css')!=css
+
+if submission.submitter
+  div(style='margin-bottom: 20px;')
+    span Hey
+    span=' '
+    span=submission.submitter
+    span ,
+
+div(style='margin-bottom: 20px;')
+  span Your “
+  span.md-markdown.md-markdown-inline!=submission.titleText
+  span ” submission was accepted. It will be inserted into Pony Foo Weekly newsletter submissions soon!
+div(style='font-style: italic;') Thanks for helping us out!
+
+div(style='margin-top: 20px;') Below you’ll find a preview of how it will look on the newsletter, provided we don’t update it any further.
+
+table.wy-table.wy-container.table-not-responsive
+  tr
+    td.wy-td
+      table.wy-table
+        tr
+          td.wy-td
+            div.wy-content!=submission.previewHtml
+
+if submission.invoice
+  div(style='margin: 20px 0;') We’ve attached an invoice for your records. You’ll find payment instructions in the invoice attachment. Feel free to send payment at your earliest convenience.
+
+if submission.paymentLink
+  div(style='margin: 20px 0; text-align: center;')
+    a(href=authority + submission.paymentLink, style='padding: 20px; background-color: #1686a2; color: #fff; border-bottom: 2px solid #5aa9bc; display: inline-block; font-size: 28px;') Pay now
+
+if submission.type === 'suggestion'
+  div(style='margin: 20px 0; font-style: italic;') Thanks – again – for taking the time. You rock!
+  div(style='margin: 20px 0;') We’d be thrilled if you’d like to send link suggestions our way more frequently. Please let us know. We’re always looking for people to help out with awesome links like this one!
+else
+  div(style='margin: 20px 0; font-style: italic;') Thanks for your business – you rock!
+
+div(style='margin-top: 20px;') You can reply to this email with any questions or additional comments you have.

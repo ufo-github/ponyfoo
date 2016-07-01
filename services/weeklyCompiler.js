@@ -43,7 +43,6 @@ function linkThroughForSlug (slug) {
 }
 
 function compile (sections, options, done) {
-  var linkThrough = linkThroughForSlug(options.slug);
   var compilers = {
     header: toHeaderSectionHtml,
     markdown: toMarkdownSectionHtml,
@@ -52,7 +51,7 @@ function compile (sections, options, done) {
   };
   map(sections, toSectionHtml, mapped);
   function toSectionHtml (section, next) {
-    compilers[section.type](section, next);
+    compilers[section.type](section, options, next);
   }
   function mapped (err, result) {
     if (err) {
@@ -60,55 +59,76 @@ function compile (sections, options, done) {
     }
     done(null, result.join(''));
   }
-  function toHeaderSectionHtml (section, next) {
-    next(null, textService.format([
-      '<div class="wy-section-header">',
-        '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
-          '%s',
-        '</h%s>',
-      '</div>'
-      ].join(''),
-      section.size,
-      section.foreground,
-      section.background,
-      options.markdown.compile(section.text, {
-        linkThrough: linkThrough
-      }),
-      section.size
-    ));
-  }
-  function toMarkdownSectionHtml (section, next) {
-    var html = options.markdown.compile(section.text, {
+}
+
+function toHeaderSectionHtml (section, options, done) {
+  var linkThrough = linkThroughForSlug(options.slug);
+  done(null, textService.format([
+    '<div class="wy-section-header">',
+      '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
+        '%s',
+      '</h%s>',
+    '</div>'
+    ].join(''),
+    section.size,
+    section.foreground,
+    section.background,
+    options.markdown.compile(section.text, {
       linkThrough: linkThrough
-    });
-    next(null, textService.format('<div class="wy-section-markdown md-markdown">%s</div>', html));
-  }
-  function toLinkSectionHtml (section, next) {
-    var descriptionHtml = options.markdown.compile(section.description, {
+    }),
+    section.size
+  ));
+}
+
+function toMarkdownSectionHtml (section, options, done) {
+  var linkThrough = linkThroughForSlug(options.slug);
+  var html = options.markdown.compile(section.text, {
+    linkThrough: linkThrough
+  });
+  done(null, textService.format('<div class="wy-section-markdown md-markdown">%s</div>', html));
+}
+
+function toLinkSectionModel (section, options, done) {
+  var linkThrough = linkThroughForSlug(options.slug);
+  var descriptionHtml = options.markdown.compile(section.description, {
+    linkThrough: linkThrough
+  });
+  var base = {
+    descriptionHtml: descriptionHtml
+  };
+  var extended = assign(base, section, {
+    titleHtml: options.markdown.compile(section.title, {
       linkThrough: linkThrough
-    });
-    var base = {
-      descriptionHtml: descriptionHtml
-    };
-    var extended = assign(base, section, {
-      titleHtml: options.markdown.compile(section.title, {
-        linkThrough: linkThrough
-      }),
-      href: linkThrough(section.href),
-      source: beautifyText(section.source),
-      sourceHref: linkThrough(section.sourceHref)
-    });
-    var model = {
-      item: extended,
-      knownTags: knownTags
-    };
-    next(null, linkSectionView(model));
-  }
-  function toStylesSectionHtml (section, next) {
-    stylus.render(section.styles, { filename: 'inline-styles.css' }, compiled);
-    function compiled (err, styles) {
-      next(err, textService.format('<style>%s</style>', styles));
+    }),
+    href: linkThrough(section.href),
+    source: beautifyText(section.source),
+    sourceHref: linkThrough(section.sourceHref)
+  });
+  var model = {
+    item: extended,
+    knownTags: knownTags
+  };
+  done(null, model);
+}
+
+function compileLinkSectionModel (model) {
+  return linkSectionView(model);
+}
+
+function toLinkSectionHtml (section, options, done) {
+  toLinkSectionModel(section, options, gotModel);
+  function gotModel (err, model) {
+    if (err) {
+      done(err); return;
     }
+    done(null, compileLinkSectionModel(model));
+  }
+}
+
+function toStylesSectionHtml (section, options, done) {
+  stylus.render(section.styles, { filename: 'inline-styles.css' }, compiled);
+  function compiled (err, styles) {
+    done(err, textService.format('<style>%s</style>', styles));
   }
 }
 
@@ -117,5 +137,11 @@ function noop () {}
 module.exports = {
   compile: compile,
   knownTags: knownTags,
-  linkThroughForSlug: linkThroughForSlug
+  linkThroughForSlug: linkThroughForSlug,
+  toHeaderSectionHtml: toHeaderSectionHtml,
+  toMarkdownSectionHtml: toMarkdownSectionHtml,
+  compileLinkSectionModel: compileLinkSectionModel,
+  toLinkSectionModel: toLinkSectionModel,
+  toLinkSectionHtml: toLinkSectionHtml,
+  toStylesSectionHtml: toStylesSectionHtml
 };
