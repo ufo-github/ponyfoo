@@ -23,13 +23,14 @@ curl \
     "http://localhost:9200/_xpack/security/user/$ES_USERNAME/_password"
 
 echo "packer: kibana x-pack"
-KIBANA_DIR=/etc/kibana
-KIBANA_CONF=$KIBANA_DIR/config/kibana.yml
+KIBANA_HOME=/usr/share/kibana
+KIBANA_CONF=/etc/kibana/kibana.yml
 echo "elasticsearch.username: \"$ES_USERNAME\"" | sudo tee -a $KIBANA_CONF > /dev/null
 echo "elasticsearch.password: \"$ES_PASSWORD\"" | sudo tee -a $KIBANA_CONF > /dev/null
-sudo $KIBANA_DIR/bin/kibana-plugin install x-pack
-sudo tar jxf $KIBANA_DIR/installedPlugins/x-pack/.phantom/phantomjs-1.9.8-linux-x86_64.tar.bz2
-sudo chown -R kibana:kibana $KIBANA_DIR
+sudo $KIBANA_HOME/bin/kibana-plugin install x-pack
+sudo tar jxf $KIBANA_HOME/installedPlugins/x-pack/.phantom/phantomjs-1.9.8-linux-x86_64.tar.bz2
+sudo chown -R kibana:kibana $KIBANA_HOME
+sudo chown -R kibana:kibana $KIBANA_CONF
 sudo /bin/systemctl enable kibana.service
 
 echo "packer: elasticsearch license"
