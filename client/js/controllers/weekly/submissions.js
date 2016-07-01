@@ -31,6 +31,7 @@ function ready (viewModel, container, route) {
   var subtypeInputs = $('.wu-type', container);
   var linkInput = $('.wu-link', container);
   var linkData = $('.wu-data', container);
+  var linkImageContainer = $('.wa-link-image-container', linkData);
   var contactSection = $('.wu-contact', container);
   var sponsorSection = $('.wu-sponsor', container);
   var previewHtml = $('.wu-preview-link', container);
@@ -79,25 +80,18 @@ function ready (viewModel, container, route) {
   }
 
   function changeSubtype (el) {
-    changeInputColors(el);
-    if (isSponsor()) {
-      contactSection.addClass('wu-has-sponsor');
-      sponsorSection.removeClass('uv-hidden');
-    } else {
-      contactSection.removeClass('wu-has-sponsor');
-      sponsorSection.addClass('uv-hidden');
-    }
-  }
+    var sponsor = isSponsor();
+    var subtype = el.text();
 
-  function changeInputColors (el) {
-    colored.removeClass('wu-color-suggestion');
-    colored.removeClass('wu-color-primary');
-    colored.removeClass('wu-color-secondary');
-    colored.removeClass('wu-color-job');
-    var currentSubtype = el.text();
-    if (currentSubtype) {
-      colored.addClass('wu-color-' + currentSubtype);
-    }
+    setClass(linkImageContainer, 'uv-hidden', sponsor && subtype !== 'primary');
+
+    setClass(contactSection, 'wu-has-sponsor', sponsor);
+    setClass(sponsorSection, 'uv-hidden', !sponsor);
+
+    setClass(colored, 'wu-color-suggestion', subtype === 'suggestion');
+    setClass(colored, 'wu-color-primary', subtype === 'primary');
+    setClass(colored, 'wu-color-secondary', subtype === 'secondary');
+    setClass(colored, 'wu-color-job', subtype === 'job');
   }
 
   function updateThumbnailImage (e) {
@@ -222,8 +216,8 @@ function ready (viewModel, container, route) {
         background: 'transparent',
         source: $('.wa-link-source', linkData).value(),
         sourceHref: $('.wa-link-source-href', linkData).value(),
-        image: $('.wa-link-image', linkData).value(),
-        sponsored: sponsor,
+        image: linkImageContainer.but('.uv-hidden').find('.wa-link-image').value(),
+        sponsored: sponsor && subtype !== 'job',
         tags: [],
         description: $('.wa-link-description', linkData).value()
       }
@@ -270,5 +264,13 @@ function ready (viewModel, container, route) {
       var target = owner ? '/weekly/submissions/review' : '/weekly';
       taunus.navigate(target);
     }
+  }
+}
+
+function setClass (el, className, condition) {
+  if (condition) {
+    el.addClass(className);
+  } else {
+    el.removeClass(className);
   }
 }

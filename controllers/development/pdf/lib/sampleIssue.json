@@ -213,14 +213,5 @@
     "sponsored": false,
     "tags": ["code"],
     "description": "Abstract operations and other functions drawn from the ECMAScript specification."
-  }, {
-    "type": "header",
-    "size": 3,
-    "text": "Helping Hands Wanted!",
-    "foreground": "#f7f0f5",
-    "background": "#900070"
-  }, {
-    "type": "markdown",
-    "text": "Feel free to send interesting links our way: [tips@ponyfoo.com](mailto:tips@ponyfoo.com).\n\nYou can [become a patron](https://www.patreon.com/bevacqua) and get the newsletter a full day earlier.\n\nThere's also sponsorship opportunities for companies, feel free to contact us at: [sponsor@ponyfoo.com](mailto:sponsor@ponyfoo.com)."
   }]
 }

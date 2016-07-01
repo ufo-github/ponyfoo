@@ -8,6 +8,8 @@ var WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
 var weeklyCompilerService = require('../../../services/weeklyCompiler');
 var datetimeService = require('../../../services/datetime');
 var markupService = require('../../../services/markup');
+var env = require('../../../lib/env');
+var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
@@ -79,9 +81,9 @@ function getDefaultIssueModel () {
     summary: [
       'We\'re glad you could make it this week! 💌',
       '',
-      'If you have any tips, feel free to email us at [tips@ponyfoo.com][tips] _-- or just reply to this email._ You can leave comments on the website.',
+      'With your help, we can make Pony Foo Weekly *even more* awesome: [send tips about cool resources][tips].',
       '',
-      '[tips]: mailto:tips@ponyfoo.com'
+      '[tips]: ' + authority + '/weekly/submissions'
     ].join('\n'),
     sections: [{
       type: 'header',
