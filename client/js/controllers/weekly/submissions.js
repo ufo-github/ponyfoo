@@ -83,7 +83,7 @@ function ready (viewModel, container, route) {
     var sponsor = isSponsor();
     var subtype = el.text();
 
-    setClass(linkImageContainer, 'uv-hidden', sponsor && subtype !== 'primary');
+    setClass(linkImageContainer, 'uv-hidden', subtype !== 'suggestion' && subtype !== 'primary');
 
     setClass(contactSection, 'wu-has-sponsor', sponsor);
     setClass(sponsorSection, 'uv-hidden', !sponsor);

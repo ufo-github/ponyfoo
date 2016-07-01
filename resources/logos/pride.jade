@@ -1,0 +1,25 @@
+extends _template
+block template_vars
+  -
+    fallbackImage = fallbackImage || '/img/logos/pride.png'
+    options = {
+      getFill: function (x, y, defaultColor, group) {
+        if (group === 'eye') { return '#f3eed1'; }
+        if (group) { return defaultColor; }
+        if (y === 0) { return '#d72329'; }
+        if (y === 1) { return '#d72329'; }
+        if (y === 2) { return '#eb8b2b'; }
+        if (y === 3) { return '#eb8b2b'; }
+        if (y === 4) { return '#efe03b'; }
+        if (y === 5) { return '#efe03b'; }
+        if (y === 6) { return '#2b8b46'; }
+        if (y === 7) { return '#2b8b46'; }
+        if (y === 8) { return '#2664f0'; }
+        if (y === 9) { return '#2664f0'; }
+        if (y === 10) { return '#822d8f'; }
+        if (y === 11) { return '#822d8f'; }
+        if (y === 12) { return '#822d8f'; }
+        if (defaultColor) { return defaultColor; }
+        return '#ffffff';
+      }
+    }

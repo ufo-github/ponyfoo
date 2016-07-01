@@ -1,0 +1,25 @@
+extends _template
+block template_vars
+  -
+    fallbackImage = fallbackImage || '/img/logos/argentina.png'
+    options = {
+      getFill: function (x, y, defaultColor, group) {
+        if (group === 'eye') { return '#f1d956'; }
+        if (group) { return defaultColor; }
+        if (y === 0) { return '#03c4f1'; }
+        if (y === 1) { return '#03c4f1'; }
+        if (y === 2) { return '#03c4f1'; }
+        if (y === 3) { return '#03c4f1'; }
+        if (y === 4) { return '#03c4f1'; }
+        if (y === 5) { return '#03c4f1'; }
+        if (y === 6) { return '#f3eed1'; }
+        if (y === 7) { return '#f3eed1'; }
+        if (y === 8) { return '#f3eed1'; }
+        if (y === 9) { return '#00a5db'; }
+        if (y === 10) { return '#00a5db'; }
+        if (y === 11) { return '#00a5db'; }
+        if (y === 12) { return '#00a5db'; }
+        if (defaultColor) { return defaultColor; }
+        return '#ffffff';
+      }
+    }

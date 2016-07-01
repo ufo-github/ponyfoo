@@ -39,15 +39,19 @@ const resClose = resourceTypes.indexOf(',') !== -1 ? '}' : '';
 
 pglob(`resources/${resOpen + resourceTypes + resClose}/**/*.jade`)
   .then(files => files.filter(file => path.basename(file)[0] !== '_'))
+  .then(files => Promise.all(files.map(source => preadFile(source, 'utf8').then(data => ({ source, data })))))
   .then(files => maybeSkip(files))
-  .then(files => files.map(source => {
+  .then(files => files.map(fd => {
+    const source = fd.source;
+    const data = fd.data;
     const dir = path.dirname(source);
     const base = path.basename(source, '.jade');
     const raw = base + '.svg';
     const optimized = base + '.min.svg';
-    const markup = jadum.renderFile(source, {
+    const markup = jadum.render(data, {
       pretty: argv.debug,
       compileDebug: argv.debug,
+      filename: source,
       cache: true
     });
     const destination = getDestination(raw);
@@ -110,7 +114,6 @@ function maybeSkip (files) {
   const hashfile = 'resources/logos/generated/hash';
   const oldHash = fs.existsSync(hashfile) && fs.readFileSync(hashfile, 'utf8');
   const forceRebuild = !!process.env.REBUILD;
-
   if (oldHash === hash && !forceRebuild) {
     console.log('Skipping logo builder task: "%s".', hash);
     return [];
