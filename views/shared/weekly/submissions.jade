@@ -71,7 +71,7 @@ article.ly-section
                 em Job listings are grouped together around the middle of the newsletter issue.
             div.wu-type-cost $35
 
-      article.wu-colored
+      article(class='wu-colored' + (editing ? ' wu-colored-' + submission.subtype : ''))
         section.wu-link-container
           label.wu-label(for='wu-link') Okay, okay. Show us what you have!
           input.wu-link.wu-colored-border#wu-link(placeholder='Paste your link here!', value=submission.section.href, data-last-scraped=submission.section.href)
@@ -132,7 +132,7 @@ article.ly-section
                       span.wu-sponsor-date-description=moment(date).format('MMMM Do')
                       i.fa.fa-remove.wu-sponsor-date-removal
 
-          section.wu-contact
+          section(class='wu-contact' + (sponsored ? ' wu-has-sponsor' : ''))
             header.wu-section-header
               h2 Contact Information
               div.wu-section-note We’re almost done! All we need now is a bit of information about you.

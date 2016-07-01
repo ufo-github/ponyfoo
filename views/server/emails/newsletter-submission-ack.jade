@@ -1,6 +1,20 @@
 style(type='text/css')!=css
-p hey dude here's preview
-a(href=authority + permalink)=permalink
+
+if submission.submitter
+  div
+    span Hey
+    span=' '
+    span=submission.submitter
+    span ,
+
+div(style='margin: 20px 0;')
+  span We just got your
+  span=' '
+  span=submission.type
+  span . Thanks for reaching out!
+
+div(style='margin-top: 20px;') Below you’ll find a preview of how it would look on the newsletter in its current state. If the content meets our expectations, we may accept your submission outright. We may also request a few modifications before accepting the submission.
+div(style='font-style: italic;') Upholding a high quality bar is a core part of what makes Pony Foo Weekly awesome!
 
 table.wy-table.wy-container.table-not-responsive
   tr
@@ -8,4 +22,35 @@ table.wy-table.wy-container.table-not-responsive
       table.wy-table
         tr
           td.wy-td
-            div.wy-content!=previewHtml
+            div.wy-content!=submission.previewHtml
+
+if submission.commentHtml
+  div(style='background-color: #900070; color: #fcfcfc; padding: 8px; border-bottom: 2px solid #ffe270;')
+    img(src='cid:gravatar', alt='', style='vertical-align: middle;')
+    span!='&nbsp;&nbsp;'
+    span=' '
+    span=submission.submitter || 'You'
+    span=' wrote:'
+
+  div.md-markdown(style='padding: 20px; background-color: #fcf9ee;')!=submission.commentHtml
+
+div(style='margin: 20px 0;')
+  span You can
+  span=' '
+  a(href=authority + permalink) review your submission
+  span=' '
+  span at any time,
+  span=' '
+  em before it gets accepted into Pony Foo Weekly
+  span .
+
+if submission.invoice
+  div(style='margin: 20px 0;') We’ve attached an invoice for your records. You’ll find payment instructions in the invoice attachment. Feel free to send payment at your earliest convenience.
+
+if submission.paymentLink
+  div(style='margin: 20px 0; text-align: center;')
+    a(href=authority + submission.paymentLink, style='padding: 20px; background-color: #1686a2; color: #fff; border-bottom: 2px solid #5aa9bc; display: inline-block; font-size: 28px;') Pay now
+
+div(style='margin: 20px 0; font-style: italic;') Thanks for taking the time, we know how annoying it can be to fill out that big submission form!
+
+div(style='margin: 20px 0;') You can reply to this email with any questions or additional comments you have. We’ll reach out soon!

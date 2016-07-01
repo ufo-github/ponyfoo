@@ -8,10 +8,10 @@ article.ly-section.vw-maintainer.de-host
     select.ivp-type(name='type')
       option(value='customer', selected=invoiceParty.type === 'customer') Customer
       option(value='payment', selected=invoiceParty.type === 'payment') Payment
-    input.ivp-name(name='name', placeholder='Sample Company', value=invoiceParty.name)
-    input.ivp-title(name='title', placeholder='Sample Company', value=invoiceParty.title)
-    input.ivp-slug(name='slug', placeholder='sample-company', value=invoiceParty.slug)
-    textarea.ivp-details(name='details', placeholder='123 Strange St.')=invoiceParty.details
+    input.ivp-name(name='name', placeholder='The invoice party name, e.g Apple Inc.', value=invoiceParty.name)
+    input.ivp-title(name='title', placeholder='A title for the party, e.g Apple Wire Transfer', value=invoiceParty.title)
+    input.ivp-slug(name='slug', placeholder='apple-wire-transfer', value=invoiceParty.slug)
+    textarea.ivp-details(name='details', placeholder='Markdown details for the party, e.g 123 Strange Street')=invoiceParty.details
     footer.ivp-actions
       a.ivp-cancel.lk-link(href='/invoices/parties', aria-label='Back to list of invoice parties') Cancel
       span(aria-label='Save this invoice party')

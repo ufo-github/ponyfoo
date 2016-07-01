@@ -45,19 +45,51 @@
 .wa-tool
   border-left 2px dashed c-dark-gray
   display block
-  background-color c-yellow
   text-align left
-  padding 10px
+  padding 6px
+
+.wa-tool-yellow
+  background-color c-yellow
   &:active
     outline 1px dotted c-purple
   &:hover
     background-color c-yellow-075
+
+.wa-submissions-container
+  margin-top 40px
+
+.wa-submissions-header
+  border-bottom 3px solid lighten(c-purple, 5%)
+
+.wa-submissions-header,
+.wa-tool-purple
+  background-color c-purple
+  color c-white
+
+.wa-tool-purple
+  &:active
+    outline 1px dotted c-yellow-highlight
+  &:hover
+    background-color lighten(c-purple, 10%)
 
 .wa-section-header
   border-right 2px dashed c-dark-gray
   background-color c-black-text
   color c-white
   text-align left
+
+.wa-link-header-suggestion
+  background-color c-orange-dark
+  color c-orange-005
+.wa-link-header-primary
+  background-color c-dark-green
+  color c-green-005
+.wa-link-header-secondary
+  background-color c-red
+  color c-red-005
+.wa-link-header-job
+  background-color c-purple
+  color c-purple-005
 
 .wa-section
   background-color c-orange-005
@@ -91,7 +123,7 @@
   &:active
     outline 1px dotted c-yellow-highlight
   &:hover
-    background-color c-black-light
+    background-color rgba(c-white, 0.25)
 
 .wa-editor
   border 2px dashed c-dark-gray
@@ -142,6 +174,7 @@
 .wa-preview
   margin 60px auto 20px
 
+.wa-input-75,
 .wa-input-50,
 .wa-input-25
   display inline-block
@@ -162,9 +195,10 @@
 .wa-color-select
   display inline-block
   vertical-align middle
-  width calc(50% - 17px)
+  width calc(50% - 20px)
+
 .wa-color-preview
-  width 34px
+  width 40px
 
 .wa-aside
   line-height 20px
@@ -188,6 +222,8 @@
   .wa-aside
     width 205px
 
+  .wa-input-75
+    width 75%
   .wa-input-50
     width 50%
   .wa-input-25

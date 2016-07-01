@@ -26,10 +26,30 @@ article.ly-section.vw-maintainer.de-host
 
     aside.wa-aside
       div.wa-toolbox.gu-candidate
-        div.wa-tool.fa.fa-header(data-tool='header')=' Header'
-        div.wa-tool.fa.fa-keyboard-o(data-tool='markdown')=' Markdown'
-        div.wa-tool.fa.fa-anchor(data-tool='link')=' Link'
-        div.wa-tool.fa.fa-envelope(data-tool='styles')=' Styles'
+        div.wa-tool.wa-tool-yellow(data-tool='header')
+          i.fa.fa-header
+          span=' Header'
+        div.wa-tool.wa-tool-yellow(data-tool='markdown')
+          i.fa.fa-keyboard-o
+          span=' Markdown'
+        div.wa-tool.wa-tool-yellow(data-tool='link')
+          i.fa.fa-anchor
+          span=' Link'
+        div.wa-tool.wa-tool-yellow(data-tool='styles')
+          i.fa.fa-object-group
+          span=' Styles'
+
+      if submissions.length
+        div.wa-submissions-container
+          header.wa-tool.wa-submissions-header
+            i.fa.fa-list-alt
+            span=' Submissions'
+          ul.wa-submissions.gu-candidate
+            each submission in submissions
+              li.wa-tool.wa-tool-purple(data-id=submission.id)
+                i.fa.fa-dot-circle-o
+                span=' '
+                div.md-markdown.md-markdown-inline!=submission.section.titleHtml
 
       if issue.status !== 'released'
         p You can save the weekly issue as a draft, or mark it ready for release

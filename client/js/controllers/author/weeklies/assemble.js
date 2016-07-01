@@ -36,6 +36,7 @@ function ready (viewModel, container, route) {
   var released = editing && weeklyIssue.status === 'released';
   var editor = $.findOne('.wa-editor', container);
   var toolbox = $.findOne('.wa-toolbox', container);
+  var submissions = $.findOne('.wa-submissions', container);
   var tools = $('.wa-tool', toolbox);
   var slug = $('.wa-slug');
   var status = $('.wa-status');
@@ -56,6 +57,10 @@ function ready (viewModel, container, route) {
     moves: toolMoves,
     copy: true
   });
+  var drakeSubmissions = dragula([editor, submissions], {
+    moves: submissionMoves,
+    copy: true
+  });
   var drakeSort = dragula([editor], {
     moves: editorSectionMoves
   });
@@ -70,6 +75,7 @@ function ready (viewModel, container, route) {
     .on('click', '.wa-section-toggle', toggleSection)
     .on('click', '.wa-section-clone', cloneSection)
     .on('change', '.wa-color-picker', pickedColor)
+    .on('change', '.wa-link-subtype', pickedSubtype)
     .on('change', '.wa-header-background', updateLinkColors)
     .on('change keypress keydown paste input', '.wa-link-image', updateThumbnailImage)
     .on('change keypress keydown paste input', '.wa-link-href', function (e) {
@@ -79,10 +85,15 @@ function ready (viewModel, container, route) {
     .and(summaryEditor)
       .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
 
-  drakeSort.on('drop', updatePreviewSlowly);
   drakeTools
     .on('cloned', clonedTool)
     .on('drop', droppedTool);
+
+  drakeSubmissions
+    .on('cloned', clonedTool)
+    .on('drop', droppedSubmission);
+
+  drakeSort.on('drop', updatePreviewSlowly);
 
   status.on('change', updatePublication);
   tools.on('click', pickedTool);
@@ -173,6 +184,9 @@ function ready (viewModel, container, route) {
   function toolMoves (el, source) {
     return source === toolbox;
   }
+  function submissionMoves (el, source) {
+    return source === submissions;
+  }
   function editorSectionMoves (el, source, handle) {
     var $handle = $(handle);
     return (
@@ -212,6 +226,7 @@ function ready (viewModel, container, route) {
   function cancellations (e) {
     if (e.which === 27) {
       drakeTools.cancel(true);
+      drakeSubmissions.cancel(true);
       drakeSort.cancel(true);
     }
   }
@@ -222,6 +237,43 @@ function ready (viewModel, container, route) {
       .parents('.wa-color-picker')
       .find(select.attr('data-target'))
       .css('color', color);
+  }
+  function pickedSubtype (e) {
+    var select = $(e.target);
+    var subtype = select.value();
+    select
+      .parents('.wa-section')
+      .find('.wa-section-header')
+      .removeClass('wa-link-header-original')
+      .removeClass('wa-link-header-suggestion')
+      .removeClass('wa-link-header-primary')
+      .removeClass('wa-link-header-secondary')
+      .removeClass('wa-link-header-job')
+      .addClass('wa-link-header-' + subtype);
+  }
+  function droppedSubmission (el, target) {
+    if (target !== editor) {
+      return;
+    }
+    var tool = $(el);
+    var toolId = tool.attr('data-id');
+    var action = 'author/weeklies/tool-link';
+    var section = findSubmissionSectionById(toolId);
+    if (!section) {
+      return;
+    }
+    insertingPartial(taunus.partial.replace(el, action, {
+      knownTags: viewModel.knownTags,
+      section: section
+    }));
+  }
+  function findSubmissionSectionById (id) {
+    var submissions = viewModel.submissions;
+    for (var i = 0; i < submissions.length; i++) {
+      if (submissions[i].id === id) {
+        return submissions[i].section;
+      }
+    }
   }
   function droppedTool (el, target) {
     if (target !== editor) {
@@ -305,6 +357,7 @@ function ready (viewModel, container, route) {
     var knownTags = $('.wa-link-tag', section).filter(byChecked).map(toValue).filter(unique);
     return {
       type: 'link',
+      subtype: $('.wa-link-subtype', section).value() || 'original',
       title: $('.wa-link-title', section).value(),
       href: $('.wa-link-href', section).value(),
       foreground: $('.wa-link-foreground', section).value(),

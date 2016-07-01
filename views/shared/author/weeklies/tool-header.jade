@@ -18,7 +18,7 @@ div.wa-section(data-tool='header')
       - foreground = section.foreground || '#333'
       - background = section.background || 'transparent'
       span.wa-color-preview.fa-stack.fa-lg
-        span.fa.fa-square-o.fa-stack-2x(style='color:' + background)
+        span.fa.fa-square.fa-stack-2x(style='color:' + background)
         span.fa.fa-font.fa-stack-1x(style='color:' + foreground)
       select.wa-color-select.wa-header-foreground(data-target='.fa-stack-1x')
         - this.selectedColor = foreground

@@ -1,7 +1,7 @@
 {
   "variables": {
     "SOURCE_AMI": "ami-116d857a",
-    "INSTANCE_TYPE": "t2.micro",
+    "INSTANCE_TYPE": "t2.small",
     "INSTANCE_USER": "admin",
     "VPC_ID": null,
     "SUBNET_ID": null

@@ -268,7 +268,7 @@ function ready (viewModel, container, route) {
     function submitted () {
       var owner = viewModel.roles && viewModel.roles.owner;
       var target = owner ? '/weekly/submissions/review' : '/weekly';
-      // taunus.navigate(target);
+      taunus.navigate(target);
     }
   }
 }

@@ -19,8 +19,3 @@ var schema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('WeeklyIssueSubmission', schema);
-
-// # Assembler / Compiler
-// - Display accepted links in assembler
-// - Add a section of from a drop-down and then compiling the section herein
-// - Ability to modify those sections further, not just tied to the submission

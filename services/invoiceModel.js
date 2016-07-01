@@ -15,8 +15,8 @@ function generateModel (data) {
   return {
     slug: slug,
     date: datetimeService.field(date),
-    customer: generatePartyModel(data.customer),
-    payment: generatePartyModel(data.payment),
+    customer: generatePartyModel(data.customer, data.customerParty),
+    payment: generatePartyModel(data.payment, data.paymentParty),
     items: items,
     paid: 'paid' in data ? data.paid : false,
     total: total,
@@ -24,15 +24,22 @@ function generateModel (data) {
   };
 }
 
-function generatePartyModel (party) {
+function generatePartyModel (party, template) {
   if (!party) {
+    if (template) {
+      return generatePartyModel(template);
+    }
     return party;
   }
+  var p = party || {};
+  var t = template || {};
+  var name = p.name || t.name;
+  var details = p.details || t.details;
   return {
-    name: party.name,
-    nameHtml: markdownService.compile(party.name),
-    details: party.details,
-    detailsHtml: markdownService.compile(party.details)
+    name: name,
+    nameHtml: markdownService.compile(name),
+    details: details,
+    detailsHtml: markdownService.compile(details)
   };
 }
 

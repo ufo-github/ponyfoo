@@ -2,7 +2,7 @@ div
   a(href!=authority + host.permalink)
     h1!=host.titleHtml
 
-p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom: 2px solid #e92c6c;')
+div(style='background-color: #900070; color: #fcfcfc; padding: 8px; border-bottom: 2px solid #ffe270;')
   -  site = comment.site && comment.site.replace(/https?:\/\//, '');
   if site
     a(href!=comment.site, style='color: #fcfcfc')
@@ -15,7 +15,7 @@ p(style='background-color: #f3720d; color: #fcfcfc; padding: 8px; border-bottom:
     span=' ' + comment.author
   span=' posted a new comment!'
 
-div.md-markdown(style='padding: 20px; background-color: #fff9f4;')!=comment.content
+div.md-markdown(style='padding: 20px; background-color: #fcf9ee;')!=comment.content
 
 p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ViewAction')
   meta(itemprop='name', content='Reply')

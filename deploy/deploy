@@ -3,8 +3,8 @@
 set -e
 
 : "${NODE_ENV:="staging"}"
-: "${RAW_AMI:="ami-d04f8abd"}"
-: "${PRIMAL_AMI:="ami-91db16fc"}"
+# : "${RAW_AMI:="ami-ca49f1dd"}"
+# : "${PRIMAL_AMI:="ami-xxxxxxxx"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
@@ -13,7 +13,7 @@ set -e
 NAME="ponyfoo-$NODE_ENV"
 
 # conventions, do not change
-INSTANCE_TYPE="t2.micro"
+INSTANCE_TYPE="t2.small"
 INSTANCE_USER="admin"
 MIN_CAPACITY="1"
 MAX_CAPACITY="3"

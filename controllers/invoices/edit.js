@@ -17,7 +17,7 @@ module.exports = function (req, res, next) {
     });
     var slug = req.params.slug;
     if (slug) {
-      Invoice.findOne({ slug: slug }).lean().exec(found);
+      Invoice.findOne({ slug: slug }).populate('customerParty paymentParty').lean().exec(found);
     } else {
       respond(defaultInvoice());
     }

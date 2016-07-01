@@ -4,6 +4,7 @@ var $ = require('dominus');
 var raf = require('raf');
 var moment = require('moment');
 var taunus = require('taunus');
+var assign = require('assignment');
 var sluggish = require('sluggish');
 var find = require('lodash/collection/find');
 var debounce = require('lodash/function/debounce');
@@ -95,7 +96,7 @@ module.exports = function (viewModel, container, route) {
     }
 
     function getModel () {
-      return {
+      var model = {
         date: moment(date.value(), 'DD-MM-YYYY').toDate(),
         slug: slug.value(),
         customer: {
@@ -109,6 +110,15 @@ module.exports = function (viewModel, container, route) {
         items: $('.ive-item-container').map(toItemModel),
         paid: $('.ive-paid').value()
       };
+      if (editing) {
+        if (viewModel.invoice.customerParty) {
+          model.customerParty = assign({}, viewModel.invoice.customerParty);
+        }
+        if (viewModel.invoice.paymentParty) {
+          model.paymentParty = assign({}, viewModel.invoice.paymentParty);
+        }
+      }
+      return model;
       function toItemModel (el) {
         return {
           summary: $('.ive-item-summary', el).value(),

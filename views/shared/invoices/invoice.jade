@@ -1,6 +1,9 @@
-section.iv-container
+section(class='iv-container' + (pdf ? ' iv-pdf' : ''))
   a.iv-logo(href='https://ponyfoo.com')
-    img(src='/img/logos/original-padded-text-white.png', alt='')
+    if pdf
+      img(src='/img/logos/original-text.png', alt='')
+    else
+      img(src='/img/logos/original-padded-text-white.png', alt='')
 
   h1.he-customer='#' + invoice.slug
   h2.he-date=invoice.date.text

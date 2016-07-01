@@ -2,7 +2,7 @@
 - tags = section.tags || []
 - unknownTags = tags.filter(function (t) { return !knownTags[t] })
 div.wa-section(data-tool='link')
-  div.wa-section-header.gu-candidate
+  div(class='wa-section-header gu-candidate' + (section.subtype ? ' wa-link-header-' + section.subtype : ''))
     span.wa-section-heading.fa.fa-anchor
       span=' Link'
       span.wa-link-preview.md-markdown.md-markdown-inline
@@ -10,12 +10,21 @@ div.wa-section(data-tool='link')
     span.wa-section-toggle.fa.fa-compress
     span.wa-section-clone.fa.fa-clone
   div.wa-section-contents.uv-hidden
+    input.wa-link-href.wa-input-75(placeholder='Paste your link here', value=section.href, data-last-scraped=section.href)
+
+    select.wa-link-subtype.wa-input-25
+      option(value='original', selected=!section.subtype || section.subtype === 'original') Original
+      option(value='suggestion', selected=section.subtype === 'suggestion') Suggestion
+      option(value='primary', selected=section.subtype === 'primary') Primary Sponsorship
+      option(value='secondary', selected=section.subtype === 'secondary') Sponsored Link
+      option(value='job', selected=section.subtype === 'job') Job Listing
+
     input.wa-input-50.wa-link-title(placeholder='What would you like the link title to be?', value=section.title)
     span.wa-input-50.wa-color-picker
       - foreground = section.foreground || '#e92c6c'
       - background = section.background || 'transparent'
       span.wa-color-preview.fa-stack.fa-lg
-        span.fa.fa-square-o.fa-stack-2x(style='color:' + background)
+        span.fa.fa-square.fa-stack-2x(style='color:' + background)
         span.fa.fa-font.fa-stack-1x(style='color:' + foreground)
       select.wa-color-select.wa-link-foreground(data-target='.fa-stack-1x')
         - this.selectedColor = foreground
@@ -23,8 +32,6 @@ div.wa-section(data-tool='link')
       select.wa-color-select.wa-link-background(data-target='.fa-stack-2x')
         - this.selectedColor = background
         include color-options
-
-    input.wa-link-href(placeholder='Paste your link here', value=section.href, data-last-scraped=section.href)
 
     input.wa-link-source.wa-input-50(placeholder='Author or source for this link?', value=section.source)
     input.wa-link-source-href.wa-input-50(placeholder='A link to the author or source?', value=section.sourceHref)

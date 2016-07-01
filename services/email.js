@@ -23,6 +23,10 @@ var layoutFile = '../.bin/views/server/emails/layout.js';
 var defaults = {
   authority: authority,
   social: {
+    facebook: {
+      url: 'https://facebook.com/ponyfoo',
+      handle: '@ponyfoo'
+    },
     twitter: {
       url: 'https://twitter.com/ponyfoo',
       handle: '@ponyfoo'
@@ -32,8 +36,7 @@ var defaults = {
       name: 'ponyfoo.com'
     }
   },
-  styles: { base: css },
-  provider: { merge: { '*': { unsubscribe_html: '' } } }
+  styles: { base: css }
 };
 var api = {
   send: send,
