@@ -217,7 +217,8 @@ function notifyAccepted (submission, done) {
       css: css,
       attachments: attachments,
       submission: {
-        type: type,
+        subtype: submission.subtype,
+        subtypeText: type,
         submitter: submission.submitter,
         titleText: titleText,
         previewHtml: result.preview.html,
@@ -268,7 +269,8 @@ function notifyReceived (submission, done) {
       permalink: permalink,
       images: submission.commentHtml ? [result.gravatar] : [],
       submission: {
-        type: submissionTypes[submission.subtype],
+        subtype: submission.subtype,
+        subtypeText: submissionTypes[submission.subtype],
         submitter: submission.submitter,
         commentHtml: submission.commentHtml,
         previewHtml: result.preview.html

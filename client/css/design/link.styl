@@ -1,3 +1,4 @@
+o-visited = 0.04
 a,
 button
   outline none
@@ -11,7 +12,7 @@ input[type='submit']
 // prime styles for :visited links
 lk-link-visited-normal()
   &
-    background-color rgba(#fff, 0.1)
+    background-color rgba(#fff, o-visited)
   & .md-code-inline
     position relative
     &:only-child
@@ -25,11 +26,11 @@ lk-link-visited-normal()
       left 0
       right 0
       bottom 0
-      opacity 0.1
+      opacity o-visited
 
 lk-link-visited-already()
   &
-    background-color rgba(c-pink, 0.1)
+    background-color rgba(c-pink, o-visited)
   & .md-code-inline:before
     background-color c-pink
 
@@ -125,7 +126,7 @@ lk-color(c-color)
 
     if c-color != inherit
       &:visited
-        background-color rgba(c-color, 0.1)
+        background-color rgba(c-color, o-visited)
       &:visited .md-code-inline:before
         background-color c-color
 

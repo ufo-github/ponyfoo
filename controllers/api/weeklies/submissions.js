@@ -7,6 +7,7 @@ var WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
 var weeklySubmissionService = require('../../../services/weeklySubmission');
 var markupService = require('../../../services/markup');
 var dateFormat = 'YYYY-MM-DD';
+var subtypes = ['suggestion', 'primary', 'secondary', 'job'];
 
 function post (req, res, next) {
   var slug = req.params.slug;
@@ -86,7 +87,7 @@ function post (req, res, next) {
     if (errors.length) {
       return { errors: errors };
     }
-    var subtype = input.section.subtype || null;
+    var subtype = subtypes.indexOf(input.section.subtype) === -1 ? 'suggestion' : input.section.subtype;
     var slug = sluggish(input.section.title + '-' + email.split('@')[0]);
     if (!editing) {
       model.status = 'incoming';

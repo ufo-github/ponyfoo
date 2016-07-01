@@ -30,7 +30,7 @@ if submission.paymentLink
   div(style='margin: 20px 0; text-align: center;')
     a(href=authority + submission.paymentLink, style='padding: 20px; background-color: #1686a2; color: #fff; border-bottom: 2px solid #5aa9bc; display: inline-block; font-size: 28px;') Pay now
 
-if submission.type === 'suggestion'
+if submission.subtype === 'suggestion'
   div(style='margin: 20px 0; font-style: italic;') Thanks – again – for taking the time. You rock!
   div(style='margin: 20px 0;') We’d be thrilled if you’d like to send link suggestions our way more frequently. Please let us know. We’re always looking for people to help out with awesome links like this one!
 else
