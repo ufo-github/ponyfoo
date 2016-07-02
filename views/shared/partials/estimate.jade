@@ -1,10 +1,14 @@
+- updated = article.updated
 - publication = article.publication
 if article.status === 'draft'
   label.at-estimate-label Draft
-else if article.status === 'publish'
-  label.at-estimate-label Slated for publication
   span.at-estimate-value
-    span=' '
+    span=' updated '
+    time(datetime=updated.datetime, aria-label='Updated ' + updated.title)=updated.text
+else if article.status === 'publish'
+  label.at-estimate-label Scheduled
+  span.at-estimate-value
+    span=' for '
     time(datetime=publication.datetime, aria-label='Publishing ' + publication.title)=publication.text
 else if article.status === 'published'
   label.at-estimate-label Published

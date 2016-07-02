@@ -46,6 +46,7 @@ function toJSON (source, options) {
 
   article.permalink = '/articles/' + article.slug;
   article.publication = datetimeService.field(article.publication);
+  article.updated = datetimeService.field(article.updated);
   article.readingTime = estimate.text(text);
 
   if (source.populated('author')) {
