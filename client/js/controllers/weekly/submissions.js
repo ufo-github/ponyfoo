@@ -82,9 +82,7 @@ function ready (viewModel, container, route) {
   function changeSubtype (el) {
     var sponsor = isSponsor();
     var subtype = el.text();
-console.log(linkImageContainer);
-console.log(subtype);
-console.log(subtype === 'secondary' || subtype === 'job');
+
     setClass(linkImageContainer, 'uv-hidden', subtype === 'secondary' || subtype === 'job');
 
     setClass(contactSection, 'wu-has-sponsor', sponsor);

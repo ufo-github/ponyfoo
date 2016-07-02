@@ -279,24 +279,28 @@ function ready (viewModel, container, route) {
     if (target !== editor) {
       return;
     }
-    var tool = $(el);
-    var toolName = tool.attr('data-tool');
-    var action = 'author/weeklies/tool-' + toolName;
-    insertingPartial(taunus.partial.replace(el, action, {
-      knownTags: viewModel.knownTags,
-      section: getDefaultSectionModel(toolName)
-    }));
+    addSectionWithTool(el);
   }
   function pickedTool (e) {
-    var tool = $(e.target);
-    var toolName = tool.attr('data-tool');
-    var action = 'author/weeklies/tool-' + toolName;
-    insertingPartial(taunus.partial.appendTo(editor, action, {
-      knownTags: viewModel.knownTags,
-      section: getDefaultSectionModel(toolName)
-    }));
+    addSectionWithTool(e.target, true);
     e.preventDefault();
     e.stopPropagation();
+  }
+  function addSectionWithTool (el, append) {
+    var tool = $(el);
+    var toolName = tool.parents('.wa-tool').and(tool).attr('data-tool');
+    var action = 'author/weeklies/tool-' + toolName;
+    var model = {
+      knownTags: viewModel.knownTags,
+      section: getDefaultSectionModel(toolName)
+    };
+    var insertion;
+    if (append) {
+      insertion = taunus.partial.appendTo(editor, action, model);
+    } else {
+      insertion = taunus.partial.replace(el, action, model);
+    }
+    insertingPartial(insertion);
   }
   function getDefaultSectionModel (toolName) {
     if (toolName === 'link') {
