@@ -26,7 +26,10 @@ article.ly-section.vw-maintainer.de-host
 
             td.wur-buttons(data-label='Actions')
               if submission.status !== 'accepted'
-                a.ar-button.lk-icon.fa.fa-check-square-o(href='/api/weeklies/submissions/' + submission.slug + '/accept', aria-label='Mark this link submission as accepted', data-taunus-ignore)
+                if submission.accepted
+                  a.ar-button.lk-icon.fa.fa-check-square(href='/api/weeklies/submissions/' + submission.slug + '/accept', aria-label='Mark this link submission as accepted once again', data-taunus-ignore)
+                else
+                  a.ar-button.lk-icon.fa.fa-check-square-o(href='/api/weeklies/submissions/' + submission.slug + '/accept', aria-label='Mark this link submission as accepted', data-taunus-ignore)
               else
                 a.ar-button.lk-icon.fa.fa-square(href='/api/weeklies/submissions/' + submission.slug + '/use', aria-label='Mark this link submission as used', data-taunus-ignore)
               a.ar-button.lk-icon.fa.fa-pencil(href='/weekly/submissions/' + submission.slug + '/edit', aria-label='Edit this link submission')
