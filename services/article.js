@@ -12,7 +12,7 @@ function findInternal (method, query, options, done) {
   if (done === void 0) {
     done = options; options = {};
   }
-  if (!options.sort) { options.sort = '-publication'; }
+  if (!options.sort) { options.sort = { publication: -1, updated: -1 }; }
 
   var cursor = Article[method](query);
   var populations = options.populate;
