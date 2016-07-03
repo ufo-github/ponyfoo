@@ -22,7 +22,7 @@ article.ly-section.vw-maintainer.de-host
             td.wur-status(data-label='Status')=submission.status
             td(data-label='Type')=submission.type
             td(data-label='Submitter')
-              a.lk-rainbows(href='mailto:' + submission.email, target='_blank')=submission.submitter || submission.email
+              a.lk-link.lk-black(href='mailto:' + submission.email, target='_blank')=submission.submitter || submission.email
 
             td.wur-buttons(data-label='Actions')
               if submission.status !== 'accepted'

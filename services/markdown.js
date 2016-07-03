@@ -1,5 +1,6 @@
 'use strict';
 
+var omnibox = require('omnibox');
 var domador = require('domador');
 var megamark = require('megamark');
 var insane = require('insane');
@@ -18,14 +19,6 @@ module.exports = {
   compile: compile,
   decompile: decompile
 };
-
-function getLabel (title) {
-  var trimmedTitle = title ? title.trim() : '';
-  if (trimmedTitle) {
-    return textService.format(' aria-label="%s"', trimmedTitle);
-  }
-  return '';
-}
 
 function attr (token, name) {
   if (token[name]) {
@@ -47,13 +40,36 @@ function attr (token, name) {
   return null;
 }
 
+function setLabel (attrs, title) {
+  var trimmedTitle = title ? title.trim() : '';
+  if (trimmedTitle) {
+    attrs['aria-label'] = trimmedTitle;
+  }
+}
+
+function blankTarget (attrs, href) {
+  var parts = omnibox.parse(href);
+  var difforigin = parts.host && parts.host !== authority;
+  if (difforigin) {
+    attrs.target = '_blank';
+  }
+}
+
+function stringifyLink (attrs) {
+  return Object.keys(attrs).reduce(reducer, '<a') + '>';
+  function reducer (all, attr) {
+    return all + textService.format(' %s="%s"', attr, attrs[attr]);
+  }
+}
+
 function link (tokens, i) {
-  var fmt = '<a href="%s"%s>';
   var open = tokens[i];
   var href = attr(open, 'href');
   var title = attr(open, 'title');
-  var html = textService.format(fmt, href, getLabel(title));
-  return html;
+  var attrs = { href: href };
+  blankTarget(attrs, href);
+  setLabel(attrs, title);
+  return stringifyLink(attrs);
 }
 
 function filter (token) {

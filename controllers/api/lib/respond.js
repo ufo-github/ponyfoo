@@ -2,7 +2,7 @@
 
 function respond (err, res, next, validation, valid) {
   if (err) {
-    if (validation.length) {
+    if (validation && validation.length) {
       invalid(res, validation);
     } else {
       next(err);
