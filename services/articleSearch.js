@@ -85,7 +85,7 @@ function addRelatedAll (done) {
       Article.find({ status: 'published' }, next);
     },
     function compute (articles, next) {
-      contra.each(articles, 3, addRelatedArticles, but(next));
+      contra.each(articles, 2, addRelatedArticles, but(next));
       function addRelatedArticles (article, next) {
         winston.debug('Computing relationships for: "%s"', article.slug);
         addRelated(article, save);
