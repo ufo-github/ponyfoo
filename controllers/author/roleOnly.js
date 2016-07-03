@@ -12,7 +12,7 @@ module.exports = function roleOnly (roles) {
         next(req.user ? null : 'route');
       },
       function findUser (next) {
-        User.findOne({ _id: req.user }).select('roles').exec(next);
+        User.findOne({ _id: req.user }).select('roles displayName').exec(next);
       },
       function testUser (user, next) {
         var ok = user && userService.hasRole(user, roles);
@@ -22,7 +22,8 @@ module.exports = function roleOnly (roles) {
           return;
         }
         req.userObject = {
-          roles: user.roles
+          roles: user.roles,
+          displayName: user.displayName
         };
         next(null);
       }

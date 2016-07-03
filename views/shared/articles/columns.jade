@@ -15,10 +15,13 @@ ol.aa-articles
           span=moment && moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
           span=' read'
         div.aa-trivia-item
-          a.aa-comments.lk-link.lk-black(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
-        if !profilePage && article.author && article.author.slug
+          a.lk-link.lk-black(href='/articles/' + article.slug + '#comments')=count + ' comment' + (count === 1 ? '' : 's')
+        if !profilePage && article.author
           div.aa-trivia-item
-            a.aa-comments.lk-link.lk-black(href='/contributors/' + article.author.slug)='by ' + article.author.displayName
+            if article.author.slug
+              a.lk-link.lk-black(href='/contributors/' + article.author.slug)='by ' + article.author.displayName
+            else
+              span='by ' + article.author.displayName
       section.aa-tags
         include ../partials/tags
       if article.cover

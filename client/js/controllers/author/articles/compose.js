@@ -178,21 +178,28 @@ module.exports = function (viewModel, container, route) {
     var editorNoteHtml = getHtml(editorNote);
     var introductionHtml = getHtml(introduction);
     var bodyHtml = getHtml(body);
-    taunus.partial(previewSummary, 'articles/columns', {
-      articles: [{
-        publication: datetimeService.field(moment().add(4, 'days')),
-        commentCount: 0,
-        slug: slug.value(),
-        readingTime: estimate.text([teaserHtml, editorNoteHtml || '', introductionHtml, bodyHtml].join(' ')),
-        titleHtml: getHtmlTitle(),
-        tags: getTags(),
-        summaryHtml: articleSummarizationService.summarize({
-          summary: summary.value(),
-          teaserHtml: teaserHtml,
-          introductionHtml: introductionHtml
-        }).html
-      }]
+    var summarized = articleSummarizationService.summarize({
+      summary: summary.value(),
+      teaserHtml: teaserHtml,
+      introductionHtml: introductionHtml
     });
+    var parts = [teaserHtml, editorNoteHtml || '', introductionHtml, bodyHtml];
+    var readingTime = estimate.text(parts.join(' '));
+    var publication = datetimeService.field(moment().add(4, 'days'));
+    var article = {
+      publication: publication,
+      commentCount: 0,
+      slug: slug.value(),
+      readingTime: readingTime,
+      titleHtml: getHtmlTitle(),
+      tags: getTags(),
+      author: {
+        displayName: viewModel.authorDisplayName
+      },
+      summaryHtml: summarized.html
+    };
+    var vm = { articles: [article] };
+    taunus.partial(previewSummary, 'articles/columns', vm);
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }

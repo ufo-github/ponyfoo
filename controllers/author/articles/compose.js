@@ -4,34 +4,49 @@ var Article = require('../../../models/Article');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
-
-  res.viewModel = {
-    model: {
-      title: 'Article Composer',
-      status: 'draft',
-      article: { tags: [] },
-      editing: !!slug,
-      originalAuthor: true
-    }
-  };
-
   if (slug) {
-    Article.findOne({ slug: slug }).lean().exec(populate);
+    findArticle();
   } else {
-    next();
+    respondWithEmptyComposer();
   }
 
-  function populate (err, article) {
+  function findArticle () {
+    Article
+      .findOne({ slug: slug })
+      .populate('author', 'displayName')
+      .lean()
+      .exec(respondUsingArticle);
+  }
+
+  function respondUsingArticle (err, article) {
     if (err) {
       next(err); return;
     }
     if (!article) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
-    var model = res.viewModel.model;
-    model.originalAuthor = article.author.equals(req.user);
-    model.article = article;
-    model.article.tags = article.tags || [];
+    res.viewModel = {
+      model: {
+        title: 'Article Composer',
+        editing: true,
+        originalAuthor: article.author._id.equals(req.user),
+        authorDisplayName: article.author.displayName,
+        article: article
+      }
+    };
+    next();
+  }
+
+  function respondWithEmptyComposer () {
+    res.viewModel = {
+      model: {
+        title: 'Article Composer',
+        editing: false,
+        originalAuthor: true,
+        authorDisplayName: req.userObject.displayName,
+        article: { tags: [] }
+      }
+    };
     next();
   }
 };
