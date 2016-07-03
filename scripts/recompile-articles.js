@@ -7,7 +7,7 @@ var db = require('../lib/db');
 var env = require('../lib/env');
 var boot = require('../lib/boot');
 var Article = require('../models/Article');
-var markup = require('../services/markup');
+var markupService = require('../services/markup');
 
 boot(booted);
 

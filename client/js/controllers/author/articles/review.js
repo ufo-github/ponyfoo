@@ -4,7 +4,7 @@ var $ = require('dominus');
 
 module.exports = function (viewModel) {
   var container = $('.ar-container');
-  var compute = $('.ar-compute');
+  var compute = $('.ar-recompute');
 
   container.on('click', '.ar-remove', remove);
   compute.on('click', computeRelated);
@@ -25,15 +25,11 @@ module.exports = function (viewModel) {
     }
   }
 
-  function computeRelated () {
-    compute.attr('disabled', true);
-
-    viewModel.measly
-      .post('/api/articles/compute-relationships')
-      .on('data', enable);
-
-    function enable () {
-      compute.attr('disabled', false);
+  function computeRelated (e) {
+    var okay = confirm('Are you sure you want to recompute relationships for every single article?');
+    if (!okay) {
+      e.preventDefault();
+      e.stopPropagation();
     }
   }
 };
