@@ -9,6 +9,8 @@ var enabled = pageId && accessToken;
 if (enabled) {
   FB.setAccessToken(accessToken);
 }
+var get = query('get');
+var post = query('post');
 
 function noop () {}
 
@@ -18,10 +20,10 @@ function share (status, link, done) {
     message: status,
     link: link
   };
-  query(endpoint, data, done);
+  post(endpoint, data, done);
 }
 
-function fake (status, link, done) {
+function shareFake (status, link, done) {
   var end = done || noop;
   winston.info('FB: ' + status + ' ' + link);
   end();
@@ -57,7 +59,7 @@ function getErrorMessage (result) {
 }
 
 module.exports = {
-  share: enabled ? share : fake,
-  get: query('get'),
-  post: query('post')
+  share: enabled ? share : shareFake,
+  get: get,
+  post: post
 };
