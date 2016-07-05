@@ -14,13 +14,21 @@ var datetimeService = require('../../../../../services/datetime');
 var twitterService = require('../../../conventions/twitter');
 var userService = require('../../../services/user');
 var storage = require('../../../lib/storage');
-var defaultKey = 'author-unsaved-draft';
-var publicationFormat = 'DD-MM-YYYY HH:mm';
+var loadScript = require('../../../lib/loadScript');
 var editorRoles = ['owner', 'editor'];
+var defaultStorageKey = 'author-unsaved-draft';
+var publicationFormat = 'DD-MM-YYYY HH:mm';
 
 function noop () {}
 
-module.exports = function (viewModel, container, route) {
+module.exports = function controller (viewModel, container, route) {
+  loadScript('/js/rome.js', function loaded () {
+    initialize(viewModel, container, route);
+  });
+};
+
+function initialize (viewModel, container, route) {
+  var rome = global.rome;
   var article = viewModel.article;
   var editing = viewModel.editing;
   var published = editing && article.status === 'published';
@@ -78,6 +86,10 @@ module.exports = function (viewModel, container, route) {
   status.on('change', updatePublication);
   campaign.on('change', '.ck-input', serializeSlowly);
   schedule.on('change', updatePublication);
+
+  if (publication.length) {
+    rome(publication[0], { inputFormat: publicationFormat });
+  }
 
   deserialize(editing && article);
 
@@ -203,11 +215,11 @@ module.exports = function (viewModel, container, route) {
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }
-  function serialize () { storage.set(defaultKey, getRequestData()); }
-  function clear () { storage.remove(defaultKey); }
+  function serialize () { storage.set(defaultStorageKey, getRequestData()); }
+  function clear () { storage.remove(defaultStorageKey); }
 
   function deserialize (source) {
-    var data = source || storage.get(defaultKey) || {
+    var data = source || storage.get(defaultStorageKey) || {
       email: true, tweet: true, fb: true, echojs: true, hn: true, lobsters: true
     };
     var titleText = data.titleMarkdown || '';

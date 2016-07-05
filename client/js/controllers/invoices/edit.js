@@ -12,7 +12,7 @@ var loadScript = require('../../lib/loadScript');
 var invoiceModelService = require('../../../../services/invoiceModel');
 
 module.exports = function (viewModel, container, route) {
-  loadScript('/js/rome.js', function () {
+  loadScript('/js/rome.js', function loaded () {
     var editing = viewModel.editing;
     var date = $('.ive-date');
     var slug = $('.ive-slug');

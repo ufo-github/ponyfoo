@@ -16,7 +16,7 @@ module.exports = function (viewModel, container) {
   var addResource = $('.apn-add-resource');
   var boundSlug = true;
 
-  loadScript('/js/rome.js', function () {
+  loadScript('/js/rome.js', function loaded () {
     var updateSlugSlowly = raf.bind(null, debounce(updateSlug, 100));
 
     rome(presented, { time: false, inputFormat: 'DD-MM-YYYY' });
