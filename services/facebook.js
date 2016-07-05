@@ -13,35 +13,12 @@ if (enabled) {
 function noop () {}
 
 function share (status, link, done) {
-  var end = done || noop;
   var endpoint = pageId + '/feed';
   var data = {
     message: status,
     link: link
   };
-  FB.api(endpoint, 'post', data, normalize);
-
-  function normalize (result) {
-    if (!result || result.error) {
-      failed(result); return;
-    }
-    end(null, result);
-  }
-
-  function failed (result) {
-    winston.warn('Error while posting to Facebook', result);
-    end(new Error(getErrorMessage(result)));
-  }
-
-  function getErrorMessage (result) {
-    if (!result) {
-      return result;
-    }
-    if (result.error) {
-      return result.error.stack || result.error;
-    }
-    return result;
-  }
+  query(endpoint, data, done);
 }
 
 function fake (status, link, done) {
@@ -50,6 +27,37 @@ function fake (status, link, done) {
   end();
 }
 
+function query (method) {
+  return function queryWithMethod (endpoint, data, done) {
+    var end = done || noop;
+    FB.api(endpoint, method, data, normalize);
+
+    function normalize (result) {
+      if (!result || result.error) {
+        failed(result); return;
+      }
+      end(null, result);
+    }
+
+    function failed (result) {
+      winston.warn('Error while posting to Facebook', result);
+      end(getErrorMessage(result));
+    }
+  };
+}
+
+function getErrorMessage (result) {
+  if (!result) {
+    return result;
+  }
+  if (result.error) {
+    return result.error.stack || result.error;
+  }
+  return result;
+}
+
 module.exports = {
-  share: enabled ? share : fake
+  share: enabled ? share : fake,
+  get: query('get'),
+  post: query('post')
 };
