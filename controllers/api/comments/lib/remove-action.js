@@ -2,8 +2,8 @@
 
 var contra = require('contra');
 var assign = require('assignment');
-var Article = require('../../../models/Article');
-var WeeklyIssue = require('../../../models/WeeklyIssue');
+var Article = require('../../../../models/Article');
+var WeeklyIssue = require('../../../../models/WeeklyIssue');
 var hostTypes = {
   articles: {
     name: 'Article',
@@ -19,7 +19,7 @@ var hostTypes = {
   }
 };
 
-function remove (req, res, next) {
+function removeAction (req, res, next, done) {
   var hostType = hostTypes[req.params.type];
   var id = req.params.id;
 
@@ -35,7 +35,7 @@ function remove (req, res, next) {
   function found (host, next) {
     var comment = host.comments.id(id);
     if (!comment) {
-      res.status(404).json({ messages: ['Comment not found'] }); return;
+      done('not found'); return;
     }
     next(null, host);
   }
@@ -44,16 +44,15 @@ function remove (req, res, next) {
     var comment = host.comments.id(id);
     var children = host.comments.filter(sameThread);
 
+    [comment].concat(children).forEach(removeAll);
+    host.save(saved);
+
     function sameThread (comment) {
       return comment.parent && comment.parent.equals(id);
     }
-
-    [comment].concat(children).forEach(function removeAll (comment) {
+    function removeAll (comment) {
       comment.remove();
-    });
-
-    host.save(saved);
-
+    }
     function saved (err) {
       next(err);
     }
@@ -63,8 +62,8 @@ function remove (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.json({});
+    done('success');
   }
 }
 
-module.exports = remove;
+module.exports = removeAction;

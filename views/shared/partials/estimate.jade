@@ -8,7 +8,7 @@ if article.status === 'draft'
 else if article.status === 'publish'
   label.at-estimate-label Scheduled
   span.at-estimate-value
-    span=' for '
+    span=' access '
     time(datetime=publication.datetime, aria-label='Publishing ' + publication.title)=publication.text
 else if article.status === 'published'
   label.at-estimate-label Published

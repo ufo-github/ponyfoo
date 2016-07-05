@@ -225,8 +225,11 @@ function send (options, done) {
   var template = options.template;
   var patrons = options.patrons;
   var partialModel = options.model;
+  var emitter = contra.emitter({});
 
   contra.waterfall([findVerifiedSubscribers, patchModel], done);
+
+  return emitter;
 
   function findVerifiedSubscribers (next) {
     var query = { verified: true };
@@ -244,7 +247,7 @@ function send (options, done) {
     var subscribers = recipients ? documents.filter(isRecipient) : documents;
     var to = _.pluck(subscribers, 'email');
     var provider = {
-      merge: subscribers.reduce(locals(topic), {})
+      merge: subscribers.reduce(locals(topic, emitter), {})
     };
     var model = assign({}, partialModel, { to: to, provider: provider });
     emailService.send(template, model, next);
@@ -254,13 +257,17 @@ function send (options, done) {
   }
 }
 
-function locals (topic) {
+function locals (topic, emitter) {
   return function localsForTopic (all, subscriber) {
-    all[subscriber.email] = {
+    var subscriberLocals = {
       name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
       reason: reasons[subscriber.source] || reasons.default,
       unsubscribe_html: getUnsubscribeHtml(subscriber, topic)
     };
+    all[subscriber.email] = subscriberLocals;
+    if (emitter) {
+      emitter.emit('locals', subscriber.email, subscriberLocals);
+    }
     return all;
   };
 }

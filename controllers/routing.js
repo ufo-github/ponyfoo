@@ -38,7 +38,8 @@ var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
 var articleShare = require('./api/articles/share');
 var commentInsert = require('./api/comments/insert');
-var commentRemove = require('./api/comments/remove');
+var commentRemoveJson = require('./api/comments/remove-json');
+var commentRemoveRedirect = require('./api/comments/remove-redirect');
 var weeklyInsert = require('./api/weeklies/insert');
 var weeklyUpdate = require('./api/weeklies/update');
 var weeklyRemove = require('./api/weeklies/remove');
@@ -104,7 +105,8 @@ module.exports = function (app) {
 
   app.put('/api/:type(articles|weeklies)/:slug/comments', commentInsert);
   app.post('/api/:type(articles|weeklies)/:slug/comments', verifyForm, commentInsert);
-  app.delete('/api/:type(articles|weeklies)/:slug/comments/:id', moderatorOnly, commentRemove);
+  app.delete('/api/:type(articles|weeklies)/:slug/comments/:id', moderatorOnly, commentRemoveJson);
+  app.get('/api/:type(articles|weeklies)/:slug/comments/:id/remove', moderatorOnly, commentRemoveRedirect);
 
   app.post('/api/weeklies/submissions', weeklySubmission);
   app.post('/api/weeklies/submissions/:slug', weeklySubmission);

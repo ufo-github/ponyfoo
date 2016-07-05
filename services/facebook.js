@@ -13,19 +13,41 @@ if (enabled) {
 function noop () {}
 
 function share (status, link, done) {
-  FB.api(pageId + '/feed', 'post', { message: status, link: link }, normalize);
-  function normalize (res) {
-    if (!res || res.error) {
-      winston.warn(res ? res.error : res);
-      (done || noop)(new Error(res ? res.error : res)); return;
+  var end = done || noop;
+  var endpoint = pageId + '/feed';
+  var data = {
+    message: status,
+    link: link
+  };
+  FB.api(endpoint, 'post', data, normalize);
+
+  function normalize (result) {
+    if (!result || result.error) {
+      failed(result); return;
     }
-    (done || noop)(null, res);
+    end(null, result);
+  }
+
+  function failed (result) {
+    winston.warn('Error while posting to Facebook', result);
+    end(new Error(getErrorMessage(result)));
+  }
+
+  function getErrorMessage (result) {
+    if (!result) {
+      return result;
+    }
+    if (result.error) {
+      return result.error.stack || result.error;
+    }
+    return result;
   }
 }
 
 function fake (status, link, done) {
+  var end = done || noop;
   winston.info('FB: ' + status + ' ' + link);
-  (done || noop)();
+  end();
 }
 
 module.exports = {

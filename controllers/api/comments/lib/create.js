@@ -6,6 +6,7 @@ var assign = require('assignment');
 var insane = require('insane');
 var contra = require('contra');
 var winston = require('winston');
+var User = require('../../../../models/User');
 var Article = require('../../../../models/Article');
 var WeeklyIssue = require('../../../../models/WeeklyIssue');
 var validate = require('./validate');
@@ -122,14 +123,31 @@ module.exports = function (options, done) {
     contra.concurrent({
       recipients: contra.curry(findRecipients, host),
       html: absolutizeHtml,
-      gravatar: fetchGravatar
-    }, function prepare (err, data) {
-      if (err) {
-        send(err); return;
+      gravatar: fetchGravatar,
+      host: getHost,
+      moderators: getModerators
+    }, prepare);
+    function getHost (next) {
+      next(null, host);
+    }
+    function getModerators (next) {
+      var moderatorRoles = ['owner', 'editor', 'moderator'];
+      var query = { roles: { $in: moderatorRoles } };
+      User.find(query).lean().select('email').exec(found);
+      function found (err, users) {
+        if (err) {
+          next(err); return;
+        }
+        next(null, _.pluck(users, 'email'));
       }
-      data.host = host;
-      send(null, data);
-    });
+    }
+    function prepare (err, result) {
+      if (err) {
+        winston.info('An error occurred when preparing comment email notifications', err);
+        return;
+      }
+      sendEmailNotifications(result);
+    }
   }
 
   function findRecipients (host, next) {
@@ -170,11 +188,7 @@ module.exports = function (options, done) {
     });
   }
 
-  function send (err, data) {
-    if (err) {
-      winston.info('An error occurred when preparing comment email notifications', err);
-      return;
-    }
+  function sendEmailNotifications (data) {
     var permalinkToHost =  util.format('/%s/%s', options.type, data.host.slug);
     var permalinkToComment = util.format('%s#comment-%s', permalinkToHost, comment._id);
     var email = {
@@ -202,12 +216,25 @@ module.exports = function (options, done) {
         description: 'Reply to Comment – ' + data.host.title
       }
     };
-    subscriberService.send({
+
+    var emitter = subscriberService.send({
       topic: hostType.topic,
       template: 'comment-published',
       recipients: data.recipients,
       model: email
     });
+    emitter.on('locals', applyLocals);
+
+    function applyLocals (email, locals) {
+      var isModerator = data.moderators.indexOf(email) !== -1;
+      locals.comment_removal_link_html = isModerator ? canRemove() : '';
+      function canRemove () {
+        var template = 'Or, <a href="%s" style="color: #1686a2;">delete</a>.';
+        var remove = util.format('%s/api%s/comments/%s/remove', authority, permalinkToHost, comment._id);
+        var html = util.format(template, remove);
+        return html;
+      }
+    }
   }
 
   function created (err) {

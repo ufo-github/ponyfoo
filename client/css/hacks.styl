@@ -1,8 +1,7 @@
 .ua-firefox *
   outline none !important // outlines do not play well with absolutely positioned pseudo elements in firefox
 
-.ua-firefox .dc-colored
-  border-top-style outset // dotted is dashed everywhere but firefox. dots in firefox are awful.
-
-.ua-safari .aa-cover-footer:before
-  background none !important // safari sucks at rendering this gradient
+.ua-firefox,
+.ua-edge
+  .dc-colored
+    border-top-style outset // dotted is dashed everywhere but FF/Edge
