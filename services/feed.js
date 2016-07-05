@@ -36,7 +36,7 @@ function from (options) {
       .unique()
       .value();
     var feed = new RSS({
-      generator: 'bevacqua/ponyfoo',
+      generator: 'ponyfoo/ponyfoo',
       title: options.title,
       description: options.description,
       feed_url: authority + options.href,

@@ -2,17 +2,17 @@
   "name": "ponyfoo",
   "description": "Open-source blogging platform",
   "version": "1.0.37",
-  "homepage": "https://github.com/bevacqua/ponyfoo",
+  "homepage": "https://github.com/ponyfoo/ponyfoo",
   "authors": [
-    "Nicolás Bevacqua <nicolasbevacqua@gmail.com>"
+    "Nicolás Bevacqua <nico@ponyfoo.com>"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bevacqua/ponyfoo.git"
+    "url": "git://github.com/ponyfoo/ponyfoo.git"
   },
   "bugs": {
-    "url": "https://github.com/bevacqua/ponyfoo/issues"
+    "url": "https://github.com/ponyfoo/ponyfoo/issues"
   },
   "main": "app",
   "scripts": {

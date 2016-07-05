@@ -30,7 +30,8 @@ function shareFake (status, link, done) {
 }
 
 function query (method) {
-  return function queryWithMethod (endpoint, data, done) {
+  return queryWithMethod;
+  function queryWithMethod (endpoint, data, done) {
     var end = done || noop;
     FB.api(endpoint, method, data, normalize);
 
@@ -45,7 +46,7 @@ function query (method) {
       winston.warn('Error while posting to Facebook', result);
       end(getErrorMessage(result));
     }
-  };
+  }
 }
 
 function getErrorMessage (result) {
