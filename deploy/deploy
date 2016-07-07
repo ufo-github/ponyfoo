@@ -5,7 +5,7 @@ set -e
 : "${NODE_ENV:="staging"}"
 : "${RAW_AMI:="ami-6644fc71"}"
 : "${PRIMAL_AMI:="ami-61358d76"}"
-# : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
+: "${CARNIVORE_AMI:="ami-a357d0b4"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
 
@@ -168,37 +168,46 @@ aws autoscaling create-auto-scaling-group \
   --vpc-zone-identifier $SUBNET_ID \
   --tags ResourceId=$ASG_NAME,Key=Name,Value=$NAME ResourceId=$ASG_NAME,Key=Role,Value=web > deploy/log/asg-create-group.log
 
-EC2_HEALTH="0"
-while [ "$EC2_HEALTH" != "$DESIRED_CAPACITY" ]
-do
-  printf "deploy: ensuring new instance(s) are healthy at ec2"
-  sleep 2;printf ".";sleep 2;printf "."
-  aws autoscaling describe-auto-scaling-groups \
-    --auto-scaling-group-names "$ASG_NAME" > deploy/log/asg-description.log
+test_ec2_elb_health() {
+  EC2_HEALTH="0"
+  while [ "$EC2_HEALTH" != "$DESIRED_CAPACITY" ]
+  do
+    printf "deploy: ensuring new instance(s) are healthy at ec2"
+    sleep 2;printf ".";sleep 2;printf "."
+    aws autoscaling describe-auto-scaling-groups \
+      --auto-scaling-group-names "$ASG_NAME" > deploy/log/asg-description.log
 
-  EC2_HEALTH=$(underscore process --outfmt text "data.AutoScalingGroups[0].Instances.filter(function (i) {
-    return i.LifecycleState === 'InService' && i.HealthStatus === 'Healthy'
-  }).length" < deploy/log/asg-description.log)
+    EC2_HEALTH=$(underscore process --outfmt text "data.AutoScalingGroups[0].Instances.filter(function (i) {
+      return i.LifecycleState === 'InService' && i.HealthStatus === 'Healthy'
+    }).length" < deploy/log/asg-description.log)
 
-  echo " ($EC2_HEALTH/$DESIRED_CAPACITY are healthy)"
-done
+    echo " ($EC2_HEALTH/$DESIRED_CAPACITY are healthy)"
+  done
 
-ELB_INSTANCES=$(jq -r '.AutoScalingGroups[0].Instances[]?.InstanceId' < deploy/log/asg-description.log)
-ELB_HEALTH="0"
-while [ "$ELB_HEALTH" != "$DESIRED_CAPACITY" ]
-do
-  printf "deploy: ensuring new instance(s) are healthy at elb"
-  sleep 2;printf ".";sleep 2;printf "."
-  aws elb describe-instance-health \
-    --load-balancer-name "$ELB_NAME" \
-    --instances $ELB_INSTANCES  > deploy/log/elb-health-description.log
+  ELB_INSTANCES=$(jq -r '.AutoScalingGroups[0].Instances[]?.InstanceId' < deploy/log/asg-description.log)
+  ELB_HEALTH="0"
+  while [ "$ELB_HEALTH" != "$DESIRED_CAPACITY" ]
+  do
+    printf "deploy: ensuring new instance(s) are healthy at elb"
+    sleep 2;printf ".";sleep 2;printf "."
+    aws elb describe-instance-health \
+      --load-balancer-name "$ELB_NAME" \
+      --instances $ELB_INSTANCES  > deploy/log/elb-health-description.log
 
-  ELB_HEALTH=$(underscore process --outfmt text "data.InstanceStates.filter(function (s) {
-    return s.State === 'InService'
-  }).length" < deploy/log/elb-health-description.log)
+    ELB_HEALTH=$(underscore process --outfmt text "data.InstanceStates.filter(function (s) {
+      return s.State === 'InService'
+    }).length" < deploy/log/elb-health-description.log)
 
-  echo " ($ELB_HEALTH/$DESIRED_CAPACITY are healthy)"
-done
+    echo " ($ELB_HEALTH/$DESIRED_CAPACITY are healthy)"
+  done
+}
+
+echo "deploy: testing deployment health."
+test_ec2_elb_health
+echo "deploy: waiting for 60s to ensure new deployment is in good standing."
+sleep 60
+echo "deploy: testing deployment health, again."
+test_ec2_elb_health
 
 while read EXISTING_GROUP_NAME
 do
