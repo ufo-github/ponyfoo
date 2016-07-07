@@ -46,23 +46,42 @@ function factory (res, options, next) {
     next();
 
     function setSearchResultsMetadata () {
-      model.title = getTitle(true);
-      model.meta.description = textService.format('This search results page contains all of the %s', getTitle(false));
+      model.title = getTitle({
+        standalone: true
+      });
+      model.queryTitle = getTitle({
+        standalone: true,
+        hasSuffix: false,
+        forcedPrefix: 'Your query for '
+      });
+      model.meta.description = 'This search results page contains all of the ' + getTitle({
+        standalone: false
+      });
 
-      function getTitle (standalone) {
+      function getTitle (ctx) {
+        // '[Your query for ${terms} in ][${knownTags} ]articles[ tagged ${otherTags}]'
+        // '[Search results for ${terms} in ][${knownTags} ]articles[ tagged ${otherTags}]'
+        var foremost = ctx.forcedPrefix || '';
+        var queryPrefix = foremost ? '' : 'Search results for ';
+        var suffix = ctx.hasSuffix === false ? '' : ' on Pony Foo';
         var terms = options.queryTerms.slice();
         var tags = options.queryTags.slice();
-        var queried = getQuery(standalone, terms);
-        var tagged = getTagPrefix(standalone && terms.length === 0, tags) + getTagSuffix(tags);
-        var title = textService.format('%s%s on Pony Foo', queried, tagged);
+        var hasNoPrefix = ctx.standalone && foremost.length === 0;
+        var hasNoPrefixOrTerms = hasNoPrefix && terms.length === 0;
+        var queried = getQuery(hasNoPrefix, terms, queryPrefix);
+        var tagged = getTagPrefix(hasNoPrefixOrTerms, tags) + getTagSuffix(tags);
+        var title = foremost + queried + tagged + suffix;
         return title;
       }
 
-      function getQuery (starts, terms) {
+      function getQuery (starts, terms, queryPrefix) {
         if (terms.length === 0) {
           return '';
         }
-        return textService.format('%s results for “%s” in ', starts ? 'Search' : 'search', terms.join('”, “'));
+        if (queryPrefix && !starts) {
+          queryPrefix = queryPrefix[0].toLowerCase() + queryPrefix.slice(1);
+        }
+        return textService.format('%s“%s” in ', queryPrefix, terms.join('”, “'));
       }
 
       function getTagPrefix (starts, tags) {
