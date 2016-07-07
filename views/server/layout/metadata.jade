@@ -23,10 +23,13 @@ meta(name='twitter:card', content='summary')
 meta(name='twitter:site', content='@ponyfoo')
 meta(name='twitter:creator', content=founder.twitter)
 
-each image, i in model.meta.images.reverse()
-  - last = i === model.meta.images.length - 1
-  meta(property='og:image', itemprop=last && 'images', content=image)
+- metaImages = model.meta.images
+- lastImageIndex = metaImages.length - 1
+
+//- facebook mostly cares about the last og:image
+each image, i in metaImages.reverse()
+  meta(property='og:image', itemprop=i === lastImageIndex && 'images', content=image)
 
 //- twitter only cares about the last meta image, repeat the cover
-if model.meta.images.length
-  meta(name='twitter:image:src', content=model.meta.images[0])
+if metaImages.length
+  meta(name='twitter:image:src', content=metaImages[lastImageIndex])
