@@ -81,7 +81,7 @@ function factory (res, options, next) {
         if (queryPrefix && !starts) {
           queryPrefix = queryPrefix[0].toLowerCase() + queryPrefix.slice(1);
         }
-        return textService.format('%s“%s” in ', queryPrefix, terms.join('”, “'));
+        return textService.format('%s“%s” in ', queryPrefix, terms.join(' '));
       }
 
       function getTagPrefix (starts, tags) {
