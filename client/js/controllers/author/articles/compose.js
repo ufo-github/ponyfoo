@@ -368,4 +368,4 @@ function initialize (viewModel, container, route) {
     clear();
     taunus.navigate('/articles/review');
   }
-};
+}

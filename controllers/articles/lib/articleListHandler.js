@@ -10,7 +10,9 @@ function factory (res, options, next) {
     next = options;
     options = {};
   }
-  return function articleListHandler (err, articles) {
+  return articleListHandler;
+
+  function articleListHandler (err, articles, extras) {
     if (err) {
       next(err); return;
     }
@@ -29,9 +31,24 @@ function factory (res, options, next) {
     model.articles = expanded.articles;
     model.meta.keywords = keywords;
     model.meta.images = expanded.extracted.images;
+
+    if (extras) {
+      if (extras.tags) {
+        model.tags = extras.tags.map(toTagModel);
+      }
+    }
+
     inliningService.addStyles(model, options.search ? 'search' : 'summaries');
     next();
-  };
+  }
+
+  function toTagModel (tag) {
+    return {
+      slug: tag.slug,
+      titleHtml: tag.titleHtml,
+      descriptionHtml: tag.descriptionHtml
+    };
+  }
 }
 
 module.exports = factory;

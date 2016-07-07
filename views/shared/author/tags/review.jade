@@ -16,7 +16,8 @@ article.ly-section.vw-maintainer.de-host
             tr
               td(data-label='Created')
                 time(datetime=tag.created.datetime, aria-label='Created ' + tag.created.title)=tag.created.text
-              td(data-label='Tag')=tag.slug
+              td(data-label='Tag')
+                a.tg-tag.tg-tag-inline.lk-link(href='/articles/tagged/' + tag.slug, aria-label='Find articles tagged "' + tag.slug + '"')=tag.slug
               td(data-label='Title')
                 div.md-markdown.md-markdown-inline!=tag.titleHtml
               td.ive-buttons(data-label='Actions')
@@ -24,4 +25,4 @@ article.ly-section.vw-maintainer.de-host
                 form.ive-remove-form(action='/api/articles/tags/' + tag.slug + '/remove', method='post')
                   button.lk-icon.fa.fa-remove(aria-label='Delete this tag', type='submit')
 
-  include ../partials/aside
+  include ../../partials/aside

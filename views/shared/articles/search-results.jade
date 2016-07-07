@@ -11,5 +11,14 @@ article.aa-container.de-host
     if fail
       h2.sr-note ...but we took the opportunity to pull together a few articles very carefully chosen at random!
 
+    if tags.length
+      ul.sr-known-tags
+        each tag in tags
+          li.sr-known-tag-container
+            section.sr-known-tag
+              a.sr-known-tag-slug.tg-tag.tg-tag-inline.lk-link(href='/articles/tagged/' + tag.slug, aria-label='Find articles tagged "' + tag.slug + '"')=tag.slug
+              div.sr-known-tag-title.md-markdown!=tag.titleHtml
+              div.sr-known-tag-description.md-markdown!=tag.descriptionHtml
+
   include list
   include ../partials/aside

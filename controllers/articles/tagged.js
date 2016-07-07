@@ -10,10 +10,6 @@ module.exports = function (req, res, next) {
   var rseparator = /[+/,_: ]+/ig;
   var tags = req.params.tags.split(rseparator);
   var title = util.format('Articles tagged "%s"', tags.join('", "'));
-  var query = {
-    status: 'published',
-    tags: { $all: tags }
-  };
   var handle = articleListHandler(res, { search: true }, searchResults(res, next));
 
   res.viewModel = {
@@ -28,5 +24,5 @@ module.exports = function (req, res, next) {
     }
   };
 
-  articleService.find(query, { populate: 'author' }, handle);
+  articleSearchService.query('', { tags: tags, populate: 'author' }, handle);
 };

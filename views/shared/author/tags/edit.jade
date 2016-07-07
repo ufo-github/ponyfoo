@@ -1,5 +1,17 @@
 article.ly-section.vw-maintainer.de-host
-  form.vw-maintainer-content.de-column(action='/api/oss/new', method='post')
+  form.vw-maintainer-content.de-column(
+    action='/api/articles/tags' + (editing ? '/' + tag.slug : ''),
+    method='post'
+  )
     h1.vw-title=editing ? 'Edit Tag' : 'New Tag'
+    input.tge-title(name='title', placeholder='This Is My Tag', value=tag.title)
+    input.tge-slug(name='slug', placeholder='this-is-my-tag', value=tag.slug)
+    div
+      textarea.wk-textarea(name='description', placeholder='Description for this tag')=tag.description
+    footer.aoss-actions
+      a.aoss-cancel.lk-link(href='/articles/tags/review', aria-label='Back to list of tags') Cancel
+      span(aria-label='Save this tag!')
+        button.bt-button.bt-pink(type='submit')
+          span.bt-text=editing ? 'Update' : 'Create'
 
-  include ../partials/aside
+  include ../../partials/aside

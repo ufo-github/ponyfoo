@@ -1,6 +1,7 @@
 'use strict';
 
 var KnownTag = require('../../../models/KnownTag');
+var datetimeService = require('../../../services/datetime');
 
 module.exports = function (req, res, next) {
   KnownTag
@@ -17,7 +18,7 @@ module.exports = function (req, res, next) {
       model: {
         title: 'Tags \u2014 Pony Foo',
         meta: {
-          canonical: '/articles/tags'
+          canonical: '/articles/tags/review'
         },
         tags: tags.map(toTagReviewModel)
       }
@@ -27,7 +28,7 @@ module.exports = function (req, res, next) {
 
   function toTagReviewModel (tag) {
     return {
-      created: tag.created,
+      created: datetimeService.field(tag.created),
       slug: tag.slug,
       titleHtml: tag.titleHtml
     };

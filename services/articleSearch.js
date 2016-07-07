@@ -8,6 +8,7 @@ var util = require('util');
 var winston = require('winston');
 var env = require('../lib/env');
 var Article = require('../models/Article');
+var KnownTag = require('../models/KnownTag');
 var articleElasticsearchService = require('./articleElasticsearch');
 var articleFeedService = require('./articleFeed');
 var articleService = require('./article');
@@ -19,17 +20,53 @@ function query (input, options, done) {
     done = options;
     options = {};
   }
-  articleElasticsearchService.query(input, options, queried);
-  function queried (err, result) {
+  var tasks = {
+    articles: findArticles,
+    tags: findKnownTags
+  };
+
+  contra.concurrent(tasks, respond);
+
+  function findArticles (next) {
+    if (input.length) {
+      elasticsearch();
+    } else {
+      findAll();
+    }
+
+    function elasticsearch () {
+      articleElasticsearchService.query(input, options, findSubset);
+    }
+
+    function findSubset (err, results) {
+      var ids = _.pluck(results, '_id');
+      var query = { _id: { $in: ids } };
+      articleService.find(query, options, next);
+    }
+
+    function findAll () {
+      var query = {
+        status: 'published',
+        tags: { $all: options.tags }
+      };
+      articleService.find(query, { populate: 'author' }, next);
+    }
+  }
+
+  function findKnownTags (next) {
+    KnownTag
+      .find({ slug: { $in: options.tags } })
+      .lean()
+      .exec(next);
+  }
+
+  function respond (err, result) {
     if (err) {
       done(err); return;
     }
-    var q = {
-      _id: {
-        $in: _.pluck(result, '_id')
-      }
-    };
-    articleService.find(q, options, done);
+    done(null, result.articles, {
+      tags: result.tags
+    });
   }
 }
 
