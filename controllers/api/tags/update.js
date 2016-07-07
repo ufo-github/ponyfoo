@@ -4,6 +4,7 @@ var winston = require('winston');
 var sluggish = require('sluggish');
 var KnownTag = require('../../../models/KnownTag');
 var markupService = require('../../../services/markup');
+var summaryService = require('../../../services/summary');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
@@ -31,8 +32,10 @@ module.exports = function (req, res, next) {
     tag.slug = sluggish(body.slug);
     tag.title = body.title;
     tag.titleHtml = markupService.compile(body.title);
+    tag.titleText = summaryService.summarize(tag.titleHtml).text;
     tag.description = body.description;
     tag.descriptionHtml = markupService.compile(body.description);
+    tag.descriptionText = summaryService.summarize(tag.descriptionHtml).text;
     tag.save(saved);
   }
 

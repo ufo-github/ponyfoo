@@ -11,16 +11,17 @@ module.exports = function (req, res, next) {
   var input = req.params.terms;
   var tags = req.params.tags.split(rtagSeparator);
   var terms = input.split(rtermSeparator);
-  var handle = articleListHandler(res, { search: true }, searchResults(res, next));
-  var fmt = 'Search results for "%s" in articles tagged "%s"';
-  var title = util.format(fmt, terms.join('", "'), tags.join('", "'));
+  var handlerOpts = {
+    search: true,
+    queryTerms: terms,
+    queryTags: tags
+  };
+  var handle = articleListHandler(res, handlerOpts, searchResults(res, next));
 
   res.viewModel = {
     model: {
-      title: title + ' on Pony Foo',
       meta: {
-        canonical: '/articles/search/' + terms.join('-') + '/tagged/' + tags.join('+'),
-        description: 'This search results page contains all of the ' + title.toLowerCase()
+        canonical: '/articles/search/' + terms.join('-') + '/tagged/' + tags.join('+')
       },
       action: 'articles/search-results',
       query: articleSearchService.format(terms, tags)
