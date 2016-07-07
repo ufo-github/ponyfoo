@@ -6,6 +6,8 @@ npm run clean
 NODE_ENV=development npm run copy
 
 # deferred libraries
+browserify node_modules/horsey -s horsey -o .bin/public/js/horsey.js --debug
+browserify node_modules/insignia -s insignia -o .bin/public/js/insignia.js --debug
 browserify node_modules/rome -s rome -o .bin/public/js/rome.js --debug
 browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js --debug
 browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug

@@ -3,12 +3,12 @@
 var $ = require('dominus');
 var estimate = require('estimate');
 var debounce = require('lodash/function/debounce');
+var concurrent = require('contra/concurrent');
 var moment = require('moment');
 var sluggish = require('sluggish');
 var raf = require('raf');
 var taunus = require('taunus');
 var articleSummarizationService = require('../../../../../services/articleSummarization');
-var textService = require('../../../../../services/text');
 var markdownService = require('../../../../../services/markdown');
 var datetimeService = require('../../../../../services/datetime');
 var twitterService = require('../../../conventions/twitter');
@@ -18,16 +18,34 @@ var loadScript = require('../../../lib/loadScript');
 var editorRoles = ['owner', 'editor'];
 var defaultStorageKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
+var maxTagSuggestions = 8;
 
 function noop () {}
 
-module.exports = function controller (viewModel, container, route) {
-  loadScript('/js/rome.js', function loaded () {
+module.exports = controller;
+
+function controller (viewModel, container, route) {
+  concurrent([
+    loadScriptUrl('/js/horsey.js'),
+    loadScriptUrl('/js/insignia.js'),
+    loadScriptUrl('/js/rome.js')
+  ], loaded);
+
+  function loaded () {
     initialize(viewModel, container, route);
-  });
-};
+  }
+
+  function loadScriptUrl (url) {
+    return scriptLoader;
+    function scriptLoader (next) {
+      loadScript(url, next);
+    }
+  }
+}
 
 function initialize (viewModel, container, route) {
+  var horsey = global.horsey;
+  var insignia = global.insignia;
   var rome = global.rome;
   var article = viewModel.article;
   var editing = viewModel.editing;
@@ -41,6 +59,7 @@ function initialize (viewModel, container, route) {
   var body = $('.ac-body');
   var summary = $('.ac-summary');
   var tags = $('.ac-tags');
+  var tagsContainer = $.findOne('.ac-tags-container');
   var campaign = $('.ac-campaign');
   var email = $('#ac-campaign-email');
   var tweet = $('#ac-campaign-tweet');
@@ -87,6 +106,21 @@ function initialize (viewModel, container, route) {
   campaign.on('change', '.ck-input', serializeSlowly);
   schedule.on('change', updatePublication);
 
+  var signet = insignia(tags[0], {
+    preventInvalid: true,
+    getText: parseTagSlug,
+    getValue: parseTagSlug
+  });
+
+  horsey(tags[0], {
+    source: getTagSuggestions,
+    getText: parseTagSlug,
+    getValue: parseTagSlug,
+    limit: maxTagSuggestions,
+    set: addTag,
+    appendTo: tagsContainer
+  });
+
   if (publication.length) {
     rome(publication[0], { inputFormat: publicationFormat });
   }
@@ -97,6 +131,23 @@ function initialize (viewModel, container, route) {
     return status.where(':checked').text() || 'draft';
   }
 
+  function getTagSuggestions (data, done) {
+    var xhrOpts = {
+      url: '/api/articles/tags',
+      json: true
+    };
+    taunus.xhr(xhrOpts, done);
+  }
+  function addTag (tag) {
+    signet.addItem(tag);
+    updatePreviewSummarySlowly();
+  }
+  function getTags () {
+    return signet.value();
+  }
+  function parseTagSlug (tag) {
+    return typeof tag === 'string' ? tag : tag.slug;
+  }
   function updatePublication () {
     serializeSlowly();
 
@@ -232,7 +283,9 @@ function initialize (viewModel, container, route) {
     editorNote.value(data.editorNote || '');
     body.value(data.body || '');
     summary.value(data.summary || '');
-    tags.value((data.tags || []).join(' '));
+
+    (data.tags || []).forEach(addTag);
+
     email.value(data.email);
     tweet.value(data.tweet);
     fb.value(data);
@@ -253,10 +306,6 @@ function initialize (viewModel, container, route) {
     updatePreviewTitle();
     updatePreviewMarkdown();
     updatePublication();
-  }
-
-  function getTags () {
-    return textService.splitTags(tags.value());
   }
 
   function getRequestData () {

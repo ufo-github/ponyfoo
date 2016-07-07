@@ -1,0 +1,27 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Tags
+    section.ae-container
+      div.ae-actions
+        a.ae-action.lk-icon.fa.fa-pencil-square-o(href='/articles/tags/new', aria-label='Create a new well-known tag')
+      table
+        thead
+          tr
+            th Created
+            th Tag
+            th Title
+            th Actions
+        tbody
+          each tag in tags
+            tr
+              td(data-label='Created')
+                time(datetime=tag.created.datetime, aria-label='Created ' + tag.created.title)=tag.created.text
+              td(data-label='Tag')=tag.slug
+              td(data-label='Title')
+                div.md-markdown.md-markdown-inline!=tag.titleHtml
+              td.ive-buttons(data-label='Actions')
+                a.ar-button.lk-icon.fa.fa-pencil(href='/articles/tags/' + tag.slug + '/edit', aria-label='Edit this tag')
+                form.ive-remove-form(action='/api/articles/tags/' + tag.slug + '/remove', method='post')
+                  button.lk-icon.fa.fa-remove(aria-label='Delete this tag', type='submit')
+
+  include ../partials/aside

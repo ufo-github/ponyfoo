@@ -33,10 +33,14 @@ var rssFeed = require('./feeds/rss');
 var metadataScrape = require('./api/metadata/scrape');
 var authorEmail = require('./api/author/email');
 var authorCompute = require('./author/compute');
+var getAllTags = require('./api/tags/get-all');
+var removeKnownTag = require('./api/tags/remove');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
 var articleShare = require('./api/articles/share');
+var updateKnownTag = require('./api/tags/update');
+var removeKnownTag = require('./api/tags/remove');
 var commentInsert = require('./api/comments/insert');
 var commentRemoveJson = require('./api/comments/remove-json');
 var commentRemoveRedirect = require('./api/comments/remove-redirect');
@@ -99,6 +103,11 @@ module.exports = function (app) {
   app.get('/owner/articles/compute', ownerOnly, authorCompute);
 
   app.put('/api/articles', articlesOnly, articleInsert);
+
+  app.get('/api/articles/tags', ownerOnly, getAllTags);
+  app.post('/api/articles/tags/:slug', ownerOnly, updateKnownTag);
+  app.get('/api/articles/tags/:slug/delete', ownerOnly, removeKnownTag);
+
   app.patch('/api/articles/:slug', articlesOnly, articleUpdate);
   app.delete('/api/articles/:slug', articlesOnly, articleRemove);
   app.post('/api/articles/:slug/share/:medium', articlesEditorOnly, articleShare);

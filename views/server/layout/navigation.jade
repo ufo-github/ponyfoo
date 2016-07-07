@@ -11,6 +11,9 @@ if model.user
           a.lk-link.lk-blue.lk-clean(href='/articles/new', aria-label='Prepare a fresh draft') Compose
         li.nv-item
           a.lk-link.lk-blue.lk-clean(href='/articles/review', aria-label='Manage articles and drafts') Review
+        if model.roles.owner
+          li.nv-item
+            a.lk-link.lk-blue.lk-clean(href='/articles/tags/review', aria-label='Manage known tags') Tags
         li.nv-item.nv-close
           span.nv-closer
 

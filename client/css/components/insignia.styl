@@ -1,0 +1,22 @@
+@import 'node_modules/insignia/insignia'
+
+.nsg-editor
+  position relative
+  background-color c-blue-01
+  padding 2px
+
+.nsg-tag
+  background-color c-white
+  color c-blue
+  border 1px solid c-blue-02
+
+.nsg-input
+  padding 3px
+  &[placeholder]
+    min-width calc(100% - 10px)
+
+.nsg-target-input:first-child
+  padding-left 10px
+
+.nsg-tags-before:empty + .nsg-input
+  margin-left 5px
