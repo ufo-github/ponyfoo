@@ -1,0 +1,32 @@
+if rss
+  link(rel='alternate', type='application/rss+xml', href=rss)
+
+link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.authority + '/opensearch.xml')
+
+if model.meta.canonical
+  link(rel='canonical', href!=model.authority + model.meta.canonical)
+
+meta(name='author', itemprop='creator', content!=founder.contact)
+
+if model.meta.keywords && model.meta.keywords.length
+  meta(name='keywords', content=model.meta.keywords.join(','))
+
+meta(name='description', property='og:description', itemprop='description', content=model.meta.description)
+meta(property='og:site_name', content='Pony Foo')
+
+if model.meta.canonical
+  meta(property='og:url', itemprop='url', content=model.authority + model.meta.canonical)
+
+meta(name='twitter:title', itemprop='name', property='og:title', content=model.title)
+meta(name='twitter:description', content=model.meta.description)
+meta(name='twitter:card', content='summary')
+meta(name='twitter:site', content='@ponyfoo')
+meta(name='twitter:creator', content=founder.twitter)
+
+each image, i in model.meta.images.reverse()
+  - last = i === model.meta.images.length - 1
+  meta(property='og:image', itemprop=last && 'images', content=image)
+
+//- twitter only cares about the last meta image, repeat the cover
+if model.meta.images.length
+  meta(name='twitter:image:src', content=model.meta.images[0])
