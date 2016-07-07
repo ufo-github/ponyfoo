@@ -68,7 +68,7 @@
   background-color rgba(c-bright-turquoise, 0.2)
   color c-black-text
   &:active
-    outline 1px dotted c-light-turquoise
+    col-outline(c-light-turquoise)
   &:hover
     background-color c-bright-turquoise
 
@@ -79,8 +79,7 @@
   margin-top 0
 
 .aa-title-link:focus
-  outline 4px dotted c-gray
-  outline-offset 6px
+  col-outline-titles(c-gray)
 
 .aa-empty
   text-align center

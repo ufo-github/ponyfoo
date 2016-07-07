@@ -1,0 +1,21 @@
+col-outline(c-color)
+  outline 1px dotted c-color
+
+  /.ua-firefox &
+    outline none
+    box-shadow 0 0 0 1px rgba(c-color, 0.5)
+
+col-outline-clear()
+  &,
+  /.ua-firefox & // because specificity
+    outline none
+
+col-outline-titles(c-color)
+  outline 4px dotted c-color
+  outline-offset 6px
+
+  /.ua-firefox &
+    outline none
+    outline-offset none
+    box-shadow none
+    text-decoration underline

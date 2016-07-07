@@ -1,7 +1,7 @@
 o-visited = 0.04
 a,
 button
-  outline none
+  col-outline-clear()
 
 a,
 button,
@@ -43,7 +43,7 @@ lk-link-rare(child)
   {child}
     lk-link-normal()
   &:active {child}
-    outline 1px dotted c-pink
+    col-outline(c-pink)
   &:visited {child}
     lk-link-visited-already()
   &:hover {child}
@@ -60,14 +60,14 @@ lk-link()
   color c-black-text
   margin-bottom 5px
   &:active
-    outline 1px dotted c-dark-gray
+    col-outline(c-dark-gray)
   &:hover
     rainbow-pseudo()
 
 .lk-icon
   color c-black-text
   &:active
-    outline 1px dotted c-dark-gray
+    col-outline(c-dark-gray)
   &:hover
     color c-pink
 

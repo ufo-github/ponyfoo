@@ -19,28 +19,15 @@
 
 dc-color(c-border-top, c-background)
   background-color c-background
-  &:before
-    background-image linear-gradient(c-border-top, c-border-top),
-                     linear-gradient(c-border-top, c-border-top),
-                     linear-gradient(to right, transparent 25%, c-border-top 25%, c-border-top 75%, transparent 75%)
+  squared-border-color(c-border-top)
   .aa-cover-footer:before
     background linear-gradient(to top, c-background 0, rgba(c-background, 0.8) 50%, c-transparent 100%)
   .aa-cover-image
     background-color c-background
 
 .dc-colored
-  position relative
-  &:before
-    content ''
-    position absolute
-    top 0
-    left 0
-    right 0
-    height 9px
-    background repeat-x left center
-    background-size 9px 9px, 9px 9px, 18px 9px
-    background-position right center, left center, center center
-    background-repeat no-repeat, no-repeat, repeat-x
+  squared-border(9px)
+  squared-border-top()
   :first-child
     margin-top 9px
   &:nth-child(7n-6)

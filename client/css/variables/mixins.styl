@@ -29,3 +29,31 @@ font-awesome()
   text-rendering auto
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+
+squared-border(v-height)
+  v-height-2x = v-height * 2
+  position relative
+  &:before
+    content ''
+    position absolute
+    left 0
+    right 0
+    height v-height
+    background repeat-x left center
+    background-size v-height v-height, v-height v-height, v-height-2x v-height
+    background-position right center, left center, center center
+    background-repeat no-repeat, no-repeat, repeat-x
+
+squared-border-color(v-color)
+  &:before
+    background-image linear-gradient(v-color, v-color),
+                     linear-gradient(v-color, v-color),
+                     linear-gradient(to right, transparent 25%, v-color 25%, v-color 75%, transparent 75%)
+
+squared-border-top(v-top = 0)
+  &:before
+    top v-top
+
+squared-border-bottom(v-bottom = 0)
+  &:before
+    bottom v-bottom

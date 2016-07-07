@@ -14,7 +14,7 @@
     color c-white
     background-color lighten(c-orange-dark, 20%)
   &:active
-    outline 1px dotted c-orange
+    col-outline(c-orange)
 
 .wa-toggler-off
   &,
@@ -23,7 +23,7 @@
     cursor default
     background-color c-black-light
     color c-white
-    outline none
+    col-outline-clear()
 
 .wa-scraper
   right 35px
@@ -51,7 +51,7 @@
 .wa-tool-yellow
   background-color c-yellow
   &:active
-    outline 1px dotted c-purple
+    col-outline(c-purple)
   &:hover
     background-color c-yellow-075
 
@@ -68,7 +68,7 @@
 
 .wa-tool-purple
   &:active
-    outline 1px dotted c-yellow-highlight
+    col-outline(c-yellow-highlight)
   &:hover
     background-color lighten(c-purple, 10%)
 
@@ -121,7 +121,7 @@
   float right
   cursor pointer
   &:active
-    outline 1px dotted c-yellow-highlight
+    col-outline(c-yellow-highlight)
   &:hover
     background-color rgba(c-white, 0.25)
 
