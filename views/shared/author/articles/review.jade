@@ -20,7 +20,7 @@ article.ly-section.vw-maintainer.de-host
           tr
             td(data-label='Author')
               if article.author.slug
-                a.lk-link.lk-black.fa.fa-male(href!='/contributors/' + article.author.slug, aria-label='See author profile')
+                a.lk-icon.fa.fa-male(href!='/contributors/' + article.author.slug, aria-label='See author profile')
             td(data-label='Title')
               a.ar-title.lk-rainbows(href!=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
             td(data-label='Condition', class='ar-status ar-status-' + article.status)
