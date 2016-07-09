@@ -140,6 +140,7 @@ function initialize (viewModel, container, route) {
     taunus.xhr(xhrOpts, done);
   }
   function renderHorseyItem (li, tag) {
+    $(li).addClass('ac-tag-item');
     taunus.partial(li, 'author/articles/tag-item', { tag: tag });
   }
   function addTag (tag) {

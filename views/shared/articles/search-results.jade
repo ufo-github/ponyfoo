@@ -16,8 +16,8 @@ article.aa-container.de-host
           li.sr-known-tag-container
             section.sr-known-tag
               a.sr-known-tag-slug.tg-tag.tg-tag-inline.lk-link(href='/articles/tagged/' + tag.slug, aria-label='Find articles tagged "' + tag.slug + '"')=tag.slug
-              div.sr-known-tag-title.md-markdown!=tag.titleHtml
-              div.sr-known-tag-description.md-markdown!=tag.descriptionHtml
+              div.kt-title.md-markdown!=tag.titleHtml
+              div.kt-description.md-markdown!=tag.descriptionHtml
 
   include list
   include ../partials/aside
