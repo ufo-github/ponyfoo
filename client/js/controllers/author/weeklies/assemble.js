@@ -157,13 +157,24 @@ function ready (viewModel, container, route) {
 
   function updateLinkSections () {
     $('.wa-section').where('[data-tool="link"]').forEach(function (el) {
+      var $linkHeading = $('.wa-section-heading', el);
       var $linkPreview = $('.wa-link-preview', el);
       var $title = $('.wa-link-title', el);
       var title = markdownService.compile($title.value()).replace(rparagraph, '');
-      var summary = summaryService.summarize(title, 30).html.trim();
-      var postfix = summary ? ' – ' + summary : '';
+      var summaryLong = summaryService.summarize(title);
+      var summaryShort = summaryService.summarize(title, 30);
+      var summaryHtml = summaryShort.html.trim();
+      var postfix = summaryHtml ? ' – ' + summaryHtml : '';
 
       $linkPreview.html(postfix);
+
+      var summaryLabelText = summaryLong.text.trim();
+      var summaryTitleText = summaryShort.text.trim();
+      if (summaryTitleText.length >= summaryLabelText.length) {
+        $linkHeading.attr('aria-label', null);
+      } else {
+        $linkHeading.attr('aria-label', summaryLabelText);
+      }
     });
   }
 
