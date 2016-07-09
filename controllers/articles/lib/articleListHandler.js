@@ -1,8 +1,9 @@
 'use strict';
 
+var tagService = require('../../../services/tag');
+var textService = require('../../../services/text');
 var articleService = require('../../../services/article');
 var metadataService = require('../../../services/metadata');
-var textService = require('../../../services/text');
 var inliningService = require('../../../services/inlining');
 
 function factory (res, options, next) {
@@ -34,7 +35,7 @@ function factory (res, options, next) {
 
     if (extras) {
       if (extras.tags) {
-        model.tags = extras.tags.map(toTagModel);
+        model.tags = extras.tags.map(tagService.toKnownTagModel);
       }
     }
 
@@ -106,14 +107,6 @@ function factory (res, options, next) {
         return '';
       }
     }
-  }
-
-  function toTagModel (tag) {
-    return {
-      slug: tag.slug,
-      titleHtml: tag.titleHtml,
-      descriptionHtml: tag.descriptionHtml
-    };
   }
 }
 

@@ -36,7 +36,7 @@ const baseColors = {
   'c-orange-06': '#f8c68d',
   'c-orange-light': '#ffeada',
   'c-orange-005': '#fcf8f5',
-  'c-orange-dark': '#f3720d',
+  'c-dark-orange': '#f3720d',
   'c-pink': '#e92c6c',
   'c-pink-light': '#ea6c93',
   'c-pink-01': '#fae7ee',

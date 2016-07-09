@@ -27,19 +27,19 @@ function getAll (done) {
     }
     var plainTags = result.plainTags;
     var used = plainTags.map(asTagSlug);
-    var known = result.knownTags.filter(addKnownTagDetails);
+    var unused = result.knownTags.filter(addKnownAsUsedTags).map(toKnownTagModel);
 
     done(null, {
       used: _.sortBy(used, 'slug'),
-      known: _.sortBy(known, 'slug')
+      unused: _.sortBy(unused, 'slug')
     });
 
-    function addKnownTagDetails (knownTag) {
+    function addKnownAsUsedTags (knownTag) {
       var i = plainTags.indexOf(knownTag.slug);
       if (i === -1) {
         return true;
       }
-      used[i] = knownTag;
+      used[i] = toKnownTagModel(knownTag);
     }
   }
 }
@@ -48,6 +48,16 @@ function asTagSlug (tag) {
   return { slug: tag };
 }
 
+function toKnownTagModel (tag) {
+  return {
+    slug: tag.slug,
+    titleHtml: tag.titleHtml,
+    descriptionHtml: tag.descriptionHtml,
+    known: true
+  };
+}
+
 module.exports = {
- getAll: getAll
+ getAll: getAll,
+ toKnownTagModel: toKnownTagModel
 };

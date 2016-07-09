@@ -118,7 +118,8 @@ function initialize (viewModel, container, route) {
     getValue: parseTagSlug,
     limit: maxTagSuggestions,
     set: addTag,
-    appendTo: tagsContainer
+    appendTo: tagsContainer,
+    renderItem: renderHorseyItem
   });
 
   if (publication.length) {
@@ -137,6 +138,9 @@ function initialize (viewModel, container, route) {
       json: true
     };
     taunus.xhr(xhrOpts, done);
+  }
+  function renderHorseyItem (li, tag) {
+    taunus.partial(li, 'author/articles/tag-item', { tag: tag });
   }
   function addTag (tag) {
     signet.addItem(tag);

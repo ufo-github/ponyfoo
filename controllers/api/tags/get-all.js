@@ -2,7 +2,7 @@
 
 var tagService = require('../../../services/tag');
 
-function remove (req, res, next) {
+function getAll (req, res, next) {
   tagService.getAll(respond);
 
   function respond (err, result) {
@@ -14,9 +14,9 @@ function remove (req, res, next) {
       list: result.used
     }, {
       id: 'Known Tags',
-      list: result.known
+      list: result.unused
     }]);
   }
 }
 
-module.exports = remove;
+module.exports = getAll;
