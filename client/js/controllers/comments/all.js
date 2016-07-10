@@ -4,7 +4,7 @@ var $ = require('dominus');
 var raf = require('raf');
 var taunus = require('taunus');
 var debounce = require('lodash/function/debounce');
-var storage = require('../../lib/storage');
+var ls = require('../../lib/storage');
 var userService = require('../../services/user');
 var textService = require('../../../../services/text');
 var key = 'comment-draft';
@@ -34,7 +34,7 @@ module.exports = function (viewModel, container) {
   deserialize();
 
   function deserialize () {
-    var data = storage.get(key);
+    var data = ls.get(key);
     if (data) {
       name.value(data.name);
       email.value(data.email);
@@ -42,7 +42,7 @@ module.exports = function (viewModel, container) {
     }
   }
 
-  function serialize () { storage.set(key, getCommentData()); }
+  function serialize () { ls.set(key, getCommentData()); }
 
   function getCommentData () {
     return {

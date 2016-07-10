@@ -7,6 +7,7 @@ var moment = require('moment');
 var series = require('contra/series');
 var curry = require('contra/curry');
 var debounce = require('lodash/function/debounce');
+var ls = require('../../lib/storage');
 var loadScript = require('../../lib/loadScript');
 var scrapeCompletionService = require('../../services/scrapeCompletion');
 var markdownService = require('../../../../services/markdown');
@@ -40,6 +41,10 @@ function ready (viewModel, container, route) {
   var picker = $.findOne('.wu-sponsor-date-picker', container);
   var dates = $('.wu-dates', container);
   var submitButton = $('.wu-submit', container);
+  var contactName = $('.wu-name', linkData);
+  var contactEmail = $('.wu-email', linkData);
+  var submissionNameStorageKey = 'submission.name';
+  var submissionEmailStorageKey = 'submission.email';
   var editing = viewModel.editing;
   var blockDate;
   var romeOpts = {
@@ -73,6 +78,9 @@ function ready (viewModel, container, route) {
   } else {
     revealLinkDataAfterScraping();
   }
+
+  contactName.value(ls.get(submissionNameStorageKey) || '');
+  contactEmail.value(ls.get(submissionEmailStorageKey) || '');
 
   function onTypeInputSelected (e) {
     var el = $(e.target);
@@ -203,8 +211,8 @@ function ready (viewModel, container, route) {
     var sponsor = isSponsor();
     var model = {
       submitter: {
-        name: $('.wu-name', linkData).value(),
-        email: $('.wu-email', linkData).value(),
+        name: contactName.value(),
+        email: contactEmail.value(),
         comment: $('.wu-comment', linkData).value()
       },
       section: {
@@ -249,9 +257,8 @@ function ready (viewModel, container, route) {
 
   function submit () {
     var endpoint = '/api/weeklies/submissions';
-    var data = {
-      json: getModel()
-    };
+    var model = getModel();
+    var data = { json: model };
     if (editing) {
       endpoint += '/' + route.params.slug;
     }
@@ -262,6 +269,8 @@ function ready (viewModel, container, route) {
     function submitted () {
       var owner = viewModel.roles && viewModel.roles.owner;
       var target = owner ? '/weekly/submissions/review' : '/weekly';
+      ls.set(submissionNameStorageKey, model.submitter.name);
+      ls.set(submissionEmailStorageKey, model.submitter.email);
       taunus.navigate(target);
     }
   }
