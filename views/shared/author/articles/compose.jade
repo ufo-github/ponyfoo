@@ -19,7 +19,7 @@ article.ly-section.vw-maintainer.de-host.uv-clearfix
       div.ac-tags-container
         input.ac-tags.nsg-target-input(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
 
-  - publication = moment(article.publication)
+  - publication = article.publication ? moment(article.publication) : moment().add(1, 'days')
   - publicationFormat = 'DD-MM-YYYY HH:mm'
   - published = article.status === 'published'
 

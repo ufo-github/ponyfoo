@@ -94,6 +94,12 @@ function initialize (viewModel, container, route) {
   var typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
   var updatePreviewMarkdownSlowly = raf.bind(null, debounce(updatePreviewMarkdown, 300));
   var updatePreviewSummarySlowly = raf.bind(null, debounce(updatePreviewSummary, 300));
+  var dateValidator = rome.val.after(moment().endOf('day'));
+  var romeOpts = {
+    inputFormat: publicationFormat,
+    dateValidator: dateValidator,
+    timeValidator: timeValidator
+  };
 
   title.on('keypress keydown paste input', typingTitleSlowly);
   slug.on('keypress keydown paste input', typingSlugSlowly);
@@ -123,13 +129,26 @@ function initialize (viewModel, container, route) {
   });
 
   if (publication.length) {
-    rome(publication[0], { inputFormat: publicationFormat });
+    rome(publication[0], romeOpts);
   }
 
   deserialize(editing && article);
 
   function getCurrentState () {
     return status.where(':checked').text() || 'draft';
+  }
+
+  function timeValidator (date) {
+    var tf = 'HH:mm:ss';
+    var time = moment(moment(date).format(tf), tf);
+    console.log(date, time.format(), (
+       time.isAfter(moment('05:59:59', tf)) &&
+      time.isBefore(moment('15:00:00', tf))
+    ))
+    return (
+       time.isAfter(moment('05:59:59', tf)) &&
+      time.isBefore(moment('15:00:00', tf))
+    );
   }
 
   function getTagSuggestions (data, done) {
