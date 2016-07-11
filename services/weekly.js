@@ -4,6 +4,7 @@ var _ = require('lodash');
 var but = require('but');
 var WeeklyIssue = require('../models/WeeklyIssue');
 var weeklyCompilerService = require('./weeklyCompiler');
+var weeklyCompilerLinkService = require('./weeklyCompilerLink');
 var commentService = require('./comment');
 var datetimeService = require('./datetime');
 var summaryService = require('./summary');
@@ -23,7 +24,7 @@ function compile (model, done) {
     if (err) {
       done(err); return;
     }
-    var linkThrough = weeklyCompilerService.linkThroughForSlug(slug);
+    var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(slug);
     model.summaryHtml = markupService.compile(model.summary, {
       absolutize: true,
       linkThrough: linkThrough

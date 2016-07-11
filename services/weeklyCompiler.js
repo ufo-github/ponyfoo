@@ -2,45 +2,12 @@
 
 var map = require('contra/map');
 var assign = require('assignment');
-var omnibox = require('omnibox');
-var queso = require('queso');
 var beautifyText = require('beautify-text');
 var stylus = require('./lib/stylus');
 var textService = require('./text');
+var weeklyCompilerLinkService = require('./weeklyCompilerLink');
 var linkSectionView = require('../.bin/views/shared/partials/weekly/link');
 var knownTags = require('./lib/knownNewsletterTags.json');
-
-function linkThroughForSlug (slug) {
-  return function linkThrough (href) {
-    if (!href) {
-      return href;
-    }
-    var u = omnibox.parse(href);
-    if (u.protocol && u.protocol !== 'http' && u.protocol !== 'https') {
-      return href;
-    }
-    Object
-      .keys(u.query)
-      .filter(function (key) {
-        return key.slice(0, 4) === 'utm_';
-      })
-      .forEach(function (key) {
-        delete u.query[key];
-      });
-    u.query.utm_source = 'ponyfoo+weekly';
-    u.query.utm_medium = 'email';
-    if (slug) {
-      u.query.utm_campaign = slug;
-    }
-    var host = u.host ? u.protocol + '://' + u.host : '';
-    return (
-      host +
-      u.pathname +
-      queso.stringify(u.query).replace(/(%2B|\s)/ig, '+') +
-      (u.hash || '')
-    );
-  };
-}
 
 function compile (sections, options, done) {
   var compilers = {
@@ -62,7 +29,7 @@ function compile (sections, options, done) {
 }
 
 function toHeaderSectionHtml (section, options, done) {
-  var linkThrough = linkThroughForSlug(options.slug);
+  var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
   done(null, textService.format([
     '<div class="wy-section-header">',
       '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
@@ -81,7 +48,7 @@ function toHeaderSectionHtml (section, options, done) {
 }
 
 function toMarkdownSectionHtml (section, options, done) {
-  var linkThrough = linkThroughForSlug(options.slug);
+  var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
   var html = options.markdown.compile(section.text, {
     linkThrough: linkThrough
   });
@@ -89,7 +56,7 @@ function toMarkdownSectionHtml (section, options, done) {
 }
 
 function toLinkSectionModel (section, options, done) {
-  var linkThrough = linkThroughForSlug(options.slug);
+  var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
   var descriptionHtml = options.markdown.compile(section.description, {
     linkThrough: linkThrough
   });
@@ -137,7 +104,6 @@ function noop () {}
 module.exports = {
   compile: compile,
   knownTags: knownTags,
-  linkThroughForSlug: linkThroughForSlug,
   toHeaderSectionHtml: toHeaderSectionHtml,
   toMarkdownSectionHtml: toMarkdownSectionHtml,
   compileLinkSectionModel: compileLinkSectionModel,

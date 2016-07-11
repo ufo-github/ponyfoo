@@ -11,20 +11,37 @@ var subtypes = ['suggestion', 'primary', 'secondary', 'job'];
 
 function post (req, res, next) {
   var slug = req.params.slug;
+  var inputSlug = getInputSlug();
   var editing = !!slug;
-  if (slug) {
-    WeeklyIssueSubmission.findOne({ slug: slug }, found);
-  } else {
-    update({}, req.body);
+  var query = {
+    slug: slug || inputSlug
+  };
+
+  WeeklyIssueSubmission.findOne(query, found);
+
+  function getInputSlug () {
+    var input = req.body || {};
+    var section = input.section || {};
+    var submitter = input.submitter || {};
+    var title = section.title || '';
+    var email = submitter.email || '';
+    var inputSlug = sluggish(title + '-' + email.split('@')[0]);
+    return inputSlug;
   }
 
   function found (err, submission) {
     if (err) {
       next(err); return;
     }
-    if (!submission) {
+    if (editing && !submission) {
       res.status(404).json({ messages: ['Submission not found!'] }); return;
+    } else if (!editing && submission) {
+      res.status(400).json({ messages: ['You’ve already submitted that link!'] }); return;
     }
+    if (!editing) {
+      update({}, req.body); return;
+    }
+
     var options = {
       submission: submission,
       userId: req.user,
@@ -88,10 +105,9 @@ function post (req, res, next) {
       return { errors: errors };
     }
     var subtype = subtypes.indexOf(input.section.subtype) === -1 ? 'suggestion' : input.section.subtype;
-    var slug = sluggish(input.section.title + '-' + email.split('@')[0]);
     if (!editing) {
       model.status = 'incoming';
-      model.slug = slug;
+      model.slug = inputSlug;
       model.section = {
         type: 'link',
         foreground: '#1bc211',

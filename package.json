@@ -106,7 +106,7 @@
     "inline-css": "2.2.2",
     "insane": "2.5.0",
     "insignia": "5.0.0",
-    "jadum": "1.4.0",
+    "jadum": "1.4.1",
     "lamernews-client": "1.1.0",
     "lipstick": "1.1.0",
     "lob-story": "1.0.0",
@@ -160,6 +160,7 @@
   },
   "devDependencies": {
     "apartment": "1.0.0",
+    "babel-preset-es2015": "6.9.0",
     "browser-sync": "2.9.11",
     "browserify": "12.0.1",
     "browserify-shim": "3.8.11",

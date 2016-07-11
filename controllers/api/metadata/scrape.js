@@ -3,10 +3,13 @@
 var url = require('url');
 var extract = require('super-crap');
 var rtitleseparator = /\s+([^\w]|_)\s+/;
+var rweb = /^https?:\/\//i;
 
 module.exports = function (req, res, next) {
   var endpoint = req.query.url;
-
+  if (rweb.test(endpoint) === false) {
+    extracted(null, {}); return;
+  }
   extract({ uri: endpoint }, extracted);
 
   function extracted (err, response) {
