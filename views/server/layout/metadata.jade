@@ -28,10 +28,8 @@ meta(name='twitter:creator', content=founder.twitter)
 
 //- facebook mostly cares about the last og:image
 each image, i in metaImages.reverse()
-  - secure = image.substr(0, 8) === 'https://'
-  - property = secure ? 'og:image:secure_url' : 'og:image'
   - itemprop = i === lastImageIndex && 'images'
-  meta(property=property, itemprop=itemprop, content=image)
+  meta(property='og:image', itemprop=itemprop, content=image)
 
 //- twitter only cares about the last meta image, repeat the cover
 if metaImages.length
