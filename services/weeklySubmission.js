@@ -43,6 +43,7 @@ var invoiceRates = {
 };
 var tmpdir = path.join(process.cwd(), 'tmp');
 var rdigits = /^\d+$/;
+var maxTitleLength = 50;
 
 function isEditable (options, done) {
   var submission = options.submission;
@@ -203,7 +204,6 @@ function notifyAccepted (submission, done) {
     if (err) {
       error(err); return;
     }
-    var maxTitleLength = 50;
     var everyone = [submission.email].concat(result.owners.map(toEmail));
     var attachments = result.invoice ? [result.invoice] : [];
     var type = submissionTypes[submission.subtype];
@@ -259,10 +259,12 @@ function notifyReceived (submission, done) {
     var verify = getToken(submission);
     var permalink = util.format('/weekly/submissions/%s/edit?verify=%s', submission.slug, verify);
     var everyone = [submission.email].concat(result.owners.map(toEmail));
+    var titleSummary = summaryService.summarize(result.preview.model.titleHtml, maxTitleLength);
+    var titleText = titleSummary.text;
     var model = {
       to: submission.email,
       cc: everyone,
-      subject: 'We got your submission to Pony Foo Weekly! 🎉',
+      subject: util.format('We got your “%s” submission for Pony Foo Weekly! 🎉', titleText),
       teaserHtml: util.format('Here’s a link to <a href="%s">review your submission</a>.', authority + permalink),
       teaserRight: 'We’ll be in touch soon!',
       css: css,
