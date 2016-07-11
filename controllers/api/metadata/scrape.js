@@ -2,17 +2,18 @@
 
 var url = require('url');
 var extract = require('super-crap');
+var rtitleseparator = /\s+([^\w]|_)\s+/;
 
 module.exports = function (req, res, next) {
   var endpoint = req.query.url;
 
   extract({ uri: endpoint }, extracted);
 
-  function extracted (err, data) {
+  function extracted (err, response) {
     if (err) {
       next(err); return;
     }
-
+    var data = response || {};
     res.json({
       title: left(data.ogTitle || data.twitterTitle || data.title),
       description: data.ogDescription || data.twitterDescription || data.description || null,
@@ -28,5 +29,5 @@ module.exports = function (req, res, next) {
 };
 
 function left (text) {
-  return text ? text.split(/\s+([^\w]|_)\s+/)[0] : null;
+  return text ? text.split(rtitleseparator)[0] : null;
 }

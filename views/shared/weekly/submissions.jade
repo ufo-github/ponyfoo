@@ -139,7 +139,7 @@ article.ly-section
               div.wu-section-note We’re almost done! All we need now is a bit of information about you.
 
             input.wu-name.wu-colored-border(placeholder='What is your name? We’d like to get to know you.', value=submission.submitter)
-            input.wu-email(placeholder='What is your email address? We’ll keep it safe.', value=submission.email)
+            input.wu-email(type='email', placeholder='What is your email address? We’ll keep it safe.', value=submission.email)
             div
               textarea.wu-comment.wk-textarea(placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.')=submission.comment
 

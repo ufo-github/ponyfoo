@@ -16,7 +16,7 @@ function scrape (options, done) {
   var updatePreview = options.updatePreview;
   var end = done || noop;
   var xhrOpts = {
-    url: '/api/metadata/scrape?url=' + options.url,
+    url: '/api/metadata/scrape?url=' + encodeURIComponent(options.url),
     json: true
   };
   taunus.xhr(xhrOpts, scraped);
