@@ -12,6 +12,7 @@ var domains = [
   /^(https?:)?\/\/codepen.io\//i,
   /^(https?:)?\/\/assets.codepen.io\//i
 ];
+var rlang = /md-lang-((?:[^\s]|$)+)/;
 
 megamark.parser.renderer.rules.link_open = link;
 
@@ -110,34 +111,56 @@ function decompile (html, options) {
     markdown: 'md'
   };
   var o = options || {};
-  return domador(html, {
+  var domadorOpts = {
     href: o.href || authority,
     absolute: true,
     fencing: true,
-    fencinglanguage: function (el) {
-      if (el.tagName === 'PRE') {
-        el = el.firstChild;
-      }
-      var match = el.className.match(/md-lang-((?:[^\s]|$)+)/);
-      if (!match) {
-        return;
-      }
-      var lang = match.pop();
-      return langmap[lang] || lang;
-    },
-    allowFrame: function (src) {
-      return startsWithValidDomain(src);
-    },
-    transform: function (el) {
-      if (el.tagName === 'IMG' && el.className === 'tj-emoji' && el.alt) {
-        return el.alt;
-      }
-      if (o.plain === true) {
-        return el.textContent || el.innerText || '';
-      }
-      if (el.tagName === 'BLOCKQUOTE' && el.className === 'twitter-tweet') {
-        return el.outerHTML;
-      }
+    fencinglanguage: fencinglanguage,
+    allowFrame: allowFrame,
+    transform: transform
+  };
+  var decompiled = domador(html, domadorOpts);
+  if (o.plain !== true) {
+    return decompiled;
+  }
+  var rspaces = /\s+/g;
+  return decompiled.replace(rspaces, ' ').trim();
+
+  function fencinglanguage (el) {
+    if (el.tagName === 'PRE') {
+      el = el.firstChild;
     }
-  });
+    var match = el.className.match(rlang);
+    if (!match) {
+      return;
+    }
+    var lang = match.pop();
+    return langmap[lang] || lang;
+  }
+
+  function allowFrame (src) {
+    return startsWithValidDomain(src);
+  }
+
+  function transform (el) {
+    if (el.tagName === 'IMG' && el.className === 'tj-emoji' && el.alt) {
+      return el.alt;
+    }
+    if (o.plain === true) {
+      return plain();
+    }
+    if (el.tagName === 'BLOCKQUOTE' && el.className === 'twitter-tweet') {
+      return el.outerHTML;
+    }
+
+    function plain () {
+      var content = el.textContent || el.innerText || '';
+      var blocks = ['DIV', 'P', 'BLOCKQUOTE', 'PRE'];
+      var block = blocks.indexOf(el.tagName) !== -1;
+      if (block) {
+        return ' ' + content + ' ';
+      }
+      return content;
+    }
+  }
 }
