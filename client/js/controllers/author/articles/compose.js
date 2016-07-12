@@ -141,10 +141,6 @@ function initialize (viewModel, container, route) {
   function timeValidator (date) {
     var tf = 'HH:mm:ss';
     var time = moment(moment(date).format(tf), tf);
-    console.log(date, time.format(), (
-       time.isAfter(moment('05:59:59', tf)) &&
-      time.isBefore(moment('15:00:00', tf))
-    ))
     return (
        time.isAfter(moment('05:59:59', tf)) &&
       time.isBefore(moment('15:00:00', tf))
