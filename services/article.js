@@ -7,6 +7,7 @@ var Article = require('../models/Article');
 var commentService = require('./comment');
 var datetimeService = require('./datetime');
 var metadataService = require('./metadata');
+var userService = require('./user');
 
 function findInternal (method, query, options, done) {
   if (done === void 0) {
@@ -56,6 +57,9 @@ function toJSON (source, options) {
       twitter: article.author.twitter,
       website: article.author.website
     };
+    if (source.author.email) {
+      article.author.avatar = userService.getAvatar(source.author);
+    }
   } else {
     delete article.author;
   }
@@ -100,7 +104,6 @@ function toJSON (source, options) {
   delete article.summaryText;
   delete article.comments;
   delete article.hn;
-  delete article.lobsters;
   delete article.echojs;
   delete article.tweet;
   delete article.fb;

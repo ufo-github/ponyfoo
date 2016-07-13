@@ -15,7 +15,6 @@ var twitterService = require('./twitter');
 var emojiService = require('./emoji');
 var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
-var lobstersService = require('./lobsters');
 var markupService = require('./markup');
 var weeklyService = require('./weekly');
 var User = require('../models/User');
@@ -34,8 +33,7 @@ function share (issue, done) {
     curried('tweet', tweet),
     curried('fb', facebook),
     curried('echojs', echojs),
-    curried('hn', hackernews),
-    curried('lobsters', lobsters)
+    curried('hn', hackernews)
   ], done);
 
   function curried (key, fn) {
@@ -183,14 +181,6 @@ function hackernews (issue, options, done) {
   }
 }
 
-function lobsters (issue, options, done) {
-  var data = {
-    title: getTitle(issue),
-    url: util.format('%s/weekly/%s', authority, issue.slug)
-  };
-  lobstersService.submit(data, done);
-}
-
 module.exports = {
   share: share,
   'email-self': emailSelf,
@@ -198,6 +188,5 @@ module.exports = {
   twitter: tweet,
   facebook: facebook,
   echojs: echojs,
-  hackernews: hackernews,
-  lobsters: lobsters
+  hackernews: hackernews
 };

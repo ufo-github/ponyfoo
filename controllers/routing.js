@@ -103,7 +103,7 @@ module.exports = function (app) {
 
   app.put('/api/articles', articlesOnly, articleInsert);
 
-  app.get('/api/articles/tags', ownerOnly, getAllTags);
+  app.get('/api/articles/tags', articlesOnly, getAllTags);
   app.post('/api/articles/tags', ownerOnly, updateKnownTag);
   app.post('/api/articles/tags/:slug', ownerOnly, updateKnownTag);
   app.post('/api/articles/tags/:slug/remove', ownerOnly, removeKnownTag);

@@ -20,6 +20,7 @@ function getModel (req, res, next) {
       WeeklyIssue
         .find({})
         .sort([['publication', -1], ['created', -1]])
+        .populate('author', 'slug email avatar')
         .exec(next);
     }
   }, respond);

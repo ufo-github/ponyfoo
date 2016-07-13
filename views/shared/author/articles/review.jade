@@ -18,9 +18,12 @@ article.ly-section.vw-maintainer.de-host
       tbody
         each article in articles
           tr
-            td(data-label='Author')
+            td.usr-avatar(data-label='Profile')
               if article.author.slug
-                a.lk-icon.fa.fa-male(href!='/contributors/' + article.author.slug, aria-label='See author profile')
+                a.mm-author-site(href!='/contributors/' + article.author.slug, aria-label='See author profile')
+                  img.mm-gravatar(src=article.author.avatar, alt='')
+              else
+                img.mm-gravatar(src=article.author.avatar, alt='')
             td(data-label='Title')
               a.ar-title.lk-rainbows(href!=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
             td(data-label='Condition', class='ar-status ar-status-' + article.status)
@@ -41,8 +44,6 @@ article.ly-section.vw-maintainer.de-host
                     button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
                   form.ar-share(action=share + '/hackernews', method='post')
                     button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
-                  form.ar-share(action=share + '/lobsters', method='post')
-                    button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
             td.ar-buttons(data-label='Actions')
               if article.status === 'draft' || userIsEditor
                 a.ar-button.lk-icon.fa.fa-pencil(href='/articles/' + article.slug + '/edit', aria-label='Edit this article')

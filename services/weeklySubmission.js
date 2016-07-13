@@ -22,6 +22,7 @@ var InvoiceParty = require('../models/InvoiceParty');
 var env = require('../lib/env');
 var pkg = require('../package.json');
 var authority = env('AUTHORITY');
+var ownerEmail = env('OWNER_EMAIL');
 var from = env('MAILGUN_SENDER');
 var paymentPartySlug = env('SUBMISSION_INVOICE_PAYMENT_SLUG');
 var css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
@@ -44,6 +45,8 @@ var invoiceRates = {
 var tmpdir = path.join(process.cwd(), 'tmp');
 var rdigits = /^\d+$/;
 var maxTitleLength = 50;
+
+function noop () {}
 
 function isEditable (options, done) {
   var submission = options.submission;
@@ -111,6 +114,9 @@ function compilePreview (submission) {
 }
 
 function notifyAccepted (submission, done) {
+  if (submission.email === ownerEmail) {
+    (done || noop)(null); return;
+  }
   var tasks = {
     owners: findOwners,
     preview: compilePreview(submission),
@@ -234,6 +240,9 @@ function notifyAccepted (submission, done) {
 }
 
 function notifyReceived (submission, done) {
+  if (submission.email === ownerEmail) {
+    (done || noop)(null); return;
+  }
   var tasks = {
     owners: findOwners,
     preview: compilePreview(submission),

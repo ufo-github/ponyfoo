@@ -4,6 +4,7 @@ var util = require('util');
 var User = require('../../../models/User');
 var datetimeService = require('../../../services/datetime');
 var emojiService = require('../../../services/emoji');
+var userService = require('../../../services/user');
 
 module.exports = function (req, res, next) {
   User.find({}).sort('-created').lean().exec(found);
@@ -31,6 +32,7 @@ function toUserModel (user) {
     roles: user.roles.map(roleAsEmoji).join(' '),
     displayName: user.displayName,
     email: user.email,
+    avatar: userService.getAvatar(user),
     slug: user.slug
   };
 }

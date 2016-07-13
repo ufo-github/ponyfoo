@@ -14,7 +14,7 @@ function getModel (req, res, next) {
   if (!editor) {
     query.author = req.user;
   }
-  articleService.find(query, { populate: [['author', 'twitter website displayName slug']] }, respond);
+  articleService.find(query, { populate: [['author', 'twitter website displayName slug email avatar']] }, respond);
 
   function respond (err, articles) {
     if (err) {

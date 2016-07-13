@@ -47,7 +47,6 @@ function ready (viewModel, container, route) {
   var fb = $('#wa-campaign-fb');
   var echojs = $('#wa-campaign-echojs');
   var hn = $('#wa-campaign-hn');
-  var lobsters = $('#wa-campaign-lobsters');
   var toggleSectionsButton = $('.wa-toggle-sections');
   var discardButton = $('.wa-discard');
   var saveButton = $('.wa-save');
@@ -411,8 +410,7 @@ function ready (viewModel, container, route) {
       tweet: tweet.value(),
       fb: fb.value(),
       echojs: echojs.value(),
-      hn: hn.value(),
-      lobsters: lobsters.value()
+      hn: hn.value()
     };
     return data;
   }

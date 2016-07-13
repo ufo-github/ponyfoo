@@ -34,7 +34,6 @@ var schema = new mongoose.Schema({
   tweet: { type: Boolean, 'default': true },
   fb: { type: Boolean, 'default': true },
   echojs: { type: Boolean, 'default': true },
-  lobsters: { type: Boolean, 'default': true },
   hn: { type: Boolean, 'default': true },
   hnDiscuss: String
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });

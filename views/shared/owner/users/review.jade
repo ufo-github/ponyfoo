@@ -7,6 +7,7 @@ article.ly-section.vw-maintainer.de-host
       table
         thead
           tr
+            th
             th Created
             th Name
             th Email
@@ -15,6 +16,12 @@ article.ly-section.vw-maintainer.de-host
         tbody
           each user in users
             tr
+              td.usr-avatar(data-label='Profile')
+                if user.slug
+                  a.mm-author-site(href!='/contributors/' + user.slug, aria-label='See author profile')
+                    img.mm-gravatar(src=user.avatar, alt='')
+                else
+                  img.mm-gravatar(src=user.avatar, alt='')
               td.usr-date(data-label='Created')
                 time(datetime=user.created.datetime, aria-label='Created ' + user.created.title)=user.created.text
               td(data-label='Name')

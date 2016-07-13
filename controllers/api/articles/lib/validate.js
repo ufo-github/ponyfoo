@@ -31,8 +31,7 @@ function validate (model, options) {
     tweet: !!model.tweet,
     fb: !!model.fb,
     echojs: !!model.echojs,
-    hn: !!model.hn,
-    lobsters: !!model.lobsters
+    hn: !!model.hn
   };
   var publication = getPublicationDate();
   if (publication) {
@@ -52,7 +51,6 @@ function validate (model, options) {
       delete sanitized.fb;
       delete sanitized.echojs;
       delete sanitized.hn;
-      delete sanitized.lobsters;
     }
   }
   validation.model = sanitized;

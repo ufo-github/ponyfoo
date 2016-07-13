@@ -38,7 +38,6 @@ function migrate (article, done) {
           tweet: article.tweet,
           fb: article.fb,
           echojs: article.echojs,
-          lobsters: article.lobsters,
           hn: article.hn
         }
       }, null, 2), next),

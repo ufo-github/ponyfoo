@@ -16,6 +16,7 @@ article.ly-section.vw-maintainer.de-host
     table.wr-container
       thead
         tr
+          th
           th Created
           th Last Update
           th Title
@@ -25,6 +26,12 @@ article.ly-section.vw-maintainer.de-host
       tbody
         each issue in weeklies
           tr
+            td.usr-avatar(data-label='Profile')
+              if issue.author.slug
+                a.mm-author-site(href!='/contributors/' + issue.author.slug, aria-label='See author profile')
+                  img.mm-gravatar(src=issue.author.avatar, alt='')
+              else
+                img.mm-gravatar(src=issue.author.avatar, alt='')
             td(data-label='Created')
               time(datetime=issue.created.datetime, aria-label=issue.created.title)='On ' + issue.created.text
             td(data-label='Last Update')
@@ -46,8 +53,6 @@ article.ly-section.vw-maintainer.de-host
                   button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
                 form.ar-share(action=share + '/hackernews', method='post')
                   button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
-                form.ar-share(action=share + '/lobsters', method='post')
-                  button.lk-icon.fa.fa-ship.ar-share-button(aria-label='Submit to Lobste.rs')
             td.ar-buttons(data-label='Actions')
               a.ar-button.lk-icon.fa.fa-pencil.wr-edit(href='/weekly/' + issue.slug + '/edit', aria-label='Edit this newsletter issue')
               a.ar-button.lk-icon.fa.fa-remove.wr-remove(aria-label='Delete this newsletter issue', data-slug=issue.slug)

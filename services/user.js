@@ -14,9 +14,8 @@ function getModel (email, password, bypass) {
 
 function getProfile (user, options) {
   var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
-  var avatar = user.avatar || user.gravatar;
   var profile = {
-    avatar: avatar,
+    avatar: getAvatar(user),
     displayName: user.displayName,
     slug: user.slug,
     role: humanReadableRole(user.roles),
@@ -27,6 +26,16 @@ function getProfile (user, options) {
     profile.bioHtml = user.bioHtml.replace(rstrip, '');
   }
   return profile;
+}
+
+function getAvatar (user) {
+  if (user.avatar) {
+    return user.avatar;
+  }
+  if (user.email) {
+    return gravatarService.format(user.email) + '&s=24';
+  }
+  return 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=24';
 }
 
 function humanReadableRole (roles) {
@@ -106,5 +115,6 @@ module.exports = {
   createUsingEncryptedPassword: create(true),
   setPassword: setPassword,
   getProfile: getProfile,
+  getAvatar: getAvatar,
   hasRole: hasRole
 };

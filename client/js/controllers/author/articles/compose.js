@@ -66,7 +66,6 @@ function initialize (viewModel, container, route) {
   var fb = $('#ac-campaign-fb');
   var echojs = $('#ac-campaign-echojs');
   var hn = $('#ac-campaign-hn');
-  var lobsters = $('#ac-campaign-lobsters');
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
   var preview = $('.ac-preview');
@@ -291,7 +290,7 @@ function initialize (viewModel, container, route) {
 
   function deserialize (source) {
     var data = source || storage.get(defaultStorageKey) || {
-      email: true, tweet: true, fb: true, echojs: true, hn: true, lobsters: true
+      email: true, tweet: true, fb: true, echojs: true, hn: true
     };
     var titleText = data.titleMarkdown || '';
     var slugText = data.slug || '';
@@ -311,7 +310,6 @@ function initialize (viewModel, container, route) {
     fb.value(data);
     echojs.value(data.echojs);
     hn.value(data.hn);
-    lobsters.value(data.lobsters);
 
     boundSlug = sluggish(titleText) === slugText;
 
@@ -345,8 +343,7 @@ function initialize (viewModel, container, route) {
       tweet: tweet.value(),
       fb: fb.value(),
       echojs: echojs.value(),
-      hn: hn.value(),
-      lobsters: lobsters.value()
+      hn: hn.value()
     };
     var scheduled = schedule.value();
     if (scheduled && !published) {

@@ -9,6 +9,7 @@ var commentService = require('./comment');
 var datetimeService = require('./datetime');
 var summaryService = require('./summary');
 var markupService = require('./markup');
+var userService = require('./user');
 var htmlService = require('./html');
 var cryptoService = require('./crypto');
 var rdigits = /^\d+$/;
@@ -76,7 +77,6 @@ function update (options, done) {
       updateFlag('tweet');
       updateFlag('fb');
       updateFlag('echojs');
-      updateFlag('lobsters');
       updateFlag('hn');
       issue.save(but(done));
 
@@ -110,6 +110,10 @@ function toMetadata (doc) {
     created: datetimeService.field(doc.created),
     updated: datetimeService.field(doc.updated),
     publication: datetimeService.field(doc.publication),
+    author: {
+      slug: doc.author.slug,
+      avatar: userService.getAvatar(doc.author)
+    },
     name: doc.name,
     slug: doc.slug,
     status: doc.status,
