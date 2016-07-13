@@ -5,6 +5,7 @@ var pullData = require('../lib/pullData');
 var Subscriber = require('../../models/Subscriber');
 var subscriberService = require('../../services/subscriber');
 var datetimeService = require('../../services/datetime');
+var userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
   var max = 100;
@@ -37,6 +38,7 @@ module.exports = function (req, res, next) {
     return {
       created: datetimeService.field(subscriber.created),
       email: subscriber.email,
+      avatar: userService.getAvatar(subscriber),
       topics: subscriber.topics,
       source: subscriber.source.split('+')[0],
       verified: subscriber.verified,

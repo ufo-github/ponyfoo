@@ -62,12 +62,12 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                             td.layout-footer-item.layout-footer-unsubscribe(valign='top', style='text-align: left;')=unsubscribe
                             td.layout-footer-item(valign='top')
                               if social.facebook.url
-                                a(href!=social.facebook.url, style='color: #3b5998;')=social.facebook.handle
+                                a(href=social.facebook.url, style='color: #3b5998;')=social.facebook.handle
                                 span &nbsp;&nbsp;&nbsp;
 
                               if social.twitter.url
-                                a(href!=social.twitter.url, style='color: #55acee;')=social.twitter.handle
+                                a(href=social.twitter.url, style='color: #55acee;')=social.twitter.handle
                                 span &nbsp;&nbsp;&nbsp;
 
                               if social.landing.url
-                                a(href!=social.landing.url)=social.landing.name
+                                a(href=social.landing.url)=social.landing.name

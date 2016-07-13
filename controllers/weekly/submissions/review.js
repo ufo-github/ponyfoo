@@ -2,9 +2,10 @@
 
 var contra = require('contra');
 var WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
+var weeklyCompilerService = require('../../../services/weeklyCompiler');
 var datetimeService = require('../../../services/datetime');
 var markupService = require('../../../services/markup');
-var weeklyCompilerService = require('../../../services/weeklyCompiler');
+var userService = require('../../../services/user');
 var subtypeMap = {
   suggestion: 'Suggestion',
   primary: 'Primary Sponsorship',
@@ -44,7 +45,8 @@ function getModel (req, res, next) {
         status: submission.status,
         type: subtypeMap[submission.subtype],
         submitter: submission.submitter,
-        email: submission.email
+        email: submission.email,
+        avatar: userService.getAvatar(submission)
       });
     }
   }

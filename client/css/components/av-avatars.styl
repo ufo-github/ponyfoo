@@ -1,0 +1,28 @@
+av-author-padding = 10px
+
+.av-avatar
+  transition all 0.5s ease-in-out
+  border-top 2px solid rgba(c-yellow, 0.3)
+  border-right 2px solid rgba(c-pink, 0.3)
+  border-bottom 2px solid rgba(c-pink, 0.4)
+  border-left 2px solid rgba(c-yellow, 0.7)
+  border-radius 30px
+  box-shadow 0px 0px 2px rgba(c-black, 0.2)
+  width 24px
+  height 24px
+
+.av-website
+  display inline-block
+  margin av-author-padding * -1
+  padding av-author-padding
+  &:hover
+    .av-avatar
+      border-top-color rgba(c-pink, 0.6)
+      border-right-color rgba(c-yellow, 0.9)
+      border-bottom-color rgba(c-yellow, 0.5)
+      border-left-color rgba(c-pink, 0.5)
+
+.av-avatar
+  display inline-block
+  vertical-align middle
+  line-height 22px

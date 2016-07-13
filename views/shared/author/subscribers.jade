@@ -18,6 +18,7 @@ article.ly-section.vw-maintainer
     table
       thead
         tr
+          th
           th Created
           th Source
           th Email
@@ -29,12 +30,15 @@ article.ly-section.vw-maintainer
           - api = '/api/subscribers/' + s.hash
           - returnPath = 'returnTo=/owner/subscribers'
           tr
+            td.usr-avatar(data-label='Avatar')
+              a.av-website(data-email='mailto:' + s.email, target='_blank')
+                img.av-avatar(src=s.avatar, alt='')
             td(data-label='Created')
               time(datetime=s.created.datetime, aria-label=s.created.title)='On ' + s.created.text
             td(data-label='Source')
               span(class='as-source as-source-' + s.source)=s.source
             td(data-label='Email')
-              a.lk-link.lk-black(href='mailto:' + s.email, target='_blank')=s.email
+              a.lk-link.lk-black(data-email='mailto:' + s.email, target='_blank')=s.email
             td.as-verified(data-label='Verified')
               if s.verified
                 div.ck-readonly.ck-alone.ck-checkbox.ck-checked

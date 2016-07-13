@@ -6,6 +6,7 @@ article.ly-section.vw-maintainer.de-host
     table.wur-container
       thead
         tr
+          th
           th Created
           th Title
           th Status
@@ -15,6 +16,9 @@ article.ly-section.vw-maintainer.de-host
       tbody
         each submission in submissions
           tr
+            td.usr-avatar(data-label='Avatar')
+              a.av-website(data-email='mailto:' + submission.email, target='_blank')
+                img.av-avatar(src=submission.avatar, alt='')
             td(data-label='Created')
               time(datetime=submission.created.datetime, aria-label=submission.created.title)='On ' + submission.created.text
             td(data-label='Title')
@@ -22,7 +26,7 @@ article.ly-section.vw-maintainer.de-host
             td.wur-status(data-label='Status')=submission.status
             td(data-label='Type')=submission.type
             td(data-label='Submitter')
-              a.lk-link.lk-black(href='mailto:' + submission.email, target='_blank')=submission.submitter || submission.email
+              a.lk-link.lk-black(data-email='mailto:' + submission.email, target='_blank')=submission.submitter || submission.email
 
             td.wur-buttons(data-label='Actions')
               if submission.status !== 'accepted'

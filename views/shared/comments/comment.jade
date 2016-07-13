@@ -1,7 +1,7 @@
 mixin author
-  img.mm-gravatar.js-only(data-src=comment.gravatar + '&s=24', alt='')
+  img.av-avatar.js-only(data-src=comment.gravatar + '&s=24', alt='')
   noscript
-    img.mm-gravatar(src=comment.gravatar + '&s=24', alt='')
+    img.av-avatar(src=comment.gravatar + '&s=24', alt='')
   span.mm-author-name=comment.author
 
 section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment._id)
@@ -11,7 +11,7 @@ section.mm-comment.ly-section(id='comment-' + comment._id, data-comment=comment.
 
     -  site = comment.site && comment.site.replace(/https?:\/\//, '');
     if site
-      a.mm-author-site(href!=comment.site, aria-label=site, rel='nofollow', target='_blank')
+      a.mm-website.av-website(href=comment.site, aria-label=site, rel='nofollow', target='_blank')
         +author
     else
       +author

@@ -22,7 +22,6 @@ module.exports = function (viewModel, container) {
   var comments = $('.mm-comments', container);
   var cancelReply = $('.mc-cancel-reply', container);
   var footer = $('.mm-footer', container);
-  var gravatars = $('.mm-gravatar', container);
 
   $('.mm-thread-reply', container).removeClass('uv-hidden');
 

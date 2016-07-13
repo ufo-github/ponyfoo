@@ -4,7 +4,7 @@ p Hey {{name}}!
 
 p
   span='I’m Nico, the editor at '
-  a(href!=authority) Pony Foo
+  a(href=authority) Pony Foo
   span . {{{reason}}}
 
 p If you confirm that you would like to subscribe, you’ll earn access to the following features.
@@ -17,11 +17,11 @@ p(itemprop='potentialAction', itemscope, itemtype='http://schema.org/ConfirmActi
   meta(itemprop='description', content='Confirm Subscription – Pony Foo')
   span='Follow '
   span(itemprop='handler', itemscope, itemtype='http://schema.org/HttpActionHandler')
-    a(itemprop='url', href!=authority + confirm) this link
+    a(itemprop='url', href=authority + confirm) this link
   span=' to confirm your email address subscription.'
 
 div(style='text-align: center;')
-  a(style='margin-top: 25px; padding: 20px; background-color: #1686a2; color: #fff; border-bottom: 2px solid #5aa9bc; display: inline-block; font-size: 28px;', href!=authority + confirm) Subscribe!
+  a(style='margin-top: 25px; padding: 20px; background-color: #1686a2; color: #fff; border-bottom: 2px solid #5aa9bc; display: inline-block; font-size: 28px;', href=authority + confirm) Subscribe!
 
 p(style='padding-bottom: 15px;') No further action is required to decline this invitation.
 

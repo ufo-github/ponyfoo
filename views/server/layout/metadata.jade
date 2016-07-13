@@ -4,7 +4,7 @@ if rss
 link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.authority + '/opensearch.xml')
 
 if model.meta.canonical
-  link(rel='canonical', href!=model.authority + model.meta.canonical)
+  link(rel='canonical', href=model.authority + model.meta.canonical)
 
 meta(name='author', itemprop='creator', content!=founder.contact)
 
