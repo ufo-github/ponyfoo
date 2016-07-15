@@ -57,6 +57,7 @@
     "beautify-text": "1.0.0",
     "bluebird": "3.3.4",
     "body-parser": "1.3.0",
+    "bureaucracy": "1.0.5",
     "but": "2.0.1",
     "campaign": "4.1.6",
     "campaign-mailgun": "1.0.7",

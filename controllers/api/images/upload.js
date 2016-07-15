@@ -16,35 +16,57 @@ var imgurClientId = env('IMGUR_CLIENT_ID');
 var production = process.env.NODE_ENV === 'production';
 
 function images (req, res) {
-  var image = req.file;
-  if (!image) {
-    errored('Image upload failed!', new Error('Image upload failed!')); return;
-  }
-
-  contra.waterfall([optimize, upload], uploaded);
-
-  function optimize (next) {
-    imageService.optimize({
-      file: image.path,
-      name: image.originalname,
-      size: image.size
-    }, next);
-  }
-
-  function upload (next) {
-    imageUpload(image, next);
-  }
-
-  function uploaded (err, result) {
-    if (err) {
-      errored(err.message, err); return;
+  res.json({
+  "results": [
+    {
+      "href": "https://i.imgur.com/PCbRYDa.png",
+      "title": "Screen Shot 2016-07-15 at 14.53.34.png"
+    },
+    {
+      "href": "https://i.imgur.com/idDBsNb.png",
+      "title": "Screen Shot 2016-07-15 at 14.53.36.png"
     }
-    winston.info('Image uploaded to', result.url);
-    respond(200, {
-      href: result.url,
-      title: result.alt,
-      version: taunus.state.version
-    });
+  ],
+  "version": "t8.1.2;v1.0.37"
+});return;
+  contra.map(req.files, toImageUpload, prepareResponse);
+
+  function toImageUpload (image, next) {
+    contra.waterfall([optimize, upload], uploaded);
+
+    function optimize (next) {
+      imageService.optimize({
+        file: image.path,
+        name: image.originalname,
+        size: image.size
+      }, next);
+    }
+
+    function upload (next) {
+      imageUpload(image, next);
+    }
+
+    function uploaded (err, result) {
+      if (err) {
+        next(err); return;
+      }
+      winston.info('Image uploaded to', result.url);
+      next(null, {
+        href: result.url,
+        title: result.alt
+      });
+    }
+  }
+
+  function prepareResponse (err, results) {
+    if (err) {
+      errored(err.message, err);
+    } else {
+      respond(200, {
+        results: results,
+        version: taunus.state.version
+      });
+    }
   }
 
   function errored (message, err) {

@@ -96,7 +96,7 @@ module.exports = function (app) {
   app.get('/:id(articles|weekly|all)/feed', rssFeed);
   app.get('/sitemap.xml', sitemap);
 
-  app.put('/api/images', upload.single('woofmark_upload'), imageUpload);
+  app.put('/api/images', upload.array('uploads', 5), imageUpload);
   app.get('/api/metadata/scrape', metadataScrape);
 
   app.get('/owner/articles/compute', ownerOnly, authorCompute);
