@@ -16,19 +16,6 @@ var imgurClientId = env('IMGUR_CLIENT_ID');
 var production = process.env.NODE_ENV === 'production';
 
 function images (req, res) {
-  res.json({
-  "results": [
-    {
-      "href": "https://i.imgur.com/PCbRYDa.png",
-      "title": "Screen Shot 2016-07-15 at 14.53.34.png"
-    },
-    {
-      "href": "https://i.imgur.com/idDBsNb.png",
-      "title": "Screen Shot 2016-07-15 at 14.53.36.png"
-    }
-  ],
-  "version": "t8.1.2;v1.0.37"
-});return;
   contra.map(req.files, toImageUpload, prepareResponse);
 
   function toImageUpload (image, next) {
