@@ -153,13 +153,16 @@
 .wa-link-image-right
   right 0
 
+.wa-link-image,
+.wa-link-image-preview-container
+  display inline-block
+  vertical-align top
+
 .wa-link-image
   width calc(100% - 38px)
 
 .wa-link-image-preview-container
-  position absolute
-  top 0
-  right 0
+  position relative
   padding 3px
   height 38px
   width 38px
@@ -167,8 +170,7 @@
 
 .wa-link-image-preview
   display block
-  margin-left auto
-  height 100%
+  margin 0 auto
 
 .wa-link-toggle-tags
   top 6px
