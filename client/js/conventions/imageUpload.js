@@ -17,19 +17,28 @@ function setupUploads (container) {
 
 function setup (el) {
   var $el = $(el);
+  var inputContainer = $el.parents('.bx-icon').prev('.bx-input');
+  var input = inputContainer.find('input');
   var bureaucrat = bureaucracy.setup(el, {
     endpoint: '/api/images',
     validator: 'image'
   });
+  bureaucrat.on('started', loader());
+  bureaucrat.on('ended', loader('done'));
   bureaucrat.on('success', uploaded);
+
+  function loader (state) {
+    return applyStateClass;
+    function applyStateClass () {
+      inputContainer[state === 'done' ? 'removeClass' : 'addClass']('bx-uploading');
+    }
+  }
 
   function uploaded (results) {
     if (results.length === 0) {
       return;
     }
     var result = results[0];
-    var input = $el.parents('.bx-icon').prev('.bx-input');
-    input = input.find('input').and(input);
     input.value(result.href);
     updateThumbnailImage();
   }

@@ -26,3 +26,26 @@
   bottom 0
   opacity 0
   cursor pointer
+
+.bx-uploading
+  position relative
+  &:before
+    font-awesome()
+    content '\f1ce'
+    z-index z-bureaucracy-input-uploading-icon
+    left 20px
+  &:after
+    content 'Loading...'
+    z-index z-bureaucracy-input-uploading
+    left 0
+    background-color c-light-turquoise
+    text-align center
+    font-style italic
+  &:before,
+  &:after
+    position absolute
+    color c-white
+    top 0
+    right 0
+    bottom 0
+    line-height 38px

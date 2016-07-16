@@ -36,15 +36,15 @@ function linkThroughForSlug (slug) {
       queso.stringify(u.query).replace(rspace, '+') +
       (u.hash || '')
     );
+
+    function removeProp (key) {
+      delete u.query[key];
+    }
   }
 }
 
 function whereUtm (key) {
   return key.slice(0, 4) === 'utm_';
-}
-
-function removeProp (key, i, host) {
-  delete host.query[key];
 }
 
 module.exports = {
