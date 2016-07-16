@@ -156,7 +156,7 @@
     "validator": "3.12.0",
     "winston": "2.0.0",
     "winston-mongodb": "1.4.0",
-    "woofmark": "4.0.2",
+    "woofmark": "4.2.1",
     "x-xss-protection": "0.1.2"
   },
   "devDependencies": {

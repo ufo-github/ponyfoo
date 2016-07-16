@@ -26,6 +26,7 @@ require('./conventions/unwrapEmails')();
 require('./conventions/linkifyHeadings')();
 require('./conventions/relativeTime')();
 require('./conventions/textareas')();
+require('./conventions/imageUpload')();
 require('./conventions/konami')();
 require('./conventions/carbon')();
 

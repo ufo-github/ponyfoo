@@ -35,25 +35,11 @@ function activate (container) {
         url: '/api/images',
         restriction: 'GIF, JPG, and PNG images'
       },
-      xhr: xhr,
       html: hasHtml,
       wysiwyg: hasWysiwyg
     });
 
     taunus.track(el, editor);
-
-    function xhr (options, done) {
-      return taunus.xhr(options, response);
-      function response (err, data, res) {
-        if (err) {
-          done(err); return;
-        }
-        if (taunus.versionCheck(data.version) === false) {
-          return;
-        }
-        done(null, res, data);
-      }
-    }
 
     function renderModes (el, id) {
       var icons = {

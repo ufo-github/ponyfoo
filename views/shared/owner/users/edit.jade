@@ -10,7 +10,10 @@ article.ly-section.vw-maintainer.de-host
       input.cb-slug.cb-half(placeholder='Their username, used in /contributors/your-username', value=profile.slug)
       input.cb-twitter.cb-half(placeholder='Their Twitter username, as in @ponyfoo', value=profile.twitter)
       input.cb-website(placeholder='A link to your website', value=profile.website)
-      input.cb-avatar(placeholder='A link to an avatar image. Defaults to a gravatar.', value=profile.avatar)
+      input.cb-avatar.bx-input(placeholder='A link to an avatar image. Defaults to a gravatar.', value=profile.avatar)
+      div.bx-icon
+        div.fa.fa-picture-o
+        input.bx-fileinput(type='file')
     section.cb-roles
       input.cb-role-input.ck-input#cb-role-owner(type='checkbox', value='owner', checked=profile.roles.indexOf('owner') !== -1)
       label.cb-role.ck-checkbox(for='cb-role-owner') Owner

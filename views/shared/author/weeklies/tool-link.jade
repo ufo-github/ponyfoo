@@ -37,11 +37,15 @@ div.wa-section(data-tool='link')
     input.wa-link-source-href.wa-input-50(placeholder='A link to the author or source?', value=section.sourceHref)
 
     span.wa-link-image-container.wa-input-50
-      input.wa-link-image(placeholder='Link to an image', value=section.image)
-      span.wa-link-image-preview-container
-        img.wa-link-image-preview.uv-hidden(alt='')
-        span.wa-toggler.wa-link-image-left.fa.fa-arrow-left.uv-hidden
-        span.wa-toggler.wa-link-image-right.fa.fa-arrow-right.uv-hidden
+      div.bx-input
+        input.wa-link-image(placeholder='Link to an image', value=section.image)
+        span.wa-link-image-preview-container
+          img.wa-link-image-preview.uv-hidden(alt='')
+          span.wa-toggler.wa-link-image-left.fa.fa-arrow-left.uv-hidden
+          span.wa-toggler.wa-link-image-right.fa.fa-arrow-right.uv-hidden
+      div.bx-icon
+        div.fa.fa-picture-o
+        input.bx-fileinput(type='file')
     span.wa-link-tags-container.wa-input-50
       input.wa-link-tags(placeholder='Tags that describe the link', value=unknownTags.join(' '))
       a.wa-link-toggle-tags.wa-toggler.lk-icon.fa.fa-adjust.fa-rotate-90
