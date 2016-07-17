@@ -7,7 +7,10 @@ var inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   var query = { status: 'published' };
-  var options = { fields: '-teaser -introduction -body -comments' };
+  var options = {
+    fields: '-teaser -introduction -body -comments',
+    populate: [['author', 'slug email avatar']]
+  };
 
   articleService.find(query, options, function (err, articles) {
     if (err) {

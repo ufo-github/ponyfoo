@@ -1,5 +1,8 @@
-rainbow()
-  background linear-gradient(to right, c-white 0, c-yellow-highlight 33%, c-green 66%, c-pink 100%)
+rainbow(v-direction = right)
+  background linear-gradient(to v-direction, c-white 0, c-yellow-highlight 33%, c-green 66%, c-pink 100%)
+
+rainbow-simple(v-direction = right)
+  background linear-gradient(to v-direction, c-white 0, c-yellow-highlight 33%, c-pink 100%)
 
 @keyframes bg-rainbow
   0%

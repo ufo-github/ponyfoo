@@ -31,7 +31,14 @@ article.ly-section
               a.hy-article-link.lk-visitor-inside.lk-rainbows(href=article.permalink)
                 span.lk-visitor-target!=article.titleHtml
             span.hy-connector
-              span!=' &mdash; published '
+              span!=' &mdash; '
+              span.usr-avatar
+                if article.author.slug
+                  a.av-website(href='/contributors/' + article.author.slug, aria-label='See author profile')
+                    img.av-avatar(src=article.author.avatar, alt='')
+                else
+                  img.av-avatar(src=article.author.avatar, alt='')
+              span=' published '
               time.hy-publication(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text
               span.hy-tags
                 span=', under '

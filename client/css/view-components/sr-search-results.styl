@@ -20,17 +20,21 @@
     background-color c-purple-02
 
 .sr-known-tags
-  background-color c-yellow-highlight-04
   list-style-type none
-  margin 20px 0
-
-.sr-known-tag-container
-  display inline-block
-  padding 10px
+  margin 40px 0 20px
 
 .sr-known-tag
+  position relative
   background-color c-yellow-highlight-01
-  padding 10px
+  padding 20px
+  &:before
+    position absolute
+    content ''
+    top 0
+    left 0
+    right 0
+    height 4px
+    rainbow-simple(right)
 
 .sr-known-tag-slug
   float right
@@ -40,4 +44,11 @@
     padding-bottom 40px
 
   .sr-known-tag-container
+    display inline-block
+    padding-right 10px
+    margin-bottom 20px
     width 50%
+
+    &:nth-child(even)
+      padding-left 10px
+      padding-right 0
