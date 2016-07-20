@@ -29,12 +29,12 @@ function format () {
 }
 
 function hyphenToCamel (text) {
-  var rhyphenated = /-([a-z])/g;
+  var rhyphenated = /-([a-z0-9])/g;
   return text.replace(rhyphenated, upperCase);
 }
 
-function upperCase (m, g) {
-  return g.toUpperCase();
+function upperCase (all, char) {
+  return char.toUpperCase();
 }
 
 module.exports = {

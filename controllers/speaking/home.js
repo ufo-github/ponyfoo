@@ -88,7 +88,7 @@ function getFullMap (engagements) {
 
 function getMarkerColor (engagement) {
   var upcoming = hasNotEnded(engagement);
-  return upcoming ? colorService.pink : colorService.pinkLight;
+  return upcoming ? colorService.colors.pink : colorService.colors.pinkLight.plain;
 }
 
 function toEngagementModel (engagement) {

@@ -1,0 +1,24 @@
+link(rel='stylesheet', type='text/css', href='/css/styleguide.css')
+
+header.sy-container
+  include ../layout/header-logo
+  nav.hn-navigation
+    ul.hn-list
+      li.hn-item
+        a.hn-link.lk-rainbows(href='#colors') Colors
+
+article.sy-container#colors
+  h1.sy-title.sy-title-purple Colors
+
+  each section in colors
+    section.sycr-section
+      h2.sycr-title=section.displayName
+      table.sycr-reel
+        - profiles = section.profiles.slice()
+        while profiles.length
+          tr
+            each profile in profiles.slice(0, 4)
+              - classes = 'sycr-color sycr-color-' + (profile.dark ? 'dark' : 'light')
+              td(class=classes, style='background-color: ' + profile.hex + ';')
+                span.sycr-color-name=profile.displayName
+            - profiles = profiles.slice(4)
