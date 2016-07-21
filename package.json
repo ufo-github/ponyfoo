@@ -25,6 +25,8 @@
     "clean": "build/clean",
     "copy": "build/copy",
     "diagnose": "build/diagnose",
+    "db-backup": "build/db-backup",
+    "db-restore": "build/db-restore",
     "setup": "deploy/setup",
     "deploy": "deploy/deploy",
     "ssh": "deploy/ssh",

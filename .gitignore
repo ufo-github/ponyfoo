@@ -3,6 +3,7 @@
 .env.browser.json
 .env.json
 .job.scheduler
+backups/
 deploy/env/
 deploy/keys/
 deploy/log/

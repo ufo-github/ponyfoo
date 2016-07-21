@@ -1,0 +1,16 @@
+#!/bin/bash
+
+mkdir backups
+
+PRODUCTION_CONN=`node scripts/parse-connection-string`
+PRODUCTION_HOST=`echo $PRODUCTION_CONN | jq -r .hosts[0].hostname`
+PRODUCTION_DB=`echo $PRODUCTION_CONN | jq -r .database`
+PRODUCTION_USERNAME=`echo $PRODUCTION_CONN | jq -r .username`
+PRODUCTION_PASSWORD=`echo $PRODUCTION_CONN | jq -r .password`
+
+mongodump \
+  -h "$PRODUCTION_HOST" \
+  -d "$PRODUCTION_DB" \
+  -u "$PRODUCTION_USERNAME" \
+  -p "$PRODUCTION_PASSWORD" \
+  -o backups/`date +%s`

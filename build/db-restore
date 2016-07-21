@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DEVELOPMENT_CONN=`NODE_ENV=development node scripts/parse-connection-string`
+DEVELOPMENT_HOST=`echo $DEVELOPMENT_CONN | jq -r .hosts[0].hostname`
+DEVELOPMENT_DB=`echo $DEVELOPMENT_CONN | jq -r .database`
+DEVELOPMENT_USERNAME=`echo $DEVELOPMENT_CONN | jq -r .username`
+DEVELOPMENT_PASSWORD=`echo $DEVELOPMENT_CONN | jq -r .password`
+
+PRODUCTION_CONN=`NODE_ENV=production node scripts/parse-connection-string`
+PRODUCTION_DB=`echo $PRODUCTION_CONN | jq -r .database`
+
+mongorestore \
+  --drop \
+  -h "$DEVELOPMENT_HOST" \
+  -d "$DEVELOPMENT_DB" \
+  -u "$DEVELOPMENT_USERNAME" \
+  -p "$DEVELOPMENT_PASSWORD" \
+  backups/`ls backups | tail -1`/$PRODUCTION_DB
