@@ -4,7 +4,8 @@ aside.de-sidebar.de-column
   form#search.ly-section.de-search(action='/articles/search', method='get', name='search')
     div.de-search-label
       sub Search for articles
-    input.de-input.sr-input(placeholder='e.g JavaScript', name='terms', value=query && query.replace(/"/g,''))
+    - termsInputValue = query && query.replace(/"/g,'')
+    input.de-input.sr-input(placeholder='e.g JavaScript', name='terms', value=termsInputValue)
 
     span.de-button(aria-label='Pro Tip: use "[js]" to search for article tags!')
       button.bt-button.bt-pink.sr-button(type='submit')

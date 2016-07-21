@@ -1,14 +1,20 @@
 link(rel='stylesheet', type='text/css', href='/css/styleguide.css')
 
-header.sy-container
+header.sy-header
   include ../layout/header-logo
   nav.hn-navigation
     ul.hn-list
       li.hn-item
         a.hn-link.lk-rainbows(href='#colors') Colors
+      li.hn-item
+        a.hn-link.lk-rainbows(href='#links') Links
+      li.hn-item
+        a.hn-link.lk-rainbows(href='#buttons') Buttons
+      li.hn-item
+        a.hn-link.lk-rainbows(href='#logo') Logo
 
 article.sy-container#colors
-  h1.sy-title.sy-title-purple Colors
+  h1.sy-title.sy-title-red Colors
 
   each section in colors
     section.sycr-section
@@ -16,9 +22,145 @@ article.sy-container#colors
       table.sycr-reel
         - profiles = section.profiles.slice()
         while profiles.length
-          tr
+          tr.sycr-row
             each profile in profiles.slice(0, 4)
               - classes = 'sycr-color sycr-color-' + (profile.dark ? 'dark' : 'light')
               td(class=classes, style='background-color: ' + profile.hex + ';')
                 span.sycr-color-name=profile.displayName
             - profiles = profiles.slice(4)
+
+article.sy-container#links
+  h1.sy-title.sy-title-orange Links
+
+  ul.sy-list
+    li.sy-list-item
+      a.lk-link(href='#links') A pink link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor(href='#links') A pink “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-black(href='#links') A black link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor.lk-black(href='#links') A black “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-orange(href='#links') A orange link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor.lk-orange(href='#links') A orange “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-blue(href='#links') A blue link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor.lk-blue(href='#links') A blue “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-twitter(href='#links') A Twitter link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor.lk-twitter(href='#links') A Twitter “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-facebook(href='#links') A Facebook link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor.lk-facebook(href='#links') A Facebook “visitor” link element
+
+    li.sy-list-item.sy-list-item-orange
+      a.lk-link.lk-white(href='#links') A white link element
+
+    li.sy-list-item.sy-list-item-orange
+      a.lk-link.lk-visitor.lk-white(href='#links') A white “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-green(href='#links') A green link element
+
+    li.sy-list-item
+      a.lk-link.lk-visitor.lk-green(href='#links') A green “visitor” link element
+
+    li.sy-list-item
+      a.lk-link.lk-link-to-green.lk-visitor-before.lk-visitor-before-no-underline(href='#links') A green “visitor-aware” link element
+
+  ul.sy-list
+    li.sy-list-item
+      a.lk-rainbows(href='#links') A rainbow link element
+
+    li.sy-list-item
+      a.lk-visitor-inside.lk-rainbows(href='#links')
+        span.lk-visitor-target A rainbow “visitor” link element
+
+  ul.sy-list
+    li.sy-list-item
+      a.lk-icon.lk-opera.fa.fa-pencil(href='#links')
+
+    li.sy-list-item
+      a.lk-icon.lk-chrome.fa.fa-chrome(href='#links')
+
+    li.sy-list-item
+      a.lk-icon.lk-firefox.fa.fa-firefox(href='#links')
+
+    li.sy-list-item
+      a.lk-icon.lk-opera.fa.fa-opera(href='#links')
+
+article.sy-container#buttons
+  h1.sy-title.sy-title-purple Buttons
+  ul.sy-list
+    li.sy-list-block
+      button.bt-button.bt-pink
+        span.bt-text A pink button element
+
+    li.sy-list-block
+      button.bt-button.bt-purple
+        span.bt-text A purple button element
+
+    li.sy-list-block
+      button.bt-button.bt-red
+        span.bt-text A red button element
+
+article.sy-container#logo
+  h1.sy-title.sy-title-yellow Logo
+
+  ul.sy-list
+    li.sy-list-item
+      include ../../../resources/logos/original
+
+    li.sy-list-item
+      include ../../../resources/logos/original-hat
+
+    li.sy-list-item
+      include ../../../resources/logos/rainbow
+
+    li.sy-list-item
+      include ../../../resources/logos/argentina
+
+  ul.sy-list.sylg-list
+    li.sy-list-item
+      h1.go-logo-container
+        span.go-anchor.gg-container
+          include ../../../resources/logos/original
+        span.go-text
+          a.lk-rainbows(href='/') ponyfoo.com
+
+    li.sy-list-item
+      h1.go-logo-container
+        span.go-anchor.gg-container
+          include ../../../resources/logos/original-hat
+        span.go-text
+          a.lk-rainbows(href='/') ponyfoo.com
+
+    li.sy-list-item
+      h1.go-logo-container
+        span.go-anchor.gg-container
+          include ../../../resources/logos/rainbow
+        span.go-text
+          a.lk-rainbows(href='/') ponyfoo.com
+
+    li.sy-list-item
+      h1.go-logo-container
+        span.go-anchor.gg-container
+          include ../../../resources/logos/argentina
+        span.go-text
+          a.lk-rainbows(href='/') ponyfoo.com

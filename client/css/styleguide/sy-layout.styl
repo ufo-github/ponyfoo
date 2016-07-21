@@ -1,13 +1,57 @@
+.sy-header,
 .sy-container
   padding 0 40px
 
-  .go-logo-container
-    margin-left 0
+.sy-header .go-logo-container
+  margin-left 0
+
+.sy-container
+  &:after
+    content ''
+    display block
+    border-bottom 10px dashed rgba(c-black, 0.2)
+    margin 100px 0
+
+.sy-list
+  display block
+  list-style-type none
+
+.sy-list-block,
+.sy-list-item
+  padding 10px
+
+.sy-list-item-orange
+  background-color c-dark-orange
+
+.sy-list-item-purple
+  background-color c-purple
 
 .sy-title
   padding 10px 20px
   border-bottom 10px solid rgba(c-black, 0.2)
 
+.sy-title-orange
+  background-color c-dark-orange
+  color c-white
+
 .sy-title-purple
   background-color c-purple
   color c-white
+
+.sy-title-yellow
+  background-color c-yellow-highlight
+  color c-black-text
+
+.sy-title-red
+  background-color c-red
+  color c-white
+
+@media screen and (min-width: 500px)
+  .sy-list-item
+    display inline-block
+    vertical-align top
+    width 50%
+
+@media screen and (min-width: 900px)
+  .sy-list-item
+    width 25%
