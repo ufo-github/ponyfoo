@@ -31,6 +31,7 @@
     "open": "deploy/open",
     "shutdown": "deploy/shutdown",
     "start": "npm run build-development",
+    "lint": "build/lint",
     "test": "build/test",
     "preinstall": "npm install node-gyp-install && ./node_modules/node-gyp-install/bin.js",
     "shots-generate": "scripts/shots-generate",

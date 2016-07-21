@@ -65,7 +65,7 @@ function createClient () {
   } else if (mode === 'send') { // send emails
     options.provider = mailgun({ apiKey: apiKey, authority: authority });
   } else {
-    throw new Error('Expected "EMAIL_MODE" environment variable to be one of: "debug", "trap", "send".')
+    throw new Error('Expected "EMAIL_MODE" environment variable to be one of: "debug", "trap", "send".');
   }
   return campaign(options);
 }
