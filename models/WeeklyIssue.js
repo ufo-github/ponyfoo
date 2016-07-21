@@ -14,6 +14,9 @@ var schema = new mongoose.Schema({
   statusReach: String, // [undefined, 'scheduled', 'patrons', 'everyone']
   thanks: String,
   issue: { type: Number, index: { unique: true, sparse: true }, require: false },
+  title: String,
+  titleText: String,
+  titleHtml: String,
   summary: String,
   summaryText: String,
   summaryHtml: String,
@@ -28,20 +31,23 @@ var schema = new mongoose.Schema({
   hnDiscuss: String
 });
 
-schema.virtual('name').get(computeName);
-schema.virtual('title').get(computeTitle);
+schema.virtual('computedTitle').get(computeTitle);
+schema.virtual('computedName').get(computeName);
 
 var model = mongoose.model('WeeklyIssue', schema);
 
 module.exports = model;
+
+function computeTitle () {
+  if (this.titleText) {
+    return this.titleText;
+  }
+  return this.computedName;
+}
 
 function computeName () {
   if (this.issue) {
     return 'Issue #' + this.issue;
   }
   return this.slug;
-}
-
-function computeTitle () {
-  return 'Pony Foo Weekly \u2014 ' + this.name;
 }

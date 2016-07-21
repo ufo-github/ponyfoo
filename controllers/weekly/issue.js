@@ -57,7 +57,7 @@ module.exports = function (req, res, next) {
 
     res.viewModel = {
       model: {
-        title: issue.name + ' \u2014 Pony Foo Weekly',
+        title: issue.computedTitle + ' \u2014 Pony Foo Weekly',
         meta: {
           canonical: canonical,
           description: issue.summaryText,

@@ -1,6 +1,9 @@
 header.dc-header.vw-title
   h1.dc-heading
-    span=issue.name
+    if issue.titleHtml
+      span.md-markdown.md-markdown-inline!=issue.titleHtml
+    else
+      span=issue.name
     span=' \u2014 '
     a.lk-link.lk-black.lk-clean(href='/weekly', aria-label='One email about the web every thursday.') Pony Foo Weekly
   div.dc-role
@@ -12,9 +15,14 @@ include navigation
 article.de-host
   section.de-column.wl-container.mm-comments-embeded
     p.wl-top.wl-intro
-      span Below, you can find the Pony Foo Weekly newsletter issue #
-      span=issue.slug
-      span='. '
+      span Below, you can find the Pony Foo Weekly newsletter issue
+      span='#' + issue.slug
+      if issue.titleHtml
+        em=' \u2014 '
+        em.md-markdown.md-markdown-inline!=issue.titleHtml
+        em='. '
+      else
+        span='. '
       if issue.statusReach === 'everyone'
         span It was sent to our subscribers
       else

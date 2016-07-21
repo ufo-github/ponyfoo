@@ -17,7 +17,10 @@ article.ly-section
             li.hy-article
               span.hy-title
                 a.hy-article-link.lk-visitor-inside.lk-rainbows(href='/weekly/' + issue.slug)
-                  span.lk-visitor-target!=issue.name
+                  if issue.titleHtml
+                    span.lk-visitor-target.md-markdown.md-markdown-inline!=issue.titleHtml
+                  else
+                    span.lk-visitor-target=issue.title
               span.hy-connector
                 span!=' &mdash; published '
                 time.hy-publication(datetime=issue.publication.datetime, aria-label=issue.publication.title, data-absolute)=issue.publication.text

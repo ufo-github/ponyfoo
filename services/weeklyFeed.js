@@ -34,7 +34,7 @@ function getFeed (done) {
           next(err); return;
         }
         next(null, {
-          title: issue.name + ' \u2014 Pony Foo Weekly',
+          title: issue.computedTitle + ' \u2014 Pony Foo Weekly',
           url: authority + '/weekly/' + issue.slug,
           description: description,
           categories: weeklyService.getAllTags(issue),

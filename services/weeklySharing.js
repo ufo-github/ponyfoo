@@ -39,10 +39,10 @@ function share (issue, done) {
   function curried (key, fn) {
     return function shareVia (next) {
       if (issue[key] === false) {
-        winston.info('Sharing turned off via "%s" channel for weekly issue %s.', key, issue.name);
+        winston.info('Sharing turned off via "%s" channel for weekly %s.', key, issue.computedName);
         next(); return;
       }
-      winston.info('Sharing weekly issue %s via "%s" channel.', issue.name, key);
+      winston.info('Sharing weekly %s via "%s" channel.', issue.computedName, key);
       fn(issue, {}, next);
     };
   }
@@ -74,7 +74,7 @@ function email (issue, options, done) {
   var permalink = authority + relativePermalink;
   var issueModel = weeklyService.toView(issue);
   var model = {
-    subject: issue.name + ' \u2014 Pony Foo Weekly',
+    subject: issue.computedTitle + ' \u2014 Pony Foo Weekly',
     teaser: 'This week’s Web Platform news & inspiration',
     teaserRightHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
     headerImage: false,
@@ -107,30 +107,10 @@ function statusLink (issue) {
   return util.format('%s/weekly/%s', authority, issue.slug);
 }
 
-function randomHeadline (options) {
-  return _.sample(options.reshare ? [
-    'In case you missed it!',
-    'Read this!',
-    'Check this out!'
-  ] : [
-    'Just published!',
-    'Fresh content!',
-    'Crisp new words!',
-    'Hot off the press!',
-    'Extra! Extra!',
-    'This just out!'
-  ]);
-}
-
-function getTitle (issue) {
-  return 'Pony Foo Weekly \u2014 ' + issue.name;
-}
-
 function tweet (issue, options, done) {
-  var headline = randomHeadline(options);
   var tweetLength = 0;
   var tweetLines = [];
-  var title = getTitle(issue);
+  var title = issue.computedTitle;
   var emoji = emojiService.randomFun();
   var mail1 = emojiService.randomMailEmoji();
   var mail2 = emojiService.randomMailEmoji();
@@ -158,12 +138,12 @@ function tweet (issue, options, done) {
 }
 
 function facebook (issue, options, done) {
-  facebookService.share(getTitle(issue), statusLink(issue), done);
+  facebookService.share(issue.computedTitle, statusLink(issue), done);
 }
 
 function echojs (issue, options, done) {
   var data = {
-    title: getTitle(issue),
+    title: issue.computedTitle,
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };
   echojsService.submit(data, done);
@@ -171,7 +151,7 @@ function echojs (issue, options, done) {
 
 function hackernews (issue, options, done) {
   var data = {
-    title: getTitle(issue),
+    title: issue.computedTitle,
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };
   hackernewsService.submit(data, submitted);

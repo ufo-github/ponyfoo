@@ -38,6 +38,7 @@ function ready (viewModel, container, route) {
   var toolbox = $.findOne('.wa-toolbox', container);
   var submissions = $.findOne('.wa-submissions', container);
   var tools = $('.wa-tool', toolbox);
+  var title = $('.wa-title');
   var slug = $('.wa-slug');
   var status = $('.wa-status');
   var summaryEditor = $.findOne('.wa-summary-editor', container);
@@ -402,6 +403,7 @@ function ready (viewModel, container, route) {
   function getModel () {
     var state = released ? weeklyIssue.status : status.where(':checked').text();
     var data = {
+      title: title.value(),
       slug: sluggish(slug.value()),
       sections: $('.wa-section', editor).map(getSectionModel),
       status: state,

@@ -26,6 +26,11 @@ function compile (model, done) {
       done(err); return;
     }
     var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(slug);
+    model.titleHtml = markupService.compile(model.title, {
+      absolutize: true,
+      linkThrough: linkThrough
+    });
+    model.titleText = summaryService.summarize(model.titleHtml).text;
     model.summaryHtml = markupService.compile(model.summary, {
       absolutize: true,
       linkThrough: linkThrough
@@ -66,9 +71,13 @@ function update (options, done) {
       if (issue.status !== 'released') {
         issue.status = model.status;
       }
+      var rparagraph = /^<p>|<\/p>$/ig;
       issue.updated = Date.now();
       issue.slug = model.slug;
       issue.sections = model.sections;
+      issue.title = model.title;
+      issue.titleHtml = (model.titleHtml || '').replace(rparagraph, '');
+      issue.titleText = model.titleText;
       issue.summary = model.summary;
       issue.summaryHtml = model.summaryHtml;
       issue.summaryText = model.summaryText;
@@ -114,7 +123,9 @@ function toMetadata (doc) {
       slug: doc.author.slug,
       avatar: userService.getAvatar(doc.author)
     },
-    name: doc.name,
+    name: doc.computedName,
+    title: doc.computedTitle,
+    titleHtml: doc.titleHtml,
     slug: doc.slug,
     status: doc.status,
     statusReach: doc.statusReach,
@@ -137,7 +148,9 @@ function toMetadata (doc) {
 
 function toView (doc) {
   return commentService.hydrate({
-    name: doc.name,
+    name: doc.computedName,
+    title: doc.computedTitle,
+    titleHtml: doc.titleHtml,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication),
     status: doc.status,
@@ -149,7 +162,9 @@ function toView (doc) {
 
 function toHistory (doc) {
   return {
-    name: doc.name,
+    name: doc.computedName,
+    title: doc.computedTitle,
+    titleHtml: doc.titleHtml,
     slug: doc.slug,
     publication: datetimeService.field(doc.publication)
   };
