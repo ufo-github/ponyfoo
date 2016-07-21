@@ -12,10 +12,10 @@ var winston = require('winston');
 var htmlService = require('./html');
 var staticService = require('./static');
 var env = require('../lib/env');
-var mode = env('MAILGUN_MODE');
+var mode = env('EMAIL_MODE');
+var from = env('EMAIL_SENDER');
+var trap = env('EMAIL_TRAP');
 var apiKey = env('MAILGUN_API_KEY');
-var from = env('MAILGUN_SENDER');
-var trap = env('MAILGUN_TRAP');
 var authority = env('AUTHORITY');
 var cssFile = path.resolve(__dirname, '../.bin/static/email.css');
 var css = fs.readFileSync(cssFile, 'utf8');
@@ -52,11 +52,9 @@ var client = createClient();
 function createClient () {
   var brandedHeader = staticService.unroll('/img/banners/branded.png');
   var headerImage = path.join('.bin/public', brandedHeader);
-  var emails = mailgun({ apiKey: apiKey, authority: authority });
   var options = {
     headerImage: headerImage,
     templateEngine: templateEngine,
-    provider: emails,
     formatting: formatting,
     from: from
   };
@@ -64,6 +62,10 @@ function createClient () {
     options.trap = trap;
   } else if (mode === 'debug') { // no reason to send any emails
     options.provider = term();
+  } else if (mode === 'send') { // send emails
+    options.provider = mailgun({ apiKey: apiKey, authority: authority });
+  } else {
+    throw new Error('Expected "EMAIL_MODE" environment variable to be one of: "debug", "trap", "send".')
   }
   return campaign(options);
 }
