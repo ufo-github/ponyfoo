@@ -1,20 +1,30 @@
 'use strict';
 
-require('../preconfigure');
-require('../chdir');
+if (!module.parent) {
+  require('../preconfigure');
+  require('../chdir');
+}
 
 var mongoUri = require('mongodb-uri');
 var env = require('../lib/env');
 var uri = env('MONGO_URI');
 var parts = mongoUri.parse(uri);
 
-parts.hosts.forEach(host =>
-  host.hostname = host.host + (host.port ? `:${host.port}` : '')
-);
+parts.hosts.forEach(host => {
+  var port = host.port ? `:${host.port}` : '';
+  host.hostname = host.host + port;
+});
 
 if (!parts.username) { parts.username = ''; }
 if (!parts.password) { parts.password = ''; }
 
-var json = JSON.stringify(parts, null, 2);
+if (module.parent) {
+  module.exports = parts;
+} else {
+  print();
+}
 
-console.log(json);
+function print () {
+  var json = JSON.stringify(parts, null, 2);
+  console.log(json);
+}
