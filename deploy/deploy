@@ -117,17 +117,23 @@ aws autoscaling describe-auto-scaling-groups > deploy/log/asg-list.log
 echo "deploy: pulling down list of existing launch configurations..."
 aws autoscaling describe-launch-configurations > deploy/log/asg-lc.log
 
-EXISTING_GROUP_NAMES=$(underscore process --outfmt text "data.AutoScalingGroups.filter(function (asg) {
+EXISTING_GROUP_NAMES=$(underscore process "data.AutoScalingGroups
+.filter(function (asg) {
   return asg.AutoScalingGroupName.indexOf(\"asg-$NAME\") === 0
-}).map(function (asg) {
+})
+.map(function (asg) {
   return asg.AutoScalingGroupName
-})" < deploy/log/asg-list.log)
+})
+.join('\n')" < deploy/log/asg-list.log | jq . -r)
 
-EXISTING_LAUNCH_CONFIGURATIONS=$(underscore process --outfmt text "data.LaunchConfigurations.filter(function (lc) {
+EXISTING_LAUNCH_CONFIGURATIONS=$(underscore process "data.LaunchConfigurations
+.filter(function (lc) {
   return lc.LaunchConfigurationName.indexOf(\"lc-$NAME\") === 0
-}).map(function (lc) {
+})
+.map(function (lc) {
   return lc.LaunchConfigurationName
-})" < deploy/log/asg-lc.log)
+})
+.join('\n')" < deploy/log/asg-lc.log | jq . -r)
 
 if [ "$EXISTING_GROUP_NAMES" != "" ]
 then
@@ -177,9 +183,11 @@ test_ec2_elb_health() {
     aws autoscaling describe-auto-scaling-groups \
       --auto-scaling-group-names "$ASG_NAME" > deploy/log/asg-description.log
 
-    EC2_HEALTH=$(underscore process --outfmt text "data.AutoScalingGroups[0].Instances.filter(function (i) {
+    EC2_HEALTH=$(underscore process "data.AutoScalingGroups[0].Instances
+    .filter(function (i) {
       return i.LifecycleState === 'InService' && i.HealthStatus === 'Healthy'
-    }).length" < deploy/log/asg-description.log)
+    })
+    .length" < deploy/log/asg-description.log | jq . -r)
 
     echo " ($EC2_HEALTH/$DESIRED_CAPACITY are healthy)"
   done
@@ -194,9 +202,11 @@ test_ec2_elb_health() {
       --load-balancer-name "$ELB_NAME" \
       --instances $ELB_INSTANCES  > deploy/log/elb-health-description.log
 
-    ELB_HEALTH=$(underscore process --outfmt text "data.InstanceStates.filter(function (s) {
+    ELB_HEALTH=$(underscore process "data.InstanceStates
+    .filter(function (s) {
       return s.State === 'InService'
-    }).length" < deploy/log/elb-health-description.log)
+    })
+    .length" < deploy/log/elb-health-description.log | jq . -r)
 
     echo " ($ELB_HEALTH/$DESIRED_CAPACITY are healthy)"
   done
@@ -211,11 +221,15 @@ test_ec2_elb_health
 
 while read EXISTING_GROUP_NAME
 do
-  ASG_INSTANCES=$(underscore process --outfmt text "data.AutoScalingGroups.filter(function (asg,i) {
+  ASG_INSTANCES=$(underscore process "data.AutoScalingGroups
+  .filter(function (asg, i) {
     return asg.AutoScalingGroupName === \"$EXISTING_GROUP_NAME\"
-  }).shift().Instances.map(function (i) {
+  })
+  .shift()
+  .Instances.map(function (i) {
     return i.InstanceId
-  })" < deploy/log/asg-list.log)
+  })
+  .join('\n')" < deploy/log/asg-list.log | jq . -r)
 
   echo "deploy: removing instances in outdated $EXISTING_GROUP_NAME from $ELB_NAME..."
   aws elb deregister-instances-from-load-balancer \
@@ -236,9 +250,12 @@ do
     aws autoscaling describe-auto-scaling-groups \
       --auto-scaling-group-names "$EXISTING_GROUP_NAME" > deploy/log/asg-existing-description.log
 
-    OPERATIONAL=$(underscore process --outfmt text "data.AutoScalingGroups.filter(function (asg) {
+    OPERATIONAL=$(underscore process "data.AutoScalingGroups
+    .filter(function (asg) {
       return asg.AutoScalingGroupName === \"$EXISTING_GROUP_NAME\"
-    }).shift().Instances.length" < deploy/log/asg-existing-description.log)
+    })
+    .shift()
+    .Instances.length" < deploy/log/asg-existing-description.log | jq . -r)
 
     echo " ($OPERATIONAL are operational)"
   done
