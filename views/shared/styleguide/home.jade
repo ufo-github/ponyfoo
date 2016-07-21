@@ -1,20 +1,19 @@
 link(rel='stylesheet', type='text/css', href='/css/styleguide.css')
 
 header.sy-header
-  include ../layout/header-logo
-  nav.hn-navigation
-    ul.hn-list
-      li.hn-item
-        a.hn-link.lk-rainbows(href='#colors') Colors
-      li.hn-item
-        a.hn-link.lk-rainbows(href='#links') Links
-      li.hn-item
-        a.hn-link.lk-rainbows(href='#buttons') Buttons
-      li.hn-item
-        a.hn-link.lk-rainbows(href='#logo') Logo
+  nav.synav-container
+    ul.synav-list
+      li.synav-item
+        a.synav-link.lk-link.lk-white(href='#colors') Colors
+      li.synav-item
+        a.synav-link.lk-link.lk-white(href='#links') Links
+      li.synav-item
+        a.synav-link.lk-link.lk-white(href='#buttons') Buttons
+      li.synav-item
+        a.synav-link.lk-link.lk-white(href='#logo') Logo
 
-article.sy-container#colors
-  h1.sy-title.sy-title-red Colors
+article.sy-container.sy-container-red#colors
+  h1.sy-title Colors
 
   each section in colors
     section.sycr-section
@@ -29,8 +28,8 @@ article.sy-container#colors
                 span.sycr-color-name=profile.displayName
             - profiles = profiles.slice(4)
 
-article.sy-container#links
-  h1.sy-title.sy-title-orange Links
+article.sy-container.sy-container-orange#links
+  h1.sy-title Links
 
   ul.sy-list
     li.sy-list-item
@@ -105,8 +104,8 @@ article.sy-container#links
     li.sy-list-item
       a.lk-icon.lk-opera.fa.fa-opera(href='#links')
 
-article.sy-container#buttons
-  h1.sy-title.sy-title-purple Buttons
+article.sy-container.sy-container-purple#buttons
+  h1.sy-title Buttons
   ul.sy-list
     li.sy-list-block
       button.bt-button.bt-pink
@@ -120,8 +119,8 @@ article.sy-container#buttons
       button.bt-button.bt-red
         span.bt-text A red button element
 
-article.sy-container#logo
-  h1.sy-title.sy-title-yellow Logo
+article.sy-container.sy-container-yellow#logo
+  h1.sy-title Logo
 
   ul.sy-list
     li.sy-list-item

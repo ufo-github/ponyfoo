@@ -3,23 +3,24 @@
 var $ = require('dominus');
 var taunus = require('taunus');
 var isElementInViewport = require('../lib/isElementInViewport');
-var logo = $('.go-anchor');
-var loader = logo
+var logo = $.findOne('.go-anchor');
+var $logo = $(logo);
+var loader = $logo
   .clone()
   .appendTo(document.body)
   .addClass('ll-loading')
   .addClass('gg-continuous');
 
 function show () {
-  var justLogo = isElementInViewport(logo[0], false);
+  var justLogo = isElementInViewport(logo, false);
   if (!justLogo) {
     loader.addClass('ll-show');
   }
-  logo.addClass('gg-continuous');
+  $logo.addClass('gg-continuous');
 }
 
 function hide () {
-  logo.removeClass('gg-continuous');
+  $logo.removeClass('gg-continuous');
   loader.removeClass('ll-show');
 }
 

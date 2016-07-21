@@ -46,6 +46,7 @@ module.exports = [
   { route: '/contributors', action: 'marketing/contributors' },
   { route: '/contributors/join-us', action: 'marketing/join-us' },
   { route: '/contributors/:slug', action: 'marketing/contributor' },
+  { route: '/styleguide', action: 'styleguide/home' },
   { route: '/about', action: 'marketing/about' },
   { route: '/speaking', action: 'speaking/home' },
   { route: '/speaking/review', action: 'author/engagements', middleware: ownerOnly },

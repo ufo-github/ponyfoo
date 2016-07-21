@@ -10,7 +10,10 @@
     content ''
     display block
     border-bottom 10px dashed rgba(c-black, 0.2)
-    margin 100px 0
+    margin 160px 0 40px
+    opacity 0.2
+  &:last-child:after
+    content none
 
 .sy-list
   display block
@@ -30,21 +33,33 @@
   padding 10px 20px
   border-bottom 10px solid rgba(c-black, 0.2)
 
-.sy-title-orange
-  background-color c-dark-orange
-  color c-white
+.sy-container-orange
+  &:after
+      border-bottom-color c-dark-orange
+  .sy-title
+    background-color c-dark-orange
+    color c-white
 
-.sy-title-purple
-  background-color c-purple
-  color c-white
+.sy-container-purple
+  &:after
+      border-bottom-color c-purple
+  .sy-title
+    background-color c-purple
+    color c-white
 
-.sy-title-yellow
-  background-color c-yellow-highlight
-  color c-black-text
+.sy-container-yellow
+  &:after
+      border-bottom-color c-yellow-highlight
+  .sy-title
+    background-color c-yellow-highlight
+    color c-black-text
 
-.sy-title-red
-  background-color c-red
-  color c-white
+.sy-container-red
+  &:after
+      border-bottom-color c-red
+  .sy-title
+    background-color c-red
+    color c-white
 
 @media screen and (min-width: 500px)
   .sy-list-item

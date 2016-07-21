@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var assign = require('assignment');
 var layoutView = require('../.bin/views/server/layout/layout');
 var getDefaultViewModel = require('../controllers/getDefaultViewModel');
@@ -22,7 +23,8 @@ function render (action, model, done) {
 
   function tryRequire () {
     try {
-      return require('../.bin/views/shared/' + action);
+      var compiledViewFile = path.resolve('.bin/views/shared/', action);
+      return require(compiledViewFile);
     } catch (err) {
       done(err);
     }

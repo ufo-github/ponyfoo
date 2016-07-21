@@ -173,6 +173,7 @@
     "errorhandler": "1.0.1",
     "gzip-size": "1.0.0",
     "gzip-size-cli": "1.0.0",
+    "html-inline": "1.2.0",
     "jshint": "2.9.2",
     "jshint-stylish": "1.0.2",
     "minimist": "1.2.0",

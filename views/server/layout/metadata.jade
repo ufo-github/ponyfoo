@@ -1,7 +1,8 @@
-if rss
-  link(rel='alternate', type='application/rss+xml', href=rss)
+if !leanLayout
+  if rss
+    link(rel='alternate', type='application/rss+xml', href=rss)
 
-link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.authority + '/opensearch.xml')
+  link(rel='search', type='application/opensearchdescription+xml', title='Pony Foo', href=model.authority + '/opensearch.xml')
 
 if model.meta.canonical
   link(rel='canonical', href=model.authority + model.meta.canonical)
