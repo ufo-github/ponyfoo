@@ -1,12 +1,12 @@
 'use strict';
 
-var version = 'v26::';
-var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
-var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
-var env = require('../../lib/env');
+var version = 'v27::';
 var swivel = require('swivel');
 var parse = require('omnibox/querystring').parse;
+var env = require('../../lib/env');
 var sw = require('./lib/sw');
+var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
+var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
 var offlineFundamentals = [
   '/',
   '/offline',
@@ -40,6 +40,9 @@ var fetchfirstsuffixes = [
 var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
 var rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
 var rfetchfirstsuffixes = new RegExp('\/(' + fetchfirstsuffixes.join('|') + ')($)', 'i');
+
+require('sw-offline-google-analytics');
+goog.offlineGoogleAnalytics.initialize();
 
 self.addEventListener('install', installer);
 self.addEventListener('activate', activator);
