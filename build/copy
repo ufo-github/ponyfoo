@@ -8,15 +8,27 @@ mkdir -p .bin/{uploads,public/img/{banners,logos},inlined,static}
 cp -r client/img .bin/public
 cp -r resources/banners/generated/*.png .bin/public/img/banners
 cp -r resources/logos/generated/touch-icons/*.png .bin/public
-cp -r resources/logos/generated/icons/favicon-*.png .bin/public
 cp -r resources/logos/generated/icons/mask-*.svg .bin/public
 cp -r resources/logos/generated/icons/{mstile,android}-*.png .bin/public
 cp -r resources/logos/generated/{text,icons}/*.{png,svg} .bin/public/img/logos
+
 cp -r client/js/inline .bin
 cp -r client/js/static/*.js .bin/public/js
+
 cp -r node_modules/font-awesome-stylus/fonts .bin/public
-cp client/*.{ico,txt,json,xml} .bin/public
+
+cp client/*.{txt,json,xml} .bin/public
 rm -rf .bin/public/img/icons
+
+cp resources/logos/generated/icons/favicon-*.$NODE_ENV.png .bin/public
+
+# drop .development, .staging, .production from filename
+for filename in .bin/public/favicon-*.$NODE_ENV.png; do
+  [ -f "$filename" ] || continue
+  mv $filename ${filename//.$NODE_ENV/}
+done
+
+cp client/favicon.$NODE_ENV.ico .bin/public/favicon.ico
 
 # secret
 echo $RANDOM$RANDOM$RANDOM$RANDOM$RANDOM$RANDOM > .bin/secret
