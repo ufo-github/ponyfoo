@@ -1,1 +1,6 @@
-include ../../../resources/logos/original
+if model.environment === 'development'
+  include ../../../resources/logos/random
+else if model.environment === 'staging'
+  include ../../../resources/logos/random-two
+else
+  include ../../../resources/logos/original

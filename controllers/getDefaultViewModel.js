@@ -4,6 +4,7 @@ var fs = require('fs');
 var contra = require('contra');
 var pkg = require('../package.json');
 var env = require('../lib/env');
+var nodeEnv = env('NODE_ENV');
 var authority = env('AUTHORITY');
 var ownerEmail = env('OWNER_EMAIL');
 var staticService = require('../services/static');
@@ -36,6 +37,7 @@ function getDefaultViewModel (done) {
       },
       description: '',
       model: {
+        environment: nodeEnv,
         authority: authority,
         title: 'Pony Foo \u2014 JavaScript consulting, modularity, front-end architecture, performance, and more. Authored by Nicolás Bevacqua',
         pkg: {
