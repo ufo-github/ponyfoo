@@ -28,7 +28,7 @@ function share (issue, done) {
   if (done === void 0) {
     done = noop;
   }
-  // NOTE: for weekly newsletters, sharing does not include emails.
+  // NOTE: for weekly newsletters, sharing is two-step: first .email, then .share.
   contra.concurrent([
     curried('tweet', tweet),
     curried('fb', facebook),
@@ -74,7 +74,7 @@ function email (issue, options, done) {
   var permalink = authority + relativePermalink;
   var issueModel = weeklyService.toView(issue);
   var model = {
-    subject: issue.computedTitle + ' \u2014 Pony Foo Weekly',
+    subject: issue.computedTitle + ' \u2014 Pony Foo Weekly #' + issue.slug,
     teaser: 'This week’s Web Platform news & inspiration',
     teaserRightHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
     headerImage: false,

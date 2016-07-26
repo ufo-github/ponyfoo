@@ -47,27 +47,56 @@ var templateEngine = {
   render: renderTemplate,
   renderString: renderTemplateString
 };
+var modes = {
+  debug: configureDebug,
+  trap: configureTrap,
+  send: configureSend
+};
 var client = createClient();
 
 function createClient () {
+  var options = configureClient();
+  return campaign(options);
+}
+
+function configureClient () {
   var brandedHeader = staticService.unroll('/img/banners/branded.png');
   var headerImage = path.join('.bin/public', brandedHeader);
-  var options = {
+  var defaults = {
     headerImage: headerImage,
     templateEngine: templateEngine,
     formatting: formatting,
     from: from
   };
-  if (mode === 'trap') { // staging environments should trap emails
-    options.trap = trap;
-  } else if (mode === 'debug') { // no reason to send any emails
-    options.provider = term();
-  } else if (mode === 'send') { // send emails
-    options.provider = mailgun({ apiKey: apiKey, authority: authority });
-  } else {
+  if (!modes.hasOwnProperty(mode)) {
     throw new Error('Expected "EMAIL_MODE" environment variable to be one of: "debug", "trap", "send".');
   }
-  return campaign(options);
+  var configureMode = modes[mode];
+  var modeConfiguration = configureMode();
+  return assign(defaults, modeConfiguration);
+}
+
+function configureDebug () {
+  return {
+    provider: term()
+  };
+}
+
+function configureTrap () {
+  return {
+    trap: trap,
+    provider: createSendProvider()
+  };
+}
+
+function configureSend () {
+  return {
+    provider: createSendProvider()
+  };
+}
+
+function createSendProvider () {
+  return mailgun({ apiKey: apiKey, authority: authority });
 }
 
 function send (type, model, done) {

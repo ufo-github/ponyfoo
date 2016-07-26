@@ -21,6 +21,9 @@ cp client/*.{txt,json,xml} .bin/public
 rm -rf .bin/public/img/icons
 
 cp resources/logos/generated/icons/favicon-*.$NODE_ENV.png .bin/public
+cp \
+  node_modules/sw-offline-google-analytics/offline-google-analytics-import.js \
+  .bin/public/js/sw-offline-google-analytics.js
 
 # drop .development, .staging, .production from filename
 for filename in .bin/public/favicon-*.$NODE_ENV.png; do

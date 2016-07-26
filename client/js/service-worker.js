@@ -1,6 +1,6 @@
 'use strict';
 
-var version = 'v27::';
+var version = 'v28::';
 var swivel = require('swivel');
 var parse = require('omnibox/querystring').parse;
 var env = require('../../lib/env');
@@ -41,7 +41,7 @@ var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 
 var rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
 var rfetchfirstsuffixes = new RegExp('\/(' + fetchfirstsuffixes.join('|') + ')($)', 'i');
 
-require('sw-offline-google-analytics');
+importScripts('/js/sw-offline-google-analytics.js');
 goog.offlineGoogleAnalytics.initialize();
 
 self.addEventListener('install', installer);
