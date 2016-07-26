@@ -1,6 +1,6 @@
 'use strict';
 
-var version = 'v28::';
+var version = 'v29::';
 var swivel = require('swivel');
 var parse = require('omnibox/querystring').parse;
 var env = require('../../lib/env');

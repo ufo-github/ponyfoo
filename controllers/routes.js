@@ -54,6 +54,7 @@ module.exports = [
   { route: '/opensource', action: 'opensource/home' },
   { route: '/opensource/review', action: 'author/oss', middleware: ownerOnly },
   { route: '/opensource/new', action: 'author/oss-new', middleware: ownerOnly },
+  { route: '/slack', action: 'marketing/slack' },
   { route: '/books', action: 'books/home' },
   { route: '/books/javascript-application-design', action: 'books/javascript-application-design' },
   { route: '/presentations', action: 'speaking/presentations' },

@@ -1,0 +1,11 @@
+header.dc-header
+  h1.dc-heading Join The Conversation!
+  div.dc-role All things web are waiting to be discussed on the Internet!
+
+section.de-host
+  div.de-column.de-column-padded
+    div.md-markdown!=slackHtml
+    div.sk-frame-container
+      iframe.sk-frame.iframe-fit-content(src=slackFrameUrl)
+
+  include ../partials/aside

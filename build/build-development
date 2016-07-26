@@ -14,6 +14,7 @@ browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug &
 
 # compile
 stylus client/css/all.styl -o .bin/public/css --include-css --include client/css --watch &
+stylus client/css/slackin.styl -o .bin/public/css --include-css --include client/css --watch &
 stylus client/css/email.styl -o .bin/static --include-css --include client/css --watch &
 stylus client/css/article.styl -o .bin/static --include-css --include client/css --watch &
 stylus client/css/newsletter-rss.styl -o .bin/static --include-css --include client/css --watch &

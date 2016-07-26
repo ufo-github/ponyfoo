@@ -41,11 +41,13 @@ uglifyjs_alone() {
 
 # compile assets, routes
 stylus client/css/all.styl -o $DIST/css --include-css --include client/css --compress
+stylus client/css/slackin.styl -o .bin/public/css --include-css --include client/css --compress
 stylus client/css/email.styl -o .bin/static --include-css --include client/css --compress
 stylus client/css/article.styl -o .bin/static --include-css --include client/css --compress
 stylus client/css/newsletter-rss.styl -o .bin/static --include-css --include client/css --compress
 stylus client/css/newsletter-email.styl -o .bin/static --include-css --include client/css --compress
 cleancss $ALL_CSS -o $ALL_CSS --s0
+cleancss .bin/public/css/slackin.css -o .bin/public/css/slackin.css --s0
 cleancss .bin/static/email.css -o .bin/static/email.css --s0
 cleancss .bin/static/article.css -o .bin/static/article.css --s0
 cleancss .bin/static/newsletter-rss.css -o .bin/static/newsletter-rss.css --s0

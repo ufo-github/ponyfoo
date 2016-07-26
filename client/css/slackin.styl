@@ -1,0 +1,59 @@
+@import 'reset'
+@import 'variables/fonts'
+@import 'variables/colors'
+@import 'variables/sizes'
+@import 'variables/z'
+@import 'variables/mixins'
+@import 'browsers/col-cross-browser-outlines'
+@import 'design/tags'
+@import 'design/core'
+@import 'design/pseudo'
+@import 'design/placeholder'
+@import 'design/input'
+@import 'design/link'
+@import 'design/fonts'
+@import 'layout/core'
+@import 'layout/heading'
+@import 'components/bt-buttons'
+
+html
+  .splash
+    margin 0
+    width inherit
+
+  .active
+    color c-dark-turquoise
+
+  .logo.org:after
+    width 100%
+
+  input
+    border none
+    border-radius none
+    &:focus
+      color inherit
+      col-outline(c-dark-turquoise)
+
+  button
+    bt-button()
+    bt-text()
+    text-transform none
+    font-family f-subheading
+    background-color c-dark-turquoise
+    &:active
+      outline-color c-dark-turquoise
+    &:hover
+      background-color lighten(c-dark-turquoise, 10%)
+    &:not(.disabled):active
+      background-color c-bright-turquoise
+    &.success:disabled
+      color c-white !important
+
+  p.signin
+    text-transform capitalize
+    a
+      text-transform none
+      lk-link()
+
+footer
+  display none
