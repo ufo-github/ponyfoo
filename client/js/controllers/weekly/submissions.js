@@ -76,11 +76,10 @@ function ready (viewModel, container, route) {
   if (editing) {
     updatePreview();
   } else {
+    contactName.value(ls.get(submissionNameStorageKey) || '');
+    contactEmail.value(ls.get(submissionEmailStorageKey) || '');
     revealLinkDataAfterScraping();
   }
-
-  contactName.value(ls.get(submissionNameStorageKey) || '');
-  contactEmail.value(ls.get(submissionEmailStorageKey) || '');
 
   function onTypeInputSelected (e) {
     var el = $(e.target);
