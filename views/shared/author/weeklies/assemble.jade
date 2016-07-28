@@ -1,89 +1,97 @@
+mixin actions
+  if editing
+    a.lk-rainbows.wa-cancel(aria-label='Back to list of weeklies', href='/weekly/review') Cancel
+  a.lk-rainbows.wa-discard(aria-label='Your draft will be permanently deleted') Discard Draft
+  span(aria-label='Save this ')
+    button.bt-button.bt-pink.wa-save(type='submit')
+      span.bt-text Save
+
 article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
     h1.vw-title Newsletter Assembler
 
-    article.wa-main
-      a.wa-scraper.lk-icon.fa.fa-barcode(aria-label='Toggle link auto-scraping using this button')
-      a.wa-toggle-sections.wa-toggler.lk-icon.fa.fa-adjust(aria-label='Toggle link sections using this button')
-      div.wa-summary-editor
-        textarea.wa-summary.wk-textarea(placeholder='Enter your Markdown summary section here')!=issue.summary
+    div
+      article.wa-main
+        a.wa-scraper.lk-icon.fa.fa-barcode(aria-label='Toggle link auto-scraping using this button')
+        a.wa-toggle-sections.wa-toggler.lk-icon.fa.fa-adjust(aria-label='Toggle link sections using this button')
+        section.wa-summary-editor
+          textarea.wa-summary.wk-textarea(placeholder='Enter your Markdown summary section here')!=issue.summary
 
-      div.wa-editor
-        each section in issue.sections
-          if section.type === 'header'
-            include tool-header
-          else if section.type === 'markdown'
-            include tool-markdown
-          else if section.type === 'link'
-            include tool-link
-          else if section.type === 'styles'
-            include tool-styles
+        section.wa-editor
+          each section in issue.sections
+            if section.type === 'header'
+              include tool-header
+            else if section.type === 'markdown'
+              include tool-markdown
+            else if section.type === 'link'
+              include tool-link
+            else if section.type === 'styles'
+              include tool-styles
 
-      input.wa-title(value=issue.title, placeholder='Title used to refer to this weekly issue')
-      input.wa-slug(value=issue.slug, placeholder='Slug used to refer to this weekly issue')
+        input.wa-title(value=issue.title, placeholder='Title used to refer to this weekly issue')
+        input.wa-slug(value=issue.slug, placeholder='Slug used to refer to this weekly issue')
 
-      div.wa-preview
+      aside.wa-aside
+        div.wa-toolbox.gu-candidate
+          div.wa-tool.wa-tool-yellow(data-tool='header')
+            i.fa.fa-header
+            span=' Header'
+          div.wa-tool.wa-tool-yellow(data-tool='markdown')
+            i.fa.fa-keyboard-o
+            span=' Markdown'
+          div.wa-tool.wa-tool-yellow(data-tool='link')
+            i.fa.fa-anchor
+            span=' Link'
+          div.wa-tool.wa-tool-yellow(data-tool='styles')
+            i.fa.fa-object-group
+            span=' Styles'
+
+        if submissions.length
+          div.wa-submissions-container
+            header.wa-tool.wa-submissions-header
+              i.fa.fa-list-alt
+              span=' Submissions'
+            ul.wa-submissions.gu-candidate
+              each submission in submissions
+                li.wa-tool.wa-tool-purple(data-id=submission.id)
+                  i.fa.fa-dot-circle-o
+                  span=' '
+                  div.md-markdown.md-markdown-inline!=submission.section.titleHtml
+
+        if issue.status !== 'released'
+          p You can save the weekly issue as a draft, or mark it ready for release
+          p.wa-timing-item
+            input.ck-input.wa-status#wa-draft-radio(type='radio', name='wa-status', value='draft', checked=issue.status === 'draft')
+            label.ck-radio(for='wa-draft-radio') Draft
+          p.wa-timing-item
+            input.ck-input.wa-status#wa-ready-radio(type='radio', name='wa-status', value='ready', checked=issue.status === 'ready' || issue.status === void 0)
+            label.ck-radio(for='wa-ready-radio') Ready
+
+          p What mediums do you want to use to promote the weekly newsletter?
+          p.wa-campaign-item
+            input.ck-input#wa-campaign-email(type='checkbox', checked=issue.email !== false)
+            label.ck-checkbox(for='wa-campaign-email') Send an email
+          p.wa-campaign-item
+            input.ck-input#wa-campaign-tweet(type='checkbox', checked=issue.tweet !== false)
+            label.ck-checkbox(for='wa-campaign-tweet') Post a Tweet
+          p.wa-campaign-item
+            input.ck-input#wa-campaign-fb(type='checkbox', checked=issue.fb !== false)
+            label.ck-checkbox(for='wa-campaign-fb') Share on Facebook
+          p.wa-campaign-item
+            input.ck-input#wa-campaign-echojs(type='checkbox', checked=!!issue.echojs)
+            label.ck-checkbox(for='wa-campaign-echojs') Submit to EchoJS
+          p.wa-campaign-item
+            input.ck-input#wa-campaign-hn(type='checkbox', checked=!!issue.hn)
+            label.ck-checkbox(for='wa-campaign-hn') Submit to Hacker News
+
+      footer.wa-actions
+        +actions
+
+    div
+      section.wa-preview
         include ../../partials/newsletter-issue
 
-    aside.wa-aside
-      div.wa-toolbox.gu-candidate
-        div.wa-tool.wa-tool-yellow(data-tool='header')
-          i.fa.fa-header
-          span=' Header'
-        div.wa-tool.wa-tool-yellow(data-tool='markdown')
-          i.fa.fa-keyboard-o
-          span=' Markdown'
-        div.wa-tool.wa-tool-yellow(data-tool='link')
-          i.fa.fa-anchor
-          span=' Link'
-        div.wa-tool.wa-tool-yellow(data-tool='styles')
-          i.fa.fa-object-group
-          span=' Styles'
-
-      if submissions.length
-        div.wa-submissions-container
-          header.wa-tool.wa-submissions-header
-            i.fa.fa-list-alt
-            span=' Submissions'
-          ul.wa-submissions.gu-candidate
-            each submission in submissions
-              li.wa-tool.wa-tool-purple(data-id=submission.id)
-                i.fa.fa-dot-circle-o
-                span=' '
-                div.md-markdown.md-markdown-inline!=submission.section.titleHtml
-
-      if issue.status !== 'released'
-        p You can save the weekly issue as a draft, or mark it ready for release
-        p.wa-timing-item
-          input.ck-input.wa-status#wa-draft-radio(type='radio', name='wa-status', value='draft', checked=issue.status === 'draft')
-          label.ck-radio(for='wa-draft-radio') Draft
-        p.wa-timing-item
-          input.ck-input.wa-status#wa-ready-radio(type='radio', name='wa-status', value='ready', checked=issue.status === 'ready' || issue.status === void 0)
-          label.ck-radio(for='wa-ready-radio') Ready
-
-        p What mediums do you want to use to promote the weekly newsletter?
-        p.wa-campaign-item
-          input.ck-input#wa-campaign-email(type='checkbox', checked=issue.email !== false)
-          label.ck-checkbox(for='wa-campaign-email') Send an email
-        p.wa-campaign-item
-          input.ck-input#wa-campaign-tweet(type='checkbox', checked=issue.tweet !== false)
-          label.ck-checkbox(for='wa-campaign-tweet') Post a Tweet
-        p.wa-campaign-item
-          input.ck-input#wa-campaign-fb(type='checkbox', checked=issue.fb !== false)
-          label.ck-checkbox(for='wa-campaign-fb') Share on Facebook
-        p.wa-campaign-item
-          input.ck-input#wa-campaign-echojs(type='checkbox', checked=!!issue.echojs)
-          label.ck-checkbox(for='wa-campaign-echojs') Submit to EchoJS
-        p.wa-campaign-item
-          input.ck-input#wa-campaign-hn(type='checkbox', checked=!!issue.hn)
-          label.ck-checkbox(for='wa-campaign-hn') Submit to Hacker News
-
-    footer.wa-actions
-      if editing
-        a.lk-rainbows.wa-cancel(aria-label='Back to list of weeklies', href='/weekly/review') Cancel
-      a.lk-rainbows.wa-discard(aria-label='Your draft will be permanently deleted') Discard Draft
-      span(aria-label='Save this ')
-        button.bt-button.bt-pink.wa-save(type='submit')
-          span.bt-text Save
+      footer.wa-actions
+        +actions
 
   include ../../partials/aside

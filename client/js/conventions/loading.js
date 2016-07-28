@@ -8,6 +8,7 @@ var $logo = $(logo);
 var loader = $logo
   .clone()
   .appendTo(document.body)
+  .removeClass('go-anchor')
   .addClass('ll-loading')
   .addClass('gg-continuous');
 

@@ -1,3 +1,11 @@
+mixin actions
+  if editing
+    a.lk-rainbows.ac-cancel(aria-label='Back to article review list', href='/articles/review') Cancel
+  a.lk-rainbows.ac-discard(aria-label='Your draft will be permanently deleted') Discard Draft
+  span(aria-label='Make the content immediately accessible!')
+    button.bt-button.bt-pink.ac-save(type='submit')
+      span.bt-text Publish
+
 - userIsEditor = roles.owner || roles.editor
 article.ly-section.vw-maintainer.de-host.uv-clearfix
   section.vw-maintainer-content.de-column
@@ -18,6 +26,8 @@ article.ly-section.vw-maintainer.de-host.uv-clearfix
         textarea.wk-textarea.ac-text.ac-summary(placeholder='Short summary of the article. Used exclusively in list views.')=article.summary
       div.ac-tags-container
         input.ac-tags.nsg-target-input(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
+    footer.ac-actions.ac-actions-after-composer
+      +actions
 
   - publication = article.publication ? moment(article.publication) : moment().add(1, 'days')
   - publicationFormat = 'DD-MM-YYYY HH:mm'
@@ -70,12 +80,7 @@ article.at-container.de-host
       section.md-markdown.ac-preview-introduction.at-introduction
       section.md-markdown.ac-preview-body.at-body
 
-    footer.ac-actions
-      if editing
-        a.lk-rainbows.ac-cancel(aria-label='Back to list of articles', href='/articles/review') Cancel
-      a.lk-rainbows.ac-discard(aria-label='Your draft will be permanently deleted') Discard Draft
-      span(aria-label='Make the content immediately accessible!')
-        button.bt-button.bt-pink.ac-save(type='submit')
-          span.bt-text Publish
+    footer.ac-actions.ac-actions-after-preview
+      +actions
 
   include ../../partials/aside
