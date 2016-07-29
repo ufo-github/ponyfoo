@@ -39,9 +39,31 @@ function query (input, options, done) {
     }
 
     function findSubset (err, results) {
-      var ids = _.pluck(results, '_id');
+      var scoreCard = results.reduce(toScoreCard, {});
+      var ids = Object.keys(scoreCard);
       var query = { _id: { $in: ids } };
-      articleService.find(query, options, next);
+      options.sort = false;
+      articleService.find(query, options, sortByElasticsearchScore);
+
+      function toScoreCard (card, result) {
+        card[result._id] = result._score;
+        return card;
+      }
+
+      function sortByElasticsearchScore (err, articles) {
+        if (err) {
+          next(err); return;
+        }
+        next(null, articles.sort(byElasticsearchScore));
+      }
+
+      function byElasticsearchScore (left, right) {
+        return getScore(right) - getScore(left);
+      }
+
+      function getScore (article) {
+        return scoreCard[article._id];
+      }
     }
 
     function findAll () {

@@ -51,7 +51,14 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var profile = userService.getProfile(user, { withBio: true });
+    var active = userService.isActive(user, { articleCount: articles.count });
+    if (!active) {
+      next('route'); return;
+    }
+    var profile = userService.getProfile(user, {
+      withBio: true,
+      articleCount: articles.count
+    });
     res.viewModel = {
       model: {
         title: user.displayName + ' \u2014 Pony Foo',

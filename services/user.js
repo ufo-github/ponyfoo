@@ -18,7 +18,7 @@ function getProfile (user, options) {
     avatar: getAvatar(user),
     displayName: user.displayName,
     slug: user.slug,
-    role: humanReadableRole(user.roles),
+    role: humanReadableRole(user.roles, options.articleCount !== 0),
     twitter: user.twitter,
     website: user.website
   };
@@ -38,9 +38,9 @@ function getAvatar (user) {
   return 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=24';
 }
 
-function humanReadableRole (roles) {
+function humanReadableRole (roles, hasPublishedArticles) {
   var terms = [];
-  if (roles.indexOf('articles') !== -1) {
+  if (roles.indexOf('articles') !== -1 && hasPublishedArticles) {
     terms.push('Contributing Author');
   }
   if (roles.indexOf('moderator') !== -1) {
@@ -108,6 +108,16 @@ function hasRole (user, roles) {
   }
 }
 
+function isActive (user, options) {
+  var roles = user.roles;
+  var singleRole = roles.length === 1;
+  var articleUser = singleRole && roles[0] === 'articles';
+  if (articleUser && options && options.articleCount === 0) {
+    return false;
+  }
+  return true;
+}
+
 module.exports = {
   findById: findById,
   findOne: findOne,
@@ -116,5 +126,6 @@ module.exports = {
   setPassword: setPassword,
   getProfile: getProfile,
   getAvatar: getAvatar,
-  hasRole: hasRole
+  hasRole: hasRole,
+  isActive: isActive
 };
