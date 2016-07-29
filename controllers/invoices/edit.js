@@ -50,7 +50,7 @@ module.exports = function (req, res, next) {
           meta: {
             canonical: '/invoices' + canonical
           },
-          invoice: invoiceModelService.generateModel(invoice),
+          invoice: invoice,
           editing: !!slug,
           parties: parties
         }

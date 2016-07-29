@@ -191,9 +191,9 @@ function notifyAccepted (submission, done) {
         var filepath = path.join(tmpdir, util.format('%s.%s.pdf', invoiceSlug, getRandomCode()));
         var options = {
           base: authority,
-          border: '40px',
-          width: '1440px',
-          height: '1200px'
+          border: '20px',
+          width: '1380px',
+          height: '840px'
         };
         pdf.create(html, options).toFile(filepath, generated);
         function generated (err) {
