@@ -3,7 +3,6 @@
 var _ = require('lodash');
 var but = require('but');
 var util = require('util');
-var contra = require('contra');
 var env = require('../lib/env');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
@@ -16,30 +15,6 @@ var markupService = require('./markup');
 var User = require('../models/User');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_ARTICLES');
-
-function noop () {}
-
-function share (article, done) {
-  if (done === void 0) {
-    done = noop;
-  }
-  contra.concurrent([
-    curried('email', email),
-    curried('tweet', tweet),
-    curried('fb', facebook),
-    curried('echojs', echojs),
-    curried('hn', hackernews)
-  ], done);
-
-  function curried (key, fn) {
-    return function shareVia (next) {
-      if (article[key] === false) {
-        next(); return;
-      }
-      fn(article, {}, next);
-    };
-  }
-}
 
 function emailSelf (article, options, done) {
   if (!options.userId) {
@@ -194,7 +169,6 @@ function hackernews (article, options, done) {
 }
 
 module.exports = {
-  share: share,
   'email-self': emailSelf,
   email: email,
   twitter: tweet,

@@ -6,6 +6,7 @@ var correcthorse = require('correcthorse');
 var WeeklyIssue = require('../models/WeeklyIssue');
 var weeklyService = require('./weekly');
 var weeklyFeedService = require('./weeklyFeed');
+var weeklySubscriberService = require('./weeklySubscriber');
 var weeklySharingService = require('./weeklySharing');
 var settingService = require('./setting');
 
@@ -167,7 +168,7 @@ function run (done) {
         end(err); return;
       }
       winston[level]('Weekly "%s" being shared via social media.', issue.slug);
-      weeklySharingService.share(issue, end);
+      weeklySubscriberService.share(issue, end);
     }
   }
   function recompileAndSave (issue, done) {

@@ -51,13 +51,16 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var active = userService.isActive(user, { articleCount: articles.count });
+    var contributor = {
+      user: user,
+      articleCount: articles.count
+    };
+    var active = userService.isActive(contributor);
     if (!active) {
       next('route'); return;
     }
-    var profile = userService.getProfile(user, {
-      withBio: true,
-      articleCount: articles.count
+    var profile = userService.getProfile(contributor, {
+      withBio: true
     });
     res.viewModel = {
       model: {

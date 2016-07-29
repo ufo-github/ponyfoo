@@ -3,7 +3,7 @@
 var contra = require('contra');
 var winston = require('winston');
 var Article = require('../../../models/Article');
-var articleSharingService = require('../../../services/articleSharing');
+var articleSubscriberService = require('../../../services/articleSubscriber');
 var articlePublishService = require('../../../services/articlePublish');
 var userService = require('../../../services/user');
 var respond = require('../lib/respond');
@@ -49,7 +49,7 @@ module.exports = function (req, res, next) {
         if (err) {
           winston.warn('Error populating before article can be shared.', err); return;
         }
-        articleSharingService.share(model);
+        articleSubscriberService.share(model);
       }
     }
   ], function response (err) {

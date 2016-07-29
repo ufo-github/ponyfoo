@@ -1,28 +1,28 @@
 'use strict';
 
-var contra = require('contra');
 var Subscriber = require('../../../../models/Subscriber');
 var cryptoService = require('../../../../services/crypto');
 
 function unfold (req, res, done) {
   var hash = req.params.hash;
   var id = hash.substr(0, 24);
-  var email = hash.substr(24);
+  var emailHash = hash.substr(24);
+  var query = { _id: id };
 
-  contra.waterfall([findExisting, validateThenRemove], done);
+  Subscriber.findOne(query, found);
 
-  function findExisting (next) {
-    Subscriber.findOne({ _id: id }, next);
-  }
-
-  function validateThenRemove (subscriber, next) {
+  function found (err, subscriber) {
+    if (err) {
+      done(err); return;
+    }
     if (!subscriber) {
-      next(null, null); return;
+      done(null, null); return;
     }
-    if (cryptoService.md5(subscriber.email) !== email) {
-      next(null, null); return;
+    var emailHashExpectation = cryptoService.md5(subscriber.email);
+    if (emailHashExpectation !== emailHash) {
+      done(null, null); return;
     }
-    next(null, subscriber.email);
+    done(null, subscriber);
   }
 }
 

@@ -4,8 +4,6 @@ var _ = require('lodash');
 var fs = require('fs');
 var but = require('but');
 var util = require('util');
-var contra = require('contra');
-var winston = require('winston');
 var env = require('../lib/env');
 var subscriberService = require('./subscriber');
 var textService = require('./text');
@@ -21,32 +19,6 @@ var User = require('../models/User');
 var authority = env('AUTHORITY');
 var card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
 var css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
-
-function noop () {}
-
-function share (issue, done) {
-  if (done === void 0) {
-    done = noop;
-  }
-  // NOTE: for weekly newsletters, sharing is two-step: first .email, then .share.
-  contra.concurrent([
-    curried('tweet', tweet),
-    curried('fb', facebook),
-    curried('echojs', echojs),
-    curried('hn', hackernews)
-  ], done);
-
-  function curried (key, fn) {
-    return function shareVia (next) {
-      if (issue[key] === false) {
-        winston.info('Sharing turned off via "%s" channel for weekly %s.', key, issue.computedName);
-        next(); return;
-      }
-      winston.info('Sharing weekly %s via "%s" channel.', issue.computedName, key);
-      fn(issue, {}, next);
-    };
-  }
-}
 
 function emailSelf (issue, options, done) {
   if (!options.userId) {
@@ -74,7 +46,7 @@ function email (issue, options, done) {
   var permalink = authority + relativePermalink;
   var issueModel = weeklyService.toView(issue);
   var model = {
-    subject: issue.computedTitle + ' \u2014 Pony Foo Weekly #' + issue.slug,
+    subject: issue.computedPageTitle,
     teaser: 'This week’s Web Platform news & inspiration',
     teaserRightHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
     headerImage: false,
@@ -162,7 +134,6 @@ function hackernews (issue, options, done) {
 }
 
 module.exports = {
-  share: share,
   'email-self': emailSelf,
   email: email,
   twitter: tweet,

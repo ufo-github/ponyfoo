@@ -2,6 +2,7 @@
 
 var contra = require('contra');
 var subscriberService = require('../../../services/subscriber');
+var weeklySubscriberService = require('../../../services/weeklySubscriber');
 var unfold = require('./lib/unfold');
 
 function remove (req, res, next) {
@@ -13,20 +14,49 @@ function remove (req, res, next) {
     confirm
   ], respond);
 
-  function confirm (email, next) {
-    if (Array.isArray(topics)) {
-      subscriberService.confirmTopics(email, topics, next);
+  function confirm (subscriber, next) {
+    if (!subscriber) {
+      next(null, false); return;
+    }
+    var allTopics = !Array.isArray(topics);
+    var proceed = shouldPeekAtNewsletter() ? peekAtNewsletter : noPeeking;
+    if (allTopics) {
+      subscriberService.confirm(subscriber.email, proceed);
     } else {
-      subscriberService.confirm(email, next);
+      subscriberService.confirmTopics(subscriber.email, topics, proceed);
+    }
+
+    function shouldPeekAtNewsletter () {
+      var wasUnverified = !subscriber.verified;
+      var isNewsletter = allTopics || topics.indexOf('newsletter') !== -1;
+      return wasUnverified && isNewsletter;
+    }
+
+    function peekAtNewsletter (err, success) {
+      if (err) {
+        next(err); return;
+      }
+      if (!success) {
+        next(null, success); return;
+      }
+      weeklySubscriberService.emailPreview(subscriber.email);
+      next(err, success, true);
+    }
+
+    function noPeeking (err, success) {
+      next(err, success, false);
     }
   }
 
-  function respond (err, success) {
+  function respond (err, success, peeked) {
     if (err) {
       next(err); return;
     }
     if (success) {
       req.flash('success', 'Your subscription to our mailing list is confirmed!');
+      if (peeked) {
+        req.flash('success', 'You’ll be getting our latest newsletter via email soon, enjoy!');
+      }
     } else {
       req.flash('error', 'Your confirmation request was invalid and couldn’t be fulfilled!');
     }

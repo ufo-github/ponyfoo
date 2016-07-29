@@ -8,44 +8,16 @@ var User = require('../../models/User');
 var userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
-  contra.waterfall([findUsers, countArticles], respond);
+  userService.findContributors(respond);
 
-  function findUsers (done) {
-    User
-      .find({})
-      .sort('created')
-      .lean()
-      .exec(done);
-  }
-
-  function countArticles (users, done) {
-    contra.map(users, hydrateWithArticleCount, done);
-
-    function hydrateWithArticleCount (user, next) {
-      Article
-        .count({ author: user._id, status: 'published' })
-        .exec(counted);
-
-      function counted (err, count) {
-        if (err) {
-          next(err); return;
-        }
-        next(null, {
-          doc: user,
-          articleCount: count
-        });
-      }
-    }
-  }
-
-  function respond (err, users) {
+  function respond (err, contributors) {
     if (err) {
       next(err); return;
     }
-    if (!users || !users.length) {
+    if (!contributors || !contributors.length) {
       next('route'); return;
     }
-    var active = users.filter(whereSlug).filter(whereActive);
+    var active = contributors.filter(whereSlug).filter(userService.isActive);
     var profiles = active.map(toProfile);
     var images = _.pluck(profiles, 'gravatar');
     res.viewModel = {
@@ -63,19 +35,12 @@ module.exports = function (req, res, next) {
   }
 }
 
-function whereSlug (user) {
-  return !!user.doc.slug;
+function whereSlug (contributor) {
+  return !!contributor.user.slug;
 }
 
-function whereActive (user) {
-  return userService.isActive(user.doc, {
-    articleCount: user.articleCount
-  });
-}
-
-function toProfile (user) {
-  return userService.getProfile(user.doc, {
-    withBio: false,
-    articleCount: user.articleCount
+function toProfile (contributor) {
+  return userService.getProfile(contributor, {
+    withBio: false
   });
 }

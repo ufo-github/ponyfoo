@@ -7,8 +7,8 @@ var emojiService = require('../../../services/emoji');
 var userService = require('../../../services/user');
 
 module.exports = function (req, res, next) {
-  User.find({}).sort('-created').lean().exec(found);
-  function found (err, users) {
+  userService.findContributors(respond);
+  function respond (err, contributors) {
     if (err) {
       next(err); return;
     }
@@ -18,14 +18,15 @@ module.exports = function (req, res, next) {
         meta: {
           canonical: '/users'
         },
-        users: users.map(toUserModel)
+        users: contributors.map(toUserModel)
       }
     };
     next();
   }
 };
 
-function toUserModel (user) {
+function toUserModel (contributor) {
+  var user = contributor.user;
   return {
     id: user._id.toString(),
     created: datetimeService.field(user.created),
@@ -33,28 +34,29 @@ function toUserModel (user) {
     displayName: user.displayName,
     email: user.email,
     avatar: userService.getAvatar(user),
-    slug: user.slug
+    slug: user.slug,
+    active: userService.isActive(contributor)
   };
 }
 
 function roleAsEmoji (role) {
   if (role === 'owner') {
-    return marked('🎩', 'Founder');
+    return icon('👑', 'Founder');
   }
   if (role === 'editor') {
-    return marked('📑', 'Contributing Editor');
+    return icon('📑', 'Contributing Editor');
   }
   if (role === 'articles') {
-    return marked('✍', 'Contributing Author');
+    return icon('✍', 'Contributing Author');
   }
   if (role === 'weeklies') {
-    return marked('💌', 'Newsletter Contributor');
+    return icon('💌', 'Newsletter Contributor');
   }
   if (role === 'moderator') {
-    return marked('🏥', 'Moderator');
+    return icon('🏥', 'Moderator');
   }
-  return marked('❓', util.format('Unknown (“%s”)', role));
-  function marked (emoji, alt) {
+  return icon('❓', util.format('Unknown (“%s”)', role));
+  function icon (emoji, alt) {
     return util.format('<span aria-label="%s">%s</span>', alt, emojiService.compile(emoji));
   }
 }

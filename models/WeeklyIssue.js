@@ -31,12 +31,24 @@ var schema = new mongoose.Schema({
   hnDiscuss: String
 });
 
+schema.virtual('computedPageTitle').get(computePageTitle);
+schema.virtual('computedIssueNumber').get(computeIssueNumber);
 schema.virtual('computedTitle').get(computeTitle);
 schema.virtual('computedName').get(computeName);
 
 var model = mongoose.model('WeeklyIssue', schema);
 
 module.exports = model;
+
+function computePageTitle () {
+  var title = this.computedTitle;
+  var postfix = ' \u2014 Pony Foo Weekly';
+  var postfixed = title + postfix;
+  if (title === this.computedIssueNumber) {
+    return postfixed;
+  }
+  return postfixed + ' #' + this.slug;
+}
 
 function computeTitle () {
   if (this.titleText) {
@@ -47,7 +59,11 @@ function computeTitle () {
 
 function computeName () {
   if (this.issue) {
-    return 'Issue #' + this.issue;
+    return this.computedIssueNumber;
   }
   return this.slug;
+}
+
+function computeIssueNumber () {
+  return 'Issue #' + this.issue;
 }

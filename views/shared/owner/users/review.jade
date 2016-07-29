@@ -17,15 +17,15 @@ article.ly-section.vw-maintainer.de-host
           each user in users
             tr
               td.usr-avatar(data-label='Profile')
-                if user.slug
-                  a.av-website(href='/contributors/' + user.slug, aria-label='See author profile')
+                if user.active && user.slug
+                  a.av-website(href='/contributors/' + user.slug, aria-label='Visit their profile')
                     img.av-avatar(src=user.avatar, alt='')
                 else
                   img.av-avatar(src=user.avatar, alt='')
               td.usr-date(data-label='Created')
                 time(datetime=user.created.datetime, aria-label='Created ' + user.created.title)=user.created.text
               td(data-label='Name')
-                if user.slug
+                if user.active && user.slug
                   a.lk-rainbows(href='/contributors/' + user.slug, aria-label='Check out their contributor profile')=user.displayName
                 else
                   span=user.displayName

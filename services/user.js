@@ -1,7 +1,41 @@
 'use strict';
 
+var contra = require('contra');
 var User = require('../models/User');
+var Article = require('../models/Article');
 var gravatarService = require('./gravatar');
+
+function findContributors (done) {
+  contra.waterfall([findUsers, countArticles], done);
+}
+
+function findUsers (done) {
+  User
+    .find({})
+    .sort('created')
+    .lean()
+    .exec(done);
+}
+
+function countArticles (users, done) {
+  contra.map(users, hydrateWithArticleCount, done);
+
+  function hydrateWithArticleCount (user, next) {
+    Article
+      .count({ author: user._id, status: 'published' })
+      .exec(counted);
+
+    function counted (err, count) {
+      if (err) {
+        next(err); return;
+      }
+      next(null, {
+        user: user,
+        articleCount: count
+      });
+    }
+  }
+}
 
 function getModel (email, password, bypass) {
   return {
@@ -12,13 +46,14 @@ function getModel (email, password, bypass) {
   };
 }
 
-function getProfile (user, options) {
+function getProfile (contributor, options) {
   var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+  var user = contributor.user;
   var profile = {
     avatar: getAvatar(user),
     displayName: user.displayName,
     slug: user.slug,
-    role: humanReadableRole(user.roles, options.articleCount !== 0),
+    role: humanReadableRole(user.roles, contributor.articleCount !== 0),
     twitter: user.twitter,
     website: user.website
   };
@@ -108,11 +143,11 @@ function hasRole (user, roles) {
   }
 }
 
-function isActive (user, options) {
-  var roles = user.roles;
+function isActive (contributor) {
+  var roles = contributor.user.roles;
   var singleRole = roles.length === 1;
   var articleUser = singleRole && roles[0] === 'articles';
-  if (articleUser && options && options.articleCount === 0) {
+  if (articleUser && contributor.articleCount === 0) {
     return false;
   }
   return true;
@@ -121,6 +156,7 @@ function isActive (user, options) {
 module.exports = {
   findById: findById,
   findOne: findOne,
+  findContributors: findContributors,
   create: create(false),
   createUsingEncryptedPassword: create(true),
   setPassword: setPassword,

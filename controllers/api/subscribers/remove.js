@@ -13,11 +13,14 @@ function remove (req, res, next) {
 
   contra.waterfall([
     contra.curry(unfold, req, res),
-    function (email, next) {
+    function (subscriber, next) {
+      if (!subscriber) {
+        next(null, false); return;
+      }
       if (topic) {
-        subscriberService.removeTopic(email, topic, next);
+        subscriberService.removeTopic(subscriber.email, topic, next);
       } else {
-        subscriberService.remove(email, next);
+        subscriberService.remove(subscriber.email, next);
       }
     }
   ], respond);
@@ -34,7 +37,7 @@ function remove (req, res, next) {
     }
     if (req.query.returnTo) {
       res.redirect(req.query.returnTo);
-    } else if (topic) {
+    } else if (topic && hash) {
       res.redirect('/unsubscribed?topic=' + topic + '&hash=' + hash);
     } else {
       res.redirect('/unsubscribed');
