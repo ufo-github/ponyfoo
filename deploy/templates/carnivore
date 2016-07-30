@@ -77,6 +77,21 @@ then
   exit 1
 fi
 
+echo "packer: setting up ~/.netrc credentials"
+NETRC=$HOME/.netrc
+touch $NETRC
+echo "machine github.com
+login $GIT_ARTICLES_USERNAME
+password $GIT_ARTICLES_PASSWORD
+
+machine api.github.com
+login $GIT_ARTICLES_USERNAME
+password $GIT_ARTICLES_PASSWORD" > $NETRC
+chmod 600 $NETRC
+
+echo "packer: cloning git articles repo"
+git clone $GIT_ARTICLES_REPO $HOME/app/server/sync
+
 echo "packer: pre-filling elasticsearch with articles"
 node $HOME/app/server/scripts/articles-elasticsearch
 

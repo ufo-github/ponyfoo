@@ -16,7 +16,7 @@ contra.waterfall([
     winston.error(err.stack || err);
   }
   db.disconnect();
-  process.exit(err ? 1 : 0)
+  process.exit(err ? 1 : 0);
 });
 
 function migrate (article, done) {

@@ -38,7 +38,8 @@
       "NAME=ponyfoo-{{user `NODE_ENV`}}",
       "PORT=3000",
       "ES_USERNAME={{user `ES_USERNAME`}}",
-      "ES_PASSWORD={{user `ES_PASSWORD`}}"
+      "ES_PASSWORD={{user `ES_PASSWORD`}}",
+      "GIT_ARTICLES_REPO={{user `GIT_ARTICLES_REPO`}}"
     ],
     "script": "deploy/templates/carnivore"
   }]
