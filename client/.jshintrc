@@ -21,5 +21,6 @@
   "undef": true,
   "unused": false,
   "validthis": true,
+  "esnext": true,
   "predef": ["confirm", "self", "caches", "Promise", "Headers", "Response", "rome", "importScripts", "goog"]
 }
