@@ -5,7 +5,7 @@ var winston = require('winston');
 var db = require('../lib/db');
 var boot = require('../lib/boot');
 var Article = require('../models/Article');
-var gitService = require('../services/git');
+var articleGitService = require('../services/articleGit');
 
 contra.waterfall([
   next => boot(next),
@@ -20,5 +20,5 @@ contra.waterfall([
 });
 
 function migrate (article, done) {
-  gitService.articleToSyncRoot(article, done);
+  articleGitService.updateSyncRoot(article, done);
 }

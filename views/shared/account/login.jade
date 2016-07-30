@@ -6,11 +6,9 @@ article.ly-section.al-container.de-host
       if providers.length
         section.al-providers
           each p in providers
-            a(
-              href=p.link,
-              title='Authenticate with ' + p.name,
-              class='al-provider lk-link' + (p.css ? ' ' + p.css : '')
-            )=(p.css ? ' ' : '') + 'Authenticate with ' + p.name
+            a.lk-link.al-provider(href=p.link, aria-label='Authenticate with ' + p.name)
+              span(class=p.css || '')
+              span=(p.css ? ' ' : '') + 'Authenticate with ' + p.name
 
         p.al-separator
          span='- or the '

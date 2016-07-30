@@ -39,7 +39,11 @@
       "PORT=3000",
       "ES_USERNAME={{user `ES_USERNAME`}}",
       "ES_PASSWORD={{user `ES_PASSWORD`}}",
-      "GIT_ARTICLES_REPO={{user `GIT_ARTICLES_REPO`}}"
+      "GIT_ARTICLES_REPO={{user `GIT_ARTICLES_REPO`}}",
+      "GIT_ARTICLES_USERNAME={{user `GIT_ARTICLES_USERNAME`}}",
+      "GIT_ARTICLES_PASSWORD={{user `GIT_ARTICLES_PASSWORD`}}",
+      "GIT_ARTICLES_EMAIL={{user `GIT_ARTICLES_EMAIL`}}",
+      "GIT_ARTICLES_NAME={{user `GIT_ARTICLES_NAME`}}"
     ],
     "script": "deploy/templates/carnivore"
   }]

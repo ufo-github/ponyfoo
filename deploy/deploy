@@ -65,6 +65,8 @@ then
   GIT_ARTICLES_REPO=$(node lib/env GIT_ARTICLES_REPO | jq -r .)
   GIT_ARTICLES_USERNAME=$(node lib/env GIT_ARTICLES_USERNAME | jq -r .)
   GIT_ARTICLES_PASSWORD=$(node lib/env GIT_ARTICLES_PASSWORD | jq -r .)
+  GIT_ARTICLES_EMAIL=$(node lib/env GIT_ARTICLES_EMAIL | jq -r .)
+  GIT_ARTICLES_NAME=$(node lib/env GIT_ARTICLES_NAME | jq -r .)
 
   mkdir -p deploy/mailtube/elasticsearch
   echo $ES_LICENSE > deploy/mailtube/elasticsearch/license.json
@@ -80,6 +82,8 @@ then
     -var GIT_ARTICLES_REPO=$GIT_ARTICLES_REPO \
     -var GIT_ARTICLES_USERNAME=$GIT_ARTICLES_USERNAME \
     -var GIT_ARTICLES_PASSWORD=$GIT_ARTICLES_PASSWORD \
+    -var GIT_ARTICLES_EMAIL=$GIT_ARTICLES_EMAIL \
+    -var GIT_ARTICLES_NAME=$GIT_ARTICLES_NAME \
     deploy/templates/primal.json | tee deploy/log/packer-primal.log
 
   PRIMAL_AMI=$(tail -1 < deploy/log/packer-primal.log | cut -d ' ' -f 2)

@@ -1,5 +1,6 @@
 'use strict';
 
+var contra = require('contra');
 var beautifyText = require('beautify-text');
 var markupService = require('../../services/markup');
 var markdownService = require('../../services/markdown');
@@ -8,6 +9,7 @@ var articleFeedService = require('../../services/articleFeed');
 var sitemapService = require('../../services/sitemap');
 var articleSummarizationService = require('../../services/articleSummarization');
 var articleSearchService = require('../../services/articleSearch');
+var articleGitService = require('../../services/articleGit');
 var Article = require('../Article');
 var env = require('../../lib/env');
 
@@ -17,12 +19,14 @@ Article.schema.post('save', afterSave);
 function computeSignature (a) {
   var bits = [
     a.titleMarkdown,
+    a.slug,
     a.status,
     a.summary || '',
     a.teaser,
     a.editorNote || '',
     a.introduction,
-    a.body
+    a.body,
+    a.tags.join(' ')
   ];
   return cryptoService.md5(bits.concat(a.tags).join(' '));
 }
@@ -45,11 +49,13 @@ function beforeSave (next) {
   article.summaryHtml = summary.html;
   article.updated = Date.now();
 
-  if (!bulk && oldSign !== article.sign && article.status === 'published') {
-    articleSearchService.update(article, next);
-  } else {
-    next();
+  if (bulk || article.status !== 'published' || oldSign === article.sign) {
+    next(); return;
   }
+  contra.concurrent([
+    next => articleSearchService.update(article, next),
+    next => articleGitService.update({ article, oldSlug: article._oldSlug }, next)
+  ], next);
 }
 
 function toHtml (md, i) {

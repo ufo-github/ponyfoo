@@ -77,6 +77,13 @@ then
   exit 1
 fi
 
+echo "packer: setting up git"
+git config --global user.email "git@ponyfoo.com"
+git config --global user.name "$GIT_ARTICLES_NAME"
+git config --global push.default simple
+git config --global branch.autosetuprebase always
+git config --global color.ui auto
+
 echo "packer: setting up ~/.netrc credentials"
 NETRC=$HOME/.netrc
 touch $NETRC
@@ -91,6 +98,8 @@ chmod 600 $NETRC
 
 echo "packer: cloning git articles repo"
 git clone $GIT_ARTICLES_REPO $HOME/app/server/sync
+cd $HOME/app/server/sync
+git branch -u origin/master
 
 echo "packer: pre-filling elasticsearch with articles"
 node $HOME/app/server/scripts/articles-elasticsearch

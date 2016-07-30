@@ -12,7 +12,15 @@ var schema = new mongoose.Schema({
   title: String,
   titleMarkdown: String,
   titleHtml: String,
-  slug: { type: String, index: { unique: true }, require: true },
+  slug: {
+    type: String,
+    index: { unique: true },
+    require: true,
+    set (value) {
+      this._oldSlug = this.slug;
+      return value;
+    }
+  },
   sign: String,
   teaser: String,
   teaserHtml: String,

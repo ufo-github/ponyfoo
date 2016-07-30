@@ -8,10 +8,12 @@ const contra = require('contra');
 const moment = require('moment');
 const winston = require('winston');
 const simpleGit = require('simple-git');
+const env = require('../lib/env');
 const htmlService = require('../services/html');
 const emojiService = require('../services/emoji');
 const repository = path.join(process.cwd(), 'sync');
 const git = simpleGit(repository);
+const enabled = env('GIT_ARTICLES_SYNC');
 
 function getGitDirectory (options) {
   const date = moment(options.created).format('YYYY/MM-DD--');
@@ -20,7 +22,12 @@ function getGitDirectory (options) {
   return sourceDir;
 }
 
-function articleToSyncRoot (article, done) {
+function updateSyncRoot (article, done) {
+  if (!enabled) {
+    winston.debug('Skipping article filesystem synchronization.');
+    done(null);
+    return;
+  }
   const sourceDir = getGitDirectory({
     created: article.created,
     slug: article.slug
@@ -28,7 +35,7 @@ function articleToSyncRoot (article, done) {
   const files = {
     [path.join(sourceDir, 'metadata.json')]: JSON.stringify({
       id: article._id,
-      author: article.author,
+      author: article.author._id || article.author,
       title: article.titleMarkdown,
       slug: article.slug,
       tags: article.tags
@@ -66,13 +73,18 @@ function articleToSyncRoot (article, done) {
   }
 }
 
-function articleToGit (options, done) {
+function update (options, done) {
+  if (!enabled) {
+    winston.debug('Skipping article git synchronization.');
+    done(null);
+    return;
+  }
   const article = options.article;
   const oldSlug = options.oldSlug;
-  const commitMessage = `[sync] Updating “${article.slug}” article. ${emojiService.randomFun()}`;
+  const commitMessage = `[sync] Updating “${article.slug}” article from web. ${emojiService.randomFun()}`;
   contra.waterfall([
     next => git.pull(but(next)),
-    next => articleToSyncRoot(article, next),
+    next => updateSyncRoot(article, next),
     (files, next) => {
       if (oldSlug === article.slug) {
         next(null, files); return;
@@ -84,12 +96,11 @@ function articleToGit (options, done) {
       git.rm(`${sourceDir}*`, err => next(err, files));
     },
     (files, next) => git.commit(commitMessage, files, but(next)),
-    // when an article is inserted/updated, run articleToGit on it.
-    // git push -u origin master
-    // have some sort of locking mechanism?
-  ]);
+    next => git.push(but(next))
+  ], done);
 }
 
 module.exports = {
-  articleToSyncRoot: articleToSyncRoot
+  updateSyncRoot: updateSyncRoot,
+  update: update
 };
