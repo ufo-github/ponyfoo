@@ -1,7 +1,9 @@
 'use strict';
 
+var but = require('but');
 var contra = require('contra');
 var Article = require('../../../models/Article');
+var articleGitService = require('../../../services/articleGit');
 var userService = require('../../../services/user');
 var editorRoles = ['owner', 'editor'];
 
@@ -28,7 +30,7 @@ function remove (req, res, next) {
     if (article.status !== 'draft' && !editor) {
       res.status(401).json({ messages: ['Only an editor can delete articles after they are published or scheduled.'] }); return;
     }
-    contra.concurrent([removal, unlinkLeft, unlinkRight], next);
+    contra.concurrent([removal, unlinkLeft, unlinkRight, gitRemoval], next);
 
     function removal (next) {
       article.remove(next);
@@ -39,9 +41,7 @@ function remove (req, res, next) {
         next(); return;
       }
       article.prev.next = article.next;
-      article.prev.save(function saved (err) {
-        next(err);
-      });
+      article.prev.save(but(next);
     }
 
     function unlinkRight (next) {
@@ -49,9 +49,11 @@ function remove (req, res, next) {
         next(); return;
       }
       article.next.prev = article.prev;
-      article.next.save(function saved (err) {
-        next(err);
-      });
+      article.next.save(but(next);
+    }
+
+    function gitRemoval (next) {
+      articleGitService.removeFromGit(article, next);
     }
   }
 

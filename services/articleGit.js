@@ -73,7 +73,7 @@ function updateSyncRoot (article, done) {
   }
 }
 
-function update (options, done) {
+function pushToGit (options, done) {
   if (!enabled) {
     winston.debug('Skipping article git synchronization.');
     done(null);
@@ -100,7 +100,19 @@ function update (options, done) {
   ], done);
 }
 
+function removeFromGit (article, done) {
+  const sourceDir = getGitDirectory({
+    created: article.created,
+    slug: article.slug
+  });
+  contra.waterfall([
+    next => git.rm(`${sourceDir}*`, but(next)),
+    next => git.push(but(next))
+  ], done);
+}
+
 module.exports = {
   updateSyncRoot: updateSyncRoot,
-  update: update
+  pushToGit: pushToGit,
+  removeFromGit: removeFromGit
 };

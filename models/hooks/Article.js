@@ -54,7 +54,7 @@ function beforeSave (next) {
   }
   contra.concurrent([
     next => articleSearchService.update(article, next),
-    next => articleGitService.update({ article, oldSlug: article._oldSlug }, next)
+    next => articleGitService.pushToGit({ article, oldSlug: article._oldSlug }, next)
   ], next);
 }
 
