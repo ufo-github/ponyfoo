@@ -36,5 +36,5 @@ function found (err, issues) {
 }
 
 function end () {
-  db.disconnect();
+  db.disconnect(() => process.exit(0));
 }

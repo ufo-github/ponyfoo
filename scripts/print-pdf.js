@@ -79,8 +79,7 @@ function getRandomCode () {
 }
 
 function end () {
-  db.disconnect();
-  process.exit(0);
+  db.disconnect(() => process.exit(0));
 }
 
 function errored (err) {

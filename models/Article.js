@@ -22,6 +22,7 @@ var schema = new mongoose.Schema({
     }
   },
   sign: String,
+  heroImage: String,
   teaser: String,
   teaserHtml: String,
   editorNote: String,

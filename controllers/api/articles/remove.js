@@ -41,7 +41,7 @@ function remove (req, res, next) {
         next(); return;
       }
       article.prev.next = article.next;
-      article.prev.save(but(next);
+      article.prev.save(but(next));
     }
 
     function unlinkRight (next) {
@@ -49,7 +49,7 @@ function remove (req, res, next) {
         next(); return;
       }
       article.next.prev = article.prev;
-      article.next.save(but(next);
+      article.next.save(but(next));
     }
 
     function gitRemoval (next) {

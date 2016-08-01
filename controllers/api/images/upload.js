@@ -23,6 +23,8 @@ function images (req, res) {
 
     function optimize (next) {
       imageService.optimize({
+        grayscale: 'grayscale' in req.query,
+        preserveSize: 'preserve-size' in req.query,
         file: image.path,
         name: image.originalname,
         size: image.size

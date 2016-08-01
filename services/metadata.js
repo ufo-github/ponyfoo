@@ -28,10 +28,6 @@ function mostCommonTags (articles, max) {
   return _(sorted).pluck('tag').first(max || 5);
 }
 
-function extractImagesFromArticle (article) {
-  return htmlService.extractImages(article.slug, article.teaserHtml + article.introductionHtml + article.bodyHtml);
-}
-
 function extractImagesFromArticles (source) {
   var many = Array.isArray(source);
   var articles = many ? source : [source];
@@ -46,6 +42,18 @@ function extractImagesFromArticles (source) {
     reduced[article._id] = extractImagesFromArticle(article);
     return reduced;
   }
+}
+
+function extractImagesFromArticle (article) {
+  var extras = [];
+  if (article.heroImage) {
+    extras.push(article.heroImage);
+  }
+  return htmlService.extractImages(
+    article.slug,
+    article.teaserHtml + article.introductionHtml + article.bodyHtml,
+    extras
+  );
 }
 
 module.exports = {

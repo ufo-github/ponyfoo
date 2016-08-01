@@ -53,6 +53,7 @@ function initialize (viewModel, container, route) {
   var title = $('.ac-title');
   var slug = $('.ac-slug');
   var texts = $('.ac-text');
+  var heroImage = $('.ac-hero-image');
   var teaser = $('.ac-teaser');
   var editorNote = $('.ac-editor-note');
   var introduction = $('.ac-introduction');
@@ -69,6 +70,7 @@ function initialize (viewModel, container, route) {
   var schedule = $('.ac-schedule');
   var publication = $('.ac-publication');
   var preview = $('.ac-preview');
+  var previewHeader = $('.at-header', preview);
   var previewTitle = $('.ac-preview-title');
   var previewTeaser = $('.ac-preview-teaser');
   var previewEditorNote = $('.ac-preview-editor-note');
@@ -88,6 +90,7 @@ function initialize (viewModel, container, route) {
   var serializeSlowly = editing ? noop : debounce(serialize, 200);
   var typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
   var typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
+  var typingHeroImageSlowly = raf.bind(null, debounce(typingHeroImage, 100));
   var typingTextSlowly = raf.bind(null, debounce(typingText, 100));
   var typingSummarySlowly = raf.bind(null, debounce(typingSummary, 100));
   var typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
@@ -102,6 +105,7 @@ function initialize (viewModel, container, route) {
 
   title.on('keypress keydown paste input', typingTitleSlowly);
   slug.on('keypress keydown paste input', typingSlugSlowly);
+  heroImage.on('keypress keydown paste input bureaucrat', typingHeroImageSlowly);
   summary.on('keypress keydown paste input', typingSummarySlowly);
   texts.on('keypress keydown paste input', typingTextSlowly);
   tags.on('keypress keydown paste input', typingTagsSlowly);
@@ -208,6 +212,11 @@ function initialize (viewModel, container, route) {
     serializeSlowly();
   }
 
+  function typingHeroImage () {
+    updatePreviewHeroImage();
+    serializeSlowly();
+  }
+
   function typingSlug () {
     boundSlug = false;
     serializeSlowly();
@@ -231,6 +240,19 @@ function initialize (viewModel, container, route) {
   function updateSlug () {
     slug.value(sluggish(title.value()));
     updatePreviewSummarySlowly();
+  }
+
+  function updatePreviewHeroImage () {
+    var heroUrl = heroImage.value().trim();
+    if (heroUrl) {
+      previewHeader.css({ backgroundImage: 'url(\'' + heroUrl + '\')' });
+      previewHeader.addClass('at-has-hero');
+      previewHeader.removeClass('at-no-hero');
+    } else {
+      previewHeader.css({ backgroundImage: null });
+      previewHeader.removeClass('at-has-hero');
+      previewHeader.addClass('at-no-hero');
+    }
   }
 
   function typingTags () {
@@ -297,6 +319,7 @@ function initialize (viewModel, container, route) {
 
     title.value(titleText);
     slug.value(slugText);
+    heroImage.value(data.heroImage || '');
     teaser.value(data.teaser || '');
     introduction.value(data.introduction || '');
     editorNote.value(data.editorNote || '');
@@ -322,6 +345,7 @@ function initialize (viewModel, container, route) {
     }
 
     updatePreviewTitle();
+    updatePreviewHeroImage();
     updatePreviewMarkdown();
     updatePublication();
   }
@@ -338,6 +362,7 @@ function initialize (viewModel, container, route) {
       introduction: introduction.value(),
       body: body.value(),
       tags: individualTags,
+      heroImage: heroImage.value().trim(),
       status: state,
       email: email.value(),
       tweet: tweet.value(),

@@ -55,14 +55,26 @@ function log (options) {
   });
 }
 
-function shrink (options, done) {
-  gm(options.file).autoOrient().resize(limits.width, limits.height).write(options.file, done);
+function magic (options, done) {
+  let op = gm(options.file);
+
+  op = op.autoOrient();
+
+  if (options.preserveSize !== true) {
+    op = op.resize(limits.width, limits.height);
+  }
+
+  if (options.grayscale === true) {
+    op = op.channel('gray');
+  }
+
+  op.write(options.file, done);
 }
 
 function optimize (options, done) {
   contra.series([
-    function shrinkStep (next) {
-      shrink(options, next);
+    function magicStep (next) {
+      magic(options, next);
     },
     function minifyStep (next) {
       getMinifier(options).run(next);

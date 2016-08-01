@@ -25,6 +25,7 @@ function validate (model, options) {
     introduction: getContent('introduction', { required: !draft }),
     body: getContent('body', { required: !draft }),
     tags: draft ? getTagsRaw() : getTags(),
+    heroImage: validator.toString(model.heroImage).trim(),
     comments: [],
     related: [],
     email: !!model.email,
@@ -110,7 +111,8 @@ function validate (model, options) {
         validation.push(message);
       }
     }
-    return input.replace(/http:\/\/i\.imgur\.com\//g, 'https://i.imgur.com/');
+    const rimgur = /http:\/\/i\.imgur\.com\//g;
+    return input.replace(rimgur, 'https://i.imgur.com/');
   }
 
   function getTags () {

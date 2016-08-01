@@ -1,6 +1,47 @@
+.at-header
+  margin-bottom 40px
+  background-color c-white
+  background linear-gradient(to bottom, c-white 0, c-pink-01 100%)
+
+.at-title
+  padding 20px
+  margin 0
+  font-size 2.6em
+  text-align center
+
+  /.ly-custom-heading &
+    font-size 3em
+
+.at-no-hero
+  .at-teaser
+    color c-black-light
+
+  .at-title
+    background-color c-white
+    background linear-gradient(to right, c-white 0, c-purple-01 100%)
+
+.at-has-hero
+  position relative
+  background-repeat no-repeat, no-repeat
+  background-position center center, center
+  background-size cover, cover
+  background-color c-dark-orange
+  color c-white
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 0
+    height 4px
+    content ''
+    background linear-gradient(to right, c-transparent 0, c-lighter-gray 100%)
+
+  .at-header-gradient
+    background-image linear-gradient(c-transparent 0%, rgba(c-dark-orange, 0.9))
+
 .at-teaser
   position relative
-  color c-black-light
   text-align left
   f-use-subheading()
   &:after
@@ -12,25 +53,32 @@
     content ''
     background linear-gradient(to right, c-white 0, c-yellow-highlight 33%, c-dark-orange 100%)
 
-.at-header
-  margin-bottom 40px
-  background-color c-white
-  background linear-gradient(to bottom, c-white 0, c-pink-01 100%)
-
-.at-title
-  padding 0 20px
-  margin-top 40px
-  margin-bottom 0
-  font-size 2.6em
-  text-align center
-  background-color c-white
-  background linear-gradient(to right, c-white 0, c-purple-01 100%)
-
-  /.ly-custom-heading &
-    font-size 3em
-
 .at-teaser-markdown
   padding 10px
+
+.at-has-hero .at-teaser
+  color c-yellow-highlight-04
+  a:not(.md-heading)
+    color c-yellow-highlight
+    &:visited
+      background-color rgba(c-yellow-highlight, o-visited)
+    &:visited .md-code-inline:before
+      background-color c-yellow-highlight
+    &:active
+      outline-color c-yellow-highlight
+    &:hover
+      border-bottom-color c-yellow-highlight
+
+.at-header-button
+  display inline-block
+  float right
+  padding 5px 10px
+  background linear-gradient(to right, lighten(c-dark-orange, 8%) 33%, c-dark-orange 100%)
+  color c-white
+  f-use-subheading()
+
+  &:hover
+    background c-dark-orange
 
 .at-editor-note,
 .at-introduction,
@@ -86,7 +134,7 @@
     margin 0 40px
 
   .at-title
-    padding 0 40px
+    padding 20px 40px
     font-size 3em
     text-align inherit
 
@@ -98,7 +146,7 @@
     padding-top 20px
 
 @media screen and (min-width: 1400px)
-  .at-body:before
+  .at-body:before,
   .at-subscribe,
   .at-siblings
     max-width 1000px

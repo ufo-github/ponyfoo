@@ -73,5 +73,5 @@ function end (err, result) {
 }
 
 function disconnect () {
-  db.disconnect();
+  db.disconnect(() => process.exit(0));
 }

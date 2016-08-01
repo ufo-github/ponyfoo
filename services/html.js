@@ -44,13 +44,13 @@ function fresh (item) {
   return item && moment().isBefore(item.expires);
 }
 
-function extractImages (key, html) {
+function extractImages (key, html, extras) {
   if (fresh(imageCache[key])) {
     return imageCache[key].value.slice();
   }
   var $ = cheerio.load(html);
   var images = $('img[src]').map(src);
-  var result = _(images).filter(notEmoji).uniq().compact().value();
+  var result = _(images).filter(notEmoji).concat(extras || []).uniq().compact().value();
 
   imageCache[key] = {
     value: result.slice(),
@@ -72,26 +72,34 @@ function notEmoji (src) {
   return !isEmoji(src);
 }
 
+function isEmojiEl ($) {
+  return (i, el) => isEmoji($(el).attr('src'));
+}
+
 function fixedEmojiSize (html) {
   var $ = cheerio.load(html);
-  $('img[src]').filter(isEmojiEl).css({
+  $('img[src]').filter(isEmojiEl($)).css({
     width: '1em',
     height: '1em',
     margin: '0 0.05em 0 0.1em',
     'vertical-align': '-0.1em'
   });
   return $.html();
-  function isEmojiEl () {
-    return isEmoji($(this).attr('src'));
-  }
 }
 
 function removeEmoji (html) {
   var $ = cheerio.load(html);
-  $('img[src]').filter(isEmojiEl).remove();
+  $('img[src]').filter(isEmojiEl($)).remove();
   return $.html();
-  function isEmojiEl () {
-    return isEmoji($(this).attr('src'));
+}
+
+function downgradeEmojiImages (html) {
+  var $ = cheerio.load(html);
+  $('img[src]').filter(isEmojiEl($)).each(replace);
+  return $.html();
+  function replace (i, el) {
+    const $el = $(el);
+    $el.replaceWith($el.attr('alt'));
   }
 }
 
@@ -168,14 +176,15 @@ function linkThrough (html, mapper) {
 }
 
 module.exports = {
-  absolutize: absolutize,
-  extractImages: extractImages,
-  getText: getText,
-  minify: minify,
-  deferImages: deferImages,
-  undeferImages: undeferImages,
-  externalizeLinks: externalizeLinks,
-  fixedEmojiSize: fixedEmojiSize,
-  removeEmoji: removeEmoji,
-  linkThrough: linkThrough
+  absolutize,
+  extractImages,
+  getText,
+  minify,
+  deferImages,
+  undeferImages,
+  externalizeLinks,
+  fixedEmojiSize,
+  removeEmoji,
+  downgradeEmojiImages,
+  linkThrough
 };

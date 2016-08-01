@@ -77,7 +77,7 @@ function ready (viewModel, container, route) {
     .on('change', '.wa-color-picker', pickedColor)
     .on('change', '.wa-link-subtype', pickedSubtype)
     .on('change', '.wa-header-background', updateLinkColors)
-    .on('change keypress keydown paste input', '.wa-link-image', updateThumbnailImage)
+    .on('change keypress keydown paste input bureaucrat', '.wa-link-image', updateThumbnailImage)
     .on('change keypress keydown paste input', '.wa-link-href', function (e) {
       scrapeLinkSlowly(e.target);
     })

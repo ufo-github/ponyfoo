@@ -55,8 +55,6 @@ var subscriberInsert = require('./api/subscribers/insert');
 var subscriberConfirm = require('./api/subscribers/confirm');
 var subscriberRemove = require('./api/subscribers/remove');
 var subscriberPollTwitterCards = require('./api/subscribers/poll-twitter-cards');
-var gitOnly = require('./api/git/only');
-var gitPushArticles = require('./api/git-hooks/push-articles');
 var secretOnly = require('./api/secret/only');
 var secretElasticsearchIndex = require('./api/secret/elasticsearch-index');
 var secretScheduler = require('./api/secret/scheduler');
@@ -167,8 +165,6 @@ module.exports = function (app) {
   }
 
   app.get('/weekly/sponsor/mediakit.pdf', weeklyMediakit);
-
-  app.get('/api/git-hooks/push/articles', gitOnly, gitPushArticles);
 
   transports.routing(app, registerAccount);
   redirects.setup(app);

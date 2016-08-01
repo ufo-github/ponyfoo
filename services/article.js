@@ -1,13 +1,16 @@
 'use strict';
 
-var contra = require('contra');
-var estimate = require('estimate');
-var env = require('../lib/env');
-var Article = require('../models/Article');
-var commentService = require('./comment');
-var datetimeService = require('./datetime');
-var metadataService = require('./metadata');
-var userService = require('./user');
+const url = require('url');
+const contra = require('contra');
+const estimate = require('estimate');
+const env = require('../lib/env');
+const Article = require('../models/Article');
+const cryptoService = require('./crypto');
+const commentService = require('./comment');
+const datetimeService = require('./datetime');
+const metadataService = require('./metadata');
+const userService = require('./user');
+const gitWeb = env('GIT_ARTICLES_WEB');
 
 function findInternal (method, query, options, done) {
   if (done === void 0) {
@@ -51,6 +54,7 @@ function toJSON (source, options) {
   article.publication = datetimeService.field(article.publication);
   article.updated = datetimeService.field(article.updated);
   article.readingTime = estimate.text(text);
+  article.gitHref = url.resolve(gitWeb, `${moment(article.created).format('YYYY/MM-DD')}--${article.slug}`);
 
   if (source.populated('author')) {
     article.author = {
@@ -135,9 +139,27 @@ function expandForListView (articles) {
   }
 }
 
+function computeSignature (article) {
+  const parts = [
+    article.titleMarkdown,
+    article.slug,
+    article.status,
+    article.heroImage || '',
+    article.summary || '',
+    article.teaser,
+    article.editorNote || '',
+    article.introduction,
+    article.body
+  ];
+  const partsWithTags = parts.concat(article.tags).join(' ');
+  const sign = cryptoService.md5(partsWithTags);
+  return sign;
+}
+
 module.exports = {
-  find: find,
-  findOne: findOne,
-  toJSON: toJSON,
-  expandForListView: expandForListView
+  find,
+  findOne,
+  toJSON,
+  expandForListView,
+  computeSignature
 };

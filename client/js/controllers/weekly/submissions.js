@@ -64,7 +64,7 @@ function ready (viewModel, container, route) {
   linkInput
     .on('change keypress keydown paste input', revealLinkDataAfterScraping);
   linkData
-    .on('change keypress keydown paste input', '.wa-link-image', updateThumbnailImage)
+    .on('change keypress keydown paste input bureaucrat', '.wa-link-image', updateThumbnailImage)
     .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
   dates
     .on('click', '.wu-sponsor-date-removal', removeDate);

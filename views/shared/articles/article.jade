@@ -1,14 +1,28 @@
-- longDate = 'dddd Do, MMMM YYYY [at] HH:mm'
-- when = article.publication
-- modified = moment(article.updated)
-- created = moment(article.created)
-- published = article.status === 'published'
+-
+  longDate = 'dddd Do, MMMM YYYY [at] HH:mm';
+  when = article.publication;
+  modified = moment(article.updated);
+  created = moment(article.created);
+  published = article.status === 'published';
 
-header.at-header.dc-header
-  h1.at-title.dc-heading(itemprop='headline')!=article.titleHtml
+header(
+  class='dc-header at-header' + (article.heroImage ? ' at-has-hero' : ' at-no-hero'),
+  style=article.heroImage ? 'background-image: url(\'' + article.heroImage + '\');' : false
+)
+  div.at-header-gradient
+    h1.at-title.dc-heading(itemprop='headline')!=article.titleHtml
 
-  section.at-teaser.dc-role
-    div.at-teaser-markdown.md-markdown!=article.teaserHtml
+    section.at-teaser.dc-role
+      div.at-teaser-markdown.md-markdown!=article.teaserHtml
+
+  if article.gitHref
+    a.at-header-button(href=article.gitHref, target='_blank')
+      i.fa.fa-code-fork
+      span=' '
+      span Improve this article
+
+  if roles.owner || roles.articles
+    a.at-header-button(href='/articles/' + article.slug + '/edit', aria-label='Edit this article') Edit
 
 section.at-container.de-host
   div.de-column
