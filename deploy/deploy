@@ -52,7 +52,6 @@ else
   echo "deploy: skipping raw image build, using $RAW_AMI"
 fi
 
-NODE_ENV=$ APP_VERSION
 ES_USERNAME=$(node lib/env ELASTICSEARCH_USERNAME | jq -r .)
 ES_PASSWORD=$(node lib/env ELASTICSEARCH_PASSWORD | jq -r .)
 
