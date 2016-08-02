@@ -26,7 +26,7 @@ function parse (params) {
     unit = 'year';
   }
 
-  var when = moment(input, inputFormat);
+  var when = moment.utc(input, inputFormat);
   var text = when.format(textual);
 
   return {
@@ -40,7 +40,7 @@ function slug (params) {
   var fmt = 'YYYY/MM/DD';
   var keys = Object.keys(params).length;
   var parts = [params.year, params.month, params.day].splice(0, keys.length);
-  return moment(parts.join('/'), fmt).format(fmt);
+  return moment.utc(parts.join('/'), fmt).format(fmt);
 }
 
 module.exports = function (req, res, next) {

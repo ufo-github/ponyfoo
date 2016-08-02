@@ -145,7 +145,7 @@ function post (req, res, next) {
 }
 
 function toDate (date) {
-  return moment(date, dateFormat).toDate();
+  return moment.utc(date, dateFormat).toDate();
 }
 
 module.exports = post;

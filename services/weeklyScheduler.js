@@ -50,7 +50,7 @@ function run (done) {
       findScheduledOrReady();
       return;
     }
-    if (moment().isBefore(moment(issue.publication))) {
+    if (moment.utc().isBefore(moment.utc(issue.publication))) {
       winston[level]('Found weekly "%s" in "patrons" status. Not ready for "everyone" yet.', issue.slug);
       end();
       return;
@@ -73,7 +73,7 @@ function run (done) {
       return;
     }
     if (issue.publication) {
-      if (moment().isBefore(moment(issue.publication).subtract(1, 'days'))) {
+      if (moment.utc().isBefore(moment.utc(issue.publication).subtract(1, 'days'))) {
         winston[level]('Found weekly "%s" in "ready" status. Not ready for "patrons" yet!', issue.slug);
         end();
         return;
@@ -108,22 +108,22 @@ function run (done) {
         if (err) {
           end(err); return;
         }
-        winston[level]('Weekly "%s" now scheduled for publication on %s.', issue.slug, moment(target).format('MMMM D, YYYY'));
+        winston[level]('Weekly "%s" now scheduled for publication on %s.', issue.slug, moment.utc(target).format('MMMM D, YYYY'));
         foundScheduledOrReady(null, issue);
       }
     }
   }
   function getPublicationTarget (issue) {
     // thursday, of the current week, at noon.
-    var target = moment().day(4).startOf('day').add(12, 'hours');
+    var target = moment.utc().day(4).startOf('day').add(12, 'hours');
     // if the target date is before the end of today, then wait until next week
-    var tooLate = moment().endOf('day').isAfter(target);
+    var tooLate = moment.utc().endOf('day').isAfter(target);
     if (tooLate) {
       winston[level]('Weekly "%s" not scheduled because target is in the past (%s).', issue.slug, target.format('MMMM D, YYYY'));
       return null;
     }
     // if the target date is in over three days, then wait a few more hours
-    var tooSoon = moment().add(3, 'days').isBefore(target);
+    var tooSoon = moment.utc().add(3, 'days').isBefore(target);
     if (tooSoon) {
       winston[level]('Weekly "%s" not scheduled because target is in over three days (%s).', issue.slug, target.format('MMMM D, YYYY'));
       return null;

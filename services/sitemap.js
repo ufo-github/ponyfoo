@@ -86,11 +86,11 @@ function articleUrl (article) {
 }
 
 function toLastMod (date) {
-  return moment(date).zone(0).format('YYYY-MM-DD');
+  return moment.utc(date).format('YYYY-MM-DD');
 }
 
 function dateTransformer (accumulator, date) {
-  var mo = moment(date).zone(0);
+  var mo = moment.utc(date);
   var year = mo.format('YYYY');
   var month = year + '/' + mo.format('MM');
   var day = month + '/' + mo.format('DD');

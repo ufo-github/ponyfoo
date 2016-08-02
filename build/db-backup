@@ -2,7 +2,7 @@
 
 mkdir backups
 
-PRODUCTION_CONN=`node scripts/parse-connection-string`
+PRODUCTION_CONN=`NODE_ENV=production node scripts/parse-connection-string`
 PRODUCTION_HOST=`echo $PRODUCTION_CONN | jq -r .hosts[0].hostname`
 PRODUCTION_DB=`echo $PRODUCTION_CONN | jq -r .database`
 PRODUCTION_USERNAME=`echo $PRODUCTION_CONN | jq -r .username`

@@ -59,11 +59,11 @@ function validate (model, options) {
 
   function getPublicationDate () {
     if (model.publication && model.status !== 'published') {
-      var when = moment(model.publication);
+      var when = moment.utc(model.publication);
       if (!when.isValid()) {
         validation.push('The publication date is invalid.');
       }
-      if (when.isBefore(moment())) {
+      if (when.isBefore(moment.utc())) {
         validation.push('Pick a publication date in the future. I don’t have superpowers.');
       }
       return when.toDate();

@@ -8,7 +8,7 @@ var datetimeService = require('./datetime');
 var markdownService = require('./markdown');
 
 function generateModel (data) {
-  var date = moment(data.date);
+  var date = moment.utc(data.date);
   var items = data.items.map(generateItem);
   var total = items.reduce(sum, 0);
   var slug = getSlug(data);
@@ -51,7 +51,7 @@ function getSlug (data) {
     return '';
   }
   var customerSlug = sluggish(data.customer.name);
-  var datestamp = moment(data.date).format('YYMMDD');
+  var datestamp = moment.utc(data.date).format('YYMMDD');
   return customerSlug + '-' + datestamp;
 }
 

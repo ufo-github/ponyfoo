@@ -15,3 +15,5 @@ else if article.status === 'published'
   span.at-estimate-value
     span=' '
     time(datetime=publication.datetime, aria-label='Published ' + publication.title)=publication.text
+else if article.status === 'deleted'
+  label.at-estimate-label Deleted

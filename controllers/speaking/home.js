@@ -115,7 +115,7 @@ function toEngagementModel (engagement) {
 }
 
 function hasNotEnded (engagement) {
-  return moment(engagement.end).endOf('day').isAfter(moment());
+  return moment.utc(engagement.end).endOf('day').isAfter(moment.utc());
 }
 
 function getMapImageUrl (places, options) {

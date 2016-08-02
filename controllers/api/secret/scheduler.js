@@ -14,7 +14,7 @@ function scheduler (req, res) {
   var total = 0;
   var amountPublished = 0;
 
-  fs.writeFile('.job.scheduler', moment().format(defaultFormat) + '\n');
+  fs.writeFile('.job.scheduler', moment.utc().format(defaultFormat) + '\n');
   winston.debug('[job] Worker %s executing job@%s', process.pid, pkg.version);
   Article.find({ status: 'publish' }).populate('author').exec(found);
 
@@ -38,7 +38,7 @@ function scheduler (req, res) {
           article.save(saved); // save the status change first!
         } else {
           if (article.publication) {
-            when = moment(article.publication);
+            when = moment.utc(article.publication);
             winston.debug('[job] Article "%s" will be published %s (%s).', article.title, when.fromNow(), when.format(defaultFormat));
           }
           next();

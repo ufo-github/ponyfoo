@@ -56,7 +56,7 @@ schema.index({
   teaser: 'text',
   introduction: 'text'
 });
-api.validStatuses = ['draft', 'publish', 'published'];
+api.validStatuses = ['draft', 'publish', 'published', 'deleted'];
 api.schema = schema;
 
 module.exports = api;

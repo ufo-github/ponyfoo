@@ -21,7 +21,7 @@ header(
       span=' '
       span Improve this article
 
-  if roles.owner || roles.articles
+  if canEdit
     a.at-header-button(href='/articles/' + article.slug + '/edit', aria-label='Edit this article') Edit
 
 section.at-container.de-host

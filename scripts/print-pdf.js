@@ -29,7 +29,7 @@ function booted () {
       errored(err); return;
     }
 
-    var now = moment();
+    var now = moment.utc();
     var invoiceSlug = sluggish(util.format('%s-%s-%s',
       'example',
       getRandomCode().slice(0, 4),

@@ -19,7 +19,7 @@ const git = simpleGit(repository);
 const rsyncroot = /^\d{4}\/\d{2}-\d{2}--[a-z0-9-]+$/i;
 
 function getGitDirectory (options) {
-  const date = moment(options.created).format('YYYY/MM-DD--');
+  const date = moment.utc(options.created).format('YYYY/MM-DD--');
   const slug = date + options.slug;
   const sources = path.join(repository, slug);
   return sources;
@@ -75,7 +75,7 @@ function updateSyncRoot (article, done) {
     return `<${tag}>${html || ''}</${tag}>`;
   }
   function write (filename, data, done) {
-    fs.writeFile(filename, (data || '').trim() + '\n', 'utf8', done);
+    fs.writeFile(filename, trimRight(data) + '\n', 'utf8', done);
   }
 }
 
@@ -87,34 +87,54 @@ function pushToGit (options, done) {
   }
   const article = options.article;
   const oldSlug = options.oldSlug;
-  const commitMessage = `[sync] Updating “${article.slug}” article from database. ${emojiService.randomFun()}`;
-  contra.waterfall([
+  const tasks = [
     next => git.pull(but(next)),
-    next => updateSyncRoot(article, next),
-    (files, next) => {
-      if (oldSlug === article.slug) {
-        next(null, files); return;
-      }
-      const sources = getGitDirectory({
-        created: article.created,
-        slug: oldSlug
-      });
-      git.rm(`${sources}*`, err => next(err, files));
-    },
-    (files, next) => git.commit(commitMessage, files, but(next)),
-    next => git.push(but(next))
-  ], done);
+    next => updateSyncRoot(article, next)
+  ];
+
+  if (oldSlug !== article.slug) {
+    tasks.push(removeOldSources);
+  }
+
+  tasks.push(commitNewSources);
+  contra.waterfall(tasks, done);
+
+  function removeOldSources (files, next) {
+    const sources = getGitDirectory({
+      created: article.created,
+      slug: oldSlug
+    });
+    git.rm(`${sources}*`, err => next(err, files));
+  }
+
+  function commitNewSources (files, next) {
+    const emoji = emojiService.randomFun();
+    const commitMessage = `[sync] Updating “${article.slug}” article. ${emoji}`;
+
+    contra.series([
+      next => git.commit(commitMessage, files, next),
+      next => git.push(next)
+    ], next);
+  }
 }
 
 function removeFromGit (article, done) {
+  if (!enabled) {
+    winston.debug('Skipping git synchronization from database.');
+    done(null);
+    return;
+  }
+
   const sources = getGitDirectory({
     created: article.created,
     slug: article.slug
   });
-  contra.waterfall([
-    next => git.pull(but(next)),
-    next => git.rm(`${sources}*`, but(next)),
-    next => git.push(but(next))
+  const commitMessage = `[sync] Removing “${article.slug}” article. ${emojiService.randomFun()}`;
+  contra.series([
+    next => git.pull(next),
+    next => git.rm(`${sources}*`, next),
+    next => git.commit(commitMessage, next),
+    next => git.push(next)
   ], done);
 }
 
@@ -139,9 +159,9 @@ function pullFromGit (event, done) {
     end(null); return;
   }
 
-  contra.waterfall([
+  contra.series([
     next => contra.each.series(removals, removeArticle, next),
-    next => git.pull(but(next)),
+    next => git.pull(next),
     next => contra.each.series(modifications, updateArticle, next)
   ], end);
 
@@ -156,8 +176,11 @@ function pullFromGit (event, done) {
     const metadata = path.join(dir, 'metadata.json');
     contra.waterfall([
       next => fs.readFile(metadata, 'utf8', next),
+      (data, next) => next(null, JSON.parse(data)),
       (data, next) => Article.findOne({ _id: data.id }, next),
-      (article, next) => article.remove(but(next))
+      (article, next) => {
+        articleService.remove(article, next);
+      }
     ], next);
   }
 
@@ -193,16 +216,16 @@ function pullFromGit (event, done) {
           next(new Error(`Article couldn't be found!`)); return;
         }
         const fromGit = {
+          status: article.status,
           titleMarkdown: metadata.title,
           slug: metadata.slug,
-          status: article.status,
-          summary: data.summary,
-          teaser: data.teaser,
-          editorNote: data.editorNote,
-          introduction: data.introduction,
-          body: data.body,
           tags: metadata.tags,
-          heroImage: metadata.heroImage || ''
+          heroImage: metadata.heroImage || '',
+          summary: trimRight(data.summary),
+          teaser: trimRight(data.teaser),
+          editorNote: trimRight(data.editorNote),
+          introduction: trimRight(data.introduction),
+          body: trimRight(data.body)
         };
         const sign = articleService.computeSignature(fromGit);
         if (sign === article.sign) {
@@ -221,12 +244,17 @@ function pullFromGit (event, done) {
       }
     }
   }
+}
 
-  function log (err) {
-    if (err) {
-      winston.warn('Error pulling commit information from git', err.stack || err);
-    }
+function log (err) {
+  if (err) {
+    winston.warn('Error pulling commit information from git', err.stack || err);
   }
+}
+
+function trimRight (text) {
+  const rtrailingnewline = /\n+$/;
+  return (text || '').replace(rtrailingnewline, '');
 }
 
 module.exports = {

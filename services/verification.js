@@ -26,7 +26,7 @@ function getLink (token) {
 }
 
 function getExpiration (token) {
-  return moment(token.created).add(token.expires, 'seconds');
+  return moment.utc(token.created).add(token.expires, 'seconds');
 }
 
 function sendEmail (user, token, done) {

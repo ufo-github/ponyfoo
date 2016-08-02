@@ -17,7 +17,7 @@ var formats = {
 function field (value, format) {
   var ff = format || 'default';
   var f = formats[ff];
-  var m = moment(value);
+  var m = moment.utc(value);
   if (m.isValid()) {
     return {
       text: m.format(f.text),
@@ -29,8 +29,8 @@ function field (value, format) {
 }
 
 function range (left, right) {
-  var start = moment(left);
-  var end = moment(right);
+  var start = moment.utc(left);
+  var end = moment.utc(right);
   var singleMonth = start.month() === end.month();
   var singleDate = singleMonth && start.date() === end.date();
   return {
@@ -65,7 +65,7 @@ function prettifyTimezone (text) { // turns -03:00 into -3, +00:00 into nothingn
 function parseDate (value) {
   var parts = value.split('-');
   if (parts.length === 2) { // allow to skip over the year, e.g '18-10'
-    parts.push(moment().year());
+    parts.push(moment.utc().year());
   } else if (parts.length !== 3) {
     return null;
   }
@@ -75,7 +75,7 @@ function parseDate (value) {
   if (parts[1].length === 1) { // allow dates like '01-6-2014'
     parts[1] = '0' + parts[1];
   }
-  var m = moment(parts.join('-'), dateInputFormat, true);
+  var m = moment.utc(parts.join('-'), dateInputFormat, true);
   return m.isValid() ? m.toDate() : null;
 }
 

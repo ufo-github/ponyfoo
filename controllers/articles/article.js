@@ -1,11 +1,12 @@
 'use strict';
 
+var inliningService = require('../../services/inlining');
 var metadataService = require('../../services/metadata');
 var articleService = require('../../services/article');
 var cryptoService = require('../../services/crypto');
 var htmlService = require('../../services/html');
 var textService = require('../../services/text');
-var inliningService = require('../../services/inlining');
+var userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
   var query = { slug: req.params.slug };
@@ -61,6 +62,12 @@ module.exports = function (req, res, next) {
       keywords: article.tags,
       images: metadataService.extractImages(article).images
     };
+    model.canEdit = userService.canEditArticle({
+      userId: req.user,
+      userRoles: req.userObject && req.userObject.roles,
+      authorId: article.author._id,
+      articleStatus: article.status
+    });
     model.article = articleService.toJSON(article);
     inliningService.addStyles(res.viewModel.model, 'article');
     next();

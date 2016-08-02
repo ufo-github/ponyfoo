@@ -3,8 +3,6 @@
 var but = require('but');
 var contra = require('contra');
 var Article = require('../../../models/Article');
-var articleService = require('../../../services/article');
-var articleGitService = require('../../../services/articleGit');
 var userService = require('../../../services/user');
 var editorRoles = ['owner', 'editor'];
 
@@ -27,20 +25,11 @@ function remove (req, res, next) {
     if (!article) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
-    if (article.status === 'draft') {
-      article.remove(but(next)); return;
+    if (article.status !== 'draft' && !editor) {
+      res.status(401).json({ messages: ['Only an editor can restore articles after they are moved to the trash.'] }); return;
     }
-    if (!editor) {
-      res.status(401).json({ messages: ['Only an editor can delete articles after they are published or scheduled.'] }); return;
-    }
-    articleService.remove(article, gitRemoval);
-
-    function gitRemoval (err) {
-      if (err) {
-        next(err); return;
-      }
-      articleGitService.removeFromGit(article, next);
-    }
+    article.status = 'draft';
+    article.save(but(next));
   }
 
   function handle (err) {

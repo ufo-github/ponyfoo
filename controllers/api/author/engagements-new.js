@@ -7,8 +7,8 @@ var Engagement = require('../../../models/Engagement');
 module.exports = function (req, res) {
   var body = req.body;
   var model = {
-    start: moment(body.start, 'DD-MM-YYYY').toDate(),
-    end: moment(body.end, 'DD-MM-YYYY').toDate(),
+    start: moment.utc(body.start, 'DD-MM-YYYY').toDate(),
+    end: moment.utc(body.end, 'DD-MM-YYYY').toDate(),
     conference: body.conference,
     website: toUrl(body.website),
     venue: body.venue,

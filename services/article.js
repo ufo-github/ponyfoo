@@ -2,6 +2,7 @@
 
 const url = require('url');
 const contra = require('contra');
+const moment = require('moment');
 const estimate = require('estimate');
 const env = require('../lib/env');
 const Article = require('../models/Article');
@@ -54,7 +55,7 @@ function toJSON (source, options) {
   article.publication = datetimeService.field(article.publication);
   article.updated = datetimeService.field(article.updated);
   article.readingTime = estimate.text(text);
-  article.gitHref = url.resolve(gitWeb, `${moment(article.created).format('YYYY/MM-DD')}--${article.slug}`);
+  article.gitHref = url.resolve(gitWeb, `${moment.utc(article.created).format('YYYY/MM-DD')}--${article.slug}`);
 
   if (source.populated('author')) {
     article.author = {
@@ -156,10 +157,49 @@ function computeSignature (article) {
   return sign;
 }
 
+function remove (article, done) {
+  if (!article) {
+    done(null); return;
+  }
+
+  contra.series([
+    populate,
+    removal,
+    unlinkLeft,
+    unlinkRight
+  ], done);
+
+  function populate (next) {
+    article.populate('prev next', next);
+  }
+
+  function removal (next) {
+    article.status = 'deleted';
+    article.save(next);
+  }
+
+  function unlinkLeft (next) {
+    if (!article.prev) {
+      next(); return;
+    }
+    article.prev.next = article.next;
+    article.prev.save(next);
+  }
+
+  function unlinkRight (next) {
+    if (!article.next) {
+      next(); return;
+    }
+    article.next.prev = article.prev;
+    article.next.save(next);
+  }
+}
+
 module.exports = {
   find,
   findOne,
   toJSON,
   expandForListView,
-  computeSignature
+  computeSignature,
+  remove
 };

@@ -17,7 +17,7 @@ article.ly-section.vw-maintainer.de-host
           th Actions
       tbody
         each article in articles
-          tr
+          tr(class='ar-row-' + article.status)
             td.usr-avatar(data-label='Profile')
               if article.author.slug
                 a.av-website(href='/contributors/' + article.author.slug, aria-label='See author profile')
@@ -30,23 +30,28 @@ article.ly-section.vw-maintainer.de-host
               include ../../partials/estimate
             if userIsEditor
               td.ar-sharing(data-label='Sharing')
-                - share = '/api/articles/' + article.slug + '/share'
-                form.ar-share(action=share + '/email-self', method='post')
-                  button.lk-icon.fa.fa-envelope-o.ar-share-button(aria-label='Send yourself a test email about this article')
-                if article.status === 'published'
-                  form.ar-share(action=share + '/email', method='post')
-                    button.lk-icon.fa.fa-envelope.ar-share-button(aria-label='Send out an email about this article')
-                  form.ar-share(action=share + '/twitter', method='post')
-                    button.lk-icon.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
-                  form.ar-share(action=share + '/facebook', method='post')
-                    button.lk-icon.fa.fa-facebook-official.ar-share-button(aria-label='Share on Facebook Page')
-                  form.ar-share(action=share + '/echojs', method='post')
-                    button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
-                  form.ar-share(action=share + '/hackernews', method='post')
-                    button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
+                if article.status !== 'deleted'
+                  - share = '/api/articles/' + article.slug + '/share'
+                  form.ar-share(action=share + '/email-self', method='post')
+                    button.lk-icon.fa.fa-envelope-o.ar-share-button(aria-label='Send yourself a test email about this article')
+                  if article.status === 'published'
+                    form.ar-share(action=share + '/email', method='post')
+                      button.lk-icon.fa.fa-envelope.ar-share-button(aria-label='Send out an email about this article')
+                    form.ar-share(action=share + '/twitter', method='post')
+                      button.lk-icon.fa.fa-twitter.ar-share-button(aria-label='Post to Twitter')
+                    form.ar-share(action=share + '/facebook', method='post')
+                      button.lk-icon.fa.fa-facebook-official.ar-share-button(aria-label='Share on Facebook Page')
+                    form.ar-share(action=share + '/echojs', method='post')
+                      button.lk-icon.fa.fa-coffee.ar-share-button(aria-label='Submit to EchoJS')
+                    form.ar-share(action=share + '/hackernews', method='post')
+                      button.lk-icon.fa.fa-hacker-news.ar-share-button(aria-label='Submit to Hacker News')
             td.ar-buttons(data-label='Actions')
-              if article.status === 'draft' || userIsEditor
-                a.ar-button.lk-icon.fa.fa-pencil(href='/articles/' + article.slug + '/edit', aria-label='Edit this article')
-                a.ar-button.lk-icon.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)
+              if article.status !== 'deleted'
+                if article.status === 'draft' || userIsEditor
+                  a.ar-button.lk-icon.fa.fa-pencil(href='/articles/' + article.slug + '/edit', aria-label='Edit this article')
+                  a.ar-button.lk-icon.fa.fa-remove.ar-remove(aria-label='Delete this article', data-slug=article.slug)
+              else
+                a.ar-button.lk-icon.fa.fa-undo.ar-restore(aria-label='Restore this article', data-slug=article.slug)
+                a.ar-button.lk-icon.fa.fa-trash.ar-trash(aria-label='Permanently delete this article', data-slug=article.slug)
 
   include ../../partials/aside

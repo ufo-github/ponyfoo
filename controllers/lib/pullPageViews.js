@@ -46,7 +46,7 @@ function pullPageViews (done) {
 
 function toDailyPageView (item) {
   return {
-    date: moment(item[0], 'YYYYMMDD').toDate(),
+    date: moment.utc(item[0], 'YYYYMMDD').toDate(),
     views: parseInt(item[1])
   };
 }

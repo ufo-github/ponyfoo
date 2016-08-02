@@ -17,7 +17,7 @@ module.exports = function (req, res) {
     [body['resources_url[]']];
 
   var model = {
-    presented: moment(body.presented, 'DD-MM-YYYY').toDate(),
+    presented: moment.utc(body.presented, 'DD-MM-YYYY').toDate(),
     title: body.title,
     slug: sluggish(body.slug),
     description: body.description,

@@ -36,6 +36,8 @@ var authorCompute = require('./author/compute');
 var articleInsert = require('./api/articles/insert');
 var articleUpdate = require('./api/articles/update');
 var articleRemove = require('./api/articles/remove');
+var articleRemovePermanently = require('./api/articles/remove-permanently');
+var articleRestore = require('./api/articles/restore');
 var articleShare = require('./api/articles/share');
 var getAllTags = require('./api/tags/get-all');
 var updateKnownTag = require('./api/tags/update');
@@ -67,6 +69,7 @@ var mediaKit = require('./development/pdf/mediakit');
 var cspReport = require('./api/cspReport');
 var sitemap = require('./sitemap/sitemap');
 var authOnly = require('./account/only');
+var hydrateUserObject = require('./hydrateUserObject');
 var ownerOnly = require('./author/roleOnly')(['owner']);
 var invoiceOnly = require('./author/roleOnly')(['owner']);
 var articlesOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
@@ -83,6 +86,8 @@ var production = env('NODE_ENV') === 'production';
 var upload = multer({ dest: '.bin/uploads' });
 
 module.exports = function (app) {
+  app.all('/*', hydrateUserObject);
+
   app.get('/api/csp-report', cspReport);
   app.get('/api/status/health', statusHealth);
   app.get('/api/:secret(\\d+)/elasticsearch', secretOnly, secretElasticsearchIndex);
@@ -108,6 +113,8 @@ module.exports = function (app) {
 
   app.patch('/api/articles/:slug', articlesOnly, articleUpdate);
   app.delete('/api/articles/:slug', articlesOnly, articleRemove);
+  app.delete('/api/articles/:slug/force', articlesOnly, articleRemovePermanently);
+  app.post('/api/articles/:slug/restore', articlesOnly, articleRestore);
   app.post('/api/articles/:slug/share/:medium', articlesEditorOnly, articleShare);
 
   app.put('/api/:type(articles|weeklies)/:slug/comments', commentInsert);

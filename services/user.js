@@ -153,15 +153,33 @@ function isActive (contributor) {
   return true;
 }
 
+function canEditArticle (options) {
+  if (!options.userId || !options.userRoles) {
+    return false;
+  }
+  if (options.articleStatus === 'deleted') {
+    return false;
+  }
+  return ( // owners. editors. authors working on drafts.
+    options.userRoles.indexOf('owner') !== -1 ||
+    options.userRoles.indexOf('editor') !== -1 || (
+      options.userRoles.indexOf('articles') !== -1 &&
+      options.authorId.equals(options.userId) &&
+      options.articleStatus === 'draft'
+    )
+  );
+}
+
 module.exports = {
-  findById: findById,
-  findOne: findOne,
-  findContributors: findContributors,
+  findById,
+  findOne,
+  findContributors,
   create: create(false),
   createUsingEncryptedPassword: create(true),
-  setPassword: setPassword,
-  getProfile: getProfile,
-  getAvatar: getAvatar,
-  hasRole: hasRole,
-  isActive: isActive
+  setPassword,
+  getProfile,
+  getAvatar,
+  hasRole,
+  isActive,
+  canEditArticle
 };

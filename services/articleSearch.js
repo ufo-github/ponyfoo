@@ -121,7 +121,7 @@ function addRelated (article, done) {
   processing[article._id] = true;
 
   var options = {
-    since: moment('2014-01-01', 'YYYY-MM-DD').toDate() // avoid floating terrible articles
+    since: moment.utc('2014-01-01', 'YYYY-MM-DD').toDate() // avoid floating terrible articles
   };
 
   articleElasticsearchService.related(article, options, queried);

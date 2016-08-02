@@ -128,7 +128,7 @@ function notifyAccepted (submission, done) {
     if (!submission.invoice) {
       next(null); return;
     }
-    var now = moment();
+    var now = moment.utc();
     var invoiceSlug = sluggish(util.format('%s-%s-%s',
       submission.email.split('@')[0],
       getRandomCode().slice(0, 4),

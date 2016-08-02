@@ -29,7 +29,7 @@ function from (options) {
   return api;
 
   function generate (items, done) {
-    var now = moment();
+    var now = moment.utc();
     var tags = _(items)
       .pluck('categories')
       .flatten()

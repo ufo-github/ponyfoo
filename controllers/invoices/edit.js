@@ -60,7 +60,7 @@ module.exports = function (req, res, next) {
 
     function defaultInvoice () {
       return {
-        date: moment().toDate(),
+        date: moment.utc().toDate(),
         customer: parties.customer[0],
         payment: parties.payment[0],
         items: []

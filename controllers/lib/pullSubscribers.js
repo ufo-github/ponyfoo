@@ -29,7 +29,7 @@ function toWeeklyDataModel (subscribers) {
   var current;
   while (copy.length) {
     subscriber = copy.pop();
-    week = moment(subscriber.created).subtract(7, 'days');
+    week = moment.utc(subscriber.created).subtract(7, 'days');
     current = {
       date: week.toDate(),
       dateText: week.format('Do MMMM ’YY'),
@@ -45,7 +45,7 @@ function toWeeklyDataModel (subscribers) {
     add();
     while (copy.length) {
       subscriber = copy.pop();
-      if (moment(subscriber.created).isAfter(week)) {
+      if (moment.utc(subscriber.created).isAfter(week)) {
         add();
       } else {
         break;

@@ -1,9 +1,10 @@
 'use strict';
 
-var Article = require('../../../models/Article');
+const Article = require('../../../models/Article');
+const userService = require('../../../services/user');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
+  const slug = req.params.slug;
   if (slug) {
     findArticle();
   } else {
@@ -23,6 +24,15 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!article) {
+      res.status(404).json({ messages: ['Article not found'] }); return;
+    }
+    const canEdit = userService.canEditArticle({
+      userId: req.user,
+      userRoles: req.userObject.roles,
+      authorId: article.author._id,
+      articleStatus: article.status
+    });
+    if (!canEdit) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
     res.viewModel = {

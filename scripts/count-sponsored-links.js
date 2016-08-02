@@ -28,7 +28,7 @@ function found (err, issues) {
 
   console.log(`Numbers:
      Found ${sections.length} sponsored links
-    Across ${issues.length} issues since ${moment(issues[0].created).format(`MMMM YYYY`)}
+    Across ${issues.length} issues since ${moment.utc(issues[0].created).format(`MMMM YYYY`)}
     Earned $${sections.length * 60}.00 in total
     Earned $${(sections.length * 60 / issues.length).toFixed(2)} per issue on average`);
 

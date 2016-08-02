@@ -41,7 +41,7 @@ function absolutize (html) {
 }
 
 function fresh (item) {
-  return item && moment().isBefore(item.expires);
+  return item && moment.utc().isBefore(item.expires);
 }
 
 function extractImages (key, html, extras) {
@@ -54,7 +54,7 @@ function extractImages (key, html, extras) {
 
   imageCache[key] = {
     value: result.slice(),
-    expires: moment().add(6, 'hours')
+    expires: moment.utc().add(6, 'hours')
   };
 
   return result;
