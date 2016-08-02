@@ -183,11 +183,14 @@ function pullFromGit (event, done) {
         author: metadata.author
       };
 
-      Article.find(query).exec(found);
+      Article.findOne(query).exec(found);
 
       function found (err, article) {
         if (err) {
           next(err); return;
+        }
+        if (!article) {
+          next(new Error(`Article couldn't be found!`)); return;
         }
         const fromGit = {
           titleMarkdown: metadata.title,
