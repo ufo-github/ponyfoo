@@ -41,8 +41,8 @@ then
 
   cp package.json deploy/mailtube
   packer build \
-    -var VPC_ID=$VPC_ID \
-    -var SUBNET_ID=$SUBNET_ID \
+    -var VPC_ID="$VPC_ID" \
+    -var SUBNET_ID="$SUBNET_ID" \
     deploy/templates/raw.json | tee deploy/log/packer-raw.log
 
   RAW_AMI=$(tail -1 < deploy/log/packer-raw.log | cut -d ' ' -f 2)
@@ -67,12 +67,12 @@ then
   cp package.json deploy/mailtube
 
   packer build \
-    -var VPC_ID=$VPC_ID \
-    -var SUBNET_ID=$SUBNET_ID \
-    -var SOURCE_AMI=$RAW_AMI \
-    -var NODE_VERSION=$NODE_VERSION \
-    -var ES_USERNAME=$ES_USERNAME \
-    -var ES_PASSWORD=$ES_PASSWORD \
+    -var VPC_ID="$VPC_ID" \
+    -var SUBNET_ID="$SUBNET_ID" \
+    -var SOURCE_AMI="$RAW_AMI" \
+    -var NODE_VERSION="$NODE_VERSION" \
+    -var ES_USERNAME="$ES_USERNAME" \
+    -var ES_PASSWORD="$ES_PASSWORD" \
     deploy/templates/primal.json | tee deploy/log/packer-primal.log
 
   PRIMAL_AMI=$(tail -1 < deploy/log/packer-primal.log | cut -d ' ' -f 2)
@@ -94,17 +94,17 @@ then
 
   echo "deploy: building carnivore image with packer..."
   packer build \
-    -var VPC_ID=$VPC_ID \
-    -var SUBNET_ID=$SUBNET_ID \
-    -var SOURCE_AMI=$PRIMAL_AMI \
-    -var NODE_ENV=$NODE_ENV \
-    -var ES_USERNAME=$ES_USERNAME \
-    -var ES_PASSWORD=$ES_PASSWORD \
-    -var GIT_ARTICLES_REPO=$GIT_ARTICLES_REPO \
-    -var GIT_ARTICLES_USERNAME=$GIT_ARTICLES_USERNAME \
-    -var GIT_ARTICLES_PASSWORD=$GIT_ARTICLES_PASSWORD \
-    -var GIT_ARTICLES_EMAIL=$GIT_ARTICLES_EMAIL \
-    -var GIT_ARTICLES_NAME=$GIT_ARTICLES_NAME \
+    -var VPC_ID="$VPC_ID" \
+    -var SUBNET_ID="$SUBNET_ID" \
+    -var SOURCE_AMI="$PRIMAL_AMI" \
+    -var NODE_ENV="$NODE_ENV" \
+    -var ES_USERNAME="$ES_USERNAME" \
+    -var ES_PASSWORD="$ES_PASSWORD" \
+    -var GIT_ARTICLES_REPO="$GIT_ARTICLES_REPO" \
+    -var GIT_ARTICLES_USERNAME="$GIT_ARTICLES_USERNAME" \
+    -var GIT_ARTICLES_PASSWORD="$GIT_ARTICLES_PASSWORD" \
+    -var GIT_ARTICLES_EMAIL="$GIT_ARTICLES_EMAIL" \
+    -var GIT_ARTICLES_NAME="$GIT_ARTICLES_NAME" \
     deploy/templates/carnivore.json | tee deploy/log/packer-carnivore.log
 
   CARNIVORE_AMI=$(tail -1 < deploy/log/packer-carnivore.log | cut -d ' ' -f 2)
