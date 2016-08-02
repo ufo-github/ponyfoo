@@ -1,5 +1,8 @@
 'use strict';
 
+require('../preconfigure');
+require('../chdir');
+
 var winston = require('winston');
 var db = require('../lib/db');
 var boot = require('../lib/boot');

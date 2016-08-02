@@ -1,10 +1,9 @@
 'use strict';
 
-var env = require('./lib/env');
-
 require('./preconfigure');
 require('./chdir');
 
+var env = require('./lib/env');
 var os = require('os');
 var http = require('http');
 var express = require('express');
