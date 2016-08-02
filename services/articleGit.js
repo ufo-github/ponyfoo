@@ -127,11 +127,11 @@ function pullFromGit (event, done) {
     return;
   }
 
-  const removals = intoChangeDirectories(event.commits
+  const removals = intoChangeDirectories(event.payload.commits
     .reduce((all, commit) => all.concat(commit.removed), [])
     .filter(file => path.basename(file) === 'metadata.json')
   );
-  const modifications = intoChangeDirectories(event.commits
+  const modifications = intoChangeDirectories(event.payload.commits
     .reduce((all, commit) => all.concat(commit.modified), [])
   );
 
