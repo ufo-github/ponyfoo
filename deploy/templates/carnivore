@@ -78,7 +78,7 @@ then
 fi
 
 echo "packer: setting up git"
-git config --global user.email "git@ponyfoo.com"
+git config --global user.email "$GIT_ARTICLES_EMAIL"
 git config --global user.name "$GIT_ARTICLES_NAME"
 git config --global push.default simple
 git config --global branch.autosetuprebase always
