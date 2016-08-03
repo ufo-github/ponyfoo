@@ -3,6 +3,9 @@
   background-color c-white
   background linear-gradient(to bottom, c-white 0, c-pink-01 100%)
 
+  code
+    background-color rgba(c-white, 0.7)
+
 .at-title
   padding 20px
   margin 0
@@ -40,6 +43,10 @@
   .at-header-gradient
     background-image linear-gradient(c-transparent 0%, rgba(c-dark-orange, 0.9))
 
+  .at-title code
+    color inherit
+    background-color transparent
+
 .at-teaser
   position relative
   text-align left
@@ -60,6 +67,8 @@
   color c-yellow-highlight-04
   a:not(.md-heading)
     color c-yellow-highlight
+    code
+      color c-dark-orange
     &:visited
       background-color rgba(c-yellow-highlight, o-visited)
     &:visited .md-code-inline:before

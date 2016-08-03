@@ -2,7 +2,6 @@
 
 var $ = require('dominus');
 var raf = require('raf');
-var rome = require('rome');
 var sluggish = require('sluggish');
 var debounce = require('lodash/function/debounce');
 var loadScript = require('../../lib/loadScript');
@@ -17,6 +16,7 @@ module.exports = function (viewModel, container) {
   var boundSlug = true;
 
   loadScript('/js/rome.js', function loaded () {
+    var rome = global.rome;
     var updateSlugSlowly = raf.bind(null, debounce(updateSlug, 100));
 
     rome(presented, { time: false, inputFormat: 'DD-MM-YYYY' });

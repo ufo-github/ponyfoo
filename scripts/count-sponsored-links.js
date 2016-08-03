@@ -19,7 +19,10 @@ function found (err, issues) {
     throw err;
   }
   var sections = issues
-    .map(issue => issue.sections)
+    .map(issue => issue.sections.map(section => {
+      section.issue = issue;
+      return section;
+    }))
     .reduce((all, sections) => all.concat(sections), [])
     .filter(section => section.type === 'link')
     .filter(section => section.sponsored);
@@ -29,10 +32,25 @@ function found (err, issues) {
   console.log(`Numbers:
      Found ${sections.length} sponsored links
     Across ${issues.length} issues since ${moment.utc(issues[0].created).format(`MMMM YYYY`)}
-    Earned $${sections.length * 60}.00 in total
-    Earned $${(sections.length * 60 / issues.length).toFixed(2)} per issue on average`);
+    Earned $${sum(sections).toFixed(2)} in total
+    Earned $${(sum(sections) / issues.length).toFixed(2)} per issue on average`);
 
   end();
+}
+
+function sum (sections) {
+  return sections.reduce((total, section) => total + price(section), 0);
+}
+
+function price (section) {
+  if (before('2016-07-28')) {
+    return 60;
+  }
+  return 70;
+
+  function before (date) {
+    return moment.utc(section.issue.publication).isBefore(moment.utc(date, 'YYYY-MM-DD'));
+  }
 }
 
 function end () {
