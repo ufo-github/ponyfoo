@@ -1,10 +1,12 @@
-.ls-spinner // best with: .fa.fa-circle-o-notch.fa-spin.fa-3x.fa-fw
-  cursor wait
-  color c-pink
-  -webkit-text-fill-color transparent
-  -webkit-background-clip text
-  // @css to avoid stylus "helping out" with a dozen invalid vendor prefixes
-  @css {
+// uses @css to avoid stylus "helping out" with a dozen invalid vendor prefixes
+// best with: .fa.fa-circle-o-notch.fa-spin.fa-3x.fa-fw
+@css {
+  .ls-spinner {
+    cursor: wait;
+    color: #e92c6c;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
     background-image: -webkit-gradient(linear, 0% 40%, 50% 100%, from(#ffe270), to(#e92c6c));
     background-image: -o-linear-gradient(transparent, transparent);
   }
+}

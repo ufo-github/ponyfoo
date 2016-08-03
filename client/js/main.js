@@ -29,6 +29,7 @@ require('./conventions/textareas')();
 require('./conventions/imageUpload')();
 require('./conventions/konami')();
 require('./conventions/carbon')();
+require('./conventions/scroll')();
 
 taunus.mount(main, wiring, {
   version: env('APP_VERSION'),

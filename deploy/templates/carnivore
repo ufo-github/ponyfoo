@@ -99,7 +99,7 @@ chmod 600 $NETRC
 echo "packer: cloning git articles repo"
 git clone $GIT_ARTICLES_REPO $HOME/app/server/sync
 cd $HOME/app/server/sync
-git branch -u origin/master
+git branch -u origin/noindex
 
 echo "packer: pre-filling elasticsearch with articles"
 node $HOME/app/server/scripts/articles-elasticsearch
