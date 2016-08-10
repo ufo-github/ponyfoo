@@ -7529,7 +7529,7 @@ block template_vars
   })
 
   function getFill (pixel) {
-    var color = options.getFill ? options.getFill(pixel) : pixel.original
+    const color = options.getFill ? options.getFill(pixel) : pixel.original
     if (color) { return color; }
     return false;
   }

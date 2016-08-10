@@ -1,5 +1,6 @@
 'use strict';
 
+const but = require('but');
 const winston = require('winston');
 const Article = require('../models/Article');
 const es = require('../lib/elasticsearch');
@@ -96,12 +97,12 @@ function bulkIndexAllArticles (done) {
 
 function ensureIndexThen (next) {
   return function wrapper (...args) {
-    if (ensured) {
-      initialized(null); return;
-    }
     const last = args[args.length - 1];
     const done = typeof last === 'function' ? last : warn;
 
+    if (ensured) {
+      initialized(null); return;
+    }
     if (ensuring) {
       enqueue(); return;
     }
@@ -125,11 +126,7 @@ function ensureIndexThen (next) {
     }
 
     function enqueue () {
-      ensureQueue.push({
-        process: next,
-        args,
-        done
-      });
+      ensureQueue.push({ process: next, args, done });
     }
 
     function dequeue (err, item) {
@@ -161,10 +158,7 @@ function toBulk (body, article) { // bulk follows [command,document] pattern
 }
 
 function ensureIndex (done) {
-  ensureIndexThen(done)(null, pass);
-  function pass (err) {
-    done(err);
-  }
+  ensureIndexThen(done)(null, but(done));
 }
 
 module.exports = {
