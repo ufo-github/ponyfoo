@@ -9,6 +9,6 @@ module.exports = function twitterWidget () {
   };
 
   function ready (f) {
-    t._e.push(f);
+    global.twttr._e.push(f);
   }
-}
+};

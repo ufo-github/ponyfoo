@@ -6,7 +6,7 @@ require('../chdir');
 const moment = require('moment');
 const db = require('../lib/db');
 const boot = require('../lib/boot');
-const WeeklyIssue = require('../models/WeeklyIssue')
+const WeeklyIssue = require('../models/WeeklyIssue');
 
 boot(booted);
 
@@ -31,7 +31,7 @@ function found (err, issues) {
 
   console.log(`Numbers:
      Found ${sections.length} sponsored links
-    Across ${issues.length} issues since ${moment.utc(issues[0].created).format(`MMMM YYYY`)}
+    Across ${issues.length} issues since ${moment.utc(issues[0].created).format('MMMM YYYY')}
     Earned $${sum(sections).toFixed(2)} in total
     Earned $${(sum(sections) / issues.length).toFixed(2)} per issue on average`);
 

@@ -1,6 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
 const minimist = require('minimist');
 const fs = require('fs');
 const path = require('path');
@@ -28,7 +27,6 @@ const argv = minimist(process.argv.slice(2), {
 });
 const rtouch = /touch-icon/i;
 const rtext = /-text/i;
-const rpadded = /-padded/i;
 const rwidth = /width="(\d+)"/i;
 const rheight = /height="(\d+)"/i;
 const rext = /\.[a-z]+$/i;

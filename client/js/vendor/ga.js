@@ -16,7 +16,7 @@ module.exports = function ga () {
   global.ga('create', property, 'auto');
   taunus.on('render', render);
 
-  function render (container, viewModel) {
+  function render (container) {
     if (container === main) {
       global.ga('send', 'pageview');
     }

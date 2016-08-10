@@ -12,4 +12,4 @@ module.exports = function gaSnippet () {
   function ga () {
     (w.ga.q = w.ga.q || []).push(arguments);
   }
-}
+};

@@ -44,7 +44,6 @@ function booted () {
         pdf: true
       }
     };
-    const filename = invoiceSlug + '.pdf';
     const filepath = path.join(tmpdir, util.format('%s.%s.pdf', invoiceSlug, getRandomCode()));
 
     invoiceModel.paid = false;

@@ -18,7 +18,7 @@ module.exports = function clicky () {
 
   taunus.on('render', render);
 
-  function render (container, viewModel) {
+  function render (container) {
     if (container === main && global.clicky) {
       global.clicky.log(global.location.href);
     }
