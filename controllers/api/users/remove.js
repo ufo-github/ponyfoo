@@ -1,11 +1,11 @@
 'use strict';
 
-var winston = require('winston');
-var User = require('../../../models/User');
+const winston = require('winston');
+const User = require('../../../models/User');
 
 module.exports = function (req, res, next) {
-  var id = req.params.id;
-  var query = { _id: id };
+  const id = req.params.id;
+  const query = { _id: id };
   User.findOne(query, found);
   function found (err, user) {
     if (err) {

@@ -1,13 +1,13 @@
 'use strict';
 
-var Subscriber = require('../../../../models/Subscriber');
-var cryptoService = require('../../../../services/crypto');
+const Subscriber = require('../../../../models/Subscriber');
+const cryptoService = require('../../../../services/crypto');
 
 function unfold (req, res, done) {
-  var hash = req.params.hash;
-  var id = hash.substr(0, 24);
-  var emailHash = hash.substr(24);
-  var query = { _id: id };
+  const hash = req.params.hash;
+  const id = hash.substr(0, 24);
+  const emailHash = hash.substr(24);
+  const query = { _id: id };
 
   Subscriber.findOne(query, found);
 
@@ -18,7 +18,7 @@ function unfold (req, res, done) {
     if (!subscriber) {
       done(null, null); return;
     }
-    var emailHashExpectation = cryptoService.md5(subscriber.email);
+    const emailHashExpectation = cryptoService.md5(subscriber.email);
     if (emailHashExpectation !== emailHash) {
       done(null, null); return;
     }

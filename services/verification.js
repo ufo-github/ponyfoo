@@ -1,19 +1,19 @@
 'use strict';
 
-var contra = require('contra');
-var moment = require('moment');
-var mongoose = require('mongoose');
-var emailService = require('./email');
-var userService = require('./user');
-var env = require('../lib/env');
-var UnverifiedUser = require('../models/UnverifiedUser');
-var UserVerificationToken = require('../models/UserVerificationToken');
-var User = require('../models/User');
-var authority = env('AUTHORITY');
-var ObjectId = mongoose.Types.ObjectId;
+const contra = require('contra');
+const moment = require('moment');
+const mongoose = require('mongoose');
+const emailService = require('./email');
+const userService = require('./user');
+const env = require('../lib/env');
+const UnverifiedUser = require('../models/UnverifiedUser');
+const UserVerificationToken = require('../models/UserVerificationToken');
+const User = require('../models/User');
+const authority = env('AUTHORITY');
+const ObjectId = mongoose.Types.ObjectId;
 
 function createToken (user, done) {
-  var token = new UserVerificationToken({
+  const token = new UserVerificationToken({
     targetId: user._id
   });
   token.save(function saved (err) {
@@ -30,8 +30,8 @@ function getExpiration (token) {
 }
 
 function sendEmail (user, token, done) {
-  var link = getLink(token);
-  var model = {
+  const link = getLink(token);
+  const model = {
     to: user.email,
     subject: 'Account Email Verification',
     teaser: 'Action required to complete your account registration',
@@ -69,7 +69,7 @@ function emitToken (user, done) {
 }
 
 function verifyToken (tokenId, done) {
-  var result;
+  let result;
 
   contra.waterfall([
     function find (next) {
@@ -83,8 +83,8 @@ function verifyToken (tokenId, done) {
       }
     },
     function validateExpiration (token, next) {
-      var now = Date.now();
-      var expiration = getExpiration(token).toDate();
+      const now = Date.now();
+      const expiration = getExpiration(token).toDate();
 
       if (now > expiration) {
         expired(next);

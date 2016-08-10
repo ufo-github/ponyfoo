@@ -1,18 +1,18 @@
 'use strict';
 
-var but = require('but');
-var contra = require('contra');
-var Article = require('../../../models/Article');
-var userService = require('../../../services/user');
-var editorRoles = ['owner', 'editor'];
+const but = require('but');
+const contra = require('contra');
+const Article = require('../../../models/Article');
+const userService = require('../../../services/user');
+const editorRoles = ['owner', 'editor'];
 
 function remove (req, res, next) {
-  var editor = userService.hasRole(req.userObject, editorRoles);
+  const editor = userService.hasRole(req.userObject, editorRoles);
 
   contra.waterfall([lookupArticle, found], handle);
 
   function lookupArticle (next) {
-    var query = { slug: req.params.slug };
+    const query = { slug: req.params.slug };
     if (!editor) {
       query.author = req.user;
     }

@@ -1,18 +1,18 @@
 'use strict';
 
-var omnibox = require('omnibox');
-var domador = require('domador');
-var megamark = require('megamark');
-var insane = require('insane');
-var textService = require('./text');
-var emojiService = require('./emoji');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var domains = [
+const omnibox = require('omnibox');
+const domador = require('domador');
+const megamark = require('megamark');
+const insane = require('insane');
+const textService = require('./text');
+const emojiService = require('./emoji');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const domains = [
   /^(https?:)?\/\/codepen.io\//i,
   /^(https?:)?\/\/assets.codepen.io\//i
 ];
-var rlang = /md-lang-((?:[^\s]|$)+)/;
+const rlang = /md-lang-((?:[^\s]|$)+)/;
 
 megamark.parser.renderer.rules.link_open = link;
 
@@ -31,8 +31,8 @@ function attr (token, name) {
   if (token.attrs[name]) {
     return token.attrs[name];
   }
-  var i = 0;
-  var len = token.attrs.length;
+  let i = 0;
+  const len = token.attrs.length;
   for (; i < len; i++) {
     if (token.attrs[i][0] === name) {
       return token.attrs[i][1];
@@ -42,15 +42,15 @@ function attr (token, name) {
 }
 
 function setLabel (attrs, title) {
-  var trimmedTitle = title ? title.trim() : '';
+  const trimmedTitle = title ? title.trim() : '';
   if (trimmedTitle) {
     attrs['aria-label'] = trimmedTitle;
   }
 }
 
 function blankTarget (attrs, href) {
-  var parts = omnibox.parse(href);
-  var difforigin = parts.host && parts.host !== authority;
+  const parts = omnibox.parse(href);
+  const difforigin = parts.host && parts.host !== authority;
   if (difforigin) {
     attrs.target = '_blank';
   }
@@ -64,17 +64,17 @@ function stringifyLink (attrs) {
 }
 
 function link (tokens, i) {
-  var open = tokens[i];
-  var href = attr(open, 'href');
-  var title = attr(open, 'title');
-  var attrs = { href: href };
+  const open = tokens[i];
+  const href = attr(open, 'href');
+  const title = attr(open, 'title');
+  const attrs = { href: href };
   blankTarget(attrs, href);
   setLabel(attrs, title);
   return stringifyLink(attrs);
 }
 
 function filter (token) {
-  var unsourced = token.tag !== 'iframe' && token.tag !== 'script';
+  const unsourced = token.tag !== 'iframe' && token.tag !== 'script';
   return unsourced || startsWithValidDomain(attr(token, 'src'));
 }
 
@@ -86,7 +86,7 @@ function startsWithValidDomain (href) {
 }
 
 function compile (text) {
-  var mdOpts = {
+  const mdOpts = {
     sanitizer: {
       filter: filter,
       allowedTags: insane.defaults.allowedTags.concat('iframe', 'script'),
@@ -101,17 +101,17 @@ function compile (text) {
       }
     }
   };
-  var html = megamark(text, mdOpts);
+  const html = megamark(text, mdOpts);
   return emojiService.compile(html);
 }
 
 function decompile (html, options) {
-  var langmap = {
+  const langmap = {
     javascript: 'js',
     markdown: 'md'
   };
-  var o = options || {};
-  var domadorOpts = {
+  const o = options || {};
+  const domadorOpts = {
     href: o.href || authority,
     absolute: true,
     fencing: true,
@@ -119,22 +119,22 @@ function decompile (html, options) {
     allowFrame: allowFrame,
     transform: transform
   };
-  var decompiled = domador(html, domadorOpts);
+  const decompiled = domador(html, domadorOpts);
   if (o.plain !== true) {
     return decompiled;
   }
-  var rspaces = /\s+/g;
+  const rspaces = /\s+/g;
   return decompiled.replace(rspaces, ' ').trim();
 
   function fencinglanguage (el) {
     if (el.tagName === 'PRE') {
       el = el.firstChild;
     }
-    var match = el.className.match(rlang);
+    const match = el.className.match(rlang);
     if (!match) {
       return;
     }
-    var lang = match.pop();
+    const lang = match.pop();
     return langmap[lang] || lang;
   }
 
@@ -154,9 +154,9 @@ function decompile (html, options) {
     }
 
     function plain () {
-      var content = el.textContent || el.innerText || '';
-      var blocks = ['DIV', 'P', 'BLOCKQUOTE', 'PRE'];
-      var block = blocks.indexOf(el.tagName) !== -1;
+      const content = el.textContent || el.innerText || '';
+      const blocks = ['DIV', 'P', 'BLOCKQUOTE', 'PRE'];
+      const block = blocks.indexOf(el.tagName) !== -1;
       if (block) {
         return ' ' + content + ' ';
       }

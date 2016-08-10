@@ -1,7 +1,7 @@
 'use strict';
 
-var notFound = '/not-found';
-var inliningService = require('../../services/inlining');
+const notFound = '/not-found';
+const inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   if (res.ignoreNotFound) {

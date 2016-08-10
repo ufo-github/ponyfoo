@@ -1,9 +1,9 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var woofmark = require('woofmark');
-var markdownService = require('../../../services/markdown');
+const $ = require('dominus');
+const taunus = require('taunus');
+const woofmark = require('woofmark');
+const markdownService = require('../../../services/markdown');
 
 function textareas () {
   taunus.gradual.transform(before);
@@ -14,10 +14,10 @@ function activate (container) {
   $('.wk-textarea', container).forEach(convert);
 
   function convert (el) {
-    var wel = $(el);
-    var hasHtml = wel.hasClass('wk-html');
-    var hasWysiwyg = wel.hasClass('wk-wysiwyg');
-    var editor = woofmark(el, {
+    const wel = $(el);
+    const hasHtml = wel.hasClass('wk-html');
+    const hasWysiwyg = wel.hasClass('wk-wysiwyg');
+    const editor = woofmark(el, {
       parseMarkdown: markdownService.compile,
       classes: {
         wysiwyg: 'md-markdown',
@@ -41,7 +41,7 @@ function activate (container) {
     taunus.track(el, editor);
 
     function renderModes (el, id) {
-      var icons = {
+      const icons = {
         markdown: 'file-text-o',
         html: 'file-code-o',
         wysiwyg: 'eye'
@@ -50,7 +50,7 @@ function activate (container) {
     }
 
     function renderCommands (el, id) {
-      var icons = {
+      const icons = {
         quote: 'quote-right',
         ul: 'list-ul',
         ol: 'list-ol',
@@ -69,14 +69,14 @@ function activate (container) {
 }
 
 function before (form) {
-  var areas = $('textarea', form);
-  var store = [];
+  const areas = $('textarea', form);
+  const store = [];
 
   areas.forEach(replace);
   return after;
 
   function replace (el) {
-    var input = $(el);
+    const input = $(el);
     store.push(input.value());
     input.value(woofmark(el).value());
   }

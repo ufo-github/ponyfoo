@@ -1,54 +1,54 @@
 'use strict';
 
-var fs = require('fs');
-var pdf = require('html-pdf');
-var util = require('util');
-var path = require('path');
-var contra = require('contra');
-var moment = require('moment');
-var winston = require('winston');
-var sluggish = require('sluggish');
-var User = require('../models/User');
-var gravatarService = require('./gravatar');
-var summaryService = require('./summary');
-var cryptoService = require('./crypto');
-var markupService = require('./markup');
-var emailService = require('./email');
-var viewService = require('./view');
-var weeklyCompilerService = require('./weeklyCompiler');
-var invoiceModelService = require('./invoiceModel');
-var Invoice = require('../models/Invoice');
-var InvoiceParty = require('../models/InvoiceParty');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var ownerEmail = env('OWNER_EMAIL');
-var paymentPartySlug = env('SUBMISSION_INVOICE_PAYMENT_SLUG');
-var css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
-var submissionTypes = {
+const fs = require('fs');
+const pdf = require('html-pdf');
+const util = require('util');
+const path = require('path');
+const contra = require('contra');
+const moment = require('moment');
+const winston = require('winston');
+const sluggish = require('sluggish');
+const User = require('../models/User');
+const gravatarService = require('./gravatar');
+const summaryService = require('./summary');
+const cryptoService = require('./crypto');
+const markupService = require('./markup');
+const emailService = require('./email');
+const viewService = require('./view');
+const weeklyCompilerService = require('./weeklyCompiler');
+const invoiceModelService = require('./invoiceModel');
+const Invoice = require('../models/Invoice');
+const InvoiceParty = require('../models/InvoiceParty');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const ownerEmail = env('OWNER_EMAIL');
+const paymentPartySlug = env('SUBMISSION_INVOICE_PAYMENT_SLUG');
+const css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
+const submissionTypes = {
   suggestion: 'link suggestion',
   primary: 'primary sponsorship request',
   secondary: 'sponsored link request',
   job: 'job listing request'
 };
-var invoiceItems = {
+const invoiceItems = {
   primary: 'Primary Sponsorship',
   secondary: 'Sponsored Link',
   job: 'Job Listing'
 };
-var invoiceRates = {
+const invoiceRates = {
   primary: 70,
   secondary: 50,
   job: 35
 };
-var tmpdir = path.join(process.cwd(), 'tmp');
-var maxTitleLength = 50;
+const tmpdir = path.join(process.cwd(), 'tmp');
+const maxTitleLength = 50;
 
 function noop () {}
 
 function isEditable (options, done) {
-  var submission = options.submission;
-  var verify = options.verify;
-  var userId = options.userId;
+  const submission = options.submission;
+  const verify = options.verify;
+  const userId = options.userId;
   if (userId) {
     User.findOne({ _id: userId }, validate);
   } else {
@@ -58,7 +58,7 @@ function isEditable (options, done) {
     if (err) {
       done(err); return;
     }
-    var owner = user && user.roles.indexOf('owner') !== -1;
+    const owner = user && user.roles.indexOf('owner') !== -1;
     if (!valid()) {
       done('route'); return;
     }
@@ -81,7 +81,7 @@ function getToken (submission) {
 }
 
 function findOwners (next) {
-  var ownerQuery = { roles: 'owner' };
+  const ownerQuery = { roles: 'owner' };
   User
     .find(ownerQuery)
     .select('email')
@@ -92,7 +92,7 @@ function findOwners (next) {
 function compilePreview (submission) {
   return compiler;
   function compiler (next) {
-    var options = {
+    const options = {
       markdown: markupService,
       slug: 'submission-preview'
     };
@@ -101,7 +101,7 @@ function compilePreview (submission) {
       if (err) {
         next(err); return;
       }
-      var html = weeklyCompilerService.compileLinkSectionModel(model);
+      const html = weeklyCompilerService.compileLinkSectionModel(model);
       next(null, {
         html: html,
         model: model.item
@@ -114,7 +114,7 @@ function notifyAccepted (submission, done) {
   if (submission.email === ownerEmail) {
     (done || noop)(null); return;
   }
-  var tasks = {
+  const tasks = {
     owners: findOwners,
     preview: compilePreview(submission),
     invoice: generateInvoice
@@ -125,13 +125,13 @@ function notifyAccepted (submission, done) {
     if (!submission.invoice) {
       next(null); return;
     }
-    var now = moment.utc();
-    var invoiceSlug = sluggish(util.format('%s-%s-%s',
+    const now = moment.utc();
+    const invoiceSlug = sluggish(util.format('%s-%s-%s',
       submission.email.split('@')[0],
       getRandomCode().slice(0, 4),
       now.format('YYMMDD')
     ));
-    var partyQuery = {
+    const partyQuery = {
       slug: paymentPartySlug,
       type: 'payment'
     };
@@ -147,7 +147,7 @@ function notifyAccepted (submission, done) {
       if (!paymentParty) {
         next(new Error('Payment party not found.')); return;
       }
-      var invoiceModel = {
+      const invoiceModel = {
         date: now.toDate(),
         slug: invoiceSlug,
         customer: {
@@ -169,8 +169,8 @@ function notifyAccepted (submission, done) {
       if (err) {
         next(err); return;
       }
-      var invoiceModel = invoiceModelService.generateModel(invoice);
-      var viewModel = {
+      const invoiceModel = invoiceModelService.generateModel(invoice);
+      const viewModel = {
         leanLayout: true,
         model: {
           title: 'Invoice #' + invoiceSlug + ' \u2014 Pony Foo',
@@ -184,9 +184,9 @@ function notifyAccepted (submission, done) {
         if (err) {
           next(err); return;
         }
-        var filename = invoiceSlug + '.pdf';
-        var filepath = path.join(tmpdir, util.format('%s.%s.pdf', invoiceSlug, getRandomCode()));
-        var options = {
+        const filename = invoiceSlug + '.pdf';
+        const filepath = path.join(tmpdir, util.format('%s.%s.pdf', invoiceSlug, getRandomCode()));
+        const options = {
           base: authority,
           border: '20px',
           width: '1380px',
@@ -207,12 +207,12 @@ function notifyAccepted (submission, done) {
     if (err) {
       error(err); return;
     }
-    var everyone = [submission.email].concat(result.owners.map(toEmail));
-    var attachments = result.invoice ? [result.invoice] : [];
-    var type = submissionTypes[submission.subtype];
-    var titleSummary = summaryService.summarize(result.preview.model.titleHtml, maxTitleLength);
-    var titleText = titleSummary.text;
-    var model = {
+    const everyone = [submission.email].concat(result.owners.map(toEmail));
+    const attachments = result.invoice ? [result.invoice] : [];
+    const type = submissionTypes[submission.subtype];
+    const titleSummary = summaryService.summarize(result.preview.model.titleHtml, maxTitleLength);
+    const titleText = titleSummary.text;
+    const model = {
       to: submission.email,
       cc: everyone,
       subject: util.format('“%s” was accepted into Pony Foo Weekly! 🎉', titleText),
@@ -240,7 +240,7 @@ function notifyReceived (submission, done) {
   if (submission.email === ownerEmail) {
     (done || noop)(null); return;
   }
-  var tasks = {
+  const tasks = {
     owners: findOwners,
     preview: compilePreview(submission),
     gravatar: fetchGravatar
@@ -262,12 +262,12 @@ function notifyReceived (submission, done) {
     if (err) {
       error(err); return;
     }
-    var verify = getToken(submission);
-    var permalink = util.format('/weekly/submissions/%s/edit?verify=%s', submission.slug, verify);
-    var everyone = [submission.email].concat(result.owners.map(toEmail));
-    var titleSummary = summaryService.summarize(result.preview.model.titleHtml, maxTitleLength);
-    var titleText = titleSummary.text;
-    var model = {
+    const verify = getToken(submission);
+    const permalink = util.format('/weekly/submissions/%s/edit?verify=%s', submission.slug, verify);
+    const everyone = [submission.email].concat(result.owners.map(toEmail));
+    const titleSummary = summaryService.summarize(result.preview.model.titleHtml, maxTitleLength);
+    const titleText = titleSummary.text;
+    const model = {
       to: submission.email,
       cc: everyone,
       subject: util.format('We got your “%s” submission for Pony Foo Weekly! 🎉', titleText),
@@ -307,8 +307,8 @@ function toEmail (user) {
 }
 
 function logger (err) {
-  var description = 'Uncaught exception while sending email about weekly submission.';
-  var data = { stack: err.stack || err.message || err || '(unknown)' };
+  const description = 'Uncaught exception while sending email about weekly submission.';
+  const data = { stack: err.stack || err.message || err || '(unknown)' };
   winston.error(description, data);
 }
 

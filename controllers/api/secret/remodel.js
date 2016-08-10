@@ -1,6 +1,6 @@
 'use strict';
 
-var taunus = require('taunus');
+const taunus = require('taunus');
 
 function remodel (req, res) {
   taunus.rebuildDefaultViewModel(rebuilt);

@@ -1,13 +1,13 @@
 'use strict';
 
-var env = require('../../lib/env');
-var WeeklyIssueSubmission = require('../../models/WeeklyIssueSubmission');
-var staticService = require('../../services/static');
-var weeklySubmissionService = require('../../services/weeklySubmission');
-var authority = env('AUTHORITY');
+const env = require('../../lib/env');
+const WeeklyIssueSubmission = require('../../models/WeeklyIssueSubmission');
+const staticService = require('../../services/static');
+const weeklySubmissionService = require('../../services/weeklySubmission');
+const authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
+  const slug = req.params.slug;
   if (slug) {
     WeeklyIssueSubmission.findOne({ slug: slug }, found);
   } else {
@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
     if (!submission) {
       next('route'); return;
     }
-    var options = {
+    const options = {
       submission: submission,
       userId: req.user,
       verify: req.query.verify

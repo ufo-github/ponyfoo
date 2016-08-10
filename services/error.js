@@ -1,7 +1,7 @@
 'use strict';
 
-var env = require('../lib/env');
-var cwd = env('CWD');
+const env = require('../lib/env');
+const cwd = env('CWD');
 
 function read (error) {
   if (!error) {
@@ -15,8 +15,8 @@ function toHtmlModel (error) {
 }
 
 function format (error) {
-  var root = new RegExp(cwd, 'ig');
-  var rooted = read(error).replace(root, '~');
+  const root = new RegExp(cwd, 'ig');
+  const rooted = read(error).replace(root, '~');
   return rooted;
 }
 

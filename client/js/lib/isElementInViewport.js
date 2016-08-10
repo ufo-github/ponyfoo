@@ -1,8 +1,8 @@
 'use strict';
 
 function isElementInViewport (el, entirely) {
-  var rect = el.getBoundingClientRect();
-  var within = (
+  const rect = el.getBoundingClientRect();
+  const within = (
     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );

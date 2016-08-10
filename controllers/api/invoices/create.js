@@ -1,12 +1,12 @@
 'use strict';
 
-var winston = require('winston');
-var sluggish = require('sluggish');
-var Invoice = require('../../../models/Invoice');
+const winston = require('winston');
+const sluggish = require('sluggish');
+const Invoice = require('../../../models/Invoice');
 
 module.exports = function (req, res) {
-  var body = req.body.invoice;
-  var model = {};
+  const body = req.body.invoice;
+  const model = {};
   model.date = body.date;
   model.slug = sluggish(body.slug);
   model.customer = {

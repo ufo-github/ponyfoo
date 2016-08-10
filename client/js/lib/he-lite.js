@@ -1,21 +1,21 @@
 'use strict';
 
-var escapes = {
+const escapes = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
   '"': '&quot;',
   '\'': '&#39;'
 };
-var unescapes = {
+const unescapes = {
   '&amp;': '&',
   '&lt;': '<',
   '&gt;': '>',
   '&quot;': '"',
   '&#39;': '\''
 };
-var rescaped = /(&amp;|&lt;|&gt;|&quot;|&#39;)/g;
-var runescaped = /[&<>"']/g;
+const rescaped = /(&amp;|&lt;|&gt;|&quot;|&#39;)/g;
+const runescaped = /[&<>"']/g;
 
 function escapeHtmlChar (match) {
   return escapes[match];

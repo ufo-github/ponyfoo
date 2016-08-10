@@ -1,21 +1,21 @@
 'use strict';
 
-var _ = require('lodash');
-var google = require('googleapis');
-var env = require('../lib/env');
-var Article = require('../models/Article');
-var email = env('GA_EMAIL');
-var privateKey = env('GA_PRIVATE_KEY');
-var profile = env('GA_PROFILE');
-var enabled = env('POPULAR_ARTICLES');
-var analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
-var rdigits = /^[\d.]+$/;
+const _ = require('lodash');
+const google = require('googleapis');
+const env = require('../lib/env');
+const Article = require('../models/Article');
+const email = env('GA_EMAIL');
+const privateKey = env('GA_PRIVATE_KEY');
+const profile = env('GA_PROFILE');
+const enabled = env('POPULAR_ARTICLES');
+const analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
+const rdigits = /^[\d.]+$/;
 
 function getArticles (done) {
   if (!enabled || !email || !privateKey || !profile) {
     done(null, []); return;
   }
-  var jwt = new google.auth.JWT(
+  const jwt = new google.auth.JWT(
     email,
     null,
     privateKey,
@@ -27,7 +27,7 @@ function getArticles (done) {
     if (err) {
       done(err); return;
     }
-    var query = {
+    const query = {
       auth: jwt,
       ids: 'ga:' + profile,
       'start-date': '2012-12-25',
@@ -49,7 +49,7 @@ function getArticles (done) {
     if (err) {
       done(err); return;
     }
-    var popular = _(result.rows
+    const popular = _(result.rows
       .filter(butHome)
       .map(toSlug)
       .reduce(bySlug, {})
@@ -60,7 +60,7 @@ function getArticles (done) {
       .slice(0, 20)
       .value();
 
-    var query = {
+    const query = {
       status: 'published',
       slug: { $in: popular }
     };
@@ -77,8 +77,8 @@ function getArticles (done) {
       done(null, articles.sort(byPopularity));
     }
     function byPopularity (a, b) {
-      var left = popular.indexOf(a.slug);
-      var right = popular.indexOf(b.slug);
+      const left = popular.indexOf(a.slug);
+      const right = popular.indexOf(b.slug);
       return left - right;
     }
   }

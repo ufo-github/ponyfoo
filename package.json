@@ -55,7 +55,7 @@
       [
         "babelify",
         {
-          "ignore": ".bin/views/",
+          "ignore": ".bin",
           "presets": "es2015"
         }
       ]

@@ -1,40 +1,40 @@
 'use strict';
 
-var sluggish = require('sluggish');
-var validator = require('validator');
-var markupService = require('../../../services/markup');
-var summaryService = require('../../../services/summary');
-var bioService = require('../../../services/bio');
-var User = require('../../../models/User');
-var rprotocol = /^https?:\/\//i;
-var rtwitter = /^https?:\/\/twitter\.com\//i;
-var rtwitter_legacy = /[@#!]+/i;
+const sluggish = require('sluggish');
+const validator = require('validator');
+const markupService = require('../../../services/markup');
+const summaryService = require('../../../services/summary');
+const bioService = require('../../../services/bio');
+const User = require('../../../models/User');
+const rprotocol = /^https?:\/\//i;
+const rtwitter = /^https?:\/\/twitter\.com\//i;
+const rtwitter_legacy = /[@#!]+/i;
 
 module.exports = function (req, res, next) {
-  var body = req.body;
-  var bio = validator.toString(body.bio);
-  var bioHtml = markupService.compile(bio, { deferImages: true });
-  var bioText = summaryService.summarize(bioHtml, 200).text;
-  var displayName = body.displayName;
+  const body = req.body;
+  const bio = validator.toString(body.bio);
+  const bioHtml = markupService.compile(bio, { deferImages: true });
+  const bioText = summaryService.summarize(bioHtml, 200).text;
+  const displayName = body.displayName;
   if (displayName.length < 4) {
     res.status(400).json({ messages: ['The name must be at least 4 characters long.'] }); return;
   }
-  var slug = sluggish(body.slug);
+  const slug = sluggish(body.slug);
   if (slug.length < 4) {
     res.status(400).json({ messages: ['The username must be at least 4 characters long.'] }); return;
   }
-  var password = validator.toString(body.password);
+  const password = validator.toString(body.password);
   if (password.length < 4) {
     res.status(400).json({ messages: ['The password must be at least 4 characters long.'] }); return;
   }
-  var validEmail = validator.isEmail(body.email);
+  const validEmail = validator.isEmail(body.email);
   if (!validEmail) {
     res.status(400).json({ messages: ['Use a valid email address.'] }); return;
   }
   if (body.roles.length < 1) {
     res.status(400).json({ messages: ['The user must have some role.'] }); return;
   }
-  var user = {};
+  const user = {};
   user.email = body.email;
   user.password = password;
   user.bypassEncryption = false;

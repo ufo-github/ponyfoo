@@ -1,7 +1,7 @@
 'use strict';
 
-var omnibox = require('omnibox');
-var queso = require('queso');
+const omnibox = require('omnibox');
+const queso = require('queso');
 
 function linkThroughForSlug (slug) {
   return linkThrough;
@@ -10,7 +10,7 @@ function linkThroughForSlug (slug) {
     if (!href) {
       return href;
     }
-    var u = omnibox.parse(href);
+    const u = omnibox.parse(href);
     if (u.protocol && u.protocol !== 'http' && u.protocol !== 'https') {
       return href;
     }
@@ -27,8 +27,8 @@ function linkThroughForSlug (slug) {
       u.query.utm_campaign = slug;
     }
 
-    var rspace = /(%2B|\s)/ig;
-    var host = u.host ? u.protocol + '://' + u.host : '';
+    const rspace = /(%2B|\s)/ig;
+    const host = u.host ? u.protocol + '://' + u.host : '';
 
     return (
       host +

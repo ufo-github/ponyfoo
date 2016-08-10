@@ -1,10 +1,10 @@
 'use strict';
 
-var _ = require('lodash');
-var mongoose = require('mongoose');
-var env = require('../../lib/env');
-var ObjectId = mongoose.Schema.Types.ObjectId;
-var fields = {
+const _ = require('lodash');
+const mongoose = require('mongoose');
+const env = require('../../lib/env');
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const fields = {
   targetId: { type: ObjectId, require: true },
   created: { type: Date, 'default': Date.now },
   expires: { type: Number, 'default': env('TOKEN_EXPIRES') },
@@ -16,7 +16,7 @@ function raw () {
 }
 
 function model (name) {
-  var schema = new mongoose.Schema(raw(), { id: false });
+  const schema = new mongoose.Schema(raw(), { id: false });
   return mongoose.model(name, schema);
 }
 

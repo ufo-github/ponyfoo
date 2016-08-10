@@ -1,8 +1,8 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var moment = require('moment');
+const $ = require('dominus');
+const taunus = require('taunus');
+const moment = require('moment');
 
 function relativeTime () {
   taunus.on('render', adjust);
@@ -18,8 +18,8 @@ function adjust (container) {
 }
 
 function relative (el) {
-  var time = $(el);
-  var absolute = moment(time.attr('datetime'));
+  const time = $(el);
+  const absolute = moment(time.attr('datetime'));
   time.text(absolute.fromNow());
 }
 

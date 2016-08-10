@@ -1,6 +1,6 @@
 'use strict';
 
-var settingService = require('../../services/setting');
+const settingService = require('../../services/setting');
 
 module.exports = function (req, res, next) {
   settingService.get(got);

@@ -1,13 +1,13 @@
 'use strict';
 
-var but = require('but');
-var contra = require('contra');
-var winston = require('winston');
-var db = require('../lib/db');
-var env = require('../lib/env');
-var boot = require('../lib/boot');
-var Article = require('../models/Article');
-var markupService = require('../services/markup');
+const but = require('but');
+const contra = require('contra');
+const winston = require('winston');
+const db = require('../lib/db');
+const env = require('../lib/env');
+const boot = require('../lib/boot');
+const Article = require('../models/Article');
+const markupService = require('../services/markup');
 
 boot(booted);
 
@@ -28,7 +28,7 @@ function booted () {
     article.sign = 'force-recompile';
     article.save(but(next));
     function recompileComment (comment) {
-      var opts = {
+      const opts = {
         deferImages: true,
         externalize: true
       };

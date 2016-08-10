@@ -21,9 +21,9 @@ function findInternal (method, query, options, done) {
     options.sort = { publication: -1, updated: -1 };
   }
 
-  var cursor = Article[method](query);
-  var populations = options.populate;
-  var populationSteps;
+  let cursor = Article[method](query);
+  const populations = options.populate;
+  let populationSteps;
   if (populations) {
     populationSteps = Array.isArray(populations) ? populations : [[populations]];
     cursor = populationSteps.reduce(populateCursor, cursor);
@@ -43,13 +43,13 @@ function findInternal (method, query, options, done) {
   }
 }
 
-var find = findInternal.bind(null, 'find');
-var findOne = findInternal.bind(null, 'findOne');
+const find = findInternal.bind(null, 'find');
+const findOne = findInternal.bind(null, 'findOne');
 
 function toJSON (source, options) {
-  var o = options || {};
-  var text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(' ');
-  var article = source.toJSON();
+  const o = options || {};
+  const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(' ');
+  const article = source.toJSON();
 
   article.permalink = '/articles/' + article.slug;
   article.publication = datetimeService.field(article.publication);
@@ -123,16 +123,16 @@ function relevant (article) {
 }
 
 function expandForListView (articles) {
-  var extracted = metadataService.extractImages(articles);
-  var expanded = articles.map(expand);
+  const extracted = metadataService.extractImages(articles);
+  const expanded = articles.map(expand);
   return {
     articles: expanded,
     extracted: extracted
   };
   function expand (article) {
-    var config = {meta: true, summary: true, id: false };
-    var model = toJSON(article, config);
-    var images = extracted.map[article._id];
+    const config = {meta: true, summary: true, id: false };
+    const model = toJSON(article, config);
+    const images = extracted.map[article._id];
     if (images && images.length) {
       model.cover = images[0];
     }

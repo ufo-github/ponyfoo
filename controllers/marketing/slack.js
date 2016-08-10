@@ -1,9 +1,9 @@
 'use strict';
 
-var env = require('../../lib/env');
-var markdownFileService = require('../../services/markdownFile');
-var slackFrameUrl = env('SLACK_FRAME_URL');
-var slackFile = './dat/slack.md';
+const env = require('../../lib/env');
+const markdownFileService = require('../../services/markdownFile');
+const slackFrameUrl = env('SLACK_FRAME_URL');
+const slackFile = './dat/slack.md';
 
 module.exports = function (req, res, next) {
   markdownFileService.read(slackFile, respond);

@@ -1,23 +1,23 @@
 'use strict';
 
-var winston = require('winston');
-var contra = require('contra');
-var leads = require('twitter-leads');
-var subscriberService = require('./subscriber');
-var Subscriber = require('../models/Subscriber');
-var env = require('../lib/env');
-var username = env('TWITTER_LEADS_USERNAME');
-var password = env('TWITTER_LEADS_PASSWORD');
-var ads = env('TWITTER_LEADS_ADS_ID');
-var articles = env('TWITTER_LEADS_CARD_ID_ARTICLES');
-var newsletter = env('TWITTER_LEADS_CARD_ID_NEWSLETTER');
+const winston = require('winston');
+const contra = require('contra');
+const leads = require('twitter-leads');
+const subscriberService = require('./subscriber');
+const Subscriber = require('../models/Subscriber');
+const env = require('../lib/env');
+const username = env('TWITTER_LEADS_USERNAME');
+const password = env('TWITTER_LEADS_PASSWORD');
+const ads = env('TWITTER_LEADS_ADS_ID');
+const articles = env('TWITTER_LEADS_CARD_ID_ARTICLES');
+const newsletter = env('TWITTER_LEADS_CARD_ID_NEWSLETTER');
 
 function pollCards (done) {
   if (!username || !password || !ads || (!articles && !newsletter)) {
     done(new Error('Method not implemented.')); return;
   }
 
-  var tasks = [];
+  const tasks = [];
   if (articles) {
     tasks.push(makeTask('', articles));
   }
@@ -36,8 +36,8 @@ function pollCards (done) {
         if (err) {
           next(err); return;
         }
-        var since = last ? last.created : new Date(0);
-        var options = {
+        const since = last ? last.created : new Date(0);
+        const options = {
           username: username,
           password: password,
           ads: ads,

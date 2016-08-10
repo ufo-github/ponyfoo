@@ -1,20 +1,20 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var color = require('color');
-var cd = require('color-difference');
-var textService = require('./text');
-var colorGuide = fs.readFileSync('./client/css/variables/colors.styl', 'utf8');
-var colorGuideLines = colorGuide.split('\n');
-var rcomment = /^\s*\/(\/|\*)\s*/i;
-var rcolor = /^\s*c-([\w-]+)\s*=\s*(#[0-9a-f]{3,6})\s*$/i;
-var matches = 0;
-var sections = [];
-var colorVariableLines = colorGuideLines.filter(isColorVariable);
-var colorProfiles = colorVariableLines.map(toColorProfile);
-var sortedColorProfiles = colorProfiles.sort(byDistance).sort(bySection);
-var api = {
+const _ = require('lodash');
+const fs = require('fs');
+const color = require('color');
+const cd = require('color-difference');
+const textService = require('./text');
+const colorGuide = fs.readFileSync('./client/css/variables/colors.styl', 'utf8');
+const colorGuideLines = colorGuide.split('\n');
+const rcomment = /^\s*\/(\/|\*)\s*/i;
+const rcolor = /^\s*c-([\w-]+)\s*=\s*(#[0-9a-f]{3,6})\s*$/i;
+let matches = 0;
+const sections = [];
+const colorVariableLines = colorGuideLines.filter(isColorVariable);
+const colorProfiles = colorVariableLines.map(toColorProfile);
+const sortedColorProfiles = colorProfiles.sort(byDistance).sort(bySection);
+const api = {
   colors: {},
   colorSections: sections
 };
@@ -41,7 +41,7 @@ function isColorVariable (line) {
 }
 
 function getSection (i) {
-  var section = _.findLast(sections, isBelowIndex);
+  const section = _.findLast(sections, isBelowIndex);
   return section;
   function isBelowIndex (section) {
     return section.index <= i;
@@ -49,15 +49,15 @@ function getSection (i) {
 }
 
 function toColorProfile (line, i) {
-  var section = getSection(i);
-  var matches = rcolor.exec(line).slice(1);
-  var name = textService.hyphenToCamel(matches[0]);
-  var hex = matches[1];
-  var rbreak = /([a-z])([A-Z0-9])/g;
-  var rdecimal = /0([0-9]+)/g;
-  var displayName = name.replace(rbreak, '$1 $2').replace(rdecimal, '0.$1');
-  var displayNameUpper = up(displayName);
-  var profile = {
+  const section = getSection(i);
+  const matches = rcolor.exec(line).slice(1);
+  const name = textService.hyphenToCamel(matches[0]);
+  const hex = matches[1];
+  const rbreak = /([a-z])([A-Z0-9])/g;
+  const rdecimal = /0([0-9]+)/g;
+  const displayName = name.replace(rbreak, '$1 $2').replace(rdecimal, '0.$1');
+  const displayNameUpper = up(displayName);
+  const profile = {
     name: name,
     displayName: displayNameUpper,
     hex: hex,

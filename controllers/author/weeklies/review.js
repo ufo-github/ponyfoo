@@ -1,10 +1,10 @@
 'use strict';
 
-var _ = require('lodash');
-var contra = require('contra');
-var WeeklyIssue = require('../../../models/WeeklyIssue');
-var weeklyService = require('../../../services/weekly');
-var settingService = require('../../../services/setting');
+const _ = require('lodash');
+const contra = require('contra');
+const WeeklyIssue = require('../../../models/WeeklyIssue');
+const weeklyService = require('../../../services/weekly');
+const settingService = require('../../../services/setting');
 
 module.exports = getModel;
 
@@ -29,8 +29,8 @@ function getModel (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var sorted = _.sortBy(result.weeklies, sortByStatus);
-    var models = sorted.map(weeklyService.toMetadata);
+    const sorted = _.sortBy(result.weeklies, sortByStatus);
+    const models = sorted.map(weeklyService.toMetadata);
     res.viewModel = {
       model: {
         title: 'Newsletter Review',
@@ -47,7 +47,7 @@ function getModel (req, res, next) {
 }
 
 function sortByStatus (doc) {
-  var state = { draft: 0, ready: 1, released: 2 }[doc.status];
-  var reach = { undefined: 0, scheduled: 1, patrons: 2, everyone: 3 }[doc.statusReach];
+  const state = { draft: 0, ready: 1, released: 2 }[doc.status];
+  const reach = { undefined: 0, scheduled: 1, patrons: 2, everyone: 3 }[doc.statusReach];
   return state + reach;
 }

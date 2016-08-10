@@ -1,10 +1,10 @@
 'use strict';
 
-var authOnly = require('./account/only');
-var ownerOnly = require('./author/roleOnly')(['owner']);
-var invoiceOnly = require('./author/roleOnly')(['owner']);
-var articlesOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
-var weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
+const authOnly = require('./account/only');
+const ownerOnly = require('./author/roleOnly')(['owner']);
+const invoiceOnly = require('./author/roleOnly')(['owner']);
+const articlesOnly = require('./author/roleOnly')(['owner', 'editor', 'articles']);
+const weekliesOnly = require('./author/roleOnly')(['owner', 'weeklies']);
 
 module.exports = [
   { route: '/', action: 'articles/home' },

@@ -1,7 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
-var datetimeService = require('./datetime');
+const _ = require('lodash');
+const datetimeService = require('./datetime');
 
 function toJSON (comment) {
   return {
@@ -25,8 +25,8 @@ function hydrate (target, doc) {
 }
 
 function threads (accumulator, comment) {
-  var thread;
-  var commentModel = toJSON(comment);
+  let thread;
+  const commentModel = toJSON(comment);
   if (commentModel.parent) {
     thread = _.find(accumulator, { id: commentModel.parent.toString() });
     thread.comments.push(commentModel);

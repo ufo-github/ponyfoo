@@ -1,10 +1,10 @@
 'use strict';
 
-var Twit = require('twit');
-var winston = require('winston');
-var env = require('../lib/env');
-var enabled = env('TWITTER_PUBLISHING');
-var client = create();
+const Twit = require('twit');
+const winston = require('winston');
+const env = require('../lib/env');
+const enabled = env('TWITTER_PUBLISHING');
+const client = create();
 
 function create () {
   return enabled && new Twit({

@@ -1,11 +1,11 @@
 'use strict';
 
-var winston = require('winston');
-var Article = require('../models/Article');
-var es = require('../lib/elasticsearch');
-var indexName = 'ponyfoo';
-var typeName = 'article';
-var mapping = {
+const winston = require('winston');
+const Article = require('../models/Article');
+const es = require('../lib/elasticsearch');
+const indexName = 'ponyfoo';
+const typeName = 'article';
+const mapping = {
   properties: {
     timestamp: { type: 'date' },
     title: { type: 'string' },
@@ -17,9 +17,9 @@ var mapping = {
     status: { type: 'string', index: 'not_analyzed' }
   }
 };
-var ensuring = false;
-var ensured = false;
-var ensureQueue = [];
+const ensureQueue = [];
+let ensuring = false;
+let ensured = false;
 
 function toIndex (article) {
   return {
@@ -55,7 +55,7 @@ function initialize (done) {
       done(err); return;
     }
     winston.debug('Creating elasticsearch mapping for articles.');
-    var op = {
+    const op = {
       index: indexName,
       type: typeName,
       body: mapping
@@ -87,7 +87,7 @@ function bulkIndexAllArticles (done) {
       done(err); return;
     }
     winston.debug('Bulk inserting articles into elasticsearch.');
-    var op = {
+    const op = {
       body: articles.reduce(toBulk, [])
     };
     es.client.bulk(op, done);
@@ -95,14 +95,12 @@ function bulkIndexAllArticles (done) {
 }
 
 function ensureIndexThen (next) {
-  return function wrapper () {
-    var args = Array.prototype.slice.call(arguments);
-
+  return function wrapper (...args) {
     if (ensured) {
       initialized(null); return;
     }
-    var last = args[args.length - 1];
-    var done = typeof last === 'function' ? last : warn;
+    const last = args[args.length - 1];
+    const done = typeof last === 'function' ? last : warn;
 
     if (ensuring) {
       enqueue(); return;
@@ -129,8 +127,8 @@ function ensureIndexThen (next) {
     function enqueue () {
       ensureQueue.push({
         process: next,
-        args: args,
-        done: done
+        args,
+        done
       });
     }
 

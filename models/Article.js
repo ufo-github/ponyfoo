@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var commentSchema = require('./schemas/comment');
-var ObjectId = mongoose.Schema.Types.ObjectId;
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const commentSchema = require('./schemas/comment');
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
@@ -47,7 +47,7 @@ var schema = new mongoose.Schema({
   hnDiscuss: String
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-var api = mongoose.model('Article', schema);
+const api = mongoose.model('Article', schema);
 
 schema.index({
   tags: 'text',

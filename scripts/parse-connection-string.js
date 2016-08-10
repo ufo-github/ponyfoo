@@ -5,13 +5,13 @@ if (!module.parent) {
   require('../chdir');
 }
 
-var mongoUri = require('mongodb-uri');
-var env = require('../lib/env');
-var uri = env('MONGO_URI');
-var parts = mongoUri.parse(uri);
+const mongoUri = require('mongodb-uri');
+const env = require('../lib/env');
+const uri = env('MONGO_URI');
+const parts = mongoUri.parse(uri);
 
 parts.hosts.forEach(host => {
-  var port = host.port ? `:${host.port}` : '';
+  const port = host.port ? `:${host.port}` : '';
   host.hostname = host.host + port;
 });
 
@@ -25,6 +25,6 @@ if (module.parent) {
 }
 
 function print () {
-  var json = JSON.stringify(parts, null, 2);
+  const json = JSON.stringify(parts, null, 2);
   console.log(json);
 }

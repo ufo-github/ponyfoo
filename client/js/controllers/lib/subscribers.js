@@ -1,23 +1,23 @@
 'use strict';
 
-var cloneDeep = require('lodash//cloneDeep');
-var $ = require('dominus');
-var moment = require('moment');
-var debounce = require('lodash/debounce');
-var loadScript = require('../../lib/loadScript');
-var colors = ['#cbc5c0', '#1a4d7f', '#55acee', '#1bc211', '#900070', '#e92c6c', '#f3720d', '#ffe270'];
+const cloneDeep = require('lodash//cloneDeep');
+const $ = require('dominus');
+const moment = require('moment');
+const debounce = require('lodash/debounce');
+const loadScript = require('../../lib/loadScript');
+const colors = ['#cbc5c0', '#1a4d7f', '#55acee', '#1bc211', '#900070', '#e92c6c', '#f3720d', '#ffe270'];
 
 module.exports = function (viewModel, container) {
-  var graphData = viewModel.subscriberGraph;
+  const graphData = viewModel.subscriberGraph;
 
   loadD3(loadD3tip.bind(null, loaded));
 
   function loadD3 (next) { loadScript('/js/d3.js', next); }
   function loadD3tip (next) { loadScript('/js/d3-tip.js', next); }
   function loaded () {
-    var d3 = global.d3;
-    var d3tip = global.d3Tip;
-    var renderTimely = debounce(render, 300);
+    const d3 = global.d3;
+    const d3tip = global.d3Tip;
+    const renderTimely = debounce(render, 300);
 
     d3tip(d3);
 
@@ -28,22 +28,22 @@ module.exports = function (viewModel, container) {
   }
 
   function render () {
-    var d3 = global.d3;
-    var parent = $.findOne('.sg-container', container);
-    var showSubscribers = $('#sg-show-subscribers', container).value();
-    var showPageViews = $('#sg-show-pageviews', container).value();
+    const d3 = global.d3;
+    const parent = $.findOne('.sg-container', container);
+    const showSubscribers = $('#sg-show-subscribers', container).value();
+    const showPageViews = $('#sg-show-pageviews', container).value();
 
     $('.sg-chart', container).remove();
 
-    var rect = parent.getBoundingClientRect();
-    var margin = {
+    const rect = parent.getBoundingClientRect();
+    const margin = {
       top: 20, right: 20, bottom: 30, left: 40
     };
-    var dx = rect.right - rect.left;
-    var unboundHeight = Math.ceil(dx / 1.5) - margin.top - margin.bottom;
-    var width = dx - margin.left - margin.right;
-    var height = Math.max(unboundHeight, 300);
-    var svg = d3
+    const dx = rect.right - rect.left;
+    const unboundHeight = Math.ceil(dx / 1.5) - margin.top - margin.bottom;
+    const width = dx - margin.left - margin.right;
+    const height = Math.max(unboundHeight, 300);
+    const svg = d3
       .select('.sg-container')
       .append('div')
       .classed('sg-chart', true)
@@ -53,16 +53,16 @@ module.exports = function (viewModel, container) {
       .append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    var x = d3.scale
+    const x = d3.scale
       .ordinal()
       .rangeRoundBands([0, width], 0.1);
 
-    var y = d3.scale
+    const y = d3.scale
       .linear()
       .rangeRound([height - 150, 0]);
 
-    var data = cloneDeep(graphData.subscribers);
-    var color = d3.scale
+    const data = cloneDeep(graphData.subscribers);
+    const color = d3.scale
       .ordinal()
       .range(colors);
 
@@ -80,10 +80,11 @@ module.exports = function (viewModel, container) {
       color.domain(d3.keys(data[0]).filter(function (key) { return key !== 'date' && key !== 'dateText'; }));
 
       data.forEach(function (d) {
-        var y0 = 0;
+        let y0 = 0;
         d.date = new Date(d.date);
-        d.fragments = color.domain().map(function (name) {
-          return { name: name, y0: y0, y1: y0 += +d[name], d: d };
+        d.fragments = color.domain().map(name => {
+          const y1 = y0 += +d[name];
+          return { name, y0, y1, d };
         });
         d.total = d.unverified + d.migration + d.twitter + d.sidebar + d.comment + d.article + d.landed + d.weekly;
       });
@@ -94,7 +95,7 @@ module.exports = function (viewModel, container) {
     }
 
     function addTimeAxis () {
-      var xAxis = d3.svg
+      const xAxis = d3.svg
         .axis()
         .scale(x)
         .orient('bottom');
@@ -123,7 +124,7 @@ module.exports = function (viewModel, container) {
       addTips();
 
       function addStackedBarChart () {
-        var date = svg.selectAll('.date')
+        const date = svg.selectAll('.date')
           .data(data)
           .enter().append('g')
           .attr('class', 'sg-g')
@@ -143,7 +144,7 @@ module.exports = function (viewModel, container) {
         if (showPageViews) {
           return;
         }
-        var yAxis = d3.svg
+        const yAxis = d3.svg
           .axis()
           .scale(y)
           .orient('left')
@@ -161,7 +162,7 @@ module.exports = function (viewModel, container) {
       }
 
       function addLegends () {
-        var legend = svg.selectAll('.legend')
+        const legend = svg.selectAll('.legend')
           .data(color.domain().slice().reverse())
           .enter().append('g')
           .attr('class', 'sg-legend')
@@ -182,18 +183,18 @@ module.exports = function (viewModel, container) {
       }
 
       function addTips () {
-        var tip = d3.tip()
+        const tip = d3.tip()
           .attr('class', 'sg-tip')
           .direction('e')
           .offset([-10, 0])
           .html(function (d) {
-            var full = d.d;
-            var i = data.indexOf(full);
-            var oldIndex = i - 1;
-            var old = oldIndex < 0 ? 0 : data[oldIndex].total - data[oldIndex].unverified;
-            var now = full.total - full.unverified;
+            const full = d.d;
+            const i = data.indexOf(full);
+            const oldIndex = i - 1;
+            const old = oldIndex < 0 ? 0 : data[oldIndex].total - data[oldIndex].unverified;
+            const now = full.total - full.unverified;
             const { name } = d;
-            var c = color(name);
+            const c = color(name);
             return `
 <div class="sg-tip-content" style="color: ${ c === '#ffe270' ? '#333' : '#fbf9ec' }; background-color: ${ c };">
   <div>
@@ -216,8 +217,8 @@ module.exports = function (viewModel, container) {
     }
 
     function addPageViews (x1, x2) {
-      var peak = 0;
-      var pv = cloneDeep(graphData.pageviews);
+      let peak = 0;
+      const pv = cloneDeep(graphData.pageviews);
       if (!pv || pv.length === 0) {
         return;
       }
@@ -228,10 +229,10 @@ module.exports = function (viewModel, container) {
         }
       });
 
-      var x = d3.time.scale().range([x1, x2]);
-      var y = d3.scale.linear().rangeRound([height - 150, 0]);
+      const x = d3.time.scale().range([x1, x2]);
+      const y = d3.scale.linear().rangeRound([height - 150, 0]);
 
-      var line = d3.svg.line()
+      const line = d3.svg.line()
         .x(d => x(d.date))
         .y(d => y(d.views));
 
@@ -244,7 +245,7 @@ module.exports = function (viewModel, container) {
       addPageViewsPath();
 
       function addPageViewsAxis () {
-        var yAxis = d3.svg
+        const yAxis = d3.svg
           .axis()
           .scale(y)
           .orient('left')
@@ -299,8 +300,8 @@ module.exports = function (viewModel, container) {
 };
 
 function diffText (old, now) {
-  var diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);
-  var sign = diff < 0 ? '' : '+';
-  var fixed = diff.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+  const diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);
+  const sign = diff < 0 ? '' : '+';
+  const fixed = diff.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
   return sign + fixed + '%';
 }

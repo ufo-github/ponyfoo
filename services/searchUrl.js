@@ -1,17 +1,15 @@
 'use strict';
 
-var spaces = /\s+/;
+const spaces = /\s+/;
 
 function compile (input) {
-  var builder = ['/articles'];
-  var keywords = (input || '').trim().split(spaces).filter(truthy);
-  var extracted = { tags: [], terms: [] };
+  const builder = ['/articles'];
+  const keywords = (input || '').trim().split(spaces).filter(truthy);
+  const extracted = { tags: [], terms: [] };
 
   keywords.reduce(extract, extracted);
-  extracted = {
-    tags: clean(extracted.tags),
-    terms: clean(extracted.terms)
-  };
+  extracted.tags = clean(extracted.tags);
+  extracted.terms = clean(extracted.terms);
 
   if (extracted.terms.length) {
     builder.push('/search/');
@@ -25,15 +23,15 @@ function compile (input) {
 }
 
 function extract (result, keyword) {
-  var tagExtract = /\[([^\s[\]]+)\]/g;
-  var tags = keyword.match(tagExtract);
+  const tagExtract = /\[([^\s[\]]+)\]/g;
+  const tags = keyword.match(tagExtract);
   if (tags) {
     result.tags.push.apply(result.tags, tags);
   }
-  var terms = [keyword];
-  var edge;
-  var splicer;
-  var split;
+  const terms = [keyword];
+  let edge;
+  let splicer;
+  let split;
   while (tags && tags.length) {
     edge = terms.length - 1;
     split = terms[edge].split(tags.shift());
@@ -60,7 +58,7 @@ function unique (collection, item) {
 }
 
 function unwrap (tag) {
-  var tagUnwrap = /^\[(\S+)\]$/;
+  const tagUnwrap = /^\[(\S+)\]$/;
   return tag.replace(tagUnwrap, '$1');
 }
 

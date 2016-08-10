@@ -1,12 +1,12 @@
 'use strict';
 
-var winston = require('winston');
-var OpenSourceProject = require('../../../models/OpenSourceProject');
-var markupService = require('../../../services/markup');
+const winston = require('winston');
+const OpenSourceProject = require('../../../models/OpenSourceProject');
+const markupService = require('../../../services/markup');
 
 module.exports = function (req, res) {
-  var body = req.body;
-  var model = {
+  const body = req.body;
+  const model = {
     name: body.name,
     repo: body.repo,
     branch: body.branch,

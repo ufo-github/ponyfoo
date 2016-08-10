@@ -1,9 +1,9 @@
 'use strict';
 
-var bcrypt = require('bcrypt');
-var crypto = require('crypto');
-var env = require('../lib/env');
-var factor = env('SALT_WORK_FACTOR');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const env = require('../lib/env');
+const factor = env('SALT_WORK_FACTOR');
 
 function encrypt (value, done) {
   bcrypt.genSalt(factor, function (err, salt) {

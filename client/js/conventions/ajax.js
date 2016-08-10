@@ -1,10 +1,10 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var measly = require('measly');
-var defaultMessages = ['Oops. It seems something went terribly wrong!'];
-var body = $('body');
+const $ = require('dominus');
+const taunus = require('taunus');
+const measly = require('measly');
+const defaultMessages = ['Oops. It seems something went terribly wrong!'];
+const body = $('body');
 
 body.on('click', '.vw-conventional, .fs-messages', remove);
 
@@ -26,8 +26,8 @@ function abort () {
 
 function remove (e) {
   e.preventDefault();
-  var ctx = $(e.target);
-  var parents = ctx.parents('.vw-conventional, .fs-messages');
+  const ctx = $(e.target);
+  const parents = ctx.parents('.vw-conventional, .fs-messages');
   ctx.and(parents).remove();
 }
 
@@ -39,12 +39,12 @@ function renderOrClean (data) {
   if (data.messages) {
     render.call(this, null, data); return;
   }
-  var context = $(this.context);
+  const context = $(this.context);
   clean(context);
 }
 
 function getMessages (err, body) {
-  var singleMessage = body && body.error && body.error.message;
+  const singleMessage = body && body.error && body.error.message;
   if (singleMessage) {
     return [singleMessage];
   }
@@ -58,12 +58,12 @@ function render (err, body) {
   if (this.aborted) {
     return;
   }
-  var messages = getMessages(err, body);
+  const messages = getMessages(err, body);
   if (messages === void 0) {
     return;
   }
-  var context = $(this.context);
-  var list = $('<ul>').addClass('vw-conventional');
+  const context = $(this.context);
+  const list = $('<ul>').addClass('vw-conventional');
 
   $(messages.map(dom)).appendTo(list).i(0).append(
     $('<span>').addClass('fa fa-remove vw-conventional-remove')
@@ -71,7 +71,7 @@ function render (err, body) {
 
   clean(context);
 
-  var title = context.findOne('.vw-title');
+  const title = context.findOne('.vw-title');
   if (title) {
     $(title).after(list);
   } else {
@@ -84,9 +84,9 @@ function render (err, body) {
 }
 
 function handleTaunusError (route, context, err) {
-  var ctx = $(context.element);
-  var parents = ctx.parents('.ly-section');
-  var section = ctx.where('.ly-section').and(parents);
+  const ctx = $(context.element);
+  const parents = ctx.parents('.ly-section');
+  const section = ctx.where('.ly-section').and(parents);
   if (section.length) {
     render.call({ context: section.length ? section : document.body }, err, {
       messages: defaultMessages

@@ -1,16 +1,16 @@
 'use strict';
 
-var contra = require('contra');
-var winston = require('winston');
-var db = require('../lib/db');
-var env = require('../lib/env');
-var boot = require('../lib/boot');
-var facebookService = require('../services/facebook');
-var fbAppId = env('FACEBOOK_APP_ID');
-var fbAppSecret = env('FACEBOOK_APP_SECRET');
-var fbPageId = env('FACEBOOK_PAGE_ID');
-var argv = process.argv.slice(2);
-var fbAccessToken = argv[0];
+const contra = require('contra');
+const winston = require('winston');
+const db = require('../lib/db');
+const env = require('../lib/env');
+const boot = require('../lib/boot');
+const facebookService = require('../services/facebook');
+const fbAppId = env('FACEBOOK_APP_ID');
+const fbAppSecret = env('FACEBOOK_APP_SECRET');
+const fbPageId = env('FACEBOOK_PAGE_ID');
+const argv = process.argv.slice(2);
+const fbAccessToken = argv[0];
 
 if (!fbAccessToken) {
   console.warn([
@@ -34,7 +34,7 @@ function booted () {
   contra.waterfall([getBearerToken, getAccounts, printAccessToken], end);
 
   function getBearerToken (next) {
-    var tokenRequest = {
+    const tokenRequest = {
       grant_type: 'fb_exchange_token',
       fb_exchange_token: fbAccessToken,
       client_id: fbAppId,
@@ -44,14 +44,14 @@ function booted () {
   }
 
   function getAccounts (data, next) {
-    var accountsRequest = {
+    const accountsRequest = {
       access_token: data.access_token
     };
     facebookService.get('me/accounts', accountsRequest, next);
   }
 
   function printAccessToken (result, next) {
-    var page = result.data.filter(wherePage)[0];
+    const page = result.data.filter(wherePage)[0];
     if (!page) {
       next(new Error('User does not have access to facebook page')); return;
     }

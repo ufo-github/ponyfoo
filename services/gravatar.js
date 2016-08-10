@@ -1,10 +1,10 @@
 'use strict';
 
-var util = require('util');
-var request = require('request');
-var cryptoService = require('./crypto');
-var fmt = 'https://www.gravatar.com/avatar/%s?d=identicon&r=PG';
-var tiny = '&s=24';
+const util = require('util');
+const request = require('request');
+const cryptoService = require('./crypto');
+const fmt = 'https://www.gravatar.com/avatar/%s?d=identicon&r=PG';
+const tiny = '&s=24';
 
 function hash (email) {
   return cryptoService.md5(email || '');

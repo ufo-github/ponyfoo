@@ -3,15 +3,15 @@
 require('./preconfigure');
 require('./chdir');
 
-var os = require('os');
-var winston = require('winston');
-var lipstick = require('lipstick');
-var env = require('./lib/env');
-var boot = require('./lib/boot');
-var cores = os.cpus().length;
-var workers = Math.max(cores, 2);
-var port = env('PORT');
-var options = {
+const os = require('os');
+const winston = require('winston');
+const lipstick = require('lipstick');
+const env = require('./lib/env');
+const boot = require('./lib/boot');
+const cores = os.cpus().length;
+const workers = Math.max(cores, 2);
+const port = env('PORT');
+const options = {
   port: port,
   workers: workers
 };

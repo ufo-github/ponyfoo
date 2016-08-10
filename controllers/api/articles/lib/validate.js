@@ -1,22 +1,22 @@
 'use strict';
 
-var util = require('util');
-var moment = require('moment');
-var sluggish = require('sluggish');
-var validator = require('validator');
-var Article = require('../../../../models/Article');
-var textService = require('../../../../services/text');
-var statuses = Article.validStatuses;
+const util = require('util');
+const moment = require('moment');
+const sluggish = require('sluggish');
+const validator = require('validator');
+const Article = require('../../../../models/Article');
+const textService = require('../../../../services/text');
+const statuses = Article.validStatuses;
 
 function validate (model, options) {
-  var validation = [];
+  const validation = [];
   if (!model || typeof model !== 'object') {
     validation.push('Invalid request.');
     return validation;
   }
-  var status = getStatus();
-  var draft = status === 'draft';
-  var sanitized = {
+  const status = getStatus();
+  const draft = status === 'draft';
+  const sanitized = {
     status: status,
     titleMarkdown: getTitle(),
     slug: getSlug(),
@@ -34,7 +34,7 @@ function validate (model, options) {
     echojs: !!model.echojs,
     hn: !!model.hn
   };
-  var publication = getPublicationDate();
+  const publication = getPublicationDate();
   if (publication) {
     sanitized.publication = publication;
   } else if (model.status !== 'published') {
@@ -59,7 +59,7 @@ function validate (model, options) {
 
   function getPublicationDate () {
     if (model.publication && model.status !== 'published') {
-      var when = moment.utc(model.publication);
+      const when = moment.utc(model.publication);
       if (!when.isValid()) {
         validation.push('The publication date is invalid.');
       }
@@ -78,23 +78,23 @@ function validate (model, options) {
   }
 
   function getTitle () {
-    var length = 3;
+    const length = 3;
     if (validator.isLength(model.titleMarkdown, length)) {
       return validator.toString(model.titleMarkdown);
     }
-    var message = util.format('The title must be at least %s characters long.', length);
+    const message = util.format('The title must be at least %s characters long.', length);
     validation.push(message);
   }
 
   function getSlug () {
-    var length = 3;
-    var input = validator.toString(model.slug);
-    var slug = sluggish(input);
+    const length = 3;
+    const input = validator.toString(model.slug);
+    const slug = sluggish(input);
     if (!validator.isLength(slug, length)) {
-      var message = util.format('The article slug must be at least %s characters long.', length);
+      const message = util.format('The article slug must be at least %s characters long.', length);
       validation.push(message);
     }
-    var rforbidden = /^feed|archives|history$/ig;
+    const rforbidden = /^feed|archives|history$/ig;
     if (rforbidden.test(slug)) {
       validation.push('The provided slug is reserved and can’t be used');
     }
@@ -102,9 +102,9 @@ function validate (model, options) {
   }
 
   function getContent (prop, options) {
-    var length = 3;
-    var message;
-    var input = validator.toString(model[prop]);
+    const length = 3;
+    let message;
+    const input = validator.toString(model[prop]);
     if (!validator.isLength(input, length)) {
       message = util.format('The article %s must be at least %s characters long.', prop, length);
       if (options.required) {
@@ -116,7 +116,7 @@ function validate (model, options) {
   }
 
   function getTags () {
-    var raw = getTagsRaw();
+    const raw = getTagsRaw();
     if (raw.length > 6) {
       validation.push('You can choose 6 categories at most.'); return;
     }
@@ -127,8 +127,8 @@ function validate (model, options) {
   }
 
   function getTagsRaw () {
-    var input = Array.isArray(model.tags) ? model.tags.join(' ') : validator.toString(model.tags);
-    var tags = textService.splitTags(input);
+    const input = Array.isArray(model.tags) ? model.tags.join(' ') : validator.toString(model.tags);
+    const tags = textService.splitTags(input);
     return tags;
   }
 }

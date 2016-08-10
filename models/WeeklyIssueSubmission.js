@@ -1,8 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Mixed = mongoose.Schema.Types.Mixed;
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const Mixed = mongoose.Schema.Types.Mixed;
+const schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   status: { type: String, index: { unique: false }, require: true }, // ['incoming', 'accepted', 'used']
   slug: { type: String, index: { unique: true }, require: true },

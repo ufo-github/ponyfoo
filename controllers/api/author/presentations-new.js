@@ -1,13 +1,13 @@
 'use strict';
 
-var winston = require('winston');
-var sluggish = require('sluggish');
-var moment = require('moment');
-var Presentation = require('../../../models/Presentation');
-var markupService = require('../../../services/markup');
+const winston = require('winston');
+const sluggish = require('sluggish');
+const moment = require('moment');
+const Presentation = require('../../../models/Presentation');
+const markupService = require('../../../services/markup');
 
 module.exports = function (req, res) {
-  var body = req.body;
+  const body = req.body;
 
   body.resources_title = Array.isArray(body['resources_title[]']) ?
      body['resources_title[]'] :
@@ -16,7 +16,7 @@ module.exports = function (req, res) {
      body['resources_url[]'] :
     [body['resources_url[]']];
 
-  var model = {
+  const model = {
     presented: moment.utc(body.presented, 'DD-MM-YYYY').toDate(),
     title: body.title,
     slug: sluggish(body.slug),
@@ -29,7 +29,7 @@ module.exports = function (req, res) {
   };
   new Presentation(model).save(saved);
   function toResourceItem (title, i) {
-    var rparagraph = /^<p>|<\/p>$/ig;
+    const rparagraph = /^<p>|<\/p>$/ig;
     return {
       title: title,
       titleHtml: markupService.compile(title).trim().replace(rparagraph, ''),

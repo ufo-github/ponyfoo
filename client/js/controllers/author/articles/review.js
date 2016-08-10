@@ -1,11 +1,11 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
+const $ = require('dominus');
+const taunus = require('taunus');
 
 module.exports = function (viewModel) {
-  var container = $('.ar-container');
-  var compute = $('.ar-recompute');
+  const container = $('.ar-container');
+  const compute = $('.ar-recompute');
 
   container.on('click', '.ar-remove', edit(remove, 'delete'));
   container.on('click', '.ar-restore', edit(restore));
@@ -14,13 +14,13 @@ module.exports = function (viewModel) {
 
   function edit (fn, action) {
     return function editHandler (e) {
-      var target = $(e.target);
-      var slug = target.attr('data-slug');
-      var confirmation = getConfirmation(action, slug);
+      const target = $(e.target);
+      const slug = target.attr('data-slug');
+      const confirmation = getConfirmation(action, slug);
       if (!confirmation) {
         return;
       }
-      var endpoint = '/api/articles/' + slug;
+      const endpoint = '/api/articles/' + slug;
       fn(endpoint).on('data', refresh);
       function refresh () {
         taunus.navigate('/articles/review', { force: true });
@@ -46,7 +46,7 @@ module.exports = function (viewModel) {
   }
 
   function computeRelated (e) {
-    var okay = confirm('Are you sure you want to recompute relationships for every single article?');
+    const okay = confirm('Are you sure you want to recompute relationships for every single article?');
     if (!okay) {
       e.preventDefault();
       e.stopPropagation();

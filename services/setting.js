@@ -1,8 +1,8 @@
 'use strict';
 
-var contra = require('contra');
-var Setting = require('../models/Setting');
-var api = contra.emitter({
+const contra = require('contra');
+const Setting = require('../models/Setting');
+const api = contra.emitter({
   get: get,
   getKey: getKey,
   setKey: setKey,
@@ -42,7 +42,7 @@ function setKey (key, value, done) {
 }
 
 function save (settings, done) {
-  var model = new Setting({ items: settings });
+  const model = new Setting({ items: settings });
   model.save(saved);
 
   function saved (err) {
@@ -69,8 +69,8 @@ function save (settings, done) {
 function toModel (settings) {
   return Object.keys(settings).map(intoKeyValuePair);
   function intoKeyValuePair (key) {
-    var setting = settings[key];
-    var value = setting === undefined ? '' : JSON.stringify(setting, null, 2);
+    const setting = settings[key];
+    const value = setting === undefined ? '' : JSON.stringify(setting, null, 2);
     return {
       key: key,
       value: value

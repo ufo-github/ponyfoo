@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var cryptoService = require('../services/crypto');
-var gravatarService = require('../services/gravatar');
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const cryptoService = require('../services/crypto');
+const gravatarService = require('../services/gravatar');
+const schema = new mongoose.Schema({
   email: { type: String, require: true, index: { unique: true }, trim: true },
   password: { type: String, require: true },
   bypassEncryption: { type: Boolean, 'default': true },
@@ -32,7 +32,7 @@ function computeGravatar () {
 }
 
 function beforeSave (done) {
-  var user = this;
+  const user = this;
   if (user.bypassEncryption) { // password already encrypted, we shouldn't re-encrypt it
     user.bypassEncryption = false;
     done(); return;

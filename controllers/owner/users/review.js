@@ -1,9 +1,9 @@
 'use strict';
 
-var util = require('util');
-var datetimeService = require('../../../services/datetime');
-var emojiService = require('../../../services/emoji');
-var userService = require('../../../services/user');
+const util = require('util');
+const datetimeService = require('../../../services/datetime');
+const emojiService = require('../../../services/emoji');
+const userService = require('../../../services/user');
 
 module.exports = function (req, res, next) {
   userService.findContributors(respond);
@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
 };
 
 function toUserModel (contributor) {
-  var user = contributor.user;
+  const user = contributor.user;
   return {
     id: user._id.toString(),
     created: datetimeService.field(user.created),

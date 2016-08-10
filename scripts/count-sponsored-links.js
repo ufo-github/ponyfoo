@@ -3,10 +3,10 @@
 require('../preconfigure');
 require('../chdir');
 
-var moment = require('moment');
-var db = require('../lib/db');
-var boot = require('../lib/boot');
-var WeeklyIssue = require('../models/WeeklyIssue')
+const moment = require('moment');
+const db = require('../lib/db');
+const boot = require('../lib/boot');
+const WeeklyIssue = require('../models/WeeklyIssue')
 
 boot(booted);
 
@@ -18,7 +18,7 @@ function found (err, issues) {
   if (err) {
     throw err;
   }
-  var sections = issues
+  const sections = issues
     .map(issue => issue.sections.map(section => {
       section.issue = issue;
       return section;

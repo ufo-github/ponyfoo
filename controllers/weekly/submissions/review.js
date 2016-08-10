@@ -1,12 +1,12 @@
 'use strict';
 
-var contra = require('contra');
-var WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
-var weeklyCompilerService = require('../../../services/weeklyCompiler');
-var datetimeService = require('../../../services/datetime');
-var markupService = require('../../../services/markup');
-var userService = require('../../../services/user');
-var subtypeMap = {
+const contra = require('contra');
+const WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
+const weeklyCompilerService = require('../../../services/weeklyCompiler');
+const datetimeService = require('../../../services/datetime');
+const markupService = require('../../../services/markup');
+const userService = require('../../../services/user');
+const subtypeMap = {
   suggestion: 'Suggestion',
   primary: 'Primary Sponsorship',
   secondary: 'Sponsored Link',
@@ -27,7 +27,7 @@ function getModel (req, res, next) {
   }
 
   function toRowModel (submission, next) {
-    var options = {
+    const options = {
       markdown: markupService,
       slug: 'submission-preview'
     };

@@ -1,12 +1,12 @@
 'use strict';
 
-var winston = require('winston');
-var sluggish = require('sluggish');
-var InvoiceParty = require('../../../../models/InvoiceParty');
-var invoicePartyTypes = ['customer', 'payment'];
+const winston = require('winston');
+const sluggish = require('sluggish');
+const InvoiceParty = require('../../../../models/InvoiceParty');
+const invoicePartyTypes = ['customer', 'payment'];
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
+  const slug = req.params.slug;
   InvoiceParty.findOne({ slug: slug }).exec(found);
   function found (err, invoiceParty) {
     if (err) {
@@ -15,9 +15,9 @@ module.exports = function (req, res, next) {
     if (!invoiceParty) {
       next('route'); return;
     }
-    var body = req.body;
-    var invalidType = invoicePartyTypes.indexOf(body.type) === -1;
-    var type = invalidType ? 'customer' : body.type;
+    const body = req.body;
+    const invalidType = invoicePartyTypes.indexOf(body.type) === -1;
+    const type = invalidType ? 'customer' : body.type;
     invoiceParty.title = body.title;
     invoiceParty.slug = sluggish(body.slug);
     invoiceParty.type = type;

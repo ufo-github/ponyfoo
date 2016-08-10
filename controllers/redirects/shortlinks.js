@@ -1,6 +1,6 @@
 'use strict';
 
-var links = require('../../dat/shortlinks.json');
+const links = require('../../dat/shortlinks.json');
 
 function setup (app) {
   app.get('/bf/:shortlink?', expander);
@@ -8,11 +8,11 @@ function setup (app) {
 }
 
 function expander (req, res, next) {
-  var path = req.path;
+  const path = req.path;
   if (!links.hasOwnProperty(path)) {
     next(); return;
   }
-  var link = links[path];
+  const link = links[path];
   res.status(302).redirect(link);
 }
 

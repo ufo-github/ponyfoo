@@ -1,9 +1,9 @@
 'use strict';
 
-var contra = require('contra');
-var winston = require('winston');
-var weeklySharingService = require('./weeklySharing');
-var WeeklyIssue = require('../models/WeeklyIssue');
+const contra = require('contra');
+const winston = require('winston');
+const weeklySharingService = require('./weeklySharing');
+const WeeklyIssue = require('../models/WeeklyIssue');
 
 function noop () {}
 

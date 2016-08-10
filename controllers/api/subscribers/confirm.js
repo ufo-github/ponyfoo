@@ -1,13 +1,15 @@
 'use strict';
 
-var contra = require('contra');
-var subscriberService = require('../../../services/subscriber');
-var weeklySubscriberService = require('../../../services/weeklySubscriber');
-var unfold = require('./lib/unfold');
+const contra = require('contra');
+const subscriberService = require('../../../services/subscriber');
+const weeklySubscriberService = require('../../../services/weeklySubscriber');
+const unfold = require('./lib/unfold');
 
 function remove (req, res, next) {
-  var topics = req.query.topic;
-  if (typeof topics === 'string') { topics = [topics]; }
+  let topics = req.query.topic;
+  if (typeof topics === 'string') {
+    topics = [topics];
+  }
 
   contra.waterfall([
     contra.curry(unfold, req, res),
@@ -18,8 +20,8 @@ function remove (req, res, next) {
     if (!subscriber) {
       next(null, false); return;
     }
-    var allTopics = !Array.isArray(topics);
-    var proceed = shouldPeekAtNewsletter() ? peekAtNewsletter : noPeeking;
+    const allTopics = !Array.isArray(topics);
+    const proceed = shouldPeekAtNewsletter() ? peekAtNewsletter : noPeeking;
     if (allTopics) {
       subscriberService.confirm(subscriber.email, proceed);
     } else {
@@ -27,8 +29,8 @@ function remove (req, res, next) {
     }
 
     function shouldPeekAtNewsletter () {
-      var wasUnverified = !subscriber.verified;
-      var isNewsletter = allTopics || topics.indexOf('newsletter') !== -1;
+      const wasUnverified = !subscriber.verified;
+      const isNewsletter = allTopics || topics.indexOf('newsletter') !== -1;
       return wasUnverified && isNewsletter;
     }
 
@@ -69,7 +71,7 @@ function remove (req, res, next) {
     }
   }
   function toKeyValue (query, topic, i) {
-    var connector = i === 0 ? '?' : '&';
+    const connector = i === 0 ? '?' : '&';
     return query + connector + topic;
   }
 }

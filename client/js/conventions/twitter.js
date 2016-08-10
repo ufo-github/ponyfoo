@@ -1,9 +1,9 @@
 'use strict';
 
-var taunus = require('taunus');
+const taunus = require('taunus');
 
 function updateView (elem) {
-  var twitter = global.twttr;
+  const twitter = global.twttr;
   if (twitter && twitter.widgets) {
     twitter.widgets.load(elem);
   }

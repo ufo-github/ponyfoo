@@ -1,14 +1,14 @@
 'use strict';
 
-var $ = require('dominus');
-var comments = require('../comments/all');
+const $ = require('dominus');
+const comments = require('../comments/all');
 
 module.exports = function (viewModel, container) {
-  var composer = $('.mc-composer', container);
+  const composer = $('.mc-composer', container);
   if (!composer.length) {
     return;
   }
-  var commentsModel = {
+  const commentsModel = {
     user: viewModel.user,
     parent: viewModel.issue,
     parentType: 'weeklies',

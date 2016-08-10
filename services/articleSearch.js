@@ -1,26 +1,26 @@
 'use strict';
 
-var _ = require('lodash');
-var moment = require('moment');
-var contra = require('contra');
-var but = require('but');
-var util = require('util');
-var winston = require('winston');
-var env = require('../lib/env');
-var Article = require('../models/Article');
-var KnownTag = require('../models/KnownTag');
-var articleElasticsearchService = require('./articleElasticsearch');
-var articleFeedService = require('./articleFeed');
-var articleService = require('./article');
-var sitemapService = require('./sitemap');
-var processing = {};
+const _ = require('lodash');
+const moment = require('moment');
+const contra = require('contra');
+const but = require('but');
+const util = require('util');
+const winston = require('winston');
+const env = require('../lib/env');
+const Article = require('../models/Article');
+const KnownTag = require('../models/KnownTag');
+const articleElasticsearchService = require('./articleElasticsearch');
+const articleFeedService = require('./articleFeed');
+const articleService = require('./article');
+const sitemapService = require('./sitemap');
+const processing = {};
 
 function query (input, options, done) {
   if (done === void 0) {
     done = options;
     options = {};
   }
-  var tasks = {
+  const tasks = {
     articles: findArticles,
     tags: findKnownTags
   };
@@ -39,9 +39,9 @@ function query (input, options, done) {
     }
 
     function findSubset (err, results) {
-      var scoreCard = results.reduce(toScoreCard, {});
-      var ids = Object.keys(scoreCard);
-      var query = { _id: { $in: ids } };
+      const scoreCard = results.reduce(toScoreCard, {});
+      const ids = Object.keys(scoreCard);
+      const query = { _id: { $in: ids } };
       options.sort = false;
       articleService.find(query, options, sortByElasticsearchScore);
 
@@ -67,7 +67,7 @@ function query (input, options, done) {
     }
 
     function findAll () {
-      var query = {
+      const query = {
         status: 'published',
         tags: { $all: options.tags }
       };
@@ -101,7 +101,7 @@ function format (terms, tags) {
 }
 
 function update (article, done) {
-  var end = done || log;
+  const end = done || log;
   articleElasticsearchService.update(article, updated);
   function updated (err) {
     if (err) {
@@ -112,7 +112,7 @@ function update (article, done) {
 }
 
 function addRelated (article, done) {
-  var end = done || log;
+  const end = done || log;
   if (processing[article._id]) {
     processing[article._id] = false;
     end(null);
@@ -120,7 +120,7 @@ function addRelated (article, done) {
   }
   processing[article._id] = true;
 
-  var options = {
+  const options = {
     since: moment.utc('2014-01-01', 'YYYY-MM-DD').toDate() // avoid floating terrible articles
   };
 
@@ -136,7 +136,7 @@ function addRelated (article, done) {
 }
 
 function addRelatedAll (done) {
-  var end = done || log;
+  const end = done || log;
   env('BULK_INSERT', true);
   winston.info('Computing relationships for articles site-wide');
   contra.waterfall([

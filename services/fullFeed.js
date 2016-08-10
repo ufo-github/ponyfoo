@@ -1,18 +1,18 @@
 'use strict';
 
-var debounce = require('lodash/debounce');
-var contra = require('contra');
-var feedService = require('./feed');
-var weeklyFeedService = require('./weeklyFeed');
-var articleFeedService = require('./articleFeed');
-var fullFeed = feedService.from({
+const debounce = require('lodash/debounce');
+const contra = require('contra');
+const feedService = require('./feed');
+const weeklyFeedService = require('./weeklyFeed');
+const articleFeedService = require('./articleFeed');
+const fullFeed = feedService.from({
   id: 'all',
   href: '/all/feed',
   title: 'Pony Foo',
   description: 'Latest feed items published on Pony Foo',
   getFeed: getFeed
 });
-var rebuildSlowly = debounce(fullFeed.rebuild, 4000);
+const rebuildSlowly = debounce(fullFeed.rebuild, 4000);
 
 weeklyFeedService.on('built', rebuildSlowly);
 articleFeedService.on('built', rebuildSlowly);

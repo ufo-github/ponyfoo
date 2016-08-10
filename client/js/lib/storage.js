@@ -1,10 +1,10 @@
 'use strict';
 
-var raf = require('raf');
-var ls = global.localStorage;
+const raf = require('raf');
+const ls = global.localStorage;
 
 function get (key) {
-  var data = ls.getItem(key);
+  const data = ls.getItem(key);
   if (data) {
     return JSON.parse(data);
   }

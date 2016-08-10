@@ -1,26 +1,26 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var path = require('path');
-var util = require('util');
-var RSS = require('rss');
-var mkdirp = require('mkdirp');
-var contra = require('contra');
-var moment = require('moment');
-var winston = require('winston');
-var assign = require('assignment');
-var staticService = require('./static');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var contact = 'Nicolás Bevacqua <feed@ponyfoo.com>';
-var feedService = {
+const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
+const RSS = require('rss');
+const mkdirp = require('mkdirp');
+const contra = require('contra');
+const moment = require('moment');
+const winston = require('winston');
+const assign = require('assignment');
+const staticService = require('./static');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const contact = 'Nicolás Bevacqua <feed@ponyfoo.com>';
+const feedService = {
   from: from,
   feeds: {}
 };
 
 function from (options) {
-  var api = assign(options, contra.emitter({
+  const api = assign(options, contra.emitter({
     built: false,
     rebuild: rebuild,
     location: path.resolve('.bin/static/' + options.id + '.xml')
@@ -29,13 +29,13 @@ function from (options) {
   return api;
 
   function generate (items, done) {
-    var now = moment.utc();
-    var tags = _(items)
+    const now = moment.utc();
+    const tags = _(items)
       .map('categories')
       .flatten()
       .uniq()
       .value();
-    var feed = new RSS({
+    const feed = new RSS({
       generator: 'ponyfoo/ponyfoo',
       title: options.title,
       description: options.description,

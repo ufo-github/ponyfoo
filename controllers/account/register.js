@@ -1,9 +1,9 @@
 'use strict';
 
-var unverifiedService = require('../../services/unverified');
-var data = require('../../lib/authentication/data');
-var env = require('../../lib/env');
-var registration = env('REGISTRATION_OPEN');
+const unverifiedService = require('../../services/unverified');
+const data = require('../../lib/authentication/data');
+const env = require('../../lib/env');
+const registration = env('REGISTRATION_OPEN');
 
 function register (req, res, next) {
   if (!registration) {

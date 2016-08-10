@@ -1,6 +1,6 @@
 'use strict';
 
-var colorService = require('../../services/color');
+const colorService = require('../../services/color');
 
 module.exports = function (req, res, next) {
   res.viewModel = {

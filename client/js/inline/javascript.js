@@ -1,14 +1,14 @@
 ~function (window, document, location) {
   function inject (url) {
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.src = url;
     document.body.appendChild(script);
   }
 
   function injector () {
-    var search = location.search;
-    var searchQuery = search ? '&' + search.substr(1) : '';
-    var searchJson = '?json&callback=taunusReady' + searchQuery;
+    const search = location.search;
+    const searchQuery = search ? '&' + search.substr(1) : '';
+    const searchJson = '?json&callback=taunusReady' + searchQuery;
     inject(location.pathname + searchJson);
     inject('/js/all.js');
   }

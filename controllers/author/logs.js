@@ -1,14 +1,14 @@
 'use strict';
 
-var Log = require('../../models/Log');
-var errorService = require('../../services/error');
-var datetimeService = require('../../services/datetime');
+const Log = require('../../models/Log');
+const errorService = require('../../services/error');
+const datetimeService = require('../../services/datetime');
 
 module.exports = function (req, res, next) {
-  var max = 100;
-  var page = parseInt(req.params.page, 10) || 1;
-  var p = page - 1;
-  var start = max * p;
+  const max = 100;
+  const page = parseInt(req.params.page, 10) || 1;
+  const p = page - 1;
+  const start = max * p;
 
   Log.find({}).sort('-timestamp').skip(start).limit(max).exec(render);
 

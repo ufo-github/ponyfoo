@@ -1,6 +1,6 @@
 'use strict';
 
-var $ = require('dominus');
+const $ = require('dominus');
 
 function unwrapImages (container) {
   $(container).find('img[data-src]').forEach(unwrap);

@@ -1,9 +1,9 @@
 'use strict';
 
-var contra = require('contra');
-var User = require('../models/User');
-var Article = require('../models/Article');
-var gravatarService = require('./gravatar');
+const contra = require('contra');
+const User = require('../models/User');
+const Article = require('../models/Article');
+const gravatarService = require('./gravatar');
 
 function findContributors (done) {
   contra.waterfall([findUsers, countArticles], done);
@@ -47,9 +47,9 @@ function getModel (email, password, bypass) {
 }
 
 function getProfile (contributor, options) {
-  var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
-  var user = contributor.user;
-  var profile = {
+  const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+  const user = contributor.user;
+  const profile = {
     avatar: getAvatar(user),
     displayName: user.displayName,
     slug: user.slug,
@@ -74,7 +74,7 @@ function getAvatar (user) {
 }
 
 function humanReadableRole (roles, hasPublishedArticles) {
-  var terms = [];
+  const terms = [];
   if (roles.indexOf('articles') !== -1 && hasPublishedArticles) {
     terms.push('Contributing Author');
   }
@@ -95,22 +95,22 @@ function humanReadableRole (roles, hasPublishedArticles) {
   }
   return 'Collaborator';
   function concatenate () {
-    var firstTerm = terms.shift();
+    const firstTerm = terms.shift();
     return terms.reduce(termReducer, firstTerm);
   }
 }
 
 function termReducer (all, term, i, terms) {
-  var len = terms.length;
-  var separator = len > 1 ? ', ' : ' ';
-  var joiner = len === i + 1 ? 'and ' : '';
+  const len = terms.length;
+  const separator = len > 1 ? ', ' : ' ';
+  const joiner = len === i + 1 ? 'and ' : '';
   return all + separator + joiner + term;
 }
 
 function create (bypass) {
   return function creation (email, password, done) {
-    var model = getModel(email, password, bypass);
-    var user = new User(model);
+    const model = getModel(email, password, bypass);
+    const user = new User(model);
 
     user.save(function saved (err) {
       done(err, user);
@@ -145,9 +145,9 @@ function hasRole (user, roles) {
 }
 
 function isActive (contributor) {
-  var roles = contributor.user.roles;
-  var singleRole = roles.length === 1;
-  var articleUser = singleRole && roles[0] === 'articles';
+  const roles = contributor.user.roles;
+  const singleRole = roles.length === 1;
+  const articleUser = singleRole && roles[0] === 'articles';
   if (articleUser && contributor.articleCount === 0) {
     return false;
   }

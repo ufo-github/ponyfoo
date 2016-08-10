@@ -1,15 +1,15 @@
 'use strict';
 
-var winston = require('winston');
-var WeeklyIssue = require('../../../models/WeeklyIssue');
-var weeklySharingService = require('../../../services/weeklySharing');
-var friendlyShared = {
+const winston = require('winston');
+const WeeklyIssue = require('../../../models/WeeklyIssue');
+const weeklySharingService = require('../../../services/weeklySharing');
+const friendlyShared = {
   'email-self': 'an email just for yourself'
 };
 
 module.exports = function (req, res) {
-  var slug = req.params.slug;
-  var medium = req.params.medium;
+  const slug = req.params.slug;
+  const medium = req.params.medium;
   WeeklyIssue.findOne({ slug: slug }, found);
 
   function found (err, weekly) {
@@ -27,14 +27,14 @@ module.exports = function (req, res) {
   }
 
   function share (weekly, reshare) {
-    var channel = weeklySharingService[medium];
+    const channel = weeklySharingService[medium];
     if (channel) {
       channel(weekly, { reshare: reshare, userId: req.user }, done);
     } else {
       end('error', 'Sharing medium "' + medium + '" is unknown.');
     }
     function done (err) {
-      var mediumText = friendlyShared[medium] || medium;
+      const mediumText = friendlyShared[medium] || medium;
       if (err) {
         winston.warn(err);
         end('error', 'Sharing via ' + mediumText + ' failed.');

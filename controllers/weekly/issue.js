@@ -1,16 +1,16 @@
 'use strict';
 
-var env = require('../../lib/env');
-var staticService = require('../../services/static');
-var WeeklyIssue = require('../../models/WeeklyIssue');
-var weeklyService = require('../../services/weekly');
-var cryptoService = require('../../services/crypto');
-var htmlService = require('../../services/html');
-var authority = env('AUTHORITY');
+const env = require('../../lib/env');
+const staticService = require('../../services/static');
+const WeeklyIssue = require('../../models/WeeklyIssue');
+const weeklyService = require('../../services/weekly');
+const cryptoService = require('../../services/crypto');
+const htmlService = require('../../services/html');
+const authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
-  var thanks = req.query.thanks;
-  var query = { slug: req.params.slug };
+  const thanks = req.query.thanks;
+  const query = { slug: req.params.slug };
   WeeklyIssue.findOne(query).populate('comments').exec(found);
 
   function found (err, issue) {
@@ -21,12 +21,12 @@ module.exports = function (req, res, next) {
       if (issue.statusReach === 'everyone') {
         done(); return;
       }
-      var challenge = cryptoService.md5(issue._id + issue.thanks);
+      const challenge = cryptoService.md5(issue._id + issue.thanks);
       if (issue.statusReach === 'patrons' && thanks && thanks === challenge) {
         handle(null, issue, challenge); return;
       }
     }
-    var verify = req.query.verify;
+    const verify = req.query.verify;
     if (verify && verify === cryptoService.md5(issue._id + issue.created)) {
       done(); return;
     }
@@ -49,10 +49,10 @@ module.exports = function (req, res, next) {
       };
       next(); return;
     }
-    var canonical = '/weekly/' + issue.slug;
-    var permalink = canonical + (challenge ? ('?thanks=' + challenge) : '');
-    var extracted = htmlService.extractImages('/weekly/' + issue.slug, issue.summaryText + issue.contentHtml);
-    var images = extracted.concat(authority + staticService.unroll('/img/ponyfooweekly-sample.png'));
+    const canonical = '/weekly/' + issue.slug;
+    const permalink = canonical + (challenge ? ('?thanks=' + challenge) : '');
+    const extracted = htmlService.extractImages('/weekly/' + issue.slug, issue.summaryText + issue.contentHtml);
+    const images = extracted.concat(authority + staticService.unroll('/img/ponyfooweekly-sample.png'));
 
     res.viewModel = {
       model: {

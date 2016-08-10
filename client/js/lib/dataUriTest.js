@@ -1,8 +1,8 @@
 'use strict';
 
-var datauri = new Image();
-var result;
-var deferred = [];
+const datauri = new Image();
+let deferred = [];
+let result;
 
 datauri.onload = load;
 datauri.onerror = error;
@@ -28,7 +28,7 @@ function resulted () {
   deferred.forEach(function (d) {
     test(d[0], d[1]);
   });
-  deferred = null;
+  deferred = [];
 }
 
 function test (success, failure) {

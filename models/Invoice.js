@@ -1,8 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const schema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   slug: { type: String, index: { unique: true }, require: true },
   date: Date,

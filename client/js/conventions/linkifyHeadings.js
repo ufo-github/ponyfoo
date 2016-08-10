@@ -1,7 +1,7 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
+const $ = require('dominus');
+const taunus = require('taunus');
 
 function linkifyHeadings () {
   taunus.on('render', render);
@@ -20,8 +20,8 @@ function render (container) {
     });
 
   function wrapInline (el) {
-    var $el = $(el);
-    var id = $el.attr('id');
+    const $el = $(el);
+    const id = $el.attr('id');
     return $el.html(`<a href="#${ id }" class="md-heading">${ $el.html() }</a>`);
   }
 }

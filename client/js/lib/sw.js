@@ -1,11 +1,11 @@
 'use strict';
 
-var queso = require('queso').stringify;
-var parse = require('omnibox/querystring').parse;
+const queso = require('queso').stringify;
+const parse = require('omnibox/querystring').parse;
 
 function toggleJSON (href, json, cb) {
-  var url = new URL(href);
-  var qs = parse(url.search.slice(1));
+  const url = new URL(href);
+  const qs = parse(url.search.slice(1));
   if (json) {
     qs.json = true;
     qs.callback = 'taunusReady';

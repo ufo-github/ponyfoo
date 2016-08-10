@@ -1,13 +1,13 @@
 'use strict';
 
-var fs = require('fs');
-var contra = require('contra');
-var pkg = require('../package.json');
-var env = require('../lib/env');
-var nodeEnv = env('NODE_ENV');
-var authority = env('AUTHORITY');
-var staticService = require('../services/static');
-var popularityService = require('../services/popularity');
+const fs = require('fs');
+const contra = require('contra');
+const pkg = require('../package.json');
+const env = require('../lib/env');
+const nodeEnv = env('NODE_ENV');
+const authority = env('AUTHORITY');
+const staticService = require('../services/static');
+const popularityService = require('../services/popularity');
 
 function read (file) {
   return function (next) {

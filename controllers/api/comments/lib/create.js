@@ -1,27 +1,27 @@
 'use strict';
 
-var _ = require('lodash');
-var util = require('util');
-var assign = require('assignment');
-var insane = require('insane');
-var contra = require('contra');
-var winston = require('winston');
-var User = require('../../../../models/User');
-var Article = require('../../../../models/Article');
-var WeeklyIssue = require('../../../../models/WeeklyIssue');
-var validate = require('./validate');
-var commentService = require('../../../../services/comment');
-var markupService = require('../../../../services/markup');
-var gravatarService = require('../../../../services/gravatar');
-var subscriberService = require('../../../../services/subscriber');
-var env = require('../../../../lib/env');
-var authority = env('AUTHORITY');
-var ownerEmail = env('OWNER_EMAIL');
-var words = env('SPAM_WORDS');
-var delimiters = '[?@,;:.<>{}()\\[\\]\\s_-]';
-var rdelimited = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
-var ranywhere = new RegExp(words, 'i');
-var hostTypes = {
+const _ = require('lodash');
+const util = require('util');
+const assign = require('assignment');
+const insane = require('insane');
+const contra = require('contra');
+const winston = require('winston');
+const User = require('../../../../models/User');
+const Article = require('../../../../models/Article');
+const WeeklyIssue = require('../../../../models/WeeklyIssue');
+const validate = require('./validate');
+const commentService = require('../../../../services/comment');
+const markupService = require('../../../../services/markup');
+const gravatarService = require('../../../../services/gravatar');
+const subscriberService = require('../../../../services/subscriber');
+const env = require('../../../../lib/env');
+const authority = env('AUTHORITY');
+const ownerEmail = env('OWNER_EMAIL');
+const words = env('SPAM_WORDS');
+const delimiters = '[?@,;:.<>{}()\\[\\]\\s_-]';
+const rdelimited = new RegExp(util.format('(^|%s)(%s)(%s|$)', delimiters, words, delimiters), 'i');
+const ranywhere = new RegExp(words, 'i');
+const hostTypes = {
   articles: {
     name: 'Article',
     schema: Article,
@@ -37,13 +37,13 @@ var hostTypes = {
 };
 
 module.exports = function (options, done) {
-  var hostType = hostTypes[options.type];
-  var validation = validate(options.model);
+  const hostType = hostTypes[options.type];
+  const validation = validate(options.model);
   if (validation.length) {
     done(null, 400, validation); return;
   }
-  var model = validation.model;
-  var comment;
+  const model = validation.model;
+  let comment;
 
   contra.waterfall([findHost, decisionTree, create], created);
 
@@ -62,8 +62,8 @@ module.exports = function (options, done) {
   }
 
   function create (host, next) {
-    var parent;
-    var parentId = model.parent;
+    let parent;
+    const parentId = model.parent;
     if (parentId) {
       parent = host.comments.id(parentId);
       if (!parent) {
@@ -79,18 +79,18 @@ module.exports = function (options, done) {
     if (options.type === 'articles' && host.status !== 'published' && !options.user) {
       done(null, 400, ['You can’t comment on article drafts!']); return;
     }
-    var opts = {
+    const opts = {
       deferImages: true,
       externalize: true
     };
-    var rimgur = /http:\/\/i\.imgur\.com\//g;
-    var secureImgur = 'https://i.imgur.com/';
-    var md = model.content.replace(rimgur, secureImgur);
-    var html = markupService.compile(model.content, opts);
-    var runsafe = /^\s*http:\/\//i;
-    var unsafeImages = false;
+    const rimgur = /http:\/\/i\.imgur\.com\//g;
+    const secureImgur = 'https://i.imgur.com/';
+    const md = model.content.replace(rimgur, secureImgur);
+    const html = markupService.compile(model.content, opts);
+    const runsafe = /^\s*http:\/\//i;
+    let unsafeImages = false;
     insane(html, {
-      filter: function filter (token) {
+      filter (token) {
         if (token.tag === 'img' && (runsafe.test(token.attrs.src) || runsafe.test(token.attrs['data-src']))) {
           unsafeImages = true;
         }
@@ -131,8 +131,8 @@ module.exports = function (options, done) {
       next(null, host);
     }
     function getModerators (next) {
-      var moderatorRoles = ['owner', 'editor', 'moderator'];
-      var query = { roles: { $in: moderatorRoles } };
+      const moderatorRoles = ['owner', 'editor', 'moderator'];
+      const query = { roles: { $in: moderatorRoles } };
       User.find(query).lean().select('email').exec(found);
       function found (err, users) {
         if (err) {
@@ -158,9 +158,9 @@ module.exports = function (options, done) {
     }
 
     function calculate (host, next) {
-      var emails = [ownerEmail, host.author.email];
-      var thread, op;
-      var parentId = comment.parent;
+      let emails = [ownerEmail, host.author.email];
+      let thread, op;
+      const parentId = comment.parent;
       if (parentId) {
         op = host.comments.id(parentId);
         thread = host.comments.filter(sameThread);
@@ -189,9 +189,9 @@ module.exports = function (options, done) {
   }
 
   function sendEmailNotifications (data) {
-    var permalinkToHost =  util.format('/%s/%s', options.type, data.host.slug);
-    var permalinkToComment = util.format('%s#comment-%s', permalinkToHost, comment._id);
-    var email = {
+    const permalinkToHost =  util.format('/%s/%s', options.type, data.host.slug);
+    const permalinkToComment = util.format('%s#comment-%s', permalinkToHost, comment._id);
+    const email = {
       subject: util.format('Fresh comments on "%s"!', data.host.title),
       teaser: 'Someone posted a comment on a thread you’re watching!',
       comment: {
@@ -217,7 +217,7 @@ module.exports = function (options, done) {
       }
     };
 
-    var emitter = subscriberService.send({
+    const emitter = subscriberService.send({
       topic: hostType.topic,
       template: 'comment-published',
       recipients: data.recipients,
@@ -226,12 +226,12 @@ module.exports = function (options, done) {
     emitter.on('locals', applyLocals);
 
     function applyLocals (email, locals) {
-      var isModerator = data.moderators.indexOf(email) !== -1;
+      const isModerator = data.moderators.indexOf(email) !== -1;
       locals.comment_removal_link_html = isModerator ? canRemove() : '';
       function canRemove () {
-        var template = 'Or, <a href="%s" style="color: #1686a2;">delete</a>.';
-        var remove = util.format('%s/api%s/comments/%s/remove', authority, permalinkToHost, comment._id);
-        var html = util.format(template, remove);
+        const template = 'Or, <a href="%s" style="color: #1686a2;">delete</a>.';
+        const remove = util.format('%s/api%s/comments/%s/remove', authority, permalinkToHost, comment._id);
+        const html = util.format(template, remove);
         return html;
       }
     }
@@ -246,7 +246,7 @@ module.exports = function (options, done) {
 };
 
 function spam (comment) {
-  var caught = (
+  const caught = (
     spamIn(comment.content) ||
     spamIn(comment.site, ranywhere) ||
     spamIn(comment.author)

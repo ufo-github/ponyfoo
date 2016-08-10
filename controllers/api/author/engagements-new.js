@@ -1,12 +1,12 @@
 'use strict';
 
-var winston = require('winston');
-var moment = require('moment');
-var Engagement = require('../../../models/Engagement');
+const winston = require('winston');
+const moment = require('moment');
+const Engagement = require('../../../models/Engagement');
 
 module.exports = function (req, res) {
-  var body = req.body;
-  var model = {
+  const body = req.body;
+  const model = {
     start: moment.utc(body.start, 'DD-MM-YYYY').toDate(),
     end: moment.utc(body.end, 'DD-MM-YYYY').toDate(),
     conference: body.conference,

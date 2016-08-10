@@ -1,6 +1,6 @@
 'use strict';
 
-var searchUrlService = require('../../services/searchUrl');
+const searchUrlService = require('../../services/searchUrl');
 
 function setup (app) {
   app.get('/:year(\\d{4})/:month([01]\\d)/:day([0-3]\\d)/:slug', redirect('/articles/:slug'));
@@ -21,8 +21,8 @@ function setup (app) {
 
 function redirect (template, qs) {
   return function middleware (req, res) {
-    var part = qs ? 'query' : 'params';
-    var endpoint = Object.keys(req[part]).reduce(map, template);
+    const part = qs ? 'query' : 'params';
+    const endpoint = Object.keys(req[part]).reduce(map, template);
     res.redirect(301, endpoint);
 
     function map (endpoint, prop) {
@@ -32,7 +32,7 @@ function redirect (template, qs) {
 }
 
 function searchTerms (req, res) {
-  var route = searchUrlService.compile(req.query.terms);
+  const route = searchUrlService.compile(req.query.terms);
   if (route) {
     res.redirect(301, route);
   } else {

@@ -1,22 +1,22 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var sluggish = require('sluggish');
-var debounce = require('lodash/debounce');
-var loadScript = require('../../lib/loadScript');
+const $ = require('dominus');
+const raf = require('raf');
+const sluggish = require('sluggish');
+const debounce = require('lodash/debounce');
+const loadScript = require('../../lib/loadScript');
 
 module.exports = function () {
-  var presented = $.findOne('.apn-presented');
-  var title = $('.apn-title');
-  var slug = $('.apn-slug');
-  var actions = $('.apn-actions');
-  var resources = $('.apn-resources').clone();
-  var addResource = $('.apn-add-resource');
+  const presented = $.findOne('.apn-presented');
+  const title = $('.apn-title');
+  const slug = $('.apn-slug');
+  const actions = $('.apn-actions');
+  const resources = $('.apn-resources').clone();
+  const addResource = $('.apn-add-resource');
 
   loadScript('/js/rome.js', function loaded () {
-    var rome = global.rome;
-    var updateSlugSlowly = raf.bind(null, debounce(updateSlug, 100));
+    const rome = global.rome;
+    const updateSlugSlowly = raf.bind(null, debounce(updateSlug, 100));
 
     rome(presented, { time: false, inputFormat: 'DD-MM-YYYY' });
 

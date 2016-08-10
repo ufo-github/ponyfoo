@@ -1,7 +1,7 @@
 'use strict';
 
-var winston = require('winston');
-var Engagement = require('../../../models/Engagement');
+const winston = require('winston');
+const Engagement = require('../../../models/Engagement');
 
 module.exports = function (req, res) {
   Engagement.remove({ _id: req.body.id }, saved);

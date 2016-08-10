@@ -1,7 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
-var contra = require('contra');
+const _ = require('lodash');
+const contra = require('contra');
 
 function find (Model, query, count, done) {
   if (count === 1) {
@@ -16,7 +16,7 @@ function find (Model, query, count, done) {
         Model.find(query).count(next);
       },
       function (count, next) {
-        var skips = Math.floor(Math.random() * count);
+        const skips = Math.floor(Math.random() * count);
         Model.find(query).skip(skips).limit(1).exec(next);
       }
     ], done);
@@ -28,8 +28,8 @@ function find (Model, query, count, done) {
         Model.find(query, '_id').lean().exec(next);
       },
       function (documents, next) {
-        var random = _(documents).map('_id').sample(count).value();
-        var byIds = {
+        const random = _(documents).map('_id').sample(count).value();
+        const byIds = {
           _id: { $in: random }
         };
         Model.find(byIds, next);

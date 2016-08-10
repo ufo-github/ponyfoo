@@ -1,7 +1,7 @@
 'use strict';
 
-var Article = require('../../models/Article');
-var redirect = require('./lib/redirect');
+const Article = require('../../models/Article');
+const redirect = require('./lib/redirect');
 
 module.exports = function (req, res, next) {
   Article

@@ -1,13 +1,13 @@
 'use strict';
 
-var contra = require('contra');
-var WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
+const contra = require('contra');
+const WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
 
 function remove (req, res, next) {
   contra.waterfall([lookupSubmission, found], handle);
 
   function lookupSubmission (next) {
-    var query = { slug: req.params.slug };
+    const query = { slug: req.params.slug };
     WeeklyIssueSubmission.findOne(query).exec(next);
   }
 

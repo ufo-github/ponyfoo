@@ -1,20 +1,20 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var series = require('contra/series');
-var curry = require('contra/curry');
-var sluggish = require('sluggish');
-var dragula = require('dragula');
-var taunus = require('taunus');
-var debounce = require('lodash/debounce');
-var scrapeCompletionService = require('../../../services/scrapeCompletion');
-var markdownService = require('../../../../../services/markdown');
-var textService = require('../../../../../services/text');
-var summaryService = require('../../../../../services/summary');
-var loadScript = require('../../../lib/loadScript');
-var rparagraph = /^<p>|<\/p>$/i;
-var rdigits = /^\d+$/;
+const $ = require('dominus');
+const raf = require('raf');
+const series = require('contra/series');
+const curry = require('contra/curry');
+const sluggish = require('sluggish');
+const dragula = require('dragula');
+const taunus = require('taunus');
+const debounce = require('lodash/debounce');
+const scrapeCompletionService = require('../../../services/scrapeCompletion');
+const markdownService = require('../../../../../services/markdown');
+const textService = require('../../../../../services/text');
+const summaryService = require('../../../../../services/summary');
+const loadScript = require('../../../lib/loadScript');
+const rparagraph = /^<p>|<\/p>$/i;
+const rdigits = /^\d+$/;
 
 module.exports = controller;
 
@@ -26,43 +26,43 @@ function controller (...params) {
 }
 
 function ready (viewModel, container, route) {
-  var weeklyCompilerService = global.weeklyCompiler;
-  var weeklyIssue = viewModel.issue;
-  var editing = viewModel.editing;
-  var released = editing && weeklyIssue.status === 'released';
-  var editor = $.findOne('.wa-editor', container);
-  var toolbox = $.findOne('.wa-toolbox', container);
-  var submissions = $.findOne('.wa-submissions', container);
-  var tools = $('.wa-tool', toolbox);
-  var title = $('.wa-title');
-  var slug = $('.wa-slug');
-  var status = $('.wa-status');
-  var summaryEditor = $.findOne('.wa-summary-editor', container);
-  var summary = $('.wa-summary');
-  var email = $('#wa-campaign-email');
-  var tweet = $('#wa-campaign-tweet');
-  var fb = $('#wa-campaign-fb');
-  var echojs = $('#wa-campaign-echojs');
-  var hn = $('#wa-campaign-hn');
-  var toggleSectionsButton = $('.wa-toggle-sections');
-  var discardButton = $('.wa-discard');
-  var saveButton = $('.wa-save');
-  var preview = $('.wa-preview');
-  var previewHtml = $('.wy-content', preview);
-  var drakeTools = dragula([editor, toolbox], {
+  const weeklyCompilerService = global.weeklyCompiler;
+  const weeklyIssue = viewModel.issue;
+  const editing = viewModel.editing;
+  const released = editing && weeklyIssue.status === 'released';
+  const editor = $.findOne('.wa-editor', container);
+  const toolbox = $.findOne('.wa-toolbox', container);
+  const submissions = $.findOne('.wa-submissions', container);
+  const tools = $('.wa-tool', toolbox);
+  const title = $('.wa-title');
+  const slug = $('.wa-slug');
+  const status = $('.wa-status');
+  const summaryEditor = $.findOne('.wa-summary-editor', container);
+  const summary = $('.wa-summary');
+  const email = $('#wa-campaign-email');
+  const tweet = $('#wa-campaign-tweet');
+  const fb = $('#wa-campaign-fb');
+  const echojs = $('#wa-campaign-echojs');
+  const hn = $('#wa-campaign-hn');
+  const toggleSectionsButton = $('.wa-toggle-sections');
+  const discardButton = $('.wa-discard');
+  const saveButton = $('.wa-save');
+  const preview = $('.wa-preview');
+  const previewHtml = $('.wy-content', preview);
+  const drakeTools = dragula([editor, toolbox], {
     moves: toolMoves,
     copy: true
   });
-  var drakeSubmissions = dragula([editor, submissions], {
+  const drakeSubmissions = dragula([editor, submissions], {
     moves: submissionMoves,
     copy: true
   });
-  var drakeSort = dragula([editor], {
+  const drakeSort = dragula([editor], {
     moves: editorSectionMoves
   });
-  var updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
-  var scrapeLinkSlowly = debounce(scrapeLink, 500);
-  var scraping = true;
+  const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
+  const scrapeLinkSlowly = debounce(scrapeLink, 500);
+  let scraping = true;
 
   $(document.documentElement).on('keyup', cancellations);
 
@@ -101,9 +101,9 @@ function ready (viewModel, container, route) {
   updatePreview();
 
   function toggleSections () {
-    var sections = $('.wa-section', editor).but('[data-tool="header"]');
-    var contents = sections.find('.wa-section-contents');
-    var hidden = contents.where('.uv-hidden');
+    const sections = $('.wa-section', editor).but('[data-tool="header"]');
+    const contents = sections.find('.wa-section-contents');
+    const hidden = contents.where('.uv-hidden');
     if (hidden.length === contents.length) {
       contents.removeClass('uv-hidden');
     } else {
@@ -119,7 +119,7 @@ function ready (viewModel, container, route) {
       discardButton.attr('aria-label', 'Permanently delete this weekly issue');
       return;
     }
-    var state = status.where(':checked').text();
+    const state = status.where(':checked').text();
     if (state === 'draft') {
       saveButton.find('.bt-text').text('Save Draft');
       saveButton.parent().attr('aria-label', 'You can access your drafts at any time');
@@ -132,9 +132,9 @@ function ready (viewModel, container, route) {
   }
 
   function updatePreview () {
-    var model = getModel();
-    var slug = rdigits.test(model.slug) ? 'issue-' + model.slug : model.slug;
-    var options = {
+    const model = getModel();
+    const slug = rdigits.test(model.slug) ? 'issue-' + model.slug : model.slug;
+    const options = {
       markdown: markdownService,
       slug: slug
     };
@@ -144,8 +144,8 @@ function ready (viewModel, container, route) {
         html = textService.format('<pre class="wa-error">%s</pre>', err);
       }
       previewHtml.html(html);
-      var previewSummary = $('.wy-section-summary', preview);
-      var summaryHtml = markdownService.compile(summary.value());
+      const previewSummary = $('.wy-section-summary', preview);
+      const summaryHtml = markdownService.compile(summary.value());
       previewSummary.html(summaryHtml);
       updateLinkSections();
     }
@@ -153,19 +153,19 @@ function ready (viewModel, container, route) {
 
   function updateLinkSections () {
     $('.wa-section').where('[data-tool="link"]').forEach(function (el) {
-      var $linkHeading = $('.wa-section-heading', el);
-      var $linkPreview = $('.wa-link-preview', el);
-      var $title = $('.wa-link-title', el);
-      var title = markdownService.compile($title.value()).replace(rparagraph, '');
-      var summaryLong = summaryService.summarize(title);
-      var summaryShort = summaryService.summarize(title, 30);
-      var summaryHtml = summaryShort.html.trim();
-      var postfix = summaryHtml ? ' – ' + summaryHtml : '';
+      const $linkHeading = $('.wa-section-heading', el);
+      const $linkPreview = $('.wa-link-preview', el);
+      const $title = $('.wa-link-title', el);
+      const title = markdownService.compile($title.value()).replace(rparagraph, '');
+      const summaryLong = summaryService.summarize(title);
+      const summaryShort = summaryService.summarize(title, 30);
+      const summaryHtml = summaryShort.html.trim();
+      const postfix = summaryHtml ? ' – ' + summaryHtml : '';
 
       $linkPreview.html(postfix);
 
-      var summaryLabelText = summaryLong.text.trim();
-      var summaryTitleText = summaryShort.text.trim();
+      const summaryLabelText = summaryLong.text.trim();
+      const summaryTitleText = summaryShort.text.trim();
       if (summaryTitleText.length >= summaryLabelText.length) {
         $linkHeading.attr('aria-label', null);
       } else {
@@ -175,10 +175,10 @@ function ready (viewModel, container, route) {
   }
 
   function updateLinkColors (e) {
-    var $el = $(e.target);
-    var $header = $el.parents('.wa-section');
-    var color = $el.value();
-    var $link = $header;
+    const $el = $(e.target);
+    const $header = $el.parents('.wa-section');
+    const color = $el.value();
+    let $link = $header;
 
     do {
       $link = $link.next('[data-tool="link"]');
@@ -195,7 +195,7 @@ function ready (viewModel, container, route) {
     return source === submissions;
   }
   function editorSectionMoves (el, source, handle) {
-    var $handle = $(handle);
+    const $handle = $(handle);
     return (
       $handle.hasClass('wa-section-header') ||
       $handle.hasClass('wa-section-heading') ||
@@ -207,13 +207,13 @@ function ready (viewModel, container, route) {
     updatePreviewSlowly();
   }
   function toggleSection (e) {
-    var toggler = $(e.target);
-    var content = toggler.parents('.wa-section').find('.wa-section-contents');
+    const toggler = $(e.target);
+    const content = toggler.parents('.wa-section').find('.wa-section-contents');
     toggleUsingButton(content, toggler, ['fa-compress', 'fa-expand']);
   }
   function toggleTags (e) {
-    var toggler = $(e.target);
-    var content = toggler.parents('.wa-section').find('.wa-link-tag-list');
+    const toggler = $(e.target);
+    const content = toggler.parents('.wa-section').find('.wa-link-tag-list');
     toggleUsingButton(content, toggler, ['fa-flip-horizontal', 'fa-rotate-90']);
   }
   function toggleUsingButton (content, button, classes) {
@@ -238,16 +238,16 @@ function ready (viewModel, container, route) {
     }
   }
   function pickedColor (e) {
-    var select = $(e.target);
-    var color = select.value();
+    const select = $(e.target);
+    const color = select.value();
     select
       .parents('.wa-color-picker')
       .find(select.attr('data-target'))
       .css('color', color);
   }
   function pickedSubtype (e) {
-    var select = $(e.target);
-    var subtype = select.value();
+    const select = $(e.target);
+    const subtype = select.value();
     select
       .parents('.wa-section')
       .find('.wa-section-header')
@@ -262,10 +262,10 @@ function ready (viewModel, container, route) {
     if (target !== editor) {
       return;
     }
-    var tool = $(el);
-    var toolId = tool.attr('data-id');
-    var action = 'author/weeklies/tool-link';
-    var section = findSubmissionSectionById(toolId);
+    const tool = $(el);
+    const toolId = tool.attr('data-id');
+    const action = 'author/weeklies/tool-link';
+    const section = findSubmissionSectionById(toolId);
     if (!section) {
       return;
     }
@@ -275,8 +275,8 @@ function ready (viewModel, container, route) {
     }));
   }
   function findSubmissionSectionById (id) {
-    var submissions = viewModel.submissions;
-    for (var i = 0; i < submissions.length; i++) {
+    const submissions = viewModel.submissions;
+    for (let i = 0; i < submissions.length; i++) {
       if (submissions[i].id === id) {
         return submissions[i].section;
       }
@@ -294,14 +294,14 @@ function ready (viewModel, container, route) {
     e.stopPropagation();
   }
   function addSectionWithTool (el, append) {
-    var tool = $(el);
-    var toolName = tool.parents('.wa-tool').and(tool).attr('data-tool');
-    var action = 'author/weeklies/tool-' + toolName;
-    var model = {
+    const tool = $(el);
+    const toolName = tool.parents('.wa-tool').and(tool).attr('data-tool');
+    const action = 'author/weeklies/tool-' + toolName;
+    const model = {
       knownTags: viewModel.knownTags,
       section: getDefaultSectionModel(toolName)
     };
-    var insertion;
+    let insertion;
     if (append) {
       insertion = taunus.partial.appendTo(editor, action, model);
     } else {
@@ -318,10 +318,10 @@ function ready (viewModel, container, route) {
     return {};
   }
   function cloneSection (e) {
-    var section = $(e.target).parents('.wa-section');
-    var toolName = section.attr('data-tool');
-    var action = 'author/weeklies/tool-' + toolName;
-    var model = getSectionModel(section);
+    const section = $(e.target).parents('.wa-section');
+    const toolName = section.attr('data-tool');
+    const action = 'author/weeklies/tool-' + toolName;
+    const model = getSectionModel(section);
     insertingPartial(taunus.partial.afterOf(section[0], action, {
       knownTags: viewModel.knownTags,
       section: model
@@ -339,13 +339,13 @@ function ready (viewModel, container, route) {
     $('.wa-section-contents', container).removeClass('uv-hidden');
   }
   function getSectionModel (section) {
-    var mappers = {
+    const mappers = {
       header: getHeaderSectionModel,
       markdown: getMarkdownSectionModel,
       link: getLinkSectionModel,
       styles: getStylesSectionModel
     };
-    var type = $(section).attr('data-tool');
+    const type = $(section).attr('data-tool');
     return mappers[type](section);
   }
   function getHeaderSectionModel (section) {
@@ -364,8 +364,8 @@ function ready (viewModel, container, route) {
     };
   }
   function getLinkSectionModel (section) {
-    var unknownTags = textService.splitTags($('.wa-link-tags', section).value());
-    var knownTags = $('.wa-link-tag', section).filter(byChecked).map(toValue).filter(unique);
+    const unknownTags = textService.splitTags($('.wa-link-tags', section).value());
+    const knownTags = $('.wa-link-tag', section).filter(byChecked).map(toValue).filter(unique);
     return {
       type: 'link',
       subtype: $('.wa-link-subtype', section).value() || 'original',
@@ -397,8 +397,8 @@ function ready (viewModel, container, route) {
     };
   }
   function getModel () {
-    var state = released ? weeklyIssue.status : status.where(':checked').text();
-    var data = {
+    const state = released ? weeklyIssue.status : status.where(':checked').text();
+    const data = {
       title: title.value(),
       slug: sluggish(slug.value()),
       sections: $('.wa-section', editor).map(getSectionModel),
@@ -423,7 +423,7 @@ function ready (viewModel, container, route) {
   }
 
   function updateThumbnailImage (e) {
-    var $container = $(e.target).parents('.wa-section-contents');
+    const $container = $(e.target).parents('.wa-section-contents');
     scrapeCompletionService.updateThumbnail($container);
   }
 
@@ -431,7 +431,7 @@ function ready (viewModel, container, route) {
     if (scraping === false) {
       return;
     }
-    var $el = $(el);
+    const $el = $(el);
     scrapeCompletionService.scrape({
       source: el,
       url: $el.value(),
@@ -445,7 +445,7 @@ function ready (viewModel, container, route) {
   }
 
   function send (data) {
-    var req;
+    let req;
 
     if (editing) {
       req = viewModel.measly.patch('/api/weeklies/' + route.params.slug, data);
@@ -456,8 +456,8 @@ function ready (viewModel, container, route) {
   }
 
   function discard () {
-    var name = route.params.slug ? '/weeklies/' + route.params.slug : 'draft';
-    var confirmation = confirm('About to discard ' + name + ', are you sure?');
+    const name = route.params.slug ? '/weeklies/' + route.params.slug : 'draft';
+    const confirmation = confirm('About to discard ' + name + ', are you sure?');
     if (!confirmation) {
       return;
     }

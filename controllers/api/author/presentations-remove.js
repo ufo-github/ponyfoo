@@ -1,7 +1,7 @@
 'use strict';
 
-var winston = require('winston');
-var Presentation = require('../../../models/Presentation');
+const winston = require('winston');
+const Presentation = require('../../../models/Presentation');
 
 module.exports = function (req, res) {
   Presentation.remove({ _id: req.body.id }, saved);

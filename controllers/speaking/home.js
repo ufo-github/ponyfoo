@@ -1,21 +1,21 @@
 'use strict';
 
-var _ = require('lodash');
-var contra = require('contra');
-var queso = require('queso');
-var assign = require('assignment');
-var moment = require('moment');
-var env = require('../../lib/env');
-var browserEnv = require('../../client/js/lib/env');
-var staticService = require('../../services/static');
-var colorService = require('../../services/color');
-var datetimeService = require('../../services/datetime');
-var presentationService = require('../../services/presentation');
-var Engagement = require('../../models/Engagement');
-var Presentation = require('../../models/Presentation');
-var mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
-var authority = env('AUTHORITY');
-var pastTagMap = {
+const _ = require('lodash');
+const contra = require('contra');
+const queso = require('queso');
+const assign = require('assignment');
+const moment = require('moment');
+const env = require('../../lib/env');
+const browserEnv = require('../../client/js/lib/env');
+const staticService = require('../../services/static');
+const colorService = require('../../services/color');
+const datetimeService = require('../../services/datetime');
+const presentationService = require('../../services/presentation');
+const Engagement = require('../../models/Engagement');
+const Presentation = require('../../models/Presentation');
+const mapsKey = browserEnv('GOOGLE_MAPS_API_KEY');
+const authority = env('AUTHORITY');
+const pastTagMap = {
   speaking: 'spoke',
   organizing: 'organized',
   attending: 'attended'
@@ -26,11 +26,11 @@ function home (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var upcoming = _.sortBy(data.engagements.filter(hasNotEnded), 'end');
-    var diff = _.difference(data.engagements, upcoming);
-    var past = _.sortBy(diff, 'end').reverse();
-    var fullMap = getFullMap(data.engagements);
-    var upcomingModels = upcoming.map(toEngagementModel);
+    const upcoming = _.sortBy(data.engagements.filter(hasNotEnded), 'end');
+    const diff = _.difference(data.engagements, upcoming);
+    const past = _.sortBy(diff, 'end').reverse();
+    const fullMap = getFullMap(data.engagements);
+    const upcomingModels = upcoming.map(toEngagementModel);
     res.viewModel = {
       model: {
         title: 'Conference Talks presented by Nicolás Bevacqua',
@@ -77,7 +77,7 @@ function getFullMap (engagements) {
     style: 'all|saturation:-100'
   });
   function toPlace (engagement) {
-    var color = getMarkerColor(engagement);
+    const color = getMarkerColor(engagement);
     return {
       location: engagement.location,
       color: '0x' + color,
@@ -87,13 +87,13 @@ function getFullMap (engagements) {
 }
 
 function getMarkerColor (engagement) {
-  var upcoming = hasNotEnded(engagement);
+  const upcoming = hasNotEnded(engagement);
   return upcoming ? colorService.colors.pink : colorService.colors.pinkLight.plain;
 }
 
 function toEngagementModel (engagement) {
-  var upcoming = hasNotEnded(engagement);
-  var model = {
+  const upcoming = hasNotEnded(engagement);
+  const model = {
     range: datetimeService.range(engagement.start, engagement.end),
     conference: engagement.conference,
     website: engagement.website,
@@ -119,20 +119,20 @@ function hasNotEnded (engagement) {
 }
 
 function getMapImageUrl (places, options) {
-  var base = 'https://maps.googleapis.com/maps/api/staticmap';
-  var defaults = {
+  const base = 'https://maps.googleapis.com/maps/api/staticmap';
+  const defaults = {
     scale: 2,
     size: '600x300',
     maptype: 'roadmap',
     key: mapsKey
   };
-  var qs = queso.stringify(assign({}, defaults, options));
-  var markers = places.reduce(getMarker, '');
+  const qs = queso.stringify(assign({}, defaults, options));
+  const markers = places.reduce(getMarker, '');
   return base + qs + markers;
 }
 
 function getMarker (all, place) {
-  var marker = Object.keys(place).reduce(getProps, '');
+  const marker = Object.keys(place).reduce(getProps, '');
   return all + '&markers=' + encodeURIComponent(marker) + place.location.replace(/(%20|\s)/g, '+');
   function getProps (props, key) {
     if (key === 'location') {

@@ -1,6 +1,6 @@
 'use strict';
 
-var OpenSourceProject = require('../../models/OpenSourceProject');
+const OpenSourceProject = require('../../models/OpenSourceProject');
 
 module.exports = function (req, res, next) {
   OpenSourceProject.find({}).sort('-added').lean().exec(function (err, projects) {

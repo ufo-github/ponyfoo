@@ -1,10 +1,10 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var env = require('../lib/env');
-var main = $.findOne('.ly-main');
-var property = env('CLICKY_PROPERTY');
+const $ = require('dominus');
+const taunus = require('taunus');
+const env = require('../lib/env');
+const main = $.findOne('.ly-main');
+const property = env('CLICKY_PROPERTY');
 
 module.exports = function clicky () {
   if (!property) {

@@ -1,18 +1,18 @@
 'use strict';
 
-var fs = require('fs');
-var contra = require('contra');
-var winston = require('winston');
-var moment = require('moment');
-var Article = require('../../../models/Article');
-var pkg = require('../../../package.json');
-var articleSubscriberService = require('../../../services/articleSubscriber');
-var articlePublishService = require('../../../services/articlePublish');
-var defaultFormat = 'HH:mm:ss -- DD MMMM, YYYY';
+const fs = require('fs');
+const contra = require('contra');
+const winston = require('winston');
+const moment = require('moment');
+const Article = require('../../../models/Article');
+const pkg = require('../../../package.json');
+const articleSubscriberService = require('../../../services/articleSubscriber');
+const articlePublishService = require('../../../services/articlePublish');
+const defaultFormat = 'HH:mm:ss -- DD MMMM, YYYY';
 
 function scheduler (req, res) {
-  var total = 0;
-  var amountPublished = 0;
+  let total = 0;
+  let amountPublished = 0;
 
   fs.writeFile('.job.scheduler', moment.utc().format(defaultFormat) + '\n');
   winston.debug('[job] Worker %s executing job@%s', process.pid, pkg.version);
@@ -33,7 +33,7 @@ function scheduler (req, res) {
         articlePublishService.publish(article, next);
       },
       function notifySubscribers (published, next) {
-        var when;
+        let when;
         if (published) {
           article.save(saved); // save the status change first!
         } else {

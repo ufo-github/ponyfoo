@@ -1,20 +1,20 @@
 'use strict';
 
-var _ = require('lodash');
-var but = require('but');
-var util = require('util');
-var env = require('../lib/env');
-var subscriberService = require('./subscriber');
-var textService = require('./text');
-var facebookService = require('./facebook');
-var twitterService = require('./twitter');
-var emojiService = require('./emoji');
-var echojsService = require('./echojs');
-var hackernewsService = require('./hackernews');
-var markupService = require('./markup');
-var User = require('../models/User');
-var authority = env('AUTHORITY');
-var card = env('TWITTER_CAMPAIGN_CARD_ARTICLES');
+const _ = require('lodash');
+const but = require('but');
+const util = require('util');
+const env = require('../lib/env');
+const subscriberService = require('./subscriber');
+const textService = require('./text');
+const facebookService = require('./facebook');
+const twitterService = require('./twitter');
+const emojiService = require('./emoji');
+const echojsService = require('./echojs');
+const hackernewsService = require('./hackernews');
+const markupService = require('./markup');
+const User = require('../models/User');
+const authority = env('AUTHORITY');
+const card = env('TWITTER_CAMPAIGN_CARD_ARTICLES');
 
 function emailSelf (article, options, done) {
   if (!options.userId) {
@@ -34,10 +34,10 @@ function emailSelf (article, options, done) {
 }
 
 function email (article, options, done) {
-  var relativePermalink = '/articles/' + article.slug;
-  var intro = article.teaserHtml + article.introductionHtml;
-  var teaser = markupService.compile(intro, { markdown: false, absolutize: true });
-  var model = {
+  const relativePermalink = '/articles/' + article.slug;
+  const intro = article.teaserHtml + article.introductionHtml;
+  const teaser = markupService.compile(intro, { markdown: false, absolutize: true });
+  const model = {
     subject: article.title,
     teaser: options.reshare ? 'You can’t miss this!' : 'Hot off the press!',
     article: {
@@ -70,7 +70,7 @@ function email (article, options, done) {
 }
 
 function socialStatus (article, options) {
-  var fresh = [
+  const fresh = [
     'Just published: "%s"',
     'Fresh content on Pony Foo! "%s"',
     '"%s" contains crisp new words!',
@@ -79,14 +79,14 @@ function socialStatus (article, options) {
     '"%s" has just been published!',
     'This just out! "%s"'
   ];
-  var manual = [
+  const manual = [
     'Check out "%s" on Pony Foo!',
     'ICYMI %s',
     'Have you read "%s" yet?'
   ];
-  var formats = options.reshare ? manual : fresh;
-  var fmt = _.sample(formats);
-  var status = util.format(fmt, article.title);
+  const formats = options.reshare ? manual : fresh;
+  const fmt = _.sample(formats);
+  const status = util.format(fmt, article.title);
   return status;
 }
 
@@ -110,12 +110,12 @@ function socialPrefix (options) {
 }
 
 function tweet (article, options, done) {
-  var tagPair = '#' + article.tags.slice(0, 2).join(' #');
-  var tagText = textService.hyphenToCamel(tagPair);
-  var emoji = emojiService.randomFun();
-  var prefix = socialPrefix(options);
-  var tweetLength = 0;
-  var tweetLines = [];
+  const tagPair = '#' + article.tags.slice(0, 2).join(' #');
+  const tagText = textService.hyphenToCamel(tagPair);
+  const emoji = emojiService.randomFun();
+  const prefix = socialPrefix(options);
+  const tweetLines = [];
+  let tweetLength = 0;
 
   add(4, '➡️️ ' + statusLink(article), 2 + 24);
   add(1, emoji + ' ' + article.title, 2 + article.title.length);
@@ -128,7 +128,7 @@ function tweet (article, options, done) {
 
   add(3, '🏷 ' + tagText, 2 + tagText.length - 1); // no extra new line here
 
-  var status = tweetLines.filter(notEmpty).join('\n');
+  const status = tweetLines.filter(notEmpty).join('\n');
 
   twitterService.tweet(status, done);
 
@@ -149,7 +149,7 @@ function facebook (article, options, done) {
 }
 
 function echojs (article, options, done) {
-  var data = {
+  const data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
   };
@@ -157,7 +157,7 @@ function echojs (article, options, done) {
 }
 
 function hackernews (article, options, done) {
-  var data = {
+  const data = {
     title: article.title,
     url: util.format('%s/articles/%s', authority, article.slug)
   };

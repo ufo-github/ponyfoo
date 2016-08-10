@@ -1,7 +1,7 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
+const $ = require('dominus');
+const taunus = require('taunus');
 
 function ajaxLogoNavigation () {
   $('.go-logo').on('left-click', hijack);

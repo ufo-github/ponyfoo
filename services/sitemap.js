@@ -1,33 +1,33 @@
 'use strict';
 
-var _ = require('lodash');
-var fs = require('fs');
-var path = require('path');
-var mkdirp = require('mkdirp');
-var sitemap = require('sitemap');
-var contra = require('contra');
-var winston = require('winston');
-var moment = require('moment');
-var User = require('../models/User');
-var Article = require('../models/Article');
-var WeeklyIssue = require('../models/WeeklyIssue');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var location = path.resolve('.bin/static/sitemap.xml');
-var api = contra.emitter({
+const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
+const mkdirp = require('mkdirp');
+const sitemap = require('sitemap');
+const contra = require('contra');
+const winston = require('winston');
+const moment = require('moment');
+const User = require('../models/User');
+const Article = require('../models/Article');
+const WeeklyIssue = require('../models/WeeklyIssue');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const location = path.resolve('.bin/static/sitemap.xml');
+const api = contra.emitter({
   built: false,
   rebuild: rebuild,
   location: location
 });
 
 function getArticleUrls (articles) {
-  var tags = _(articles).map('tags').flatten().uniq().value();
-  var tagUrls = tags.map(tagUrl);
-  var dates = _.map(articles, 'publication').reduce(dateTransformer, { year: {}, month: {}, day: {} });
-  var dateUrls = _(dates).values().map(_.values).flatten().value();
-  var articleUrls = articles.map(articleUrl);
-  var modified = toLastMod(articles[0] ? articles[0].updated : Date.now());
-  var urls = _.flatten([articleUrls, basics(modified), tagUrls, dateUrls]);
+  const tags = _(articles).map('tags').flatten().uniq().value();
+  const tagUrls = tags.map(tagUrl);
+  const dates = _.map(articles, 'publication').reduce(dateTransformer, { year: {}, month: {}, day: {} });
+  const dateUrls = _(dates).values().map(_.values).flatten().value();
+  const articleUrls = articles.map(articleUrl);
+  const modified = toLastMod(articles[0] ? articles[0].updated : Date.now());
+  const urls = _.flatten([articleUrls, basics(modified), tagUrls, dateUrls]);
   return urls;
 }
 
@@ -90,10 +90,10 @@ function toLastMod (date) {
 }
 
 function dateTransformer (accumulator, date) {
-  var mo = moment.utc(date);
-  var year = mo.format('YYYY');
-  var month = year + '/' + mo.format('MM');
-  var day = month + '/' + mo.format('DD');
+  const mo = moment.utc(date);
+  const year = mo.format('YYYY');
+  const month = year + '/' + mo.format('MM');
+  const day = month + '/' + mo.format('DD');
 
   if (!accumulator.year[year]) {
     accumulator.year[year] = { url: '/articles/' + year, changefreq: 'monthly', priority: 0.4 };
@@ -118,17 +118,17 @@ function rebuild () {
     if (err) {
       done(err); return;
     }
-    var modified = toLastMod(result.articles[0] ? result.articles[0].updated : Date.now());
-    var urls = getArticleUrls(result.articles)
+    const modified = toLastMod(result.articles[0] ? result.articles[0].updated : Date.now());
+    const urls = getArticleUrls(result.articles)
       .concat(getWeeklyUrls(result.weeklies))
       .concat(getContributorUrls(result.users, modified))
       .concat(getOtherUrls(modified));
-    var map = sitemap.createSitemap({
+    const map = sitemap.createSitemap({
       hostname: authority,
       cacheTime: 15 * 60 * 1000, // 15 minutes
       urls: urls
     });
-    var xml = map.toXML();
+    const xml = map.toXML();
     persist(xml, done);
   }
 }

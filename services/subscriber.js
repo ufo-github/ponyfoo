@@ -1,20 +1,20 @@
 'use strict';
 
-var _ = require('lodash');
-var assign = require('assignment');
-var util = require('util');
-var contra = require('contra');
-var winston = require('winston');
-var emailService = require('./email');
-var cryptoService = require('./crypto');
-var Subscriber = require('../models/Subscriber');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var reasons = {
+const _ = require('lodash');
+const assign = require('assignment');
+const util = require('util');
+const contra = require('contra');
+const winston = require('winston');
+const emailService = require('./email');
+const cryptoService = require('./crypto');
+const Subscriber = require('../models/Subscriber');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const reasons = {
   default: 'Thanks for your interest in becoming a subscriber of our mailing list!',
   comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here’s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
 };
-var allTopics = ['announcements', 'articles', 'newsletter'];
+const allTopics = ['announcements', 'articles', 'newsletter'];
 
 function noop () {}
 
@@ -27,7 +27,7 @@ function add (model, done) {
 }
 
 function addTopics (model, topics, done) {
-  var valid = validateTopics(topics || allTopics.slice());
+  const valid = validateTopics(topics || allTopics.slice());
   contra.waterfall([
     function findExisting (next) {
       Subscriber.findOne({ email: model.email }, next);
@@ -42,7 +42,7 @@ function addTopics (model, topics, done) {
       new Subscriber(model).save(saved);
 
       function existed () {
-        var wants = _.difference(valid, existing.topics);
+        const wants = _.difference(valid, existing.topics);
         if (wants.length === 0) {
           ack(null, false, true);
         } else {
@@ -87,11 +87,11 @@ function addTopics (model, topics, done) {
 }
 
 function invitationConfirmation (subscriber, topics, done) {
-  var hash = getHash(subscriber);
-  var some = Array.isArray(topics) && topics.length && topics.length < allTopics.length;
-  var query = some ? '?topic=' + topics.join('&topic=') : '';
-  var confirm = util.format('/api/subscribers/%s/confirm%s', hash, query);
-  var model = {
+  const hash = getHash(subscriber);
+  const some = Array.isArray(topics) && topics.length && topics.length < allTopics.length;
+  const query = some ? '?topic=' + topics.join('&topic=') : '';
+  const confirm = util.format('/api/subscribers/%s/confirm%s', hash, query);
+  const model = {
     to: subscriber.email,
     subject: 'Pony Foo Subscription Invitation!',
     teaser: 'Would you like to subscribe to Pony Foo?',
@@ -142,7 +142,7 @@ function validateTopics (topics) {
 }
 
 function confirmTopics (email, topics, done) {
-  var valid = validateTopics(topics);
+  const valid = validateTopics(topics);
   Subscriber.findOne({ email: email }, found);
   function found (err, subscriber) {
     if (err) {
@@ -151,7 +151,7 @@ function confirmTopics (email, topics, done) {
     if (!subscriber) {
       bail(topics)(); return;
     }
-    var wants = _.difference(valid, subscriber.topics);
+    const wants = _.difference(valid, subscriber.topics);
     wants.forEach(addWant);
     subscriber.verified = true;
     subscriber.save(bail(wants));
@@ -179,11 +179,11 @@ function removeTopic (email, topic, done) {
     if (!subscriber) {
       remove(email, done); return;
     }
-    var index = subscriber.topics.indexOf(topic);
+    const index = subscriber.topics.indexOf(topic);
     if (index === -1) {
       bail(); return;
     }
-    var topics = subscriber.topics.slice();
+    const topics = subscriber.topics.slice();
     topics.splice(index, 1);
     if (topics.length === 0 || (topics.length === 1 && topics[0] === 'announcements')) {
       remove(email, done);
@@ -203,10 +203,10 @@ function removeTopic (email, topic, done) {
 }
 
 function successback (options, done) {
-  var action = options.action;
-  var email = options.email;
-  var topic = options.topic;
-  var hash = options.hash;
+  const action = options.action;
+  const email = options.email;
+  const topic = options.topic;
+  const hash = options.hash;
   return function proceed (err) {
     if (!err) {
       winston.info('Email subscription for "%s" %s [%s]', email, action, topic || '*');
@@ -216,19 +216,19 @@ function successback (options, done) {
 }
 
 function send (options, done) {
-  var topic = options.topic;
-  var recipients = options.recipients;
-  var template = options.template;
-  var patrons = options.patrons;
-  var partialModel = options.model;
-  var emitter = contra.emitter({});
+  const topic = options.topic;
+  const recipients = options.recipients;
+  const template = options.template;
+  const patrons = options.patrons;
+  const partialModel = options.model;
+  const emitter = contra.emitter({});
 
   contra.waterfall([findVerifiedSubscribers, patchModel], done);
 
   return emitter;
 
   function findVerifiedSubscribers (next) {
-    var query = { verified: true };
+    const query = { verified: true };
     if (topic) {
       query.topics = topic;
     }
@@ -240,12 +240,12 @@ function send (options, done) {
     Subscriber.find(query, next);
   }
   function patchModel (documents, next) {
-    var subscribers = recipients ? documents.filter(isRecipient) : documents;
-    var to = _.map(subscribers, 'email');
-    var provider = {
+    const subscribers = recipients ? documents.filter(isRecipient) : documents;
+    const to = _.map(subscribers, 'email');
+    const provider = {
       merge: subscribers.reduce(locals(topic, emitter), {})
     };
-    var model = assign({}, partialModel, { to: to, provider: provider });
+    const model = assign({}, partialModel, { to: to, provider: provider });
     emailService.send(template, model, next);
   }
   function isRecipient (subscriber) {
@@ -255,7 +255,7 @@ function send (options, done) {
 
 function locals (topic, emitter) {
   return function localsForTopic (all, subscriber) {
-    var subscriberLocals = {
+    const subscriberLocals = {
       name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
       reason: reasons[subscriber.source] || reasons.default,
       unsubscribe_html: getUnsubscribeHtml(subscriber, topic)
@@ -269,9 +269,9 @@ function locals (topic, emitter) {
 }
 
 function getUnsubscribeHtml (subscriber, topic) {
-  var urlformat = '%s/api/subscribers/%s/unsubscribe%s';
-  var linkformat = '<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>';
-  var href = util.format(urlformat, authority, getHash(subscriber), getHrefTopic());
+  const urlformat = '%s/api/subscribers/%s/unsubscribe%s';
+  const linkformat = '<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>';
+  const href = util.format(urlformat, authority, getHash(subscriber), getHrefTopic());
   return util.format(linkformat, href);
   function getHrefTopic () {
     return topic ? '?topic=' + topic : '';

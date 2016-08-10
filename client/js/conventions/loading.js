@@ -1,11 +1,11 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var isElementInViewport = require('../lib/isElementInViewport');
-var logo = $.findOne('.go-anchor');
-var $logo = $(logo);
-var loader = $logo
+const $ = require('dominus');
+const taunus = require('taunus');
+const isElementInViewport = require('../lib/isElementInViewport');
+const logo = $.findOne('.go-anchor');
+const $logo = $(logo);
+const loader = $logo
   .clone()
   .appendTo(document.body)
   .removeClass('go-anchor')
@@ -13,7 +13,7 @@ var loader = $logo
   .addClass('gg-continuous');
 
 function show () {
-  var justLogo = isElementInViewport(logo, false);
+  const justLogo = isElementInViewport(logo, false);
   if (!justLogo) {
     loader.addClass('ll-show');
   }

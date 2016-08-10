@@ -1,10 +1,10 @@
 'use strict';
 
-var winston = require('winston');
-var settingService = require('../../../services/setting');
+const winston = require('winston');
+const settingService = require('../../../services/setting');
 
 module.exports = function (req, res, next) {
-  var settings = getSettings(req.body);
+  const settings = getSettings(req.body);
   settingService.save(settings, saved);
   function saved (err) {
     if (err) {
@@ -15,9 +15,9 @@ module.exports = function (req, res, next) {
 };
 
 function getSettings (body) {
-  var keys = toArray(body.setting_keys);
-  var values = toArray(body.setting_values);
-  var settings = keys.reduce(toSetting, {});
+  const keys = toArray(body.setting_keys);
+  const values = toArray(body.setting_values);
+  const settings = keys.reduce(toSetting, {});
   return settings;
   function toSetting (settings, key, i) {
     try {

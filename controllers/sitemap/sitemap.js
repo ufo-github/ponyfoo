@@ -1,6 +1,6 @@
 'use strict';
 
-var sitemapService = require('../../services/sitemap');
+const sitemapService = require('../../services/sitemap');
 
 module.exports = function (req, res) {
   if (sitemapService.built) {

@@ -3,28 +3,28 @@
 require('./preconfigure');
 require('./chdir');
 
-var env = require('./lib/env');
-var os = require('os');
-var http = require('http');
-var express = require('express');
-var moment = require('moment');
-var winston = require('winston');
-var lipstick = require('lipstick');
-var boot = require('./lib/boot');
-var middleware = require('./lib/middleware');
-var routing = require('./controllers/routing');
-var development = require('./lib/development');
-var articleFeedService = require('./services/articleFeed');
-var weeklyFeedService = require('./services/weeklyFeed');
-var sitemapService = require('./services/sitemap');
-var shouldRebuild = !env('APP_REBUILD');
-var port = env('PORT');
+const env = require('./lib/env');
+const os = require('os');
+const http = require('http');
+const express = require('express');
+const moment = require('moment');
+const winston = require('winston');
+const lipstick = require('lipstick');
+const boot = require('./lib/boot');
+const middleware = require('./lib/middleware');
+const routing = require('./controllers/routing');
+const development = require('./lib/development');
+const articleFeedService = require('./services/articleFeed');
+const weeklyFeedService = require('./services/weeklyFeed');
+const sitemapService = require('./services/sitemap');
+const shouldRebuild = !env('APP_REBUILD');
+const port = env('PORT');
 
 require('./services/fullFeed'); // listens for events and auto-rebuilds.
 
 function listen () {
-  var app = express();
-  var server = http.createServer(app);
+  const app = express();
+  const server = http.createServer(app);
 
   development.patch(app);
 

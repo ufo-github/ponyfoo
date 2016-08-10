@@ -1,8 +1,8 @@
 'use strict';
 
-var truncText = require('trunc-text');
-var OpenSourceProject = require('../../models/OpenSourceProject');
-var htmlService = require('../../services/html');
+const truncText = require('trunc-text');
+const OpenSourceProject = require('../../models/OpenSourceProject');
+const htmlService = require('../../services/html');
 
 module.exports = function (req, res, next) {
   OpenSourceProject.find({}).sort('-added').exec(function (err, projects) {
@@ -13,9 +13,9 @@ module.exports = function (req, res, next) {
       res.viewModel = { skip: true };
       next(); return;
     }
-    var latest = projects[0];
-    var descriptionText = htmlService.getText(latest.descriptionHtml);
-    var description = truncText(descriptionText, 170);
+    const latest = projects[0];
+    const descriptionText = htmlService.getText(latest.descriptionHtml);
+    const description = truncText(descriptionText, 170);
     res.viewModel = {
       model: {
         title: 'Open-source projects \u2014 Pony Foo',

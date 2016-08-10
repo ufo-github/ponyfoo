@@ -1,31 +1,31 @@
 'use strict';
 
-var moment = require('moment');
-var sluggish = require('sluggish');
-var validator = require('validator');
-var WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
-var weeklySubmissionService = require('../../../services/weeklySubmission');
-var markupService = require('../../../services/markup');
-var dateFormat = 'YYYY-MM-DD';
-var subtypes = ['suggestion', 'primary', 'secondary', 'job'];
+const moment = require('moment');
+const sluggish = require('sluggish');
+const validator = require('validator');
+const WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
+const weeklySubmissionService = require('../../../services/weeklySubmission');
+const markupService = require('../../../services/markup');
+const dateFormat = 'YYYY-MM-DD';
+const subtypes = ['suggestion', 'primary', 'secondary', 'job'];
 
 function post (req, res, next) {
-  var slug = req.params.slug;
-  var inputSlug = getInputSlug();
-  var editing = !!slug;
-  var query = {
+  const slug = req.params.slug;
+  const inputSlug = getInputSlug();
+  const editing = !!slug;
+  const query = {
     slug: slug || inputSlug
   };
 
   WeeklyIssueSubmission.findOne(query, found);
 
   function getInputSlug () {
-    var input = req.body || {};
-    var section = input.section || {};
-    var submitter = input.submitter || {};
-    var title = section.title || '';
-    var email = submitter.email || '';
-    var inputSlug = sluggish(title + '-' + email.split('@')[0]);
+    const input = req.body || {};
+    const section = input.section || {};
+    const submitter = input.submitter || {};
+    const title = section.title || '';
+    const email = submitter.email || '';
+    const inputSlug = sluggish(title + '-' + email.split('@')[0]);
     return inputSlug;
   }
 
@@ -42,7 +42,7 @@ function post (req, res, next) {
       update({}, req.body); return;
     }
 
-    var options = {
+    const options = {
       submission: submission,
       userId: req.user,
       verify: req.query.verify
@@ -56,7 +56,7 @@ function post (req, res, next) {
     }
   }
   function update (model, changes, isOwner) {
-    var result = validateChanges(model, changes, isOwner);
+    const result = validateChanges(model, changes, isOwner);
     if (result.errors.length) {
       res.status(400).json({ messages: result.errors }); return;
     }
@@ -80,9 +80,9 @@ function post (req, res, next) {
     res.json({});
   }
   function validateChanges (model, input, isOwner) {
-    var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
-    var errors = [];
-    var sponsor = !!input.sponsor;
+    const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+    const errors = [];
+    const sponsor = !!input.sponsor;
     if (!input.submitter) { input.submitter = {}; }
     if (!input.section) { input.section = {}; }
     if (!input.sponsor) { input.sponsor = {}; }
@@ -91,7 +91,7 @@ function post (req, res, next) {
         errors.push('You aren’t allowed to update the submission status.');
       }
     }
-    var email = input.submitter.email;
+    const email = input.submitter.email;
     if (!validator.isEmail(email)) {
       errors.push('You must provide us with your email address, so that we can reach out to you.');
     }
@@ -104,7 +104,7 @@ function post (req, res, next) {
     if (errors.length) {
       return { errors: errors };
     }
-    var subtype = subtypes.indexOf(input.section.subtype) === -1 ? 'suggestion' : input.section.subtype;
+    const subtype = subtypes.indexOf(input.section.subtype) === -1 ? 'suggestion' : input.section.subtype;
     if (!editing) {
       model.status = 'incoming';
       model.slug = inputSlug;

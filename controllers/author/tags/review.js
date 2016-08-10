@@ -1,7 +1,7 @@
 'use strict';
 
-var KnownTag = require('../../../models/KnownTag');
-var datetimeService = require('../../../services/datetime');
+const KnownTag = require('../../../models/KnownTag');
+const datetimeService = require('../../../services/datetime');
 
 module.exports = function (req, res, next) {
   KnownTag

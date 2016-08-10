@@ -1,7 +1,7 @@
 'use strict';
 
-var moment = require('moment');
-var Subscriber = require('../../models/Subscriber');
+const moment = require('moment');
+const Subscriber = require('../../models/Subscriber');
 
 module.exports = pullSubscribers;
 
@@ -22,11 +22,11 @@ function pullSubscribers (done) {
 }
 
 function toWeeklyDataModel (subscribers) {
-  var copy = subscribers.slice();
-  var list = [];
-  var subscriber;
-  var week;
-  var current;
+  const copy = subscribers.slice();
+  const list = [];
+  let subscriber;
+  let week;
+  let current;
   while (copy.length) {
     subscriber = copy.pop();
     week = moment.utc(subscriber.created).subtract(7, 'days');
@@ -53,7 +53,7 @@ function toWeeklyDataModel (subscribers) {
     }
     list.push(current);
   }
-  var verified = subscribers.filter(isVerified).length;
+  const verified = subscribers.filter(isVerified).length;
   return {
     list: list,
     verified: verified

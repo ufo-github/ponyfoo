@@ -1,25 +1,25 @@
 'use strict';
 
-var fs = require('fs');
-var gm = require('gm');
-var but = require('but');
-var path = require('path');
-var contra = require('contra');
-var Imagemin = require('imagemin');
-var pngquant = require('imagemin-pngquant');
-var mozjpeg = require('imagemin-mozjpeg');
-var gifsicle = require('imagemin-gifsicle');
-var winston = require('winston');
-var prettyBytes = require('pretty-bytes');
-var env = require('../lib/env');
-var level = env('LOGGING_LEVEL');
-var limits = {
+const fs = require('fs');
+const gm = require('gm');
+const but = require('but');
+const path = require('path');
+const contra = require('contra');
+const Imagemin = require('imagemin');
+const pngquant = require('imagemin-pngquant');
+const mozjpeg = require('imagemin-mozjpeg');
+const gifsicle = require('imagemin-gifsicle');
+const winston = require('winston');
+const prettyBytes = require('pretty-bytes');
+const env = require('../lib/env');
+const level = env('LOGGING_LEVEL');
+const limits = {
   width: 900,
   height: 550
 };
 
 function findPlugin (file) {
-  var ext = path.extname(file).toLowerCase();
+  const ext = path.extname(file).toLowerCase();
   if (ext === '.png') {
     return pngquant();
   } else if (ext === '.jpg' || ext === '.jpeg') {
@@ -30,8 +30,8 @@ function findPlugin (file) {
 }
 
 function getMinifier (options) {
-  var imagemin = new Imagemin().src(options.file).dest(path.dirname(options.file));
-  var plugin = findPlugin(options.file);
+  const imagemin = new Imagemin().src(options.file).dest(path.dirname(options.file));
+  const plugin = findPlugin(options.file);
   if (plugin) {
     imagemin.use(plugin);
   }
@@ -46,11 +46,11 @@ function log (options) {
     if (err) {
       return;
     }
-    var was = prettyBytes(options.size);
-    var is = prettyBytes(stats.size);
-    var difference = options.size - stats.size;
-    var diff = prettyBytes(-difference);
-    var percentage = -(100 - stats.size * 100 / options.size).toFixed(2);
+    const was = prettyBytes(options.size);
+    const is = prettyBytes(stats.size);
+    const difference = options.size - stats.size;
+    const diff = prettyBytes(-difference);
+    const percentage = -(100 - stats.size * 100 / options.size).toFixed(2);
     winston.info('%s was %s, is %s, diff %s [%s%]', options.name, was, is, diff, percentage);
   });
 }

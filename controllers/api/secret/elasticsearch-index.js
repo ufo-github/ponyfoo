@@ -1,7 +1,7 @@
 'use strict';
 
-var winston = require('winston');
-var indexService = require('../../../services/articleElasticsearchIndex');
+const winston = require('winston');
+const indexService = require('../../../services/articleElasticsearchIndex');
 
 function ensure (req, res, next) {
   winston.debug('Ensuring elasticsearch index exists.');

@@ -1,10 +1,10 @@
 'use strict';
 
-var tagService = require('../../../services/tag');
-var textService = require('../../../services/text');
-var articleService = require('../../../services/article');
-var metadataService = require('../../../services/metadata');
-var inliningService = require('../../../services/inlining');
+const tagService = require('../../../services/tag');
+const textService = require('../../../services/text');
+const articleService = require('../../../services/article');
+const metadataService = require('../../../services/metadata');
+const inliningService = require('../../../services/inlining');
 
 function factory (res, options, next) {
   if (arguments.length < 3) {
@@ -17,7 +17,7 @@ function factory (res, options, next) {
     if (err) {
       next(err); return;
     }
-    var model = res.viewModel.model;
+    const model = res.viewModel.model;
     if (!model.action) {
       model.action = 'articles/articles';
 
@@ -27,8 +27,8 @@ function factory (res, options, next) {
       }
     }
 
-    var keywords = metadataService.mostCommonTags(articles);
-    var expanded = articleService.expandForListView(articles);
+    const keywords = metadataService.mostCommonTags(articles);
+    const expanded = articleService.expandForListView(articles);
     model.articles = expanded.articles;
     model.meta.keywords = keywords;
     model.meta.images = expanded.extracted.images;
@@ -62,16 +62,16 @@ function factory (res, options, next) {
       function getTitle (ctx) {
         // '[Your query for ${terms} in ][${knownTags} ]articles[ tagged ${otherTags}]'
         // '[Search results for ${terms} in ][${knownTags} ]articles[ tagged ${otherTags}]'
-        var foremost = ctx.forcedPrefix || '';
-        var queryPrefix = foremost ? '' : 'Search results for ';
-        var suffix = ctx.hasSuffix === false ? '' : ' on Pony Foo';
-        var terms = options.queryTerms.slice();
-        var tags = options.queryTags.slice();
-        var hasNoPrefix = ctx.standalone && foremost.length === 0;
-        var hasNoPrefixOrTerms = hasNoPrefix && terms.length === 0;
-        var queried = getQuery(hasNoPrefix, terms, queryPrefix);
-        var tagged = getTagPrefix(hasNoPrefixOrTerms, tags) + getTagSuffix(tags);
-        var title = foremost + queried + tagged + suffix;
+        const foremost = ctx.forcedPrefix || '';
+        const queryPrefix = foremost ? '' : 'Search results for ';
+        const suffix = ctx.hasSuffix === false ? '' : ' on Pony Foo';
+        const terms = options.queryTerms.slice();
+        const tags = options.queryTags.slice();
+        const hasNoPrefix = ctx.standalone && foremost.length === 0;
+        const hasNoPrefixOrTerms = hasNoPrefix && terms.length === 0;
+        const queried = getQuery(hasNoPrefix, terms, queryPrefix);
+        const tagged = getTagPrefix(hasNoPrefixOrTerms, tags) + getTagSuffix(tags);
+        const title = foremost + queried + tagged + suffix;
         return title;
       }
 
@@ -91,7 +91,7 @@ function factory (res, options, next) {
         }
         return extras.tags.reduce(toTagPrefix, '') + ' articles';
         function toTagPrefix (prefix, tag) {
-          var index = tags.indexOf(tag.slug);
+          const index = tags.indexOf(tag.slug);
           tags.splice(index, 1);
           if (!prefix.length) {
             return tag.titleText;

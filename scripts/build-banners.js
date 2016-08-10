@@ -68,8 +68,8 @@ fs.createReadStream('resources/banners/_template-source.png')
   .pipe(new PNG({ filterType: 4 }))
   .on('parsed', function () {
 
-    for (let y = 5; y < this.height; y += 10) {
-      for (let x = 5; x < this.width; x += 10) {
+    for (const y = 5; y < this.height; y += 10) {
+      for (const x = 5; x < this.width; x += 10) {
         const idx = (this.width * y + x) << 2;
         const original = color({
           r: this.data[idx],
@@ -130,7 +130,7 @@ block template_vars
   })
 
   function getFill (pixel) {
-    var color = options.getFill ? options.getFill(pixel) : pixel.original
+    const color = options.getFill ? options.getFill(pixel) : pixel.original
     if (color) { return color; }
     return false;
   }

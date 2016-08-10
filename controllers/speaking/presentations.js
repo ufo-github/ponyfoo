@@ -1,8 +1,8 @@
 'use strict';
 
-var _ = require('lodash');
-var Presentation = require('../../models/Presentation');
-var presentationService = require('../../services/presentation');
+const _ = require('lodash');
+const Presentation = require('../../models/Presentation');
+const presentationService = require('../../services/presentation');
 
 module.exports = function (req, res, next) {
   Presentation.find({}).sort('-presented').exec(function (err, presentations) {
@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
       res.viewModel = { skip: true };
       next(); return;
     }
-    var images = _.flatten(presentations.map(presentationService.toCovers));
+    const images = _.flatten(presentations.map(presentationService.toCovers));
     res.viewModel = {
       model: {
         title: 'Conference Presentations \u2014 Pony Foo',

@@ -1,17 +1,17 @@
 'use strict';
 
-var env = require('../../lib/env');
-var registration = env('REGISTRATION_OPEN');
-var data = require('../../lib/authentication/data');
-var inliningService = require('../../services/inlining');
-var providers = Object.keys(data.providers).filter(enabled).map(namePair);
+const env = require('../../lib/env');
+const registration = env('REGISTRATION_OPEN');
+const data = require('../../lib/authentication/data');
+const inliningService = require('../../services/inlining');
+const providers = Object.keys(data.providers).filter(enabled).map(namePair);
 
 function enabled (key) {
   return data.providers[key].enabled;
 }
 
 function namePair (key) {
-  var p = data.providers[key];
+  const p = data.providers[key];
   return { name: p.name, link: p.link, css: p.css };
 }
 

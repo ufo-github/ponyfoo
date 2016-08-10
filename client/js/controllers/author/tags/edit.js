@@ -1,12 +1,12 @@
 'use strict';
 
-var $ = require('dominus');
-var sluggish = require('sluggish');
+const $ = require('dominus');
+const sluggish = require('sluggish');
 
 module.exports = function () {
-  var title = $('.tge-title');
-  var slug = $('.tge-slug');
-  var boundSlug = true;
+  const title = $('.tge-title');
+  const slug = $('.tge-slug');
+  let boundSlug = true;
 
   title.on('keypress keydown paste input', typingTitle);
   slug.on('keypress keydown paste input', typingSlug);

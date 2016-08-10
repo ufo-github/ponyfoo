@@ -1,8 +1,8 @@
 'use strict';
 
-var contra = require('contra');
-var winston = require('winston');
-var articleSharingService = require('./articleSharing');
+const contra = require('contra');
+const winston = require('winston');
+const articleSharingService = require('./articleSharing');
 
 function noop () {}
 

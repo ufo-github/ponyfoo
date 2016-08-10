@@ -1,6 +1,6 @@
 'use strict';
 
-var tagService = require('../../../services/tag');
+const tagService = require('../../../services/tag');
 
 function getAll (req, res, next) {
   tagService.getAll(respond);

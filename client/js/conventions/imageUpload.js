@@ -1,11 +1,11 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var queso = require('queso');
-var bureaucracy = require('bureaucracy');
-var scrapeCompletionService = require('../services/scrapeCompletion');
-var body = $.findOne('body');
+const $ = require('dominus');
+const taunus = require('taunus');
+const queso = require('queso');
+const bureaucracy = require('bureaucracy');
+const scrapeCompletionService = require('../services/scrapeCompletion');
+const body = $.findOne('body');
 
 function bind () {
   taunus.on('start', setupUploads.bind(null, body));
@@ -17,15 +17,15 @@ function setupUploads (container) {
 }
 
 function setup (el) {
-  var $el = $(el);
-  var inputContainer = $el.parents('.bx-icon').prev('.bx-input');
-  var input = inputContainer.find('input');
-  var grayscale = input.attr('data-grayscale');
-  var preserve = input.attr('data-preserve-size');
-  var options = {};
+  const $el = $(el);
+  const inputContainer = $el.parents('.bx-icon').prev('.bx-input');
+  const input = inputContainer.find('input');
+  const grayscale = input.attr('data-grayscale');
+  const preserve = input.attr('data-preserve-size');
+  const options = {};
   if (preserve) { options['preserve-size'] = true; }
   if (grayscale) { options.grayscale = true; }
-  var bureaucrat = bureaucracy.setup(el, {
+  const bureaucrat = bureaucracy.setup(el, {
     endpoint: '/api/images' + queso.stringify(options),
     validator: 'image'
   });
@@ -44,14 +44,14 @@ function setup (el) {
     if (results.length === 0) {
       return;
     }
-    var result = results[0];
+    const result = results[0];
     input.value(result.href);
     input.emit('bureaucrat');
     updateThumbnailImage();
   }
 
   function updateThumbnailImage () {
-    var $container = $el.parents('.wa-section-contents');
+    const $container = $el.parents('.wa-section-contents');
     scrapeCompletionService.updateThumbnail($container);
   }
 }

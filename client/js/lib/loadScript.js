@@ -1,6 +1,6 @@
 'use strict';
 
-var tag = 'script';
+const tag = 'script';
 
 function loadScript (url, options, done) {
   if (typeof options === 'function') {
@@ -9,8 +9,8 @@ function loadScript (url, options, done) {
   } else if (!options) {
     options = {};
   }
-  var first;
-  var script = document.createElement(tag);
+  let first;
+  const script = document.createElement(tag);
   script.async = true;
   script.src = url;
   if (done) { script.onload = success; script.onerror = error; }

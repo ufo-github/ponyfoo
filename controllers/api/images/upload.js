@@ -1,19 +1,19 @@
 'use strict';
 
-var correcthorse = require('correcthorse');
-var winston = require('winston');
-var path = require('path');
-var fs = require('fs');
-var mkdirp = require('mkdirp');
-var tmp = require('tmp');
-var taunus = require('taunus');
-var contra = require('contra');
-var imageService = require('../../../services/image');
-var env = require('../../../lib/env');
-var localPath = path.resolve('./tmp/images');
-var imgur = require('imgur');
-var imgurClientId = env('IMGUR_CLIENT_ID');
-var production = process.env.NODE_ENV === 'production';
+const correcthorse = require('correcthorse');
+const winston = require('winston');
+const path = require('path');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const tmp = require('tmp');
+const taunus = require('taunus');
+const contra = require('contra');
+const imageService = require('../../../services/image');
+const env = require('../../../lib/env');
+const localPath = path.resolve('./tmp/images');
+const imgur = require('imgur');
+const imgurClientId = env('IMGUR_CLIENT_ID');
+const production = process.env.NODE_ENV === 'production';
 
 function images (req, res) {
   contra.map(req.files, toImageUpload, prepareResponse);
@@ -108,7 +108,7 @@ function fileUpload (source, done) {
   }
 
   function generateFilename (next) {
-    var template = path.join(localPath, `${ correcthorse() }-X.${ source.extension }`);
+    const template = path.join(localPath, `${ correcthorse() }-X.${ source.extension }`);
     tmp.tmpName({ template: template }, next);
   }
 

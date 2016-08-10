@@ -1,7 +1,7 @@
 'use strict';
 
-var pullData = require('../lib/pullData');
-var subscriberService = require('../../services/subscriber');
+const pullData = require('../lib/pullData');
+const subscriberService = require('../../services/subscriber');
 
 module.exports = function (req, res, next) {
   pullData(function render (err, result) {

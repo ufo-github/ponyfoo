@@ -1,37 +1,37 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var concurrent = require('contra/concurrent');
-var loadScript = require('../../lib/loadScript');
-var env = require('../../lib/env');
-var mapsKey = env('GOOGLE_MAPS_API_KEY');
-var source = 'https://maps.googleapis.com/maps/api/js?key=' + mapsKey + '&libraries=places';
-var nullLatLng = {
+const $ = require('dominus');
+const taunus = require('taunus');
+const concurrent = require('contra/concurrent');
+const loadScript = require('../../lib/loadScript');
+const env = require('../../lib/env');
+const mapsKey = env('GOOGLE_MAPS_API_KEY');
+const source = 'https://maps.googleapis.com/maps/api/js?key=' + mapsKey + '&libraries=places';
+const nullLatLng = {
   lat: 0, lng: 0
 };
 
 module.exports = function (viewModel) {
   loadScript(source, function () {
-    var google = global.google;
-    var gmaps = google.maps;
-    var playButton = $('.tkfm-play');
-    var stopContainer = $('.tkfm-stop');
-    var stopButton = $('.tkfm-stop-button');
-    var interactiveMap = $('.tkfm-interactive');
-    var interactiveMapEl = interactiveMap[0];
-    var mapOptions = {
+    const google = global.google;
+    const gmaps = google.maps;
+    const playButton = $('.tkfm-play');
+    const stopContainer = $('.tkfm-stop');
+    const stopButton = $('.tkfm-stop-button');
+    const interactiveMap = $('.tkfm-interactive');
+    const interactiveMapEl = interactiveMap[0];
+    const mapOptions = {
       center: nullLatLng,
       zoom: 2
     };
-    var map = new gmaps.Map(interactiveMapEl, mapOptions);
-    var places = new gmaps.places.PlacesService(map);
-    var toPink = markMapper('/img/map-pin-e92c6c.png'); // from http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|e92c6c
-    var toPinkLight = markMapper('/img/map-pin-f4a5c0.png'); // from http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|f4a5c0
-    var upcoming = viewModel.engagements.upcoming.map(toPink);
-    var past = viewModel.engagements.past.map(toPinkLight);
-    var all = upcoming.concat(past);
-    var openedInfoWindow;
+    const map = new gmaps.Map(interactiveMapEl, mapOptions);
+    const places = new gmaps.places.PlacesService(map);
+    const toPink = markMapper('/img/map-pin-e92c6c.png'); // from http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|e92c6c
+    const toPinkLight = markMapper('/img/map-pin-f4a5c0.png'); // from http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|f4a5c0
+    const upcoming = viewModel.engagements.upcoming.map(toPink);
+    const past = viewModel.engagements.past.map(toPinkLight);
+    const all = upcoming.concat(past);
+    let openedInfoWindow;
 
     concurrent(all, 4, ready);
 
@@ -78,7 +78,7 @@ module.exports = function (viewModel) {
           next();
           return;
         }
-        var place = results[0];
+        const place = results[0];
         if (place) {
           createMarker(place);
         }
@@ -87,11 +87,11 @@ module.exports = function (viewModel) {
           markPlace(icon, engagement, next);
         }
         function createMarker (place) {
-          var partial = taunus.state.templates['speaking/engagement-infowindow'];
-          var infoWindow = new google.maps.InfoWindow({
+          const partial = taunus.state.templates['speaking/engagement-infowindow'];
+          const infoWindow = new google.maps.InfoWindow({
             content: partial({ engagement: engagement })
           });
-          var marker = new gmaps.Marker({
+          const marker = new gmaps.Marker({
             map: map,
             position: place.geometry.location,
             title: engagement.conference,

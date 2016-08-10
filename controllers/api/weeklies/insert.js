@@ -1,9 +1,9 @@
 'use strict';
 
-var weeklyService = require('../../../services/weekly');
+const weeklyService = require('../../../services/weekly');
 
 module.exports = function (req, res) {
-  var model = req.body;
+  const model = req.body;
   model.author = req.user;
   weeklyService.insert(model, inserted);
   function inserted (err) {

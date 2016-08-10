@@ -1,8 +1,8 @@
 'use strict';
 
-var contra = require('contra');
-var bioService = require('../../services/bio');
-var User = require('../../models/User');
+const contra = require('contra');
+const bioService = require('../../services/bio');
+const User = require('../../models/User');
 
 module.exports = function (req, res, next) {
   contra.waterfall([getUser, getBio], respond);

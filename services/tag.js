@@ -1,12 +1,12 @@
 'use strict';
 
-var _ = require('lodash');
-var contra = require('contra');
-var Article = require('../models/Article');
-var KnownTag = require('../models/KnownTag');
+const _ = require('lodash');
+const contra = require('contra');
+const Article = require('../models/Article');
+const KnownTag = require('../models/KnownTag');
 
 function getAll (done) {
-  var tasks = {
+  const tasks = {
     plainTags: findTags,
     knownTags: findKnownTags
   };
@@ -25,9 +25,9 @@ function getAll (done) {
     if (err) {
       done(err); return;
     }
-    var plainTags = result.plainTags;
-    var used = plainTags.map(asTagSlug);
-    var unused = result.knownTags.filter(addKnownAsUsedTags).map(toKnownTagModel);
+    const plainTags = result.plainTags;
+    const used = plainTags.map(asTagSlug);
+    const unused = result.knownTags.filter(addKnownAsUsedTags).map(toKnownTagModel);
 
     done(null, {
       used: _.sortBy(used, 'slug'),
@@ -35,7 +35,7 @@ function getAll (done) {
     });
 
     function addKnownAsUsedTags (knownTag) {
-      var i = plainTags.indexOf(knownTag.slug);
+      const i = plainTags.indexOf(knownTag.slug);
       if (i === -1) {
         return true;
       }

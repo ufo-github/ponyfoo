@@ -1,10 +1,10 @@
 'use strict';
 
-var env = require('../../lib/env');
-var staticService = require('../../services/static');
-var markdownFileService = require('../../services/markdownFile');
-var authority = env('AUTHORITY');
-var guidelinesFile = './dat/contributing-guidelines.md';
+const env = require('../../lib/env');
+const staticService = require('../../services/static');
+const markdownFileService = require('../../services/markdownFile');
+const authority = env('AUTHORITY');
+const guidelinesFile = './dat/contributing-guidelines.md';
 
 module.exports = function (req, res, next) {
   markdownFileService.read(guidelinesFile, respond);

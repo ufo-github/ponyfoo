@@ -1,22 +1,22 @@
 'use strict';
 
-var contra = require('contra');
-var winston = require('winston');
-var Article = require('../../../models/Article');
-var articleSubscriberService = require('../../../services/articleSubscriber');
-var articlePublishService = require('../../../services/articlePublish');
-var userService = require('../../../services/user');
-var respond = require('../lib/respond');
-var validate = require('./lib/validate');
-var editorRoles = ['owner', 'editor'];
+const contra = require('contra');
+const winston = require('winston');
+const Article = require('../../../models/Article');
+const articleSubscriberService = require('../../../services/articleSubscriber');
+const articlePublishService = require('../../../services/articlePublish');
+const userService = require('../../../services/user');
+const respond = require('../lib/respond');
+const validate = require('./lib/validate');
+const editorRoles = ['owner', 'editor'];
 
 module.exports = function (req, res, next) {
-  var editor = userService.hasRole(req.userObject, editorRoles);
+  const editor = userService.hasRole(req.userObject, editorRoles);
 
   contra.waterfall([lookup, found], response);
 
   function lookup (next) {
-    var query = { slug: req.params.slug };
+    const query = { slug: req.params.slug };
     if (!editor) {
       query.author = req.user;
     }
@@ -27,15 +27,15 @@ module.exports = function (req, res, next) {
     if (!article) {
       res.status(404).json({ messages: ['Article not found'] }); return;
     }
-    var body = req.body;
+    const body = req.body;
     if (body.status !== 'draft' && !editor) {
       respond.invalid(res, ['Authors are only allowed to write drafts. An editor must publish the article.']); return;
     }
-    var validation = validate(body, { update: true, editor: editor, originalAuthor: article.author.equals(req.user) });
+    const validation = validate(body, { update: true, editor: editor, originalAuthor: article.author.equals(req.user) });
     if (validation.length) {
       respond.invalid(res, validation); return;
     }
-    var model = validation.model;
+    const model = validation.model;
 
     model._id = article._id;
     articlePublishService.publish(model, maybePublished);

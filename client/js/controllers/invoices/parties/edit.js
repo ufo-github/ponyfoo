@@ -1,20 +1,20 @@
 'use strict';
 
-var $ = require('dominus');
-var debounce = require('lodash/debounce');
-var sluggish = require('sluggish');
-var raf = require('raf');
+const $ = require('dominus');
+const debounce = require('lodash/debounce');
+const sluggish = require('sluggish');
+const raf = require('raf');
 
 module.exports = function (viewModel) {
-  var editing = viewModel.editing;
-  var name = $('.ivp-name');
-  var title = $('.ivp-title');
-  var slug = $('.ivp-slug');
-  var boundSlug = !editing;
-  var boundTitle = !editing;
-  var typingNameSlowly = raf.bind(null, debounce(typingName, 100));
-  var typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
-  var typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
+  const editing = viewModel.editing;
+  const name = $('.ivp-name');
+  const title = $('.ivp-title');
+  const slug = $('.ivp-slug');
+  const typingNameSlowly = raf.bind(null, debounce(typingName, 100));
+  const typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
+  const typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
+  let boundSlug = !editing;
+  let boundTitle = !editing;
 
   name.on('keypress keydown paste input', typingNameSlowly);
   title.on('keypress keydown paste input', typingTitleSlowly);

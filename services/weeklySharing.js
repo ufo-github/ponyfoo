@@ -1,21 +1,21 @@
 'use strict';
 
-var fs = require('fs');
-var but = require('but');
-var util = require('util');
-var env = require('../lib/env');
-var subscriberService = require('./subscriber');
-var cryptoService = require('./crypto');
-var facebookService = require('./facebook');
-var twitterService = require('./twitter');
-var emojiService = require('./emoji');
-var echojsService = require('./echojs');
-var hackernewsService = require('./hackernews');
-var weeklyService = require('./weekly');
-var User = require('../models/User');
-var authority = env('AUTHORITY');
-var card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
-var css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
+const fs = require('fs');
+const but = require('but');
+const util = require('util');
+const env = require('../lib/env');
+const subscriberService = require('./subscriber');
+const cryptoService = require('./crypto');
+const facebookService = require('./facebook');
+const twitterService = require('./twitter');
+const emojiService = require('./emoji');
+const echojsService = require('./echojs');
+const hackernewsService = require('./hackernews');
+const weeklyService = require('./weekly');
+const User = require('../models/User');
+const authority = env('AUTHORITY');
+const card = env('TWITTER_CAMPAIGN_CARD_NEWSLETTER');
+const css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
 
 function emailSelf (issue, options, done) {
   if (!options.userId) {
@@ -38,11 +38,11 @@ function email (issue, options, done) {
   if (options.reshare) {
     done(new Error('The weekly newsletter cannot be reshared.')); return;
   }
-  var thanks = options.thanks ? ('?thanks=' + cryptoService.md5(issue._id + options.thanks)) : '';
-  var relativePermalink = '/weekly/' + issue.slug + thanks;
-  var permalink = authority + relativePermalink;
-  var issueModel = weeklyService.toView(issue);
-  var model = {
+  const thanks = options.thanks ? ('?thanks=' + cryptoService.md5(issue._id + options.thanks)) : '';
+  const relativePermalink = '/weekly/' + issue.slug + thanks;
+  const permalink = authority + relativePermalink;
+  const issueModel = weeklyService.toView(issue);
+  const model = {
     subject: issue.computedPageTitle,
     teaser: 'This week’s Web Platform news & inspiration',
     teaserRightHtml: util.format('<a href="%s">Read this issue on ponyfoo.com</a>', permalink),
@@ -77,12 +77,12 @@ function statusLink (issue) {
 }
 
 function tweet (issue, options, done) {
-  var tweetLength = 0;
-  var tweetLines = [];
-  var title = issue.computedTitle;
-  var emoji = emojiService.randomFun();
-  var mail1 = emojiService.randomMailEmoji();
-  var mail2 = emojiService.randomMailEmoji();
+  let tweetLength = 0;
+  const tweetLines = [];
+  const title = issue.computedTitle;
+  const emoji = emojiService.randomFun();
+  const mail1 = emojiService.randomMailEmoji();
+  const mail2 = emojiService.randomMailEmoji();
 
   add(3, mail1 + ' ' + statusLink(issue), 2 + 24);
   add(0, emoji + ' ' + title, 2 + title.length);
@@ -90,7 +90,7 @@ function tweet (issue, options, done) {
   add(1, '🏷 #ponyfooweekly', 16); // no extra new line here
   add(2, mail2 + ' ' + 'Read, comment & subscribe ⤵️', 2 + 28);
 
-  var status = tweetLines.filter(notEmpty).join('\n');
+  const status = tweetLines.filter(notEmpty).join('\n');
 
   twitterService.tweet(status, done);
 
@@ -111,7 +111,7 @@ function facebook (issue, options, done) {
 }
 
 function echojs (issue, options, done) {
-  var data = {
+  const data = {
     title: issue.computedTitle,
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };
@@ -119,7 +119,7 @@ function echojs (issue, options, done) {
 }
 
 function hackernews (issue, options, done) {
-  var data = {
+  const data = {
     title: issue.computedTitle,
     url: util.format('%s/weekly/%s', authority, issue.slug)
   };

@@ -1,24 +1,24 @@
 'use strict';
 
-var _ = require('lodash');
-var url = require('url');
-var util = require('util');
-var moment = require('moment');
-var cheerio = require('cheerio');
-var minifyHtml = require('html-minifier').minify;
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var minifierOptions = {
+const _ = require('lodash');
+const url = require('url');
+const util = require('util');
+const moment = require('moment');
+const cheerio = require('cheerio');
+const minifyHtml = require('html-minifier').minify;
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const minifierOptions = {
   collapseWhitespace: true,
   conservativeCollapse: true
 };
-var imageCache = {};
+const imageCache = {};
 
 function absolutize (html) {
   if (!html) {
     return html;
   }
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
 
   $('a[href]').each(resolve('href'));
   $('img[src]').each(resolve('src'));
@@ -26,15 +26,15 @@ function absolutize (html) {
   $('script[src]').each(resolve('src'));
   $('link[href]').each(resolve('href'));
 
-  var absolute = $.html();
-  var undeferred = undeferImages(absolute); // undo deferred image sources
+  const absolute = $.html();
+  const undeferred = undeferImages(absolute); // undo deferred image sources
   return undeferred;
 
   function resolve (prop) {
     return function each () {
-      var elem = $(this);
-      var href = elem.attr(prop);
-      var absolute = url.resolve(authority, href);
+      const elem = $(this);
+      const href = elem.attr(prop);
+      const absolute = url.resolve(authority, href);
       elem.attr(prop, absolute);
     };
   }
@@ -48,9 +48,9 @@ function extractImages (key, html, extras) {
   if (fresh(imageCache[key])) {
     return imageCache[key].value.slice();
   }
-  var $ = cheerio.load(html);
-  var images = $('img[src]').map(src);
-  var result = _(images).filter(notEmoji).concat(extras || []).uniq().compact().value();
+  const $ = cheerio.load(html);
+  const images = $('img[src]').map(src);
+  const result = _(images).filter(notEmoji).concat(extras || []).uniq().compact().value();
 
   imageCache[key] = {
     value: result.slice(),
@@ -77,7 +77,7 @@ function isEmojiEl ($) {
 }
 
 function fixedEmojiSize (html) {
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('img[src]').filter(isEmojiEl($)).css({
     width: '1em',
     height: '1em',
@@ -88,13 +88,13 @@ function fixedEmojiSize (html) {
 }
 
 function removeEmoji (html) {
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('img[src]').filter(isEmojiEl($)).remove();
   return $.html();
 }
 
 function downgradeEmojiImages (html) {
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('img[src]').filter(isEmojiEl($)).each(replace);
   return $.html();
   function replace (i, el) {
@@ -115,13 +115,13 @@ function deferImages (html, startIndex) {
   if (!html) {
     return html;
   }
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('img[src]').each(defer);
   return $.html();
 
   function defer (i) {
-    var start = startIndex || 0;
-    var elem, fallback;
+    const start = startIndex || 0;
+    let elem, fallback;
     if (i < start) {
       return;
     }
@@ -138,12 +138,12 @@ function undeferImages (html) {
   if (!html) {
     return html;
   }
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('img[data-src]').each(undefer);
   return $.html();
 
   function undefer () {
-    var elem = $(this);
+    const elem = $(this);
     elem.attr('src', elem.attr('data-src'));
     elem.removeClass('js-only');
     elem.removeAttr('data-src');
@@ -155,7 +155,7 @@ function externalizeLinks (html) {
   if (!html) {
     return html;
   }
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('a[href]').attr('target', '_blank');
   $('a[href]').attr('rel', 'nofollow');
   return $.html();
@@ -165,12 +165,12 @@ function linkThrough (html, mapper) {
   if (!html) {
     return html;
   }
-  var $ = cheerio.load(html);
+  const $ = cheerio.load(html);
   $('a[href]').each(update);
   return $.html();
   function update () {
-    var elem = $(this);
-    var href = elem.attr('href');
+    const elem = $(this);
+    const href = elem.attr('href');
     elem.attr('href', mapper(href));
   }
 }

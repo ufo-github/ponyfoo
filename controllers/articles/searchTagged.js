@@ -1,21 +1,21 @@
 'use strict';
 
-var articleListHandler = require('./lib/articleListHandler');
-var searchResults = require('./lib/searchResults');
-var articleSearchService = require('../../services/articleSearch');
+const articleListHandler = require('./lib/articleListHandler');
+const searchResults = require('./lib/searchResults');
+const articleSearchService = require('../../services/articleSearch');
 
 module.exports = function (req, res, next) {
-  var rtagSeparator = /[+/,_: ]+/ig;
-  var rtermSeparator = /[+/,_: -]+/ig;
-  var input = req.params.terms;
-  var tags = req.params.tags.split(rtagSeparator);
-  var terms = input.split(rtermSeparator);
-  var handlerOpts = {
+  const rtagSeparator = /[+/,_: ]+/ig;
+  const rtermSeparator = /[+/,_: -]+/ig;
+  const input = req.params.terms;
+  const tags = req.params.tags.split(rtagSeparator);
+  const terms = input.split(rtermSeparator);
+  const handlerOpts = {
     search: true,
     queryTerms: terms,
     queryTags: tags
   };
-  var handle = articleListHandler(res, handlerOpts, searchResults(res, next));
+  const handle = articleListHandler(res, handlerOpts, searchResults(res, next));
 
   res.viewModel = {
     model: {

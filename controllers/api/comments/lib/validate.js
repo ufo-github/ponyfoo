@@ -1,15 +1,15 @@
 'use strict';
 
-var util = require('util');
-var validator = require('validator');
+const util = require('util');
+const validator = require('validator');
 
 function validate (model) {
-  var validation = [];
+  const validation = [];
   if (!model || typeof model !== 'object') {
     validation.push('Invalid request.');
     return validation;
   }
-  var sanitized = {
+  const sanitized = {
     author: getName(),
     email: getEmail(),
     content: getContent(),
@@ -21,7 +21,7 @@ function validate (model) {
   return validation;
 
   function getName () {
-    var name = validator.toString(model.name).trim();
+    const name = validator.toString(model.name).trim();
     if (!name) {
       validation.push(util.format('Your name is required'));
     }
@@ -29,7 +29,7 @@ function validate (model) {
   }
 
   function getEmail () {
-    var valid = validator.isEmail(model.email);
+    const valid = validator.isEmail(model.email);
     if (valid === false) {
       validation.push('Please provide a valid email address! No spam, promise!');
     }
@@ -37,13 +37,13 @@ function validate (model) {
   }
 
   function getContent () {
-    var length = 10;
-    var max = 60000;
-    var valid = validator.isLength(model.content, length);
+    const length = 10;
+    const max = 60000;
+    const valid = validator.isLength(model.content, length);
     if (valid === false) {
       validation.push(util.format('Comments must be at least %s characters long', length));
     }
-    var bound = validator.isLength(model.content, 0, max);
+    const bound = validator.isLength(model.content, 0, max);
     if (bound === false) {
       validation.push(util.format('Comments can have at most %s characters!', length));
     }
@@ -51,8 +51,8 @@ function validate (model) {
   }
 
   function getSite () {
-    var scheme = /^https?:\/\//i;
-    var input = validator.toString(model.site).trim();
+    const scheme = /^https?:\/\//i;
+    const input = validator.toString(model.site).trim();
     if (input && !validator.isURL(input)) {
       validation.push('The site is optional, but it should be an URL');
     }

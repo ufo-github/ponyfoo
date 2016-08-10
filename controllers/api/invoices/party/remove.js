@@ -1,7 +1,7 @@
 'use strict';
 
-var winston = require('winston');
-var InvoiceParty = require('../../../../models/InvoiceParty');
+const winston = require('winston');
+const InvoiceParty = require('../../../../models/InvoiceParty');
 
 module.exports = function (req, res) {
   InvoiceParty.remove({ slug: req.params.slug }, saved);

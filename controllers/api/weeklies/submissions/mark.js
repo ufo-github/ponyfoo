@@ -1,9 +1,9 @@
 'use strict';
 
-var contra = require('contra');
-var WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
-var weeklySubmissionService = require('../../../../services/weeklySubmission');
-var actions = {
+const contra = require('contra');
+const WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
+const weeklySubmissionService = require('../../../../services/weeklySubmission');
+const actions = {
   accept: 'accepted',
   use: 'used'
 };
@@ -12,7 +12,7 @@ function remove (req, res, next) {
   contra.waterfall([lookupSubmission, found], handle);
 
   function lookupSubmission (next) {
-    var query = { slug: req.params.slug };
+    const query = { slug: req.params.slug };
     WeeklyIssueSubmission.findOne(query).exec(next);
   }
 
@@ -22,9 +22,9 @@ function remove (req, res, next) {
       res.redirect('/weekly/submissions/review');
       return;
     }
-    var action = req.params.action;
-    var status = actions[action];
-    var accepting = status === 'accepted' && !submission.accepted;
+    const action = req.params.action;
+    const status = actions[action];
+    const accepting = status === 'accepted' && !submission.accepted;
     if (accepting) {
       submission.accepted = true;
     }

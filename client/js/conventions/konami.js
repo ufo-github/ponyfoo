@@ -1,20 +1,20 @@
 'use strict';
 
-var $ = require('dominus');
-var cheet = require('cheet.js');
-var loading = require('./loading');
-var konamiCode = '↑ ↑ ↓ ↓ ← → ← → b a';
-var doc = document;
-var active;
+const $ = require('dominus');
+const cheet = require('cheet.js');
+const loading = require('./loading');
+const konamiCode = '↑ ↑ ↓ ↓ ← → ← → b a';
+const doc = document;
+let active;
 
 function konami () {
   cheet(konamiCode, render);
 }
 
 function appendCSS (count) {
-  var css = makeCSS(count);
-  var head = doc.head || doc.getElementsByTagName('head')[0];
-  var style = doc.createElement('style');
+  const css = makeCSS(count);
+  const head = doc.head || doc.getElementsByTagName('head')[0];
+  const style = doc.createElement('style');
   style.id = '_konami-code';
   style.type = 'text/css';
   if (style.styleSheet){
@@ -26,14 +26,14 @@ function appendCSS (count) {
 }
 
 function makeCSS (count) {
-  var i;
-  var rootSelector = '.konami-code rect';
-  var vendors = ['-webkit-', '-moz-', '-o-', '-ms-', ''];
-  var gradual = prefixed('transition', 'opacity 3s ease-in-out');
-  var opacity = Math.random() + 0.2;
-  var base = '.konami-code{position:fixed;top:0;left:0;right:0;bottom:0;cursor:pointer;opacity:' + opacity + ';' + gradual + '}';
-  var fadeaway = '.konami-code-fadeaway{opacity:0}';
-  var rects = [[[''], [
+  let i;
+  const rootSelector = '.konami-code rect';
+  const vendors = ['-webkit-', '-moz-', '-o-', '-ms-', ''];
+  const gradual = prefixed('transition', 'opacity 3s ease-in-out');
+  const opacity = Math.random() + 0.2;
+  const base = '.konami-code{position:fixed;top:0;left:0;right:0;bottom:0;cursor:pointer;opacity:' + opacity + ';' + gradual + '}';
+  const fadeaway = '.konami-code-fadeaway{opacity:0}';
+  const rects = [[[''], [
     prefixed('transition', 'all 0.1s ease-in-out'),
     prefixed('animation-name', 'konami-0'),
     prefixed('animation-iteration-count', 'infinite')
@@ -94,13 +94,13 @@ function render () {
   if (active) {
     return;
   }
-  var c = 0;
-  var d = 36;
-  var w = Math.max(doc.documentElement.clientWidth, window.innerWidth || 0);
-  var h = Math.max(doc.documentElement.clientHeight, window.innerHeight || 0);
-  var x;
-  var y;
-  var svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  let c = 0;
+  const d = 36;
+  const w = Math.max(doc.documentElement.clientWidth, window.innerWidth || 0);
+  const h = Math.max(doc.documentElement.clientHeight, window.innerHeight || 0);
+  let x;
+  let y;
+  const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
   for (y = -1; y < h/d+1; y++) {
     for (x = -1; x < w/d+1; x++) {
       addRect();
@@ -115,7 +115,7 @@ function render () {
   $('.konami-code').on('click', clear);
   setTimeout(clear, 12000);
   function addRect () {
-    var rect = doc.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    const rect = doc.createElementNS('http://www.w3.org/2000/svg', 'rect');
     rect.setAttributeNS(null, 'width', d);
     rect.setAttributeNS(null, 'height', d);
     rect.setAttributeNS(null, 'x', x * d);
@@ -141,7 +141,7 @@ function wipe () {
 }
 
 function filler () {
-  var seed = Math.random();
+  const seed = Math.random();
   if (seed > 0.95) {
     return '#f8ab6f';
   }

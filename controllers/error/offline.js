@@ -1,7 +1,7 @@
 'use strict';
 
-var offline = '/offline';
-var inliningService = require('../../services/inlining');
+const offline = '/offline';
+const inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
   res.status(200);

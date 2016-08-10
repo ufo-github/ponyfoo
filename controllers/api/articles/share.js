@@ -1,11 +1,11 @@
 'use strict';
 
-var Article = require('../../../models/Article');
-var articleSharingService = require('../../../services/articleSharing');
+const Article = require('../../../models/Article');
+const articleSharingService = require('../../../services/articleSharing');
 
 module.exports = function (req, res) {
-  var slug = req.params.slug;
-  var medium = req.params.medium;
+  const slug = req.params.slug;
+  const medium = req.params.medium;
 
   Article
     .findOne({ slug: slug })
@@ -25,7 +25,7 @@ module.exports = function (req, res) {
   }
 
   function share (article) {
-    var channel = articleSharingService[medium];
+    const channel = articleSharingService[medium];
     if (channel) {
       channel(article, { reshare: true, userId: req.user }, done);
     } else {

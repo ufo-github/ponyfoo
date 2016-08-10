@@ -1,17 +1,17 @@
 'use strict';
 
-var contra = require('contra');
-var pullData = require('../lib/pullData');
-var Subscriber = require('../../models/Subscriber');
-var subscriberService = require('../../services/subscriber');
-var datetimeService = require('../../services/datetime');
-var userService = require('../../services/user');
+const contra = require('contra');
+const pullData = require('../lib/pullData');
+const Subscriber = require('../../models/Subscriber');
+const subscriberService = require('../../services/subscriber');
+const datetimeService = require('../../services/datetime');
+const userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
-  var max = 100;
-  var page = parseInt(req.params.page, 10) || 1;
-  var p = page - 1;
-  var start = max * p;
+  const max = 100;
+  const page = parseInt(req.params.page, 10) || 1;
+  const p = page - 1;
+  const start = max * p;
 
   contra.concurrent({
     subscriberGraph: pullData,

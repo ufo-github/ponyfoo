@@ -1,10 +1,10 @@
 'use strict';
 
-var settingService = require('../../../services/setting');
+const settingService = require('../../../services/setting');
 
 module.exports = function (req, res, next) {
-  var key = req.params.key;
-  var value = req.body.value;
+  const key = req.params.key;
+  const value = req.body.value;
   settingService.setKey(key, value, saved);
   function saved (err) {
     if (err) {

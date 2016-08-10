@@ -1,15 +1,15 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var glob = require('glob');
-var files = glob.sync('.bin/inlined/*.css');
-var cache = files.reduce(reader, {});
-var enabled = files.length;
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
+const files = glob.sync('.bin/inlined/*.css');
+const cache = files.reduce(reader, {});
+const enabled = files.length;
 
 function reader (cache, file) {
-  var css = fs.readFileSync(file, 'utf8');
-  var component = path.basename(file, '.css');
+  const css = fs.readFileSync(file, 'utf8');
+  const component = path.basename(file, '.css');
   cache[component] = css;
   return cache;
 }

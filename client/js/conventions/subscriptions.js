@@ -1,8 +1,8 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var measly = require('measly');
+const $ = require('dominus');
+const taunus = require('taunus');
+const measly = require('measly');
 
 function subscriptions () {
   taunus.on('render', render);
@@ -12,20 +12,20 @@ function render (container) {
   $('.ss-container', container).forEach(setupInPlace);
 
   function setupInPlace (place) {
-    var ajax = measly.layer({ context: place });
-    var source = $('.ss-source', place).value();
-    var input = $('.ss-input', place);
-    var topicChecks = $('.ss-topic', place);
-    var button = $('.ss-button', place);
+    const ajax = measly.layer({ context: place });
+    const source = $('.ss-source', place).value();
+    const input = $('.ss-input', place);
+    const topicChecks = $('.ss-topic', place);
+    const button = $('.ss-button', place);
     button.on('click', search);
 
     function search (e) {
       e.preventDefault();
-      var email = input.value().trim();
+      const email = input.value().trim();
       if (!email) {
         return;
       }
-      var json = {
+      const json = {
         subscriber: email,
         source: source,
         topics: topicChecks.length ? topicChecks.filter(byValue).map(toTopic) : undefined

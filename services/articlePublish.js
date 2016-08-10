@@ -1,8 +1,8 @@
 'use strict';
 
-var but = require('but');
-var contra = require('contra');
-var Article = require('../models/Article');
+const but = require('but');
+const contra = require('contra');
+const Article = require('../models/Article');
 
 function publish (model, done) {
   if (model.status !== 'publish' || (model.publication && model.publication >= Date.now())) {

@@ -1,7 +1,7 @@
 'use strict';
 
-var User = require('../models/User');
-var cache = {};
+const User = require('../models/User');
+const cache = {};
 
 function get (email, field, done) {
   if (cache[email] && field in cache[email]) {

@@ -1,9 +1,9 @@
 'use strict';
 
-var sampleIssue = require('./lib/sampleIssue.json');
-var colorService = require('../../../services/color');
-var weeklyService = require('../../../services/weekly');
-var weeklyCompilerService = require('../../../services/weeklyCompiler');
+const sampleIssue = require('./lib/sampleIssue.json');
+const colorService = require('../../../services/color');
+const weeklyService = require('../../../services/weekly');
+const weeklyCompilerService = require('../../../services/weeklyCompiler');
 
 module.exports = function (req, res, next) {
   weeklyService.compile(sampleIssue, compiled);

@@ -1,7 +1,7 @@
 'use strict';
 
-var InvoiceParty = require('../../../models/InvoiceParty');
-var datetimeService = require('../../../services/datetime');
+const InvoiceParty = require('../../../models/InvoiceParty');
+const datetimeService = require('../../../services/datetime');
 
 module.exports = function (req, res, next) {
   InvoiceParty.find({}).sort('-created').lean().exec(found);

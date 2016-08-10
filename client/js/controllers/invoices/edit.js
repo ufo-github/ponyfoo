@@ -1,31 +1,31 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var moment = require('moment');
-var taunus = require('taunus');
-var assign = require('assignment');
-var sluggish = require('sluggish');
-var find = require('lodash//find');
-var debounce = require('lodash/debounce');
-var loadScript = require('../../lib/loadScript');
-var invoiceModelService = require('../../../../services/invoiceModel');
+const $ = require('dominus');
+const raf = require('raf');
+const moment = require('moment');
+const taunus = require('taunus');
+const assign = require('assignment');
+const sluggish = require('sluggish');
+const find = require('lodash//find');
+const debounce = require('lodash/debounce');
+const loadScript = require('../../lib/loadScript');
+const invoiceModelService = require('../../../../services/invoiceModel');
 
 module.exports = function (viewModel) {
   loadScript('/js/rome.js', function loaded () {
-    var { rome } = global;
-    var editing = viewModel.editing;
-    var date = $('.ive-date');
-    var slug = $('.ive-slug');
-    var customerName = $('.ive-customer-name');
-    var addItem = $('.ive-add-item');
-    var items = $('.ive-items');
-    var form = $('.ig-form');
-    var boundSlug = !editing;
-    var typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
-    var typingDateSlowly = raf.bind(null, debounce(typingDate, 100));
-    var typingCustomerSlowly = raf.bind(null, debounce(typingCustomer, 100));
-    var updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
+    const { rome } = global;
+    const editing = viewModel.editing;
+    const date = $('.ive-date');
+    const slug = $('.ive-slug');
+    const customerName = $('.ive-customer-name');
+    const addItem = $('.ive-add-item');
+    const items = $('.ive-items');
+    const form = $('.ig-form');
+    let boundSlug = !editing;
+    const typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
+    const typingDateSlowly = raf.bind(null, debounce(typingDate, 100));
+    const typingCustomerSlowly = raf.bind(null, debounce(typingCustomer, 100));
+    const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
 
     rome(date[0], { time: false, inputFormat: 'DD-MM-YYYY' }).on('data', typingDateSlowly);
 
@@ -56,21 +56,21 @@ module.exports = function (viewModel) {
     }
 
     function getSlug () {
-      var companySlug = sluggish(customerName.value());
-      var datestamp = moment(date.value(), 'DD-MM-YYYY').format('YYMMDD');
-      var slug = companySlug + '-' + datestamp;
+      const companySlug = sluggish(customerName.value());
+      const datestamp = moment(date.value(), 'DD-MM-YYYY').format('YYMMDD');
+      const slug = companySlug + '-' + datestamp;
       return slug;
     }
 
     function prefilledPartyHandler (party) {
       return setParty;
       function setParty (e) {
-        var el = $(e.target);
-        var slug = el.value();
-        var item = find(viewModel.parties[party], { slug: slug });
-        var section = el.parents('.ive-party-section');
-        var name = section.find('.ive-party-name');
-        var details = section.find('.ive-party-details');
+        const el = $(e.target);
+        const slug = el.value();
+        const item = find(viewModel.parties[party], { slug: slug });
+        const section = el.parents('.ive-party-section');
+        const name = section.find('.ive-party-name');
+        const details = section.find('.ive-party-details');
         if (item) {
           name.value(item.name);
           details.value(item.details);
@@ -100,7 +100,7 @@ module.exports = function (viewModel) {
     }
 
     function getModel () {
-      var model = {
+      const model = {
         date: moment(date.value(), 'DD-MM-YYYY').toDate(),
         slug: slug.value(),
         customer: {
@@ -133,12 +133,12 @@ module.exports = function (viewModel) {
     }
 
     function updatePreview () {
-      var el = $.findOne('.ive-container');
-      var model = getModel();
+      const el = $.findOne('.ive-container');
+      const model = getModel();
       model.customer.details = model.customer.details;
       model.payment.details = model.payment.details;
-      var invoice = invoiceModelService.generateModel(model);
-      var vm = {
+      const invoice = invoiceModelService.generateModel(model);
+      const vm = {
         invoice: invoice,
         editing: editing
       };
@@ -147,9 +147,9 @@ module.exports = function (viewModel) {
 
     function save (e) {
       e.preventDefault();
-      var endpoint = form.attr('action');
-      var invoice = getModel();
-      var data = {
+      const endpoint = form.attr('action');
+      const invoice = getModel();
+      const data = {
         json: {
           invoice: invoice
         }

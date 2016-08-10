@@ -1,7 +1,7 @@
 'use strict';
 
 function welcome (version) {
-  var message = [
+  const message = [
     '%c████████████████████████████████████████████%c████%c████',
     '%c████████████████████████████████████████████%c████%c████',
     '%c████████████████████████████████████████%c████%c████',
@@ -34,15 +34,15 @@ function welcome (version) {
     'Feel free to play around with our globals: $, md, and moment!'
   ].join('\n');
 
-  var logoFont = 'font-family: Arial; font-size: 11px;';
-  var green = 'color: #26ef00; ' + logoFont;
-  var greenIris = 'color: #26e400; ' + logoFont;
-  var oneas = 'color: #1a1a1a; ' + logoFont;
-  var threes = 'color: #333333; ' + logoFont;
-  var fourds = 'color: #4d4d4d; ' + logoFont;
-  var black = 'color: #000000; ' + logoFont;
-  var transparent = 'color: transparent; ' + logoFont;
-  var css = 'color: #e92c6c; font-size: 1.4em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;';
+  const logoFont = 'font-family: Arial; font-size: 11px;';
+  const green = 'color: #26ef00; ' + logoFont;
+  const greenIris = 'color: #26e400; ' + logoFont;
+  const oneas = 'color: #1a1a1a; ' + logoFont;
+  const threes = 'color: #333333; ' + logoFont;
+  const fourds = 'color: #4d4d4d; ' + logoFont;
+  const black = 'color: #000000; ' + logoFont;
+  const transparent = 'color: transparent; ' + logoFont;
+  const css = 'color: #e92c6c; font-size: 1.4em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;';
 
   console.log(
     message,

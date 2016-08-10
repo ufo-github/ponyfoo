@@ -1,12 +1,12 @@
 'use strict';
 
-var test = require('tape');
-var sinon = require('sinon');
-var mockery = require('mockery');
+const test = require('tape');
+const sinon = require('sinon');
+const mockery = require('mockery');
 
 test('routes should match expectation', function (t) {
-  var stubs = {};
-  var routes = [];
+  const stubs = {};
+  const routes = [];
 
   setup();
 
@@ -39,8 +39,8 @@ test('routes should match expectation', function (t) {
   teardown();
 
   function setup () {
-    var errors = sinon.stub();
-    var transports = {
+    const errors = sinon.stub();
+    const transports = {
       routing: sinon.spy()
     };
     mockery.enable();
@@ -55,9 +55,9 @@ test('routes should match expectation', function (t) {
 
   function plan () {
     // arrange
-    var middleware = Array.prototype.slice.call(arguments);
-    var verb = middleware.shift();
-    var url = middleware.shift();
+    const middleware = Array.prototype.slice.call(arguments);
+    const verb = middleware.shift();
+    const url = middleware.shift();
 
     routes.push({
       verb: verb,
@@ -76,7 +76,7 @@ test('routes should match expectation', function (t) {
 
   function run () {
     // arrange
-    var app = {
+    const app = {
       get: sinon.spy(),
       put: sinon.spy(),
       post: sinon.spy(),
@@ -86,7 +86,7 @@ test('routes should match expectation', function (t) {
       all: sinon.spy()
     };
 
-    var routing = require('../../controllers/routing');
+    const routing = require('../../controllers/routing');
 
     // act
     routing(app);
@@ -96,8 +96,8 @@ test('routes should match expectation', function (t) {
     routes.forEach(assertRoute);
 
     function assertRoute (route) {
-      var method = app[route.verb];
-      var sets = method.args.filter(routeMatch);
+      const method = app[route.verb];
+      const sets = method.args.filter(routeMatch);
 
       t.ok(sets.length, 'route ' + route.url + ' expected at least one call');
       t.ok(testMiddleware(), 'route ' + route.url + ' expected middleware match');

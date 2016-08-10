@@ -1,16 +1,16 @@
 'use strict';
 
-var map = require('contra/map');
-var assign = require('assignment');
-var beautifyText = require('beautify-text');
-var stylus = require('./lib/stylus');
-var textService = require('./text');
-var weeklyCompilerLinkService = require('./weeklyCompilerLink');
-var linkSectionView = require('../.bin/views/shared/partials/weekly/link');
-var knownTags = require('./lib/knownNewsletterTags.json');
+const map = require('contra/map');
+const assign = require('assignment');
+const beautifyText = require('beautify-text');
+const stylus = require('./lib/stylus');
+const textService = require('./text');
+const weeklyCompilerLinkService = require('./weeklyCompilerLink');
+const linkSectionView = require('../.bin/views/shared/partials/weekly/link');
+const knownTags = require('./lib/knownNewsletterTags.json');
 
 function compile (sections, options, done) {
-  var compilers = {
+  const compilers = {
     header: toHeaderSectionHtml,
     markdown: toMarkdownSectionHtml,
     link: toLinkSectionHtml,
@@ -29,7 +29,7 @@ function compile (sections, options, done) {
 }
 
 function toHeaderSectionHtml (section, options, done) {
-  var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
+  const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
   done(null, textService.format([
     '<div class="wy-section-header">',
     '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
@@ -48,22 +48,22 @@ function toHeaderSectionHtml (section, options, done) {
 }
 
 function toMarkdownSectionHtml (section, options, done) {
-  var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
-  var html = options.markdown.compile(section.text, {
+  const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
+  const html = options.markdown.compile(section.text, {
     linkThrough: linkThrough
   });
   done(null, textService.format('<div class="wy-section-markdown md-markdown">%s</div>', html));
 }
 
 function toLinkSectionModel (section, options, done) {
-  var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
-  var descriptionHtml = options.markdown.compile(section.description, {
+  const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
+  const descriptionHtml = options.markdown.compile(section.description, {
     linkThrough: linkThrough
   });
-  var base = {
+  const base = {
     descriptionHtml: descriptionHtml
   };
-  var extended = assign(base, section, {
+  const extended = assign(base, section, {
     titleHtml: options.markdown.compile(section.title, {
       linkThrough: linkThrough
     }),
@@ -71,7 +71,7 @@ function toLinkSectionModel (section, options, done) {
     source: beautifyText(section.source),
     sourceHref: linkThrough(section.sourceHref)
   });
-  var model = {
+  const model = {
     item: extended,
     knownTags: knownTags
   };

@@ -3,21 +3,21 @@
 require('../preconfigure');
 require('../chdir');
 
-var opn = require('opn');
-var path = require('path');
-var util = require('util');
-var winston = require('winston');
-var moment = require('moment');
-var sluggish = require('sluggish');
-var pdf = require('html-pdf');
-var db = require('../lib/db');
-var env = require('../lib/env');
-var boot = require('../lib/boot');
-var Invoice = require('../models/Invoice');
-var invoiceModelService = require('../services/invoiceModel');
-var viewService = require('../services/view');
-var authority = env('AUTHORITY');
-var tmpdir = path.join(process.cwd(), 'tmp');
+const opn = require('opn');
+const path = require('path');
+const util = require('util');
+const winston = require('winston');
+const moment = require('moment');
+const sluggish = require('sluggish');
+const pdf = require('html-pdf');
+const db = require('../lib/db');
+const env = require('../lib/env');
+const boot = require('../lib/boot');
+const Invoice = require('../models/Invoice');
+const invoiceModelService = require('../services/invoiceModel');
+const viewService = require('../services/view');
+const authority = env('AUTHORITY');
+const tmpdir = path.join(process.cwd(), 'tmp');
 
 boot(booted);
 
@@ -29,14 +29,14 @@ function booted () {
       errored(err); return;
     }
 
-    var now = moment.utc();
-    var invoiceSlug = sluggish(util.format('%s-%s-%s',
+    const now = moment.utc();
+    const invoiceSlug = sluggish(util.format('%s-%s-%s',
       'example',
       getRandomCode().slice(0, 4),
       now.format('YYMMDD')
     ));
-    var invoiceModel = invoiceModelService.generateModel(invoice);
-    var viewModel = {
+    const invoiceModel = invoiceModelService.generateModel(invoice);
+    const viewModel = {
       leanLayout: true,
       model: {
         title: 'Invoice #' + invoiceSlug + ' \u2014 Pony Foo',
@@ -44,8 +44,8 @@ function booted () {
         pdf: true
       }
     };
-    var filename = invoiceSlug + '.pdf';
-    var filepath = path.join(tmpdir, util.format('%s.%s.pdf', invoiceSlug, getRandomCode()));
+    const filename = invoiceSlug + '.pdf';
+    const filepath = path.join(tmpdir, util.format('%s.%s.pdf', invoiceSlug, getRandomCode()));
 
     invoiceModel.paid = false;
     viewService.render('invoices/invoice', viewModel, rendered);
@@ -54,7 +54,7 @@ function booted () {
       if (err) {
         errored(err); return;
       }
-      var options = {
+      const options = {
         base: authority,
         border: '20px',
         width: '1380px',

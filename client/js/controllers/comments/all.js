@@ -1,26 +1,26 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var taunus = require('taunus');
-var debounce = require('lodash/debounce');
-var ls = require('../../lib/storage');
-var userService = require('../../services/user');
-var textService = require('../../../../services/text');
-var key = 'comment-draft';
+const $ = require('dominus');
+const raf = require('raf');
+const taunus = require('taunus');
+const debounce = require('lodash/debounce');
+const ls = require('../../lib/storage');
+const userService = require('../../services/user');
+const textService = require('../../../../services/text');
+const key = 'comment-draft';
 
 module.exports = function (viewModel, container) {
-  var composer = $('.mc-composer', container);
-  var name = $('.mc-name', container);
-  var email = $('.mc-email', container);
-  var site = $('.mc-site', container);
-  var content = $('.mc-content', container);
-  var send = $('.mc-send', container);
-  var sendText = $('.bt-text', send);
-  var serializeSlowly = debounce(serialize, 100);
-  var comments = $('.mm-comments', container);
-  var cancelReply = $('.mc-cancel-reply', container);
-  var footer = $('.mm-footer', container);
+  const composer = $('.mc-composer', container);
+  const name = $('.mc-name', container);
+  const email = $('.mc-email', container);
+  const site = $('.mc-site', container);
+  const content = $('.mc-content', container);
+  const send = $('.mc-send', container);
+  const sendText = $('.bt-text', send);
+  const serializeSlowly = debounce(serialize, 100);
+  const comments = $('.mm-comments', container);
+  const cancelReply = $('.mc-cancel-reply', container);
+  const footer = $('.mm-footer', container);
 
   $('.mm-thread-reply', container).removeClass('uv-hidden');
 
@@ -32,7 +32,7 @@ module.exports = function (viewModel, container) {
   deserialize();
 
   function deserialize () {
-    var data = ls.get(key);
+    const data = ls.get(key);
     if (data) {
       name.value(data.name);
       email.value(data.email);
@@ -52,10 +52,10 @@ module.exports = function (viewModel, container) {
   }
 
   function attach (e) {
-    var button = $(e.target);
-    var thread = button.parents('.mm-thread');
-    var reply = thread.find('.mm-thread-reply');
-    var replies = $('.mm-thread-reply').but(reply);
+    const button = $(e.target);
+    const thread = button.parents('.mm-thread');
+    const reply = thread.find('.mm-thread-reply');
+    const replies = $('.mm-thread-reply').but(reply);
     replies.removeClass('uv-hidden');
     reply.addClass('uv-hidden').parent().before(composer);
     sendText.text('Add Reply');
@@ -64,7 +64,7 @@ module.exports = function (viewModel, container) {
   }
 
   function detach () {
-    var replies = $('.mm-thread-reply');
+    const replies = $('.mm-thread-reply');
     footer.append(composer);
     replies.removeClass('uv-hidden');
     cancelReply.addClass('uv-hidden');
@@ -75,9 +75,9 @@ module.exports = function (viewModel, container) {
   function comment (e) {
     e.preventDefault();
 
-    var thread = send.parents('.mm-thread');
-    var endpoint = textService.format('/api/%s/%s/comments', viewModel.parentType, viewModel.parent.slug);
-    var model = {
+    const thread = send.parents('.mm-thread');
+    const endpoint = textService.format('/api/%s/%s/comments', viewModel.parentType, viewModel.parent.slug);
+    const model = {
       json: getCommentData()
     };
     model.json.parent = thread.attr('data-thread');
@@ -92,9 +92,9 @@ module.exports = function (viewModel, container) {
     }
 
     function appendResult (data) {
-      var placeholder = $('<div>');
-      var template, partial;
-      var model = {
+      const placeholder = $('<div>');
+      let template, partial;
+      const model = {
         user: viewModel.user,
         roles: userService.getRoles(),
         parent: {
@@ -123,16 +123,16 @@ module.exports = function (viewModel, container) {
   }
 
   function remove (e) {
-    var button = $(e.target);
-    var comment = button.parents('.mm-comment');
-    var id = comment.attr('data-comment');
-    var endpoint = textService.format('/api/%s/%s/comments/%s', viewModel.parentType, viewModel.parent.slug, id);
+    const button = $(e.target);
+    const comment = button.parents('.mm-comment');
+    const id = comment.attr('data-comment');
+    const endpoint = textService.format('/api/%s/%s/comments/%s', viewModel.parentType, viewModel.parent.slug, id);
 
     viewModel.measly.delete(endpoint).on('data', cleanup);
 
     function cleanup () {
-      var comments = $(textService.format('[data-comment="%s"]', id));
-      var thread = $(textService.format('[data-thread="%s"]', id));
+      const comments = $(textService.format('[data-comment="%s"]', id));
+      const thread = $(textService.format('[data-thread="%s"]', id));
       if (thread.length && composer.parents(thread).length) {
         detach();
       }

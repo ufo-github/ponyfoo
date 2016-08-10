@@ -1,8 +1,8 @@
 'use strict';
 
-var util = require('util');
-var removeAction = require('./lib/remove-action');
-var types = {
+const util = require('util');
+const removeAction = require('./lib/remove-action');
+const types = {
   articles: 'articles',
   weeklies: 'weekly'
 };
@@ -13,8 +13,8 @@ function remove (req, res, next) {
     if (result === 'not_found') {
       req.flash('error', ['Comment not found.']);
     }
-    var p = req.params;
-    var host = util.format('/%s/%s', types[p.type], p.slug);
+    const p = req.params;
+    const host = util.format('/%s/%s', types[p.type], p.slug);
     res.redirect(host);
   }
 }

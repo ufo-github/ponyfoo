@@ -1,13 +1,13 @@
 'use strict';
 
-var winston = require('winston');
-var sluggish = require('sluggish');
-var Invoice = require('../../../models/Invoice');
+const winston = require('winston');
+const sluggish = require('sluggish');
+const Invoice = require('../../../models/Invoice');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
-  var body = req.body.invoice;
-  var query = { slug: slug };
+  const slug = req.params.slug;
+  const body = req.body.invoice;
+  const query = { slug: slug };
   Invoice.findOne(query, found);
   function found (err, invoice) {
     if (err) {

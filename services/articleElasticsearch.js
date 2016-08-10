@@ -1,10 +1,10 @@
 'use strict';
 
-var es = require('../lib/elasticsearch');
-var indexService = require('./articleElasticsearchIndex');
-var indexName = 'ponyfoo';
-var typeName = 'article';
-var relatedArticlesLimit = 6;
+const es = require('../lib/elasticsearch');
+const indexService = require('./articleElasticsearchIndex');
+const indexName = 'ponyfoo';
+const typeName = 'article';
+const relatedArticlesLimit = 6;
 
 function update (article, done) {
   es.client.update({
@@ -73,8 +73,8 @@ function found (done) {
   };
 }
 function filters (options) {
-  var tags = Array.isArray(options.tags) ? options.tags : [];
-  var clauses = [status('published')].concat(tags.map(tagToFilter));
+  const tags = Array.isArray(options.tags) ? options.tags : [];
+  const clauses = [status('published')].concat(tags.map(tagToFilter));
   if (options.since) {
     clauses.unshift(since(options.since));
   }

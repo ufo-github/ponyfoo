@@ -1,10 +1,10 @@
 'use strict';
 
-var winston = require('winston');
-var weeklyService = require('../../../services/weekly');
+const winston = require('winston');
+const weeklyService = require('../../../services/weekly');
 
 module.exports = function (req, res) {
-  var options = {
+  const options = {
     author: req.user,
     slug: req.params.slug,
     model: req.body

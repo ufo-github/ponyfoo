@@ -1,8 +1,8 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var cryptoService = require('../services/crypto');
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const cryptoService = require('../services/crypto');
+const schema = new mongoose.Schema({
   email: { type: String, require: true },
   password: { type: String, require: true }
 }, { id: false });
@@ -10,7 +10,7 @@ var schema = new mongoose.Schema({
 schema.pre('save', beforeSave);
 
 function beforeSave (done) {
-  var user = this;
+  const user = this;
 
   if (!user.isModified('password')) {
     done(); return;

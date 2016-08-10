@@ -1,20 +1,20 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var searchUrlService = require('../../../services/searchUrl');
+const $ = require('dominus');
+const taunus = require('taunus');
+const searchUrlService = require('../../../services/searchUrl');
 
 function searchConvention () {
   taunus.on('render', render);
 }
 
 function render (container) {
-  var input = $('.sr-input', container);
+  const input = $('.sr-input', container);
   $('.sr-button', container).on('click', search);
   function search (e) {
     e.preventDefault();
-    var terms = input.value();
-    var route = searchUrlService.compile(terms);
+    const terms = input.value();
+    const route = searchUrlService.compile(terms);
     if (route) {
       taunus.navigate(route);
     }

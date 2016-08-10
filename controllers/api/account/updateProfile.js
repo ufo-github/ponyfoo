@@ -1,20 +1,20 @@
 'use strict';
 
-var sluggish = require('sluggish');
-var validator = require('validator');
-var markupService = require('../../../services/markup');
-var summaryService = require('../../../services/summary');
-var bioService = require('../../../services/bio');
-var User = require('../../../models/User');
-var rprotocol = /^https?:\/\//i;
-var rtwitter = /^https?:\/\/twitter\.com\//i;
-var rtwitter_legacy = /[@#!]+/i;
+const sluggish = require('sluggish');
+const validator = require('validator');
+const markupService = require('../../../services/markup');
+const summaryService = require('../../../services/summary');
+const bioService = require('../../../services/bio');
+const User = require('../../../models/User');
+const rprotocol = /^https?:\/\//i;
+const rtwitter = /^https?:\/\/twitter\.com\//i;
+const rtwitter_legacy = /[@#!]+/i;
 
 module.exports = function (req, res, next) {
-  var body = req.body;
-  var bio = validator.toString(body.bio);
-  var bioHtml = markupService.compile(bio, { deferImages: true });
-  var bioText = summaryService.summarize(bioHtml, 200).text;
+  const body = req.body;
+  const bio = validator.toString(body.bio);
+  const bioHtml = markupService.compile(bio, { deferImages: true });
+  const bioText = summaryService.summarize(bioHtml, 200).text;
 
   User.findOne({ _id: req.user }, update);
 
@@ -25,15 +25,15 @@ module.exports = function (req, res, next) {
     if (!user) {
       res.status(404).json({ messages: ['Account not found!'] }); return;
     }
-    var displayName = body.displayName;
+    const displayName = body.displayName;
     if (displayName.length < 4) {
       res.status(400).json({ messages: ['Your name must be at least 4 characters long.'] }); return;
     }
-    var slug = sluggish(body.slug);
+    const slug = sluggish(body.slug);
     if (slug.length < 4) {
       res.status(400).json({ messages: ['Your username must be at least 4 characters long.'] }); return;
     }
-    var validEmail = validator.isEmail(body.email);
+    const validEmail = validator.isEmail(body.email);
     if (!validEmail) {
       res.status(400).json({ messages: ['Use a valid email address.'] }); return;
     }
@@ -47,7 +47,7 @@ module.exports = function (req, res, next) {
     user.bioHtml = bioHtml;
     user.bioText = bioText;
 
-    var password = validator.toString(body.password);
+    const password = validator.toString(body.password);
     if ('password' in body && 'oldPassword' in body) {
       if (password.length < 4) {
         short(); return;

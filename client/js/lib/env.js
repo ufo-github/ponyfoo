@@ -1,6 +1,6 @@
 'use strict';
 
-var env = require('../../../.env.browser.json');
+const env = require('../../../.env.browser.json');
 
 function accessor (key) {
   return env[key] || null;

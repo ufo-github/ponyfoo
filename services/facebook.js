@@ -1,22 +1,22 @@
 'use strict';
 
-var FB = require('fb');
-var winston = require('winston');
-var env = require('../lib/env');
-var pageId = env('FACEBOOK_PAGE_ID');
-var accessToken = env('FACEBOOK_ACCESS_TOKEN');
-var enabled = pageId && accessToken;
+const FB = require('fb');
+const winston = require('winston');
+const env = require('../lib/env');
+const pageId = env('FACEBOOK_PAGE_ID');
+const accessToken = env('FACEBOOK_ACCESS_TOKEN');
+const enabled = pageId && accessToken;
 if (enabled) {
   FB.setAccessToken(accessToken);
 }
-var get = query('get');
-var post = query('post');
+const get = query('get');
+const post = query('post');
 
 function noop () {}
 
 function share (status, link, done) {
-  var endpoint = pageId + '/feed';
-  var data = {
+  const endpoint = pageId + '/feed';
+  const data = {
     message: status,
     link: link
   };
@@ -24,7 +24,7 @@ function share (status, link, done) {
 }
 
 function shareFake (status, link, done) {
-  var end = done || noop;
+  const end = done || noop;
   winston.info('FB: ' + status + ' ' + link);
   end();
 }
@@ -32,7 +32,7 @@ function shareFake (status, link, done) {
 function query (method) {
   return queryWithMethod;
   function queryWithMethod (endpoint, data, done) {
-    var end = done || noop;
+    const end = done || noop;
     FB.api(endpoint, method, data, normalize);
 
     function normalize (result) {

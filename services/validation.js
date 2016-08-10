@@ -1,9 +1,9 @@
 'use strict';
 
-var validator = require('validator');
+const validator = require('validator');
 
 function integer (value, defaultValue) {
-  var casted = validator.toInt(value || defaultValue);
+  const casted = validator.toInt(value || defaultValue);
   return !isNaN(casted) && casted || defaultValue;
 }
 

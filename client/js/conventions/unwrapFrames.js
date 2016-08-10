@@ -1,8 +1,8 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var body = $.findOne('body');
+const $ = require('dominus');
+const taunus = require('taunus');
+const body = $.findOne('body');
 
 function bind () {
   taunus.on('start', unwrapFrames.bind(null, body));

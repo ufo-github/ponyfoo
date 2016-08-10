@@ -1,14 +1,14 @@
 'use strict';
 
-var inliningService = require('../../services/inlining');
-var metadataService = require('../../services/metadata');
-var articleService = require('../../services/article');
-var cryptoService = require('../../services/crypto');
-var userService = require('../../services/user');
+const inliningService = require('../../services/inlining');
+const metadataService = require('../../services/metadata');
+const articleService = require('../../services/article');
+const cryptoService = require('../../services/crypto');
+const userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
-  var query = { slug: req.params.slug };
-  var options = { populate: 'prev next related comments author' };
+  const query = { slug: req.params.slug };
+  const options = { populate: 'prev next related comments author' };
   res.viewModel = {
     model: {
       title: 'Pony Foo'
@@ -26,7 +26,7 @@ module.exports = function (req, res, next) {
     }
 
     // draft share link?
-    var verify = req.query.verify;
+    const verify = req.query.verify;
     if (verify && verify === cryptoService.md5(article._id + article.created)) {
       done(); return;
     }
@@ -51,7 +51,7 @@ module.exports = function (req, res, next) {
       res.viewModel.skip = true;
       next(); return;
     }
-    var model = res.viewModel.model;
+    const model = res.viewModel.model;
     model.full = true;
     model.title = article.title;
     model.meta = {

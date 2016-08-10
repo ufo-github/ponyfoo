@@ -1,7 +1,7 @@
 'use strict';
 
-var WeeklyIssue = require('../../models/WeeklyIssue');
-var redirect = require('./lib/redirect');
+const WeeklyIssue = require('../../models/WeeklyIssue');
+const redirect = require('./lib/redirect');
 
 module.exports = function (req, res, next) {
   WeeklyIssue

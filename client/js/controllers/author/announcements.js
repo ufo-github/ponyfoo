@@ -1,20 +1,20 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var taunus = require('taunus');
-var debounce = require('lodash/debounce');
-var markdownService = require('../../../../services/markdown');
+const $ = require('dominus');
+const raf = require('raf');
+const taunus = require('taunus');
+const debounce = require('lodash/debounce');
+const markdownService = require('../../../../services/markdown');
 
 module.exports = function (viewModel) {
-  var subject = $('.ec-subject');
-  var teaser = $('.ec-teaser');
-  var body = $('.ec-body');
-  var topic = $('.ec-topic');
-  var previewSubject = $('.ec-preview-subject');
-  var previewTeaser = $('.ec-preview-teaser');
-  var previewBody = $('.ec-preview-body');
-  var sendButton = $('.ec-send');
+  const subject = $('.ec-subject');
+  const teaser = $('.ec-teaser');
+  const body = $('.ec-body');
+  const topic = $('.ec-topic');
+  const previewSubject = $('.ec-preview-subject');
+  const previewTeaser = $('.ec-preview-teaser');
+  const previewBody = $('.ec-preview-body');
+  const sendButton = $('.ec-send');
 
   subject.on('keypress keydown paste', raf.bind(null, debounce(updatePreviewSubject, 200)));
   teaser.on('keypress keydown paste', raf.bind(null, debounce(updatePreviewTeaser, 200)));
@@ -28,14 +28,14 @@ module.exports = function (viewModel) {
     previewTeaser.text(teaser.value() || 'Teaser about email contents');
   }
   function updatePreviewBody () {
-    var rparagraph = /^<p>|<\/p>$/ig;
+    const rparagraph = /^<p>|<\/p>$/ig;
     previewBody.html(getHtml(body).trim().replace(rparagraph, '') || 'Main body of your email');
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }
 
   function send () {
-    var model = {
+    const model = {
       json: {
         topic: topic.value(),
         subject: subject.value(),

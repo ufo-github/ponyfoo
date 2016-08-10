@@ -3,10 +3,10 @@
 require('../preconfigure');
 require('../chdir');
 
-var winston = require('winston');
-var db = require('../lib/db');
-var boot = require('../lib/boot');
-var indexService = require('../services/articleElasticsearchIndex');
+const winston = require('winston');
+const db = require('../lib/db');
+const boot = require('../lib/boot');
+const indexService = require('../services/articleElasticsearchIndex');
 
 boot(booted);
 

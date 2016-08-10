@@ -1,13 +1,13 @@
 'use strict';
 
-var version = 'v31::';
-var swivel = require('swivel');
-var parse = require('omnibox/querystring').parse;
-var env = require('../../lib/env');
-var sw = require('./lib/sw');
-var mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
-var rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
-var offlineFundamentals = [
+const version = 'v31::';
+const swivel = require('swivel');
+const parse = require('omnibox/querystring').parse;
+const env = require('../../lib/env');
+const sw = require('./lib/sw');
+const mysteryMan = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y';
+const rainbows = 'https://i.imgur.com/EgwCMYB.jpg';
+const offlineFundamentals = [
   '/',
   '/offline',
   '/css/all.css',
@@ -15,12 +15,12 @@ var offlineFundamentals = [
   mysteryMan,
   rainbows
 ];
-var ignoreprefixes = [
+const ignoreprefixes = [
   'api',
   'bf',
   's'
 ];
-var fetchfirstprefixes = [
+const fetchfirstprefixes = [
   'owner',
   'invoices',
   'account',
@@ -29,7 +29,7 @@ var fetchfirstprefixes = [
   'subscribed',
   'unsubscribed'
 ];
-var fetchfirstsuffixes = [
+const fetchfirstsuffixes = [
   'review',
   'edit',
   'new',
@@ -37,9 +37,9 @@ var fetchfirstsuffixes = [
   'first',
   'random'
 ];
-var rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
-var rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
-var rfetchfirstsuffixes = new RegExp('\/(' + fetchfirstsuffixes.join('|') + ')($)', 'i');
+const rignoreprefixes = new RegExp('^\/(' + ignoreprefixes.join('|') + ')(\/|$)', 'i');
+const rfetchfirstprefixes = new RegExp('^\/(' + fetchfirstprefixes.join('|') + ')(\/|$)', 'i');
+const rfetchfirstsuffixes = new RegExp('\/(' + fetchfirstsuffixes.join('|') + ')($)', 'i');
 
 self.importScripts('/js/sw-offline-google-analytics.js');
 self.goog.offlineGoogleAnalytics.initialize();
@@ -76,13 +76,13 @@ function activator (e) {
 }
 
 function fetcher (e) {
-  var request = e.request;
+  const request = e.request;
   if (request.method !== 'GET') {
     return;
   }
 
-  var url = new URL(request.url);
-  var sameorigin = url.origin === location.origin;
+  const url = new URL(request.url);
+  const sameorigin = url.origin === location.origin;
   if (sameorigin && rignoreprefixes.test(url.pathname)) {
     return; // ignore
   }
@@ -101,7 +101,7 @@ function fetcher (e) {
     return respondBasedOnCache(cached, false);
   }
   function respondBasedOnCache (cached, fetchFirst) {
-    var networked = fetch(request)
+    const networked = fetch(request)
       .then(fetchedFromNetwork, unableToResolve)
       .catch(unableToResolve);
 
@@ -111,7 +111,7 @@ function fetcher (e) {
     return cached || networked;
 
     function fetchedFromNetwork (response) {
-      var cacheCopy = response.clone();
+      const cacheCopy = response.clone();
       caches.open(version + 'pages').then(function add (cache) {
         cache.put(request, cacheCopy);
         relay(response, cache);
@@ -120,10 +120,10 @@ function fetcher (e) {
     }
 
     function relay (response, cache) {
-      var qs = parse(url.search.slice(1));
-      var loading = 'json' in qs && qs.callback === 'taunusReady';
-      var json = matchesType(response, 'application/json');
-      var notifies = cached && sameorigin;
+      const qs = parse(url.search.slice(1));
+      const loading = 'json' in qs && qs.callback === 'taunusReady';
+      const json = matchesType(response, 'application/json');
+      const notifies = cached && sameorigin;
       if (!notifies) {
         return;
       }
@@ -138,17 +138,17 @@ function fetcher (e) {
         });
       }
       function relayJSONP () {
-        var href = sw.toggleJSON(request.url, true);
+        const href = sw.toggleJSON(request.url, true);
         response.clone().text().then(function parsed (text) {
-          var left = 54; // /**/ typeof taunusReady === 'function' && taunusReady(
-          var right = 2; // );
-          var json = text.substr(left, text.length - left - right);
-          var data = JSON.parse(json);
+          const left = 54; // /**/ typeof taunusReady === 'function' && taunusReady(
+          const right = 2; // );
+          const json = text.substr(left, text.length - left - right);
+          const data = JSON.parse(json);
           swivel.broadcast('view-update', href, data);
           repurpose();
 
           function repurpose () {
-            var options = {
+            const options = {
               status: 200,
               headers: new Headers({ 'Content-Type': 'application/json' })
             };
@@ -162,7 +162,7 @@ function fetcher (e) {
       if (fetchFirst && cached) {
         return cached;
       }
-      var accepts = request.headers.get('Accept');
+      const accepts = request.headers.get('Accept');
       if (sameorigin && accepts.indexOf('application/json') !== -1) {
         return offlineView();
       }
@@ -182,16 +182,16 @@ function fetcher (e) {
   }
 
   function matchesType (response, type) {
-    var contentType = response.headers.get('Content-Type');
+    const contentType = response.headers.get('Content-Type');
     return contentType && contentType.indexOf(type) !== -1;
   }
 
   function offlineView () {
-    var viewModel = {
+    const viewModel = {
       version: env('TAUNUS_VERSION'),
       model: { action: 'error/offline' }
     };
-    var options = {
+    const options = {
       status: 200,
       headers: new Headers({ 'Content-Type': 'application/json' })
     };

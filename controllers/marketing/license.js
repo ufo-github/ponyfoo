@@ -1,7 +1,7 @@
 'use strict';
 
-var markdownFileService = require('../../services/markdownFile');
-var aboutFile = './dat/license.md';
+const markdownFileService = require('../../services/markdownFile');
+const aboutFile = './dat/license.md';
 
 module.exports = function (req, res, next) {
   markdownFileService.read(aboutFile, respond);

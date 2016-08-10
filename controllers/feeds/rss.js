@@ -1,10 +1,10 @@
 'use strict';
 
-var feedService = require('../../services/feed');
-var maxAge = 15 * 60 * 1000; // 15 minutes
+const feedService = require('../../services/feed');
+const maxAge = 15 * 60 * 1000; // 15 minutes
 
 module.exports = function (req, res) {
-  var id = req.params.id;
+  const id = req.params.id;
   if (!(id in feedService.feeds)) {
     res.end(''); return;
   }

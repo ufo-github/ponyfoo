@@ -1,7 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const schema = new mongoose.Schema({
   added: { type: Date, default: Date.now },
   name: String,
   repo: String,

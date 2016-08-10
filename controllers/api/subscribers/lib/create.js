@@ -1,7 +1,7 @@
 'use strict';
 
-var validator = require('validator');
-var subscriberService = require('../../../../services/subscriber');
+const validator = require('validator');
+const subscriberService = require('../../../../services/subscriber');
 
 function create (email, source, topics, done) {
   if (!validator.isEmail(email)) {

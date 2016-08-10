@@ -1,20 +1,20 @@
 'use strict';
 
-var _ = require('lodash');
-var util = require('util');
-var safeson = require('safeson');
-var taunus = require('taunus');
-var accepts = require('accepts');
-var pkg = require('../package.json');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var environment = env('NODE_ENV');
-var userAgent = util.format('%s@%s/%s', pkg.name, pkg.version, environment);
-var dev = environment === 'development';
-var textSpaces = dev ? 2 : 0;
+const _ = require('lodash');
+const util = require('util');
+const safeson = require('safeson');
+const taunus = require('taunus');
+const accepts = require('accepts');
+const pkg = require('../package.json');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const environment = env('NODE_ENV');
+const userAgent = util.format('%s@%s/%s', pkg.name, pkg.version, environment);
+const dev = environment === 'development';
+const textSpaces = dev ? 2 : 0;
 
 function referer (req) {
-  var r = req.headers.referer || '';
+  const r = req.headers.referer || '';
   return r.indexOf(authority) === 0 ? r : '/';
 }
 
@@ -23,8 +23,8 @@ function validationError (req, res, result) {
 }
 
 function isJson (req) {
-  var accept = accepts(req).types('html', 'json');
-  var json = accept === 'json' || 'json' in req.query;
+  const accept = accepts(req).types('html', 'json');
+  const json = accept === 'json' || 'json' in req.query;
   return json;
 }
 
@@ -49,7 +49,7 @@ function response (req, res, statusCode, data, flashOnly) {
     flash();
   }
   function text () {
-    var encoded = safeson(data, textSpaces);
+    const encoded = safeson(data, textSpaces);
     res.set('Content-Type', 'text/html; charset=utf-8');
     res.send(encoded);
   }
@@ -68,8 +68,8 @@ function response (req, res, statusCode, data, flashOnly) {
 function flashCopy (req, data) {
   Object.keys(data).forEach(flash); // copy data onto flash
   function flash (key) {
-    var store = data[key];
-    var collection = Array.isArray(store) ? store : [store];
+    const store = data[key];
+    const collection = Array.isArray(store) ? store : [store];
     collection.forEach(copy);
     function copy (value) {
       req.flash(key, value);
@@ -78,8 +78,8 @@ function flashCopy (req, data) {
 }
 
 function redirect (req, res, url, options) {
-  var href = url || referer(req);
-  var o = options || {};
+  const href = url || referer(req);
+  const o = options || {};
   if (o.flash) {
     flashCopy(req, o.flash);
   }

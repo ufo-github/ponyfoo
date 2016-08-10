@@ -1,8 +1,8 @@
 'use strict';
 
-var moment = require('moment');
-var Invoice = require('../../models/Invoice');
-var InvoiceParty = require('../../models/InvoiceParty');
+const moment = require('moment');
+const Invoice = require('../../models/Invoice');
+const InvoiceParty = require('../../models/InvoiceParty');
 
 module.exports = function (req, res, next) {
   InvoiceParty.find({}).lean().exec(foundParties);
@@ -11,10 +11,10 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var parties = allParties.reduce(partiesIntoBuckets, {
+    const parties = allParties.reduce(partiesIntoBuckets, {
       customer: [], payment: []
     });
-    var slug = req.params.slug;
+    const slug = req.params.slug;
     if (slug) {
       Invoice.findOne({ slug: slug }).populate('customerParty paymentParty').lean().exec(found);
     } else {
@@ -41,8 +41,8 @@ module.exports = function (req, res, next) {
     }
 
     function respond (invoice) {
-      var title = slug ? 'Invoice #' + slug : 'New Invoice';
-      var canonical = slug ? '/' + slug + '/edit' : '/new';
+      const title = slug ? 'Invoice #' + slug : 'New Invoice';
+      const canonical = slug ? '/' + slug + '/edit' : '/new';
       res.viewModel = {
         model: {
           title: title + ' \u2014 Pony Foo',

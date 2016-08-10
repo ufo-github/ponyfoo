@@ -1,12 +1,12 @@
 'use strict';
 
-var url = require('url');
-var extract = require('super-crap');
-var rtitleseparator = /\s+([^\w]|_)\s+/;
-var rweb = /^https?:\/\//i;
+const url = require('url');
+const extract = require('super-crap');
+const rtitleseparator = /\s+([^\w]|_)\s+/;
+const rweb = /^https?:\/\//i;
 
 module.exports = function (req, res, next) {
-  var endpoint = req.query.url;
+  const endpoint = req.query.url;
   if (rweb.test(endpoint) === false) {
     extracted(null, {}); return;
   }
@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var data = response || {};
+    const data = response || {};
     res.json({
       title: left(data.ogTitle || data.twitterTitle || data.title),
       description: data.ogDescription || data.twitterDescription || data.description || null,

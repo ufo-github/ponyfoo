@@ -1,7 +1,7 @@
 'use strict';
 
-var winston = require('winston');
-var OpenSourceProject = require('../../../models/OpenSourceProject');
+const winston = require('winston');
+const OpenSourceProject = require('../../../models/OpenSourceProject');
 
 module.exports = function (req, res) {
   OpenSourceProject.remove({ _id: req.body.id }, saved);

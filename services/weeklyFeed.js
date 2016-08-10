@@ -1,17 +1,17 @@
 'use strict';
 
-var fs = require('fs');
-var util = require('util');
-var contra = require('contra');
-var cheerio = require('cheerio');
-var inlineCss = require('inline-css');
-var feedService = require('./feed');
-var markupService = require('./markup');
-var weeklyService = require('./weekly');
-var WeeklyIssue = require('../models/WeeklyIssue');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var css = fs.readFileSync('.bin/static/newsletter-rss.css', 'utf8');
+const fs = require('fs');
+const util = require('util');
+const contra = require('contra');
+const cheerio = require('cheerio');
+const inlineCss = require('inline-css');
+const feedService = require('./feed');
+const markupService = require('./markup');
+const weeklyService = require('./weekly');
+const WeeklyIssue = require('../models/WeeklyIssue');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const css = fs.readFileSync('.bin/static/newsletter-rss.css', 'utf8');
 
 function getFeed (done) {
   WeeklyIssue
@@ -47,33 +47,33 @@ function getFeed (done) {
       return '<div class="md-markdown">' + html + '</div>';
     }
     function formatContent (contentHtml, done) {
-      var compilerOpts = {
+      const compilerOpts = {
         markdown: false,
         absolutize: true,
         removeEmoji: true
       };
-      var inliningOpts = {
+      const inliningOpts = {
         extraCss: css,
         url: authority
       };
-      var contents = '<div class="f-core">' + contentHtml + '</div>';
-      var fixed = markupService.compile(contents, compilerOpts);
+      const contents = '<div class="f-core">' + contentHtml + '</div>';
+      const fixed = markupService.compile(contents, compilerOpts);
 
       inlineCss(fixed, inliningOpts).then(inlinedCss, done);
 
       function inlinedCss (inlined) {
-        var $ = cheerio.load(inlined);
+        const $ = cheerio.load(inlined);
         $('.wy-section-header .md-markdown > p').each(replaceWith($, 'div'));
-        var html = $.html();
+        const html = $.html();
         done(null, html);
       }
       function replaceWith ($, tagName) {
-        var tag = '<' + tagName + '>';
+        const tag = '<' + tagName + '>';
         return replacer;
         function replacer () {
-          var el = $(this);
-          var contents = el.html();
-          var replacement = $(tag).html(contents);
+          const el = $(this);
+          const contents = el.html();
+          const replacement = $(tag).html(contents);
           el.replaceWith(replacement);
         }
       }

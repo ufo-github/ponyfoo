@@ -1,10 +1,10 @@
 'use strict';
 
-var subscriberService = require('../../services/subscriber');
+const subscriberService = require('../../services/subscriber');
 
 module.exports = function (req, res, next) {
-  var allTopics = subscriberService.getTopics();
-  var queryTopics = req.query.topic;
+  const allTopics = subscriberService.getTopics();
+  let queryTopics = req.query.topic;
   if (typeof queryTopics === 'string') { queryTopics = [queryTopics]; }
   if (!Array.isArray(queryTopics)) { queryTopics = allTopics.slice(); }
   queryTopics.push('announcements');

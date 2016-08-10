@@ -1,20 +1,18 @@
 'use strict';
 
-var validator = require('validator');
-var subscriberService = require('../../../services/subscriber');
-var markupService = require('../../../services/markup');
+const validator = require('validator');
+const subscriberService = require('../../../services/subscriber');
+const markupService = require('../../../services/markup');
 
 module.exports = function (req, res) {
-  var topic = req.body.topic;
-  var subject = req.body.subject;
-  var teaser = req.body.teaser;
-  var body = req.body.body;
+  const { topic, subject, body } = req.body;
+  let { teaser } = req.body;
 
   if (invalid()) {
     return;
   }
 
-  var rawBody = markupService.compile(body, { absolutize: true });
+  const rawBody = markupService.compile(body, { absolutize: true });
 
   subscriberService.send({
     topic,
@@ -28,7 +26,7 @@ module.exports = function (req, res) {
   res.json({});
 
   function invalid () {
-    var messages = [];
+    const messages = [];
     if (!validator.isLength(subject, 4)) {
       messages.push('The email subject is way too short!');
     }

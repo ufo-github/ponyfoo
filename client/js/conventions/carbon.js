@@ -1,16 +1,16 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var loadScript = require('../lib/loadScript');
-var placement = 'https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom';
-var options = {
+const $ = require('dominus');
+const taunus = require('taunus');
+const loadScript = require('../lib/loadScript');
+const placement = 'https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom';
+const options = {
   container: $.findOne('.ca-content'),
   id: '_carbonads_js'
 };
-var script = loadScript(placement, options, loaded);
-var timer;
-var originalGo;
+const script = loadScript(placement, options, loaded);
+let timer;
+let originalGo;
 
 function loaded () {
   timer = setTimeout(helpMePay, 5000);
@@ -41,7 +41,7 @@ function patchUnsafeImageHost (image) {
   if (image.indexOf('//') === 0) {
     return 'https:' + image;
   }
-  var url = new URL(image);
+  const url = new URL(image);
   if (url.host === 'assets.servedby-buysellads.com' && url.protocol === 'http:') {
     return url.href.replace(/^http:/, 'https:');
   }
@@ -72,7 +72,7 @@ function changed () {
 }
 
 function helpMePay () {
-  var blocked = $('#carbonads').length === 0;
+  const blocked = $('#carbonads').length === 0;
   if (blocked) {
     $('.ca-blocked').removeClass('uv-hidden');
   } else {

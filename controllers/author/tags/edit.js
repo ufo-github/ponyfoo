@@ -1,10 +1,10 @@
 'use strict';
 
-var KnownTag = require('../../../models/KnownTag');
+const KnownTag = require('../../../models/KnownTag');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
-  var editing = !!slug;
+  const slug = req.params.slug;
+  const editing = !!slug;
   if (slug) {
     KnownTag
       .findOne({ slug: slug })

@@ -1,14 +1,14 @@
 'use strict';
 
-var contra = require('contra');
-var User = require('../../models/User');
-var Article = require('../../models/Article');
-var userService = require('../../services/user');
-var articleService = require('../../services/article');
+const contra = require('contra');
+const User = require('../../models/User');
+const Article = require('../../models/Article');
+const userService = require('../../services/user');
+const articleService = require('../../services/article');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
-  var query = {
+  const slug = req.params.slug;
+  const query = {
     slug: slug
   };
   contra.waterfall([findUser, findArticles], respond);
@@ -21,17 +21,17 @@ module.exports = function (req, res, next) {
     if (!user) {
       next('route'); return;
     }
-    var query = {
+    const query = {
       author: user._id,
       status: 'published'
     };
-    var tasks = {
+    const tasks = {
       list: getArticleList,
       count: getArticleCount
     };
     contra.concurrent(tasks, found);
     function getArticleList (next) {
-      var options = {
+      const options = {
         limit: 9
       };
       articleService.find(query, options, next);
@@ -50,15 +50,15 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var contributor = {
+    const contributor = {
       user: user,
       articleCount: articles.count
     };
-    var active = userService.isActive(contributor);
+    const active = userService.isActive(contributor);
     if (!active) {
       next('route'); return;
     }
-    var profile = userService.getProfile(contributor, {
+    const profile = userService.getProfile(contributor, {
       withBio: true
     });
     res.viewModel = {

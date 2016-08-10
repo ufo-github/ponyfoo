@@ -12,13 +12,13 @@ function unique (results, item) {
 }
 
 function splitTags (text) {
-  var spaces = /\s+/g;
+  const spaces = /\s+/g;
   return text.trim().toLowerCase().split(spaces).filter(truthy).reduce(unique, []);
 }
 
 function format () {
-  var args = Array.prototype.slice.call(arguments);
-  var initial = args.shift();
+  const args = Array.prototype.slice.call(arguments);
+  const initial = args.shift();
 
   function replacer (text, replacement) {
     return text.replace('%s', replacement);
@@ -27,7 +27,7 @@ function format () {
 }
 
 function hyphenToCamel (text) {
-  var rhyphenated = /-([a-z0-9])/g;
+  const rhyphenated = /-([a-z0-9])/g;
   return text.replace(rhyphenated, upperCase);
 }
 

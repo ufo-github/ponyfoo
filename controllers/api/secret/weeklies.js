@@ -1,13 +1,13 @@
 'use strict';
 
-var settingService = require('../../../services/setting');
-var weeklySchedulerService = require('../../../services/weeklyScheduler');
-var wasEnabledLastTime = false;
+const settingService = require('../../../services/setting');
+const weeklySchedulerService = require('../../../services/weeklyScheduler');
+let wasEnabledLastTime = false;
 
 settingService.on('save', saved);
 
 function saved (settings) {
-  var enabled = settings.PONYFOOWEEKLY_CRON === true;
+  const enabled = settings.PONYFOOWEEKLY_CRON === true;
   if (!wasEnabledLastTime && enabled) {
     weeklySchedulerService.run();
   }

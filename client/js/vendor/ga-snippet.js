@@ -1,6 +1,6 @@
 'use strict';
 
-var w = global;
+const w = global;
 
 module.exports = function gaSnippet () {
   require('../lib/loadScript')('//www.google-analytics.com/analytics.js');

@@ -1,18 +1,18 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var concurrent = require('contra/concurrent');
-var ls = require('../../lib/storage');
-var datetimeService = require('../../../../services/datetime');
+const $ = require('dominus');
+const taunus = require('taunus');
+const concurrent = require('contra/concurrent');
+const ls = require('../../lib/storage');
+const datetimeService = require('../../../../services/datetime');
 
 module.exports = function (viewModel) {
   viewModel.projects.forEach(function (project) {
-    var branch = project.branch;
-    var repo = project.repo;
-    var cacheKey = 'oss:repos/' + repo;
-    var cache = ls.get(cacheKey);
-    var earlier = new Date();
+    const branch = project.branch;
+    const repo = project.repo;
+    const cacheKey = 'oss:repos/' + repo;
+    const cache = ls.get(cacheKey);
+    const earlier = new Date();
     earlier.setHours(earlier.getHours() - 6);
     if (cache && new Date(cache.date) > earlier) {
       render({ meta: cache.value });
@@ -27,7 +27,7 @@ module.exports = function (viewModel) {
       }
     }, pulled);
     function query (url, next) {
-      var options = {
+      const options = {
         url: 'https://api.github.com' + url,
         headers: { Accept: 'application/vnd.github.v3+json' },
         json: true
@@ -40,13 +40,13 @@ module.exports = function (viewModel) {
       if (err) {
         return;
       }
-      var meta = {
+      const meta = {
         repo: repo,
         updated: datetimeService.field(new Date(result.branch.commit.commit.author.date)),
         sha: result.branch.commit.sha,
         stars: result.repo.stargazers_count
       };
-      var cache = {
+      const cache = {
         date: new Date(),
         value: meta
       };
@@ -54,7 +54,7 @@ module.exports = function (viewModel) {
       ls.set(cacheKey, cache);
     }
     function render (model) {
-      var container = $.findOne('[data-repo="' + repo + '"]');
+      const container = $.findOne('[data-repo="' + repo + '"]');
       taunus.partial(container, 'opensource/meta', model);
     }
   });

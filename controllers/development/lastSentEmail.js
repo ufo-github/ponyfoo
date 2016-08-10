@@ -1,8 +1,8 @@
 'use strict';
 
-var emailService = require('../../services/email');
-var staticService = require('../../services/static');
-var gravatarService = require('../../services/gravatar');
+const emailService = require('../../services/email');
+const staticService = require('../../services/static');
+const gravatarService = require('../../services/gravatar');
 
 function lastSentEmail (req, res, next) {
   if (!emailService.getLastEmailHtml) {

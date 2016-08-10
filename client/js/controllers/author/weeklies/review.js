@@ -1,12 +1,12 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
+const $ = require('dominus');
+const taunus = require('taunus');
 
 module.exports = function (viewModel, container) {
-  var liveCheck = $('.wr-live', container);
-  var levelCheck = $('.wr-level', container);
-  var table = $('.wr-container', container);
+  const liveCheck = $('.wr-live', container);
+  const levelCheck = $('.wr-level', container);
+  const table = $('.wr-container', container);
 
   liveCheck.on('click', toggleCron);
   levelCheck.on('click', toggleLevel);
@@ -35,13 +35,13 @@ module.exports = function (viewModel, container) {
   }
 
   function remove (e) {
-    var target = $(e.target);
-    var slug = target.attr('data-slug');
-    var confirmation = confirm('About to delete /weekly/' + slug + ', are you sure?');
+    const target = $(e.target);
+    const slug = target.attr('data-slug');
+    const confirmation = confirm('About to delete /weekly/' + slug + ', are you sure?');
     if (!confirmation) {
       return;
     }
-    var endpoint = '/api/weeklies/' + slug;
+    const endpoint = '/api/weeklies/' + slug;
 
     viewModel.measly.delete(endpoint).on('data', removeRow);
 

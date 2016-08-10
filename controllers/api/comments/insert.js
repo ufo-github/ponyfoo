@@ -1,18 +1,18 @@
 'use strict';
 
-var accepts = require('accepts');
-var create = require('./lib/create');
-var httpService = require('../../../services/http');
+const accepts = require('accepts');
+const create = require('./lib/create');
+const httpService = require('../../../services/http');
 
 function insert (req, res, next) {
-  var model = {
+  const model = {
     name: req.body.name,
     email: req.body.email,
     site: req.body.site,
     content: req.body.content,
     parent: req.body.parent
   };
-  var options = {
+  const options = {
     type: req.params.type,
     slug: req.params.slug,
     model: model,
@@ -23,7 +23,7 @@ function insert (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var accept = accepts(req).types('html', 'json');
+    const accept = accepts(req).types('html', 'json');
     if (accept === 'json') {
       if (inserted) {
         res.status(statusCode).json(inserted);

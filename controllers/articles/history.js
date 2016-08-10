@@ -1,13 +1,13 @@
 'use strict';
 
-var _ = require('lodash');
-var articleService = require('../../services/article');
-var metadataService = require('../../services/metadata');
-var inliningService = require('../../services/inlining');
+const _ = require('lodash');
+const articleService = require('../../services/article');
+const metadataService = require('../../services/metadata');
+const inliningService = require('../../services/inlining');
 
 module.exports = function (req, res, next) {
-  var query = { status: 'published' };
-  var options = {
+  const query = { status: 'published' };
+  const options = {
     fields: '-teaser -introduction -body -comments',
     populate: [['author', 'slug email avatar']]
   };
@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var expanded = articles.map(function (article) {
+    const expanded = articles.map(function (article) {
       return articleService.toJSON(article, { meta: true, id: false });
     });
     res.viewModel = {

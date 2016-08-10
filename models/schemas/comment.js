@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var gravatarService = require('../../services/gravatar');
-var ObjectId = mongoose.Schema.Types.ObjectId;
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const gravatarService = require('../../services/gravatar');
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   author: String,
   email: String,

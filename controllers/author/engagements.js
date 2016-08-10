@@ -1,7 +1,7 @@
 'use strict';
 
-var datetimeService = require('../../services/datetime');
-var Engagement = require('../../models/Engagement');
+const datetimeService = require('../../services/datetime');
+const Engagement = require('../../models/Engagement');
 
 module.exports = function (req, res, next) {
   Engagement.find({}).sort('-end').lean().exec(function (err, engagements) {

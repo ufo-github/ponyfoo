@@ -1,7 +1,7 @@
 'use strict';
 
-var Invoice = require('../../models/Invoice');
-var invoiceModelService = require('../../services/invoiceModel');
+const Invoice = require('../../models/Invoice');
+const invoiceModelService = require('../../services/invoiceModel');
 
 module.exports = function (req, res, next) {
   Invoice.find({}).sort('-date').lean().exec(function (err, invoices) {

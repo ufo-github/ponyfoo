@@ -1,14 +1,14 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var moment = require('moment');
-var markdownService = require('../../services/markdown');
-var analytics = require('./analytics');
-var wiring = require('./wiring');
-var env = require('../../lib/env');
-var main = $.findOne('.ly-main');
-var g = global;
+const $ = require('dominus');
+const taunus = require('taunus');
+const moment = require('moment');
+const markdownService = require('../../services/markdown');
+const analytics = require('./analytics');
+const wiring = require('./wiring');
+const env = require('../../lib/env');
+const main = $.findOne('.ly-main');
+const g = global;
 
 require('hint');
 

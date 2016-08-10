@@ -1,14 +1,14 @@
 'use strict';
 
-var useragent = require('useragent');
-var User = require('../models/User');
+const useragent = require('useragent');
+const User = require('../models/User');
 
 module.exports = function hydrateRequestModel (vm, meta, done) {
-  var rnonalpha = /[^a-z]/ig;
-  var req = meta.req;
-  var user = req.user;
-  var header = req.headers['user-agent'];
-  var ua = useragent.parse(header);
+  const rnonalpha = /[^a-z]/ig;
+  const req = meta.req;
+  const user = req.user;
+  const header = req.headers['user-agent'];
+  const ua = useragent.parse(header);
 
   vm.ua = ua.family.toLowerCase().replace(rnonalpha, '');
 

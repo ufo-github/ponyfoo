@@ -1,7 +1,7 @@
 'use strict';
 
-var winston = require('winston');
-var KnownTag = require('../../../models/KnownTag');
+const winston = require('winston');
+const KnownTag = require('../../../models/KnownTag');
 
 module.exports = function (req, res) {
   KnownTag.remove({ slug: req.params.slug }, saved);

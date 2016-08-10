@@ -1,22 +1,22 @@
 'use strict';
 
-var $ = require('dominus');
-var estimate = require('estimate');
-var debounce = require('lodash/debounce');
-var concurrent = require('contra/concurrent');
-var moment = require('moment');
-var sluggish = require('sluggish');
-var raf = require('raf');
-var taunus = require('taunus');
-var articleSummarizationService = require('../../../../../services/articleSummarization');
-var markdownService = require('../../../../../services/markdown');
-var datetimeService = require('../../../../../services/datetime');
-var twitterService = require('../../../conventions/twitter');
-var storage = require('../../../lib/storage');
-var loadScript = require('../../../lib/loadScript');
-var defaultStorageKey = 'author-unsaved-draft';
-var publicationFormat = 'DD-MM-YYYY HH:mm';
-var maxTagSuggestions = 8;
+const $ = require('dominus');
+const estimate = require('estimate');
+const debounce = require('lodash/debounce');
+const concurrent = require('contra/concurrent');
+const moment = require('moment');
+const sluggish = require('sluggish');
+const raf = require('raf');
+const taunus = require('taunus');
+const articleSummarizationService = require('../../../../../services/articleSummarization');
+const markdownService = require('../../../../../services/markdown');
+const datetimeService = require('../../../../../services/datetime');
+const twitterService = require('../../../conventions/twitter');
+const storage = require('../../../lib/storage');
+const loadScript = require('../../../lib/loadScript');
+const defaultStorageKey = 'author-unsaved-draft';
+const publicationFormat = 'DD-MM-YYYY HH:mm';
+const maxTagSuggestions = 8;
 
 function noop () {}
 
@@ -42,62 +42,62 @@ function controller (viewModel, container, route) {
 }
 
 function initialize (viewModel, container, route) {
-  var horsey = global.horsey;
-  var insignia = global.insignia;
-  var rome = global.rome;
-  var article = viewModel.article;
-  var editing = viewModel.editing;
-  var published = editing && article.status === 'published';
-  var title = $('.ac-title');
-  var slug = $('.ac-slug');
-  var texts = $('.ac-text');
-  var heroImage = $('.ac-hero-image');
-  var teaser = $('.ac-teaser');
-  var editorNote = $('.ac-editor-note');
-  var introduction = $('.ac-introduction');
-  var body = $('.ac-body');
-  var summary = $('.ac-summary');
-  var tags = $('.ac-tags');
-  var tagsContainer = $.findOne('.ac-tags-container');
-  var campaign = $('.ac-campaign');
-  var email = $('#ac-campaign-email');
-  var tweet = $('#ac-campaign-tweet');
-  var fb = $('#ac-campaign-fb');
-  var echojs = $('#ac-campaign-echojs');
-  var hn = $('#ac-campaign-hn');
-  var schedule = $('.ac-schedule');
-  var publication = $('.ac-publication');
-  var preview = $('.ac-preview');
-  var previewHeader = $('.at-header', preview);
-  var previewTitle = $('.ac-preview-title');
-  var previewTeaser = $('.ac-preview-teaser');
-  var previewEditorNote = $('.ac-preview-editor-note');
-  var previewIntroduction = $('.ac-preview-introduction');
-  var previewBody = $('.ac-preview-body');
-  var previewSummary = $.findOne('.ac-preview-summary');
-  var discardButton = $('.ac-discard');
-  var saveButton = $('.ac-save');
-  var status = $('.ac-status');
-  var statusRadio = {
+  const horsey = global.horsey;
+  const insignia = global.insignia;
+  const rome = global.rome;
+  const article = viewModel.article;
+  const editing = viewModel.editing;
+  const published = editing && article.status === 'published';
+  const title = $('.ac-title');
+  const slug = $('.ac-slug');
+  const texts = $('.ac-text');
+  const heroImage = $('.ac-hero-image');
+  const teaser = $('.ac-teaser');
+  const editorNote = $('.ac-editor-note');
+  const introduction = $('.ac-introduction');
+  const body = $('.ac-body');
+  const summary = $('.ac-summary');
+  const tags = $('.ac-tags');
+  const tagsContainer = $.findOne('.ac-tags-container');
+  const campaign = $('.ac-campaign');
+  const email = $('#ac-campaign-email');
+  const tweet = $('#ac-campaign-tweet');
+  const fb = $('#ac-campaign-fb');
+  const echojs = $('#ac-campaign-echojs');
+  const hn = $('#ac-campaign-hn');
+  const schedule = $('.ac-schedule');
+  const publication = $('.ac-publication');
+  const preview = $('.ac-preview');
+  const previewHeader = $('.at-header', preview);
+  const previewTitle = $('.ac-preview-title');
+  const previewTeaser = $('.ac-preview-teaser');
+  const previewEditorNote = $('.ac-preview-editor-note');
+  const previewIntroduction = $('.ac-preview-introduction');
+  const previewBody = $('.ac-preview-body');
+  const previewSummary = $.findOne('.ac-preview-summary');
+  const discardButton = $('.ac-discard');
+  const saveButton = $('.ac-save');
+  const status = $('.ac-status');
+  const statusRadio = {
     draft: $('#ac-draft-radio'),
     publish: $('#ac-publish-radio')
   };
-  var boundSlug = true;
-  var serializeSlowly = editing ? noop : debounce(serialize, 200);
-  var typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
-  var typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
-  var typingHeroImageSlowly = raf.bind(null, debounce(typingHeroImage, 100));
-  var typingTextSlowly = raf.bind(null, debounce(typingText, 100));
-  var typingSummarySlowly = raf.bind(null, debounce(typingSummary, 100));
-  var typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
-  var updatePreviewMarkdownSlowly = raf.bind(null, debounce(updatePreviewMarkdown, 300));
-  var updatePreviewSummarySlowly = raf.bind(null, debounce(updatePreviewSummary, 300));
-  var dateValidator = rome.val.after(moment().endOf('day'));
-  var romeOpts = {
+  const serializeSlowly = editing ? noop : debounce(serialize, 200);
+  const typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
+  const typingSlugSlowly = raf.bind(null, debounce(typingSlug, 100));
+  const typingHeroImageSlowly = raf.bind(null, debounce(typingHeroImage, 100));
+  const typingTextSlowly = raf.bind(null, debounce(typingText, 100));
+  const typingSummarySlowly = raf.bind(null, debounce(typingSummary, 100));
+  const typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
+  const updatePreviewMarkdownSlowly = raf.bind(null, debounce(updatePreviewMarkdown, 300));
+  const updatePreviewSummarySlowly = raf.bind(null, debounce(updatePreviewSummary, 300));
+  const dateValidator = rome.val.after(moment().endOf('day'));
+  const romeOpts = {
     inputFormat: publicationFormat,
     dateValidator: dateValidator,
     timeValidator: timeValidator
   };
+  let boundSlug = true;
 
   title.on('keypress keydown paste input', typingTitleSlowly);
   slug.on('keypress keydown paste input', typingSlugSlowly);
@@ -111,7 +111,7 @@ function initialize (viewModel, container, route) {
   campaign.on('change', '.ck-input', serializeSlowly);
   schedule.on('change', updatePublication);
 
-  var signet = insignia(tags[0], {
+  const signet = insignia(tags[0], {
     preventInvalid: true,
     getText: parseTagSlug,
     getValue: parseTagSlug
@@ -138,8 +138,8 @@ function initialize (viewModel, container, route) {
   }
 
   function timeValidator (date) {
-    var tf = 'HH:mm:ss';
-    var time = moment(moment(date).format(tf), tf);
+    const tf = 'HH:mm:ss';
+    const time = moment(moment(date).format(tf), tf);
     return (
        time.isAfter(moment('05:59:59', tf)) &&
       time.isBefore(moment('15:00:00', tf))
@@ -147,7 +147,7 @@ function initialize (viewModel, container, route) {
   }
 
   function getTagSuggestions (data, done) {
-    var xhrOpts = {
+    const xhrOpts = {
       url: '/api/articles/tags',
       json: true
     };
@@ -177,13 +177,13 @@ function initialize (viewModel, container, route) {
       discardButton.attr('aria-label', 'Permanently delete this article');
       return;
     }
-    var state = getCurrentState();
+    const state = getCurrentState();
     if (state === 'draft') {
       saveButton.find('.bt-text').text('Save Draft');
       saveButton.parent().attr('aria-label', 'You can access your drafts at any time');
       return;
     }
-    var scheduled = schedule.value();
+    const scheduled = schedule.value();
     if (scheduled) {
       saveButton.find('.bt-text').text('Schedule');
       saveButton.parent().attr('aria-label', 'Schedule this article for publication');
@@ -224,7 +224,7 @@ function initialize (viewModel, container, route) {
   }
 
   function getHtmlTitle () {
-    var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+    const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
     return getHtml(title).replace(rstrip, '');
   }
 
@@ -239,7 +239,7 @@ function initialize (viewModel, container, route) {
   }
 
   function updatePreviewHeroImage () {
-    var heroUrl = heroImage.value().trim();
+    const heroUrl = heroImage.value().trim();
     if (heroUrl) {
       previewHeader.css({ backgroundImage: 'url(\'' + heroUrl + '\')' });
       previewHeader.addClass('at-has-hero');
@@ -257,9 +257,9 @@ function initialize (viewModel, container, route) {
   }
 
   function updatePreviewMarkdown () {
-    var rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+    const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
     previewTeaser.html(getHtml(teaser));
-    var note = getHtml(editorNote).replace(rstrip, '');
+    const note = getHtml(editorNote).replace(rstrip, '');
     if (note.length) {
       previewEditorNote.removeClass('uv-hidden').html(note);
     } else {
@@ -274,19 +274,19 @@ function initialize (viewModel, container, route) {
   }
 
   function updatePreviewSummary () {
-    var teaserHtml = getHtml(teaser);
-    var editorNoteHtml = getHtml(editorNote);
-    var introductionHtml = getHtml(introduction);
-    var bodyHtml = getHtml(body);
-    var summarized = articleSummarizationService.summarize({
+    const teaserHtml = getHtml(teaser);
+    const editorNoteHtml = getHtml(editorNote);
+    const introductionHtml = getHtml(introduction);
+    const bodyHtml = getHtml(body);
+    const summarized = articleSummarizationService.summarize({
       summary: summary.value(),
       teaserHtml: teaserHtml,
       introductionHtml: introductionHtml
     });
-    var parts = [teaserHtml, editorNoteHtml || '', introductionHtml, bodyHtml];
-    var readingTime = estimate.text(parts.join(' '));
-    var publication = datetimeService.field(moment().add(4, 'days'));
-    var article = {
+    const parts = [teaserHtml, editorNoteHtml || '', introductionHtml, bodyHtml];
+    const readingTime = estimate.text(parts.join(' '));
+    const publication = datetimeService.field(moment().add(4, 'days'));
+    const article = {
       publication: publication,
       commentCount: 0,
       slug: slug.value(),
@@ -298,7 +298,7 @@ function initialize (viewModel, container, route) {
       },
       summaryHtml: summarized.html
     };
-    var vm = { articles: [article] };
+    const vm = { articles: [article] };
     taunus.partial(previewSummary, 'articles/columns', vm);
   }
 
@@ -307,11 +307,11 @@ function initialize (viewModel, container, route) {
   function clear () { storage.remove(defaultStorageKey); }
 
   function deserialize (source) {
-    var data = source || storage.get(defaultStorageKey) || {
+    const data = source || storage.get(defaultStorageKey) || {
       email: true, tweet: true, fb: true, echojs: true, hn: true
     };
-    var titleText = data.titleMarkdown || '';
-    var slugText = data.slug || '';
+    const titleText = data.titleMarkdown || '';
+    const slugText = data.slug || '';
 
     title.value(titleText);
     slug.value(slugText);
@@ -347,9 +347,9 @@ function initialize (viewModel, container, route) {
   }
 
   function getRequestData () {
-    var individualTags = getTags();
-    var state = published ? article.status : getCurrentState();
-    var data = {
+    const individualTags = getTags();
+    const state = published ? article.status : getCurrentState();
+    const data = {
       titleMarkdown: title.value(),
       slug: slug.value(),
       summary: summary.value(),
@@ -366,7 +366,7 @@ function initialize (viewModel, container, route) {
       echojs: echojs.value(),
       hn: hn.value()
     };
-    var scheduled = schedule.value();
+    const scheduled = schedule.value();
     if (scheduled && !published) {
       data.publication = moment(publication.value(), publicationFormat).format();
     }
@@ -374,12 +374,12 @@ function initialize (viewModel, container, route) {
   }
 
   function save () {
-    var data = getRequestData();
+    const data = getRequestData();
     send({ json: data });
   }
 
   function send (data) {
-    var req;
+    let req;
 
     if (editing) {
       req = viewModel.measly.patch('/api/articles/' + route.params.slug, data);
@@ -390,8 +390,8 @@ function initialize (viewModel, container, route) {
   }
 
   function discard () {
-    var name = route.params.slug ? '/articles/' + route.params.slug : 'draft';
-    var confirmation = confirm('About to discard ' + name + ', are you sure?');
+    const name = route.params.slug ? '/articles/' + route.params.slug : 'draft';
+    const confirmation = confirm('About to discard ' + name + ', are you sure?');
     if (!confirmation) {
       return;
     }

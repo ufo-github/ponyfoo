@@ -1,10 +1,10 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var main = $.findOne('.ly-main');
-var env = require('../lib/env');
-var property = env('GA_PROPERTY');
+const $ = require('dominus');
+const taunus = require('taunus');
+const main = $.findOne('.ly-main');
+const env = require('../lib/env');
+const property = env('GA_PROPERTY');
 
 module.exports = function ga () {
   if (!property) {

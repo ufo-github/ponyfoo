@@ -1,13 +1,13 @@
 'use strict';
 
-var env = require('../../lib/env');
-var staticService = require('../../services/static');
-var WeeklyIssue = require('../../models/WeeklyIssue');
-var weeklyService = require('../../services/weekly');
-var authority = env('AUTHORITY');
+const env = require('../../lib/env');
+const staticService = require('../../services/static');
+const WeeklyIssue = require('../../models/WeeklyIssue');
+const weeklyService = require('../../services/weekly');
+const authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
-  var query = { status: 'released', statusReach: 'everyone' };
+  const query = { status: 'released', statusReach: 'everyone' };
 
   WeeklyIssue.find(query).sort('-publication').exec(found);
 
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var models = issues.map(weeklyService.toHistory);
+    const models = issues.map(weeklyService.toHistory);
     res.viewModel = {
       model: {
         meta: {

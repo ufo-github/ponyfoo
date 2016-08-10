@@ -1,12 +1,12 @@
 'use strict';
 
-var env = require('../../lib/env');
-var staticService = require('../../services/static');
-var authority = env('AUTHORITY');
-var WeeklyIssue = require('../../models/WeeklyIssue');
+const env = require('../../lib/env');
+const staticService = require('../../services/static');
+const authority = env('AUTHORITY');
+const WeeklyIssue = require('../../models/WeeklyIssue');
 
 module.exports = function (req, res, next) {
-  var query = { status: 'released', statusReach: 'everyone' };
+  const query = { status: 'released', statusReach: 'everyone' };
   WeeklyIssue.count(query, counted);
   function counted (err, count) {
     if (err) {

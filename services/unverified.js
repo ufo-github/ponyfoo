@@ -1,17 +1,17 @@
 'use strict';
 
-var contra = require('contra');
-var validator = require('validator');
-var env = require('../lib/env');
-var userService = require('./user');
-var verificationService = require('./verification');
-var UnverifiedUser = require('../models/UnverifiedUser');
-var development = env('NODE_ENV') === 'development';
+const contra = require('contra');
+const validator = require('validator');
+const env = require('../lib/env');
+const userService = require('./user');
+const verificationService = require('./verification');
+const UnverifiedUser = require('../models/UnverifiedUser');
+const development = env('NODE_ENV') === 'development';
 
 function validate (input, done) {
-  var email = input.email;
-  var password = input.password;
-  var messages = [];
+  const email = input.email;
+  const password = input.password;
+  const messages = [];
 
   if (typeof email !== 'string' || email.length === 0) {
     messages.push('The email address can’t be empty');
@@ -29,7 +29,7 @@ function validate (input, done) {
 }
 
 function create (email, password, done) {
-  var user = new UnverifiedUser({
+  const user = new UnverifiedUser({
     email: email,
     displayName: email.split('@')[0],
     password: password
@@ -40,7 +40,7 @@ function create (email, password, done) {
 }
 
 function register (input, done) {
-  var messages;
+  let messages;
 
   contra.waterfall([
     function validation (next) {

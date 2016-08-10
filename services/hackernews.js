@@ -1,10 +1,10 @@
 'use strict';
 
-var winston = require('winston');
-var hackerpub = require('hackerpub');
-var env = require('../lib/env');
-var username = env('HN_USERNAME');
-var password = env('HN_PASSWORD');
+const winston = require('winston');
+const hackerpub = require('hackerpub');
+const env = require('../lib/env');
+const username = env('HN_USERNAME');
+const password = env('HN_PASSWORD');
 
 function submit (data, done) {
   if (username && password) {

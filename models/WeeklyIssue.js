@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var commentSchema = require('./schemas/comment');
-var ObjectId = mongoose.Schema.Types.ObjectId;
-var Mixed = mongoose.Schema.Types.Mixed;
-var schema = new mongoose.Schema({
+const mongoose = require('mongoose');
+const commentSchema = require('./schemas/comment');
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const Mixed = mongoose.Schema.Types.Mixed;
+const schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
@@ -36,14 +36,14 @@ schema.virtual('computedIssueNumber').get(computeIssueNumber);
 schema.virtual('computedTitle').get(computeTitle);
 schema.virtual('computedName').get(computeName);
 
-var model = mongoose.model('WeeklyIssue', schema);
+const model = mongoose.model('WeeklyIssue', schema);
 
 module.exports = model;
 
 function computePageTitle () {
-  var title = this.computedTitle;
-  var postfix = ' \u2014 Pony Foo Weekly';
-  var postfixed = title + postfix;
+  const title = this.computedTitle;
+  const postfix = ' \u2014 Pony Foo Weekly';
+  const postfixed = title + postfix;
   if (title === this.computedIssueNumber) {
     return postfixed;
   }

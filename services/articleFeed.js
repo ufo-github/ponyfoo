@@ -1,16 +1,16 @@
 'use strict';
 
-var fs = require('fs');
-var util = require('util');
-var contra = require('contra');
-var cheerio = require('cheerio');
-var inlineCss = require('inline-css');
-var feedService = require('./feed');
-var markupService = require('./markup');
-var Article = require('../models/Article');
-var env = require('../lib/env');
-var authority = env('AUTHORITY');
-var css = fs.readFileSync('.bin/static/article.css', 'utf8');
+const fs = require('fs');
+const util = require('util');
+const contra = require('contra');
+const cheerio = require('cheerio');
+const inlineCss = require('inline-css');
+const feedService = require('./feed');
+const markupService = require('./markup');
+const Article = require('../models/Article');
+const env = require('../lib/env');
+const authority = env('AUTHORITY');
+const css = fs.readFileSync('.bin/static/article.css', 'utf8');
 
 function getFeed (done) {
   Article
@@ -47,23 +47,23 @@ function getFeed (done) {
       }
     }
     function formatContent (contentHtml, done) {
-      var compilerOpts = {
+      const compilerOpts = {
         markdown: false,
         absolutize: true,
         removeEmoji: true
       };
-      var inliningOpts = {
+      const inliningOpts = {
         extraCss: css,
         url: authority
       };
-      var contents = '<div class="f-core md-markdown">' + contentHtml + '</div>';
-      var fixed = markupService.compile(contents, compilerOpts);
+      const contents = '<div class="f-core md-markdown">' + contentHtml + '</div>';
+      const fixed = markupService.compile(contents, compilerOpts);
 
       inlineCss(fixed, inliningOpts).then(inlinedCss, done);
 
       function inlinedCss (inlined) {
-        var $ = cheerio.load(inlined);
-        var html = $.html();
+        const $ = cheerio.load(inlined);
+        const html = $.html();
         done(null, html);
       }
     }

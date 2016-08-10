@@ -1,10 +1,10 @@
 'use strict';
 
-var $ = require('dominus');
-var taunus = require('taunus');
-var rweb = /^https?:\/\//i;
-var rprotocol = /^https?:\/\/(www\.)?/ig;
-var swappers = [];
+const $ = require('dominus');
+const taunus = require('taunus');
+const rweb = /^https?:\/\//i;
+const rprotocol = /^https?:\/\/(www\.)?/ig;
+const swappers = [];
 
 function noop () {}
 
@@ -12,10 +12,10 @@ function scrape (options, done) {
   if (ignore()) {
     return;
   }
-  var $container = options.container;
-  var updatePreview = options.updatePreview;
-  var end = done || noop;
-  var xhrOpts = {
+  const $container = options.container;
+  const updatePreview = options.updatePreview;
+  const end = done || noop;
+  const xhrOpts = {
     url: '/api/metadata/scrape?url=' + encodeURIComponent(options.url),
     json: true
   };
@@ -25,12 +25,12 @@ function scrape (options, done) {
     if (!options.source) {
       return;
     }
-    var $el = $(options.source);
-    var url = $el.value().trim();
+    const $el = $(options.source);
+    const url = $el.value().trim();
     if (!rweb.test(url)) {
       return true;
     }
-    var old = $el.attr('data-last-scraped');
+    const old = $el.attr('data-last-scraped');
     $el.attr('data-last-scraped', url);
     if (url.length === 0 || url === old) {
       return true;
@@ -40,11 +40,11 @@ function scrape (options, done) {
     if (err) {
       end(err); return;
     }
-    var firstImage = data.images && data.images[0] || '';
-    var description = (data.description || '').trim();
-    var sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
-    var imageInput = $('.wa-link-image', $container);
-    var imageInputContainer = $('.wa-link-image-container', $container);
+    const firstImage = data.images && data.images[0] || '';
+    const description = (data.description || '').trim();
+    const sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
+    const imageInput = $('.wa-link-image', $container);
+    const imageInputContainer = $('.wa-link-image-container', $container);
 
     updateInputs();
     updateImageSwapper();
@@ -64,7 +64,7 @@ function scrape (options, done) {
     }
 
     function updateImageSwapper () {
-      var swapper = data.images.length > 1;
+      const swapper = data.images.length > 1;
       if (swapper) {
         swapperOn();
       } else {
@@ -73,15 +73,15 @@ function scrape (options, done) {
     }
 
     function swapperOff () {
-      var toggler = $('.wa-toggler', imageInputContainer);
+      const toggler = $('.wa-toggler', imageInputContainer);
       swapperOffEvent(toggler);
     }
 
     function swapperOn () {
-      var toggler = $('.wa-toggler', imageInputContainer);
-      var togglerLeft = $('.wa-link-image-left', imageInputContainer);
-      var togglerRight = $('.wa-link-image-right', imageInputContainer);
-      var index = 0;
+      const toggler = $('.wa-toggler', imageInputContainer);
+      const togglerLeft = $('.wa-link-image-left', imageInputContainer);
+      const togglerRight = $('.wa-link-image-right', imageInputContainer);
+      let index = 0;
 
       swapperOffEvent(toggler);
       togglerLeft.addClass('wa-toggler-off');
@@ -90,11 +90,11 @@ function scrape (options, done) {
       swapperOnEvent(toggler, swap);
 
       function swap (e) {
-        var $el = $(e.target);
+        const $el = $(e.target);
         if ($el.hasClass('wa-toggler-off')) {
           return;
         }
-        var left = e.target === togglerLeft[0];
+        const left = e.target === togglerLeft[0];
         index += left ? -1 : 1;
         imageInput.value(data.images[index] || '');
         invalidate(-1, togglerLeft);
@@ -104,8 +104,8 @@ function scrape (options, done) {
       }
 
       function invalidate (offset, $el) {
-        var on = typeof data.images[index + offset] === 'string';
-        var op = on ? 'removeClass' : 'addClass';
+        const on = typeof data.images[index + offset] === 'string';
+        const op = on ? 'removeClass' : 'addClass';
         $el[op]('wa-toggler-off');
       }
     }
@@ -118,12 +118,12 @@ function scrape (options, done) {
     }
 
     function swapperOffEvent (toggler) {
-      var swapper = findSwapper();
+      const swapper = findSwapper();
       toggler
         .addClass('uv-hidden')
         .off('click', swapper && swapper.fn);
       function findSwapper () {
-        for (var i = 0; i < swappers.length; i++) {
+        for (let i = 0; i < swappers.length; i++) {
           if ($(swappers[i].toggler).but(toggler).length === 0) {
             return swappers.splice(i, 1)[0];
           }
@@ -134,9 +134,9 @@ function scrape (options, done) {
 }
 
 function updateThumbnail ($container) {
-  var $image = $('.wa-link-image', $container);
-  var $imagePreview = $('.wa-link-image-preview', $container);
-  var imageValue = $image.value().trim();
+  const $image = $('.wa-link-image', $container);
+  const $imagePreview = $('.wa-link-image-preview', $container);
+  const imageValue = $image.value().trim();
 
   $imagePreview.attr('src', imageValue);
 

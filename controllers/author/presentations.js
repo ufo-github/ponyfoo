@@ -1,7 +1,7 @@
 'use strict';
 
-var datetimeService = require('../../services/datetime');
-var Presentation = require('../../models/Presentation');
+const datetimeService = require('../../services/datetime');
+const Presentation = require('../../models/Presentation');
 
 module.exports = function (req, res, next) {
   Presentation.find({}).sort('-presented').lean().exec(function (err, presentations) {

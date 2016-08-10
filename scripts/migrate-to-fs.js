@@ -1,11 +1,11 @@
 'use strict';
 
-var contra = require('contra');
-var winston = require('winston');
-var db = require('../lib/db');
-var boot = require('../lib/boot');
-var Article = require('../models/Article');
-var articleGitService = require('../services/articleGit');
+const contra = require('contra');
+const winston = require('winston');
+const db = require('../lib/db');
+const boot = require('../lib/boot');
+const Article = require('../models/Article');
+const articleGitService = require('../services/articleGit');
 
 contra.waterfall([
   next => boot(next),

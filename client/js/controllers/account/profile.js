@@ -1,26 +1,26 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var taunus = require('taunus');
-var sluggish = require('sluggish');
-var debounce = require('lodash/debounce');
-var markdownService = require('../../../../services/markdown');
+const $ = require('dominus');
+const raf = require('raf');
+const taunus = require('taunus');
+const sluggish = require('sluggish');
+const debounce = require('lodash/debounce');
+const markdownService = require('../../../../services/markdown');
 
 module.exports = function (viewModel, container) {
-  var email = $('.cb-email', container);
-  var oldPassword = $('.cb-old-password', container);
-  var password = $('.cb-password', container);
-  var displayName = $('.cb-name', container);
-  var slug = $('.cb-slug', container);
-  var bio = $('.cb-bio', container);
-  var twitter = $('.cb-twitter', container);
-  var website = $('.cb-website', container);
-  var preview = $('.cb-preview', container);
-  var avatar = $('.cb-avatar', container);
-  var saveButton = $('.cb-save', container);
-  var updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 200));
-  var updateSlugSlowly = raf.bind(null, debounce(updateSlug, 200));
+  const email = $('.cb-email', container);
+  const oldPassword = $('.cb-old-password', container);
+  const password = $('.cb-password', container);
+  const displayName = $('.cb-name', container);
+  const slug = $('.cb-slug', container);
+  const bio = $('.cb-bio', container);
+  const twitter = $('.cb-twitter', container);
+  const website = $('.cb-website', container);
+  const preview = $('.cb-preview', container);
+  const avatar = $('.cb-avatar', container);
+  const saveButton = $('.cb-save', container);
+  const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 200));
+  const updateSlugSlowly = raf.bind(null, debounce(updateSlug, 200));
 
   displayName.on('keypress keydown paste input', updateSlugSlowly);
   slug.once('keypress keydown paste input', unbindSlug);
@@ -37,7 +37,7 @@ module.exports = function (viewModel, container) {
   }
 
   function updatePreview () {
-    var rparagraph = /^<p>|<\/p>$/ig;
+    const rparagraph = /^<p>|<\/p>$/ig;
     preview.html(getHtml(bio).trim().replace(rparagraph, '') || 'Main body of your bio');
   }
 
@@ -46,8 +46,8 @@ module.exports = function (viewModel, container) {
   }
 
   function save () {
-    var slugValue = sluggish(slug.value());
-    var model = {
+    const slugValue = sluggish(slug.value());
+    const model = {
       email: email.value(),
       displayName: displayName.value(),
       slug: slugValue,
@@ -56,12 +56,12 @@ module.exports = function (viewModel, container) {
       website: website.value(),
       avatar: avatar.value()
     };
-    var pwd = password.value();
+    const pwd = password.value();
     if (pwd.length) {
       model.password = pwd;
       model.oldPassword = oldPassword.value();
     }
-    var data = { json: model };
+    const data = { json: model };
     viewModel.measly.patch('/api/account/profile', data).on('data', leave);
 
     function leave () {

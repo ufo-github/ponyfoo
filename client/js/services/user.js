@@ -1,7 +1,7 @@
 'use strict';
 
-var taunus = require('taunus');
-var store = {};
+const taunus = require('taunus');
+const store = {};
 
 boot();
 
@@ -24,7 +24,7 @@ function getRoles () {
 }
 
 function hasRole (user, roles) {
-  var userRoles = Object.keys(user.roles);
+  const userRoles = Object.keys(user.roles);
   return userRoles.some(isSeekedRole);
   function isSeekedRole (role) {
     return userRoles[role] === true && roles.indexOf(role) !== -1;

@@ -1,16 +1,16 @@
 'use strict';
 
-var moment = require('moment');
-var sluggish = require('sluggish');
-var numberService = require('./number');
-var datetimeService = require('./datetime');
-var markdownService = require('./markdown');
+const moment = require('moment');
+const sluggish = require('sluggish');
+const numberService = require('./number');
+const datetimeService = require('./datetime');
+const markdownService = require('./markdown');
 
 function generateModel (data) {
-  var date = moment.utc(data.date);
-  var items = data.items.map(generateItem);
-  var total = items.reduce(sum, 0);
-  var slug = getSlug(data);
+  const date = moment.utc(data.date);
+  const items = data.items.map(generateItem);
+  const total = items.reduce(sum, 0);
+  const slug = getSlug(data);
   return {
     slug: slug,
     date: datetimeService.field(date),
@@ -30,10 +30,10 @@ function generatePartyModel (party, template) {
     }
     return party;
   }
-  var p = party || {};
-  var t = template || {};
-  var name = p.name || t.name;
-  var details = p.details || t.details;
+  const p = party || {};
+  const t = template || {};
+  const name = p.name || t.name;
+  const details = p.details || t.details;
   return {
     name: name,
     nameHtml: markdownService.compile(name),
@@ -49,8 +49,8 @@ function getSlug (data) {
   if (!data.customer) {
     return '';
   }
-  var customerSlug = sluggish(data.customer.name);
-  var datestamp = moment.utc(data.date).format('YYMMDD');
+  const customerSlug = sluggish(data.customer.name);
+  const datestamp = moment.utc(data.date).format('YYMMDD');
   return customerSlug + '-' + datestamp;
 }
 
@@ -59,10 +59,10 @@ function sum (accumulator, item) {
 }
 
 function generateItem (item) {
-  var summary = item.summary || '_(no description)_';
-  var amount = item.amount || 1;
-  var rate = item.rate || 0;
-  var price = amount * rate;
+  const summary = item.summary || '_(no description)_';
+  const amount = item.amount || 1;
+  const rate = item.rate || 0;
+  const price = amount * rate;
   return {
     summary: summary,
     summaryHtml: markdownService.compile(summary),

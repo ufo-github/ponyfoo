@@ -1,8 +1,8 @@
 'use strict';
 
-var env = require('../../lib/env');
-var staticService = require('../../services/static');
-var authority = env('AUTHORITY');
+const env = require('../../lib/env');
+const staticService = require('../../services/static');
+const authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   res.viewModel = {

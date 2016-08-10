@@ -1,22 +1,22 @@
 'use strict';
 
-var _ = require('lodash');
-var but = require('but');
-var WeeklyIssue = require('../models/WeeklyIssue');
-var weeklyCompilerService = require('./weeklyCompiler');
-var weeklyCompilerLinkService = require('./weeklyCompilerLink');
-var commentService = require('./comment');
-var datetimeService = require('./datetime');
-var summaryService = require('./summary');
-var markupService = require('./markup');
-var userService = require('./user');
-var htmlService = require('./html');
-var cryptoService = require('./crypto');
-var rdigits = /^\d+$/;
+const _ = require('lodash');
+const but = require('but');
+const WeeklyIssue = require('../models/WeeklyIssue');
+const weeklyCompilerService = require('./weeklyCompiler');
+const weeklyCompilerLinkService = require('./weeklyCompilerLink');
+const commentService = require('./comment');
+const datetimeService = require('./datetime');
+const summaryService = require('./summary');
+const markupService = require('./markup');
+const userService = require('./user');
+const htmlService = require('./html');
+const cryptoService = require('./crypto');
+const rdigits = /^\d+$/;
 
 function compile (model, done) {
-  var slug = rdigits.test(model.slug) ? 'issue-' + model.slug : model.slug;
-  var options = {
+  const slug = rdigits.test(model.slug) ? 'issue-' + model.slug : model.slug;
+  const options = {
     markdown: markupService,
     slug: slug
   };
@@ -25,7 +25,7 @@ function compile (model, done) {
     if (err) {
       done(err); return;
     }
-    var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(slug);
+    const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(slug);
     model.titleHtml = markupService.compile(model.title, {
       absolutize: true,
       linkThrough: linkThrough
@@ -47,14 +47,14 @@ function insert (model, done) {
     if (err) {
       done(err); return;
     }
-    var doc = new WeeklyIssue(model);
+    const doc = new WeeklyIssue(model);
     doc.save(but(done));
   }
 }
 
 function update (options, done) {
-  var query = { slug: options.slug };
-  var model = options.model;
+  const query = { slug: options.slug };
+  const model = options.model;
   WeeklyIssue.findOne(query, found);
   function found (err, issue) {
     if (err) {
@@ -71,7 +71,7 @@ function update (options, done) {
       if (issue.status !== 'released') {
         issue.status = model.status;
       }
-      var rparagraph = /^<p>|<\/p>$/ig;
+      const rparagraph = /^<p>|<\/p>$/ig;
       issue.updated = Date.now();
       issue.slug = model.slug;
       issue.sections = model.sections;
@@ -111,10 +111,10 @@ function getAllTags (weeklyIssue) {
 }
 
 function toMetadata (doc) {
-  var released = doc.status === 'released';
-  var patrons = doc.statusReach === 'patrons';
-  var everyone = doc.statusReach === 'everyone';
-  var permalink = getPermalink();
+  const released = doc.status === 'released';
+  const patrons = doc.statusReach === 'patrons';
+  const everyone = doc.statusReach === 'everyone';
+  const permalink = getPermalink();
   return {
     created: datetimeService.field(doc.created),
     updated: datetimeService.field(doc.updated),
@@ -133,7 +133,7 @@ function toMetadata (doc) {
     permalink: permalink
   };
   function getPermalink () {
-    var base = '/weekly/' + doc.slug;
+    const base = '/weekly/' + doc.slug;
     if (!released) {
       return base + '?verify=' + hash(doc.created);
     } else if (patrons) {

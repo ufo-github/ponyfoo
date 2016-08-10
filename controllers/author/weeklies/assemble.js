@@ -1,19 +1,19 @@
 'use strict';
 
-var contra = require('contra');
-var assign = require('assignment');
-var correcthorse = require('correcthorse');
-var WeeklyIssue = require('../../../models/WeeklyIssue');
-var WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
-var weeklyCompilerService = require('../../../services/weeklyCompiler');
-var datetimeService = require('../../../services/datetime');
-var markupService = require('../../../services/markup');
-var env = require('../../../lib/env');
-var authority = env('AUTHORITY');
+const contra = require('contra');
+const assign = require('assignment');
+const correcthorse = require('correcthorse');
+const WeeklyIssue = require('../../../models/WeeklyIssue');
+const WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
+const weeklyCompilerService = require('../../../services/weeklyCompiler');
+const datetimeService = require('../../../services/datetime');
+const markupService = require('../../../services/markup');
+const env = require('../../../lib/env');
+const authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
-  var tasks = {
+  const slug = req.params.slug;
+  const tasks = {
     issue: findWeeklyIssue,
     submissions: findAcceptedSubmissions
   };
@@ -50,8 +50,8 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    var issueModel = result.issue || getDefaultIssueModel();
-    var publication = issueModel.publication || new Date();
+    const issueModel = result.issue || getDefaultIssueModel();
+    const publication = issueModel.publication || new Date();
     issueModel.publication = datetimeService.field(publication);
     res.viewModel = {
       model: {
@@ -67,8 +67,8 @@ module.exports = function (req, res, next) {
 };
 
 function toSubmissionModel (submission) {
-  var id = submission._id.toString();
-  var section = assign({}, submission.section, {
+  const id = submission._id.toString();
+  const section = assign({}, submission.section, {
     titleHtml: markupService.compile(submission.section.title)
   });
   return { id: id, section: section };

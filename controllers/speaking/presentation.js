@@ -1,9 +1,9 @@
 'use strict';
 
-var truncText = require('trunc-text');
-var Presentation = require('../../models/Presentation');
-var presentationService = require('../../services/presentation');
-var htmlService = require('../../services/html');
+const truncText = require('trunc-text');
+const Presentation = require('../../models/Presentation');
+const presentationService = require('../../services/presentation');
+const htmlService = require('../../services/html');
 
 module.exports = function (req, res, next) {
   Presentation.findOne({ slug: req.params.slug }, function (err, presentation) {
@@ -14,9 +14,9 @@ module.exports = function (req, res, next) {
       res.viewModel = { skip: true };
       next(); return;
     }
-    var descriptionText = htmlService.getText(presentation.descriptionHtml);
-    var description = truncText(descriptionText, 170);
-    var model = presentationService.toModel(presentation);
+    const descriptionText = htmlService.getText(presentation.descriptionHtml);
+    const description = truncText(descriptionText, 170);
+    const model = presentationService.toModel(presentation);
     res.viewModel = {
       model: {
         title: presentation.title,

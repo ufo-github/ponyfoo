@@ -1,13 +1,13 @@
 'use strict';
 
-var fontfaceonload = require('fontfaceonload');
-var contentLoaded = require('./vendor/contentLoaded');
-var persistance = 'localStorage' in window;
-var checks = {};
+const fontfaceonload = require('fontfaceonload');
+const contentLoaded = require('./vendor/contentLoaded');
+const persistance = 'localStorage' in window;
+const checks = {};
 
 // load fonts from google asynchronously
-var elem = document.createElement('link');
-var head = document.getElementsByTagName('head')[0];
+const elem = document.createElement('link');
+const head = document.getElementsByTagName('head')[0];
 elem.rel = 'stylesheet';
 elem.href = 'https://fonts.googleapis.com/css?family=Neuton:700|Merriweather:400italic,400,700';
 elem.media = 'only x';
@@ -44,8 +44,8 @@ function fontLoaded (className) {
       return;
     }
     loaded.once = true;
-    var doc = document.documentElement;
-    var separator = doc.className.length ? ' ' : '';
+    const doc = document.documentElement;
+    const separator = doc.className.length ? ' ' : '';
     doc.className += separator + className;
     if (persistance) {
       localStorage['fonts:' + className] = true;

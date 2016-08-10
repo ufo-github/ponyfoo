@@ -1,19 +1,19 @@
 'use strict';
 
-var _ = require('lodash');
-var moment = require('moment');
-var util = require('util');
-var articleService = require('../../services/article');
-var articleListHandler = require('./lib/articleListHandler');
+const _ = require('lodash');
+const moment = require('moment');
+const util = require('util');
+const articleService = require('../../services/article');
+const articleListHandler = require('./lib/articleListHandler');
 
 function parse (params) {
-  var formats = ['YYYY', 'MM', 'DD'];
-  var parts = _.values(params);
-  var len = parts.length;
-  var input = parts.join('-');
-  var inputFormat = formats.slice(0, len).join('-');
-  var unit;
-  var textual;
+  const formats = ['YYYY', 'MM', 'DD'];
+  const parts = _.values(params);
+  const len = parts.length;
+  const input = parts.join('-');
+  const inputFormat = formats.slice(0, len).join('-');
+  let unit;
+  let textual;
 
   if (params.day) {
     textual = 'MMMM Do, YYYY';
@@ -26,8 +26,8 @@ function parse (params) {
     unit = 'year';
   }
 
-  var when = moment.utc(input, inputFormat);
-  var text = when.format(textual);
+  const when = moment.utc(input, inputFormat);
+  const text = when.format(textual);
 
   return {
     start: when.startOf(unit).toDate(),
@@ -37,17 +37,17 @@ function parse (params) {
 }
 
 function slug (params) {
-  var fmt = 'YYYY/MM/DD';
-  var keys = Object.keys(params).length;
-  var parts = [params.year, params.month, params.day].splice(0, keys.length);
+  const fmt = 'YYYY/MM/DD';
+  const keys = Object.keys(params).length;
+  const parts = [params.year, params.month, params.day].splice(0, keys.length);
   return moment.utc(parts.join('/'), fmt).format(fmt);
 }
 
 module.exports = function (req, res, next) {
-  var parsed = parse(req.params);
-  var handle = articleListHandler(res, { skip: false }, next);
-  var titleFormat = 'Articles published on %s';
-  var title = util.format(titleFormat, parsed.text);
+  const parsed = parse(req.params);
+  const handle = articleListHandler(res, { skip: false }, next);
+  const titleFormat = 'Articles published on %s';
+  const title = util.format(titleFormat, parsed.text);
 
   res.viewModel = {
     model: {
@@ -59,7 +59,7 @@ module.exports = function (req, res, next) {
     }
   };
 
-  var query = {
+  const query = {
     status: 'published',
     publication: {
       $gte: parsed.start,

@@ -1,10 +1,10 @@
 'use strict';
 
-var contra = require('contra');
-var assign = require('assignment');
-var Article = require('../../../../models/Article');
-var WeeklyIssue = require('../../../../models/WeeklyIssue');
-var hostTypes = {
+const contra = require('contra');
+const assign = require('assignment');
+const Article = require('../../../../models/Article');
+const WeeklyIssue = require('../../../../models/WeeklyIssue');
+const hostTypes = {
   articles: {
     name: 'Article',
     schema: Article,
@@ -20,8 +20,8 @@ var hostTypes = {
 };
 
 function removeAction (req, res, next, done) {
-  var hostType = hostTypes[req.params.type];
-  var id = req.params.id;
+  const hostType = hostTypes[req.params.type];
+  const id = req.params.id;
 
   contra.waterfall([lookup, found, removal], handle);
 
@@ -33,7 +33,7 @@ function removeAction (req, res, next, done) {
   }
 
   function found (host, next) {
-    var comment = host.comments.id(id);
+    const comment = host.comments.id(id);
     if (!comment) {
       done('not found'); return;
     }
@@ -41,8 +41,8 @@ function removeAction (req, res, next, done) {
   }
 
   function removal (host, next) {
-    var comment = host.comments.id(id);
-    var children = host.comments.filter(sameThread);
+    const comment = host.comments.id(id);
+    const children = host.comments.filter(sameThread);
 
     [comment].concat(children).forEach(removeAll);
     host.save(saved);

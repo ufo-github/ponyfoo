@@ -1,18 +1,18 @@
 'use strict';
 
-var moment = require('moment');
-var google = require('googleapis');
-var env = require('../../lib/env');
-var email = env('GA_EMAIL');
-var privateKey = env('GA_PRIVATE_KEY');
-var profile = env('GA_PROFILE');
-var analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
+const moment = require('moment');
+const google = require('googleapis');
+const env = require('../../lib/env');
+const email = env('GA_EMAIL');
+const privateKey = env('GA_PRIVATE_KEY');
+const profile = env('GA_PROFILE');
+const analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
 
 function pullPageViews (done) {
   if (!email || !privateKey || !profile) {
     done(null, []); return;
   }
-  var jwt = new google.auth.JWT(
+  const jwt = new google.auth.JWT(
     email,
     null,
     privateKey,
@@ -24,7 +24,7 @@ function pullPageViews (done) {
     if (err) {
       done(err); return;
     }
-    var query = {
+    const query = {
       auth: jwt,
       ids: 'ga:' + profile,
       'start-date': '2012-12-25',

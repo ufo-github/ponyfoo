@@ -1,6 +1,6 @@
 'use strict';
 
-var removeAction = require('./lib/remove-action');
+const removeAction = require('./lib/remove-action');
 
 function remove (req, res, next) {
   removeAction(req, res, next, removed);

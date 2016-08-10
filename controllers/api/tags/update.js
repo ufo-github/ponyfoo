@@ -1,14 +1,14 @@
 'use strict';
 
-var winston = require('winston');
-var sluggish = require('sluggish');
-var KnownTag = require('../../../models/KnownTag');
-var markupService = require('../../../services/markup');
-var summaryService = require('../../../services/summary');
+const winston = require('winston');
+const sluggish = require('sluggish');
+const KnownTag = require('../../../models/KnownTag');
+const markupService = require('../../../services/markup');
+const summaryService = require('../../../services/summary');
 
 module.exports = function (req, res, next) {
-  var slug = req.params.slug;
-  var editing = !!slug;
+  const slug = req.params.slug;
+  const editing = !!slug;
   if (editing) {
     KnownTag
       .findOne({ slug: slug })
@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
   }
 
   function updateAndSave (tag) {
-    var { body } = req;
+    const { body } = req;
     tag.slug = sluggish(body.slug);
     tag.title = body.title;
     tag.titleHtml = markupService.compile(body.title);
