@@ -172,8 +172,8 @@
     "twitter-leads": "1.0.0",
     "useragent": "2.1.9",
     "validator": "3.12.0",
-    "winston": "2.0.0",
-    "winston-mongodb": "1.4.0",
+    "winston": "2.2.0",
+    "winston-mongodb": "1.6.1",
     "woofmark": "4.2.1",
     "x-xss-protection": "0.1.2"
   },
