@@ -1,9 +1,6 @@
 'use strict';
 
-var env = require('../../lib/env');
-var staticService = require('../../services/static');
 var markdownFileService = require('../../services/markdownFile');
-var authority = env('AUTHORITY');
 var aboutFile = './dat/license.md';
 
 module.exports = function (req, res, next) {

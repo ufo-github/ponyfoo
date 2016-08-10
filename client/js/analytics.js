@@ -1,11 +1,11 @@
 'use strict';
 
-var twitterWidget = require('./vendor/twitter.widget');
-var codepen = require('./vendor/codepen');
-var ga = require('./vendor/ga');
-var clicky = require('./vendor/clicky');
+const twitterWidget = require('./vendor/twitter.widget');
+const codepen = require('./vendor/codepen');
+const ga = require('./vendor/ga');
+const clicky = require('./vendor/clicky');
 
-function analytics (env) {
+function analytics () {
   twitterWidget();
   codepen();
   ga();

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var summaryService = require('./summary');
 var markdownService = require('./markdown');

@@ -3,7 +3,6 @@
 var moment = require('moment');
 var Invoice = require('../../models/Invoice');
 var InvoiceParty = require('../../models/InvoiceParty');
-var invoiceModelService = require('../../services/invoiceModel');
 
 module.exports = function (req, res, next) {
   InvoiceParty.find({}).lean().exec(foundParties);
@@ -67,4 +66,4 @@ module.exports = function (req, res, next) {
       };
     }
   }
-}
+};

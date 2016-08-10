@@ -9,7 +9,7 @@ var summaryService = require('../../../services/summary');
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
   var editing = !!slug;
-  if (slug) {
+  if (editing) {
     KnownTag
       .findOne({ slug: slug })
       .exec(found);
@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
   }
 
   function updateAndSave (tag) {
-    var body = req.body;
+    var { body } = req;
     tag.slug = sluggish(body.slug);
     tag.title = body.title;
     tag.titleHtml = markupService.compile(body.title);

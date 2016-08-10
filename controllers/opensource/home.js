@@ -2,10 +2,7 @@
 
 var truncText = require('trunc-text');
 var OpenSourceProject = require('../../models/OpenSourceProject');
-var staticService = require('../../services/static');
 var htmlService = require('../../services/html');
-var env = require('../../lib/env');
-var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {
   OpenSourceProject.find({}).sort('-added').exec(function (err, projects) {

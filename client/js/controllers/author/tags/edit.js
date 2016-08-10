@@ -3,7 +3,7 @@
 var $ = require('dominus');
 var sluggish = require('sluggish');
 
-module.exports = function (viewModel, container) {
+module.exports = function () {
   var title = $('.tge-title');
   var slug = $('.tge-slug');
   var boundSlug = true;

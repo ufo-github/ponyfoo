@@ -2,9 +2,9 @@
 
 var winston = require('winston');
 
-function cspReport (req, res, next) {
+function cspReport (req, res) {
   if (req.body) {
-    winston.warn('csp violation', req.body);
+    winston.warn('CSP header violation', req.body);
   }
   res.status(204).end();
 }

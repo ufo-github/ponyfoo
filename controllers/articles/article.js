@@ -4,8 +4,6 @@ var inliningService = require('../../services/inlining');
 var metadataService = require('../../services/metadata');
 var articleService = require('../../services/article');
 var cryptoService = require('../../services/crypto');
-var htmlService = require('../../services/html');
-var textService = require('../../services/text');
 var userService = require('../../services/user');
 
 module.exports = function (req, res, next) {

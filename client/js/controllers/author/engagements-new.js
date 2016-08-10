@@ -3,7 +3,7 @@
 var $ = require('dominus');
 var loadScript = require('../../lib/loadScript');
 
-module.exports = function (viewModel, container) {
+module.exports = function () {
   loadScript('/js/rome.js', function loaded () {
     var rome = global.rome;
     var start = $.findOne('.aen-start');

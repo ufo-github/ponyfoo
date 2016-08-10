@@ -1,9 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
 var winston = require('winston');
-var moment = require('moment');
-var Setting = require('../../../models/Setting');
 var settingService = require('../../../services/setting');
 
 module.exports = function (req, res, next) {

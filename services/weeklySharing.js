@@ -1,19 +1,16 @@
 'use strict';
 
-var _ = require('lodash');
 var fs = require('fs');
 var but = require('but');
 var util = require('util');
 var env = require('../lib/env');
 var subscriberService = require('./subscriber');
-var textService = require('./text');
 var cryptoService = require('./crypto');
 var facebookService = require('./facebook');
 var twitterService = require('./twitter');
 var emojiService = require('./emoji');
 var echojsService = require('./echojs');
 var hackernewsService = require('./hackernews');
-var markupService = require('./markup');
 var weeklyService = require('./weekly');
 var User = require('../models/User');
 var authority = env('AUTHORITY');

@@ -20,10 +20,8 @@ var invoiceModelService = require('./invoiceModel');
 var Invoice = require('../models/Invoice');
 var InvoiceParty = require('../models/InvoiceParty');
 var env = require('../lib/env');
-var pkg = require('../package.json');
 var authority = env('AUTHORITY');
 var ownerEmail = env('OWNER_EMAIL');
-var from = env('EMAIL_SENDER');
 var paymentPartySlug = env('SUBMISSION_INVOICE_PAYMENT_SLUG');
 var css = fs.readFileSync('.bin/static/newsletter-email.css', 'utf8');
 var submissionTypes = {
@@ -43,7 +41,6 @@ var invoiceRates = {
   job: 35
 };
 var tmpdir = path.join(process.cwd(), 'tmp');
-var rdigits = /^\d+$/;
 var maxTitleLength = 50;
 
 function noop () {}

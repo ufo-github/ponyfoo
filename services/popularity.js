@@ -55,8 +55,8 @@ function getArticles (done) {
       .reduce(bySlug, {})
     )
       .values()
-      .sortByOrder(['row.1'], ['desc'])
-      .pluck('slug')
+      .orderBy(['row.1'], ['desc'])
+      .map('slug')
       .slice(0, 20)
       .value();
 

@@ -15,10 +15,6 @@ var reasons = {
   comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here’s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
 };
 var allTopics = ['announcements', 'articles', 'newsletter'];
-var topicDisplayText = {
-  articles: 'articles and comments',
-  newsletter: 'the newsletter'
-};
 
 function noop () {}
 
@@ -128,15 +124,15 @@ function confirm (email, done) {
     verified: true,
     topics: allTopics.slice()
   }, successback({
-   action: 'confirmed',
-   email: email
+    action: 'confirmed',
+    email: email
   }, done));
 }
 
 function remove (email, done) {
   Subscriber.remove({ email: email }, successback({
-   action: 'withdrawn',
-   email: email,
+    action: 'withdrawn',
+    email: email,
   }, done));
 }
 
@@ -166,9 +162,9 @@ function confirmTopics (email, topics, done) {
   function bail (topics) {
     return function (err) {
       successback({
-       action: 'confirmed',
-       email: email,
-       topic: topics.join(',') || 'unchanged'
+        action: 'confirmed',
+        email: email,
+        topic: topics.join(',') || 'unchanged'
       }, done)(err);
     };
   }
@@ -197,10 +193,10 @@ function removeTopic (email, topic, done) {
     }
     function bail (err) {
       successback({
-       action: 'withdrawn',
-       email: email,
-       topic: topic,
-       hash: getHash(subscriber)
+        action: 'withdrawn',
+        email: email,
+        topic: topic,
+        hash: getHash(subscriber)
       }, done)(err);
     }
   }
@@ -245,7 +241,7 @@ function send (options, done) {
   }
   function patchModel (documents, next) {
     var subscribers = recipients ? documents.filter(isRecipient) : documents;
-    var to = _.pluck(subscribers, 'email');
+    var to = _.map(subscribers, 'email');
     var provider = {
       merge: subscribers.reduce(locals(topic, emitter), {})
     };

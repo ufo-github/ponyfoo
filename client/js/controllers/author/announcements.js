@@ -3,7 +3,7 @@
 var $ = require('dominus');
 var raf = require('raf');
 var taunus = require('taunus');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var markdownService = require('../../../../services/markdown');
 
 module.exports = function (viewModel) {

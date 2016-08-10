@@ -6,7 +6,7 @@ var taunus = require('taunus');
 var moment = require('moment');
 var series = require('contra/series');
 var curry = require('contra/curry');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var ls = require('../../lib/storage');
 var loadScript = require('../../lib/loadScript');
 var scrapeCompletionService = require('../../services/scrapeCompletion');
@@ -16,13 +16,13 @@ var dateFormat = 'YYYY-MM-DD';
 
 module.exports = controller;
 
-function controller (viewModel, container, route) {
+function controller (...params) {
   series([
     curry(loadScript, '/js/rome.js'),
     curry(loadScript, '/js/weekly-compiler.js')
   ], loaded);
-  function loaded (err) {
-    ready(viewModel, container, route);
+  function loaded () {
+    ready(...params);
   }
 }
 
@@ -127,7 +127,7 @@ function ready (viewModel, container, route) {
   }
 
   function nextThursday () {
-    var now = moment()
+    var now = moment();
     if (now.day() >= 4) {
       return now.day(11); // 7 + 4
     }
@@ -144,7 +144,7 @@ function ready (viewModel, container, route) {
     }
   }
 
-  function calendarMoved (a) {
+  function calendarMoved () {
     blockDate = true;
   }
 

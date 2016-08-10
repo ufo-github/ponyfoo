@@ -3,17 +3,16 @@
 var $ = require('dominus');
 var raf = require('raf');
 var sluggish = require('sluggish');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var loadScript = require('../../lib/loadScript');
 
-module.exports = function (viewModel, container) {
+module.exports = function () {
   var presented = $.findOne('.apn-presented');
   var title = $('.apn-title');
   var slug = $('.apn-slug');
   var actions = $('.apn-actions');
   var resources = $('.apn-resources').clone();
   var addResource = $('.apn-add-resource');
-  var boundSlug = true;
 
   loadScript('/js/rome.js', function loaded () {
     var rome = global.rome;

@@ -1,11 +1,11 @@
 'use strict';
 
 var $ = require('dominus');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var sluggish = require('sluggish');
 var raf = require('raf');
 
-module.exports = function (viewModel, container, route) {
+module.exports = function (viewModel) {
   var editing = viewModel.editing;
   var name = $('.ivp-name');
   var title = $('.ivp-title');

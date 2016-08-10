@@ -1,7 +1,5 @@
 'use strict';
 
-var winston = require('winston');
-var Article = require('../models/Article');
 var es = require('../lib/elasticsearch');
 var indexService = require('./articleElasticsearchIndex');
 var indexName = 'ponyfoo';
@@ -74,11 +72,6 @@ function found (done) {
     done(null, result.hits.hits.map(searchHitToResult));
   };
 }
-
-function warn (err) {
-  if (err) { winston.warn(err); }
-}
-
 function filters (options) {
   var tags = Array.isArray(options.tags) ? options.tags : [];
   var clauses = [status('published')].concat(tags.map(tagToFilter));

@@ -6,13 +6,14 @@ var moment = require('moment');
 var taunus = require('taunus');
 var assign = require('assignment');
 var sluggish = require('sluggish');
-var find = require('lodash/collection/find');
-var debounce = require('lodash/function/debounce');
+var find = require('lodash//find');
+var debounce = require('lodash/debounce');
 var loadScript = require('../../lib/loadScript');
 var invoiceModelService = require('../../../../services/invoiceModel');
 
-module.exports = function (viewModel, container, route) {
+module.exports = function (viewModel) {
   loadScript('/js/rome.js', function loaded () {
+    var { rome } = global;
     var editing = viewModel.editing;
     var date = $('.ive-date');
     var slug = $('.ive-slug');
@@ -47,6 +48,9 @@ module.exports = function (viewModel, container, route) {
     function typingCustomer () { updateSlug(); }
 
     function updateSlug () {
+      if (!boundSlug) {
+        return;
+      }
       slug.value(getSlug());
       updatePreviewSlowly();
     }

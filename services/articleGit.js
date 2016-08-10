@@ -231,7 +231,7 @@ function pullFromGit (event, done) {
             next(err); return;
           }
           if (!article) {
-            next(new Error(`Article couldn't be found!`)); return;
+            next(new Error('Article couldn\'t be found!')); return;
           }
           const fromGit = {
             status: article.status,

@@ -14,15 +14,15 @@ module.exports = function (req, res) {
     return;
   }
 
-  var bodyHtml = markupService.compile(body, { absolutize: true });
+  var rawBody = markupService.compile(body, { absolutize: true });
 
   subscriberService.send({
-    topic: req.body.topic,
+    topic,
     template: 'raw',
     model: {
-      subject: subject,
-      teaser: teaser,
-      rawBody: bodyHtml
+      subject,
+      teaser,
+      rawBody
     }
   });
   res.json({});
@@ -39,7 +39,7 @@ module.exports = function (req, res) {
       messages.push('The email body should have some substance, don’t you think?');
     }
     if (messages.length) {
-      res.status(400).json({ messages: messages });
+      res.status(400).json({ messages });
       return true;
     }
   }

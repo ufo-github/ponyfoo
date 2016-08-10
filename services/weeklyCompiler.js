@@ -32,11 +32,11 @@ function toHeaderSectionHtml (section, options, done) {
   var linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
   done(null, textService.format([
     '<div class="wy-section-header">',
-      '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
-        '%s',
-      '</h%s>',
+    '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
+    '%s',
+    '</h%s>',
     '</div>'
-    ].join(''),
+  ].join(''),
     section.size,
     section.foreground,
     section.background,
@@ -98,8 +98,6 @@ function toStylesSectionHtml (section, options, done) {
     done(err, textService.format('<style>%s</style>', styles));
   }
 }
-
-function noop () {}
 
 module.exports = {
   compile: compile,

@@ -20,7 +20,7 @@ function factory (res, next) {
       }
       var keywords = metadataService.mostCommonTags(articles);
       var imagesResult = metadataService.extractImages(articles);
-      var expanded = articles.map(expand)
+      var expanded = articles.map(expand);
       model.articles = expanded;
       model.meta.keywords = keywords;
       model.meta.images = imagesResult.images;

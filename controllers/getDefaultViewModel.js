@@ -6,7 +6,6 @@ var pkg = require('../package.json');
 var env = require('../lib/env');
 var nodeEnv = env('NODE_ENV');
 var authority = env('AUTHORITY');
-var ownerEmail = env('OWNER_EMAIL');
 var staticService = require('../services/static');
 var popularityService = require('../services/popularity');
 

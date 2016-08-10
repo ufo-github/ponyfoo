@@ -1,6 +1,5 @@
 'use strict';
 
-var but = require('but');
 var contra = require('contra');
 var Setting = require('../models/Setting');
 var api = contra.emitter({

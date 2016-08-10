@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
     Subscriber
       .find({})
       .sort('-created')
-      .skip(p * max)
+      .skip(start)
       .limit(max)
       .lean()
       .exec(found);

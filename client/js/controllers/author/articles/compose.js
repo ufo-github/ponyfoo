@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var estimate = require('estimate');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var concurrent = require('contra/concurrent');
 var moment = require('moment');
 var sluggish = require('sluggish');
@@ -12,10 +12,8 @@ var articleSummarizationService = require('../../../../../services/articleSummar
 var markdownService = require('../../../../../services/markdown');
 var datetimeService = require('../../../../../services/datetime');
 var twitterService = require('../../../conventions/twitter');
-var userService = require('../../../services/user');
 var storage = require('../../../lib/storage');
 var loadScript = require('../../../lib/loadScript');
-var editorRoles = ['owner', 'editor'];
 var defaultStorageKey = 'author-unsaved-draft';
 var publicationFormat = 'DD-MM-YYYY HH:mm';
 var maxTagSuggestions = 8;
@@ -77,8 +75,6 @@ function initialize (viewModel, container, route) {
   var previewIntroduction = $('.ac-preview-introduction');
   var previewBody = $('.ac-preview-body');
   var previewSummary = $.findOne('.ac-preview-summary');
-  var previewTags = $.findOne('.ac-preview-tags');
-  var previewHtml = $('.ac-preview-html');
   var discardButton = $('.ac-discard');
   var saveButton = $('.ac-save');
   var status = $('.ac-status');

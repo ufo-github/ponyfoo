@@ -101,20 +101,22 @@ function imgurUpload (source, done) {
 }
 
 function fileUpload (source, done) {
-  contra.waterfall([
-    function (next) {
-      mkdirp(localPath);
-    },
-    function (next) {
-      var template = path.join(localPath, correcthorse() + '-X.' + source.extension);
-      tmp.tmpName({ template: template }, next);
-    },
-    function (temp, next) {
-      fs.rename(source.path, temp, function (err) {
-        next(err, temp);
-      });
-    }
-  ], function (err, temp) {
+  contra.waterfall([ensureLocalPath, generateFilename, renameUploadedFile], respond);
+
+  function ensureLocalPath (next) {
+    mkdirp(localPath, next);
+  }
+
+  function generateFilename (next) {
+    var template = path.join(localPath, `${ correcthorse() }-X.${ source.extension }`);
+    tmp.tmpName({ template: template }, next);
+  }
+
+  function renameUploadedFile (temp, next) {
+    fs.rename(source.path, temp, err => next(err, temp));
+  }
+
+  function respond (err, temp) {
     if (err) {
       done(err); return;
     }
@@ -122,7 +124,7 @@ function fileUpload (source, done) {
       alt: source.originalname,
       url: toLocalUrl(localPath, temp)
     });
-  });
+  }
 }
 
 module.exports = images;

@@ -3,7 +3,7 @@
 .env.browser.json
 .env.json
 .job.scheduler
-npm-debug.log
+npm-debug.log*
 Thumbs.db
 backups/
 deploy/env/

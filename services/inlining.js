@@ -23,7 +23,7 @@ function addStyles (host, component) {
     host.inlineStyles.toJSON = componentName;
   }
   function componentName () {
-    return '[' + component + ']'
+    return '[' + component + ']';
   }
 }
 

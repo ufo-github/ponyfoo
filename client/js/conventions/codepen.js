@@ -1,9 +1,8 @@
 'use strict';
 
-var $ = require('dominus');
 var taunus = require('taunus');
 
-function updateView (elem) {
+function updateView () {
   if (global.CodePenEmbed && global.CodePenEmbed._showCodePenEmbeds) {
     global.CodePenEmbed._showCodePenEmbeds();
   }

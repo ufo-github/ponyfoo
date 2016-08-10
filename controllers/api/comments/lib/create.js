@@ -138,7 +138,7 @@ module.exports = function (options, done) {
         if (err) {
           next(err); return;
         }
-        next(null, _.pluck(users, 'email'));
+        next(null, _.map(users, 'email'));
       }
     }
     function prepare (err, result) {
@@ -165,7 +165,7 @@ module.exports = function (options, done) {
         op = host.comments.id(parentId);
         thread = host.comments.filter(sameThread);
         thread.unshift(op);
-        emails = emails.concat(_.pluck(thread, 'email'));
+        emails = emails.concat(_.map(thread, 'email'));
       }
       function sameThread (comment) {
         return comment.parent && comment.parent.equals(parentId);

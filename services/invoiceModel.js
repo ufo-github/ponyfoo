@@ -1,7 +1,6 @@
 'use strict';
 
 var moment = require('moment');
-var assign = require('assignment');
 var sluggish = require('sluggish');
 var numberService = require('./number');
 var datetimeService = require('./datetime');

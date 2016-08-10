@@ -11,7 +11,7 @@ var nullLatLng = {
   lat: 0, lng: 0
 };
 
-module.exports = function (viewModel, container) {
+module.exports = function (viewModel) {
   loadScript(source, function () {
     var google = global.google;
     var gmaps = google.maps;

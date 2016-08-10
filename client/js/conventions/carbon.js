@@ -28,10 +28,11 @@ function patch (data) {
   if (data.ads) {
     data.ads.forEach(patchAd);
   }
-  function patchAd (ad) {
-    try { // fix unsafe image loading for hosts known to support https
+  function patchAd (ad) { // fix unsafe image loading for hosts known to support https
+    try {
       ad.image = patchUnsafeImageHost(ad.image);
     } catch (e) {
+      // suppress
     }
   }
 }

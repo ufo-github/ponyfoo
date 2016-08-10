@@ -3,7 +3,7 @@
 var Article = require('../../../models/Article');
 var articleSharingService = require('../../../services/articleSharing');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var slug = req.params.slug;
   var medium = req.params.medium;
 

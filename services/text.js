@@ -1,7 +1,5 @@
 'use strict';
 
-var sluggish = require('sluggish');
-
 function truthy (value) {
   return !!value;
 }
@@ -38,7 +36,7 @@ function upperCase (all, char) {
 }
 
 module.exports = {
- splitTags: splitTags,
- format: format,
- hyphenToCamel: hyphenToCamel
+  splitTags: splitTags,
+  format: format,
+  hyphenToCamel: hyphenToCamel
 };

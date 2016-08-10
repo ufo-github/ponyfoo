@@ -1,7 +1,6 @@
 'use strict';
 
 var $ = require('dominus');
-var taunus = require('taunus');
 
 module.exports = function (viewModel, container) {
   var table = $('.wur-container', container);

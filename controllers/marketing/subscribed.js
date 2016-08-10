@@ -23,9 +23,9 @@ module.exports = function (req, res, next) {
   function byQuery (topic) {
     if (queryTopics) {
       if (Array.isArray(queryTopics)) {
-        return queryTopics.indexOf(topic) !== -1
+        return queryTopics.indexOf(topic) !== -1;
       }
-      return queryTopics === topic || queryTopics
+      return queryTopics === topic || queryTopics;
     }
     return true;
   }

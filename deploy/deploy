@@ -4,10 +4,11 @@ set -e
 
 : "${NODE_ENV:="staging"}"
 : "${RAW_AMI:="ami-6644fc71"}"
-: "${PRIMAL_AMI:="ami-61358d76"}"
+# : "${PRIMAL_AMI:="ami-xxxxxxxx"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
 # : "${CLEANUP:="no"}"
+# : "${REBUILD_APP:="no"}"
 
 # configurable variables
 NAME="ponyfoo-$NODE_ENV"
@@ -28,7 +29,13 @@ LC_NAME="lc-$NAME-$STAMP"
 rm -rf deploy/log
 mkdir deploy/log
 
-echo "deploy: build target: $NODE_ENV"
+if [ -z ${REBUILD_APP+x} ]
+then
+  npm run build-env
+else
+  echo "deploy: skipping app build for $NODE_ENV environment."
+fi
+
 echo "deploy: getting vpc and subnet ids..."
 aws ec2 describe-subnets --filters Name=tag:Name,Values=subnet-$NAME > deploy/log/subnet.log
 VPC_ID=$(jq -r .Subnets[0].VpcId < deploy/log/subnet.log)
@@ -83,9 +90,6 @@ fi
 
 if [ -z ${CARNIVORE_AMI+x} ]
 then
-  echo "deploy: building app..."
-  npm run build-env
-
   GIT_ARTICLES_REPO=$(node lib/env GIT_ARTICLES_REPO | jq -r .)
   GIT_ARTICLES_USERNAME=$(node lib/env GIT_ARTICLES_USERNAME | jq -r .)
   GIT_ARTICLES_PASSWORD=$(node lib/env GIT_ARTICLES_PASSWORD | jq -r .)

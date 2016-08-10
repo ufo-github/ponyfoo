@@ -58,6 +58,6 @@ function toKnownTagModel (tag) {
 }
 
 module.exports = {
- getAll: getAll,
- toKnownTagModel: toKnownTagModel
+  getAll: getAll,
+  toKnownTagModel: toKnownTagModel
 };

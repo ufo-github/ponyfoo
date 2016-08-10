@@ -6,7 +6,6 @@ var WeeklyIssue = require('../../models/WeeklyIssue');
 var weeklyService = require('../../services/weekly');
 var cryptoService = require('../../services/crypto');
 var htmlService = require('../../services/html');
-var metadataService = require('../../services/metadata');
 var authority = env('AUTHORITY');
 
 module.exports = function (req, res, next) {

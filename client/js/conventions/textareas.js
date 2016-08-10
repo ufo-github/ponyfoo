@@ -2,7 +2,6 @@
 
 var $ = require('dominus');
 var taunus = require('taunus');
-var domador = require('domador');
 var woofmark = require('woofmark');
 var markdownService = require('../../../services/markdown');
 
@@ -15,7 +14,7 @@ function activate (container) {
   $('.wk-textarea', container).forEach(convert);
 
   function convert (el) {
-    var wel = $(el)
+    var wel = $(el);
     var hasHtml = wel.hasClass('wk-html');
     var hasWysiwyg = wel.hasClass('wk-wysiwyg');
     var editor = woofmark(el, {
@@ -63,8 +62,8 @@ function activate (container) {
     }
 
     function renderIcon (el, icon) {
-      $(el).addClass('wk-command-' + icon)
-      $('<i>').addClass('fa fa-' + icon).appendTo(el);
+      $(el).addClass(`wk-command-${ icon }`);
+      $('<i>').addClass(`fa fa-${ icon }`).appendTo(el);
     }
   }
 }
@@ -81,7 +80,7 @@ function before (form) {
     store.push(input.value());
     input.value(woofmark(el).value());
   }
-  function after (form) {
+  function after () {
     areas.forEach(restore);
   }
   function restore (el, i) {

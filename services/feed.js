@@ -31,9 +31,9 @@ function from (options) {
   function generate (items, done) {
     var now = moment.utc();
     var tags = _(items)
-      .pluck('categories')
+      .map('categories')
       .flatten()
-      .unique()
+      .uniq()
       .value();
     var feed = new RSS({
       generator: 'ponyfoo/ponyfoo',
@@ -52,7 +52,7 @@ function from (options) {
       ttl: 15
     });
 
-    _.sortByOrder(items, ['date'], ['desc']).forEach(insert);
+    _.orderBy(items, ['date'], ['desc']).forEach(insert);
     done(null, feed.xml());
 
     function insert (feedItem) {

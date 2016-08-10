@@ -1,7 +1,6 @@
 'use strict';
 
 var env = require('../../lib/env');
-var User = require('../../models/User');
 var WeeklyIssueSubmission = require('../../models/WeeklyIssueSubmission');
 var staticService = require('../../services/static');
 var weeklySubmissionService = require('../../services/weeklySubmission');

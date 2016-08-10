@@ -6,7 +6,7 @@ var concurrent = require('contra/concurrent');
 var ls = require('../../lib/storage');
 var datetimeService = require('../../../../services/datetime');
 
-module.exports = function (viewModel, container) {
+module.exports = function (viewModel) {
   viewModel.projects.forEach(function (project) {
     var branch = project.branch;
     var repo = project.repo;
@@ -19,10 +19,10 @@ module.exports = function (viewModel, container) {
       return;
     }
     concurrent({
-      repo: function (next) {
+      repo (next) {
         query('/repos/' + repo, next);
       },
-      branch: function (next) {
+      branch (next) {
         query('/repos/' + repo + '/branches/' + branch, next);
       }
     }, pulled);

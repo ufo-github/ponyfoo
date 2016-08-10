@@ -2,7 +2,7 @@
 
 var $ = require('dominus');
 var raf = require('raf');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var refreshScrollSlowly = raf.bind(null, debounce(refreshScroll, 5));
 var body = document.body;
 var html = document.documentElement;

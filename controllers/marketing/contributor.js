@@ -1,7 +1,6 @@
 'use strict';
 
 var contra = require('contra');
-var env = require('../../lib/env');
 var User = require('../../models/User');
 var Article = require('../../models/Article');
 var userService = require('../../services/user');
@@ -78,4 +77,4 @@ module.exports = function (req, res, next) {
     };
     next();
   }
-}
+};

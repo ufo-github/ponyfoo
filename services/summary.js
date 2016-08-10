@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var he = require('he');
 var truncHtml = require('trunc-html');

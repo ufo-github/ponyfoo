@@ -1,6 +1,5 @@
 'use strict';
 
-var but = require('but');
 var contra = require('contra');
 var WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
 var weeklySubmissionService = require('../../../../services/weeklySubmission');

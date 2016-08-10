@@ -1,6 +1,5 @@
 'use strict';
 
-var path = require('path');
 var sitemapService = require('../../services/sitemap');
 
 module.exports = function (req, res) {

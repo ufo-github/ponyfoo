@@ -1,7 +1,7 @@
 {
   "name": "ponyfoo",
   "description": "Open-source blogging platform",
-  "version": "1.0.37",
+  "version": "1.1.0",
   "homepage": "https://github.com/ponyfoo/ponyfoo",
   "authors": [
     "Nicolás Bevacqua <nico@ponyfoo.com>"
@@ -23,6 +23,7 @@
     "build-staging": "build/build-staging",
     "build-production": "build/build-production",
     "clean": "build/clean",
+    "clean-all": "build/clean-all",
     "copy": "build/copy",
     "diagnose": "build/diagnose",
     "db-backup": "build/db-backup",
@@ -50,13 +51,20 @@
   },
   "browserify": {
     "transform": [
-      "browserify-shim"
+      "browserify-shim",
+      [
+        "babelify",
+        {
+          "ignore": ".bin/views/",
+          "presets": "es2015"
+        }
+      ]
     ]
   },
   "dependencies": {
     "accepts": "1.2.13",
     "assignment": "2.2.0",
-    "bcrypt": "0.8.5",
+    "bcrypt": "0.8.7",
     "beautify-text": "1.0.0",
     "bluebird": "3.3.4",
     "body-parser": "1.3.0",
@@ -71,7 +79,7 @@
     "color-difference": "0.3.4",
     "compression": "1.0.11",
     "connect-flash": "0.1.1",
-    "connect-mongo": "0.8.2",
+    "connect-mongo": "1.3.2",
     "connect-redis": "2.4.1",
     "contra": "1.9.1",
     "cookie-parser": "1.1.0",
@@ -117,13 +125,13 @@
     "lamernews-client": "1.1.0",
     "lipstick": "1.1.0",
     "lob-story": "1.0.0",
-    "lodash": "3.10.1",
+    "lodash": "4.14.2",
     "measly": "1.4.0",
     "megamark": "3.3.0",
     "mkdirp": "0.5.1",
     "moment": "2.14.1",
     "mongodb-uri": "0.9.7",
-    "mongoose": "4.4.14",
+    "mongoose": "4.5.8",
     "morgan": "1.6.1",
     "multer": "1.1.0",
     "nconf": "0.7.1",
@@ -153,7 +161,7 @@
     "super-crap": "1.0.0",
     "sw-offline-google-analytics": "1.0.0",
     "swivel": "3.0.0",
-    "taunus": "8.1.2",
+    "taunus": "8.1.4",
     "taunus-express": "3.0.0",
     "tmp": "0.0.28",
     "transports": "1.0.0",
@@ -172,33 +180,32 @@
   "devDependencies": {
     "apartment": "1.0.0",
     "babel-preset-es2015": "6.9.0",
+    "babelify": "7.3.0",
     "browser-sync": "2.9.11",
-    "browserify": "12.0.1",
-    "browserify-shim": "3.8.11",
+    "browserify": "13.1.0",
+    "browserify-shim": "3.8.12",
     "bundle-collapser": "1.2.1",
     "clean-css": "3.4.6",
     "disc": "1.3.2",
     "errorhandler": "1.0.1",
+    "eslint": "3.2.2",
     "gzip-size-cli": "1.0.0",
     "html-inline": "1.2.0",
-    "jshint": "2.9.2",
-    "jshint-stylish": "1.0.2",
     "minimist": "1.2.0",
     "mockery": "1.4.0",
     "nearest-color": "0.4.0",
     "nib": "1.0.2",
-    "nodemon": "1.4.0",
+    "nodemon": "1.10.0",
     "normalize.css": "3.0.1",
     "penthouse": "0.3.6",
     "phantomjs-prebuilt": "2.1.7",
     "pngjs": "2.2.0",
     "pretty-bytes-cli": "1.0.0",
-    "process-finder": "1.0.0",
     "reaver": "2.0.0",
     "scourge": "1.0.1",
     "serve-favicon": "2.0.1",
     "serve-static": "1.1.0",
-    "shots": "1.3.1",
+    "shots": "1.3.2",
     "sinon": "1.9.1",
     "spritesmith": "3.1.0",
     "svg2png": "3.0.0",
@@ -206,6 +213,6 @@
     "tape": "2.12.3",
     "uglify-js": "2.5.0",
     "underscore-cli": "0.2.18",
-    "watchify": "3.6.0"
+    "watchify": "3.7.0"
   }
 }

@@ -1,11 +1,10 @@
 'use strict';
 
-var cloneDeep = require('lodash/lang/cloneDeep');
+var cloneDeep = require('lodash//cloneDeep');
 var $ = require('dominus');
 var moment = require('moment');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var loadScript = require('../../lib/loadScript');
-var textService = require('../../../../services/text');
 var colors = ['#cbc5c0', '#1a4d7f', '#55acee', '#1bc211', '#900070', '#e92c6c', '#f3720d', '#ffe270'];
 
 module.exports = function (viewModel, container) {
@@ -193,30 +192,16 @@ module.exports = function (viewModel, container) {
             var oldIndex = i - 1;
             var old = oldIndex < 0 ? 0 : data[oldIndex].total - data[oldIndex].unverified;
             var now = full.total - full.unverified;
-            var c = color(d.name);
-            return textService.format([
-              '<div class="sg-tip-content" style="color: %s; background-color: %s;">',
-                '<div>',
-                  '<span class="sg-tip-label">%s:</span>',
-                  ' %s (%s)',
-                '</div>',
-                '<div>Overall: %s (%s)</div>',
-              '</div>'
-              ].join(''),
-              c === '#ffe270' ? '#333' : '#fbf9ec',
-              c,
-              d.name,
-              full[d.name],
-              diffText(data[oldIndex][d.name], full[d.name]),
-              now,
-              diffText(old, now)
-            );
-            function diffText (old, now) {
-              var diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);
-              var sign = diff < 0 ? '' : '+';
-              var fixed = diff.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
-              return sign + fixed + '%';
-            }
+            const { name } = d;
+            var c = color(name);
+            return `
+<div class="sg-tip-content" style="color: ${ c === '#ffe270' ? '#333' : '#fbf9ec' }; background-color: ${ c };">
+  <div>
+    <span class="sg-tip-label">${ name }:</span>
+     ${ full[name] } (${ diffText(data[oldIndex][name], full[name]) })
+  </div>
+  <div>Overall: ${ now } (${ diffText(old, now) })</div>
+</div>`;
           });
 
         svg.call(tip);
@@ -236,7 +221,7 @@ module.exports = function (viewModel, container) {
       if (!pv || pv.length === 0) {
         return;
       }
-      pv.forEach(function (pv) {
+      pv.forEach(pv => {
         pv.date = new Date(pv.date);
         if (peak < pv.views) {
           peak = pv.views;
@@ -247,8 +232,8 @@ module.exports = function (viewModel, container) {
       var y = d3.scale.linear().rangeRound([height - 150, 0]);
 
       var line = d3.svg.line()
-        .x(function (d) { return x(d.date); })
-        .y(function (d) { return y(d.views); });
+        .x(d => x(d.date))
+        .y(d => y(d.views));
 
       x.domain(d3.extent(pv, function (d) { return d.date; }));
       y.domain(d3.extent(pv, function (d) { return d.views; }));
@@ -289,8 +274,8 @@ module.exports = function (viewModel, container) {
             { offset: '100%', color: '#e92c6c' }
           ])
           .enter().append('stop')
-          .attr('offset', function (d) { return d.offset; })
-          .attr('stop-color', function (d) { return d.color });
+          .attr('offset', d => d.offset)
+          .attr('stop-color', d => d.color);
       }
 
       function addPageViewsShadow () {
@@ -312,3 +297,10 @@ module.exports = function (viewModel, container) {
     }
   }
 };
+
+function diffText (old, now) {
+  var diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);
+  var sign = diff < 0 ? '' : '+';
+  var fixed = diff.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+  return sign + fixed + '%';
+}

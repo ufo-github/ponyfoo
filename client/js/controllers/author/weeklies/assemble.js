@@ -7,8 +7,7 @@ var curry = require('contra/curry');
 var sluggish = require('sluggish');
 var dragula = require('dragula');
 var taunus = require('taunus');
-var debounce = require('lodash/function/debounce');
-var textareas = require('../../../conventions/textareas');
+var debounce = require('lodash/debounce');
 var scrapeCompletionService = require('../../../services/scrapeCompletion');
 var markdownService = require('../../../../../services/markdown');
 var textService = require('../../../../../services/text');
@@ -19,14 +18,11 @@ var rdigits = /^\d+$/;
 
 module.exports = controller;
 
-function controller (viewModel, container, route) {
+function controller (...params) {
   series([
     curry(loadScript, '/js/stylus.js'),
     curry(loadScript, '/js/weekly-compiler.js')
-  ], loaded);
-  function loaded (err) {
-    ready(viewModel, container, route);
-  }
+  ], () => ready(...params));
 }
 
 function ready (viewModel, container, route) {

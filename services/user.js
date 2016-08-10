@@ -96,14 +96,15 @@ function humanReadableRole (roles, hasPublishedArticles) {
   return 'Collaborator';
   function concatenate () {
     var firstTerm = terms.shift();
-    var len = terms.length;
-    return terms.reduce(join, firstTerm);
-    function join (all, term, i, terms) {
-      var separator = len > 1 ? ', ' : ' ';
-      var joiner = len === i + 1 ? 'and ' : '';
-      return all + separator + joiner + term;
-    }
+    return terms.reduce(termReducer, firstTerm);
   }
+}
+
+function termReducer (all, term, i, terms) {
+  var len = terms.length;
+  var separator = len > 1 ? ', ' : ' ';
+  var joiner = len === i + 1 ? 'and ' : '';
+  return all + separator + joiner + term;
 }
 
 function create (bypass) {

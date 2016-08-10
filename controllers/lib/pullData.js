@@ -19,4 +19,4 @@ module.exports = function (done) {
       pageviews: result.pageviews
     });
   }
-}
+};

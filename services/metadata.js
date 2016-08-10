@@ -23,9 +23,9 @@ function countTags (accumulator, tag) {
 }
 
 function mostCommonTags (articles, max) {
-  var weighted = _.pluck(articles, 'tags').reduce(countTags, []);
+  var weighted = _.map(articles, 'tags').reduce(countTags, []);
   var sorted = _.sortBy(weighted, 'count').reverse();
-  return _(sorted).pluck('tag').first(max || 5);
+  return _(sorted).map('tag').first(max || 5);
 }
 
 function extractImagesFromArticles (source) {
@@ -33,7 +33,7 @@ function extractImagesFromArticles (source) {
   var articles = many ? source : [source];
   var reduced = articles.reduce(articleReducer, {});
   var values = _.values(reduced);
-  var images = many ? _(values).pluck('0').flatten().uniq().compact().value() : _.flatten(values);
+  var images = many ? _(values).map('0').flatten().uniq().compact().value() : _.flatten(values);
   return {
     images: appendDefaultCover(images),
     map: reduced

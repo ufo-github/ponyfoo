@@ -21,9 +21,9 @@ var api = contra.emitter({
 });
 
 function getArticleUrls (articles) {
-  var tags = _(articles).pluck('tags').flatten().unique().value();
+  var tags = _(articles).map('tags').flatten().uniq().value();
   var tagUrls = tags.map(tagUrl);
-  var dates = _.pluck(articles, 'publication').reduce(dateTransformer, { year: {}, month: {}, day: {} });
+  var dates = _.map(articles, 'publication').reduce(dateTransformer, { year: {}, month: {}, day: {} });
   var dateUrls = _(dates).values().map(_.values).flatten().value();
   var articleUrls = articles.map(articleUrl);
   var modified = toLastMod(articles[0] ? articles[0].updated : Date.now());

@@ -1,7 +1,6 @@
 'use strict';
 
 var InvoiceParty = require('../../../models/InvoiceParty');
-var invoiceModelService = require('../../../services/invoiceModel');
 
 module.exports = function (req, res, next) {
   var slug = req.params.slug;
@@ -46,4 +45,4 @@ module.exports = function (req, res, next) {
       details: []
     };
   }
-}
+};

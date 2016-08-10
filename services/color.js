@@ -40,7 +40,7 @@ function isColorVariable (line) {
   return true;
 }
 
-function getSection (i, line) {
+function getSection (i) {
   var section = _.findLast(sections, isBelowIndex);
   return section;
   function isBelowIndex (section) {
@@ -48,8 +48,8 @@ function getSection (i, line) {
   }
 }
 
-function toColorProfile (line, i, all) {
-  var section = getSection(i, line);
+function toColorProfile (line, i) {
+  var section = getSection(i);
   var matches = rcolor.exec(line).slice(1);
   var name = textService.hyphenToCamel(matches[0]);
   var hex = matches[1];

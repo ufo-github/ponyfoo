@@ -103,7 +103,7 @@ function format (terms, tags) {
 function update (article, done) {
   var end = done || log;
   articleElasticsearchService.update(article, updated);
-  function updated (err, exists) {
+  function updated (err) {
     if (err) {
       end(err); return;
     }
@@ -130,7 +130,7 @@ function addRelated (article, done) {
     if (err) {
       end(err); return;
     }
-    article.related = _.pluck(result, '_id');
+    article.related = _.map(result, '_id');
     article.save(but(end));
   }
 }

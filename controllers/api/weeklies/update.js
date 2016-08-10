@@ -3,7 +3,7 @@
 var winston = require('winston');
 var weeklyService = require('../../../services/weekly');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var options = {
     author: req.user,
     slug: req.params.slug,

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# cleanup
+npm run clean
+rm -rf resources/*/generated

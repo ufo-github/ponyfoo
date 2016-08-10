@@ -1,6 +1,5 @@
 'use strict';
 
-var winston = require('winston');
 var sluggish = require('sluggish');
 var validator = require('validator');
 var markupService = require('../../../services/markup');
@@ -28,10 +27,10 @@ module.exports = function (req, res, next) {
   if (password.length < 4) {
     res.status(400).json({ messages: ['The password must be at least 4 characters long.'] }); return;
   }
-    var validEmail = validator.isEmail(body.email);
-    if (!validEmail) {
-      res.status(400).json({ messages: ['Use a valid email address.'] }); return;
-    }
+  var validEmail = validator.isEmail(body.email);
+  if (!validEmail) {
+    res.status(400).json({ messages: ['Use a valid email address.'] }); return;
+  }
   if (body.roles.length < 1) {
     res.status(400).json({ messages: ['The user must have some role.'] }); return;
   }

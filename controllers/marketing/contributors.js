@@ -1,10 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var contra = require('contra');
-var env = require('../../lib/env');
-var Article = require('../../models/Article');
-var User = require('../../models/User');
 var userService = require('../../services/user');
 
 module.exports = function (req, res, next) {
@@ -19,7 +15,7 @@ module.exports = function (req, res, next) {
     }
     var active = contributors.filter(whereSlug).filter(userService.isActive);
     var profiles = active.map(toProfile);
-    var images = _.pluck(profiles, 'gravatar');
+    var images = _.map(profiles, 'gravatar');
     res.viewModel = {
       model: {
         title: 'Contributors \u2014 Pony Foo',
@@ -33,7 +29,7 @@ module.exports = function (req, res, next) {
     };
     next();
   }
-}
+};
 
 function whereSlug (contributor) {
   return !!contributor.user.slug;

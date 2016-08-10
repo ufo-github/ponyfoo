@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
         },
         title: 'Article Publication History on Pony Foo',
         articles: expanded,
-        total: _.pluck(expanded, 'readingTime').reduce(sum, 0)
+        total: _.map(expanded, 'readingTime').reduce(sum, 0)
       }
     };
     inliningService.addStyles(res.viewModel.model, 'history');

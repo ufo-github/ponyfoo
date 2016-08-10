@@ -24,4 +24,4 @@ module.exports = function (viewModel, container) {
   function toTopic (el) {
     return $(el).text();
   }
-}
+};

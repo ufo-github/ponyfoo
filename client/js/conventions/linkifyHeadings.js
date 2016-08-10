@@ -13,16 +13,16 @@ function render (container) {
     .map(wrapInline)
     .find('.md-heading')
     .on('mouseenter', function (e) {
-      $(e.target).parent().addClass('md-heading-hover')
+      $(e.target).parent().addClass('md-heading-hover');
     })
     .on('mouseleave', function (e) {
-      $(e.target).parent().removeClass('md-heading-hover')
+      $(e.target).parent().removeClass('md-heading-hover');
     });
 
   function wrapInline (el) {
     var $el = $(el);
     var id = $el.attr('id');
-    return $el.html('<a href="#' + id + '" class="md-heading">' + $el.html() + '</a>')
+    return $el.html(`<a href="#${ id }" class="md-heading">${ $el.html() }</a>`);
   }
 }
 

@@ -7,7 +7,7 @@ var friendlyShared = {
   'email-self': 'an email just for yourself'
 };
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var slug = req.params.slug;
   var medium = req.params.medium;
   WeeklyIssue.findOne({ slug: slug }, found);

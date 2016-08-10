@@ -3,7 +3,7 @@
 var winston = require('winston');
 var subscriberTwitterService = require('../../../services/subscriberTwitter');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   subscriberTwitterService.pollCards(completed);
   function completed (err) {
     if (err) {

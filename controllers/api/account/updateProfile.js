@@ -1,6 +1,5 @@
 'use strict';
 
-var winston = require('winston');
 var sluggish = require('sluggish');
 var validator = require('validator');
 var markupService = require('../../../services/markup');
@@ -51,7 +50,7 @@ module.exports = function (req, res, next) {
     var password = validator.toString(body.password);
     if ('password' in body && 'oldPassword' in body) {
       if (password.length < 4) {
-        res.status(400).json({ messages: ['The password must be at least 4 characters long.'] }); return;
+        short(); return;
       }
       user.validatePassword(body.oldPassword, validatedPassword);
     } else {
@@ -61,12 +60,23 @@ module.exports = function (req, res, next) {
       if (err) {
         next(err); return;
       }
+      if (!valid) {
+        mismatch(); return;
+      }
       user.password = password;
       save();
     }
     function save () {
       user.save(saved);
     }
+  }
+
+  function short () {
+    res.status(400).json({ messages: ['The password must be at least 4 characters long.'] });
+  }
+
+  function mismatch () {
+    res.status(400).json({ messages: ['You seem to have mistyped your old password.'] });
   }
 
   function parseTwitter (value) {

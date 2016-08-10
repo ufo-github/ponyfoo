@@ -1,7 +1,6 @@
 'use strict';
 
 var util = require('util');
-var User = require('../../../models/User');
 var datetimeService = require('../../../services/datetime');
 var emojiService = require('../../../services/emoji');
 var userService = require('../../../services/user');

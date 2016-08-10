@@ -1,6 +1,6 @@
 'use strict';
 
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var contra = require('contra');
 var feedService = require('./feed');
 var weeklyFeedService = require('./weeklyFeed');

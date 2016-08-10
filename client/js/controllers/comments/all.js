@@ -3,7 +3,7 @@
 var $ = require('dominus');
 var raf = require('raf');
 var taunus = require('taunus');
-var debounce = require('lodash/function/debounce');
+var debounce = require('lodash/debounce');
 var ls = require('../../lib/storage');
 var userService = require('../../services/user');
 var textService = require('../../../../services/text');
@@ -15,7 +15,6 @@ module.exports = function (viewModel, container) {
   var email = $('.mc-email', container);
   var site = $('.mc-site', container);
   var content = $('.mc-content', container);
-  var preview = $.findOne('.mc-preview', container);
   var send = $('.mc-send', container);
   var sendText = $('.bt-text', send);
   var serializeSlowly = debounce(serialize, 100);

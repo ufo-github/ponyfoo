@@ -2,7 +2,7 @@
 
 var weeklyService = require('../../../services/weekly');
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
   var model = req.body;
   model.author = req.user;
   weeklyService.insert(model, inserted);

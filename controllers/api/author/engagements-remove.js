@@ -1,7 +1,6 @@
 'use strict';
 
 var winston = require('winston');
-var moment = require('moment');
 var Engagement = require('../../../models/Engagement');
 
 module.exports = function (req, res) {

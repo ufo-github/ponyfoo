@@ -1,7 +1,5 @@
 'use strict';
 
-var util = require('util');
-var articleService = require('../../services/article');
 var articleSearchService = require('../../services/articleSearch');
 var articleListHandler = require('./lib/articleListHandler');
 var searchResults = require('./lib/searchResults');

@@ -28,7 +28,7 @@ function find (Model, query, count, done) {
         Model.find(query, '_id').lean().exec(next);
       },
       function (documents, next) {
-        var random = _(documents).pluck('_id').sample(count).value();
+        var random = _(documents).map('_id').sample(count).value();
         var byIds = {
           _id: { $in: random }
         };
