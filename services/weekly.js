@@ -20,7 +20,8 @@ function compile (model, done) {
     markdown: markupService,
     slug: slug
   };
-  weeklyCompilerService.compile(model.sections, options, compiled);
+  var json = model.toJSON ? model.toJSON() : model;
+  weeklyCompilerService.compile(json.sections, options, compiled);
   function compiled (err, html) {
     if (err) {
       done(err); return;
