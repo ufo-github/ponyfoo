@@ -15,7 +15,7 @@ function getFeed (done) {
     .find({ status: 'published' })
     .populate('author', 'displayName email')
     .sort('-publication')
-    .limit(20)
+    .limit(10)
     .exec(found);
 
   function found (err, articles) {

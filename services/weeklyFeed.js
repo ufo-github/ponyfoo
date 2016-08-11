@@ -4,7 +4,6 @@ const fs = require('fs');
 const util = require('util');
 const contra = require('contra');
 const cheerio = require('cheerio');
-const inlineCss = require('inline-css');
 const feedService = require('./feed');
 const markupService = require('./markup');
 const weeklyService = require('./weekly');
@@ -18,7 +17,7 @@ function getFeed (done) {
     .find({ status: 'released', statusReach: 'everyone' })
     .populate('author', 'displayName email')
     .sort('-publication')
-    .limit(20)
+    .limit(10)
     .exec(found);
 
   function found (err, issues) {
@@ -52,32 +51,30 @@ function getFeed (done) {
         absolutize: true,
         removeEmoji: true
       };
-      const inliningOpts = {
-        extraCss: css,
-        url: authority
-      };
-      const contents = '<div class="f-core">' + contentHtml + '</div>';
-      const fixed = markupService.compile(contents, compilerOpts);
+      const contents = `<style>${ css }</style><div class="f-core">${ contentHtml }</div>`;
+      const html = markupService.compile(contents, compilerOpts);
+      const fixed = fixUp(html);
 
-      inlineCss(fixed, inliningOpts).then(inlinedCss, done);
-
-      function inlinedCss (inlined) {
-        const $ = cheerio.load(inlined);
-        $('.wy-section-header .md-markdown > p').each(replaceWith($, 'div'));
-        const html = $.html();
-        done(null, html);
-      }
-      function replaceWith ($, tagName) {
-        const tag = '<' + tagName + '>';
-        return replacer;
-        function replacer () {
-          const el = $(this);
-          const contents = el.html();
-          const replacement = $(tag).html(contents);
-          el.replaceWith(replacement);
-        }
-      }
+      done(null, fixed);
     }
+  }
+}
+
+function fixUp (html) {
+  const $ = cheerio.load(html);
+  $('.wy-section-header .md-markdown > p').each(replaceWith($, 'div'));
+  const result = $.html();
+  return result;
+}
+
+function replaceWith ($, tagName) {
+  const tag = `<${ tagName }>`;
+  return replacer;
+  function replacer () {
+    const el = $(this);
+    const contents = el.html();
+    const replacement = $(tag).html(contents);
+    el.replaceWith(replacement);
   }
 }
 
