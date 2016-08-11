@@ -3,8 +3,6 @@
 const fs = require('fs');
 const util = require('util');
 const contra = require('contra');
-const cheerio = require('cheerio');
-const inlineCss = require('inline-css');
 const feedService = require('./feed');
 const markupService = require('./markup');
 const Article = require('../models/Article');
@@ -52,20 +50,10 @@ function getFeed (done) {
         absolutize: true,
         removeEmoji: true
       };
-      const inliningOpts = {
-        extraCss: css,
-        url: authority
-      };
-      const contents = '<div class="f-core md-markdown">' + contentHtml + '</div>';
-      const fixed = markupService.compile(contents, compilerOpts);
+      const contents = `<style>${ css }</style><div class="f-core md-markdown">${ contentHtml }</div>`;
+      const html = markupService.compile(contents, compilerOpts);
 
-      inlineCss(fixed, inliningOpts).then(inlinedCss, done);
-
-      function inlinedCss (inlined) {
-        const $ = cheerio.load(inlined);
-        const html = $.html();
-        done(null, html);
-      }
+      done(null, html);
     }
   }
 }
