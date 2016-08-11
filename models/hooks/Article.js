@@ -20,10 +20,9 @@ Article.schema.post('save', afterSave);
 function beforeSave (next) {
   const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
   const rstripemptyparagraph = /^\s*<p>\s*<\/p>\s*$/i;
-  const bulk = env('BULK_INSERT');
   const article = this;
-  const oldSign = article.sign;
 
+  article._oldSign = article.sign;
   article.sign = articleService.computeSignature(article);
   article.titleHtml = toHtml(article.titleMarkdown).replace(rstrip, '');
   article.title = beautifyText(markdownService.decompile(article.titleHtml, { plain: true }));
@@ -36,18 +35,7 @@ function beforeSave (next) {
   article.summaryHtml = summary.html;
   article.updated = Date.now();
 
-  if (bulk || article.status !== 'published' || oldSign === article.sign) {
-    next(null); return;
-  }
-  contra.concurrent([
-    next => articleSearchService.update(article, next),
-    next => articleGitService.pushToGit({ article, oldSlug: article._oldSlug }, next)
-  ], err => {
-    if (err) {
-      winston.warn('Error while saving article', err.stack || err);
-    }
-    next(err);
-  });
+  next(null);
 }
 
 function toHtml (md, i) {
@@ -55,8 +43,29 @@ function toHtml (md, i) {
 }
 
 function afterSave () {
+  const article = this;
   const bulk = env('BULK_INSERT');
-  if (bulk) { // trust that these will be rebuilt afterwards
+
+  if (bulk) { // trust that these side-effects will be computed afterwards
+    return;
+  }
+
+  if (article.status !== 'published' || article._oldSign === article.sign) {
+    return;
+  }
+
+  contra.concurrent([
+    next => articleSearchService.update(article, next),
+    next => articleGitService.pushToGit({ article, oldSlug: article._oldSlug }, next)
+  ], afterIndexing);
+}
+
+function afterIndexing (err) {
+  if (err) {
+    winston.warn('Error after saving article', err.stack || err);
+  }
+  const bulk = env('BULK_INSERT');
+  if (bulk) { // sanity
     return;
   }
   articleFeedService.rebuild();
