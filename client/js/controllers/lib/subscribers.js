@@ -51,7 +51,7 @@ module.exports = function (viewModel, container) {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+      .attr('transform', `translate(${ margin.left },${ margin.top })`);
 
     const x = d3.scale
       .ordinal()
@@ -80,10 +80,11 @@ module.exports = function (viewModel, container) {
       color.domain(d3.keys(data[0]).filter(function (key) { return key !== 'date' && key !== 'dateText'; }));
 
       data.forEach(function (d) {
-        let y0 = 0;
+        let currentHeight = 0;
         d.date = new Date(d.date);
         d.fragments = color.domain().map(name => {
-          const y1 = y0 += +d[name];
+          const y0 = currentHeight;
+          const y1 = currentHeight += +d[name];
           return { name, y0, y1, d };
         });
         d.total = d.unverified + d.migration + d.twitter + d.sidebar + d.comment + d.article + d.landed + d.weekly;
