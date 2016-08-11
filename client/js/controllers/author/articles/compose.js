@@ -228,13 +228,18 @@ function initialize (viewModel, container, route) {
     return getHtml(title).replace(rstrip, '');
   }
 
-  function updatePreviewTitle () {
+  function updatePreviewTitleHtml () {
     previewTitle.html(getHtmlTitle());
+  }
+
+  function updatePreviewTitle () {
+    updatePreviewTitleHtml();
     updatePreviewSummarySlowly();
   }
 
   function updateSlug () {
-    slug.value(sluggish(title.value()));
+    updatePreviewTitleHtml();
+    slug.value(sluggish(previewTitle.text()));
     updatePreviewSummarySlowly();
   }
 
@@ -330,8 +335,6 @@ function initialize (viewModel, container, route) {
     echojs.value(data.echojs);
     hn.value(data.hn);
 
-    boundSlug = sluggish(titleText) === slugText;
-
     if (data.status !== 'published') {
       statusRadio[data.status || 'publish'].value(true);
 
@@ -344,6 +347,8 @@ function initialize (viewModel, container, route) {
     updatePreviewHeroImage();
     updatePreviewMarkdown();
     updatePublication();
+
+    boundSlug = sluggish(previewTitle.text()) === slugText;
   }
 
   function getRequestData () {
