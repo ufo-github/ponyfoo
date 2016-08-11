@@ -257,7 +257,7 @@ function initialize (viewModel, container, route) {
   }
 
   function updatePreviewMarkdown () {
-    const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
     previewTeaser.html(getHtml(teaser));
     const note = getHtml(editorNote).replace(rstrip, '');
     if (note.length) {

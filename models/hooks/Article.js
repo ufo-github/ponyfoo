@@ -19,6 +19,7 @@ Article.schema.post('save', afterSave);
 
 function beforeSave (next) {
   const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+  const rstripemptyparagraph = /^\s*<p>\s*<\/p>\s*$/i;
   const bulk = env('BULK_INSERT');
   const article = this;
   const oldSign = article.sign;
@@ -27,7 +28,7 @@ function beforeSave (next) {
   article.titleHtml = toHtml(article.titleMarkdown).replace(rstrip, '');
   article.title = beautifyText(markdownService.decompile(article.titleHtml, { plain: true }));
   article.teaserHtml = toHtml(article.teaser, 1);
-  article.editorNoteHtml = toHtml(article.editorNote || '', 1).replace(rstrip, '');
+  article.editorNoteHtml = toHtml(article.editorNote || '', 1).replace(rstripemptyparagraph, '');
   article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);
   const summary = articleSummarizationService.summarize(article);
