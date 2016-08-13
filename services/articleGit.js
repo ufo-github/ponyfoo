@@ -127,7 +127,7 @@ function pushToGit (options, done) {
     contra.series(tasks, done);
 
     function removeOldSources (next) {
-      if (oldSlug === article.slug) {
+      if (!oldSlug || oldSlug === article.slug) {
         next(); return;
       }
       const gitSlug = getGitSlug(article, oldSlug);
