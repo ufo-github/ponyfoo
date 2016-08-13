@@ -194,8 +194,11 @@ function pullFromGit (event, done) {
       const metadata = path.join(dir, 'metadata.json');
       contra.waterfall([
         next => fs.readFile(metadata, 'utf8', next),
-        (data, next) => next(null, JSON.parse(data)),
-        (data, next) => Article.findOne({ _id: data.id }, next),
+        (metadata, next) => next(null, JSON.parse(metadata)),
+        (metadata, next) => Article.findOne({
+          _id: metadata.id,
+          author: metadata.author
+        }, next),
         (article, next) => {
           articleService.remove(article, next);
         }
