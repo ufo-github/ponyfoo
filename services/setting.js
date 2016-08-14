@@ -59,6 +59,9 @@ function save (settings, done) {
   }
 
   function foundOld (err, settings) {
+    if (err) {
+      done(err); return;
+    }
     contra.each(settings, 3, remove, done);
     function remove (setting, next) {
       setting.remove(setting, next);

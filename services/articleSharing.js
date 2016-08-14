@@ -163,6 +163,9 @@ function hackernews (article, options, done) {
   };
   hackernewsService.submit(data, submitted);
   function submitted (err, res, body, discuss) {
+    if (err) {
+      done(err); return;
+    }
     article.hnDiscuss = discuss;
     article.save(but(done));
   }

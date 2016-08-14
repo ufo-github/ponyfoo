@@ -39,6 +39,9 @@ function query (input, options, done) {
     }
 
     function findSubset (err, results) {
+      if (err) {
+        next(err); return;
+      }
       const scoreCard = results.reduce(toScoreCard, {});
       const ids = Object.keys(scoreCard);
       const query = { _id: { $in: ids } };

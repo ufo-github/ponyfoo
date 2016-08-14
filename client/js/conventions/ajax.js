@@ -44,6 +44,9 @@ function renderOrClean (data) {
 }
 
 function getMessages (err, body) {
+  if (err) {
+    return defaultMessages;
+  }
   const singleMessage = body && body.error && body.error.message;
   if (singleMessage) {
     return [singleMessage];
