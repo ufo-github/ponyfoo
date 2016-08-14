@@ -161,27 +161,25 @@ function removeFromGit (article, done) {
   }, done);
 }
 
-function pullFromGit (event, done) {
-  const end = done || log;
-
+function pullFromGit ({ payload }, done = log) {
   isEnabled(function () {
-    const removals = intoChangeDirectories(event.payload.commits
+    const removals = intoChangeDirectories(payload.commits
       .reduce((all, commit) => all.concat(commit.removed), [])
       .filter(file => path.basename(file) === 'metadata.json')
     );
-    const modifications = intoChangeDirectories(event.payload.commits
+    const modifications = intoChangeDirectories(payload.commits
       .reduce((all, commit) => all.concat(commit.modified), [])
     );
 
     if (removals.length === 0 && modifications.length === 0) {
-      end(null); return;
+      done(null); return;
     }
 
     contra.series([
       next => contra.each.series(removals, removeArticle, next),
       next => git.pull(next),
       next => contra.each.series(modifications, updateArticle, next)
-    ], end);
+    ], done);
 
     function intoChangeDirectories (list) {
       return list
@@ -265,7 +263,7 @@ function pullFromGit (event, done) {
         }
       }
     }
-  }, end);
+  }, done);
 }
 
 function log (err) {
