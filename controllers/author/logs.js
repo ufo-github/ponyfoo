@@ -1,8 +1,8 @@
 'use strict';
 
-const Log = require('../../models/Log');
-const errorService = require('../../services/error');
-const datetimeService = require('../../services/datetime');
+const Log = require(`../../models/Log`);
+const errorService = require(`../../services/error`);
+const datetimeService = require(`../../services/datetime`);
 
 module.exports = function (req, res, next) {
   const max = 100;
@@ -10,16 +10,16 @@ module.exports = function (req, res, next) {
   const p = page - 1;
   const start = max * p;
 
-  Log.find({}).sort('-timestamp').skip(start).limit(max).exec(render);
+  Log.find({}).sort(`-timestamp`).skip(start).limit(max).exec(render);
 
   function render (err, logs) {
     if (err) {
-      next('route'); return;
+      next(`route`); return;
     }
 
     res.viewModel = {
       model: {
-        title: 'Log Stream',
+        title: `Log Stream`,
         logs: logs.map(cast),
         more: logs.length >= max,
         page: page
@@ -31,7 +31,7 @@ module.exports = function (req, res, next) {
 
 function cast (log) {
   return {
-    created: datetimeService.field(log.timestamp, 'precise'),
+    created: datetimeService.field(log.timestamp, `precise`),
     message: log.message,
     level: log.level,
     meta: metaToModel(log.meta)

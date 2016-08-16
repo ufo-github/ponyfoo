@@ -1,7 +1,7 @@
 'use strict';
 
-const winston = require('winston');
-const settingService = require('../../../services/setting');
+const winston = require(`winston`);
+const settingService = require(`../../../services/setting`);
 
 module.exports = function (req, res, next) {
   const settings = getSettings(req.body);
@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.redirect('/owner/settings');
+    res.redirect(`/owner/settings`);
   }
 };
 
@@ -21,9 +21,9 @@ function getSettings (body) {
   return settings;
   function toSetting (settings, key, i) {
     try {
-      settings[key] = values[i] === '' ? undefined : JSON.parse(values[i]);
+      settings[key] = values[i] === `` ? undefined : JSON.parse(values[i]);
     } catch (e) {
-      winston.debug('Failed to save setting %s when parsing user-provided value as JSON.', key);
+      winston.debug(`Failed to save setting %s when parsing user-provided value as JSON.`, key);
     }
     return settings;
   }

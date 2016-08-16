@@ -1,11 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
-const env = require('../lib/env');
-const htmlService = require('./html');
-const staticService = require('./static');
-const authority = env('AUTHORITY');
-const defaultCover = authority + staticService.unroll('/img/banners/branded.png');
+const _ = require(`lodash`);
+const env = require(`../lib/env`);
+const htmlService = require(`./html`);
+const staticService = require(`./static`);
+const authority = env(`AUTHORITY`);
+const defaultCover = authority + staticService.unroll(`/img/banners/branded.png`);
 
 function appendDefaultCover (list) {
   list.push(defaultCover);
@@ -23,9 +23,9 @@ function countTags (accumulator, tag) {
 }
 
 function mostCommonTags (articles, max) {
-  const weighted = _.map(articles, 'tags').reduce(countTags, []);
-  const sorted = _.sortBy(weighted, 'count').reverse();
-  return _(sorted).map('tag').first(max || 5);
+  const weighted = _.map(articles, `tags`).reduce(countTags, []);
+  const sorted = _.sortBy(weighted, `count`).reverse();
+  return _(sorted).map(`tag`).first(max || 5);
 }
 
 function extractImagesFromArticles (source) {
@@ -33,7 +33,7 @@ function extractImagesFromArticles (source) {
   const articles = many ? source : [source];
   const reduced = articles.reduce(articleReducer, {});
   const values = _.values(reduced);
-  const images = many ? _(values).map('0').flatten().uniq().compact().value() : _.flatten(values);
+  const images = many ? _(values).map(`0`).flatten().uniq().compact().value() : _.flatten(values);
   return {
     images: appendDefaultCover(images),
     map: reduced

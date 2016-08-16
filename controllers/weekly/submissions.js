@@ -1,10 +1,10 @@
 'use strict';
 
-const env = require('../../lib/env');
-const WeeklyIssueSubmission = require('../../models/WeeklyIssueSubmission');
-const staticService = require('../../services/static');
-const weeklySubmissionService = require('../../services/weeklySubmission');
-const authority = env('AUTHORITY');
+const env = require(`../../lib/env`);
+const WeeklyIssueSubmission = require(`../../models/WeeklyIssueSubmission`);
+const staticService = require(`../../services/static`);
+const weeklySubmissionService = require(`../../services/weeklySubmission`);
+const authority = env(`AUTHORITY`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!submission) {
-      next('route'); return;
+      next(`route`); return;
     }
     const options = {
       submission: submission,
@@ -36,11 +36,11 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         meta: {
-          canonical: '/weekly/submissions',
-          description: 'Suggest links for Pony Foo Weekly or provide us with your sponsored content requests.',
-          images: [authority + staticService.unroll('/img/ponyfooweekly-sample.png')]
+          canonical: `/weekly/submissions`,
+          description: `Suggest links for Pony Foo Weekly or provide us with your sponsored content requests.`,
+          images: [authority + staticService.unroll(`/img/ponyfooweekly-sample.png`)]
         },
-        title: 'Submissions \u2014 Pony Foo Weekly',
+        title: `Submissions \u2014 Pony Foo Weekly`,
         editing: !!slug,
         submission: toEditModel(submission)
       }

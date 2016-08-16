@@ -1,6 +1,6 @@
 'use strict';
 
-const taunus = require('taunus');
+const taunus = require(`taunus`);
 
 function updateView (elem) {
   const twitter = global.twttr;
@@ -10,8 +10,8 @@ function updateView (elem) {
 }
 
 function twitter () {
-  taunus.on('start', updateView.bind(null, document.body));
-  taunus.on('render', updateView);
+  taunus.on(`start`, updateView.bind(null, document.body));
+  taunus.on(`render`, updateView);
 }
 
 twitter.updateView = updateView;

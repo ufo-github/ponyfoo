@@ -1,9 +1,9 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
-const env = require('../lib/env');
-const factor = env('SALT_WORK_FACTOR');
+const bcrypt = require(`bcrypt`);
+const crypto = require(`crypto`);
+const env = require(`../lib/env`);
+const factor = env(`SALT_WORK_FACTOR`);
 
 function encrypt (value, done) {
   bcrypt.genSalt(factor, function (err, salt) {
@@ -24,7 +24,7 @@ function test (hash, value, done) {
 }
 
 function md5 (value) {
-  return crypto.createHash('md5').update(String(value)).digest('hex');
+  return crypto.createHash(`md5`).update(String(value)).digest(`hex`);
 }
 
 module.exports = {

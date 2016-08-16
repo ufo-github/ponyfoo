@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const Mixed = mongoose.Schema.Types.Mixed;
 const schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
@@ -19,4 +19,4 @@ const schema = new mongoose.Schema({
   section: Mixed
 });
 
-module.exports = mongoose.model('WeeklyIssueSubmission', schema);
+module.exports = mongoose.model(`WeeklyIssueSubmission`, schema);

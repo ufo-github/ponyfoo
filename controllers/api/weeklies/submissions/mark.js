@@ -1,11 +1,11 @@
 'use strict';
 
-const contra = require('contra');
-const WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
-const weeklySubmissionService = require('../../../../services/weeklySubmission');
+const contra = require(`contra`);
+const WeeklyIssueSubmission = require(`../../../../models/WeeklyIssueSubmission`);
+const weeklySubmissionService = require(`../../../../services/weeklySubmission`);
 const actions = {
-  accept: 'accepted',
-  use: 'used'
+  accept: `accepted`,
+  use: `used`
 };
 
 function remove (req, res, next) {
@@ -18,13 +18,13 @@ function remove (req, res, next) {
 
   function found (submission, next) {
     if (!submission) {
-      req.flash('error', ['Weekly submission not found.']);
-      res.redirect('/weekly/submissions/review');
+      req.flash(`error`, [`Weekly submission not found.`]);
+      res.redirect(`/weekly/submissions/review`);
       return;
     }
     const action = req.params.action;
     const status = actions[action];
-    const accepting = status === 'accepted' && !submission.accepted;
+    const accepting = status === `accepted` && !submission.accepted;
     if (accepting) {
       submission.accepted = true;
     }
@@ -45,7 +45,7 @@ function remove (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.redirect('/weekly/submissions/review');
+    res.redirect(`/weekly/submissions/review`);
   }
 }
 

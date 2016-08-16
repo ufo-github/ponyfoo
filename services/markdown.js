@@ -1,13 +1,13 @@
 'use strict';
 
-const omnibox = require('omnibox');
-const domador = require('domador');
-const megamark = require('megamark');
-const insane = require('insane');
-const textService = require('./text');
-const emojiService = require('./emoji');
-const env = require('../lib/env');
-const authority = env('AUTHORITY');
+const omnibox = require(`omnibox`);
+const domador = require(`domador`);
+const megamark = require(`megamark`);
+const insane = require(`insane`);
+const textService = require(`./text`);
+const emojiService = require(`./emoji`);
+const env = require(`../lib/env`);
+const authority = env(`AUTHORITY`);
 const domains = [
   /^(https?:)?\/\/codepen.io\//i,
   /^(https?:)?\/\/assets.codepen.io\//i
@@ -42,9 +42,9 @@ function attr (token, name) {
 }
 
 function setLabel (attrs, title) {
-  const trimmedTitle = title ? title.trim() : '';
+  const trimmedTitle = title ? title.trim() : ``;
   if (trimmedTitle) {
-    attrs['aria-label'] = trimmedTitle;
+    attrs[`aria-label`] = trimmedTitle;
   }
 }
 
@@ -52,21 +52,21 @@ function blankTarget (attrs, href) {
   const parts = omnibox.parse(href);
   const difforigin = parts.host && parts.host !== authority;
   if (difforigin) {
-    attrs.target = '_blank';
+    attrs.target = `_blank`;
   }
 }
 
 function stringifyLink (attrs) {
-  return Object.keys(attrs).reduce(reducer, '<a') + '>';
+  return Object.keys(attrs).reduce(reducer, `<a`) + `>`;
   function reducer (all, attr) {
-    return all + textService.format(' %s="%s"', attr, attrs[attr]);
+    return all + textService.format(` %s="%s"`, attr, attrs[attr]);
   }
 }
 
 function link (tokens, i) {
   const open = tokens[i];
-  const href = attr(open, 'href');
-  const title = attr(open, 'title');
+  const href = attr(open, `href`);
+  const title = attr(open, `title`);
   const attrs = { href: href };
   blankTarget(attrs, href);
   setLabel(attrs, title);
@@ -74,8 +74,8 @@ function link (tokens, i) {
 }
 
 function filter (token) {
-  const unsourced = token.tag !== 'iframe' && token.tag !== 'script';
-  return unsourced || startsWithValidDomain(attr(token, 'src'));
+  const unsourced = token.tag !== `iframe` && token.tag !== `script`;
+  return unsourced || startsWithValidDomain(attr(token, `src`));
 }
 
 function startsWithValidDomain (href) {
@@ -89,15 +89,15 @@ function compile (text) {
   const mdOpts = {
     sanitizer: {
       filter: filter,
-      allowedTags: insane.defaults.allowedTags.concat('iframe', 'script'),
+      allowedTags: insane.defaults.allowedTags.concat(`iframe`, `script`),
       allowedAttributes: {
-        script: ['src', 'async'],
-        p: ['data-height', 'data-theme-id', 'data-slug-hash', 'data-default-tab', 'data-user']
+        script: [`src`, `async`],
+        p: [`data-height`, `data-theme-id`, `data-slug-hash`, `data-default-tab`, `data-user`]
       },
       allowedClasses: {
-        p: ['codepen'],
-        blockquote: ['twitter-tweet'],
-        img: ['tj-emoji']
+        p: [`codepen`],
+        blockquote: [`twitter-tweet`],
+        img: [`tj-emoji`]
       }
     }
   };
@@ -107,8 +107,8 @@ function compile (text) {
 
 function decompile (html, options) {
   const langmap = {
-    javascript: 'js',
-    markdown: 'md'
+    javascript: `js`,
+    markdown: `md`
   };
   const o = options || {};
   const domadorOpts = {
@@ -124,10 +124,10 @@ function decompile (html, options) {
     return decompiled;
   }
   const rspaces = /\s+/g;
-  return decompiled.replace(rspaces, ' ').trim();
+  return decompiled.replace(rspaces, ` `).trim();
 
   function fencinglanguage (el) {
-    if (el.tagName === 'PRE') {
+    if (el.tagName === `PRE`) {
       el = el.firstChild;
     }
     const match = el.className.match(rlang);
@@ -143,22 +143,22 @@ function decompile (html, options) {
   }
 
   function transform (el) {
-    if (el.tagName === 'IMG' && el.className === 'tj-emoji' && el.alt) {
+    if (el.tagName === `IMG` && el.className === `tj-emoji` && el.alt) {
       return el.alt;
     }
     if (o.plain === true) {
       return plain();
     }
-    if (el.tagName === 'BLOCKQUOTE' && el.className === 'twitter-tweet') {
+    if (el.tagName === `BLOCKQUOTE` && el.className === `twitter-tweet`) {
       return el.outerHTML;
     }
 
     function plain () {
-      const content = el.textContent || el.innerText || '';
-      const blocks = ['DIV', 'P', 'BLOCKQUOTE', 'PRE'];
+      const content = el.textContent || el.innerText || ``;
+      const blocks = [`DIV`, `P`, `BLOCKQUOTE`, `PRE`];
       const block = blocks.indexOf(el.tagName) !== -1;
       if (block) {
-        return ' ' + content + ' ';
+        return ` ` + content + ` `;
       }
       return content;
     }

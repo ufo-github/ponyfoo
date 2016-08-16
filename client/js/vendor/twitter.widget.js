@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function twitterWidget () {
-  require('../lib/loadScript')('https://platform.twitter.com/widgets.js');
+  require(`../lib/loadScript`)(`https://platform.twitter.com/widgets.js`);
 
   global.twttr = {
     _e: [],

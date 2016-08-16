@@ -1,6 +1,6 @@
 'use strict';
 
-const subscriberTwitterService = require('../../../services/subscriberTwitter');
+const subscriberTwitterService = require(`../../../services/subscriberTwitter`);
 
 function poll (req, res, next) {
   subscriberTwitterService.pollCards(polled);

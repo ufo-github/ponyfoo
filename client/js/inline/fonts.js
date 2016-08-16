@@ -1,19 +1,19 @@
 'use strict';
 
-const fontfaceonload = require('fontfaceonload');
-const contentLoaded = require('./vendor/contentLoaded');
-const persistance = 'localStorage' in window;
+const fontfaceonload = require(`fontfaceonload`);
+const contentLoaded = require(`./vendor/contentLoaded`);
+const persistance = `localStorage` in window;
 const checks = {};
 
 // load fonts from google asynchronously
-const elem = document.createElement('link');
-const head = document.getElementsByTagName('head')[0];
-elem.rel = 'stylesheet';
-elem.href = 'https://fonts.googleapis.com/css?family=Neuton:700|Merriweather:400italic,400,700';
-elem.media = 'only x';
+const elem = document.createElement(`link`);
+const head = document.getElementsByTagName(`head`)[0];
+elem.rel = `stylesheet`;
+elem.href = `https://fonts.googleapis.com/css?family=Neuton:700|Merriweather:400italic,400,700`;
+elem.media = `only x`;
 head.appendChild(elem);
 setTimeout(function () {
-  elem.media = 'all';
+  elem.media = `all`;
 });
 
 checkAllFonts(); // cache may be primed, try to swap early!
@@ -22,8 +22,8 @@ contentLoaded(window, checkAllFonts); // cache isn't primed, wait on async <link
 contentLoaded(window, checkAllFonts, true); // always runs on onload event
 
 function checkAllFonts () {
-  checkFont('Merriweather', 'ly-custom-subheading');
-  checkFont('Neuton', 'ly-custom-heading');
+  checkFont(`Merriweather`, `ly-custom-subheading`);
+  checkFont(`Neuton`, `ly-custom-heading`);
 }
 
 function checkFont (name, className) {
@@ -32,7 +32,7 @@ function checkFont (name, className) {
   } else if (checks[className].once) {
     return;
   }
-  if (persistance && localStorage['fonts:' + className]) {
+  if (persistance && localStorage[`fonts:` + className]) {
     checks[className](); return; // user probably has the font in their cache
   }
   fontfaceonload(name, { success: checks[className], weight: 700 });
@@ -45,10 +45,10 @@ function fontLoaded (className) {
     }
     loaded.once = true;
     const doc = document.documentElement;
-    const separator = doc.className.length ? ' ' : '';
+    const separator = doc.className.length ? ` ` : ``;
     doc.className += separator + className;
     if (persistance) {
-      localStorage['fonts:' + className] = true;
+      localStorage[`fonts:` + className] = true;
     }
   };
 }

@@ -1,19 +1,19 @@
 'use strict';
 
-const InvoiceParty = require('../../../models/InvoiceParty');
-const datetimeService = require('../../../services/datetime');
+const InvoiceParty = require(`../../../models/InvoiceParty`);
+const datetimeService = require(`../../../services/datetime`);
 
 module.exports = function (req, res, next) {
-  InvoiceParty.find({}).sort('-created').lean().exec(found);
+  InvoiceParty.find({}).sort(`-created`).lean().exec(found);
   function found (err, invoiceParties) {
     if (err) {
       next(err); return;
     }
     res.viewModel = {
       model: {
-        title: 'Invoice Parties \u2014 Pony Foo',
+        title: `Invoice Parties \u2014 Pony Foo`,
         meta: {
-          canonical: '/invoices/parties'
+          canonical: `/invoices/parties`
         },
         invoiceParties: invoiceParties.map(augmentParty)
       }

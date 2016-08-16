@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const contra = require('contra');
-const Article = require('../models/Article');
-const KnownTag = require('../models/KnownTag');
+const _ = require(`lodash`);
+const contra = require(`contra`);
+const Article = require(`../models/Article`);
+const KnownTag = require(`../models/KnownTag`);
 
 function getAll (done) {
   const tasks = {
@@ -14,7 +14,7 @@ function getAll (done) {
   contra.concurrent(tasks, merge);
 
   function findTags (next) {
-    Article.find({}).distinct('tags').lean().exec(next);
+    Article.find({}).distinct(`tags`).lean().exec(next);
   }
 
   function findKnownTags (next) {
@@ -30,8 +30,8 @@ function getAll (done) {
     const unused = result.knownTags.filter(addKnownAsUsedTags).map(toKnownTagModel);
 
     done(null, {
-      used: _.sortBy(used, 'slug'),
-      unused: _.sortBy(unused, 'slug')
+      used: _.sortBy(used, `slug`),
+      unused: _.sortBy(unused, `slug`)
     });
 
     function addKnownAsUsedTags (knownTag) {

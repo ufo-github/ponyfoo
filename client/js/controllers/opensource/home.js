@@ -1,16 +1,16 @@
 'use strict';
 
-const $ = require('dominus');
-const taunus = require('taunus');
-const concurrent = require('contra/concurrent');
-const ls = require('../../lib/storage');
-const datetimeService = require('../../../../services/datetime');
+const $ = require(`dominus`);
+const taunus = require(`taunus`);
+const concurrent = require(`contra/concurrent`);
+const ls = require(`../../lib/storage`);
+const datetimeService = require(`../../../../services/datetime`);
 
 module.exports = function (viewModel) {
   viewModel.projects.forEach(function (project) {
     const branch = project.branch;
     const repo = project.repo;
-    const cacheKey = 'oss:repos/' + repo;
+    const cacheKey = `oss:repos/` + repo;
     const cache = ls.get(cacheKey);
     const earlier = new Date();
     earlier.setHours(earlier.getHours() - 6);
@@ -20,16 +20,16 @@ module.exports = function (viewModel) {
     }
     concurrent({
       repo (next) {
-        query('/repos/' + repo, next);
+        query(`/repos/` + repo, next);
       },
       branch (next) {
-        query('/repos/' + repo + '/branches/' + branch, next);
+        query(`/repos/` + repo + `/branches/` + branch, next);
       }
     }, pulled);
     function query (url, next) {
       const options = {
-        url: 'https://api.github.com' + url,
-        headers: { Accept: 'application/vnd.github.v3+json' },
+        url: `https://api.github.com` + url,
+        headers: { Accept: `application/vnd.github.v3+json` },
         json: true
       };
       taunus.xhr(options, function (err, body, res) {
@@ -54,8 +54,8 @@ module.exports = function (viewModel) {
       ls.set(cacheKey, cache);
     }
     function render (model) {
-      const container = $.findOne('[data-repo="' + repo + '"]');
-      taunus.partial(container, 'opensource/meta', model);
+      const container = $.findOne(`[data-repo="` + repo + `"]`);
+      taunus.partial(container, `opensource/meta`, model);
     }
   });
 };

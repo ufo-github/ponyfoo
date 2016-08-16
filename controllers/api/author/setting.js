@@ -1,6 +1,6 @@
 'use strict';
 
-const settingService = require('../../../services/setting');
+const settingService = require(`../../../services/setting`);
 
 module.exports = function (req, res, next) {
   const key = req.params.key;
@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     res.status(200).json({
-      messages: ['Updated.']
+      messages: [`Updated.`]
     });
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   slug: { type: String, index: { unique: true }, require: true },
@@ -12,4 +12,4 @@ const schema = new mongoose.Schema({
   descriptionHtml: String
 });
 
-module.exports = mongoose.model('KnownTag', schema);
+module.exports = mongoose.model(`KnownTag`, schema);

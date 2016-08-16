@@ -1,7 +1,7 @@
 'use strict';
 
-const contra = require('contra');
-const Setting = require('../models/Setting');
+const contra = require(`contra`);
+const Setting = require(`../models/Setting`);
 const api = contra.emitter({
   get: get,
   getKey: getKey,
@@ -11,7 +11,7 @@ const api = contra.emitter({
 });
 
 function get (done) {
-  Setting.findOne({}).sort('-created').lean().exec(found);
+  Setting.findOne({}).sort(`-created`).lean().exec(found);
   function found (err, setting) {
     if (err) {
       done(err); return;
@@ -49,12 +49,12 @@ function save (settings, done) {
     if (err) {
       done(err); return;
     }
-    api.emit('save', settings);
+    api.emit(`save`, settings);
     Setting
       .find({
         created: { $lt: model.created }
       })
-      .sort('created')
+      .sort(`created`)
       .exec(foundOld);
   }
 
@@ -73,7 +73,7 @@ function toModel (settings) {
   return Object.keys(settings).map(intoKeyValuePair);
   function intoKeyValuePair (key) {
     const setting = settings[key];
-    const value = setting === undefined ? '' : JSON.stringify(setting, null, 2);
+    const value = setting === undefined ? `` : JSON.stringify(setting, null, 2);
     return {
       key: key,
       value: value

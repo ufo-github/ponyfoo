@@ -1,11 +1,11 @@
 'use strict';
 
-const sluggish = require('sluggish');
-const validator = require('validator');
-const markupService = require('../../../services/markup');
-const summaryService = require('../../../services/summary');
-const bioService = require('../../../services/bio');
-const User = require('../../../models/User');
+const sluggish = require(`sluggish`);
+const validator = require(`validator`);
+const markupService = require(`../../../services/markup`);
+const summaryService = require(`../../../services/summary`);
+const bioService = require(`../../../services/bio`);
+const User = require(`../../../models/User`);
 const rprotocol = /^https?:\/\//i;
 const rtwitter = /^https?:\/\/twitter\.com\//i;
 const rtwitter_legacy = /[@#!]+/i;
@@ -23,19 +23,19 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!user) {
-      res.status(404).json({ messages: ['Account not found!'] }); return;
+      res.status(404).json({ messages: [`Account not found!`] }); return;
     }
     const displayName = body.displayName;
     if (displayName.length < 4) {
-      res.status(400).json({ messages: ['Your name must be at least 4 characters long.'] }); return;
+      res.status(400).json({ messages: [`Your name must be at least 4 characters long.`] }); return;
     }
     const slug = sluggish(body.slug);
     if (slug.length < 4) {
-      res.status(400).json({ messages: ['Your username must be at least 4 characters long.'] }); return;
+      res.status(400).json({ messages: [`Your username must be at least 4 characters long.`] }); return;
     }
     const validEmail = validator.isEmail(body.email);
     if (!validEmail) {
-      res.status(400).json({ messages: ['Use a valid email address.'] }); return;
+      res.status(400).json({ messages: [`Use a valid email address.`] }); return;
     }
     user.email = body.email;
     user.displayName = displayName;
@@ -48,7 +48,7 @@ module.exports = function (req, res, next) {
     user.bioText = bioText;
 
     const password = validator.toString(body.password);
-    if ('password' in body && 'oldPassword' in body) {
+    if (`password` in body && `oldPassword` in body) {
       if (password.length < 4) {
         short(); return;
       }
@@ -72,11 +72,11 @@ module.exports = function (req, res, next) {
   }
 
   function short () {
-    res.status(400).json({ messages: ['The password must be at least 4 characters long.'] });
+    res.status(400).json({ messages: [`The password must be at least 4 characters long.`] });
   }
 
   function mismatch () {
-    res.status(400).json({ messages: ['You seem to have mistyped your old password.'] });
+    res.status(400).json({ messages: [`You seem to have mistyped your old password.`] });
   }
 
   function parseTwitter (value) {
@@ -84,8 +84,8 @@ module.exports = function (req, res, next) {
       return null;
     }
     return value
-      .replace(rtwitter, '')
-      .replace(rtwitter_legacy, '');
+      .replace(rtwitter, ``)
+      .replace(rtwitter_legacy, ``);
   }
 
   function parseLink (value) {
@@ -93,7 +93,7 @@ module.exports = function (req, res, next) {
       return null;
     }
     if (!rprotocol.test(value)) {
-      return 'http://' + value;
+      return `http://` + value;
     }
     return value;
   }

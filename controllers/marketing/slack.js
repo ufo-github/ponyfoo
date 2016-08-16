@@ -1,9 +1,9 @@
 'use strict';
 
-const env = require('../../lib/env');
-const markdownFileService = require('../../services/markdownFile');
-const slackFrameUrl = env('SLACK_FRAME_URL');
-const slackFile = './dat/slack.md';
+const env = require(`../../lib/env`);
+const markdownFileService = require(`../../services/markdownFile`);
+const slackFrameUrl = env(`SLACK_FRAME_URL`);
+const slackFile = `./dat/slack.md`;
 
 module.exports = function (req, res, next) {
   markdownFileService.read(slackFile, respond);
@@ -14,9 +14,9 @@ module.exports = function (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: 'Join our Slack community \u2014 Pony Foo',
+        title: `Join our Slack community \u2014 Pony Foo`,
         meta: {
-          canonical: '/slack'
+          canonical: `/slack`
         },
         slackFrameUrl: slackFrameUrl,
         slackHtml: slackHtml

@@ -1,11 +1,11 @@
 'use strict';
 
-const contra = require('contra');
-const pullData = require('../lib/pullData');
-const Subscriber = require('../../models/Subscriber');
-const subscriberService = require('../../services/subscriber');
-const datetimeService = require('../../services/datetime');
-const userService = require('../../services/user');
+const contra = require(`contra`);
+const pullData = require(`../lib/pullData`);
+const Subscriber = require(`../../models/Subscriber`);
+const subscriberService = require(`../../services/subscriber`);
+const datetimeService = require(`../../services/datetime`);
+const userService = require(`../../services/user`);
 
 module.exports = function (req, res, next) {
   const max = 100;
@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
   function pullSubscribers (next) {
     Subscriber
       .find({})
-      .sort('-created')
+      .sort(`-created`)
       .skip(start)
       .limit(max)
       .lean()
@@ -40,7 +40,7 @@ module.exports = function (req, res, next) {
       email: subscriber.email,
       avatar: userService.getAvatar(subscriber),
       topics: subscriber.topics,
-      source: subscriber.source.split('+')[0],
+      source: subscriber.source.split(`+`)[0],
       verified: subscriber.verified,
       hash: subscriberService.getHash(subscriber)
     };
@@ -53,7 +53,7 @@ module.exports = function (req, res, next) {
 
     res.viewModel = {
       model: {
-        title: 'Subscribers \u2014 Pony Foo',
+        title: `Subscribers \u2014 Pony Foo`,
         subscriberGraph: result.subscriberGraph,
         subscribers: result.subscribers,
         allTopics: subscriberService.getTopics(),

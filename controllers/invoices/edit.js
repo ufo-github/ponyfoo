@@ -1,8 +1,8 @@
 'use strict';
 
-const moment = require('moment');
-const Invoice = require('../../models/Invoice');
-const InvoiceParty = require('../../models/InvoiceParty');
+const moment = require(`moment`);
+const Invoice = require(`../../models/Invoice`);
+const InvoiceParty = require(`../../models/InvoiceParty`);
 
 module.exports = function (req, res, next) {
   InvoiceParty.find({}).lean().exec(foundParties);
@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
     });
     const slug = req.params.slug;
     if (slug) {
-      Invoice.findOne({ slug: slug }).populate('customerParty paymentParty').lean().exec(found);
+      Invoice.findOne({ slug: slug }).populate(`customerParty paymentParty`).lean().exec(found);
     } else {
       respond(defaultInvoice());
     }
@@ -35,19 +35,19 @@ module.exports = function (req, res, next) {
         next(err); return;
       }
       if (!invoice) {
-        next('route'); return;
+        next(`route`); return;
       }
       respond(invoice);
     }
 
     function respond (invoice) {
-      const title = slug ? 'Invoice #' + slug : 'New Invoice';
-      const canonical = slug ? '/' + slug + '/edit' : '/new';
+      const title = slug ? `Invoice #` + slug : `New Invoice`;
+      const canonical = slug ? `/` + slug + `/edit` : `/new`;
       res.viewModel = {
         model: {
-          title: title + ' \u2014 Pony Foo',
+          title: title + ` \u2014 Pony Foo`,
           meta: {
-            canonical: '/invoices' + canonical
+            canonical: `/invoices` + canonical
           },
           invoice: invoice,
           editing: !!slug,

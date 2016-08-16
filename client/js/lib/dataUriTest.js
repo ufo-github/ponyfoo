@@ -6,7 +6,7 @@ let result;
 
 datauri.onload = load;
 datauri.onerror = error;
-datauri.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+datauri.src = `data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==`;
 
 function load () {
   set(datauri.width === 1 && datauri.height === 1);

@@ -3,9 +3,9 @@
 module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
-      title: 'Email Composer \u2014 Pony Foo',
+      title: `Email Composer \u2014 Pony Foo`,
       meta: {
-        canonical: '/owner/announcements'
+        canonical: `/owner/announcements`
       }
     }
   };

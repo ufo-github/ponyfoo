@@ -1,6 +1,6 @@
 'use strict';
 
-const KnownTag = require('../../../models/KnownTag');
+const KnownTag = require(`../../../models/KnownTag`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!tag) {
-      next('route'); return;
+      next(`route`); return;
     }
     respond(tag);
   }
@@ -27,7 +27,7 @@ module.exports = function (req, res, next) {
   function respond (tag) {
     res.viewModel = {
       model: {
-        title: (editing ? 'Update' : 'New') + ' Tag \u2014 Pony Foo',
+        title: (editing ? `Update` : `New`) + ` Tag \u2014 Pony Foo`,
         tag: tag,
         editing: editing
       }

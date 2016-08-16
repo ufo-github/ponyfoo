@@ -1,6 +1,6 @@
 'use strict';
 
-const InvoiceParty = require('../../../models/InvoiceParty');
+const InvoiceParty = require(`../../../models/InvoiceParty`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -15,19 +15,19 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!invoiceParty) {
-      next('route'); return;
+      next(`route`); return;
     }
     respond(invoiceParty);
   }
 
   function respond (invoiceParty) {
-    const title = slug ? 'Invoice Party #' + slug : 'New Invoice Party';
-    const canonical = slug ? '/' + slug + '/edit' : '/new';
+    const title = slug ? `Invoice Party #` + slug : `New Invoice Party`;
+    const canonical = slug ? `/` + slug + `/edit` : `/new`;
     res.viewModel = {
       model: {
-        title: title + ' \u2014 Pony Foo',
+        title: title + ` \u2014 Pony Foo`,
         meta: {
-          canonical: '/invoices/parties' + canonical
+          canonical: `/invoices/parties` + canonical
         },
         invoiceParty: invoiceParty,
         editing: !!slug
@@ -38,10 +38,10 @@ module.exports = function (req, res, next) {
 
   function defaultInvoiceParty () {
     return {
-      type: 'customer',
-      title: '',
-      slug: '',
-      name: '',
+      type: `customer`,
+      title: ``,
+      slug: ``,
+      name: ``,
       details: []
     };
   }

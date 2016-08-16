@@ -1,6 +1,6 @@
 'use strict';
 
-const raf = require('raf');
+const raf = require(`raf`);
 const ls = global.localStorage;
 
 function get (key) {

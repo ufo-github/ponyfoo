@@ -9,24 +9,19 @@
     "sourceType": "module"
   },
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "backtick"],
+    "semi": ["error", "always"],
+    "array-callback-return": "error",
+    "complexity": "error",
+    "curly": "error",
+    "eqeqeq": "error",
+    "handle-callback-err": "error",
     "no-console": "warn",
     "no-constant-condition": 0,
-    "handle-callback-err": "error"
+    "no-else-return": "error",
+    "no-prototype-builtins": "error",
+    "no-unsafe-negation": "error"
   }
 }

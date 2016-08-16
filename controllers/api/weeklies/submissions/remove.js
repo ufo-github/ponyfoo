@@ -1,7 +1,7 @@
 'use strict';
 
-const contra = require('contra');
-const WeeklyIssueSubmission = require('../../../../models/WeeklyIssueSubmission');
+const contra = require(`contra`);
+const WeeklyIssueSubmission = require(`../../../../models/WeeklyIssueSubmission`);
 
 function remove (req, res, next) {
   contra.waterfall([lookupSubmission, found], handle);
@@ -13,7 +13,7 @@ function remove (req, res, next) {
 
   function found (submission, next) {
     if (!submission) {
-      res.status(404).json({ messages: ['Weekly submission not found'] }); return;
+      res.status(404).json({ messages: [`Weekly submission not found`] }); return;
     }
     submission.remove(next);
   }

@@ -1,10 +1,10 @@
 'use strict';
 
-const winston = require('winston');
-const sluggish = require('sluggish');
-const KnownTag = require('../../../models/KnownTag');
-const markupService = require('../../../services/markup');
-const summaryService = require('../../../services/summary');
+const winston = require(`winston`);
+const sluggish = require(`sluggish`);
+const KnownTag = require(`../../../models/KnownTag`);
+const markupService = require(`../../../services/markup`);
+const summaryService = require(`../../../services/summary`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!tag) {
-      next('route'); return;
+      next(`route`); return;
     }
     updateAndSave(tag);
   }
@@ -43,6 +43,6 @@ module.exports = function (req, res, next) {
     if (err) {
       winston.error(err);
     }
-    res.redirect('/articles/tags/review');
+    res.redirect(`/articles/tags/review`);
   }
 };

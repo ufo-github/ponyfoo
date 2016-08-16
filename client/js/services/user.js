@@ -1,13 +1,13 @@
 'use strict';
 
-const taunus = require('taunus');
+const taunus = require(`taunus`);
 const store = {};
 
 boot();
 
 function boot () {
-  taunus.on('start', updateStore);
-  taunus.on('render', updateStore);
+  taunus.on(`start`, updateStore);
+  taunus.on(`render`, updateStore);
 }
 
 function updateStore (container, viewModel) {

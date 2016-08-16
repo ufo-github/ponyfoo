@@ -1,7 +1,7 @@
 'use strict';
 
-const winston = require('winston');
-const weeklyService = require('../../../services/weekly');
+const winston = require(`winston`);
+const weeklyService = require(`../../../services/weekly`);
 
 module.exports = function (req, res) {
   const options = {
@@ -13,7 +13,7 @@ module.exports = function (req, res) {
   function inserted (err) {
     if (err) {
       winston.warn(err);
-      res.status(500).json({ messages: ['Oops. Something went terribly wrong!'] });
+      res.status(500).json({ messages: [`Oops. Something went terribly wrong!`] });
       return;
     }
     res.status(200).json({});

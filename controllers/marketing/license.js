@@ -1,7 +1,7 @@
 'use strict';
 
-const markdownFileService = require('../../services/markdownFile');
-const aboutFile = './dat/license.md';
+const markdownFileService = require(`../../services/markdownFile`);
+const aboutFile = `./dat/license.md`;
 
 module.exports = function (req, res, next) {
   markdownFileService.read(aboutFile, respond);
@@ -12,9 +12,9 @@ module.exports = function (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: 'License \u2014 Pony Foo',
+        title: `License \u2014 Pony Foo`,
         meta: {
-          canonical: '/license'
+          canonical: `/license`
         },
         licenseHtml: licenseHtml
       }

@@ -1,6 +1,6 @@
 'use strict';
 
-const validator = require('validator');
+const validator = require(`validator`);
 
 function integer (value, defaultValue) {
   const casted = validator.toInt(value || defaultValue);

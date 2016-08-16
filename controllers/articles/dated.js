@@ -1,29 +1,29 @@
 'use strict';
 
-const _ = require('lodash');
-const moment = require('moment');
-const util = require('util');
-const articleService = require('../../services/article');
-const articleListHandler = require('./lib/articleListHandler');
+const _ = require(`lodash`);
+const moment = require(`moment`);
+const util = require(`util`);
+const articleService = require(`../../services/article`);
+const articleListHandler = require(`./lib/articleListHandler`);
 
 function parse (params) {
-  const formats = ['YYYY', 'MM', 'DD'];
+  const formats = [`YYYY`, `MM`, `DD`];
   const parts = _.values(params);
   const len = parts.length;
-  const input = parts.join('-');
-  const inputFormat = formats.slice(0, len).join('-');
+  const input = parts.join(`-`);
+  const inputFormat = formats.slice(0, len).join(`-`);
   let unit;
   let textual;
 
   if (params.day) {
-    textual = 'MMMM Do, YYYY';
-    unit = 'day';
+    textual = `MMMM Do, YYYY`;
+    unit = `day`;
   } else if (params.month) {
-    textual = 'MMMM, YYYY';
-    unit = 'month';
+    textual = `MMMM, YYYY`;
+    unit = `month`;
   } else {
-    textual = 'YYYY';
-    unit = 'year';
+    textual = `YYYY`;
+    unit = `year`;
   }
 
   const when = moment.utc(input, inputFormat);
@@ -37,30 +37,30 @@ function parse (params) {
 }
 
 function slug (params) {
-  const fmt = 'YYYY/MM/DD';
+  const fmt = `YYYY/MM/DD`;
   const keys = Object.keys(params).length;
   const parts = [params.year, params.month, params.day].splice(0, keys.length);
-  return moment.utc(parts.join('/'), fmt).format(fmt);
+  return moment.utc(parts.join(`/`), fmt).format(fmt);
 }
 
 module.exports = function (req, res, next) {
   const parsed = parse(req.params);
   const handle = articleListHandler(res, { skip: false }, next);
-  const titleFormat = 'Articles published on %s';
+  const titleFormat = `Articles published on %s`;
   const title = util.format(titleFormat, parsed.text);
 
   res.viewModel = {
     model: {
       title: title,
       meta: {
-        canonical: '/articles/' + slug(req.params),
-        description: 'This search results page contains all of the ' + title.toLowerCase()
+        canonical: `/articles/` + slug(req.params),
+        description: `This search results page contains all of the ` + title.toLowerCase()
       }
     }
   };
 
   const query = {
-    status: 'published',
+    status: `published`,
     publication: {
       $gte: parsed.start,
       $lt: parsed.end

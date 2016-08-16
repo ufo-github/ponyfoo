@@ -1,35 +1,35 @@
 'use strict';
 
-const $ = require('dominus');
-const raf = require('raf');
-const taunus = require('taunus');
-const debounce = require('lodash/debounce');
-const markdownService = require('../../../../services/markdown');
+const $ = require(`dominus`);
+const raf = require(`raf`);
+const taunus = require(`taunus`);
+const debounce = require(`lodash/debounce`);
+const markdownService = require(`../../../../services/markdown`);
 
 module.exports = function (viewModel) {
-  const subject = $('.ec-subject');
-  const teaser = $('.ec-teaser');
-  const body = $('.ec-body');
-  const topic = $('.ec-topic');
-  const previewSubject = $('.ec-preview-subject');
-  const previewTeaser = $('.ec-preview-teaser');
-  const previewBody = $('.ec-preview-body');
-  const sendButton = $('.ec-send');
+  const subject = $(`.ec-subject`);
+  const teaser = $(`.ec-teaser`);
+  const body = $(`.ec-body`);
+  const topic = $(`.ec-topic`);
+  const previewSubject = $(`.ec-preview-subject`);
+  const previewTeaser = $(`.ec-preview-teaser`);
+  const previewBody = $(`.ec-preview-body`);
+  const sendButton = $(`.ec-send`);
 
-  subject.on('keypress keydown paste', raf.bind(null, debounce(updatePreviewSubject, 200)));
-  teaser.on('keypress keydown paste', raf.bind(null, debounce(updatePreviewTeaser, 200)));
-  body.on('keypress keydown paste input', raf.bind(null, debounce(updatePreviewBody, 200)));
-  sendButton.on('click', send);
+  subject.on(`keypress keydown paste`, raf.bind(null, debounce(updatePreviewSubject, 200)));
+  teaser.on(`keypress keydown paste`, raf.bind(null, debounce(updatePreviewTeaser, 200)));
+  body.on(`keypress keydown paste input`, raf.bind(null, debounce(updatePreviewBody, 200)));
+  sendButton.on(`click`, send);
 
   function updatePreviewSubject () {
-    previewSubject.text(subject.value().trim() || 'Email Preview');
+    previewSubject.text(subject.value().trim() || `Email Preview`);
   }
   function updatePreviewTeaser () {
-    previewTeaser.text(teaser.value() || 'Teaser about email contents');
+    previewTeaser.text(teaser.value() || `Teaser about email contents`);
   }
   function updatePreviewBody () {
     const rparagraph = /^<p>|<\/p>$/ig;
-    previewBody.html(getHtml(body).trim().replace(rparagraph, '') || 'Main body of your email');
+    previewBody.html(getHtml(body).trim().replace(rparagraph, ``) || `Main body of your email`);
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }
@@ -43,10 +43,10 @@ module.exports = function (viewModel) {
         body: body.value()
       }
     };
-    viewModel.measly.post('/api/email', model).on('data', leave);
+    viewModel.measly.post(`/api/email`, model).on(`data`, leave);
   }
 
   function leave () {
-    taunus.navigate('/');
+    taunus.navigate(`/`);
   }
 };

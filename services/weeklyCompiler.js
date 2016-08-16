@@ -1,13 +1,13 @@
 'use strict';
 
-const map = require('contra/map');
-const assign = require('assignment');
-const beautifyText = require('beautify-text');
-const stylus = require('./lib/stylus');
-const textService = require('./text');
-const weeklyCompilerLinkService = require('./weeklyCompilerLink');
-const linkSectionView = require('../.bin/views/shared/partials/weekly/link');
-const knownTags = require('./lib/knownNewsletterTags.json');
+const map = require(`contra/map`);
+const assign = require(`assignment`);
+const beautifyText = require(`beautify-text`);
+const stylus = require(`./lib/stylus`);
+const textService = require(`./text`);
+const weeklyCompilerLinkService = require(`./weeklyCompilerLink`);
+const linkSectionView = require(`../.bin/views/shared/partials/weekly/link`);
+const knownTags = require(`./lib/knownNewsletterTags.json`);
 
 function compile (sections, options, done) {
   const compilers = {
@@ -24,19 +24,19 @@ function compile (sections, options, done) {
     if (err) {
       done(err); return;
     }
-    done(null, result.join(''));
+    done(null, result.join(``));
   }
 }
 
 function toHeaderSectionHtml (section, options, done) {
   const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
   done(null, textService.format([
-    '<div class="wy-section-header">',
-    '<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">',
-    '%s',
-    '</h%s>',
-    '</div>'
-  ].join(''),
+    `<div class="wy-section-header">`,
+    `<h%s class="md-markdown" style="color:%s;background-color:%s;padding:10px;">`,
+    `%s`,
+    `</h%s>`,
+    `</div>`
+  ].join(``),
     section.size,
     section.foreground,
     section.background,
@@ -52,7 +52,7 @@ function toMarkdownSectionHtml (section, options, done) {
   const html = options.markdown.compile(section.text, {
     linkThrough: linkThrough
   });
-  done(null, textService.format('<div class="wy-section-markdown md-markdown">%s</div>', html));
+  done(null, textService.format(`<div class="wy-section-markdown md-markdown">%s</div>`, html));
 }
 
 function toLinkSectionModel (section, options, done) {
@@ -93,9 +93,9 @@ function toLinkSectionHtml (section, options, done) {
 }
 
 function toStylesSectionHtml (section, options, done) {
-  stylus.render(section.styles, { filename: 'inline-styles.css' }, compiled);
+  stylus.render(section.styles, { filename: `inline-styles.css` }, compiled);
   function compiled (err, styles) {
-    done(err, textService.format('<style>%s</style>', styles));
+    done(err, textService.format(`<style>%s</style>`, styles));
   }
 }
 

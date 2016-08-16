@@ -1,15 +1,15 @@
 'use strict';
 
-const env = require('../../lib/env');
-const staticService = require('../../services/static');
-const WeeklyIssue = require('../../models/WeeklyIssue');
-const weeklyService = require('../../services/weekly');
-const authority = env('AUTHORITY');
+const env = require(`../../lib/env`);
+const staticService = require(`../../services/static`);
+const WeeklyIssue = require(`../../models/WeeklyIssue`);
+const weeklyService = require(`../../services/weekly`);
+const authority = env(`AUTHORITY`);
 
 module.exports = function (req, res, next) {
-  const query = { status: 'released', statusReach: 'everyone' };
+  const query = { status: `released`, statusReach: `everyone` };
 
-  WeeklyIssue.find(query).sort('-publication').exec(found);
+  WeeklyIssue.find(query).sort(`-publication`).exec(found);
 
   function found (err, issues) {
     if (err) {
@@ -19,12 +19,12 @@ module.exports = function (req, res, next) {
     res.viewModel = {
       model: {
         meta: {
-          canonical: '/weekly/history',
-          description: 'Every Pony Foo Weekly newsletter issue ever published on Pony Foo can be found listed here!',
+          canonical: `/weekly/history`,
+          description: `Every Pony Foo Weekly newsletter issue ever published on Pony Foo can be found listed here!`,
           keywords: weeklyService.getAllTags(issues),
-          images: [authority + staticService.unroll('/img/ponyfooweekly-sample.png')]
+          images: [authority + staticService.unroll(`/img/ponyfooweekly-sample.png`)]
         },
-        title: 'Pony Foo Weekly Publication History',
+        title: `Pony Foo Weekly Publication History`,
         issues: models,
         any: issues.length > 0
       }

@@ -1,20 +1,20 @@
 'use strict';
 
-const _ = require('lodash');
-const assign = require('assignment');
-const util = require('util');
-const contra = require('contra');
-const winston = require('winston');
-const emailService = require('./email');
-const cryptoService = require('./crypto');
-const Subscriber = require('../models/Subscriber');
-const env = require('../lib/env');
-const authority = env('AUTHORITY');
+const _ = require(`lodash`);
+const assign = require(`assignment`);
+const util = require(`util`);
+const contra = require(`contra`);
+const winston = require(`winston`);
+const emailService = require(`./email`);
+const cryptoService = require(`./crypto`);
+const Subscriber = require(`../models/Subscriber`);
+const env = require(`../lib/env`);
+const authority = env(`AUTHORITY`);
 const reasons = {
-  default: 'Thanks for your interest in becoming a subscriber of our mailing list!',
-  comment: 'Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here’s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!'
+  default: `Thanks for your interest in becoming a subscriber of our mailing list!`,
+  comment: `Thank you for sharing your thoughts on my blog, I really appreciate that you took the time to do that. Here’s hoping that you become an active contributor on Pony Foo! I would also like to extend you an invitation to our mailing list!`
 };
-const allTopics = ['announcements', 'articles', 'newsletter'];
+const allTopics = [`announcements`, `articles`, `newsletter`];
 
 function noop () {}
 
@@ -65,21 +65,20 @@ function addTopics (model, topics, done) {
         if (err) {
           winston.warn(err);
         } else {
-          winston.info('Email subscription for "%s" %s via %s', model.email, getStatus(), model.source || '(unset)');
+          winston.info(`Email subscription for "%s" %s via %s`, model.email, getStatus(), model.source || `(unset)`);
         }
         next(err, success, existed);
         function getStatus () {
           if (existed) {
-            return 'was duplicate';
+            return `was duplicate`;
           }
           if (success) {
             if (model.verified) {
-              return 'confirmed';
-            } else {
-              return 'requested';
+              return `confirmed`;
             }
+            return `requested`;
           }
-          return 'failed';
+          return `failed`;
         }
       }
     }
@@ -89,32 +88,32 @@ function addTopics (model, topics, done) {
 function invitationConfirmation (subscriber, topics, done) {
   const hash = getHash(subscriber);
   const some = Array.isArray(topics) && topics.length && topics.length < allTopics.length;
-  const query = some ? '?topic=' + topics.join('&topic=') : '';
-  const confirm = util.format('/api/subscribers/%s/confirm%s', hash, query);
+  const query = some ? `?topic=` + topics.join(`&topic=`) : ``;
+  const confirm = util.format(`/api/subscribers/%s/confirm%s`, hash, query);
   const model = {
     to: subscriber.email,
-    subject: 'Pony Foo Subscription Invitation!',
-    teaser: 'Would you like to subscribe to Pony Foo?',
+    subject: `Pony Foo Subscription Invitation!`,
+    teaser: `Would you like to subscribe to Pony Foo?`,
     confirm: confirm,
     topics: topics,
     provider: {
       merge: locals()({}, subscriber)
     },
     linkedData: {
-      '@context': 'http://schema.org',
-      '@type': 'EmailMessage',
+      '@context': `http://schema.org`,
+      '@type': `EmailMessage`,
       potentialAction: {
-        '@type': 'ConfirmAction',
-        name: 'Confirm Subscription',
+        '@type': `ConfirmAction`,
+        name: `Confirm Subscription`,
         handler: {
-          '@type': 'HttpActionHandler',
+          '@type': `HttpActionHandler`,
           url: authority + confirm
         }
       },
-      description: 'Confirm Subscription – Pony Foo'
+      description: `Confirm Subscription – Pony Foo`
     }
   };
-  emailService.send('list-subscription', model, done);
+  emailService.send(`list-subscription`, model, done);
 }
 
 function confirm (email, done) {
@@ -124,20 +123,20 @@ function confirm (email, done) {
     verified: true,
     topics: allTopics.slice()
   }, successback({
-    action: 'confirmed',
+    action: `confirmed`,
     email: email
   }, done));
 }
 
 function remove (email, done) {
   Subscriber.remove({ email: email }, successback({
-    action: 'withdrawn',
+    action: `withdrawn`,
     email: email,
   }, done));
 }
 
 function validateTopics (topics) {
-  topics.push('announcements');
+  topics.push(`announcements`);
   return _.intersection(allTopics, topics);
 }
 
@@ -162,9 +161,9 @@ function confirmTopics (email, topics, done) {
   function bail (topics) {
     return function (err) {
       successback({
-        action: 'confirmed',
+        action: `confirmed`,
         email: email,
-        topic: topics.join(',') || 'unchanged'
+        topic: topics.join(`,`) || `unchanged`
       }, done)(err);
     };
   }
@@ -185,7 +184,7 @@ function removeTopic (email, topic, done) {
     }
     const topics = subscriber.topics.slice();
     topics.splice(index, 1);
-    if (topics.length === 0 || (topics.length === 1 && topics[0] === 'announcements')) {
+    if (topics.length === 0 || (topics.length === 1 && topics[0] === `announcements`)) {
       remove(email, done);
     } else {
       subscriber.topics = topics;
@@ -193,7 +192,7 @@ function removeTopic (email, topic, done) {
     }
     function bail (err) {
       successback({
-        action: 'withdrawn',
+        action: `withdrawn`,
         email: email,
         topic: topic,
         hash: getHash(subscriber)
@@ -209,7 +208,7 @@ function successback (options, done) {
   const hash = options.hash;
   return function proceed (err) {
     if (!err) {
-      winston.info('Email subscription for "%s" %s [%s]', email, action, topic || '*');
+      winston.info(`Email subscription for "%s" %s [%s]`, email, action, topic || `*`);
     }
     done(err, !err, topic, hash);
   };
@@ -232,16 +231,16 @@ function send (options, done) {
     if (topic) {
       query.topics = topic;
     }
-    if (patrons === 'no') {
+    if (patrons === `no`) {
       query.patron = false;
-    } else if (patrons === 'only') {
+    } else if (patrons === `only`) {
       query.patron = true;
     }
     Subscriber.find(query, next);
   }
   function patchModel (documents, next) {
     const subscribers = recipients ? documents.filter(isRecipient) : documents;
-    const to = _.map(subscribers, 'email');
+    const to = _.map(subscribers, `email`);
     const provider = {
       merge: subscribers.reduce(locals(topic, emitter), {})
     };
@@ -256,25 +255,25 @@ function send (options, done) {
 function locals (topic, emitter) {
   return function localsForTopic (all, subscriber) {
     const subscriberLocals = {
-      name: subscriber.name ? subscriber.name.split(' ')[0] : 'there',
+      name: subscriber.name ? subscriber.name.split(` `)[0] : `there`,
       reason: reasons[subscriber.source] || reasons.default,
       unsubscribe_html: getUnsubscribeHtml(subscriber, topic)
     };
     all[subscriber.email] = subscriberLocals;
     if (emitter) {
-      emitter.emit('locals', subscriber.email, subscriberLocals);
+      emitter.emit(`locals`, subscriber.email, subscriberLocals);
     }
     return all;
   };
 }
 
 function getUnsubscribeHtml (subscriber, topic) {
-  const urlformat = '%s/api/subscribers/%s/unsubscribe%s';
-  const linkformat = '<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>';
+  const urlformat = `%s/api/subscribers/%s/unsubscribe%s`;
+  const linkformat = `<a href="%s" style="color:#e92c6c;text-decoration:none;">unsubscribe</a>`;
   const href = util.format(urlformat, authority, getHash(subscriber), getHrefTopic());
   return util.format(linkformat, href);
   function getHrefTopic () {
-    return topic ? '?topic=' + topic : '';
+    return topic ? `?topic=` + topic : ``;
   }
 }
 

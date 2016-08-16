@@ -1,8 +1,8 @@
 'use strict';
 
-const articleListHandler = require('./lib/articleListHandler');
-const searchResults = require('./lib/searchResults');
-const articleSearchService = require('../../services/articleSearch');
+const articleListHandler = require(`./lib/articleListHandler`);
+const searchResults = require(`./lib/searchResults`);
+const articleSearchService = require(`../../services/articleSearch`);
 
 module.exports = function (req, res, next) {
   const rseparator = /[+/,_: -]+/ig;
@@ -18,12 +18,12 @@ module.exports = function (req, res, next) {
   res.viewModel = {
     model: {
       meta: {
-        canonical: '/articles/search/' + terms.join('-')
+        canonical: `/articles/search/` + terms.join(`-`)
       },
-      action: 'articles/search-results',
+      action: `articles/search-results`,
       query: articleSearchService.format(terms, [])
     }
   };
 
-  articleSearchService.query(input, { populate: 'author' }, handle);
+  articleSearchService.query(input, { populate: `author` }, handle);
 };

@@ -1,19 +1,19 @@
 'use strict';
 
-const correcthorse = require('correcthorse');
-const winston = require('winston');
-const path = require('path');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
-const tmp = require('tmp');
-const taunus = require('taunus');
-const contra = require('contra');
-const imageService = require('../../../services/image');
-const env = require('../../../lib/env');
-const localPath = path.resolve('./tmp/images');
-const imgur = require('imgur');
-const imgurClientId = env('IMGUR_CLIENT_ID');
-const production = process.env.NODE_ENV === 'production';
+const correcthorse = require(`correcthorse`);
+const winston = require(`winston`);
+const path = require(`path`);
+const fs = require(`fs`);
+const mkdirp = require(`mkdirp`);
+const tmp = require(`tmp`);
+const taunus = require(`taunus`);
+const contra = require(`contra`);
+const imageService = require(`../../../services/image`);
+const env = require(`../../../lib/env`);
+const localPath = path.resolve(`./tmp/images`);
+const imgur = require(`imgur`);
+const imgurClientId = env(`IMGUR_CLIENT_ID`);
+const production = process.env.NODE_ENV === `production`;
 
 function images (req, res) {
   contra.map(req.files, toImageUpload, prepareResponse);
@@ -23,8 +23,8 @@ function images (req, res) {
 
     function optimize (next) {
       imageService.optimize({
-        grayscale: 'grayscale' in req.query,
-        preserveSize: 'preserve-size' in req.query,
+        grayscale: `grayscale` in req.query,
+        preserveSize: `preserve-size` in req.query,
         file: image.path,
         name: image.originalname,
         size: image.size
@@ -39,7 +39,7 @@ function images (req, res) {
       if (err) {
         next(err); return;
       }
-      winston.info('Image uploaded to', result.url);
+      winston.info(`Image uploaded to`, result.url);
       next(null, {
         href: result.url,
         title: result.alt
@@ -59,7 +59,7 @@ function images (req, res) {
   }
 
   function errored (message, err) {
-    winston.warn('Error uploading an image', err);
+    winston.warn(`Error uploading an image`, err);
     respond(400, {
       messages: [message],
       version: taunus.state.version
@@ -72,18 +72,18 @@ function images (req, res) {
 }
 
 function toLocalUrl (local, file) {
-  return file.replace(local, '/img/uploads');
+  return file.replace(local, `/img/uploads`);
 }
 
 function imageUpload (source, done) {
   if (!source) {
-    done(new Error('No image source received on the back-end'));
+    done(new Error(`No image source received on the back-end`));
   } else if (imgurClientId) {
     imgurUpload(source, done);
   } else if (!production) {
     fileUpload(source, done);
   } else {
-    done(new Error('Misconfigured image upload!'));
+    done(new Error(`Misconfigured image upload!`));
   }
 }
 
@@ -94,7 +94,7 @@ function imgurUpload (source, done) {
     .then(function (res) {
       done(null, {
         alt: source.originalname,
-        url: res.data.link.replace(/^http:/, 'https:')
+        url: res.data.link.replace(/^http:/, `https:`)
       });
     })
     .catch(done);

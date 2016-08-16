@@ -1,17 +1,17 @@
 'use strict';
 
-const inliningService = require('../../services/inlining');
-const metadataService = require('../../services/metadata');
-const articleService = require('../../services/article');
-const cryptoService = require('../../services/crypto');
-const userService = require('../../services/user');
+const inliningService = require(`../../services/inlining`);
+const metadataService = require(`../../services/metadata`);
+const articleService = require(`../../services/article`);
+const cryptoService = require(`../../services/crypto`);
+const userService = require(`../../services/user`);
 
 module.exports = function (req, res, next) {
   const query = { slug: req.params.slug };
-  const options = { populate: 'prev next related comments author' };
+  const options = { populate: `prev next related comments author` };
   res.viewModel = {
     model: {
-      title: 'Pony Foo'
+      title: `Pony Foo`
     }
   };
 
@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
     if (err || !article) {
       notFound(); return;
     }
-    if (article.status === 'published') {
+    if (article.status === `published`) {
       done(); return;
     }
 
@@ -55,7 +55,7 @@ module.exports = function (req, res, next) {
     model.full = true;
     model.title = article.title;
     model.meta = {
-      canonical: '/articles/' + article.slug,
+      canonical: `/articles/` + article.slug,
       description: article.summaryText,
       keywords: article.tags,
       images: metadataService.extractImages(article).images
@@ -67,7 +67,7 @@ module.exports = function (req, res, next) {
       articleStatus: article.status
     });
     model.article = articleService.toJSON(article);
-    inliningService.addStyles(res.viewModel.model, 'article');
+    inliningService.addStyles(res.viewModel.model, `article`);
     next();
   }
 };

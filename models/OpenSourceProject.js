@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   added: { type: Date, default: Date.now },
   name: String,
@@ -12,4 +12,4 @@ const schema = new mongoose.Schema({
   descriptionHtml: String
 });
 
-module.exports = mongoose.model('OpenSourceProject', schema);
+module.exports = mongoose.model(`OpenSourceProject`, schema);

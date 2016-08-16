@@ -1,11 +1,11 @@
 'use strict';
 
-const truncText = require('trunc-text');
-const OpenSourceProject = require('../../models/OpenSourceProject');
-const htmlService = require('../../services/html');
+const truncText = require(`trunc-text`);
+const OpenSourceProject = require(`../../models/OpenSourceProject`);
+const htmlService = require(`../../services/html`);
 
 module.exports = function (req, res, next) {
-  OpenSourceProject.find({}).sort('-added').exec(function (err, projects) {
+  OpenSourceProject.find({}).sort(`-added`).exec(function (err, projects) {
     if (err) {
       next(err); return;
     }
@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
     const description = truncText(descriptionText, 170);
     res.viewModel = {
       model: {
-        title: 'Open-source projects \u2014 Pony Foo',
+        title: `Open-source projects \u2014 Pony Foo`,
         projects: projects.map(function (project) {
           return {
             name: project.name,
@@ -30,7 +30,7 @@ module.exports = function (req, res, next) {
           };
         }),
         meta: {
-          canonical: '/opensource',
+          canonical: `/opensource`,
           description: description,
           images: projects.map(toScreenshot)
         }

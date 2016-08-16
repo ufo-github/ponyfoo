@@ -1,28 +1,28 @@
 'use strict';
 
-const env = require('../../lib/env');
-const staticService = require('../../services/static');
-const WeeklyIssue = require('../../models/WeeklyIssue');
-const weeklyService = require('../../services/weekly');
-const cryptoService = require('../../services/crypto');
-const htmlService = require('../../services/html');
-const authority = env('AUTHORITY');
+const env = require(`../../lib/env`);
+const staticService = require(`../../services/static`);
+const WeeklyIssue = require(`../../models/WeeklyIssue`);
+const weeklyService = require(`../../services/weekly`);
+const cryptoService = require(`../../services/crypto`);
+const htmlService = require(`../../services/html`);
+const authority = env(`AUTHORITY`);
 
 module.exports = function (req, res, next) {
   const thanks = req.query.thanks;
   const query = { slug: req.params.slug };
-  WeeklyIssue.findOne(query).populate('comments').exec(found);
+  WeeklyIssue.findOne(query).populate(`comments`).exec(found);
 
   function found (err, issue) {
     if (err || !issue) {
       notFound(); return;
     }
-    if (issue.status === 'released') {
-      if (issue.statusReach === 'everyone') {
+    if (issue.status === `released`) {
+      if (issue.statusReach === `everyone`) {
         done(); return;
       }
       const challenge = cryptoService.md5(issue._id + issue.thanks);
-      if (issue.statusReach === 'patrons' && thanks && thanks === challenge) {
+      if (issue.statusReach === `patrons` && thanks && thanks === challenge) {
         handle(null, issue, challenge); return;
       }
     }
@@ -49,10 +49,10 @@ module.exports = function (req, res, next) {
       };
       next(); return;
     }
-    const canonical = '/weekly/' + issue.slug;
-    const permalink = canonical + (challenge ? ('?thanks=' + challenge) : '');
-    const extracted = htmlService.extractImages('/weekly/' + issue.slug, issue.summaryText + issue.contentHtml);
-    const images = extracted.concat(authority + staticService.unroll('/img/ponyfooweekly-sample.png'));
+    const canonical = `/weekly/` + issue.slug;
+    const permalink = canonical + (challenge ? (`?thanks=` + challenge) : ``);
+    const extracted = htmlService.extractImages(`/weekly/` + issue.slug, issue.summaryText + issue.contentHtml);
+    const images = extracted.concat(authority + staticService.unroll(`/img/ponyfooweekly-sample.png`));
 
     res.viewModel = {
       model: {

@@ -1,37 +1,55 @@
 'use strict';
 
-const contra = require('contra');
-const winston = require('winston');
-const Article = require('../../../models/Article');
-const articleSubscriberService = require('../../../services/articleSubscriber');
-const articlePublishService = require('../../../services/articlePublish');
-const userService = require('../../../services/user');
-const respond = require('../lib/respond');
-const validate = require('./lib/validate');
-const editorRoles = ['owner', 'editor'];
+const contra = require(`contra`);
+const winston = require(`winston`);
+const Article = require(`../../../models/Article`);
+const articleSubscriberService = require(`../../../services/articleSubscriber`);
+const articlePublishService = require(`../../../services/articlePublish`);
+const userService = require(`../../../services/user`);
+const respond = require(`../lib/respond`);
+const validate = require(`./lib/validate`);
+const editorRoles = [`owner`, `editor`];
 
 module.exports = function (req, res, next) {
   const editor = userService.hasRole(req.userObject, editorRoles);
+  const { authorSlug } = req.body;
+  const hasAuthor = !!authorSlug;
 
   contra.waterfall([lookup, found], response);
 
   function lookup (next) {
-    const query = { slug: req.params.slug };
+    const articleQuery = { slug: req.params.slug };
     if (!editor) {
-      query.author = req.user;
+      articleQuery.author = req.user;
     }
-    Article.findOne(query).populate('author').exec(next);
+    const userQuery = { slug: authorSlug };
+    contra.concurrent({
+      article: next => Article.findOne(articleQuery).populate(`author`).exec(next),
+      author: next => {
+        if (!hasAuthor) {
+          next(null); return;
+        }
+        userService.findUserWithRole(userQuery, [`owner`, `articles`], next);
+      }
+    }, next);
   }
 
-  function found (article, next) {
+  function found ({ article, author }, next) {
     if (!article) {
-      res.status(404).json({ messages: ['Article not found'] }); return;
+      res.status(404).json({ messages: [`Article not found`] }); return;
     }
-    const body = req.body;
-    if (body.status !== 'draft' && !editor) {
-      respond.invalid(res, ['Authors are only allowed to write drafts. An editor must publish the article.']); return;
+    const { body } = req;
+    if (body.status !== `draft` && !editor) {
+      respond.invalid(res, [`Authors are only allowed to write drafts. An editor must publish the article.`]); return;
     }
-    const validation = validate(body, { update: true, editor: editor, originalAuthor: article.author.equals(req.user) });
+    const originalAuthor = article.author.equals(req.user);
+    const validation = validate(body, {
+      update: true,
+      editor,
+      originalAuthor,
+      author,
+      hasAuthor
+    });
     if (validation.length) {
       respond.invalid(res, validation); return;
     }

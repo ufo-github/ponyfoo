@@ -1,16 +1,16 @@
 'use strict';
 
-const contra = require('contra');
-const WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
-const weeklyCompilerService = require('../../../services/weeklyCompiler');
-const datetimeService = require('../../../services/datetime');
-const markupService = require('../../../services/markup');
-const userService = require('../../../services/user');
+const contra = require(`contra`);
+const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
+const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
+const datetimeService = require(`../../../services/datetime`);
+const markupService = require(`../../../services/markup`);
+const userService = require(`../../../services/user`);
 const subtypeMap = {
-  suggestion: 'Suggestion',
-  primary: 'Primary Sponsorship',
-  secondary: 'Sponsored Link',
-  job: 'Job Listing'
+  suggestion: `Suggestion`,
+  primary: `Primary Sponsorship`,
+  secondary: `Sponsored Link`,
+  job: `Job Listing`
 };
 
 module.exports = getModel;
@@ -19,7 +19,7 @@ function getModel (req, res, next) {
   contra.waterfall([findSubmissions, mapToRowModels], respond);
 
   function findSubmissions (next) {
-    WeeklyIssueSubmission.find({}).sort('-created').lean().exec(next);
+    WeeklyIssueSubmission.find({}).sort(`-created`).lean().exec(next);
   }
 
   function mapToRowModels (submissions, next) {
@@ -29,7 +29,7 @@ function getModel (req, res, next) {
   function toRowModel (submission, next) {
     const options = {
       markdown: markupService,
-      slug: 'submission-preview'
+      slug: `submission-preview`
     };
     weeklyCompilerService.toLinkSectionModel(submission.section, options, gotModel);
     function gotModel (err, model) {
@@ -57,9 +57,9 @@ function getModel (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: 'Submission Review',
+        title: `Submission Review`,
         meta: {
-          canonical: '/weekly/submissions/review'
+          canonical: `/weekly/submissions/review`
         },
         submissions: submissionModels
       }

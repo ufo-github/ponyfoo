@@ -1,18 +1,18 @@
 'use strict';
 
 const escapes = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  '\'': '&#39;'
+  '&': `&amp;`,
+  '<': `&lt;`,
+  '>': `&gt;`,
+  '"': `&quot;`,
+  '\'': `&#39;`
 };
 const unescapes = {
-  '&amp;': '&',
-  '&lt;': '<',
-  '&gt;': '>',
-  '&quot;': '"',
-  '&#39;': '\''
+  '&amp;': `&`,
+  '&lt;': `<`,
+  '&gt;': `>`,
+  '&quot;': `"`,
+  '&#39;': `'`
 };
 const rescaped = /(&amp;|&lt;|&gt;|&quot;|&#39;)/g;
 const runescaped = /[&<>"']/g;
@@ -25,11 +25,11 @@ function unescapeHtmlChar (match) {
 }
 
 function escapeHtml (text) {
-  return text == null ? '' : String(text).replace(runescaped, escapeHtmlChar);
+  return !text ? `` : String(text).replace(runescaped, escapeHtmlChar);
 }
 
 function unescapeHtml (html) {
-  return html == null ? '' : String(html).replace(rescaped, unescapeHtmlChar);
+  return !html ? `` : String(html).replace(rescaped, unescapeHtmlChar);
 }
 
 escapeHtml.options = unescapeHtml.options = {};
@@ -39,5 +39,5 @@ module.exports = {
   escape: escapeHtml,
   decode: unescapeHtml,
   unescape: unescapeHtml,
-  version: '1.0.0-browser'
+  version: `1.0.0-browser`
 };

@@ -1,8 +1,8 @@
 'use strict';
 
-const contra = require('contra');
-const pullSubscribers = require('../lib/pullSubscribers');
-const pullPageViews = require('../lib/pullPageViews');
+const contra = require(`contra`);
+const pullSubscribers = require(`../lib/pullSubscribers`);
+const pullPageViews = require(`../lib/pullPageViews`);
 
 module.exports = function (done) {
   contra.concurrent({

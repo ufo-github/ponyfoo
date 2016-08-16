@@ -1,22 +1,22 @@
 'use strict';
 
-const fs = require('fs');
-const util = require('util');
-const contra = require('contra');
-const cheerio = require('cheerio');
-const feedService = require('./feed');
-const markupService = require('./markup');
-const weeklyService = require('./weekly');
-const WeeklyIssue = require('../models/WeeklyIssue');
-const env = require('../lib/env');
-const authority = env('AUTHORITY');
-const css = fs.readFileSync('.bin/static/newsletter-rss.css', 'utf8');
+const fs = require(`fs`);
+const util = require(`util`);
+const contra = require(`contra`);
+const cheerio = require(`cheerio`);
+const feedService = require(`./feed`);
+const markupService = require(`./markup`);
+const weeklyService = require(`./weekly`);
+const WeeklyIssue = require(`../models/WeeklyIssue`);
+const env = require(`../lib/env`);
+const authority = env(`AUTHORITY`);
+const css = fs.readFileSync(`.bin/static/newsletter-rss.css`, `utf8`);
 
 function getFeed (done) {
   WeeklyIssue
-    .find({ status: 'released', statusReach: 'everyone' })
-    .populate('author', 'displayName email')
-    .sort('-publication')
+    .find({ status: `released`, statusReach: `everyone` })
+    .populate(`author`, `displayName email`)
+    .sort(`-publication`)
     .limit(10)
     .exec(found);
 
@@ -33,17 +33,17 @@ function getFeed (done) {
           next(err); return;
         }
         next(null, {
-          title: issue.computedTitle + ' \u2014 Pony Foo Weekly',
-          url: authority + '/weekly/' + issue.slug,
+          title: issue.computedTitle + ` \u2014 Pony Foo Weekly`,
+          url: authority + `/weekly/` + issue.slug,
           description: description,
           categories: weeklyService.getAllTags(issue),
-          author: util.format('%s <%s>', issue.author.displayName, issue.author.email),
+          author: util.format(`%s <%s>`, issue.author.displayName, issue.author.email),
           date: issue.publication
         });
       }
     }
     function md (html) {
-      return '<div class="md-markdown">' + html + '</div>';
+      return `<div class="md-markdown">` + html + `</div>`;
     }
     function formatContent (contentHtml, done) {
       const compilerOpts = {
@@ -62,7 +62,7 @@ function getFeed (done) {
 
 function fixUp (html) {
   const $ = cheerio.load(html);
-  $('.wy-section-header .md-markdown > p').each(replaceWith($, 'div'));
+  $(`.wy-section-header .md-markdown > p`).each(replaceWith($, `div`));
   const result = $.html();
   return result;
 }
@@ -79,9 +79,9 @@ function replaceWith ($, tagName) {
 }
 
 module.exports = feedService.from({
-  id: 'weekly',
-  href: '/weekly/feed',
-  title: 'Pony Foo Weekly',
-  description: 'Latest Pony Foo Weekly issues',
+  id: `weekly`,
+  href: `/weekly/feed`,
+  title: `Pony Foo Weekly`,
+  description: `Latest Pony Foo Weekly issues`,
   getFeed: getFeed
 });

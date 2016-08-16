@@ -1,6 +1,6 @@
 'use strict';
 
-const User = require('../models/User');
+const User = require(`../models/User`);
 const cache = {};
 
 function get (email, field, done) {
@@ -14,7 +14,7 @@ function get (email, field, done) {
       done(err); return;
     }
     if (!user) {
-      done(null, ''); return;
+      done(null, ``); return;
     }
     updateInternal(email, field, user[field]);
     done(null, user[field]);
@@ -29,17 +29,17 @@ function updateInternal (email, field, value) {
 }
 
 function getMarkdown (email, done) {
-  get(email, 'bio', done);
+  get(email, `bio`, done);
 }
 
 function getHtml (email, done) {
-  get(email, 'bioHtml', done);
+  get(email, `bioHtml`, done);
 }
 
 function update (email, md, html, text) {
-  updateInternal(email, 'bio', md);
-  updateInternal(email, 'bioHtml', html);
-  updateInternal(email, 'bioText', text);
+  updateInternal(email, `bio`, md);
+  updateInternal(email, `bioHtml`, html);
+  updateInternal(email, `bioText`, text);
 }
 
 module.exports = {

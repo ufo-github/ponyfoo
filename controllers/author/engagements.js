@@ -1,16 +1,16 @@
 'use strict';
 
-const datetimeService = require('../../services/datetime');
-const Engagement = require('../../models/Engagement');
+const datetimeService = require(`../../services/datetime`);
+const Engagement = require(`../../models/Engagement`);
 
 module.exports = function (req, res, next) {
-  Engagement.find({}).sort('-end').lean().exec(function (err, engagements) {
+  Engagement.find({}).sort(`-end`).lean().exec(function (err, engagements) {
     if (err) {
       next(err); return;
     }
     res.viewModel = {
       model: {
-        title: 'Engagements \u2014 Pony Foo',
+        title: `Engagements \u2014 Pony Foo`,
         engagements: engagements.map(function (engagement) {
           return {
             id: engagement._id.toString(),

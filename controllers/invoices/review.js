@@ -1,18 +1,18 @@
 'use strict';
 
-const Invoice = require('../../models/Invoice');
-const invoiceModelService = require('../../services/invoiceModel');
+const Invoice = require(`../../models/Invoice`);
+const invoiceModelService = require(`../../services/invoiceModel`);
 
 module.exports = function (req, res, next) {
-  Invoice.find({}).sort('-date').lean().exec(function (err, invoices) {
+  Invoice.find({}).sort(`-date`).lean().exec(function (err, invoices) {
     if (err) {
       next(err); return;
     }
     res.viewModel = {
       model: {
-        title: 'Invoices \u2014 Pony Foo',
+        title: `Invoices \u2014 Pony Foo`,
         meta: {
-          canonical: '/invoices'
+          canonical: `/invoices`
         },
         invoices: invoices.map(invoiceModelService.generateModel)
       }

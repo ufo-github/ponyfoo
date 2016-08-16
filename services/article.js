@@ -1,17 +1,17 @@
 'use strict';
 
-const url = require('url');
-const contra = require('contra');
-const moment = require('moment');
-const estimate = require('estimate');
-const env = require('../lib/env');
-const Article = require('../models/Article');
-const cryptoService = require('./crypto');
-const commentService = require('./comment');
-const datetimeService = require('./datetime');
-const metadataService = require('./metadata');
-const userService = require('./user');
-const gitWeb = env('GIT_ARTICLES_WEB');
+const url = require(`url`);
+const contra = require(`contra`);
+const moment = require(`moment`);
+const estimate = require(`estimate`);
+const env = require(`../lib/env`);
+const Article = require(`../models/Article`);
+const cryptoService = require(`./crypto`);
+const commentService = require(`./comment`);
+const datetimeService = require(`./datetime`);
+const metadataService = require(`./metadata`);
+const userService = require(`./user`);
+const gitWeb = env(`GIT_ARTICLES_WEB`);
 
 function findInternal (method, query, options, done) {
   if (done === void 0) {
@@ -43,21 +43,21 @@ function findInternal (method, query, options, done) {
   }
 }
 
-const find = findInternal.bind(null, 'find');
-const findOne = findInternal.bind(null, 'findOne');
+const find = findInternal.bind(null, `find`);
+const findOne = findInternal.bind(null, `findOne`);
 
 function toJSON (source, options) {
   const o = options || {};
-  const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(' ');
+  const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(` `);
   const article = source.toJSON();
 
-  article.permalink = '/articles/' + article.slug;
+  article.permalink = `/articles/` + article.slug;
   article.publication = datetimeService.field(article.publication);
   article.updated = datetimeService.field(article.updated);
   article.readingTime = estimate.text(text);
-  article.gitHref = url.resolve(gitWeb, `${moment.utc(article.created).format('YYYY/MM-DD')}--${article.slug}`);
+  article.gitHref = url.resolve(gitWeb, `${moment.utc(article.created).format(`YYYY/MM-DD`)}--${article.slug}`);
 
-  if (source.populated('author')) {
+  if (source.populated(`author`)) {
     article.author = {
       displayName: article.author.displayName,
       slug: article.author.slug,
@@ -73,17 +73,17 @@ function toJSON (source, options) {
 
   commentService.hydrate(article, source);
 
-  if (source.populated('prev')) {
+  if (source.populated(`prev`)) {
     article.prev = relevant(article.prev);
   } else {
     delete article.prev;
   }
-  if (source.populated('next')) {
+  if (source.populated(`next`)) {
     article.next = relevant(article.next);
   } else {
     delete article.next;
   }
-  if (source.populated('related')) {
+  if (source.populated(`related`)) {
     article.related = article.related.map(relevant);
   } else {
     delete article.related;
@@ -145,14 +145,14 @@ function computeSignature (article) {
     article.titleMarkdown,
     article.slug,
     article.status,
-    article.heroImage || '',
-    article.summary || '',
+    article.heroImage || ``,
+    article.summary || ``,
     article.teaser,
-    article.editorNote || '',
+    article.editorNote || ``,
     article.introduction,
     article.body
   ];
-  const partsWithTags = parts.concat(article.tags).join(' ');
+  const partsWithTags = parts.concat(article.tags).join(` `);
   const sign = cryptoService.md5(partsWithTags);
   return sign;
 }
@@ -170,11 +170,11 @@ function remove (article, done) {
   ], done);
 
   function populate (next) {
-    article.populate('prev next', next);
+    article.populate(`prev next`, next);
   }
 
   function removal (next) {
-    article.status = 'deleted';
+    article.status = `deleted`;
     article.save(next);
   }
 

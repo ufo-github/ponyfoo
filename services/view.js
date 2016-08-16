@@ -1,9 +1,9 @@
 'use strict';
 
-const path = require('path');
-const assign = require('assignment');
-const layoutView = require('../.bin/views/server/layout/layout');
-const getDefaultViewModel = require('../controllers/getDefaultViewModel');
+const path = require(`path`);
+const assign = require(`assignment`);
+const layoutView = require(`../.bin/views/server/layout/layout`);
+const getDefaultViewModel = require(`../controllers/getDefaultViewModel`);
 
 function render (action, model, done) {
   const partialView = tryRequire();
@@ -23,7 +23,7 @@ function render (action, model, done) {
 
   function tryRequire () {
     try {
-      const compiledViewFile = path.resolve('.bin/views/shared/', action);
+      const compiledViewFile = path.resolve(`.bin/views/shared/`, action);
       return require(compiledViewFile);
     } catch (err) {
       done(err);

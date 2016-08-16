@@ -1,7 +1,7 @@
 'use strict';
 
-const omnibox = require('omnibox');
-const queso = require('queso');
+const omnibox = require(`omnibox`);
+const queso = require(`queso`);
 
 function linkThroughForSlug (slug) {
   return linkThrough;
@@ -11,7 +11,7 @@ function linkThroughForSlug (slug) {
       return href;
     }
     const u = omnibox.parse(href);
-    if (u.protocol && u.protocol !== 'http' && u.protocol !== 'https') {
+    if (u.protocol && u.protocol !== `http` && u.protocol !== `https`) {
       return href;
     }
 
@@ -20,21 +20,21 @@ function linkThroughForSlug (slug) {
       .filter(whereUtm)
       .forEach(removeProp);
 
-    u.query.utm_source = 'ponyfoo+weekly';
-    u.query.utm_medium = 'email';
+    u.query.utm_source = `ponyfoo+weekly`;
+    u.query.utm_medium = `email`;
 
     if (slug) {
       u.query.utm_campaign = slug;
     }
 
     const rspace = /(%2B|\s)/ig;
-    const host = u.host ? u.protocol + '://' + u.host : '';
+    const host = u.host ? u.protocol + `://` + u.host : ``;
 
     return (
       host +
       u.pathname +
-      queso.stringify(u.query).replace(rspace, '+') +
-      (u.hash || '')
+      queso.stringify(u.query).replace(rspace, `+`) +
+      (u.hash || ``)
     );
 
     function removeProp (key) {
@@ -44,7 +44,7 @@ function linkThroughForSlug (slug) {
 }
 
 function whereUtm (key) {
-  return key.slice(0, 4) === 'utm_';
+  return key.slice(0, 4) === `utm_`;
 }
 
 module.exports = {

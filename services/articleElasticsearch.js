@@ -1,9 +1,9 @@
 'use strict';
 
-const es = require('../lib/elasticsearch');
-const indexService = require('./articleElasticsearchIndex');
-const indexName = 'ponyfoo';
-const typeName = 'article';
+const es = require(`../lib/elasticsearch`);
+const indexService = require(`./articleElasticsearchIndex`);
+const indexName = `ponyfoo`;
+const typeName = `article`;
 const relatedArticlesLimit = 6;
 
 function update (article, done) {
@@ -33,7 +33,7 @@ function query (input, options, done) {
           must: {
             multi_match: {
               query: input,
-              fields: ['title^3', 'teaser', 'introduction', 'content']
+              fields: [`title^3`, `teaser`, `introduction`, `content`]
             }
           }
         }
@@ -74,7 +74,7 @@ function found (done) {
 }
 function filters (options) {
   const tags = Array.isArray(options.tags) ? options.tags : [];
-  const clauses = [status('published')].concat(tags.map(tagToFilter));
+  const clauses = [status(`published`)].concat(tags.map(tagToFilter));
   if (options.since) {
     clauses.unshift(since(options.since));
   }

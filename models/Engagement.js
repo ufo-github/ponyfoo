@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   start: Date,
   end: Date,
@@ -11,4 +11,4 @@ const schema = new mongoose.Schema({
   tags: [String]
 });
 
-module.exports = mongoose.model('Engagement', schema);
+module.exports = mongoose.model(`Engagement`, schema);

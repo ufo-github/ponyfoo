@@ -1,28 +1,28 @@
 'use strict';
 
-const contra = require('contra');
-const validator = require('validator');
-const env = require('../lib/env');
-const userService = require('./user');
-const verificationService = require('./verification');
-const UnverifiedUser = require('../models/UnverifiedUser');
-const development = env('NODE_ENV') === 'development';
+const contra = require(`contra`);
+const validator = require(`validator`);
+const env = require(`../lib/env`);
+const userService = require(`./user`);
+const verificationService = require(`./verification`);
+const UnverifiedUser = require(`../models/UnverifiedUser`);
+const development = env(`NODE_ENV`) === `development`;
 
 function validate (input, done) {
   const email = input.email;
   const password = input.password;
   const messages = [];
 
-  if (typeof email !== 'string' || email.length === 0) {
-    messages.push('The email address can’t be empty');
+  if (typeof email !== `string` || email.length === 0) {
+    messages.push(`The email address can’t be empty`);
   } else if (!development && !validator.isEmail(email)) {
-    messages.push('You must provide a valid email address');
+    messages.push(`You must provide a valid email address`);
   } else {
     input.email = email.trim().toLowerCase(); // ignore case
   }
 
-  if (typeof password !== 'string' || password.length === 0) {
-    messages.push('Your password can’t be empty');
+  if (typeof password !== `string` || password.length === 0) {
+    messages.push(`Your password can’t be empty`);
   }
 
   done(null, messages);
@@ -31,7 +31,7 @@ function validate (input, done) {
 function create (email, password, done) {
   const user = new UnverifiedUser({
     email: email,
-    displayName: email.split('@')[0],
+    displayName: email.split(`@`)[0],
     password: password
   });
   user.save(function saved (err) {
@@ -54,7 +54,7 @@ function register (input, done) {
     },
     function availability (user, next) {
       if (user !== null) {
-        messages.unshift('That email address is unavailable');
+        messages.unshift(`That email address is unavailable`);
       }
       next(messages.length ? messages : null);
     },

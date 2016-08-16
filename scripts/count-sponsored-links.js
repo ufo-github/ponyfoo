@@ -1,17 +1,17 @@
 'use strict';
 
-require('../preconfigure');
-require('../chdir');
+require(`../preconfigure`);
+require(`../chdir`);
 
-const moment = require('moment');
-const db = require('../lib/db');
-const boot = require('../lib/boot');
-const WeeklyIssue = require('../models/WeeklyIssue');
+const moment = require(`moment`);
+const db = require(`../lib/db`);
+const boot = require(`../lib/boot`);
+const WeeklyIssue = require(`../models/WeeklyIssue`);
 
 boot(booted);
 
 function booted () {
-  WeeklyIssue.find({ statusReach: 'everyone' }).lean().exec(found);
+  WeeklyIssue.find({ statusReach: `everyone` }).lean().exec(found);
 }
 
 function found (err, issues) {
@@ -24,14 +24,14 @@ function found (err, issues) {
       return section;
     }))
     .reduce((all, sections) => all.concat(sections), [])
-    .filter(section => section.type === 'link')
+    .filter(section => section.type === `link`)
     .filter(section => section.sponsored);
 
   sections.forEach(section => console.log(section.href));
 
   console.log(`Numbers:
      Found ${sections.length} sponsored links
-    Across ${issues.length} issues since ${moment.utc(issues[0].created).format('MMMM YYYY')}
+    Across ${issues.length} issues since ${moment.utc(issues[0].created).format(`MMMM YYYY`)}
     Earned $${sum(sections).toFixed(2)} in total
     Earned $${(sum(sections) / issues.length).toFixed(2)} per issue on average`);
 
@@ -43,13 +43,13 @@ function sum (sections) {
 }
 
 function price (section) {
-  if (before('2016-07-28')) {
+  if (before(`2016-07-28`)) {
     return 60;
   }
   return 70;
 
   function before (date) {
-    return moment.utc(section.issue.publication).isBefore(moment.utc(date, 'YYYY-MM-DD'));
+    return moment.utc(section.issue.publication).isBefore(moment.utc(date, `YYYY-MM-DD`));
   }
 }
 

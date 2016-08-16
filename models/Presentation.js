@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   presented: Date,
@@ -18,4 +18,4 @@ const schema = new mongoose.Schema({
   }]
 });
 
-module.exports = mongoose.model('Presentation', schema);
+module.exports = mongoose.model(`Presentation`, schema);

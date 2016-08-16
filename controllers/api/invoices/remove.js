@@ -1,7 +1,7 @@
 'use strict';
 
-const winston = require('winston');
-const Invoice = require('../../../models/Invoice');
+const winston = require(`winston`);
+const Invoice = require(`../../../models/Invoice`);
 
 module.exports = function (req, res) {
   Invoice.remove({ slug: req.params.slug }, saved);
@@ -9,6 +9,6 @@ module.exports = function (req, res) {
     if (err) {
       winston.error(err);
     }
-    res.redirect('/invoices');
+    res.redirect(`/invoices`);
   }
 };

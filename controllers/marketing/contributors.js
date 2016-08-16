@@ -1,7 +1,7 @@
 'use strict';
 
-const _ = require('lodash');
-const userService = require('../../services/user');
+const _ = require(`lodash`);
+const userService = require(`../../services/user`);
 
 module.exports = function (req, res, next) {
   userService.findContributors(respond);
@@ -11,17 +11,17 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!contributors || !contributors.length) {
-      next('route'); return;
+      next(`route`); return;
     }
     const active = contributors.filter(whereSlug).filter(userService.isActive);
     const profiles = active.map(toProfile);
-    const images = _.map(profiles, 'gravatar');
+    const images = _.map(profiles, `gravatar`);
     res.viewModel = {
       model: {
-        title: 'Contributors \u2014 Pony Foo',
+        title: `Contributors \u2014 Pony Foo`,
         meta: {
-          canonical: '/contributors',
-          description: 'Check out all the contributors and writers in collaboration with Pony Foo!',
+          canonical: `/contributors`,
+          description: `Check out all the contributors and writers in collaboration with Pony Foo!`,
           images: images
         },
         profiles: profiles

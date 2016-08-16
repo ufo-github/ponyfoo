@@ -1,14 +1,14 @@
 'use strict';
 
-const _ = require('lodash');
-const google = require('googleapis');
-const env = require('../lib/env');
-const Article = require('../models/Article');
-const email = env('GA_EMAIL');
-const privateKey = env('GA_PRIVATE_KEY');
-const profile = env('GA_PROFILE');
-const enabled = env('POPULAR_ARTICLES');
-const analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
+const _ = require(`lodash`);
+const google = require(`googleapis`);
+const env = require(`../lib/env`);
+const Article = require(`../models/Article`);
+const email = env(`GA_EMAIL`);
+const privateKey = env(`GA_PRIVATE_KEY`);
+const profile = env(`GA_PROFILE`);
+const enabled = env(`POPULAR_ARTICLES`);
+const analyticsScope = `https://www.googleapis.com/auth/analytics.readonly`;
 const rdigits = /^[\d.]+$/;
 
 function getArticles (done) {
@@ -29,21 +29,21 @@ function getArticles (done) {
     }
     const query = {
       auth: jwt,
-      ids: 'ga:' + profile,
-      'start-date': '2012-12-25',
-      'end-date': 'today',
+      ids: `ga:` + profile,
+      'start-date': `2012-12-25`,
+      'end-date': `today`,
       'max-results': 50,
       metrics: [
-        'ga:pageviews',
-        'ga:uniquePageviews',
-        'ga:timeOnPage',
-        'ga:bounces',
-        'ga:entrances,ga:exits',
+        `ga:pageviews`,
+        `ga:uniquePageviews`,
+        `ga:timeOnPage`,
+        `ga:bounces`,
+        `ga:entrances,ga:exits`,
       ].join(),
-      dimensions: 'ga:pagePath',
-      sort: '-ga:pageviews'
+      dimensions: `ga:pagePath`,
+      sort: `-ga:pageviews`
     };
-    google.analytics('v3').data.ga.get(query, got);
+    google.analytics(`v3`).data.ga.get(query, got);
   }
   function got (err, result) {
     if (err) {
@@ -55,19 +55,19 @@ function getArticles (done) {
       .reduce(bySlug, {})
     )
       .values()
-      .orderBy(['row.1'], ['desc'])
-      .map('slug')
+      .orderBy([`row.1`], [`desc`])
+      .map(`slug`)
       .slice(0, 20)
       .value();
 
     const query = {
-      status: 'published',
+      status: `published`,
       slug: { $in: popular }
     };
     Article
       .find(query)
       .lean()
-      .select('-_id publication slug titleHtml tags')
+      .select(`-_id publication slug titleHtml tags`)
       .exec(found);
 
     function found (err, articles) {
@@ -85,13 +85,13 @@ function getArticles (done) {
 }
 
 function butHome (row) {
-  return row[0] !== '/';
+  return row[0] !== `/`;
 }
 
 function toSlug (row) {
   return {
     row: row.map(parseInts),
-    slug: row[0].slice(row[0].lastIndexOf('/') + 1)
+    slug: row[0].slice(row[0].lastIndexOf(`/`) + 1)
   };
 }
 
@@ -110,7 +110,7 @@ function bySlug (popular, entry) {
   }
   return popular;
   function merge (column, i, row) {
-    if (typeof column === 'number') {
+    if (typeof column === `number`) {
       row[i] += entry.row[i];
     }
   }

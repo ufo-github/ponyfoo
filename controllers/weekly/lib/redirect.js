@@ -5,9 +5,9 @@ function redirect (res, next) {
     if (err) {
       next(err);
     } else if (!documents || !documents.length) {
-      next('route');
+      next(`route`);
     } else {
-      res.redirect('/weekly/' + documents[0].slug);
+      res.redirect(`/weekly/` + documents[0].slug);
     }
   };
 }

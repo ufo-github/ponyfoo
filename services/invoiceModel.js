@@ -1,10 +1,10 @@
 'use strict';
 
-const moment = require('moment');
-const sluggish = require('sluggish');
-const numberService = require('./number');
-const datetimeService = require('./datetime');
-const markdownService = require('./markdown');
+const moment = require(`moment`);
+const sluggish = require(`sluggish`);
+const numberService = require(`./number`);
+const datetimeService = require(`./datetime`);
+const markdownService = require(`./markdown`);
 
 function generateModel (data) {
   const date = moment.utc(data.date);
@@ -17,7 +17,7 @@ function generateModel (data) {
     customer: generatePartyModel(data.customer, data.customerParty),
     payment: generatePartyModel(data.payment, data.paymentParty),
     items: items,
-    paid: 'paid' in data ? data.paid : false,
+    paid: `paid` in data ? data.paid : false,
     total: total,
     totalMoney: numberService.toMoney(total)
   };
@@ -47,11 +47,11 @@ function getSlug (data) {
     return data.slug;
   }
   if (!data.customer) {
-    return '';
+    return ``;
   }
   const customerSlug = sluggish(data.customer.name);
-  const datestamp = moment.utc(data.date).format('YYMMDD');
-  return customerSlug + '-' + datestamp;
+  const datestamp = moment.utc(data.date).format(`YYMMDD`);
+  return customerSlug + `-` + datestamp;
 }
 
 function sum (accumulator, item) {
@@ -59,7 +59,7 @@ function sum (accumulator, item) {
 }
 
 function generateItem (item) {
-  const summary = item.summary || '_(no description)_';
+  const summary = item.summary || `_(no description)_`;
   const amount = item.amount || 1;
   const rate = item.rate || 0;
   const price = amount * rate;

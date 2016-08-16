@@ -1,8 +1,8 @@
 'use strict';
 
-const contra = require('contra');
-const bioService = require('../../../services/bio');
-const User = require('../../../models/User');
+const contra = require(`contra`);
+const bioService = require(`../../../services/bio`);
+const User = require(`../../../models/User`);
 
 module.exports = function (req, res, next) {
   const id = req.params.id;
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
 
   function getBio (user, next) {
     if (!user) {
-      next(null, {}, ''); return;
+      next(null, {}, ``); return;
     }
     bioService.getMarkdown(user.email, got);
     function got (err, bio) {
@@ -32,7 +32,7 @@ module.exports = function (req, res, next) {
       twitter: user.twitter,
       website: user.website,
       avatar: user.avatar,
-      roles: user.roles || ['articles'],
+      roles: user.roles || [`articles`],
       bio: user.bio
     });
   }
@@ -43,13 +43,13 @@ module.exports = function (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: id ? 'Edit User' : 'Create User',
+        title: id ? `Edit User` : `Create User`,
         meta: {
-          canonical: '/users/' + (id ? id + '/edit' : 'new')
+          canonical: `/users/` + (id ? id + `/edit` : `new`)
         },
         editing: !!profile.id,
         profile: profile,
-        action: 'owner/users/edit'
+        action: `owner/users/edit`
       }
     };
     next();

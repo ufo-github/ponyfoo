@@ -1,9 +1,9 @@
 'use strict';
 
-const util = require('util');
-const datetimeService = require('../../../services/datetime');
-const emojiService = require('../../../services/emoji');
-const userService = require('../../../services/user');
+const util = require(`util`);
+const datetimeService = require(`../../../services/datetime`);
+const emojiService = require(`../../../services/emoji`);
+const userService = require(`../../../services/user`);
 
 module.exports = function (req, res, next) {
   userService.findContributors(respond);
@@ -13,9 +13,9 @@ module.exports = function (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: 'Users \u2014 Pony Foo',
+        title: `Users \u2014 Pony Foo`,
         meta: {
-          canonical: '/users'
+          canonical: `/users`
         },
         users: contributors.map(toUserModel)
       }
@@ -29,7 +29,7 @@ function toUserModel (contributor) {
   return {
     id: user._id.toString(),
     created: datetimeService.field(user.created),
-    roles: user.roles.map(roleAsEmoji).join(' '),
+    roles: user.roles.map(roleAsEmoji).join(` `),
     displayName: user.displayName,
     email: user.email,
     avatar: userService.getAvatar(user),
@@ -39,23 +39,23 @@ function toUserModel (contributor) {
 }
 
 function roleAsEmoji (role) {
-  if (role === 'owner') {
-    return icon('👑', 'Founder');
+  if (role === `owner`) {
+    return icon(`👑`, `Founder`);
   }
-  if (role === 'editor') {
-    return icon('📑', 'Contributing Editor');
+  if (role === `editor`) {
+    return icon(`📑`, `Contributing Editor`);
   }
-  if (role === 'articles') {
-    return icon('✍', 'Contributing Author');
+  if (role === `articles`) {
+    return icon(`✍`, `Contributing Author`);
   }
-  if (role === 'weeklies') {
-    return icon('💌', 'Newsletter Contributor');
+  if (role === `weeklies`) {
+    return icon(`💌`, `Newsletter Contributor`);
   }
-  if (role === 'moderator') {
-    return icon('🏥', 'Moderator');
+  if (role === `moderator`) {
+    return icon(`🏥`, `Moderator`);
   }
-  return icon('❓', util.format('Unknown (“%s”)', role));
+  return icon(`❓`, util.format(`Unknown (“%s”)`, role));
   function icon (emoji, alt) {
-    return util.format('<span aria-label="%s">%s</span>', alt, emojiService.compile(emoji));
+    return util.format(`<span aria-label="%s">%s</span>`, alt, emojiService.compile(emoji));
   }
 }

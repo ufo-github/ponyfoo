@@ -1,26 +1,26 @@
 'use strict';
 
-const _ = require('lodash');
-const contra = require('contra');
-const WeeklyIssue = require('../../../models/WeeklyIssue');
-const weeklyService = require('../../../services/weekly');
-const settingService = require('../../../services/setting');
+const _ = require(`lodash`);
+const contra = require(`contra`);
+const WeeklyIssue = require(`../../../models/WeeklyIssue`);
+const weeklyService = require(`../../../services/weekly`);
+const settingService = require(`../../../services/setting`);
 
 module.exports = getModel;
 
 function getModel (req, res, next) {
   contra.concurrent({
     live: function (next) {
-      settingService.getKey('PONYFOOWEEKLY_CRON', next);
+      settingService.getKey(`PONYFOOWEEKLY_CRON`, next);
     },
     level: function (next) {
-      settingService.getKey('PONYFOOWEEKLY_CRON_LEVEL', next);
+      settingService.getKey(`PONYFOOWEEKLY_CRON_LEVEL`, next);
     },
     weeklies: function (next) {
       WeeklyIssue
         .find({})
-        .sort([['publication', -1], ['created', -1]])
-        .populate('author', 'slug email avatar')
+        .sort([[`publication`, -1], [`created`, -1]])
+        .populate(`author`, `slug email avatar`)
         .exec(next);
     }
   }, respond);
@@ -33,9 +33,9 @@ function getModel (req, res, next) {
     const models = sorted.map(weeklyService.toMetadata);
     res.viewModel = {
       model: {
-        title: 'Newsletter Review',
+        title: `Newsletter Review`,
         meta: {
-          canonical: '/weekly/review'
+          canonical: `/weekly/review`
         },
         weeklies: models,
         live: result.live,

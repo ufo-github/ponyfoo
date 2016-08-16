@@ -1,15 +1,15 @@
 'use strict';
 
-const contra = require('contra');
-const assign = require('assignment');
-const correcthorse = require('correcthorse');
-const WeeklyIssue = require('../../../models/WeeklyIssue');
-const WeeklyIssueSubmission = require('../../../models/WeeklyIssueSubmission');
-const weeklyCompilerService = require('../../../services/weeklyCompiler');
-const datetimeService = require('../../../services/datetime');
-const markupService = require('../../../services/markup');
-const env = require('../../../lib/env');
-const authority = env('AUTHORITY');
+const contra = require(`contra`);
+const assign = require(`assignment`);
+const correcthorse = require(`correcthorse`);
+const WeeklyIssue = require(`../../../models/WeeklyIssue`);
+const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
+const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
+const datetimeService = require(`../../../services/datetime`);
+const markupService = require(`../../../services/markup`);
+const env = require(`../../../lib/env`);
+const authority = env(`AUTHORITY`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -33,7 +33,7 @@ module.exports = function (req, res, next) {
         next(err); return;
       }
       if (!issue) {
-        res.status(404).json({ messages: ['Weekly issue not found'] }); return;
+        res.status(404).json({ messages: [`Weekly issue not found`] }); return;
       }
       next(null, issue);
     }
@@ -41,7 +41,7 @@ module.exports = function (req, res, next) {
 
   function findAcceptedSubmissions (next) {
     WeeklyIssueSubmission
-      .find({ status: 'accepted' })
+      .find({ status: `accepted` })
       .lean()
       .exec(next);
   }
@@ -55,7 +55,7 @@ module.exports = function (req, res, next) {
     issueModel.publication = datetimeService.field(publication);
     res.viewModel = {
       model: {
-        title: 'Weekly Assembler \u2014 Pony Foo',
+        title: `Weekly Assembler \u2014 Pony Foo`,
         issue: issueModel,
         submissions: result.submissions.map(toSubmissionModel),
         editing: !!slug,
@@ -76,18 +76,18 @@ function toSubmissionModel (submission) {
 
 function getDefaultIssueModel () {
   return {
-    status: 'draft',
+    status: `draft`,
     slug: correcthorse(),
     summary: [
-      'We\'re glad you could make it this week! 💌',
-      '',
-      'With your help, we can make Pony Foo Weekly *even more* awesome: [send tips about cool resources][tips].',
-      '',
-      '[tips]: ' + authority + '/weekly/submissions'
-    ].join('\n'),
+      `We're glad you could make it this week! 💌`,
+      ``,
+      `With your help, we can make Pony Foo Weekly *even more* awesome: [send tips about cool resources][tips].`,
+      ``,
+      `[tips]: ` + authority + `/weekly/submissions`
+    ].join(`\n`),
     sections: [{
-      type: 'header',
-      text: 'Oh, hai! 🎉'
+      type: `header`,
+      text: `Oh, hai! 🎉`
     }]
   };
 }

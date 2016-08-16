@@ -1,14 +1,14 @@
 'use strict';
 
-const $ = require('dominus');
-const taunus = require('taunus');
+const $ = require(`dominus`);
+const taunus = require(`taunus`);
 
 function ajaxLogoNavigation () {
-  $('.go-logo').on('left-click', hijack);
+  $(`.go-logo`).on(`left-click`, hijack);
 }
 
 function hijack (e) {
-  taunus.navigate('/');
+  taunus.navigate(`/`);
   e.preventDefault();
 }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   name: String,
   source: String,
@@ -13,4 +13,4 @@ const schema = new mongoose.Schema({
 
 schema.index({ topics: 1 });
 
-module.exports = mongoose.model('Subscriber', schema);
+module.exports = mongoose.model(`Subscriber`, schema);

@@ -1,21 +1,21 @@
 'use strict';
 
-const $ = require('dominus');
-const estimate = require('estimate');
-const debounce = require('lodash/debounce');
-const concurrent = require('contra/concurrent');
-const moment = require('moment');
-const sluggish = require('sluggish');
-const raf = require('raf');
-const taunus = require('taunus');
-const articleSummarizationService = require('../../../../../services/articleSummarization');
-const markdownService = require('../../../../../services/markdown');
-const datetimeService = require('../../../../../services/datetime');
-const twitterService = require('../../../conventions/twitter');
-const storage = require('../../../lib/storage');
-const loadScript = require('../../../lib/loadScript');
-const defaultStorageKey = 'author-unsaved-draft';
-const publicationFormat = 'DD-MM-YYYY HH:mm';
+const $ = require(`dominus`);
+const estimate = require(`estimate`);
+const debounce = require(`lodash/debounce`);
+const concurrent = require(`contra/concurrent`);
+const moment = require(`moment`);
+const sluggish = require(`sluggish`);
+const raf = require(`raf`);
+const taunus = require(`taunus`);
+const articleSummarizationService = require(`../../../../../services/articleSummarization`);
+const markdownService = require(`../../../../../services/markdown`);
+const datetimeService = require(`../../../../../services/datetime`);
+const twitterService = require(`../../../conventions/twitter`);
+const storage = require(`../../../lib/storage`);
+const loadScript = require(`../../../lib/loadScript`);
+const defaultStorageKey = `author-unsaved-draft`;
+const publicationFormat = `DD-MM-YYYY HH:mm`;
 const maxTagSuggestions = 8;
 
 function noop () {}
@@ -24,9 +24,9 @@ module.exports = controller;
 
 function controller (viewModel, container, route) {
   concurrent([
-    loadScriptUrl('/js/horsey.js'),
-    loadScriptUrl('/js/insignia.js'),
-    loadScriptUrl('/js/rome.js')
+    loadScriptUrl(`/js/horsey.js`),
+    loadScriptUrl(`/js/insignia.js`),
+    loadScriptUrl(`/js/rome.js`)
   ], loaded);
 
   function loaded () {
@@ -45,42 +45,45 @@ function initialize (viewModel, container, route) {
   const horsey = global.horsey;
   const insignia = global.insignia;
   const rome = global.rome;
+  const { owner } = viewModel.roles;
   const article = viewModel.article;
   const editing = viewModel.editing;
-  const published = editing && article.status === 'published';
-  const title = $('.ac-title');
-  const slug = $('.ac-slug');
-  const texts = $('.ac-text');
-  const heroImage = $('.ac-hero-image');
-  const teaser = $('.ac-teaser');
-  const editorNote = $('.ac-editor-note');
-  const introduction = $('.ac-introduction');
-  const body = $('.ac-body');
-  const summary = $('.ac-summary');
-  const tags = $('.ac-tags');
-  const tagsContainer = $.findOne('.ac-tags-container');
-  const campaign = $('.ac-campaign');
-  const email = $('#ac-campaign-email');
-  const tweet = $('#ac-campaign-tweet');
-  const fb = $('#ac-campaign-fb');
-  const echojs = $('#ac-campaign-echojs');
-  const hn = $('#ac-campaign-hn');
-  const schedule = $('.ac-schedule');
-  const publication = $('.ac-publication');
-  const preview = $('.ac-preview');
-  const previewHeader = $('.at-header', preview);
-  const previewTitle = $('.ac-preview-title');
-  const previewTeaser = $('.ac-preview-teaser');
-  const previewEditorNote = $('.ac-preview-editor-note');
-  const previewIntroduction = $('.ac-preview-introduction');
-  const previewBody = $('.ac-preview-body');
-  const previewSummary = $.findOne('.ac-preview-summary');
-  const discardButton = $('.ac-discard');
-  const saveButton = $('.ac-save');
-  const status = $('.ac-status');
+  const published = editing && article.status === `published`;
+  const title = $(`.ac-title`);
+  const slug = $(`.ac-slug`);
+  const texts = $(`.ac-text`);
+  const heroImage = $(`.ac-hero-image`);
+  const teaser = $(`.ac-teaser`);
+  const editorNote = $(`.ac-editor-note`);
+  const introduction = $(`.ac-introduction`);
+  const body = $(`.ac-body`);
+  const summary = $(`.ac-summary`);
+  const author = $(`.ac-author`);
+  const authorContainer = $.findOne(`.ac-author-container`);
+  const tags = $(`.ac-tags`);
+  const tagsContainer = $.findOne(`.ac-tags-container`);
+  const campaign = $(`.ac-campaign`);
+  const email = $(`#ac-campaign-email`);
+  const tweet = $(`#ac-campaign-tweet`);
+  const fb = $(`#ac-campaign-fb`);
+  const echojs = $(`#ac-campaign-echojs`);
+  const hn = $(`#ac-campaign-hn`);
+  const schedule = $(`.ac-schedule`);
+  const publication = $(`.ac-publication`);
+  const preview = $(`.ac-preview`);
+  const previewHeader = $(`.at-header`, preview);
+  const previewTitle = $(`.ac-preview-title`);
+  const previewTeaser = $(`.ac-preview-teaser`);
+  const previewEditorNote = $(`.ac-preview-editor-note`);
+  const previewIntroduction = $(`.ac-preview-introduction`);
+  const previewBody = $(`.ac-preview-body`);
+  const previewSummary = $.findOne(`.ac-preview-summary`);
+  const discardButton = $(`.ac-discard`);
+  const saveButton = $(`.ac-save`);
+  const status = $(`.ac-status`);
   const statusRadio = {
-    draft: $('#ac-draft-radio'),
-    publish: $('#ac-publish-radio')
+    draft: $(`#ac-draft-radio`),
+    publish: $(`#ac-publish-radio`)
   };
   const serializeSlowly = editing ? noop : debounce(serialize, 200);
   const typingTitleSlowly = raf.bind(null, debounce(typingTitle, 100));
@@ -91,108 +94,163 @@ function initialize (viewModel, container, route) {
   const typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
   const updatePreviewMarkdownSlowly = raf.bind(null, debounce(updatePreviewMarkdown, 300));
   const updatePreviewSummarySlowly = raf.bind(null, debounce(updatePreviewSummary, 300));
-  const dateValidator = rome.val.after(moment().endOf('day'));
+  const dateValidator = rome.val.after(moment().endOf(`day`));
   const romeOpts = {
     inputFormat: publicationFormat,
     dateValidator: dateValidator,
     timeValidator: timeValidator
   };
   let boundSlug = true;
+  let authorSignet;
 
-  title.on('keypress keydown paste input', typingTitleSlowly);
-  slug.on('keypress keydown paste input', typingSlugSlowly);
-  heroImage.on('keypress keydown paste input bureaucrat', typingHeroImageSlowly);
-  summary.on('keypress keydown paste input', typingSummarySlowly);
-  texts.on('keypress keydown paste input', typingTextSlowly);
-  tags.on('keypress keydown paste input', typingTagsSlowly);
-  discardButton.on('click', discard);
-  saveButton.on('click', save);
-  status.on('change', updatePublication);
-  campaign.on('change', '.ck-input', serializeSlowly);
-  schedule.on('change', updatePublication);
+  title.on(`keypress keydown paste input`, typingTitleSlowly);
+  slug.on(`keypress keydown paste input`, typingSlugSlowly);
+  heroImage.on(`keypress keydown paste input bureaucrat`, typingHeroImageSlowly);
+  summary.on(`keypress keydown paste input`, typingSummarySlowly);
+  texts.on(`keypress keydown paste input`, typingTextSlowly);
+  tags.on(`keypress keydown paste input`, typingTagsSlowly);
+  discardButton.on(`click`, discard);
+  saveButton.on(`click`, save);
+  status.on(`change`, updatePublication);
+  campaign.on(`change`, `.ck-input`, serializeSlowly);
+  schedule.on(`change`, updatePublication);
 
-  const signet = insignia(tags[0], {
+  const tagSignet = insignia(tags[0], {
     preventInvalid: true,
-    getText: parseTagSlug,
-    getValue: parseTagSlug
+    getText: getSlugText,
+    getValue: getSlugText
   });
 
   horsey(tags[0], {
     source: getTagSuggestions,
-    getText: parseTagSlug,
-    getValue: parseTagSlug,
+    getText: getSlugText,
+    getValue: getSlugText,
     limit: maxTagSuggestions,
     set: addTag,
     appendTo: tagsContainer,
-    renderItem: renderHorseyItem
+    renderItem: renderHorseyTagItem
   });
 
   if (publication.length) {
     rome(publication[0], romeOpts);
   }
 
+  if (owner) {
+    initializeForOwner();
+  }
+
   deserialize(editing && article);
 
+  function initializeForOwner () {
+    authorSignet = insignia(author[0], {
+      free: false,
+      deletion: true,
+      preventInvalid: true,
+      getText: getSlugText,
+      getValue: getSlugText
+    });
+    window.authorSignet=authorSignet;
+    horsey(author[0], {
+      source: getAuthorSuggestions,
+      getText: getSlugText,
+      getValue: getSlugText,
+      limit: maxTagSuggestions,
+      set: setAuthor,
+      appendTo: authorContainer,
+      renderItem: renderHorseyAuthorItem,
+      blankSearch: true
+    });
+
+    const slug = author.value();
+    author.value(``);
+    authorSignet.addItem({ slug });
+  }
+
   function getCurrentState () {
-    return status.where(':checked').text() || 'draft';
+    return status.where(`:checked`).text() || `draft`;
   }
 
   function timeValidator (date) {
-    const tf = 'HH:mm:ss';
+    const tf = `HH:mm:ss`;
     const time = moment(moment(date).format(tf), tf);
     return (
-       time.isAfter(moment('05:59:59', tf)) &&
-      time.isBefore(moment('15:00:00', tf))
+       time.isAfter(moment(`05:59:59`, tf)) &&
+      time.isBefore(moment(`15:00:00`, tf))
     );
   }
 
   function getTagSuggestions (data, done) {
     const xhrOpts = {
-      url: '/api/articles/tags',
+      url: `/api/articles/tags`,
       json: true
     };
     taunus.xhr(xhrOpts, done);
   }
-  function renderHorseyItem (li, tag) {
-    $(li).addClass('ac-tag-item');
-    taunus.partial(li, 'author/articles/tag-item', { tag: tag });
+  function renderHorseyTagItem (li, tag) {
+    $(li).addClass(`ac-tag-item`);
+    taunus.partial(li, `author/articles/tag-item`, { tag: tag });
   }
   function addTag (tag) {
-    signet.addItem(tag);
+    tagSignet.addItem(tag);
     updatePreviewSummarySlowly();
   }
   function getTags () {
-    return signet.value();
+    return tagSignet.value();
   }
-  function parseTagSlug (tag) {
-    return typeof tag === 'string' ? tag : tag.slug;
+
+  function getSlugText (host) {
+    return typeof host === `string` ? host : host.slug;
   }
+
+  function getAuthorSuggestions (data, done) {
+    const xhrOpts = {
+      url: `/api/articles/authors`,
+      json: true
+    };
+    taunus.xhr(xhrOpts, done);
+  }
+  function renderHorseyAuthorItem (li, user) {
+    $(li).addClass(`ac-author-item`);
+    taunus.partial(li, `author/articles/author-item`, { user });
+  }
+
   function updatePublication () {
     serializeSlowly();
 
     if (published) {
-      saveButton.find('.bt-text').text('Save Changes');
-      saveButton.parent().attr('aria-label', 'Make your modifications immediately accessible!');
-      discardButton.text('Delete Article');
-      discardButton.attr('aria-label', 'Permanently delete this article');
+      saveButton.find(`.bt-text`).text(`Save Changes`);
+      saveButton.parent().attr(`aria-label`, `Make your modifications immediately accessible!`);
+      discardButton.text(`Delete Article`);
+      discardButton.attr(`aria-label`, `Permanently delete this article`);
       return;
     }
     const state = getCurrentState();
-    if (state === 'draft') {
-      saveButton.find('.bt-text').text('Save Draft');
-      saveButton.parent().attr('aria-label', 'You can access your drafts at any time');
+    if (state === `draft`) {
+      saveButton.find(`.bt-text`).text(`Save Draft`);
+      saveButton.parent().attr(`aria-label`, `You can access your drafts at any time`);
       return;
     }
     const scheduled = schedule.value();
     if (scheduled) {
-      saveButton.find('.bt-text').text('Schedule');
-      saveButton.parent().attr('aria-label', 'Schedule this article for publication');
+      saveButton.find(`.bt-text`).text(`Schedule`);
+      saveButton.parent().attr(`aria-label`, `Schedule this article for publication`);
       return;
     }
-    if (state === 'publish') {
-      saveButton.find('.bt-text').text('Publish');
-      saveButton.parent().attr('aria-label', 'Make the content immediately accessible!');
+    if (state === `publish`) {
+      saveButton.find(`.bt-text`).text(`Publish`);
+      saveButton.parent().attr(`aria-label`, `Make the content immediately accessible!`);
     }
+  }
+
+  function setAuthor (author) {
+    if (!authorSignet) {
+      return;
+    }
+    const values = authorSignet.value();
+    if (values.length > 0) {
+      values.forEach(value => authorSignet.removeItem(value));
+    }
+    authorSignet.addItem(author);
   }
 
   function typingText () {
@@ -225,7 +283,7 @@ function initialize (viewModel, container, route) {
 
   function getHtmlTitle () {
     const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
-    return getHtml(title).replace(rstrip, '');
+    return getHtml(title).replace(rstrip, ``);
   }
 
   function updatePreviewTitleHtml () {
@@ -246,13 +304,13 @@ function initialize (viewModel, container, route) {
   function updatePreviewHeroImage () {
     const heroUrl = heroImage.value().trim();
     if (heroUrl) {
-      previewHeader.css({ backgroundImage: 'url(\'' + heroUrl + '\')' });
-      previewHeader.addClass('at-has-hero');
-      previewHeader.removeClass('at-no-hero');
+      previewHeader.css({ backgroundImage: `url('` + heroUrl + `')` });
+      previewHeader.addClass(`at-has-hero`);
+      previewHeader.removeClass(`at-no-hero`);
     } else {
       previewHeader.css({ backgroundImage: null });
-      previewHeader.removeClass('at-has-hero');
-      previewHeader.addClass('at-no-hero');
+      previewHeader.removeClass(`at-has-hero`);
+      previewHeader.addClass(`at-no-hero`);
     }
   }
 
@@ -264,11 +322,11 @@ function initialize (viewModel, container, route) {
   function updatePreviewMarkdown () {
     const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
     previewTeaser.html(getHtml(teaser));
-    const note = getHtml(editorNote).replace(rstrip, '');
+    const note = getHtml(editorNote).replace(rstrip, ``);
     if (note.length) {
-      previewEditorNote.removeClass('uv-hidden').html(note);
+      previewEditorNote.removeClass(`uv-hidden`).html(note);
     } else {
-      previewEditorNote.addClass('uv-hidden');
+      previewEditorNote.addClass(`uv-hidden`);
     }
     previewIntroduction.html(getHtml(introduction));
     previewBody.html(getHtml(body));
@@ -288,9 +346,9 @@ function initialize (viewModel, container, route) {
       teaserHtml: teaserHtml,
       introductionHtml: introductionHtml
     });
-    const parts = [teaserHtml, editorNoteHtml || '', introductionHtml, bodyHtml];
-    const readingTime = estimate.text(parts.join(' '));
-    const publication = datetimeService.field(moment().add(4, 'days'));
+    const parts = [teaserHtml, editorNoteHtml || ``, introductionHtml, bodyHtml];
+    const readingTime = estimate.text(parts.join(` `));
+    const publication = datetimeService.field(moment().add(4, `days`));
     const article = {
       publication: publication,
       commentCount: 0,
@@ -299,12 +357,12 @@ function initialize (viewModel, container, route) {
       titleHtml: getHtmlTitle(),
       tags: getTags(),
       author: {
-        displayName: viewModel.authorDisplayName
+        displayName: viewModel.article.author.displayName
       },
       summaryHtml: summarized.html
     };
     const vm = { articles: [article] };
-    taunus.partial(previewSummary, 'articles/columns', vm);
+    taunus.partial(previewSummary, `articles/columns`, vm);
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }
@@ -315,19 +373,23 @@ function initialize (viewModel, container, route) {
     const data = source || storage.get(defaultStorageKey) || {
       email: true, tweet: true, fb: true, echojs: true, hn: true
     };
-    const titleText = data.titleMarkdown || '';
-    const slugText = data.slug || '';
+    const titleText = data.titleMarkdown || ``;
+    const slugText = data.slug || ``;
 
     title.value(titleText);
     slug.value(slugText);
-    heroImage.value(data.heroImage || '');
-    teaser.value(data.teaser || '');
-    introduction.value(data.introduction || '');
-    editorNote.value(data.editorNote || '');
-    body.value(data.body || '');
-    summary.value(data.summary || '');
+    heroImage.value(data.heroImage || ``);
+    teaser.value(data.teaser || ``);
+    introduction.value(data.introduction || ``);
+    editorNote.value(data.editorNote || ``);
+    body.value(data.body || ``);
+    summary.value(data.summary || ``);
 
     (data.tags || []).forEach(addTag);
+
+    if (data.authorSlug) {
+      setAuthor(data.authorSlug);
+    }
 
     email.value(data.email);
     tweet.value(data.tweet);
@@ -335,10 +397,10 @@ function initialize (viewModel, container, route) {
     echojs.value(data.echojs);
     hn.value(data.hn);
 
-    if (data.status !== 'published') {
-      statusRadio[data.status || 'publish'].value(true);
+    if (data.status !== `published`) {
+      statusRadio[data.status || `publish`].value(true);
 
-      if ('publication' in data) {
+      if (`publication` in data) {
         schedule.value(true);
       }
     }
@@ -371,6 +433,9 @@ function initialize (viewModel, container, route) {
       echojs: echojs.value(),
       hn: hn.value()
     };
+    if (authorSignet) {
+      data.authorSlug = authorSignet.value()[0];
+    }
     const scheduled = schedule.value();
     if (scheduled && !published) {
       data.publication = moment(publication.value(), publicationFormat).format();
@@ -387,21 +452,21 @@ function initialize (viewModel, container, route) {
     let req;
 
     if (editing) {
-      req = viewModel.measly.patch('/api/articles/' + route.params.slug, data);
+      req = viewModel.measly.patch(`/api/articles/` + route.params.slug, data);
     } else {
-      req = viewModel.measly.put('/api/articles', data);
+      req = viewModel.measly.put(`/api/articles`, data);
     }
-    req.on('data', leave);
+    req.on(`data`, leave);
   }
 
   function discard () {
-    const name = route.params.slug ? '/articles/' + route.params.slug : 'draft';
-    const confirmation = confirm('About to discard ' + name + ', are you sure?');
+    const name = route.params.slug ? `/articles/` + route.params.slug : `draft`;
+    const confirmation = confirm(`About to discard ` + name + `, are you sure?`);
     if (!confirmation) {
       return;
     }
     if (editing) {
-      viewModel.measly.delete('/api/articles/' + route.params.slug).on('data', leave);
+      viewModel.measly.delete(`/api/articles/` + route.params.slug).on(`data`, leave);
     } else {
       leave();
     }
@@ -409,6 +474,6 @@ function initialize (viewModel, container, route) {
 
   function leave () {
     clear();
-    taunus.navigate('/articles/review');
+    taunus.navigate(`/articles/review`);
   }
 }

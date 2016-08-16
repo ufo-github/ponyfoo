@@ -1,8 +1,8 @@
 'use strict';
 
-const accepts = require('accepts');
-const create = require('./lib/create');
-const httpService = require('../../../services/http');
+const accepts = require(`accepts`);
+const create = require(`./lib/create`);
+const httpService = require(`../../../services/http`);
 
 function insert (req, res, next) {
   const model = {
@@ -23,15 +23,15 @@ function insert (req, res, next) {
     if (err) {
       next(err); return;
     }
-    const accept = accepts(req).types('html', 'json');
-    if (accept === 'json') {
+    const accept = accepts(req).types(`html`, `json`);
+    if (accept === `json`) {
       if (inserted) {
         res.status(statusCode).json(inserted);
       } else {
         res.status(statusCode).json({ messages: messages });
       }
     } else {
-      req.flash(statusCode === 200 ? 'success' : 'error', messages);
+      req.flash(statusCode === 200 ? `success` : `error`, messages);
       res.redirect(httpService.referer(req));
     }
   });

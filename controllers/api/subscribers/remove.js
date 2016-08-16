@@ -1,11 +1,11 @@
 'use strict';
 
-const contra = require('contra');
-const subscriberService = require('../../../services/subscriber');
-const unfold = require('./lib/unfold');
+const contra = require(`contra`);
+const subscriberService = require(`../../../services/subscriber`);
+const unfold = require(`./lib/unfold`);
 const topicTexts = {
-  articles: 'emails about articles and comments',
-  newsletter: 'our newsletter'
+  articles: `emails about articles and comments`,
+  newsletter: `our newsletter`
 };
 
 function remove (req, res, next) {
@@ -29,18 +29,18 @@ function remove (req, res, next) {
     if (err) {
       next(err); return;
     }
-    const topicText = topic ? topicTexts[topic] || topic : 'our mailing list';
+    const topicText = topic ? topicTexts[topic] || topic : `our mailing list`;
     if (success) {
-      req.flash('success', 'You’ve successfully unsubscribed from ' + topicText + '!');
+      req.flash(`success`, `You’ve successfully unsubscribed from ` + topicText + `!`);
     } else {
-      req.flash('error', 'Your unsubscription request was invalid and couldn’t be fulfilled!');
+      req.flash(`error`, `Your unsubscription request was invalid and couldn’t be fulfilled!`);
     }
     if (req.query.returnTo) {
       res.redirect(req.query.returnTo);
     } else if (topic && hash) {
-      res.redirect('/unsubscribed?topic=' + topic + '&hash=' + hash);
+      res.redirect(`/unsubscribed?topic=` + topic + `&hash=` + hash);
     } else {
-      res.redirect('/unsubscribed');
+      res.redirect(`/unsubscribed`);
     }
   }
 }

@@ -3,8 +3,8 @@
 const spaces = /\s+/;
 
 function compile (input) {
-  const builder = ['/articles'];
-  const keywords = (input || '').trim().split(spaces).filter(truthy);
+  const builder = [`/articles`];
+  const keywords = (input || ``).trim().split(spaces).filter(truthy);
   const extracted = { tags: [], terms: [] };
 
   keywords.reduce(extract, extracted);
@@ -12,14 +12,14 @@ function compile (input) {
   extracted.terms = clean(extracted.terms);
 
   if (extracted.terms.length) {
-    builder.push('/search/');
-    builder.push(extracted.terms.join('-'));
+    builder.push(`/search/`);
+    builder.push(extracted.terms.join(`-`));
   }
   if (extracted.tags.length) {
-    builder.push('/tagged/');
-    builder.push(extracted.tags.map(unwrap).join('+'));
+    builder.push(`/tagged/`);
+    builder.push(extracted.tags.map(unwrap).join(`+`));
   }
-  return builder.length > 1 ? builder.join('') : null;
+  return builder.length > 1 ? builder.join(``) : null;
 }
 
 function extract (result, keyword) {
@@ -59,7 +59,7 @@ function unique (collection, item) {
 
 function unwrap (tag) {
   const tagUnwrap = /^\[(\S+)\]$/;
-  return tag.replace(tagUnwrap, '$1');
+  return tag.replace(tagUnwrap, `$1`);
 }
 
 module.exports = {

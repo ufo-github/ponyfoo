@@ -1,12 +1,12 @@
 'use strict';
 
-const util = require('util');
-const validator = require('validator');
+const util = require(`util`);
+const validator = require(`validator`);
 
 function validate (model) {
   const validation = [];
-  if (!model || typeof model !== 'object') {
-    validation.push('Invalid request.');
+  if (!model || typeof model !== `object`) {
+    validation.push(`Invalid request.`);
     return validation;
   }
   const sanitized = {
@@ -23,7 +23,7 @@ function validate (model) {
   function getName () {
     const name = validator.toString(model.name).trim();
     if (!name) {
-      validation.push(util.format('Your name is required'));
+      validation.push(util.format(`Your name is required`));
     }
     return name;
   }
@@ -31,7 +31,7 @@ function validate (model) {
   function getEmail () {
     const valid = validator.isEmail(model.email);
     if (valid === false) {
-      validation.push('Please provide a valid email address! No spam, promise!');
+      validation.push(`Please provide a valid email address! No spam, promise!`);
     }
     return model.email;
   }
@@ -41,11 +41,11 @@ function validate (model) {
     const max = 60000;
     const valid = validator.isLength(model.content, length);
     if (valid === false) {
-      validation.push(util.format('Comments must be at least %s characters long', length));
+      validation.push(util.format(`Comments must be at least %s characters long`, length));
     }
     const bound = validator.isLength(model.content, 0, max);
     if (bound === false) {
-      validation.push(util.format('Comments can have at most %s characters!', length));
+      validation.push(util.format(`Comments can have at most %s characters!`, length));
     }
     return model.content;
   }
@@ -54,12 +54,12 @@ function validate (model) {
     const scheme = /^https?:\/\//i;
     const input = validator.toString(model.site).trim();
     if (input && !validator.isURL(input)) {
-      validation.push('The site is optional, but it should be an URL');
+      validation.push(`The site is optional, but it should be an URL`);
     }
     if (input.length === 0) {
       return null;
     }
-    return scheme.test(input) ? input : 'http://' + input;
+    return scheme.test(input) ? input : `http://` + input;
   }
 
   function getParent () {

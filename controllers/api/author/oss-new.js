@@ -1,8 +1,8 @@
 'use strict';
 
-const winston = require('winston');
-const OpenSourceProject = require('../../../models/OpenSourceProject');
-const markupService = require('../../../services/markup');
+const winston = require(`winston`);
+const OpenSourceProject = require(`../../../models/OpenSourceProject`);
+const markupService = require(`../../../services/markup`);
 
 module.exports = function (req, res) {
   const body = req.body;
@@ -19,9 +19,9 @@ module.exports = function (req, res) {
   function saved (err) {
     if (err) {
       winston.error(err);
-      res.redirect('/opensource/new');
+      res.redirect(`/opensource/new`);
     } else {
-      res.redirect('/opensource/review');
+      res.redirect(`/opensource/review`);
     }
   }
 };

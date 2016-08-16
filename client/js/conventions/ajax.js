@@ -1,19 +1,19 @@
 'use strict';
 
-const $ = require('dominus');
-const taunus = require('taunus');
-const measly = require('measly');
-const defaultMessages = ['Oops. It seems something went terribly wrong!'];
-const body = $('body');
+const $ = require(`dominus`);
+const taunus = require(`taunus`);
+const measly = require(`measly`);
+const defaultMessages = [`Oops. It seems something went terribly wrong!`];
+const body = $(`body`);
 
-body.on('click', '.vw-conventional, .fs-messages', remove);
+body.on(`click`, `.vw-conventional, .fs-messages`, remove);
 
 function conventions () {
-  measly.on('data', renderOrClean);
-  measly.on('error', render);
-  taunus.on('render', createLayer);
-  taunus.on('change', abort);
-  taunus.on('fetch.error', handleTaunusError);
+  measly.on(`data`, renderOrClean);
+  measly.on(`error`, render);
+  taunus.on(`render`, createLayer);
+  taunus.on(`change`, abort);
+  taunus.on(`fetch.error`, handleTaunusError);
 }
 
 function createLayer (container, viewModel) {
@@ -27,12 +27,12 @@ function abort () {
 function remove (e) {
   e.preventDefault();
   const ctx = $(e.target);
-  const parents = ctx.parents('.vw-conventional, .fs-messages');
+  const parents = ctx.parents(`.vw-conventional, .fs-messages`);
   ctx.and(parents).remove();
 }
 
 function clean (context) {
-  context.find('.vw-conventional').remove();
+  context.find(`.vw-conventional`).remove();
 }
 
 function renderOrClean (data) {
@@ -66,15 +66,15 @@ function render (err, body) {
     return;
   }
   const context = $(this.context);
-  const list = $('<ul>').addClass('vw-conventional');
+  const list = $(`<ul>`).addClass(`vw-conventional`);
 
   $(messages.map(dom)).appendTo(list).i(0).append(
-    $('<span>').addClass('fa fa-remove vw-conventional-remove')
+    $(`<span>`).addClass(`fa fa-remove vw-conventional-remove`)
   );
 
   clean(context);
 
-  const title = context.findOne('.vw-title');
+  const title = context.findOne(`.vw-title`);
   if (title) {
     $(title).after(list);
   } else {
@@ -88,8 +88,8 @@ function render (err, body) {
 
 function handleTaunusError (route, context, err) {
   const ctx = $(context.element);
-  const parents = ctx.parents('.ly-section');
-  const section = ctx.where('.ly-section').and(parents);
+  const parents = ctx.parents(`.ly-section`);
+  const section = ctx.where(`.ly-section`).and(parents);
   if (section.length) {
     render.call({ context: section.length ? section : document.body }, err, {
       messages: defaultMessages
@@ -98,7 +98,7 @@ function handleTaunusError (route, context, err) {
 }
 
 function dom (message) {
-  return $('<li>').text(message).addClass('vw-conventional-message')[0];
+  return $(`<li>`).text(message).addClass(`vw-conventional-message`)[0];
 }
 
 module.exports = conventions;

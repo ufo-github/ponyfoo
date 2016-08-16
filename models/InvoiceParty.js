@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   title: String,
@@ -10,4 +10,4 @@ const schema = new mongoose.Schema({
   details: String
 });
 
-module.exports = mongoose.model('InvoiceParty', schema);
+module.exports = mongoose.model(`InvoiceParty`, schema);

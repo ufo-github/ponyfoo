@@ -1,20 +1,46 @@
 'use strict';
 
-const contra = require('contra');
-const User = require('../models/User');
-const Article = require('../models/Article');
-const gravatarService = require('./gravatar');
+const assign = require(`assignment`);
+const contra = require(`contra`);
+const User = require(`../models/User`);
+const Article = require(`../models/Article`);
+const gravatarService = require(`./gravatar`);
 
 function findContributors (done) {
-  contra.waterfall([findUsers, countArticles], done);
+  contra.waterfall([next => findUsers({}, next), countArticles], done);
 }
 
-function findUsers (done) {
+function findUsers (query, done) {
   User
-    .find({})
-    .sort('created')
+    .find(query)
+    .sort(`created`)
     .lean()
     .exec(done);
+}
+
+function findAllUsersInRole (roles, done) {
+  findUsersWithRole({}, roles, done);
+}
+
+function findUsersWithRole (query, roles, done) {
+  const roleQuery = {
+    roles: {
+      $in: roles
+    }
+  };
+  const fullQuery = assign(roleQuery, query);
+  findUsers(fullQuery, done);
+}
+
+function findUserWithRole (query, roles, done) {
+  findUsersWithRole(query, roles, (err, users) => {
+    if (err) {
+      done(err);
+    } else {
+      const [ user ] = users;
+      done(null, user);
+    }
+  });
 }
 
 function countArticles (users, done) {
@@ -22,7 +48,7 @@ function countArticles (users, done) {
 
   function hydrateWithArticleCount (user, next) {
     Article
-      .count({ author: user._id, status: 'published' })
+      .count({ author: user._id, status: `published` })
       .exec(counted);
 
     function counted (err, count) {
@@ -42,7 +68,7 @@ function getModel (email, password, bypass) {
     email: email,
     password: password,
     bypassEncryption: bypass,
-    displayName: email.split('@')[0]
+    displayName: email.split(`@`)[0]
   };
 }
 
@@ -58,7 +84,7 @@ function getProfile (contributor, options) {
     website: user.website
   };
   if (options.withBio) {
-    profile.bioHtml = user.bioHtml.replace(rstrip, '');
+    profile.bioHtml = user.bioHtml.replace(rstrip, ``);
   }
   return profile;
 }
@@ -68,32 +94,32 @@ function getAvatar (user) {
     return user.avatar;
   }
   if (user.email) {
-    return gravatarService.format(user.email) + '&s=24';
+    return gravatarService.format(user.email) + `&s=24`;
   }
-  return 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=24';
+  return `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=24`;
 }
 
 function humanReadableRole (roles, hasPublishedArticles) {
   const terms = [];
-  if (roles.indexOf('articles') !== -1 && hasPublishedArticles) {
-    terms.push('Contributing Author');
+  if (roles.indexOf(`articles`) !== -1 && hasPublishedArticles) {
+    terms.push(`Contributing Author`);
   }
-  if (roles.indexOf('moderator') !== -1) {
-    terms.push('Contributing Editor');
+  if (roles.indexOf(`moderator`) !== -1) {
+    terms.push(`Contributing Editor`);
   }
-  if (roles.indexOf('moderator') !== -1) {
-    terms.push('Moderator');
+  if (roles.indexOf(`moderator`) !== -1) {
+    terms.push(`Moderator`);
   }
-  if (roles.indexOf('weeklies') !== -1) {
-    terms.push('Pony Foo Weekly');
+  if (roles.indexOf(`weeklies`) !== -1) {
+    terms.push(`Pony Foo Weekly`);
   }
-  if (roles.indexOf('owner') !== -1) {
-    return 'Founder';
+  if (roles.indexOf(`owner`) !== -1) {
+    return `Founder`;
   }
   if (terms.length) {
     return concatenate();
   }
-  return 'Collaborator';
+  return `Collaborator`;
   function concatenate () {
     const firstTerm = terms.shift();
     return terms.reduce(termReducer, firstTerm);
@@ -102,8 +128,8 @@ function humanReadableRole (roles, hasPublishedArticles) {
 
 function termReducer (all, term, i, terms) {
   const len = terms.length;
-  const separator = len > 1 ? ', ' : ' ';
-  const joiner = len === i + 1 ? 'and ' : '';
+  const separator = len > 1 ? `, ` : ` `;
+  const joiner = len === i + 1 ? `and ` : ``;
   return all + separator + joiner + term;
 }
 
@@ -147,7 +173,7 @@ function hasRole (user, roles) {
 function isActive (contributor) {
   const roles = contributor.user.roles;
   const singleRole = roles.length === 1;
-  const articleUser = singleRole && roles[0] === 'articles';
+  const articleUser = singleRole && roles[0] === `articles`;
   if (articleUser && contributor.articleCount === 0) {
     return false;
   }
@@ -158,20 +184,23 @@ function canEditArticle (options) {
   if (!options.userId || !options.userRoles) {
     return false;
   }
-  if (options.articleStatus === 'deleted') {
+  if (options.articleStatus === `deleted`) {
     return false;
   }
   return ( // owners. editors. authors working on drafts.
-    options.userRoles.indexOf('owner') !== -1 ||
-    options.userRoles.indexOf('editor') !== -1 || (
-      options.userRoles.indexOf('articles') !== -1 &&
+    options.userRoles.indexOf(`owner`) !== -1 ||
+    options.userRoles.indexOf(`editor`) !== -1 || (
+      options.userRoles.indexOf(`articles`) !== -1 &&
       options.authorId.equals(options.userId) &&
-      options.articleStatus === 'draft'
+      options.articleStatus === `draft`
     )
   );
 }
 
 module.exports = {
+  findAllUsersInRole,
+  findUsersWithRole,
+  findUserWithRole,
   findById,
   findOne,
   findContributors,

@@ -1,18 +1,18 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const cryptoService = require('../services/crypto');
+const mongoose = require(`mongoose`);
+const cryptoService = require(`../services/crypto`);
 const schema = new mongoose.Schema({
   email: { type: String, require: true },
   password: { type: String, require: true }
 }, { id: false });
 
-schema.pre('save', beforeSave);
+schema.pre(`save`, beforeSave);
 
 function beforeSave (done) {
   const user = this;
 
-  if (!user.isModified('password')) {
+  if (!user.isModified(`password`)) {
     done(); return;
   }
   encryptPassword(user, done);
@@ -29,4 +29,4 @@ function encryptPassword (user, done) {
 }
 
 
-module.exports = mongoose.model('UnverifiedUser', schema);
+module.exports = mongoose.model(`UnverifiedUser`, schema);

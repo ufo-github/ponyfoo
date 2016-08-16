@@ -36,6 +36,11 @@ article.ly-section.vw-maintainer.de-host.uv-clearfix
         textarea.wk-textarea.ac-text.ac-summary(placeholder='Short summary of the article. Used exclusively in list views.')=article.summary
       div.ac-tags-container
         input.ac-tags.nsg-target-input(placeholder='Enter a list of tags relevant to this article', value=article.tags.join(' '))
+
+      if roles.owner
+        div.ac-author-container
+          input.ac-author.nsg-target-input(placeholder='Author for this article', value=article.author.slug)
+
     footer.ac-actions.ac-actions-after-composer
       +actions
 

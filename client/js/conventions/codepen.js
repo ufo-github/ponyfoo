@@ -1,6 +1,6 @@
 'use strict';
 
-const taunus = require('taunus');
+const taunus = require(`taunus`);
 
 function updateView () {
   if (global.CodePenEmbed && global.CodePenEmbed._showCodePenEmbeds) {
@@ -9,8 +9,8 @@ function updateView () {
 }
 
 function codepen () {
-  taunus.on('start', updateView);
-  taunus.on('render', updateView);
+  taunus.on(`start`, updateView);
+  taunus.on(`render`, updateView);
 }
 
 module.exports = codepen;

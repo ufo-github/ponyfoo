@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require(`mongoose`);
 const schema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   level: String,
@@ -8,4 +8,4 @@ const schema = new mongoose.Schema({
   meta: {}
 });
 
-module.exports = mongoose.model('Log', schema);
+module.exports = mongoose.model(`Log`, schema);

@@ -1,21 +1,21 @@
 'use strict';
 
-const _ = require('lodash');
-const util = require('util');
-const safeson = require('safeson');
-const taunus = require('taunus');
-const accepts = require('accepts');
-const pkg = require('../package.json');
-const env = require('../lib/env');
-const authority = env('AUTHORITY');
-const environment = env('NODE_ENV');
-const userAgent = util.format('%s@%s/%s', pkg.name, pkg.version, environment);
-const dev = environment === 'development';
+const _ = require(`lodash`);
+const util = require(`util`);
+const safeson = require(`safeson`);
+const taunus = require(`taunus`);
+const accepts = require(`accepts`);
+const pkg = require(`../package.json`);
+const env = require(`../lib/env`);
+const authority = env(`AUTHORITY`);
+const environment = env(`NODE_ENV`);
+const userAgent = util.format(`%s@%s/%s`, pkg.name, pkg.version, environment);
+const dev = environment === `development`;
 const textSpaces = dev ? 2 : 0;
 
 function referer (req) {
-  const r = req.headers.referer || '';
-  return r.indexOf(authority) === 0 ? r : '/';
+  const r = req.headers.referer || ``;
+  return r.indexOf(authority) === 0 ? r : `/`;
 }
 
 function validationError (req, res, result) {
@@ -23,13 +23,13 @@ function validationError (req, res, result) {
 }
 
 function isJson (req) {
-  const accept = accepts(req).types('html', 'json');
-  const json = accept === 'json' || 'json' in req.query;
+  const accept = accepts(req).types(`html`, `json`);
+  const json = accept === `json` || `json` in req.query;
   return json;
 }
 
 function asText (req) {
-  return 'as-text' in req.query;
+  return `as-text` in req.query;
 }
 
 function isJsonAsText (req) {
@@ -50,7 +50,7 @@ function response (req, res, statusCode, data, flashOnly) {
   }
   function text () {
     const encoded = safeson(data, textSpaces);
-    res.set('Content-Type', 'text/html; charset=utf-8');
+    res.set(`Content-Type`, `text/html; charset=utf-8`);
     res.send(encoded);
   }
   function json () {
@@ -59,7 +59,7 @@ function response (req, res, statusCode, data, flashOnly) {
   function flash () {
     flashCopy(req, data);
     if (flashOnly) {
-      req.flash('model', flashOnly);
+      req.flash(`model`, flashOnly);
     }
     res.redirect(referer(req));
   }
@@ -90,7 +90,7 @@ function redirect (req, res, url, options) {
 }
 
 function sane (body) {
-  return _.omit(body, 'password');
+  return _.omit(body, `password`);
 }
 
 function classic (req, res, next, fn) {

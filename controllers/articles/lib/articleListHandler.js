@@ -1,10 +1,10 @@
 'use strict';
 
-const tagService = require('../../../services/tag');
-const textService = require('../../../services/text');
-const articleService = require('../../../services/article');
-const metadataService = require('../../../services/metadata');
-const inliningService = require('../../../services/inlining');
+const tagService = require(`../../../services/tag`);
+const textService = require(`../../../services/text`);
+const articleService = require(`../../../services/article`);
+const metadataService = require(`../../../services/metadata`);
+const inliningService = require(`../../../services/inlining`);
 
 function factory (res, options, next) {
   if (arguments.length < 3) {
@@ -19,7 +19,7 @@ function factory (res, options, next) {
     }
     const model = res.viewModel.model;
     if (!model.action) {
-      model.action = 'articles/articles';
+      model.action = `articles/articles`;
 
       if (articles.length === 0 && options.skip !== false) {
         res.viewModel.skip = true;
@@ -39,11 +39,11 @@ function factory (res, options, next) {
       }
     }
 
-    if ('queryTerms' in options && 'queryTags' in options) {
+    if (`queryTerms` in options && `queryTags` in options) {
       setSearchResultsMetadata();
     }
 
-    inliningService.addStyles(model, options.search ? 'search' : 'summaries');
+    inliningService.addStyles(model, options.search ? `search` : `summaries`);
     next();
 
     function setSearchResultsMetadata () {
@@ -53,18 +53,18 @@ function factory (res, options, next) {
       model.queryTitle = getTitle({
         standalone: true,
         hasSuffix: false,
-        forcedPrefix: 'Your query for '
+        forcedPrefix: `Your query for `
       });
-      model.meta.description = 'This search results page contains all of the ' + getTitle({
+      model.meta.description = `This search results page contains all of the ` + getTitle({
         standalone: false
       });
 
       function getTitle (ctx) {
         // '[Your query for ${terms} in ][${knownTags} ]articles[ tagged ${otherTags}]'
         // '[Search results for ${terms} in ][${knownTags} ]articles[ tagged ${otherTags}]'
-        const foremost = ctx.forcedPrefix || '';
-        const queryPrefix = foremost ? '' : 'Search results for ';
-        const suffix = ctx.hasSuffix === false ? '' : ' on Pony Foo';
+        const foremost = ctx.forcedPrefix || ``;
+        const queryPrefix = foremost ? `` : `Search results for `;
+        const suffix = ctx.hasSuffix === false ? `` : ` on Pony Foo`;
         const terms = options.queryTerms.slice();
         const tags = options.queryTags.slice();
         const hasNoPrefix = ctx.standalone && foremost.length === 0;
@@ -77,34 +77,34 @@ function factory (res, options, next) {
 
       function getQuery (starts, terms, queryPrefix) {
         if (terms.length === 0) {
-          return '';
+          return ``;
         }
         if (queryPrefix && !starts) {
           queryPrefix = queryPrefix[0].toLowerCase() + queryPrefix.slice(1);
         }
-        return textService.format('%s“%s” in ', queryPrefix, terms.join(' '));
+        return textService.format(`%s“%s” in `, queryPrefix, terms.join(` `));
       }
 
       function getTagPrefix (starts, tags) {
         if (extras.tags.length === 0) {
-          return starts ? 'Articles' : 'articles';
+          return starts ? `Articles` : `articles`;
         }
-        return extras.tags.reduce(toTagPrefix, '') + ' articles';
+        return extras.tags.reduce(toTagPrefix, ``) + ` articles`;
         function toTagPrefix (prefix, tag) {
           const index = tags.indexOf(tag.slug);
           tags.splice(index, 1);
           if (!prefix.length) {
             return tag.titleText;
           }
-          return prefix + ', ' + tag.titleText;
+          return prefix + `, ` + tag.titleText;
         }
       }
 
       function getTagSuffix (tags) {
         if (tags.length) {
-          return textService.format(' tagged “%s”', tags.join('”, “'));
+          return textService.format(` tagged “%s”`, tags.join(`”, “`));
         }
-        return '';
+        return ``;
       }
     }
   }

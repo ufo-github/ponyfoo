@@ -1,9 +1,9 @@
 'use strict';
 
-const truncText = require('trunc-text');
-const Presentation = require('../../models/Presentation');
-const presentationService = require('../../services/presentation');
-const htmlService = require('../../services/html');
+const truncText = require(`trunc-text`);
+const Presentation = require(`../../models/Presentation`);
+const presentationService = require(`../../services/presentation`);
+const htmlService = require(`../../services/html`);
 
 module.exports = function (req, res, next) {
   Presentation.findOne({ slug: req.params.slug }, function (err, presentation) {
@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
         title: presentation.title,
         presentation: model,
         meta: {
-          canonical: '/presentations/' + req.params.slug,
+          canonical: `/presentations/` + req.params.slug,
           description: description,
           images: presentationService.toCovers(presentation)
         }

@@ -1,10 +1,10 @@
 'use strict';
 
-const contra = require('contra');
-const User = require('../../models/User');
-const Article = require('../../models/Article');
-const userService = require('../../services/user');
-const articleService = require('../../services/article');
+const contra = require(`contra`);
+const User = require(`../../models/User`);
+const Article = require(`../../models/Article`);
+const userService = require(`../../services/user`);
+const articleService = require(`../../services/article`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -19,11 +19,11 @@ module.exports = function (req, res, next) {
 
   function findArticles (user, next) {
     if (!user) {
-      next('route'); return;
+      next(`route`); return;
     }
     const query = {
       author: user._id,
-      status: 'published'
+      status: `published`
     };
     const tasks = {
       list: getArticleList,
@@ -56,16 +56,16 @@ module.exports = function (req, res, next) {
     };
     const active = userService.isActive(contributor);
     if (!active) {
-      next('route'); return;
+      next(`route`); return;
     }
     const profile = userService.getProfile(contributor, {
       withBio: true
     });
     res.viewModel = {
       model: {
-        title: user.displayName + ' \u2014 Pony Foo',
+        title: user.displayName + ` \u2014 Pony Foo`,
         meta: {
-          canonical: '/contributors/' + slug,
+          canonical: `/contributors/` + slug,
           images: [profile.gravatar],
           description: user.bioText
         },

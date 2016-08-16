@@ -1,8 +1,8 @@
 'use strict';
 
-const contra = require('contra');
-const winston = require('winston');
-const articleSharingService = require('./articleSharing');
+const contra = require(`contra`);
+const winston = require(`winston`);
+const articleSharingService = require(`./articleSharing`);
 
 function noop () {}
 
@@ -11,20 +11,20 @@ function share (article, done) {
     done = noop;
   }
   contra.concurrent([
-    medium('email', 'email'),
-    medium('tweet', 'twitter'),
-    medium('fb', 'facebook'),
-    medium('echojs', 'echojs'),
-    medium('hn', 'hackernews')
+    medium(`email`, `email`),
+    medium(`tweet`, `twitter`),
+    medium(`fb`, `facebook`),
+    medium(`echojs`, `echojs`),
+    medium(`hn`, `hackernews`)
   ], done);
 
   function medium (key, method) {
     return function shareVia (next) {
       if (article[key] === false) {
-        winston.info('Sharing turned off via "%s" channel for article %s.', method, article.title);
+        winston.info(`Sharing turned off via "%s" channel for article %s.`, method, article.title);
         next(); return;
       }
-      winston.info('Sharing article %s via "%s" channel.', article.title, method);
+      winston.info(`Sharing article %s via "%s" channel.`, article.title, method);
       articleSharingService[method](article, {}, next);
     };
   }

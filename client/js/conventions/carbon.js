@@ -1,12 +1,12 @@
 'use strict';
 
-const $ = require('dominus');
-const taunus = require('taunus');
-const loadScript = require('../lib/loadScript');
-const placement = 'https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom';
+const $ = require(`dominus`);
+const taunus = require(`taunus`);
+const loadScript = require(`../lib/loadScript`);
+const placement = `https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom`;
 const options = {
-  container: $.findOne('.ca-content'),
-  id: '_carbonads_js'
+  container: $.findOne(`.ca-content`),
+  id: `_carbonads_js`
 };
 const script = loadScript(placement, options, loaded);
 let timer;
@@ -21,7 +21,7 @@ function loaded () {
 function go (data) {
   patch(data);
   originalGo(data);
-  $('#_carbonads_js ~ [id^=carbonads_]').remove(); // remove extra ads if carbon is being weird
+  $(`#_carbonads_js ~ [id^=carbonads_]`).remove(); // remove extra ads if carbon is being weird
 }
 
 function patch (data) {
@@ -38,26 +38,26 @@ function patch (data) {
 }
 
 function patchUnsafeImageHost (image) {
-  if (image.indexOf('//') === 0) {
-    return 'https:' + image;
+  if (image.indexOf(`//`) === 0) {
+    return `https:` + image;
   }
   const url = new URL(image);
-  if (url.host === 'assets.servedby-buysellads.com' && url.protocol === 'http:') {
-    return url.href.replace(/^http:/, 'https:');
+  if (url.host === `assets.servedby-buysellads.com` && url.protocol === `http:`) {
+    return url.href.replace(/^http:/, `https:`);
   }
   return image;
 }
 
 function carbon () {
-  taunus.once('change', track);
+  taunus.once(`change`, track);
 }
 
 function track () {
-  taunus.on('change', changed);
+  taunus.on(`change`, changed);
 }
 
 function changed () {
-  options.container = $.findOne('.ca-content', taunus.state.container);
+  options.container = $.findOne(`.ca-content`, taunus.state.container);
   if (timer) {
     clearTimeout(timer);
   }
@@ -72,11 +72,11 @@ function changed () {
 }
 
 function helpMePay () {
-  const blocked = $('#carbonads').length === 0;
+  const blocked = $(`#carbonads`).length === 0;
   if (blocked) {
-    $('.ca-blocked').removeClass('uv-hidden');
+    $(`.ca-blocked`).removeClass(`uv-hidden`);
   } else {
-    $('.ca-blocked').addClass('uv-hidden');
+    $(`.ca-blocked`).addClass(`uv-hidden`);
   }
   timer = false;
 }

@@ -1,34 +1,34 @@
 'use strict';
 
-const $ = require('dominus');
-const raf = require('raf');
-const taunus = require('taunus');
-const debounce = require('lodash/debounce');
-const ls = require('../../lib/storage');
-const userService = require('../../services/user');
-const textService = require('../../../../services/text');
-const key = 'comment-draft';
+const $ = require(`dominus`);
+const raf = require(`raf`);
+const taunus = require(`taunus`);
+const debounce = require(`lodash/debounce`);
+const ls = require(`../../lib/storage`);
+const userService = require(`../../services/user`);
+const textService = require(`../../../../services/text`);
+const key = `comment-draft`;
 
 module.exports = function (viewModel, container) {
-  const composer = $('.mc-composer', container);
-  const name = $('.mc-name', container);
-  const email = $('.mc-email', container);
-  const site = $('.mc-site', container);
-  const content = $('.mc-content', container);
-  const send = $('.mc-send', container);
-  const sendText = $('.bt-text', send);
+  const composer = $(`.mc-composer`, container);
+  const name = $(`.mc-name`, container);
+  const email = $(`.mc-email`, container);
+  const site = $(`.mc-site`, container);
+  const content = $(`.mc-content`, container);
+  const send = $(`.mc-send`, container);
+  const sendText = $(`.bt-text`, send);
   const serializeSlowly = debounce(serialize, 100);
-  const comments = $('.mm-comments', container);
-  const cancelReply = $('.mc-cancel-reply', container);
-  const footer = $('.mm-footer', container);
+  const comments = $(`.mm-comments`, container);
+  const cancelReply = $(`.mc-cancel-reply`, container);
+  const footer = $(`.mm-footer`, container);
 
-  $('.mm-thread-reply', container).removeClass('uv-hidden');
+  $(`.mm-thread-reply`, container).removeClass(`uv-hidden`);
 
-  composer.on('keypress keydown keyup paste input', serializeSlowly);
-  send.on('click', comment);
-  comments.on('click', '.mm-thread-reply', attach);
-  comments.on('click', '.mm-remove', remove);
-  cancelReply.on('click', detach);
+  composer.on(`keypress keydown keyup paste input`, serializeSlowly);
+  send.on(`click`, comment);
+  comments.on(`click`, `.mm-thread-reply`, attach);
+  comments.on(`click`, `.mm-remove`, remove);
+  cancelReply.on(`click`, detach);
   deserialize();
 
   function deserialize () {
@@ -53,38 +53,38 @@ module.exports = function (viewModel, container) {
 
   function attach (e) {
     const button = $(e.target);
-    const thread = button.parents('.mm-thread');
-    const reply = thread.find('.mm-thread-reply');
-    const replies = $('.mm-thread-reply').but(reply);
-    replies.removeClass('uv-hidden');
-    reply.addClass('uv-hidden').parent().before(composer);
-    sendText.text('Add Reply');
-    cancelReply.removeClass('uv-hidden');
-    composer.find('.vw-conventional').remove();
+    const thread = button.parents(`.mm-thread`);
+    const reply = thread.find(`.mm-thread-reply`);
+    const replies = $(`.mm-thread-reply`).but(reply);
+    replies.removeClass(`uv-hidden`);
+    reply.addClass(`uv-hidden`).parent().before(composer);
+    sendText.text(`Add Reply`);
+    cancelReply.removeClass(`uv-hidden`);
+    composer.find(`.vw-conventional`).remove();
   }
 
   function detach () {
-    const replies = $('.mm-thread-reply');
+    const replies = $(`.mm-thread-reply`);
     footer.append(composer);
-    replies.removeClass('uv-hidden');
-    cancelReply.addClass('uv-hidden');
-    sendText.text('Add Comment');
-    composer.find('.vw-conventional').remove();
+    replies.removeClass(`uv-hidden`);
+    cancelReply.addClass(`uv-hidden`);
+    sendText.text(`Add Comment`);
+    composer.find(`.vw-conventional`).remove();
   }
 
   function comment (e) {
     e.preventDefault();
 
-    const thread = send.parents('.mm-thread');
-    const endpoint = textService.format('/api/%s/%s/comments', viewModel.parentType, viewModel.parent.slug);
+    const thread = send.parents(`.mm-thread`);
+    const endpoint = textService.format(`/api/%s/%s/comments`, viewModel.parentType, viewModel.parent.slug);
     const model = {
       json: getCommentData()
     };
-    model.json.parent = thread.attr('data-thread');
-    viewModel.measly.put(endpoint, model).on('data', commented);
+    model.json.parent = thread.attr(`data-thread`);
+    viewModel.measly.put(endpoint, model).on(`data`, commented);
 
     function commented (data) {
-      content.value('');
+      content.value(``);
       detach();
       serialize();
       raf(deserialize);
@@ -92,7 +92,7 @@ module.exports = function (viewModel, container) {
     }
 
     function appendResult (data) {
-      const placeholder = $('<div>');
+      const placeholder = $(`<div>`);
       let template, partial;
       const model = {
         user: viewModel.user,
@@ -107,32 +107,32 @@ module.exports = function (viewModel, container) {
       };
       if (thread.length) {
         model.comment = data;
-        template = 'comments/comment';
+        template = `comments/comment`;
       } else {
-        template = 'comments/thread';
+        template = `comments/thread`;
       }
       taunus.partial(placeholder[0], template, model);
       partial = placeholder.children();
-      partial.find('.mm-thread-reply').removeClass('uv-hidden');
+      partial.find(`.mm-thread-reply`).removeClass(`uv-hidden`);
       if (thread.length) {
-        thread.find('.mm-thread-comments').append(partial);
+        thread.find(`.mm-thread-comments`).append(partial);
       } else {
-        comments.find('.mm-footer').before(partial);
+        comments.find(`.mm-footer`).before(partial);
       }
     }
   }
 
   function remove (e) {
     const button = $(e.target);
-    const comment = button.parents('.mm-comment');
-    const id = comment.attr('data-comment');
-    const endpoint = textService.format('/api/%s/%s/comments/%s', viewModel.parentType, viewModel.parent.slug, id);
+    const comment = button.parents(`.mm-comment`);
+    const id = comment.attr(`data-comment`);
+    const endpoint = textService.format(`/api/%s/%s/comments/%s`, viewModel.parentType, viewModel.parent.slug, id);
 
-    viewModel.measly.delete(endpoint).on('data', cleanup);
+    viewModel.measly.delete(endpoint).on(`data`, cleanup);
 
     function cleanup () {
-      const comments = $(textService.format('[data-comment="%s"]', id));
-      const thread = $(textService.format('[data-thread="%s"]', id));
+      const comments = $(textService.format(`[data-comment="%s"]`, id));
+      const thread = $(textService.format(`[data-thread="%s"]`, id));
       if (thread.length && composer.parents(thread).length) {
         detach();
       }

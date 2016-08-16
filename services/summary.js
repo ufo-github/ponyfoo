@@ -1,23 +1,23 @@
 'use strict';
 
-const he = require('he');
-const truncHtml = require('trunc-html');
+const he = require(`he`);
+const truncHtml = require(`trunc-html`);
 
 function summarize (html, limit) {
   const options = {
-    ignoredTags: ['blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    ignoredTags: [`blockquote`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`],
     sanitizer: {
       allowedAttributes: {
-        mark: ['class']
+        mark: [`class`]
       },
       allowedClasses: {
-        img: ['tj-emoji']
+        img: [`tj-emoji`]
       },
       filter: function (token) {
-        if (token.tag !== 'img') {
+        if (token.tag !== `img`) {
           return true;
         }
-        const hasEmojiClass = (token.attrs.class || '').indexOf('tj-emoji') !== -1;
+        const hasEmojiClass = (token.attrs.class || ``).indexOf(`tj-emoji`) !== -1;
         return hasEmojiClass;
       }
     },

@@ -1,7 +1,7 @@
 'use strict';
 
-const url = require('url');
-const extract = require('super-crap');
+const url = require(`url`);
+const extract = require(`super-crap`);
 const rtitleseparator = /\s+([^\w]|_)\s+/;
 const rweb = /^https?:\/\//i;
 

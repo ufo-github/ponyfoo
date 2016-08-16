@@ -1,10 +1,10 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const commentSchema = require('./schemas/comment');
+const mongoose = require(`mongoose`);
+const commentSchema = require(`./schemas/comment`);
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const schema = new mongoose.Schema({
-  author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
+  author: { type: ObjectId, index: { unique: false }, require: true, ref: `User` },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
   publication: Date,
@@ -35,9 +35,9 @@ const schema = new mongoose.Schema({
   body: String,
   bodyHtml: String,
   tags: [String],
-  prev: { type: ObjectId, index: { unique: false }, ref: 'Article' },
-  next: { type: ObjectId, index: { unique: false }, ref: 'Article' },
-  related: [{ type: ObjectId, ref: 'Article' }],
+  prev: { type: ObjectId, index: { unique: false }, ref: `Article` },
+  next: { type: ObjectId, index: { unique: false }, ref: `Article` },
+  related: [{ type: ObjectId, ref: `Article` }],
   comments: [commentSchema],
   email: { type: Boolean, 'default': true },
   tweet: { type: Boolean, 'default': true },
@@ -47,16 +47,16 @@ const schema = new mongoose.Schema({
   hnDiscuss: String
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-const api = mongoose.model('Article', schema);
+const api = mongoose.model(`Article`, schema);
 
 schema.index({
-  tags: 'text',
-  body: 'text',
-  title: 'text',
-  teaser: 'text',
-  introduction: 'text'
+  tags: `text`,
+  body: `text`,
+  title: `text`,
+  teaser: `text`,
+  introduction: `text`
 });
-api.validStatuses = ['draft', 'publish', 'published', 'deleted'];
+api.validStatuses = [`draft`, `publish`, `published`, `deleted`];
 api.schema = schema;
 
 module.exports = api;

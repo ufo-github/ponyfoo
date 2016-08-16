@@ -1,8 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const cryptoService = require('../services/crypto');
-const gravatarService = require('../services/gravatar');
+const mongoose = require(`mongoose`);
+const cryptoService = require(`../services/crypto`);
+const gravatarService = require(`../services/gravatar`);
 const schema = new mongoose.Schema({
   email: { type: String, require: true, index: { unique: true }, trim: true },
   password: { type: String, require: true },
@@ -23,8 +23,8 @@ const schema = new mongoose.Schema({
   roles: [String] // ['owner', 'editor', 'articles', 'weeklies', 'moderator']
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 
-schema.virtual('gravatar').get(computeGravatar);
-schema.pre('save', beforeSave);
+schema.virtual(`gravatar`).get(computeGravatar);
+schema.pre(`save`, beforeSave);
 schema.methods.validatePassword = validatePassword;
 
 function computeGravatar () {
@@ -37,7 +37,7 @@ function beforeSave (done) {
     user.bypassEncryption = false;
     done(); return;
   }
-  if (!user.isModified('password')) {
+  if (!user.isModified(`password`)) {
     done(); return;
   }
   encryptPassword(user, done);
@@ -57,4 +57,4 @@ function validatePassword (input, cb) {
   cryptoService.test(this.password, input, cb);
 }
 
-module.exports = mongoose.model('User', schema);
+module.exports = mongoose.model(`User`, schema);

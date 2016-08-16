@@ -1,7 +1,7 @@
 'use strict';
 
-const Subscriber = require('../../../../models/Subscriber');
-const cryptoService = require('../../../../services/crypto');
+const Subscriber = require(`../../../../models/Subscriber`);
+const cryptoService = require(`../../../../services/crypto`);
 
 function unfold (req, res, done) {
   const hash = req.params.hash;

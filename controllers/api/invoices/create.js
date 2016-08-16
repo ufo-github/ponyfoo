@@ -1,8 +1,8 @@
 'use strict';
 
-const winston = require('winston');
-const sluggish = require('sluggish');
-const Invoice = require('../../../models/Invoice');
+const winston = require(`winston`);
+const sluggish = require(`sluggish`);
+const Invoice = require(`../../../models/Invoice`);
 
 module.exports = function (req, res) {
   const body = req.body.invoice;
@@ -23,9 +23,9 @@ module.exports = function (req, res) {
   function saved (err) {
     if (err) {
       winston.error(err);
-      res.redirect('/invoices/new');
+      res.redirect(`/invoices/new`);
     } else {
-      res.redirect('/invoices');
+      res.redirect(`/invoices`);
     }
   }
 };

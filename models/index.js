@@ -1,7 +1,7 @@
 'use strict';
 
-const path = require('path');
-const glob = require('glob');
+const path = require(`path`);
+const glob = require(`glob`);
 
 function load (pattern, accumulator) {
   const modules = glob.sync(pattern, { cwd: __dirname });
@@ -12,7 +12,7 @@ function load (pattern, accumulator) {
   return modules.map(unwrap).reduce(keys, accumulator || {});
 
   function keys (accumulator, model, i) {
-    const name = path.basename(modules[i], '.js');
+    const name = path.basename(modules[i], `.js`);
     accumulator[name] = model;
     return accumulator;
   }
@@ -23,7 +23,7 @@ function unwrap (file) {
 }
 
 module.exports = function api () {
-  const models = load('*.js', api);
-  load('hooks/*.js');
+  const models = load(`*.js`, api);
+  load(`hooks/*.js`);
   return models;
 };

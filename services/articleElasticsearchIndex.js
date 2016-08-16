@@ -1,21 +1,21 @@
 'use strict';
 
-const but = require('but');
-const winston = require('winston');
-const Article = require('../models/Article');
-const es = require('../lib/elasticsearch');
-const indexName = 'ponyfoo';
-const typeName = 'article';
+const but = require(`but`);
+const winston = require(`winston`);
+const Article = require(`../models/Article`);
+const es = require(`../lib/elasticsearch`);
+const indexName = `ponyfoo`;
+const typeName = `article`;
 const mapping = {
   properties: {
-    timestamp: { type: 'date' },
-    title: { type: 'string' },
-    slug: { type: 'string' },
-    teaser: { type: 'string' },
-    introduction: { type: 'string' },
-    body: { type: 'string' },
-    tags: { type: 'string', index: 'not_analyzed' },
-    status: { type: 'string', index: 'not_analyzed' }
+    timestamp: { type: `date` },
+    title: { type: `string` },
+    slug: { type: `string` },
+    teaser: { type: `string` },
+    introduction: { type: `string` },
+    body: { type: `string` },
+    tags: { type: `string`, index: `not_analyzed` },
+    status: { type: `string`, index: `not_analyzed` }
   }
 };
 const ensureQueue = [];
@@ -43,11 +43,11 @@ function initialize (done) {
       done(err); return;
     }
     if (exists) {
-      winston.debug('Elasticsearch index already existed.');
+      winston.debug(`Elasticsearch index already existed.`);
       done(null);
       return;
     }
-    winston.debug('Creating elasticsearch index.');
+    winston.debug(`Creating elasticsearch index.`);
     es.client.indices.create({ index: indexName }, createdIndex);
   }
 
@@ -55,7 +55,7 @@ function initialize (done) {
     if (err) {
       done(err); return;
     }
-    winston.debug('Creating elasticsearch mapping for articles.');
+    winston.debug(`Creating elasticsearch mapping for articles.`);
     const op = {
       index: indexName,
       type: typeName,
@@ -75,19 +75,19 @@ function initialize (done) {
     if (err) {
       done(err); return;
     }
-    winston.info('Ensured elasticsearch index exists.');
+    winston.info(`Ensured elasticsearch index exists.`);
     done(null);
   }
 }
 
 function bulkIndexAllArticles (done) {
-  winston.debug('Looking up articles on MongoDB database.');
+  winston.debug(`Looking up articles on MongoDB database.`);
   Article.find({}).exec(found);
   function found (err, articles) {
     if (err) {
       done(err); return;
     }
-    winston.debug('Bulk inserting articles into elasticsearch.');
+    winston.debug(`Bulk inserting articles into elasticsearch.`);
     const op = {
       body: articles.reduce(toBulk, [])
     };
@@ -98,7 +98,7 @@ function bulkIndexAllArticles (done) {
 function ensureIndexThen (next) {
   return function wrapper (...args) {
     const last = args[args.length - 1];
-    const done = typeof last === 'function' ? last : warn;
+    const done = typeof last === `function` ? last : warn;
 
     if (ensured) {
       initialized(null); return;

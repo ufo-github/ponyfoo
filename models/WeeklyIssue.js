@@ -1,11 +1,11 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const commentSchema = require('./schemas/comment');
+const mongoose = require(`mongoose`);
+const commentSchema = require(`./schemas/comment`);
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Mixed = mongoose.Schema.Types.Mixed;
 const schema = new mongoose.Schema({
-  author: { type: ObjectId, index: { unique: false }, require: true, ref: 'User' },
+  author: { type: ObjectId, index: { unique: false }, require: true, ref: `User` },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   updated: { type: Date, require: true, 'default': Date.now },
   slug: { type: String, index: { unique: true }, require: true },
@@ -31,23 +31,23 @@ const schema = new mongoose.Schema({
   hnDiscuss: String
 });
 
-schema.virtual('computedPageTitle').get(computePageTitle);
-schema.virtual('computedIssueNumber').get(computeIssueNumber);
-schema.virtual('computedTitle').get(computeTitle);
-schema.virtual('computedName').get(computeName);
+schema.virtual(`computedPageTitle`).get(computePageTitle);
+schema.virtual(`computedIssueNumber`).get(computeIssueNumber);
+schema.virtual(`computedTitle`).get(computeTitle);
+schema.virtual(`computedName`).get(computeName);
 
-const model = mongoose.model('WeeklyIssue', schema);
+const model = mongoose.model(`WeeklyIssue`, schema);
 
 module.exports = model;
 
 function computePageTitle () {
   const title = this.computedTitle;
-  const postfix = ' \u2014 Pony Foo Weekly';
+  const postfix = ` \u2014 Pony Foo Weekly`;
   const postfixed = title + postfix;
   if (title === this.computedIssueNumber) {
     return postfixed;
   }
-  return postfixed + ' #' + this.slug;
+  return postfixed + ` #` + this.slug;
 }
 
 function computeTitle () {
@@ -65,5 +65,5 @@ function computeName () {
 }
 
 function computeIssueNumber () {
-  return 'Issue #' + this.issue;
+  return `Issue #` + this.issue;
 }

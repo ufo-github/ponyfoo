@@ -1,6 +1,6 @@
 'use strict';
 
-const settingService = require('../../services/setting');
+const settingService = require(`../../services/setting`);
 
 module.exports = function (req, res, next) {
   settingService.get(got);
@@ -10,9 +10,9 @@ module.exports = function (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: 'Site-wide Settings \u2014 Pony Foo',
+        title: `Site-wide Settings \u2014 Pony Foo`,
         meta: {
-          canonical: '/owner/settings'
+          canonical: `/owner/settings`
         },
         settings: settingService.toModel(settings)
       }

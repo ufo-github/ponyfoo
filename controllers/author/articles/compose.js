@@ -1,22 +1,22 @@
 'use strict';
 
-const Article = require('../../../models/Article');
-const userService = require('../../../services/user');
+const Article = require(`../../../models/Article`);
+const userService = require(`../../../services/user`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
   if (slug) {
-    findArticle();
+    findArticle(respondUsingArticle);
   } else {
     respondWithEmptyComposer();
   }
 
-  function findArticle () {
+  function findArticle (done) {
     Article
       .findOne({ slug: slug })
-      .populate('author', 'displayName')
+      .populate(`author`, `displayName slug avatar email`)
       .lean()
-      .exec(respondUsingArticle);
+      .exec(done);
   }
 
   function respondUsingArticle (err, article) {
@@ -24,7 +24,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!article) {
-      res.status(404).json({ messages: ['Article not found'] }); return;
+      res.status(404).json({ messages: [`Article not found`] }); return;
     }
     const canEdit = userService.canEditArticle({
       userId: req.user,
@@ -33,15 +33,20 @@ module.exports = function (req, res, next) {
       articleStatus: article.status
     });
     if (!canEdit) {
-      res.status(404).json({ messages: ['Article not found'] }); return;
+      res.status(404).json({ messages: [`Article not found`] }); return;
     }
+    const originalAuthor = article.author._id.equals(req.user);
+    article.author = {
+      slug: article.author.slug,
+      displayName: article.author.displayName,
+      avatar: userService.getAvatar(article.author)
+    };
     res.viewModel = {
       model: {
-        title: 'Article Composer',
+        title: `Article Composer`,
         editing: true,
-        originalAuthor: article.author._id.equals(req.user),
-        authorDisplayName: article.author.displayName,
-        article: article
+        originalAuthor,
+        article
       }
     };
     next();
@@ -50,11 +55,18 @@ module.exports = function (req, res, next) {
   function respondWithEmptyComposer () {
     res.viewModel = {
       model: {
-        title: 'Article Composer',
+        title: `Article Composer`,
         editing: false,
         originalAuthor: true,
         authorDisplayName: req.userObject.displayName,
-        article: { tags: [] }
+        article: {
+          tags: [],
+          author: {
+            slug: req.userObject.slug,
+            displayName: req.userObject.displayName,
+            avatar: req.userObject.avatar
+          }
+        }
       }
     };
     next();

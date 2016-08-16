@@ -1,17 +1,17 @@
 'use strict';
 
-require('../preconfigure');
-require('../chdir');
+require(`../preconfigure`);
+require(`../chdir`);
 
-const winston = require('winston');
-const db = require('../lib/db');
-const boot = require('../lib/boot');
-const indexService = require('../services/articleElasticsearchIndex');
+const winston = require(`winston`);
+const db = require(`../lib/db`);
+const boot = require(`../lib/boot`);
+const indexService = require(`../services/articleElasticsearchIndex`);
 
 boot(booted);
 
 function booted () {
-  winston.info('Script is ensuring elasticsearch index exists.');
+  winston.info(`Script is ensuring elasticsearch index exists.`);
   indexService.ensureIndex(ensured);
 }
 
@@ -21,7 +21,7 @@ function ensured (err) {
     end();
     return;
   }
-  winston.info('Script ensured elasticsearch index exists.');
+  winston.info(`Script ensured elasticsearch index exists.`);
   end();
 }
 

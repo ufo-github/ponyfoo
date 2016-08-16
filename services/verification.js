@@ -1,15 +1,15 @@
 'use strict';
 
-const contra = require('contra');
-const moment = require('moment');
-const mongoose = require('mongoose');
-const emailService = require('./email');
-const userService = require('./user');
-const env = require('../lib/env');
-const UnverifiedUser = require('../models/UnverifiedUser');
-const UserVerificationToken = require('../models/UserVerificationToken');
-const User = require('../models/User');
-const authority = env('AUTHORITY');
+const contra = require(`contra`);
+const moment = require(`moment`);
+const mongoose = require(`mongoose`);
+const emailService = require(`./email`);
+const userService = require(`./user`);
+const env = require(`../lib/env`);
+const UnverifiedUser = require(`../models/UnverifiedUser`);
+const UserVerificationToken = require(`../models/UserVerificationToken`);
+const User = require(`../models/User`);
+const authority = env(`AUTHORITY`);
 const ObjectId = mongoose.Types.ObjectId;
 
 function createToken (user, done) {
@@ -22,38 +22,38 @@ function createToken (user, done) {
 }
 
 function getLink (token) {
-  return '/account/verify-email/' + token._id;
+  return `/account/verify-email/` + token._id;
 }
 
 function getExpiration (token) {
-  return moment.utc(token.created).add(token.expires, 'seconds');
+  return moment.utc(token.created).add(token.expires, `seconds`);
 }
 
 function sendEmail (user, token, done) {
   const link = getLink(token);
   const model = {
     to: user.email,
-    subject: 'Account Email Verification',
-    teaser: 'Action required to complete your account registration',
+    subject: `Account Email Verification`,
+    teaser: `Action required to complete your account registration`,
     validation: {
       link: link,
       expires: getExpiration(token).fromNow()
     },
     linkedData: {
-      '@context': 'http://schema.org',
-      '@type': 'EmailMessage',
+      '@context': `http://schema.org`,
+      '@type': `EmailMessage`,
       potentialAction: {
-        '@type': 'ConfirmAction',
-        name: 'Verify Email',
+        '@type': `ConfirmAction`,
+        name: `Verify Email`,
         handler: {
-          '@type': 'HttpActionHandler',
+          '@type': `HttpActionHandler`,
           url: authority + link
         }
       },
-      description: 'Verify Email – Pony Foo'
+      description: `Verify Email – Pony Foo`
     }
   };
-  emailService.send('verify-address', model);
+  emailService.send(`verify-address`, model);
   done();
 }
 
@@ -119,8 +119,8 @@ function verifyToken (tokenId, done) {
     },
     function created (user, next) {
       next(null, {
-        status: 'success',
-        message: 'Thanks for validating your email address!',
+        status: `success`,
+        message: `Thanks for validating your email address!`,
         user: user
       });
     }
@@ -133,8 +133,8 @@ function verifyToken (tokenId, done) {
 
   function expired (next) {
     result = {
-      status: 'error',
-      message: 'This validation token has expired'
+      status: `error`,
+      message: `This validation token has expired`
     };
     next(result);
   }

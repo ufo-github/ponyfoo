@@ -1,9 +1,9 @@
 'use strict';
 
-const Article = require('../../../models/Article');
-const articleService = require('../../../services/article');
-const metadataService = require('../../../services/metadata');
-const randomService = require('../../../services/random');
+const Article = require(`../../../models/Article`);
+const articleService = require(`../../../services/article`);
+const metadataService = require(`../../../services/metadata`);
+const randomService = require(`../../../services/random`);
 
 function factory (res, next) {
   return function searchResults (err) {
@@ -12,7 +12,7 @@ function factory (res, next) {
       next(err); return;
     }
     model.fail = true;
-    randomService.find(Article, { status: 'published' }, 5, fill);
+    randomService.find(Article, { status: `published` }, 5, fill);
 
     function fill (err, articles) {
       if (err) {

@@ -1,7 +1,7 @@
 'use strict';
 
-const contra = require('contra');
-const verificationService = require('../../services/verification');
+const contra = require(`contra`);
+const verificationService = require(`../../services/verification`);
 
 module.exports = function (req, res, next) {
   const verify = contra.curry(verificationService.verifyToken, req.params.token);
@@ -25,6 +25,6 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
-    res.redirect('/');
+    res.redirect(`/`);
   }
 };

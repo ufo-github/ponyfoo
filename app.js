@@ -1,26 +1,26 @@
 'use strict';
 
-require('./preconfigure');
-require('./chdir');
+require(`./preconfigure`);
+require(`./chdir`);
 
-const env = require('./lib/env');
-const os = require('os');
-const http = require('http');
-const express = require('express');
-const moment = require('moment');
-const winston = require('winston');
-const lipstick = require('lipstick');
-const boot = require('./lib/boot');
-const middleware = require('./lib/middleware');
-const routing = require('./controllers/routing');
-const development = require('./lib/development');
-const articleFeedService = require('./services/articleFeed');
-const weeklyFeedService = require('./services/weeklyFeed');
-const sitemapService = require('./services/sitemap');
-const shouldRebuild = !env('APP_REBUILD');
-const port = env('PORT');
+const env = require(`./lib/env`);
+const os = require(`os`);
+const http = require(`http`);
+const express = require(`express`);
+const moment = require(`moment`);
+const winston = require(`winston`);
+const lipstick = require(`lipstick`);
+const boot = require(`./lib/boot`);
+const middleware = require(`./lib/middleware`);
+const routing = require(`./controllers/routing`);
+const development = require(`./lib/development`);
+const articleFeedService = require(`./services/articleFeed`);
+const weeklyFeedService = require(`./services/weeklyFeed`);
+const sitemapService = require(`./services/sitemap`);
+const shouldRebuild = !env(`APP_REBUILD`);
+const port = env(`PORT`);
 
-require('./services/fullFeed'); // listens for events and auto-rebuilds.
+require(`./services/fullFeed`); // listens for events and auto-rebuilds.
 
 function listen () {
   const app = express();
@@ -42,7 +42,7 @@ function listen () {
 }
 
 function listening () {
-  winston.info('app listening on %s:%s', os.hostname(), port);
+  winston.info(`app listening on %s:%s`, os.hostname(), port);
   development.browserSync();
 
   if (shouldRebuild) {

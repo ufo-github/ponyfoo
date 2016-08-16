@@ -1,12 +1,12 @@
 'use strict';
 
-const moment = require('moment');
-const google = require('googleapis');
-const env = require('../../lib/env');
-const email = env('GA_EMAIL');
-const privateKey = env('GA_PRIVATE_KEY');
-const profile = env('GA_PROFILE');
-const analyticsScope = 'https://www.googleapis.com/auth/analytics.readonly';
+const moment = require(`moment`);
+const google = require(`googleapis`);
+const env = require(`../../lib/env`);
+const email = env(`GA_EMAIL`);
+const privateKey = env(`GA_PRIVATE_KEY`);
+const profile = env(`GA_PROFILE`);
+const analyticsScope = `https://www.googleapis.com/auth/analytics.readonly`;
 
 function pullPageViews (done) {
   if (!email || !privateKey || !profile) {
@@ -26,15 +26,15 @@ function pullPageViews (done) {
     }
     const query = {
       auth: jwt,
-      ids: 'ga:' + profile,
-      'start-date': '2012-12-25',
-      'end-date': 'today',
+      ids: `ga:` + profile,
+      'start-date': `2012-12-25`,
+      'end-date': `today`,
       'max-results': 10000,
-      metrics: 'ga:pageviews',
-      dimensions: 'ga:date',
-      sort: 'ga:date'
+      metrics: `ga:pageviews`,
+      dimensions: `ga:date`,
+      sort: `ga:date`
     };
-    google.analytics('v3').data.ga.get(query, got);
+    google.analytics(`v3`).data.ga.get(query, got);
   }
   function got (err, result) {
     if (err) {
@@ -46,7 +46,7 @@ function pullPageViews (done) {
 
 function toDailyPageView (item) {
   return {
-    date: moment.utc(item[0], 'YYYYMMDD').toDate(),
+    date: moment.utc(item[0], `YYYYMMDD`).toDate(),
     views: parseInt(item[1])
   };
 }

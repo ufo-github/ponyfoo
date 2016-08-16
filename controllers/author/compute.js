@@ -1,10 +1,10 @@
 'use strict';
 
-const articleSearchService = require('../../services/articleSearch');
+const articleSearchService = require(`../../services/articleSearch`);
 
 module.exports = function (req, res) {
   articleSearchService.addRelatedAll(completed);
   function completed () {
-    res.redirect('/articles/review');
+    res.redirect(`/articles/review`);
   }
 };

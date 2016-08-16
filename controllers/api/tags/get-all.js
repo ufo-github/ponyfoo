@@ -1,6 +1,6 @@
 'use strict';
 
-const tagService = require('../../../services/tag');
+const tagService = require(`../../../services/tag`);
 
 function getAll (req, res, next) {
   tagService.getAll(respond);
@@ -10,10 +10,10 @@ function getAll (req, res, next) {
       next(err); return;
     }
     res.json([{
-      id: 'Previously Used Tags',
+      id: `Previously Used Tags`,
       list: result.used
     }, {
-      id: 'Known Tags',
+      id: `Known Tags`,
       list: result.unused
     }]);
   }

@@ -1,23 +1,23 @@
 'use strict';
 
-const taunus = require('taunus');
-const taunusView = require('taunus/browser/view');
-const taunusClone = require('taunus/browser/clone');
-const swivel = require('swivel');
-const sw = require('./lib/sw');
+const taunus = require(`taunus`);
+const taunusView = require(`taunus/browser/view`);
+const taunusClone = require(`taunus/browser/clone`);
+const swivel = require(`swivel`);
+const sw = require(`./lib/sw`);
 
 function register () {
-  const enabled = 'serviceWorker' in navigator;
+  const enabled = `serviceWorker` in navigator;
   if (!enabled) {
     return;
   }
   navigator.serviceWorker
-    .register('/service-worker.js')
+    .register(`/service-worker.js`)
     .then(navigator.serviceWorker.ready)
     .then(setupMessaging);
 
   function setupMessaging () {
-    swivel.on('view-update', renderUpdate);
+    swivel.on(`view-update`, renderUpdate);
 
     function renderUpdate (context, href, data) {
       if (sw.toggleJSON(href, false) !== location.href) {

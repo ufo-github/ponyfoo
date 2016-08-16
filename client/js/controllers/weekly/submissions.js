@@ -1,25 +1,25 @@
 'use strict';
 
-const $ = require('dominus');
-const raf = require('raf');
-const taunus = require('taunus');
-const moment = require('moment');
-const series = require('contra/series');
-const curry = require('contra/curry');
-const debounce = require('lodash/debounce');
-const ls = require('../../lib/storage');
-const loadScript = require('../../lib/loadScript');
-const scrapeCompletionService = require('../../services/scrapeCompletion');
-const markdownService = require('../../../../services/markdown');
-const textService = require('../../../../services/text');
-const dateFormat = 'YYYY-MM-DD';
+const $ = require(`dominus`);
+const raf = require(`raf`);
+const taunus = require(`taunus`);
+const moment = require(`moment`);
+const series = require(`contra/series`);
+const curry = require(`contra/curry`);
+const debounce = require(`lodash/debounce`);
+const ls = require(`../../lib/storage`);
+const loadScript = require(`../../lib/loadScript`);
+const scrapeCompletionService = require(`../../services/scrapeCompletion`);
+const markdownService = require(`../../../../services/markdown`);
+const textService = require(`../../../../services/text`);
+const dateFormat = `YYYY-MM-DD`;
 
 module.exports = controller;
 
 function controller (...params) {
   series([
-    curry(loadScript, '/js/rome.js'),
-    curry(loadScript, '/js/weekly-compiler.js')
+    curry(loadScript, `/js/rome.js`),
+    curry(loadScript, `/js/weekly-compiler.js`)
   ], loaded);
   function loaded () {
     ready(...params);
@@ -29,22 +29,22 @@ function controller (...params) {
 function ready (viewModel, container, route) {
   const rome = global.rome;
   const weeklyCompilerService = global.weeklyCompiler;
-  const subtypeInputs = $('.wu-type', container);
-  const linkInput = $('.wu-link', container);
-  const linkData = $('.wu-data', container);
-  const linkImageContainer = $('.wa-link-image-container', linkData);
-  const contactSection = $('.wu-contact', container);
-  const sponsorSection = $('.wu-sponsor', container);
-  const previewHtml = $('.wu-preview-link', container);
-  const colored = $('.wu-colored', container);
+  const subtypeInputs = $(`.wu-type`, container);
+  const linkInput = $(`.wu-link`, container);
+  const linkData = $(`.wu-data`, container);
+  const linkImageContainer = $(`.wa-link-image-container`, linkData);
+  const contactSection = $(`.wu-contact`, container);
+  const sponsorSection = $(`.wu-sponsor`, container);
+  const previewHtml = $(`.wu-preview-link`, container);
+  const colored = $(`.wu-colored`, container);
   const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
-  const picker = $.findOne('.wu-sponsor-date-picker', container);
-  const dates = $('.wu-dates', container);
-  const submitButton = $('.wu-submit', container);
-  const contactName = $('.wu-name', linkData);
-  const contactEmail = $('.wu-email', linkData);
-  const submissionNameStorageKey = 'submission.name';
-  const submissionEmailStorageKey = 'submission.email';
+  const picker = $.findOne(`.wu-sponsor-date-picker`, container);
+  const dates = $(`.wu-dates`, container);
+  const submitButton = $(`.wu-submit`, container);
+  const contactName = $(`.wu-name`, linkData);
+  const contactEmail = $(`.wu-email`, linkData);
+  const submissionNameStorageKey = `submission.name`;
+  const submissionEmailStorageKey = `submission.email`;
   const editing = viewModel.editing;
   let blockDate;
   const romeOpts = {
@@ -54,30 +54,30 @@ function ready (viewModel, container, route) {
     initialValue: nextThursday()
   };
   const calendar = rome(picker, romeOpts)
-    .on('data', addDate)
-    .on('back', calendarMoved)
-    .on('next', calendarMoved);
+    .on(`data`, addDate)
+    .on(`back`, calendarMoved)
+    .on(`next`, calendarMoved);
 
   subtypeInputs
-    .on('click', onTypeInputSelected)
-    .on('click change', updatePreview);
+    .on(`click`, onTypeInputSelected)
+    .on(`click change`, updatePreview);
   linkInput
-    .on('change keypress keydown paste input', revealLinkDataAfterScraping);
+    .on(`change keypress keydown paste input`, revealLinkDataAfterScraping);
   linkData
-    .on('change keypress keydown paste input bureaucrat', '.wa-link-image', updateThumbnailImage)
-    .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
+    .on(`change keypress keydown paste input bureaucrat`, `.wa-link-image`, updateThumbnailImage)
+    .on(`change keypress keydown paste input`, `input,textarea,select`, updatePreviewSlowly);
   dates
-    .on('click', '.wu-sponsor-date-removal', removeDate);
+    .on(`click`, `.wu-sponsor-date-removal`, removeDate);
   submitButton
-    .on('click', submit);
+    .on(`click`, submit);
 
-  changeSubtype(subtypeInputs.where(':checked'));
+  changeSubtype(subtypeInputs.where(`:checked`));
 
   if (editing) {
     updatePreview();
   } else {
-    contactName.value(ls.get(submissionNameStorageKey) || '');
-    contactEmail.value(ls.get(submissionEmailStorageKey) || '');
+    contactName.value(ls.get(submissionNameStorageKey) || ``);
+    contactEmail.value(ls.get(submissionEmailStorageKey) || ``);
     revealLinkDataAfterScraping();
   }
 
@@ -90,19 +90,19 @@ function ready (viewModel, container, route) {
     const sponsor = isSponsor();
     const subtype = el.text();
 
-    setClass(linkImageContainer, 'uv-hidden', subtype === 'secondary' || subtype === 'job');
+    setClass(linkImageContainer, `uv-hidden`, subtype === `secondary` || subtype === `job`);
 
-    setClass(contactSection, 'wu-has-sponsor', sponsor);
-    setClass(sponsorSection, 'uv-hidden', !sponsor);
+    setClass(contactSection, `wu-has-sponsor`, sponsor);
+    setClass(sponsorSection, `uv-hidden`, !sponsor);
 
-    setClass(colored, 'wu-color-suggestion', subtype === 'suggestion');
-    setClass(colored, 'wu-color-primary', subtype === 'primary');
-    setClass(colored, 'wu-color-secondary', subtype === 'secondary');
-    setClass(colored, 'wu-color-job', subtype === 'job');
+    setClass(colored, `wu-color-suggestion`, subtype === `suggestion`);
+    setClass(colored, `wu-color-primary`, subtype === `primary`);
+    setClass(colored, `wu-color-secondary`, subtype === `secondary`);
+    setClass(colored, `wu-color-job`, subtype === `job`);
   }
 
   function updateThumbnailImage (e) {
-    const $container = $(e.target).parents('.wa-section-contents');
+    const $container = $(e.target).parents(`.wa-section-contents`);
     scrapeCompletionService.updateThumbnail($container);
   }
 
@@ -115,14 +115,14 @@ function ready (viewModel, container, route) {
       updatePreview: updatePreview
     }, scraped);
     function scraped () {
-      linkData.removeClass('uv-opaque');
+      linkData.removeClass(`uv-opaque`);
     }
   }
 
   function getSelectedDates () {
-    return $('.wu-sponsor-date', linkData).map(toDate);
+    return $(`.wu-sponsor-date`, linkData).map(toDate);
     function toDate (el) {
-      return $(el).attr('data-date');
+      return $(el).attr(`data-date`);
     }
   }
 
@@ -135,8 +135,8 @@ function ready (viewModel, container, route) {
   }
 
   function isValidSponsorDate (date) {
-    const now = moment().endOf('day');
-    const current = moment(date).startOf('day');
+    const now = moment().endOf(`day`);
+    const current = moment(date).startOf(`day`);
     const formatted = current.format(dateFormat);
     return current.isAfter(now) && current.day() === 4 && !getSelectedDates().some(alreadySelected);
     function alreadySelected (selectedDate) {
@@ -161,15 +161,15 @@ function ready (viewModel, container, route) {
       blockDate = false;
       return;
     }
-    const li = $('<li>');
-    const description = $('<span>');
-    const removal = $('<i>');
-    const pretty = moment(value).format('MMMM Do');
-    description.addClass('wu-sponsor-date-description');
+    const li = $(`<li>`);
+    const description = $(`<span>`);
+    const removal = $(`<i>`);
+    const pretty = moment(value).format(`MMMM Do`);
+    description.addClass(`wu-sponsor-date-description`);
     description.text(pretty);
-    removal.addClass('fa fa-remove wu-sponsor-date-removal');
-    li.addClass('wu-sponsor-date');
-    li.attr('data-date', value);
+    removal.addClass(`fa fa-remove wu-sponsor-date-removal`);
+    li.addClass(`wu-sponsor-date`);
+    li.attr(`data-date`, value);
     li.append(description);
     li.append(removal);
     dates.append(li);
@@ -185,23 +185,23 @@ function ready (viewModel, container, route) {
       return ldate.isBefore(rdate) ? -1 : 1;
     }
     function findAndPlaceLast (date) {
-      const selector = '.wu-sponsor-date[data-date="' + date + '"]';
+      const selector = `.wu-sponsor-date[data-date="` + date + `"]`;
       $(selector).appendTo(dates);
     }
   }
 
   function removeDate (e) {
-    $(e.target).parents('.wu-sponsor-date').remove();
+    $(e.target).parents(`.wu-sponsor-date`).remove();
     calendar.refresh();
   }
 
   function getSubtype () {
-    return subtypeInputs.where(':checked').text();
+    return subtypeInputs.where(`:checked`).text();
   }
 
   function isSponsor () {
     const subtype = getSubtype();
-    const sponsor = subtype && subtype !== 'suggestion';
+    const sponsor = subtype && subtype !== `suggestion`;
     return sponsor;
   }
 
@@ -212,27 +212,27 @@ function ready (viewModel, container, route) {
       submitter: {
         name: contactName.value(),
         email: contactEmail.value(),
-        comment: $('.wu-comment', linkData).value()
+        comment: $(`.wu-comment`, linkData).value()
       },
       section: {
-        type: 'link',
+        type: `link`,
         subtype: subtype || null,
-        title: $('.wa-link-title', linkData).value(),
+        title: $(`.wa-link-title`, linkData).value(),
         href: linkInput.value(),
-        foreground: '#1bc211',
-        background: 'transparent',
-        source: $('.wa-link-source', linkData).value(),
-        sourceHref: $('.wa-link-source-href', linkData).value(),
-        image: linkImageContainer.but('.uv-hidden').find('.wa-link-image').value(),
-        sponsored: sponsor && subtype !== 'job',
+        foreground: `#1bc211`,
+        background: `transparent`,
+        source: $(`.wa-link-source`, linkData).value(),
+        sourceHref: $(`.wa-link-source-href`, linkData).value(),
+        image: linkImageContainer.but(`.uv-hidden`).find(`.wa-link-image`).value(),
+        sponsored: sponsor && subtype !== `job`,
         tags: [],
-        description: $('.wa-link-description', linkData).value()
+        description: $(`.wa-link-description`, linkData).value()
       }
     };
     if (sponsor) {
       model.sponsor = {
-        amount: parseInt($('.wu-sponsor-amount-input', linkData).value() || '0'),
-        invoice: $('.wu-sponsor-invoice-input').value(),
+        amount: parseInt($(`.wu-sponsor-amount-input`, linkData).value() || `0`),
+        invoice: $(`.wu-sponsor-invoice-input`).value(),
         dates: getSelectedDates()
       };
     }
@@ -243,12 +243,12 @@ function ready (viewModel, container, route) {
     const model = getModel();
     const options = {
       markdown: markdownService,
-      slug: 'submission-preview'
+      slug: `submission-preview`
     };
     weeklyCompilerService.compile([model.section], options, compiled);
     function compiled (err, html) {
       if (err) {
-        html = textService.format('<pre class="wa-error">%s</pre>', err);
+        html = textService.format(`<pre class="wa-error">%s</pre>`, err);
       }
       previewHtml.html(html);
     }
@@ -258,18 +258,18 @@ function ready (viewModel, container, route) {
     const model = getModel();
     const data = { json: model };
     const endpoint = getEndpoint();
-    viewModel.measly.post(endpoint, data).on('data', submitted);
+    viewModel.measly.post(endpoint, data).on(`data`, submitted);
 
     function submitted () {
       const owner = viewModel.roles && viewModel.roles.owner;
-      const target = owner ? '/weekly/submissions/review' : '/weekly';
+      const target = owner ? `/weekly/submissions/review` : `/weekly`;
       ls.set(submissionNameStorageKey, model.submitter.name);
       ls.set(submissionEmailStorageKey, model.submitter.email);
       taunus.navigate(target);
     }
 
     function getEndpoint () {
-      const base = '/api/weeklies/submissions';
+      const base = `/api/weeklies/submissions`;
       if (editing) {
         return `${base}/${route.params.slug}`;
       }

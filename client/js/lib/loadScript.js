@@ -1,9 +1,9 @@
 'use strict';
 
-const tag = 'script';
+const tag = `script`;
 
 function loadScript (url, options, done) {
-  if (typeof options === 'function') {
+  if (typeof options === `function`) {
     done = options;
     options = {};
   } else if (!options) {
@@ -18,7 +18,7 @@ function loadScript (url, options, done) {
   if (options.container) {
     options.container.insertBefore(script, options.container.firstChild);
   } else {
-    first = document.getElementsByTagName('link')[0];
+    first = document.getElementsByTagName(`link`)[0];
     first.parentNode.insertBefore(script, first);
   }
   return script;
@@ -26,7 +26,7 @@ function loadScript (url, options, done) {
     done();
   }
   function error () {
-    done(new Error('Error loading script: ' + url));
+    done(new Error(`Error loading script: ` + url));
   }
 }
 

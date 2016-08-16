@@ -1,8 +1,8 @@
 'use strict';
 
-const contra = require('contra');
-const bioService = require('../../services/bio');
-const User = require('../../models/User');
+const contra = require(`contra`);
+const bioService = require(`../../services/bio`);
+const User = require(`../../models/User`);
 
 module.exports = function (req, res, next) {
   contra.waterfall([getUser, getBio], respond);
@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
 
   function getBio (user, next) {
     if (!user) {
-      next(new Error('Please log out and authenticate again!')); return;
+      next(new Error(`Please log out and authenticate again!`)); return;
     }
     bioService.getMarkdown(user.email, got);
     function got (err, bio) {
@@ -35,9 +35,9 @@ module.exports = function (req, res, next) {
     }
     res.viewModel = {
       model: {
-        title: 'Bio Editor',
+        title: `Bio Editor`,
         meta: {
-          canonical: '/account/bio'
+          canonical: `/account/bio`
         },
         profile: profile
       }

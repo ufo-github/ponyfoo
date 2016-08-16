@@ -1,7 +1,7 @@
 'use strict';
 
-const winston = require('winston');
-const KnownTag = require('../../../models/KnownTag');
+const winston = require(`winston`);
+const KnownTag = require(`../../../models/KnownTag`);
 
 module.exports = function (req, res) {
   KnownTag.remove({ slug: req.params.slug }, saved);
@@ -9,6 +9,6 @@ module.exports = function (req, res) {
     if (err) {
       winston.error(err);
     }
-    res.redirect('/articles/tags/review');
+    res.redirect(`/articles/tags/review`);
   }
 };

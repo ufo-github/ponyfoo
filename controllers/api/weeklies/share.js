@@ -1,10 +1,10 @@
 'use strict';
 
-const winston = require('winston');
-const WeeklyIssue = require('../../../models/WeeklyIssue');
-const weeklySharingService = require('../../../services/weeklySharing');
+const winston = require(`winston`);
+const WeeklyIssue = require(`../../../models/WeeklyIssue`);
+const weeklySharingService = require(`../../../services/weeklySharing`);
 const friendlyShared = {
-  'email-self': 'an email just for yourself'
+  'email-self': `an email just for yourself`
 };
 
 module.exports = function (req, res) {
@@ -14,15 +14,15 @@ module.exports = function (req, res) {
 
   function found (err, weekly) {
     if (err) {
-      end('error', 'An unexpected error occurred.');
+      end(`error`, `An unexpected error occurred.`);
     } else if (!weekly) {
-      end('error', 'That weekly issue can’t be shared.');
-    } else if (medium === 'email-self') {
+      end(`error`, `That weekly issue can’t be shared.`);
+    } else if (medium === `email-self`) {
       share(weekly, false);
-    } else if (weekly.status === 'released' && weekly.statusReach === 'everyone') {
+    } else if (weekly.status === `released` && weekly.statusReach === `everyone`) {
       share(weekly, true);
     } else {
-      end('error', 'That weekly issue can’t be shared via social media yet.');
+      end(`error`, `That weekly issue can’t be shared via social media yet.`);
     }
   }
 
@@ -31,21 +31,21 @@ module.exports = function (req, res) {
     if (channel) {
       channel(weekly, { reshare: reshare, userId: req.user }, done);
     } else {
-      end('error', 'Sharing medium "' + medium + '" is unknown.');
+      end(`error`, `Sharing medium "` + medium + `" is unknown.`);
     }
     function done (err) {
       const mediumText = friendlyShared[medium] || medium;
       if (err) {
         winston.warn(err);
-        end('error', 'Sharing via ' + mediumText + ' failed.');
+        end(`error`, `Sharing via ` + mediumText + ` failed.`);
       } else {
-        end('success', 'Your weekly issue was shared via ' + mediumText + '.');
+        end(`success`, `Your weekly issue was shared via ` + mediumText + `.`);
       }
     }
   }
 
   function end (type, message) {
     req.flash(type, message);
-    res.redirect('/weekly/review');
+    res.redirect(`/weekly/review`);
   }
 };

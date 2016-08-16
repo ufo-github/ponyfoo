@@ -1,7 +1,7 @@
 'use strict';
 
-const _ = require('lodash');
-const datetimeService = require('./datetime');
+const _ = require(`lodash`);
+const datetimeService = require(`./datetime`);
 
 function toJSON (comment) {
   return {
@@ -11,13 +11,13 @@ function toJSON (comment) {
     email: comment.email,
     contentHtml: comment.contentHtml,
     site: comment.site,
-    parent: (comment.parent || '').toString(),
+    parent: (comment.parent || ``).toString(),
     gravatar: comment.gravatar,
   };
 }
 
 function hydrate (target, doc) {
-  if (doc.populated && doc.populated('comments')) {
+  if (doc.populated && doc.populated(`comments`)) {
     target.commentThreads = doc.comments.sort(byPublication).reduce(threads, []);
   }
   target.commentCount = doc.comments ? doc.comments.length : 0;

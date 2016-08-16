@@ -1,7 +1,7 @@
 'use strict';
 
-const summaryService = require('./summary');
-const markdownService = require('./markdown');
+const summaryService = require(`./summary`);
+const markdownService = require(`./markdown`);
 
 function summarize (article) {
   if (article.summary) { // author-provided summary

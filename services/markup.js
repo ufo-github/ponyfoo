@@ -1,8 +1,8 @@
 'use strict';
 
-const gemoji = require('gemoji');
-const htmlService = require('./html');
-const markdownService = require('./markdown');
+const gemoji = require(`gemoji`);
+const htmlService = require(`./html`);
+const markdownService = require(`./markdown`);
 
 function compile (md, options) {
   const methods = [];
@@ -26,7 +26,7 @@ function compile (md, options) {
   }
 
   function deferImages (html) {
-    const i = typeof o.deferImages === 'number' && o.deferImages;
+    const i = typeof o.deferImages === `number` && o.deferImages;
     return htmlService.deferImages(html, i);
   }
 

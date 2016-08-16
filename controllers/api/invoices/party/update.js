@@ -1,9 +1,9 @@
 'use strict';
 
-const winston = require('winston');
-const sluggish = require('sluggish');
-const InvoiceParty = require('../../../../models/InvoiceParty');
-const invoicePartyTypes = ['customer', 'payment'];
+const winston = require(`winston`);
+const sluggish = require(`sluggish`);
+const InvoiceParty = require(`../../../../models/InvoiceParty`);
+const invoicePartyTypes = [`customer`, `payment`];
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -13,11 +13,11 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!invoiceParty) {
-      next('route'); return;
+      next(`route`); return;
     }
     const body = req.body;
     const invalidType = invoicePartyTypes.indexOf(body.type) === -1;
-    const type = invalidType ? 'customer' : body.type;
+    const type = invalidType ? `customer` : body.type;
     invoiceParty.title = body.title;
     invoiceParty.slug = sluggish(body.slug);
     invoiceParty.type = type;
@@ -27,9 +27,9 @@ module.exports = function (req, res, next) {
     function saved (err) {
       if (err) {
         winston.error(err);
-        res.redirect('/invoices/parties/' + slug + '/edit');
+        res.redirect(`/invoices/parties/` + slug + `/edit`);
       } else {
-        res.redirect('/invoices/parties');
+        res.redirect(`/invoices/parties`);
       }
     }
   }

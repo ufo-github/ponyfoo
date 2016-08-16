@@ -1,8 +1,8 @@
 'use strict';
 
-const winston = require('winston');
-const sluggish = require('sluggish');
-const Invoice = require('../../../models/Invoice');
+const winston = require(`winston`);
+const sluggish = require(`sluggish`);
+const Invoice = require(`../../../models/Invoice`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
       next(err); return;
     }
     if (!invoice) {
-      next('route'); return;
+      next(`route`); return;
     }
     invoice.date = body.date;
     invoice.slug = sluggish(body.slug);
@@ -33,9 +33,9 @@ module.exports = function (req, res, next) {
   function saved (err) {
     if (err) {
       winston.error(err);
-      res.redirect('/invoices/' + slug + '/edit');
+      res.redirect(`/invoices/` + slug + `/edit`);
     } else {
-      res.redirect('/invoices');
+      res.redirect(`/invoices`);
     }
   }
 };

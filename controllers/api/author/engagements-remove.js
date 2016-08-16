@@ -1,7 +1,7 @@
 'use strict';
 
-const winston = require('winston');
-const Engagement = require('../../../models/Engagement');
+const winston = require(`winston`);
+const Engagement = require(`../../../models/Engagement`);
 
 module.exports = function (req, res) {
   Engagement.remove({ _id: req.body.id }, saved);
@@ -9,6 +9,6 @@ module.exports = function (req, res) {
     if (err) {
       winston.error(err);
     }
-    res.redirect('/speaking/review');
+    res.redirect(`/speaking/review`);
   }
 };

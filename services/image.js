@@ -1,18 +1,18 @@
 'use strict';
 
-const fs = require('fs');
-const gm = require('gm');
-const but = require('but');
-const path = require('path');
-const contra = require('contra');
-const Imagemin = require('imagemin');
-const pngquant = require('imagemin-pngquant');
-const mozjpeg = require('imagemin-mozjpeg');
-const gifsicle = require('imagemin-gifsicle');
-const winston = require('winston');
-const prettyBytes = require('pretty-bytes');
-const env = require('../lib/env');
-const level = env('LOGGING_LEVEL');
+const fs = require(`fs`);
+const gm = require(`gm`);
+const but = require(`but`);
+const path = require(`path`);
+const contra = require(`contra`);
+const Imagemin = require(`imagemin`);
+const pngquant = require(`imagemin-pngquant`);
+const mozjpeg = require(`imagemin-mozjpeg`);
+const gifsicle = require(`imagemin-gifsicle`);
+const winston = require(`winston`);
+const prettyBytes = require(`pretty-bytes`);
+const env = require(`../lib/env`);
+const level = env(`LOGGING_LEVEL`);
 const limits = {
   width: 900,
   height: 550
@@ -20,11 +20,11 @@ const limits = {
 
 function findPlugin (file) {
   const ext = path.extname(file).toLowerCase();
-  if (ext === '.png') {
+  if (ext === `.png`) {
     return pngquant();
-  } else if (ext === '.jpg' || ext === '.jpeg') {
+  } else if (ext === `.jpg` || ext === `.jpeg`) {
     return mozjpeg();
-  } else if (ext === '.gif') {
+  } else if (ext === `.gif`) {
     return gifsicle({ interlaced: true });
   }
 }
@@ -39,7 +39,7 @@ function getMinifier (options) {
 }
 
 function log (options) {
-  if (level !== 'debug') {
+  if (level !== `debug`) {
     return;
   }
   fs.stat(options.file, function gotStats (err, stats) {
@@ -51,7 +51,7 @@ function log (options) {
     const difference = options.size - stats.size;
     const diff = prettyBytes(-difference);
     const percentage = -(100 - stats.size * 100 / options.size).toFixed(2);
-    winston.info('%s was %s, is %s, diff %s [%s%]', options.name, was, is, diff, percentage);
+    winston.info(`%s was %s, is %s, diff %s [%s%]`, options.name, was, is, diff, percentage);
   });
 }
 
@@ -65,7 +65,7 @@ function magic (options, done) {
   }
 
   if (options.grayscale === true) {
-    op = op.channel('gray');
+    op = op.channel(`gray`);
   }
 
   op.write(options.file, done);
