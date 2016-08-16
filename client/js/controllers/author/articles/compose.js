@@ -149,7 +149,7 @@ function initialize (viewModel, container, route) {
       getText: getSlugText,
       getValue: getSlugText
     });
-    window.authorSignet=authorSignet;
+
     horsey(author[0], {
       source: getAuthorSuggestions,
       getText: getSlugText,
@@ -163,7 +163,7 @@ function initialize (viewModel, container, route) {
 
     const slug = author.value();
     author.value(``);
-    authorSignet.addItem({ slug });
+    authorSignet.addItem(slug);
   }
 
   function getCurrentState () {
