@@ -26,6 +26,8 @@ jadum resources/**/*.jade -o .bin --obj '{"basedir":"resources"}' --watch &
 taunus -o
 NODE_ENV=development node lib/env BROWSER_ENV | jq . > .env.browser.json
 watchify client/js/inline/fonts.js -o .bin/inline/fonts.js --debug --verbose &
+watchify client/js/inline/javascript.js -o .bin/inline/javascript.js --debug --verbose &
+watchify client/js/inline/styles.js -o .bin/inline/styles.js --debug --verbose &
 watchify client/js/main.js -o .bin/public/js/all.js --debug --verbose &
 watchify client/js/service-worker.js -o .bin/public/service-worker.js --debug --verbose &
 watchify services/weeklyCompiler.js -s weekly-compiler -o .bin/public/js/weekly-compiler.js --debug --verbose &

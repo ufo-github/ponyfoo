@@ -8,7 +8,11 @@ const analytics = require(`./analytics`);
 const wiring = require(`./wiring`);
 const env = require(`../../lib/env`);
 const main = $.findOne(`.ly-main`);
-const g = global;
+
+global.$ = $;
+global.md = markdownService.compile;
+global.md.svc = markdownService;
+global.moment = moment;
 
 require(`hint`);
 
@@ -35,11 +39,6 @@ taunus.mount(main, wiring, {
   bootstrap: `manual`,
   forms: false
 });
-
-g.$ = $;
-g.md = markdownService.compile;
-g.md.svc = markdownService;
-g.moment = moment;
 
 require(`./service-worker-registration`)();
 

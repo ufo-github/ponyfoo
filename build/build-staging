@@ -24,5 +24,7 @@ browserify node_modules/rome -s rome -o .bin/public/js/rome.js --debug
 browserify node_modules/d3 -s d3 -o .bin/public/js/d3.js --debug
 browserify node_modules/d3-tip -s d3-tip -o .bin/public/js/d3-tip.js --debug
 browserify client/js/inline/fonts.js -o .bin/inline/fonts.js --debug
+browserify client/js/inline/javascript.js -o .bin/inline/javascript.js --debug
+browserify client/js/inline/styles.js -o .bin/inline/styles.js --debug
 browserify client/js/main.js -o .bin/public/js/all.js --debug
 browserify client/js/service-worker.js -o .bin/public/service-worker.js --debug

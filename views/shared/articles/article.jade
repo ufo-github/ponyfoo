@@ -15,7 +15,7 @@ header(
     section.at-teaser.dc-role
       div.at-teaser-markdown.md-markdown!=article.teaserHtml
 
-  if article.gitHref
+  if published && article.gitHref
     a.at-header-button(href=article.gitHref, target='_blank')
       i.fa.fa-code-fork
       span=' '
