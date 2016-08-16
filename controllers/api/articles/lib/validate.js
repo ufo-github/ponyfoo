@@ -34,9 +34,8 @@ function validate (model, options) {
     echojs: !!model.echojs,
     hn: !!model.hn
   };
-  const author = getAuthor();
   if (options.hasAuthor) {
-    sanitized.author = author;
+    sanitized.author = getAuthor();
   }
   const publication = getPublicationDate();
   if (publication) {
@@ -62,7 +61,7 @@ function validate (model, options) {
   return validation;
 
   function getAuthor () {
-    if (options.hasAuthor && !options.author) {
+    if (!options.author) {
       validation.push(`The author doesn't exist. Maybe it was deleted or demoted?`);
       return null;
     }
