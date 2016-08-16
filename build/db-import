@@ -1,0 +1,4 @@
+#!/bin/bash
+
+npm run db-backup-from-production
+npm run db-restore-latest-backup-locally

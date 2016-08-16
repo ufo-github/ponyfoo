@@ -26,8 +26,9 @@
     "clean-all": "build/clean-all",
     "copy": "build/copy",
     "diagnose": "build/diagnose",
-    "db-backup": "build/db-backup",
-    "db-restore": "build/db-restore",
+    "db-backup-from-production": "build/db-backup-from-production",
+    "db-restore-latest-backup-locally": "build/db-restore-latest-backup-locally",
+    "db-import": "build/db-import",
     "setup": "deploy/setup",
     "deploy": "deploy/deploy",
     "ssh": "deploy/ssh",
@@ -52,6 +53,7 @@
   "browserify": {
     "transform": [
       "browserify-shim",
+      "rollupify",
       [
         "babelify",
         {
@@ -202,6 +204,7 @@
     "pngjs": "2.2.0",
     "pretty-bytes-cli": "1.0.0",
     "reaver": "2.0.0",
+    "rollupify": "0.3.4",
     "scourge": "1.0.1",
     "serve-favicon": "2.0.1",
     "serve-static": "1.1.0",
