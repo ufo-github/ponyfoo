@@ -34,9 +34,7 @@ function create (email, password, done) {
     displayName: email.split(`@`)[0],
     password: password
   });
-  user.save(function saved (err) {
-    done(err, user);
-  });
+  user.save(err => done(err, user));
 }
 
 function register (input, done) {
@@ -54,7 +52,7 @@ function register (input, done) {
     },
     function availability (user, next) {
       if (user !== null) {
-        messages.unshift(`That email address is unavailable`);
+        messages.unshift(`That email address already belongs to a user!`);
       }
       next(messages.length ? messages : null);
     },

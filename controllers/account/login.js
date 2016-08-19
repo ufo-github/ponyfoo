@@ -16,9 +16,12 @@ function toProviderModel (key) {
 }
 
 module.exports = function (req, res, next) {
+  if (req.user) {
+    return; // case handled by transports package
+  }
   res.viewModel = {
     model: {
-      title: `Login`,
+      title: `Login \u2014 Pony Foo`,
       meta: {
         canonical: `/account/login`
       },

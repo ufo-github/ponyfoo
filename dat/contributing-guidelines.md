@@ -37,7 +37,9 @@ That being said, none of this is written in stone.
 
 ## All of the above sounds amazing? Reach out!
 
-When you're ready, drop us a message at [hello@ponyfoo.com][hello]. Please include links to pieces you've published in the past. If you already have a draft, send that over too in plain text, Markdown, HTML, or whatever format you'd like.
+When you're ready, please drop us a message at [hello@ponyfoo.com][hello]. Please include links to pieces you've published in the past. If you already have a draft, send that over too in plain text, Markdown, HTML, or whatever format you'd like.
+
+If you feel confident about your writing skills and you think your topic is on point with what we write about at Pony Foo, go ahead and create an account using the button below. You'll be able to access our online article editor, create and review drafts, and collaborate with us in getting your articles published!
 
 [hello]: hello@ponyfoo.com "Say hello!"
 [jeff]: https://blog.codinghorror.com/ "Coding Horror Blog"

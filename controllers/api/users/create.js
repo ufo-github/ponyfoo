@@ -1,5 +1,6 @@
 'use strict';
 
+const winston = require(`winston`);
 const sluggish = require(`sluggish`);
 const validator = require(`validator`);
 const markupService = require(`../../../services/markup`);
@@ -72,6 +73,7 @@ module.exports = function (req, res, next) {
     if (err) {
       next(err); return;
     }
+    winston.info(`Created an account for ${ user.email }`);
     bioService.update(user.email, bio, bioHtml, bioText);
     res.json({});
   }

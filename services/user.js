@@ -1,10 +1,12 @@
 'use strict';
 
-const assign = require(`assignment`);
 const contra = require(`contra`);
+const winston = require(`winston`);
+const assign = require(`assignment`);
 const User = require(`../models/User`);
 const Article = require(`../models/Article`);
 const gravatarService = require(`./gravatar`);
+const defaultRoles = [`articles`];
 
 function findContributors (done) {
   contra.waterfall([next => findUsers({}, next), countArticles], done);
@@ -63,12 +65,14 @@ function countArticles (users, done) {
   }
 }
 
-function getModel (email, password, bypass) {
+function getModel (email, password, bypassEncryption) {
+  const displayName = email.split(`@`)[0];
   return {
-    email: email,
-    password: password,
-    bypassEncryption: bypass,
-    displayName: email.split(`@`)[0]
+    email,
+    password,
+    bypassEncryption,
+    displayName,
+    roles: defaultRoles
   };
 }
 
@@ -133,12 +137,15 @@ function termReducer (all, term, i, terms) {
   return all + separator + joiner + term;
 }
 
-function create (bypass) {
+function createUser ({ bypassEncryption }) {
   return function creation (email, password, done) {
-    const model = getModel(email, password, bypass);
+    const model = getModel(email, password, bypassEncryption);
     const user = new User(model);
 
     user.save(function saved (err) {
+      if (!err) {
+        winston.info(`Created an account for ${ email }`);
+      }
       done(err, user);
     });
   };
@@ -204,8 +211,8 @@ module.exports = {
   findById,
   findOne,
   findContributors,
-  create: create(false),
-  createUsingEncryptedPassword: create(true),
+  create: createUser({ bypassEncryption: false }),
+  createUsingEncryptedPassword: createUser({ bypassEncryption: true }),
   setPassword,
   getProfile,
   getAvatar,

@@ -33,8 +33,8 @@ function sendEmail (user, token, done) {
   const link = getLink(token);
   const model = {
     to: user.email,
-    subject: `Account Email Verification`,
-    teaser: `Action required to complete your account registration`,
+    subject: `Welcome to Pony Foo! Email verification required. 🦄`,
+    teaser: `Email verification is required to complete your account registration.`,
     validation: {
       link: link,
       expires: getExpiration(token).fromNow()
