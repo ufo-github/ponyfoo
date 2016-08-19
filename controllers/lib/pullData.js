@@ -14,7 +14,7 @@ module.exports = function (done) {
       done(err); return;
     }
     done(null, {
-      subscribers: result.subscribers.list,
+      subscribers: result.subscribers.buckets,
       verified: result.subscribers.verified,
       pageviews: result.pageviews
     });

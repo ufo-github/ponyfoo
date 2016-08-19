@@ -28,7 +28,7 @@
     "diagnose": "build/diagnose",
     "db-backup-from-production": "build/db-backup-from-production",
     "db-restore-latest-backup-locally": "build/db-restore-latest-backup-locally",
-    "db-import": "build/db-import",
+    "db-pull": "build/db-pull",
     "setup": "deploy/setup",
     "deploy": "deploy/deploy",
     "ssh": "deploy/ssh",

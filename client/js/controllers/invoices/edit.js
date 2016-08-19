@@ -33,7 +33,6 @@ module.exports = function (viewModel) {
     date.on(`keypress keydown paste input`, typingDateSlowly);
     customerName.on(`keypress keydown paste input`, typingCustomerSlowly);
     addItem.on(`click`, appendItemPartial);
-    updatePreview();
 
     $(`.ig-container`)
       .on(`keypress keydown paste input change`, `input,textarea`, updatePreviewSlowly)
@@ -42,6 +41,9 @@ module.exports = function (viewModel) {
     $(`.ive-save`).on(`click`, save);
     $(`.ive-customer-frequent`).on(`change`, prefilledPartyHandler(`customer`));
     $(`.ive-payment-frequent`).on(`change`, prefilledPartyHandler(`payment`));
+
+    updatePreview();
+    updateSlug();
 
     function typingSlug () { boundSlug = false; updatePreviewSlowly(); }
     function typingDate () { updateSlug(); }
@@ -79,6 +81,7 @@ module.exports = function (viewModel) {
           details.value(``);
         }
         el.value(``);
+        updateSlug();
         updatePreviewSlowly();
       }
     }

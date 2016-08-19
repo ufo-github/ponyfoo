@@ -5,7 +5,11 @@ const $ = require(`dominus`);
 const moment = require(`moment`);
 const debounce = require(`lodash/debounce`);
 const loadScript = require(`../../lib/loadScript`);
-const colors = [`#cbc5c0`, `#1a4d7f`, `#55acee`, `#1bc211`, `#900070`, `#e92c6c`, `#f3720d`, `#ffe270`];
+const colors = [`#e0e0e0`, `#cbc5c0`, `#55acee`, `#1bc211`, `#900070`, `#e92c6c`, `#f3720d`, `#ffe270`];
+
+function isLightColor (color) {
+  return color === `#e0e0e0` || color === `#cbc5c0` || color === `#ffe270`;
+}
 
 module.exports = function (viewModel, container) {
   const graphData = viewModel.subscriberGraph;
@@ -25,6 +29,7 @@ module.exports = function (viewModel, container) {
     $(window).on(`resize`, renderTimely);
     $(`#sg-show-subscribers`).on(`change`, render);
     $(`#sg-show-pageviews`).on(`change`, render);
+    $(`#sg-wow-mode`).on(`change`, render);
   }
 
   function render () {
@@ -32,6 +37,7 @@ module.exports = function (viewModel, container) {
     const parent = $.findOne(`.sg-container`, container);
     const showSubscribers = $(`#sg-show-subscribers`, container).value();
     const showPageViews = $(`#sg-show-pageviews`, container).value();
+    const wowMode = $(`#sg-wow-mode`, container).value();
 
     $(`.sg-chart`, container).remove();
 
@@ -77,22 +83,29 @@ module.exports = function (viewModel, container) {
     }
 
     function prepareDomain () {
-      color.domain(d3.keys(data[0]).filter(function (key) { return key !== `date` && key !== `dateText`; }));
+      color.domain(d3.keys(data[0]).filter(key => key !== `date` && key !== `dateText`));
 
-      data.forEach(function (d) {
-        let currentHeight = 0;
-        d.date = new Date(d.date);
-        d.fragments = color.domain().map(name => {
-          const y0 = currentHeight;
-          const y1 = currentHeight += +d[name];
-          return { name, y0, y1, d };
+      data
+        .sort((a, b) => moment(a.date).isAfter(b.date) ? 1 : -1)
+        .forEach((d, i) => {
+          const types = [
+            `unverified`, `migration`, `twitter`, `sidebar`, `comment`, `article`, `landed`, `weekly`
+          ];
+          if (!(wowMode || i === 0)) {
+            types.forEach(type => d[type] += data[i - 1][type]);
+          }
+          let currentHeight = 0;
+          d.date = new Date(d.date);
+          d.fragments = color.domain().map(name => {
+            const y0 = currentHeight;
+            const y1 = currentHeight += +d[name];
+            return { name, y0, y1, d };
+          });
+          d.total = types.reduce((total, type) => total + d[type], 0);
         });
-        d.total = d.unverified + d.migration + d.twitter + d.sidebar + d.comment + d.article + d.landed + d.weekly;
-      });
-      data.sort(function (a, b) { return moment(a.date).isAfter(b.date) ? 1 : -1; });
 
-      x.domain(data.map(function (d) { return d.dateText; }));
-      y.domain([0, d3.max(data, function (d) { return d.total; })]);
+      x.domain(data.map(d => d.dateText));
+      y.domain([0, d3.max(data, d => d.total)]);
     }
 
     function addTimeAxis () {
@@ -135,7 +148,7 @@ module.exports = function (viewModel, container) {
           .data(function (d) { return d.fragments; })
           .enter().append(`rect`)
           .attr(`class`, `sg-bar`)
-          .attr(`width`, x.rangeBand())
+          .attr(`width`, x.rangeBand() + (wowMode ? 0 : 1))
           .attr(`y`, function (d) { return y(d.y1); })
           .attr(`height`, function (d) { return y(d.y0) - y(d.y1); })
           .style(`fill`, function (d) { return color(d.name); });
@@ -159,10 +172,13 @@ module.exports = function (viewModel, container) {
           .attr(`y`, 6)
           .attr(`dy`, `.71em`)
           .style(`text-anchor`, `end`)
-          .text(`Subscribers per week`);
+          .text(wowMode ? `Subscribers per week` : `Total subscribers`);
       }
 
       function addLegends () {
+        const legends = {
+          landed: `landing`
+        };
         const legend = svg.selectAll(`.legend`)
           .data(color.domain().slice().reverse())
           .enter().append(`g`)
@@ -180,7 +196,7 @@ module.exports = function (viewModel, container) {
           .attr(`y`, 9)
           .attr(`dy`, `.35em`)
           .style(`text-anchor`, `end`)
-          .text(function (d) { return d; });
+          .text(d => legends[d] || d);
       }
 
       function addTips () {
@@ -193,23 +209,33 @@ module.exports = function (viewModel, container) {
             const i = data.indexOf(full);
             const oldIndex = i - 1;
             const old = oldIndex < 0 ? 0 : data[oldIndex].total - data[oldIndex].unverified;
-            const now = full.total - full.unverified;
+            const now = full.total;
+            const verified = now - full.unverified;
             const { name } = d;
             const c = color(name);
+            const tipClass = isLightColor(c) ? `sg-tip-light` : `sg-tip-dark`;
             return `
-<div class="sg-tip-content" style="color: ${ c === `#ffe270` ? `#333` : `#fbf9ec` }; background-color: ${ c };">
+<div class="sg-tip-content ${ tipClass }" }; style="background-color: ${ c };">
+  <div class="sg-tip-date">${ full.dateText }</div>
   <div>
-    <span class="sg-tip-label">${ name }:</span>
-     ${ full[name] } (${ diffText(data[oldIndex][name], full[name]) })
+    <span class="sg-tip-label">${ name }: </span>
+    <span class="sg-tip-numbers">${ full[name] } ${ diffText(data[oldIndex][name], full[name]) }</span>
   </div>
-  <div>Overall: ${ now } (${ diffText(old, now) })</div>
+  <div>
+    <span class="sg-tip-label">Verified: </span>
+    <span class="sg-tip-numbers">${ verified } ${ diffText(old, verified) }</span>
+  </div>
+  <div>
+    <span class="sg-tip-label">Total: </span>
+    <span class="sg-tip-numbers">${ now } ${ diffText(old, now) }</span>
+  </div>
 </div>`;
           });
 
         svg.call(tip);
         svg
           .selectAll(`rect`)
-          .on(`mouseover`, function (d) {
+          .on(`mouseover`, d => {
             if (d.y1 - d.y0 > 0) { tip.show(d); }
           });
 
@@ -223,10 +249,13 @@ module.exports = function (viewModel, container) {
       if (!pv || pv.length === 0) {
         return;
       }
-      pv.forEach(pv => {
-        pv.date = new Date(pv.date);
-        if (peak < pv.views) {
-          peak = pv.views;
+      pv.forEach((cpv, i) => {
+        cpv.date = new Date(cpv.date);
+        if (!(wowMode || i === 0)) {
+          cpv.views += pv[i - 1].views;
+        }
+        if (peak < cpv.views) {
+          peak = cpv.views;
         }
       });
 
@@ -237,8 +266,8 @@ module.exports = function (viewModel, container) {
         .x(d => x(d.date))
         .y(d => y(d.views));
 
-      x.domain(d3.extent(pv, function (d) { return d.date; }));
-      y.domain(d3.extent(pv, function (d) { return d.views; }));
+      x.domain(d3.extent(pv, d => d.date));
+      y.domain(d3.extent(pv, d => d.views));
 
       addPageViewsAxis();
       addLinearGradient();
@@ -260,7 +289,7 @@ module.exports = function (viewModel, container) {
           .attr(`y`, 6)
           .attr(`dy`, `.71em`)
           .style(`text-anchor`, `end`)
-          .text(`Page views per day`);
+          .text(wowMode ? `Page views per day` : `Total page views`);
       }
 
       function addLinearGradient () {
@@ -303,6 +332,7 @@ module.exports = function (viewModel, container) {
 function diffText (old, now) {
   const diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);
   const sign = diff < 0 ? `` : `+`;
-  const fixed = diff.toFixed(2).replace(/0+$/, ``).replace(/\.$/, ``);
-  return sign + fixed + `%`;
+  const fixed = diff.toFixed(1).replace(/0+$/, ``).replace(/\.$/, ``);
+  const css = diff < 0 ? `sg-diff-negative` : `sg-diff-positive`;
+  return `<span class='sg-diff ${css}'>${ sign }${ fixed }%</span>`;
 }

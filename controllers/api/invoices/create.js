@@ -19,7 +19,15 @@ module.exports = function (req, res) {
   };
   model.items = body.items;
   model.paid = body.paid;
+
+  if (!model.slug) {
+    req.flash(`error`, `Invoice must have a slug!`);
+    res.redirect(`/invoices/new`);
+    return;
+  }
+
   new Invoice(model).save(saved);
+
   function saved (err) {
     if (err) {
       winston.error(err);

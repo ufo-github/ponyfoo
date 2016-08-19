@@ -22,55 +22,67 @@ function pullSubscribers (done) {
 }
 
 function toWeeklyDataModel (subscribers) {
+  const verified = subscribers.filter(isVerified).length;
   const copy = subscribers.slice();
-  const list = [];
-  let subscriber;
-  let week;
-  let current;
-  while (copy.length) {
-    subscriber = copy.pop();
-    week = moment.utc(subscriber.created).subtract(7, `days`);
-    current = {
-      date: week.toDate(),
-      dateText: week.format(`Do MMMM ’YY`),
-      migration: 0,
-      unverified: 0,
-      twitter: 0,
-      weekly: 0,
-      sidebar: 0,
-      comment: 0,
-      article: 0,
-      landed: 0
-    };
-    add();
-    while (copy.length) {
-      subscriber = copy.pop();
-      if (moment.utc(subscriber.created).isAfter(week)) {
-        add();
+  const buckets = getBuckets(copy);
+  return { verified, buckets };
+}
+
+function getBuckets (all) {
+  const buckets = [];
+  let bucket;
+  let subscriber = all.pop();
+  let stay = !!subscriber;
+  while (stay) {
+    stay = false;
+    bucket = initBucket(subscriber);
+    while (all.length) {
+      subscriber = all.pop();
+      const wasCreatedLater = moment.utc(subscriber.created).isAfter(bucket.date);
+      if (wasCreatedLater) {
+        addToBucket(bucket, subscriber);
       } else {
+        stay = true;
         break;
       }
     }
-    list.push(current);
+    buckets.push(bucket);
   }
-  const verified = subscribers.filter(isVerified).length;
-  return {
-    list: list,
-    verified: verified
+  return buckets;
+}
+
+function initBucket (seedSubscriber) {
+  const week = moment.utc(seedSubscriber.created).subtract(7, `days`);
+  const bucket = {
+    date: week.toDate(),
+    dateText: week.format(`Do MMMM ’YY`),
+    migration: 0,
+    unverified: 0,
+    twitter: 0,
+    weekly: 0,
+    sidebar: 0,
+    comment: 0,
+    article: 0,
+    landed: 0
   };
-  function add () {
-    current[source()]++;
+  addToBucket(bucket, seedSubscriber);
+  return bucket;
+}
+
+function addToBucket (bucket, subscriber) {
+  bucket[findSource(subscriber)]++;
+}
+
+function findSource (subscriber) {
+  if (!subscriber.verified) {
+    return `unverified`;
   }
-  function source () {
-    if (!subscriber.verified) {
-      return `unverified`;
-    }
-    if (subscriber.source === `intent`) {
-      return `sidebar`;
-    }
-    return subscriber.source.split(`+`)[0];
+  if (subscriber.source === `intent`) {
+    return `sidebar`;
   }
-  function isVerified (s) {
-    return s.verified;
-  }
+  return subscriber.source.split(`+`)[0];
+}
+
+function isVerified (subscriber) {
+  return subscriber.verified;
 }
