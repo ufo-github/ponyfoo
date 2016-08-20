@@ -282,7 +282,7 @@ function initialize (viewModel, container, route) {
   }
 
   function getHtmlTitle () {
-    const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
     return getHtml(title).replace(rstrip, ``);
   }
 

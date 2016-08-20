@@ -13,7 +13,7 @@ const markdownService = require(`../../../../../services/markdown`);
 const textService = require(`../../../../../services/text`);
 const summaryService = require(`../../../../../services/summary`);
 const loadScript = require(`../../../lib/loadScript`);
-const rparagraph = /^<p>|<\/p>$/i;
+const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
 const rdigits = /^\d+$/;
 
 module.exports = controller;
@@ -156,7 +156,7 @@ function ready (viewModel, container, route) {
       const $linkHeading = $(`.wa-section-heading`, el);
       const $linkPreview = $(`.wa-link-preview`, el);
       const $title = $(`.wa-link-title`, el);
-      const title = markdownService.compile($title.value()).replace(rparagraph, ``);
+      const title = markdownService.compile($title.value()).replace(rstrip, ``);
       const summaryLong = summaryService.summarize(title);
       const summaryShort = summaryService.summarize(title, 30);
       const summaryHtml = summaryShort.html.trim();

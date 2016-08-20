@@ -72,12 +72,12 @@ function update (options, done) {
       if (issue.status !== `released`) {
         issue.status = model.status;
       }
-      const rparagraph = /^<p>|<\/p>$/ig;
+      const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
       issue.updated = Date.now();
       issue.slug = model.slug;
       issue.sections = model.sections;
       issue.title = model.title;
-      issue.titleHtml = (model.titleHtml || ``).replace(rparagraph, ``);
+      issue.titleHtml = (model.titleHtml || ``).replace(rstrip, ``);
       issue.titleText = model.titleText;
       issue.summary = model.summary;
       issue.summaryHtml = model.summaryHtml;

@@ -80,7 +80,7 @@ function post (req, res, next) {
     res.json({});
   }
   function validateChanges (model, input, isOwner) {
-    const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
     const errors = [];
     const sponsor = !!input.sponsor;
     if (!input.submitter) { input.submitter = {}; }

@@ -29,10 +29,10 @@ module.exports = function (req, res) {
   };
   new Presentation(model).save(saved);
   function toResourceItem (title, i) {
-    const rparagraph = /^<p>|<\/p>$/ig;
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
     return {
       title: title,
-      titleHtml: markupService.compile(title).trim().replace(rparagraph, ``),
+      titleHtml: markupService.compile(title).trim().replace(rstrip, ``),
       url: body.resources_url[i]
     };
   }

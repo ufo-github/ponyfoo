@@ -28,8 +28,8 @@ module.exports = function (viewModel) {
     previewTeaser.text(teaser.value() || `Teaser about email contents`);
   }
   function updatePreviewBody () {
-    const rparagraph = /^<p>|<\/p>$/ig;
-    previewBody.html(getHtml(body).trim().replace(rparagraph, ``) || `Main body of your email`);
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
+    previewBody.html(getHtml(body).trim().replace(rstrip, ``) || `Main body of your email`);
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }

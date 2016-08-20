@@ -25,7 +25,7 @@ article.ly-section.vw-maintainer.de-host
               else
                 img.av-avatar(src=article.author.avatar, alt='')
             td(data-label='Title')
-              a.ar-title.lk-rainbows(href=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
+              a.ar-title.lk-rainbows.md-markdown(href=article.permalink, aria-label='Navigate to full article')!=article.titleHtml
             td(data-label='Condition', class='ar-status ar-status-' + article.status)
               include ../../partials/estimate
             if userIsEditor

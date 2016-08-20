@@ -1,8 +1,5 @@
 if model.user
   nav.nv-container
-    div.nv-logon
-      a.nv-logon-anchor(href='/account/logout') Logout
-
     ul.nv-items
       if model.roles.owner || model.roles.articles
         li.nv-item.nv-open
@@ -47,6 +44,7 @@ if model.user
           a.lk-link.lk-blue.lk-clean(href='/presentations/review', aria-label='Manage presentations') Presentations
         li.nv-item.nv-close
           span.nv-closer
+
         li.nv-item.nv-open
           span.nv-opener
         li.nv-item
@@ -56,10 +54,19 @@ if model.user
         li.nv-item
           a.lk-icon.fa.fa-credit-card(href='/invoices', aria-label='Generate Pony Foo invoices')
         li.nv-item
-          a.lk-icon.fa.fa-users(href='/users', aria-label='Manage contributing users')
+          a.lk-icon.fa.fa-users(href='/users/review', aria-label='Manage contributing users')
+        li.nv-item
+          a.lk-icon.fa.fa-user-times(href='/users/unverified/review', aria-label='Manage unverified users')
         li.nv-item
           a.lk-icon.fa.fa-bars(href='/owner/logs', aria-label='Check out activity logs')
         li.nv-item
           a.lk-icon.fa.fa-cog(href='/owner/settings', aria-label='Change site-wide settings')
         li.nv-item.nv-close
           span.nv-closer
+
+      li.nv-item.nv-open
+        span.nv-opener
+      li.nv-item
+        a.lk-icon.fa.fa-sign-out(href='/account/logout')
+      li.nv-item.nv-open
+        span.nv-closer

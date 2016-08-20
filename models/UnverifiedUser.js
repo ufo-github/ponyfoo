@@ -3,6 +3,7 @@
 const mongoose = require(`mongoose`);
 const cryptoService = require(`../services/crypto`);
 const schema = new mongoose.Schema({
+  created: { type: Date, require: true, 'default': Date.now },
   email: { type: String, require: true },
   password: { type: String, require: true }
 }, { id: false });

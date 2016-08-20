@@ -18,8 +18,7 @@ Article.schema.pre(`save`, beforeSave);
 Article.schema.post(`save`, afterSave);
 
 function beforeSave (next) {
-  const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
-  const rstripemptyparagraph = /^\s*<p>\s*<\/p>\s*$/i;
+  const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
   const article = this;
 
   article._oldSign = article.sign;
@@ -27,7 +26,7 @@ function beforeSave (next) {
   article.titleHtml = toHtml(article.titleMarkdown).replace(rstrip, ``);
   article.title = beautifyText(markdownService.decompile(article.titleHtml, { plain: true }));
   article.teaserHtml = toHtml(article.teaser, 1);
-  article.editorNoteHtml = toHtml(article.editorNote || ``, 1).replace(rstripemptyparagraph, ``);
+  article.editorNoteHtml = toHtml(article.editorNote || ``, 1).replace(rstrip, ``);
   article.introductionHtml = toHtml(article.introduction, 1);
   article.bodyHtml = toHtml(article.body, true);
   const summary = articleSummarizationService.summarize(article);

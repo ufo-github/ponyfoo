@@ -45,9 +45,13 @@ section.at-container.de-host
 
       footer.at-siblings.an-siblings.uv-clearfix
         if article.prev
-          a.lk-rainbows.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')!='« ' + article.prev.titleHtml
+          a.lk-rainbows.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')
+            span='« '
+            span.md-markdown.md-markdown-inline!=article.prev.titleHtml
         if article.next
-          a.lk-rainbows.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')!=article.next.titleHtml + ' »'
+          a.lk-rainbows.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')
+            span.md-markdown.md-markdown-inline!=article.next.titleHtml
+            span=' »'
 
     form.ly-section.ss-container.at-subscribe.wt-cta(action='/api/subscribers', method='post', name='subscribe')
       div.ss-label

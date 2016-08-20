@@ -1,0 +1,24 @@
+article.ly-section.vw-maintainer.de-host
+  section.vw-maintainer-content.de-column
+    h1.vw-title Unverified Users
+    section.usr-container
+      table
+        thead
+          tr
+            th
+            th Created
+            th Email
+        tbody
+          each user in users
+            tr
+              td.usr-avatar(data-label='Profile')
+                img.av-avatar(src=user.avatar, alt='')
+              td.usr-date(data-label='Created')
+                if user.created
+                  time(datetime=user.created.datetime, aria-label='Created ' + user.created.title)=user.created.text
+                else
+                  span Unknown
+              td(data-label='Email')
+                a.lk-rainbows(data-email='mailto:' + user.email, aria-label='Send them an email.')=user.email
+
+  include ../../partials/aside

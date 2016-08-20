@@ -37,8 +37,8 @@ module.exports = function (viewModel, container) {
   }
 
   function updatePreview () {
-    const rparagraph = /^<p>|<\/p>$/ig;
-    preview.html(getHtml(bio).trim().replace(rparagraph, ``) || `Main body of your bio`);
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
+    preview.html(getHtml(bio).trim().replace(rstrip, ``) || `Main body of your bio`);
   }
 
   function getHtml (el) {

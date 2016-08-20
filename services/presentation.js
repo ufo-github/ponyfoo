@@ -9,7 +9,7 @@ const slideFormat = `https://speakerd.s3.amazonaws.com/presentations/%s/slide_0.
 const youtubeFormat = `https://img.youtube.com/vi/%s/0.jpg`;
 
 function toModel (presentation) {
-  const rparagraph = /^<p>|<\/p>$/ig;
+  const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
   return {
     presented: datetimeService.field(presentation.presented),
     title: presentation.title,
@@ -22,7 +22,7 @@ function toModel (presentation) {
       const absolute = url.resolve(authority, resource.url);
       const target = absolute.indexOf(authority) === 0 ? null : `_blank`;
       return {
-        title: resource.titleHtml.trim().replace(rparagraph, ``),
+        title: resource.titleHtml.trim().replace(rstrip, ``),
         url: resource.url,
         target: target
       };

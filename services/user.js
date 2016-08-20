@@ -77,7 +77,7 @@ function getModel (email, password, bypassEncryption) {
 }
 
 function getProfile (contributor, options) {
-  const rstrip = /^\s*<p>\s*|\s*<\/p>\s*$/ig;
+  const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
   const user = contributor.user;
   const profile = {
     avatar: getAvatar(user),
@@ -218,5 +218,6 @@ module.exports = {
   getAvatar,
   hasRole,
   isActive,
-  canEditArticle
+  canEditArticle,
+  defaultRoles
 };

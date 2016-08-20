@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
       model: {
         title: `Users \u2014 Pony Foo`,
         meta: {
-          canonical: `/users`
+          canonical: `/users/review`
         },
         users: contributors.map(toUserModel)
       }
