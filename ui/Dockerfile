@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -y \
   build-essential \
 	curl \
 	g++ \
-  git \
   graphicsmagick \
 	make \
 	python
@@ -25,7 +24,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY . /var/www/app
 
-RUN cd /var/www/app ; npm install
+RUN cd /var/www/app ; npm install --production
 
 EXPOSE 3000
 
