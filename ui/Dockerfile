@@ -1,31 +1,36 @@
-FROM debian:jessie
+FROM mhart/alpine-node:6
+
+LABEL name "ponyfoo"
 
 MAINTAINER Nicolás Bevacqua <nico@ponyfoo.com>
 
-RUN apt-get update && apt-get install -y \
-  build-essential \
-	curl \
-	g++ \
-  graphicsmagick \
-	make \
-	python
+RUN apk add --update \
+  autoconf \
+  automake \
+  bash \
+  curl \
+  g++ \
+  gcc \
+  git \
+  libpng-dev \
+  libtool \
+  make \
+  nasm \
+  python
 
-# python-software-properties
-# software-properties-common
-# lsof
-# libkrb5-dev
-# apache2-utils
-# bzip2
+# graphicsmagick
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && apk add --update graphicsmagick \
+ && rm -rf /var/cache/apk/*
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+WORKDIR /usr/src
 
-RUN apt-get update && apt-get install -y \
-	nodejs
+COPY package.json package.json
 
-COPY . /var/www/app
+RUN npm install --production
 
-RUN cd /var/www/app ; npm install --production
+COPY . .
 
 EXPOSE 3000
 
-CMD ["node", "/var/www/app/cluster.js"]
+ENTRYPOINT ["npm run start-cluster"]
