@@ -8,6 +8,7 @@ const moment = require(`moment`);
 const sluggish = require(`sluggish`);
 const raf = require(`raf`);
 const taunus = require(`taunus`);
+const articleTextService = require(`../../../../../services/articleText`);
 const articleSummarizationService = require(`../../../../../services/articleSummarization`);
 const markdownService = require(`../../../../../services/markdown`);
 const datetimeService = require(`../../../../../services/datetime`);
@@ -282,8 +283,7 @@ function initialize (viewModel, container, route) {
   }
 
   function getHtmlTitle () {
-    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
-    return getHtml(title).replace(rstrip, ``);
+    return articleTextService.sanitizeTitleHtml(getHtml(title));
   }
 
   function updatePreviewTitleHtml () {

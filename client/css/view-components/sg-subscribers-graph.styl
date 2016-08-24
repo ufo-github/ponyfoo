@@ -20,6 +20,11 @@
 
 .sg-legend
   display none
+  text-transform capitalize
+  cursor pointer
+
+.sg-legend-disabled
+  opacity 0.6
 
 .sg-tip
   f-use-subheading()
@@ -72,6 +77,7 @@
 
 .sg-options .ck-checkbox
   margin-right 15px
+  margin-bottom 15px
 
   &:last-child
     margin-right 0
@@ -90,7 +96,6 @@
 @media only screen and (min-width: 768px)
   .sg-legend
     display block
-    text-transform capitalize
 
   .sg-x .tick
     display block

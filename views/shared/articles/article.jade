@@ -49,14 +49,13 @@ section.at-container.de-host
         )
 
       div.at-trivia-details
-        span
+        span.at-trivia-detail
           include ../partials/estimate
         span.at-trivia-separator=' | '
-        span=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
-        span=' read'
+        span.at-trivia-detail=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '') + ' read'
         if published || user
           span.at-trivia-separator=' | '
-          a.lk-link.lk-black(href='#comments')
+          a.at-trivia-detail.lk-link.lk-black(href='#comments')
             span.fa.fa-commenting-o
             span=' '
             span=commentCount
@@ -81,10 +80,10 @@ section.at-container.de-host
         if article.prev
           a.lk-rainbows.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')
             span='« '
-            span.md-markdown.md-markdown-inline!=article.prev.titleHtml
+            span.an-title.md-markdown!=article.prev.titleHtml
         if article.next
           a.lk-rainbows.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')
-            span.md-markdown.md-markdown-inline!=article.next.titleHtml
+            span.an-title.md-markdown!=article.next.titleHtml
             span=' »'
 
     form.ly-section.ss-container.at-subscribe.wt-cta(action='/api/subscribers', method='post', name='subscribe')

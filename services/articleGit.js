@@ -86,7 +86,11 @@ function updateSyncRoot (article, done) {
       tag(article.tags.map(tagText => tag(tagText, `kbd`)).join(` `), `p`),
       tag(article.summaryHtml, `blockquote`),
       tag(article.teaserHtml),
-      tag(article.editorNoteHtml),
+      tag(article.editorNoteHtml
+        ? article.editorNoteHtml
+        + tag(tag(tag(`— Editor’s note.`, `em`), `sub`), `p`, `align='right'`)
+        : article.editorNoteHtml,
+      `blockquote`),
       tag(article.introductionHtml),
       tag(article.bodyHtml)
     ].join(`\n\n`)))
@@ -100,9 +104,8 @@ function updateSyncRoot (article, done) {
     ), next)
   ], err => done(err, filenames));
 
-  function tag (html, tagName) {
-    tagName = tagName || `div`;
-    return `<${tagName}>${html || ``}</${tagName}>`;
+  function tag (html, tagName = `div`, attrs = ``) {
+    return `<${tagName}${attrs ? ` ${attrs}` : ``}>${html || ``}</${tagName}>`;
   }
 
   function link (html, href) {

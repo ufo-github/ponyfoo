@@ -112,9 +112,11 @@
   line-height 48px
 
 .at-trivia-separator
+  display none
+  color c-lighter-gray
+
+.at-trivia-detail
   display block
-  color transparent
-  line-height 0
 
 .at-trivia,
 .at-editor-note,
@@ -153,14 +155,9 @@
   margin 0 20px 40px
 
 @media screen and (min-width: 500px)
+  .at-trivia-detail,
   .at-trivia-separator
     display inline
-    color c-lighter-gray
-
-@media screen and (min-width: 700px)
-  .at-trivia-details
-    margin 0
-    float right
 
 @media screen and (min-width: 768px)
   .at-trivia,
@@ -189,15 +186,20 @@
     /.ly-custom-heading &
       font-size 4em
 
+@media screen and (min-width: 850px)
+  .at-trivia-details
+    margin 0
+    float right
+
 @media screen and (min-width: 1200px)
   .at-container .de-sidebar
     padding-top 20px
+
+  .at-trivia
+    padding-top 0
 
 @media screen and (min-width: 1400px)
   .at-body:before,
   .at-subscribe,
   .at-siblings
     max-width 1000px
-
-.at-trivia
-  padding-top 0

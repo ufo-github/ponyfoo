@@ -6,6 +6,7 @@ const beautifyText = require(`beautify-text`);
 const markupService = require(`../../services/markup`);
 const markdownService = require(`../../services/markdown`);
 const sitemapService = require(`../../services/sitemap`);
+const articleTextService = require(`../../services/articleText`);
 const articleFeedService = require(`../../services/articleFeed`);
 const articleSummarizationService = require(`../../services/articleSummarization`);
 const articleSearchService = require(`../../services/articleSearch`);
@@ -23,7 +24,7 @@ function beforeSave (next) {
 
   article._oldSign = article.sign;
   article.sign = articleService.computeSignature(article);
-  article.titleHtml = toHeading(toHtml(article.titleMarkdown));
+  article.titleHtml = articleTextService.sanitizeTitleHtml(toHtml(article.titleMarkdown));
   article.title = beautifyText(markdownService.decompile(article.titleHtml, { plain: true }));
   article.teaserHtml = toHtml(article.teaser, 1);
   article.editorNoteHtml = toHtml(article.editorNote || ``, 1).replace(rstrip, ``);
@@ -35,15 +36,6 @@ function beforeSave (next) {
   article.updated = Date.now();
 
   next(null);
-}
-
-function toHeading (html) {
-  const rparagraphclose = /<\/p>/ig;
-  const rcollapsible = /<p>|<\/p>|(<br>$)/ig;
-  const heading = html
-    .replace(rparagraphclose, `<br>`)
-    .replace(rcollapsible, ``);
-  return heading;
 }
 
 function toHtml (md, i) {
