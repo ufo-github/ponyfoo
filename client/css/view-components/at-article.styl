@@ -112,7 +112,9 @@
   line-height 48px
 
 .at-trivia-separator
-  color c-lighter-gray
+  display block
+  color transparent
+  line-height 0
 
 .at-trivia,
 .at-editor-note,
@@ -149,6 +151,11 @@
 
 .at-subscribe
   margin 0 20px 40px
+
+@media screen and (min-width: 500px)
+  .at-trivia-separator
+    display inline
+    color c-lighter-gray
 
 @media screen and (min-width: 700px)
   .at-trivia-details
