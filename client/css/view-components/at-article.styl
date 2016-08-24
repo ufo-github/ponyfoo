@@ -94,6 +94,27 @@
   &:hover
     background c-dark-orange
 
+.at-trivia
+  margin-bottom 20px
+
+.at-trivia-name
+  f-use-subheading()
+
+.at-trivia-name,
+.at-trivia-social
+  margin-left 10px
+
+.at-trivia-details
+  margin-left 60px
+  margin-top 20px
+  f-use-subheading()
+  font-style italic
+  line-height 48px
+
+.at-trivia-separator
+  color c-lighter-gray
+
+.at-trivia,
 .at-editor-note,
 .at-introduction,
 .at-body
@@ -129,7 +150,13 @@
 .at-subscribe
   margin 0 20px 40px
 
+@media screen and (min-width: 700px)
+  .at-trivia-details
+    margin 0
+    float right
+
 @media screen and (min-width: 768px)
+  .at-trivia,
   .at-teaser-markdown,
   .at-editor-note,
   .at-introduction,
@@ -164,3 +191,6 @@
   .at-subscribe,
   .at-siblings
     max-width 1000px
+
+.at-trivia
+  padding-top 0
