@@ -46,16 +46,21 @@ function findInternal (method, query, options, done) {
 const find = findInternal.bind(null, `find`);
 const findOne = findInternal.bind(null, `findOne`);
 
+function getGitHref (article) {
+  return url.resolve(gitWeb, `${moment.utc(article.created).format(`YYYY/MM-DD`)}--${article.slug}`);
+}
+
 function toJSON (source, options) {
   const o = options || {};
   const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(` `);
   const article = source.toJSON();
 
   article.permalink = `/articles/` + article.slug;
-  article.publication = datetimeService.field(article.publication);
+  article.created = datetimeService.field(article.created);
   article.updated = datetimeService.field(article.updated);
+  article.publication = datetimeService.field(article.publication);
   article.readingTime = estimate.text(text);
-  article.gitHref = url.resolve(gitWeb, `${moment.utc(article.created).format(`YYYY/MM-DD`)}--${article.slug}`);
+  article.gitHref = getGitHref(source);
 
   if (source.populated(`author`)) {
     article.author = {
@@ -101,13 +106,15 @@ function toJSON (source, options) {
     delete article.introductionHtml;
     delete article.bodyHtml;
   }
+  if (o.editing !== true) {
+    delete article.teaser;
+    delete article.introduction;
+    delete article.body;
+    delete article.titleMarkdown;
+    delete article.summary;
+  }
   delete article.__v;
   delete article.sign;
-  delete article.teaser;
-  delete article.introduction;
-  delete article.body;
-  delete article.titleMarkdown;
-  delete article.summary;
   delete article.summaryText;
   delete article.comments;
   delete article.hn;
@@ -199,6 +206,7 @@ module.exports = {
   find,
   findOne,
   toJSON,
+  getGitHref,
   expandForListView,
   computeSignature,
   remove

@@ -1,0 +1,18 @@
+header(
+  class='dc-header at-header' + (article.heroImage ? ' at-has-hero' : ' at-no-hero'),
+  style=article.heroImage ? 'background-image: url(\'' + article.heroImage + '\');' : false
+)
+  div.at-header-gradient
+    h1.at-title.dc-heading(itemprop='headline')!=article.titleHtml
+
+    section.at-teaser.dc-role
+      div.at-teaser-markdown.md-markdown!=article.teaserHtml
+
+  if article.status === 'published' && article.gitHref
+    a.at-header-button(href=article.gitHref, target='_blank')
+      i.fa.fa-code-fork
+      span=' '
+      span Improve this article
+
+  if canEdit
+    a.at-header-button(href='/articles/' + article.slug + '/edit', aria-label='Edit this article') Edit

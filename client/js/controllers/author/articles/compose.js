@@ -72,12 +72,8 @@ function initialize (viewModel, container, route) {
   const schedule = $(`.ac-schedule`);
   const publication = $(`.ac-publication`);
   const preview = $(`.ac-preview`);
-  const previewHeader = $(`.at-header`, preview);
-  const previewTitle = $(`.ac-preview-title`);
-  const previewTeaser = $(`.ac-preview-teaser`);
-  const previewEditorNote = $(`.ac-preview-editor-note`);
-  const previewIntroduction = $(`.ac-preview-introduction`);
-  const previewBody = $(`.ac-preview-body`);
+  const previewHeader = $.findOne(`.ac-preview-header`);
+  const previewBody = $.findOne(`.ac-preview-body`);
   const previewSummary = $.findOne(`.ac-preview-summary`);
   const discardButton = $(`.ac-discard`);
   const saveButton = $(`.ac-save`);
@@ -93,7 +89,9 @@ function initialize (viewModel, container, route) {
   const typingTextSlowly = raf.bind(null, debounce(typingText, 100));
   const typingSummarySlowly = raf.bind(null, debounce(typingSummary, 100));
   const typingTagsSlowly = raf.bind(null, debounce(typingTags, 100));
-  const updatePreviewMarkdownSlowly = raf.bind(null, debounce(updatePreviewMarkdown, 300));
+  const updateTweetsSlowly = raf.bind(null, debounce(updateTweets, 5000));
+  const updatePreviewHeaderSlowly = raf.bind(null, debounce(updatePreviewHeader, 300));
+  const updatePreviewBodySlowly = raf.bind(null, debounce(updatePreviewBody, 300));
   const updatePreviewSummarySlowly = raf.bind(null, debounce(updatePreviewSummary, 300));
   const dateValidator = rome.val.after(moment().endOf(`day`));
   const romeOpts = {
@@ -256,19 +254,20 @@ function initialize (viewModel, container, route) {
 
   function typingText () {
     serializeSlowly();
-    updatePreviewMarkdownSlowly();
+    updatePreviewHeaderSlowly();
+    updatePreviewBodySlowly();
   }
 
   function typingTitle () {
     if (boundSlug) {
       updateSlug();
     }
-    updatePreviewTitle();
+    updatePreviewHeader();
     serializeSlowly();
   }
 
   function typingHeroImage () {
-    updatePreviewHeroImage();
+    updatePreviewHeader();
     serializeSlowly();
   }
 
@@ -286,54 +285,69 @@ function initialize (viewModel, container, route) {
     return articleTextService.sanitizeTitleHtml(getHtml(title));
   }
 
-  function updatePreviewTitleHtml () {
-    previewTitle.html(getHtmlTitle());
+  function getStatus () {
+    return published ? article.status : getCurrentState();
   }
 
-  function updatePreviewTitle () {
-    updatePreviewTitleHtml();
+  function updatePreviewHeader () {
+    taunus.partial(previewHeader, `articles/article/header`, {
+      article: {
+        titleHtml: getHtmlTitle(),
+        teaserHtml: getHtml(teaser),
+        heroImage: heroImage.value().trim(),
+        slug: sluggish(slug.value()),
+        status: getStatus(),
+        gitHref: article.gitHref
+      },
+      canEdit: false
+    });
     updatePreviewSummarySlowly();
+  }
+
+  function updatePreviewBody () {
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
+    const fieldNow = datetimeService.field(moment());
+    taunus.partial(previewBody, `articles/article/main`, {
+      articleComposer: true,
+      article: {
+        publication: datetimeService.field(getPreviewPublication()),
+        permalink: article.permalink,
+        created: article.created || fieldNow,
+        updated: article.updated || fieldNow,
+        status: getStatus(),
+        commentCount: article.commentCount || 0,
+        author: article.author,
+        readingTime: getReadingTime(),
+        editorNoteHtml: getHtml(editorNote).replace(rstrip, ``),
+        introductionHtml: getHtml(introduction),
+        bodyHtml: getHtml(body)
+      },
+      user: viewModel.user
+    });
+    updatePreviewSummarySlowly();
+    updateTweetsSlowly();
+    if (!summary.value()) {
+      updatePreviewSummarySlowly();
+    }
+  }
+
+  function updateTweets () {
+    preview.forEach(twitterService.updateView);
+  }
+
+  function getCurrentSlug () {
+    return sluggish($(`.at-title`, previewHeader).text());
   }
 
   function updateSlug () {
-    updatePreviewTitleHtml();
-    slug.value(sluggish(previewTitle.text()));
+    updatePreviewHeader();
+    slug.value(getCurrentSlug());
     updatePreviewSummarySlowly();
-  }
-
-  function updatePreviewHeroImage () {
-    const heroUrl = heroImage.value().trim();
-    if (heroUrl) {
-      previewHeader.css({ backgroundImage: `url('` + heroUrl + `')` });
-      previewHeader.addClass(`at-has-hero`);
-      previewHeader.removeClass(`at-no-hero`);
-    } else {
-      previewHeader.css({ backgroundImage: null });
-      previewHeader.removeClass(`at-has-hero`);
-      previewHeader.addClass(`at-no-hero`);
-    }
   }
 
   function typingTags () {
     updatePreviewSummarySlowly();
     serializeSlowly();
-  }
-
-  function updatePreviewMarkdown () {
-    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
-    previewTeaser.html(getHtml(teaser));
-    const note = getHtml(editorNote).replace(rstrip, ``);
-    if (note.length) {
-      previewEditorNote.removeClass(`uv-hidden`).html(note);
-    } else {
-      previewEditorNote.addClass(`uv-hidden`);
-    }
-    previewIntroduction.html(getHtml(introduction));
-    previewBody.html(getHtml(body));
-    preview.forEach(twitterService.updateView);
-    if (!summary.value()) {
-      updatePreviewSummary();
-    }
   }
 
   function updatePreviewSummary () {
@@ -348,12 +362,12 @@ function initialize (viewModel, container, route) {
     });
     const parts = [teaserHtml, editorNoteHtml || ``, introductionHtml, bodyHtml];
     const readingTime = estimate.text(parts.join(` `));
-    const publication = datetimeService.field(moment().add(4, `days`));
+    const publication = datetimeService.field(getPreviewPublication());
     const article = {
-      publication: publication,
+      publication,
       commentCount: 0,
       slug: slug.value(),
-      readingTime: readingTime,
+      readingTime,
       titleHtml: getHtmlTitle(),
       tags: getTags(),
       author: {
@@ -363,6 +377,16 @@ function initialize (viewModel, container, route) {
     };
     const vm = { articles: [article] };
     taunus.partial(previewSummary, `articles/columns`, vm);
+  }
+
+  function getReadingTime () {
+    const teaserHtml = getHtml(teaser);
+    const editorNoteHtml = getHtml(editorNote);
+    const introductionHtml = getHtml(introduction);
+    const bodyHtml = getHtml(body);
+    const parts = [teaserHtml, editorNoteHtml || ``, introductionHtml, bodyHtml];
+    const readingTime = estimate.text(parts.join(` `));
+    return readingTime;
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }
@@ -405,12 +429,11 @@ function initialize (viewModel, container, route) {
       }
     }
 
-    updatePreviewTitle();
-    updatePreviewHeroImage();
-    updatePreviewMarkdown();
+    updatePreviewHeader();
+    updatePreviewBody();
     updatePublication();
 
-    boundSlug = sluggish(previewTitle.text()) === slugText;
+    boundSlug = getCurrentSlug() === slugText;
   }
 
   function getRequestData () {
@@ -438,9 +461,23 @@ function initialize (viewModel, container, route) {
     }
     const scheduled = schedule.value();
     if (scheduled && !published) {
-      data.publication = moment(publication.value(), publicationFormat).format();
+      data.publication = getScheduledPublication().format();
     }
     return data;
+  }
+
+  function getScheduledPublication () {
+    return moment(publication.value(), publicationFormat);
+  }
+
+  function getPreviewPublication () {
+    if (published) {
+      return moment(article.publication.datetime);
+    }
+    if (schedule.value() && !published) {
+      return getScheduledPublication();
+    }
+    return moment().add(4, `days`);
   }
 
   function save () {

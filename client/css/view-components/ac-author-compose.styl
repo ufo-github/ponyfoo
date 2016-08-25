@@ -53,11 +53,14 @@
   display block
   margin-top 15px
 
-.ac-preview-title:empty:before
-  content 'Article Preview'
-
-.ac-preview-heading
+.ac-preview-header
   margin-top 40px
+
+  .at-title:empty:before
+    content 'Article Preview'
+
+.ac-preview-body:empty + .ac-actions-after-preview
+  visibility hidden
 
 .ac-tags-container,
 .ac-author-container

@@ -1,0 +1,63 @@
+-
+  published = article.status === 'published';
+  commentCount = article.commentCount;
+
+header.at-trivia
+  if article.author.slug
+    a.av-website(href='/contributors/' + article.author.slug, aria-label='Visit their profile')
+      img.av-avatar.av-avatar-large(src=article.author.avatar, alt='')
+    a.at-trivia-name.lk-rainbows(href='/contributors/' + article.author.slug, aria-label='Visit their profile')=article.author.displayName
+  else
+    img.av-avatar.av-avatar-large(src=article.author.avatar, alt='')
+    span.at-trivia-name=article.author.displayName
+
+  if article.author.twitter
+    a.at-trivia-social.lk-link.lk-twitter.fa.fa-twitter(
+      href='https://twitter.com/' + article.author.twitter,
+      target='_blank'
+    )
+
+  if article.author.website
+    a.at-trivia-social.lk-link.lk-black.fa.fa-bookmark(
+      href=article.author.website,
+      target='_blank'
+    )
+
+  div.at-trivia-details
+    span.at-trivia-detail
+      include ../../partials/estimate
+    span.at-trivia-separator=' | '
+    span.at-trivia-detail=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '') + ' read'
+    if (articleComposer && published) || (!articleComposer && (published || user))
+      span.at-trivia-separator=' | '
+      a.at-trivia-detail.lk-link.lk-black(href=article.permalink + '#comments', target=articleComposer ? '_blank' : false)
+        span.fa.fa-commenting-o
+        span=' '
+        span=commentCount
+
+article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting')
+  if !articleComposer
+    meta(itemprop='dateCreated', content=article.created.datetime)
+    meta(itemprop='dateModified', content=article.updated.datetime)
+    meta(itemprop='datePublished', content=article.publication.datetime)
+    meta(itemprop='keywords', content=article.tags.join(','))
+    meta(itemprop='discussionUrl', content=authority + article.permalink + '#comments')
+
+    if commentCount
+      meta(itemprop='interactionCount', content=commentCount + ' UserComments')
+
+  section.at-corpus(itemprop='articleBody')
+    if article.editorNoteHtml
+      section.md-markdown.at-editor-note!=article.editorNoteHtml
+    section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml
+    section.md-markdown.at-body!=article.bodyHtml
+
+  footer.at-siblings.an-siblings.uv-clearfix
+    if article.prev
+      a.lk-rainbows.an-anchor.an-prev(href='/articles/' + article.prev.slug, rel='prev', aria-label='Read the previous article!')
+        span='« '
+        span.an-title.md-markdown!=article.prev.titleHtml
+    if article.next
+      a.lk-rainbows.an-anchor.an-next(href='/articles/' + article.next.slug, rel='next', aria-label='Read the next article!')
+        span.an-title.md-markdown!=article.next.titleHtml
+        span=' »'

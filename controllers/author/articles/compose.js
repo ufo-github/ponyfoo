@@ -1,6 +1,7 @@
 'use strict';
 
 const Article = require(`../../../models/Article`);
+const articleService = require(`../../../services/article`);
 const userService = require(`../../../services/user`);
 
 module.exports = function (req, res, next) {
@@ -14,8 +15,7 @@ module.exports = function (req, res, next) {
   function findArticle (done) {
     Article
       .findOne({ slug: slug })
-      .populate(`author`, `displayName slug avatar email`)
-      .lean()
+      .populate(`author`, `displayName slug avatar email twitter website`)
       .exec(done);
   }
 
@@ -36,17 +36,13 @@ module.exports = function (req, res, next) {
       res.status(404).json({ messages: [`Article not found`] }); return;
     }
     const originalAuthor = article.author._id.equals(req.user);
-    article.author = {
-      slug: article.author.slug,
-      displayName: article.author.displayName,
-      avatar: userService.getAvatar(article.author)
-    };
+    const articleModel = articleService.toJSON(article, { editing: true });
     res.viewModel = {
       model: {
         title: `Article Composer`,
         editing: true,
         originalAuthor,
-        article
+        article: articleModel
       }
     };
     next();
