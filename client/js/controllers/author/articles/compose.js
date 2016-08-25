@@ -71,10 +71,9 @@ function initialize (viewModel, container, route) {
   const hn = $(`#ac-campaign-hn`);
   const schedule = $(`.ac-schedule`);
   const publication = $(`.ac-publication`);
-  const preview = $(`.ac-preview`);
+  const previewSummary = $.findOne(`.ac-preview-summary`);
   const previewHeader = $.findOne(`.ac-preview-header`);
   const previewBody = $.findOne(`.ac-preview-body`);
-  const previewSummary = $.findOne(`.ac-preview-summary`);
   const discardButton = $(`.ac-discard`);
   const saveButton = $(`.ac-save`);
   const status = $(`.ac-status`);
@@ -332,7 +331,7 @@ function initialize (viewModel, container, route) {
   }
 
   function updateTweets () {
-    preview.forEach(twitterService.updateView);
+    twitterService.updateView(previewBody);
   }
 
   function getCurrentSlug () {
