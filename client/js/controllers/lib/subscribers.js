@@ -366,7 +366,7 @@ module.exports = function (viewModel, container) {
       return reverse;
     }
   }
-}
+};
 
 function diffText (old, now) {
   const diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);

@@ -2,7 +2,6 @@
 
 const _ = require(`lodash`);
 const articleService = require(`../../../services/article`);
-const cryptoService = require(`../../../services/crypto`);
 const userService = require(`../../../services/user`);
 const editorRoles = [`owner`, `editor`];
 

@@ -3,7 +3,6 @@
 const inliningService = require(`../../services/inlining`);
 const metadataService = require(`../../services/metadata`);
 const articleService = require(`../../services/article`);
-const cryptoService = require(`../../services/crypto`);
 const userService = require(`../../services/user`);
 
 module.exports = function (req, res, next) {
