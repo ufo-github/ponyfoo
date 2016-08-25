@@ -39,7 +39,8 @@ module.exports = function (req, res, next) {
     const articleModel = articleService.toJSON(article, { editing: true });
     res.viewModel = {
       model: {
-        title: `Article Composer`,
+        title: `Article Composer \u2014 Pony Foo`,
+        articleComposer: true,
         editing: true,
         originalAuthor,
         article: articleModel
@@ -51,7 +52,8 @@ module.exports = function (req, res, next) {
   function respondWithEmptyComposer () {
     res.viewModel = {
       model: {
-        title: `Article Composer`,
+        title: `Article Composer \u2014 Pony Foo`,
+        articleComposer: true,
         editing: false,
         originalAuthor: true,
         authorDisplayName: req.userObject.displayName,

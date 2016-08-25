@@ -50,12 +50,21 @@ function getGitHref (article) {
   return url.resolve(gitWeb, `${moment.utc(article.created).format(`YYYY/MM-DD`)}--${article.slug}`);
 }
 
+function getHash (article) {
+  return cryptoService.md5(article._id + article.created);
+}
+
 function toJSON (source, options) {
   const o = options || {};
   const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(` `);
   const article = source.toJSON();
 
   article.permalink = `/articles/` + article.slug;
+
+  if (article.status !== `published`) {
+    article.permalink += `?verify=` + getHash(source);
+  }
+
   article.created = datetimeService.field(article.created);
   article.updated = datetimeService.field(article.updated);
   article.publication = datetimeService.field(article.publication);
@@ -207,6 +216,7 @@ module.exports = {
   findOne,
   toJSON,
   getGitHref,
+  getHash,
   expandForListView,
   computeSignature,
   remove

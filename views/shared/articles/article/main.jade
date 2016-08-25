@@ -28,7 +28,7 @@ header.at-trivia
       include ../../partials/estimate
     span.at-trivia-separator=' | '
     span.at-trivia-detail=moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '') + ' read'
-    if (articleComposer && published) || (!articleComposer && (published || user))
+    if published || user
       span.at-trivia-separator=' | '
       a.at-trivia-detail.lk-link.lk-black(href=article.permalink + '#comments', target=articleComposer ? '_blank' : false)
         span.fa.fa-commenting-o

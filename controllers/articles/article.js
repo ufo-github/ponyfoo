@@ -27,7 +27,7 @@ module.exports = function (req, res, next) {
 
     // draft share link?
     const verify = req.query.verify;
-    if (verify && verify === cryptoService.md5(article._id + article.created)) {
+    if (verify && verify === articleService.getHash(article)) {
       done(); return;
     }
 

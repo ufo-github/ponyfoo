@@ -23,14 +23,9 @@ function getModel (req, res, next) {
     if (err) {
       next(err); return;
     }
-    const models = articles
-      .map(article => articleService.toJSON(article, { meta: true }))
-      .map(model => {
-        if (model.status !== `published`) {
-          model.permalink += `?verify=` + cryptoService.md5(model._id + model.created);
-        }
-        return model;
-      });
+    const models = articles.map(article => articleService.toJSON(article, {
+      meta: true
+    }));
     const sorted = _.sortBy(models, sortByStatus);
     res.viewModel = {
       model: {
