@@ -31,8 +31,4 @@ function hasRole (user, roles) {
   }
 }
 
-module.exports = {
-  getUser: getUser,
-  getRoles: getRoles,
-  hasRole: hasRole
-};
+module.exports = { getUser, getRoles, hasRole };

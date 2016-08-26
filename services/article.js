@@ -121,16 +121,17 @@ function toJSON (source, options) {
     delete article.body;
     delete article.titleMarkdown;
     delete article.summary;
+
+    delete article.email;
+    delete article.tweet;
+    delete article.fb;
+    delete article.echojs;
+    delete article.hn;
   }
   delete article.__v;
   delete article.sign;
   delete article.summaryText;
   delete article.comments;
-  delete article.hn;
-  delete article.echojs;
-  delete article.tweet;
-  delete article.fb;
-  delete article.email;
   return article;
 }
 

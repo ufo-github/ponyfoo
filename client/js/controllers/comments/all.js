@@ -4,7 +4,8 @@ const $ = require(`dominus`);
 const raf = require(`raf`);
 const taunus = require(`taunus`);
 const debounce = require(`lodash/debounce`);
-const ls = require(`../../lib/storage`);
+const ls = require(`local-storage`);
+const progressblock = require(`../../lib/progressblock`);
 const userService = require(`../../services/user`);
 const textService = require(`../../../../services/text`);
 const key = `comment-draft`;
@@ -74,7 +75,9 @@ module.exports = function (viewModel, container) {
 
   function comment (e) {
     e.preventDefault();
-
+    if (progressblock.block(send)) {
+      return;
+    }
     const thread = send.parents(`.mm-thread`);
     const endpoint = textService.format(`/api/%s/%s/comments`, viewModel.parentType, viewModel.parent.slug);
     const model = {
@@ -84,6 +87,10 @@ module.exports = function (viewModel, container) {
     viewModel.measly.put(endpoint, model).on(`data`, commented);
 
     function commented (data) {
+      progressblock.release(send);
+      if (data.messages && data.messages.length) {
+        return;
+      }
       content.value(``);
       detach();
       serialize();

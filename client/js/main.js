@@ -34,6 +34,8 @@ require(`./conventions/konami`)();
 require(`./conventions/carbon`)();
 require(`./conventions/scroll`)();
 
+require(`./components/subscribeBubble`)();
+
 taunus.mount(main, wiring, {
   version: env(`APP_VERSION`),
   bootstrap: `manual`,
@@ -43,4 +45,5 @@ taunus.mount(main, wiring, {
 require(`./service-worker-registration`)();
 
 analytics(env(`NODE_ENV`));
-require(`./welcome`)(env(`APP_VERSION`));
+
+require(`./components/welcome`)(env(`APP_VERSION`));

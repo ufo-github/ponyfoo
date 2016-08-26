@@ -59,6 +59,7 @@ function initBucket (seedSubscriber) {
     migration: 0,
     unverified: 0,
     twitter: 0,
+    bubble: 0,
     weekly: 0,
     sidebar: 0,
     comment: 0,

@@ -7,7 +7,7 @@ const moment = require(`moment`);
 const series = require(`contra/series`);
 const curry = require(`contra/curry`);
 const debounce = require(`lodash/debounce`);
-const ls = require(`../../lib/storage`);
+const ls = require(`local-storage`);
 const loadScript = require(`../../lib/loadScript`);
 const scrapeCompletionService = require(`../../services/scrapeCompletion`);
 const markdownService = require(`../../../../services/markdown`);
@@ -263,8 +263,10 @@ function ready (viewModel, container, route) {
     function submitted () {
       const owner = viewModel.roles && viewModel.roles.owner;
       const target = owner ? `/weekly/submissions/review` : `/weekly`;
-      ls.set(submissionNameStorageKey, model.submitter.name);
-      ls.set(submissionEmailStorageKey, model.submitter.email);
+      if (!editing) {
+        ls.set(submissionNameStorageKey, model.submitter.name);
+        ls.set(submissionEmailStorageKey, model.submitter.email);
+      }
       taunus.navigate(target);
     }
 

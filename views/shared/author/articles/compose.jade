@@ -44,7 +44,7 @@ article.ly-section.vw-maintainer.de-host.uv-clearfix
     footer.ac-actions.ac-actions-after-composer
       +actions
 
-  - publication = article.publication ? moment(article.publication) : moment().add(1, 'days')
+  - publication = article.publication.datetime ? moment(article.publication.datetime) : moment().add(1, 'days')
   - publicationFormat = 'DD-MM-YYYY HH:mm'
   - published = article.status === 'published'
 

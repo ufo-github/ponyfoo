@@ -1,0 +1,146 @@
+- sb-bubble-small = 50px
+- sb-bubble-large = 100px
+
+sb-bubble-size(unit)
+  width unit
+  height unit
+  font-size (unit * 0.6)
+
+  &:before
+    margin-top (unit * -0.3)
+
+sb-opener-size(unit)
+  .sb-container
+    right (unit / 2)
+    bottom (unit / 2)
+
+  .sb-opener
+    sb-bubble-size(unit)
+
+.sb-container
+  left 20px
+  position fixed
+  z-index z-bubble
+
+.sb-bubble
+  position absolute
+  cursor pointer
+  opacity 0
+  border-radius 30px
+  box-shadow 2px 2px 20px c-black
+  color c-white
+  transition all 1s ease-in-out
+
+  &:before
+    position absolute
+    top 50%
+    left 0
+    right 0
+    text-align center
+
+.sb-opener
+  right 0
+  bottom 0
+  border-style solid
+  border-color rgba(c-black, 0.02)
+  background-color c-pink
+  background linear-gradient(to bottom right, c-pink 0, darken(c-pink, 5%) 100%)
+  text-shadow 2px 2px c-pink-light
+  transform rotateZ(45deg)
+
+  &:hover
+    background linear-gradient(to bottom right, lighten(c-pink, 5%) 0, c-pink 100%)
+
+.sb-opener-show
+  opacity 1
+  border-radius 100px
+  border-width 5px
+  transform none
+
+.sb-closer
+  right 0
+  bottom 120px
+  background-color c-black-text
+  text-shadow 2px 2px c-black-light
+  sb-bubble-size(sb-bubble-small)
+
+  &:hover
+    background-color c-black-light
+
+.sb-closer-show
+  opacity 1
+  border-radius 100px
+
+.sb-expansion
+  position absolute
+  bottom -10px
+  right 15px
+  max-width 500px
+  transition all 1s ease-in-out
+  padding 10px
+
+  .vw-conventional
+    background-color c-black-light
+    margin-bottom 10px
+
+  .vw-conventional-remove
+    display none
+
+.sb-label
+  display inline-block
+  opacity 0
+  margin-bottom 15px
+  font-size 14px
+
+.sb-input
+  height 50px
+  border-top-left-radius 3px
+  border-bottom-left-radius 3px
+  background linear-gradient(to bottom right, c-pink 0, darken(c-pink, 5%) 100%)
+  box-shadow 2px 2px 20px c-black
+  font-size 24px
+  color c-white
+  placeholders(c-pink-01)
+  f-use-subheading()
+
+  &:focus
+    col-outline(c-pink-01)
+
+.sb-expansion-stage-one
+  width calc(100% - 20px)
+  border-radius 3px
+  box-shadow -3px -3px 20px rgba(c-black, 0.2)
+
+.sb-expansion-stage-two
+  background linear-gradient(to top left, c-white 33%, darken(c-white, 2%) 100%)
+
+  .sb-label
+    transition opacity 1s ease-in
+    opacity 1
+
+.sb-expansion-hide
+  pointer-events none
+  width 0
+
+sb-opener-size(sb-bubble-small)
+
+@media only screen and (min-width: 350px)
+  .sb-label
+    font-size 16px
+
+@media only screen and (min-width: 768px)
+  sb-opener-size(sb-bubble-large)
+
+  .sb-label br
+    display none
+
+  .sb-expansion
+    bottom 0
+    right 50px
+    padding 20px
+
+  .sb-closer
+    right 25px
+
+  .sb-input
+    height 60px

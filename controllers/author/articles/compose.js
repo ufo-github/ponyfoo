@@ -37,34 +37,36 @@ module.exports = function (req, res, next) {
     }
     const originalAuthor = article.author._id.equals(req.user);
     const articleModel = articleService.toJSON(article, { editing: true });
-    res.viewModel = {
-      model: {
-        title: `Article Composer \u2014 Pony Foo`,
-        articleComposer: true,
-        editing: true,
-        originalAuthor,
-        article: articleModel
-      }
-    };
-    next();
+    respondWithArticle({
+      article: articleModel,
+      editing: true,
+      originalAuthor
+    });
   }
 
   function respondWithEmptyComposer () {
+    respondWithArticle({
+      article: {
+        tags: [],
+        author: {
+          slug: req.userObject.slug,
+          displayName: req.userObject.displayName,
+          avatar: req.userObject.avatar
+        }
+      },
+      editing: false,
+      originalAuthor: true
+    });
+  }
+
+  function respondWithArticle({ article, editing, originalAuthor }) {
     res.viewModel = {
       model: {
         title: `Article Composer \u2014 Pony Foo`,
         articleComposer: true,
-        editing: false,
-        originalAuthor: true,
-        authorDisplayName: req.userObject.displayName,
-        article: {
-          tags: [],
-          author: {
-            slug: req.userObject.slug,
-            displayName: req.userObject.displayName,
-            avatar: req.userObject.avatar
-          }
-        }
+        editing,
+        originalAuthor,
+        article
       }
     };
     next();

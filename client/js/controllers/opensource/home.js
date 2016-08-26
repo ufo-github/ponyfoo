@@ -3,7 +3,7 @@
 const $ = require(`dominus`);
 const taunus = require(`taunus`);
 const concurrent = require(`contra/concurrent`);
-const ls = require(`../../lib/storage`);
+const ls = require(`local-storage`);
 const datetimeService = require(`../../../../services/datetime`);
 
 module.exports = function (viewModel) {

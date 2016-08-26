@@ -6,6 +6,7 @@ const debounce = require(`lodash/debounce`);
 const concurrent = require(`contra/concurrent`);
 const moment = require(`moment`);
 const sluggish = require(`sluggish`);
+const ls = require(`local-storage`);
 const raf = require(`raf`);
 const taunus = require(`taunus`);
 const articleTextService = require(`../../../../../services/articleText`);
@@ -13,8 +14,8 @@ const articleSummarizationService = require(`../../../../../services/articleSumm
 const markdownService = require(`../../../../../services/markdown`);
 const datetimeService = require(`../../../../../services/datetime`);
 const twitterService = require(`../../../conventions/twitter`);
-const storage = require(`../../../lib/storage`);
 const loadScript = require(`../../../lib/loadScript`);
+const progressblock = require(`../../../lib/progressblock`);
 const defaultStorageKey = `author-unsaved-draft`;
 const publicationFormat = `DD-MM-YYYY HH:mm`;
 const maxTagSuggestions = 8;
@@ -76,6 +77,7 @@ function initialize (viewModel, container, route) {
   const previewBody = $.findOne(`.ac-preview-body`);
   const discardButton = $(`.ac-discard`);
   const saveButton = $(`.ac-save`);
+  const allButtons = saveButton.and(discardButton);
   const status = $(`.ac-status`);
   const statusRadio = {
     draft: $(`#ac-draft-radio`),
@@ -369,9 +371,7 @@ function initialize (viewModel, container, route) {
       readingTime,
       titleHtml: getHtmlTitle(),
       tags: getTags(),
-      author: {
-        displayName: viewModel.article.author.displayName
-      },
+      author: viewModel.article.author,
       summaryHtml: summarized.html
     };
     const vm = { articles: [article] };
@@ -389,11 +389,11 @@ function initialize (viewModel, container, route) {
   }
 
   function getHtml (el) { return markdownService.compile(el.value()); }
-  function serialize () { storage.set(defaultStorageKey, getRequestData()); }
-  function clear () { storage.remove(defaultStorageKey); }
+  function serialize () { ls.set(defaultStorageKey, getRequestData()); }
+  function clear () { ls.remove(defaultStorageKey); }
 
   function deserialize (source) {
-    const data = source || storage.get(defaultStorageKey) || {
+    const data = source || ls.get(defaultStorageKey) || {
       email: true, tweet: true, fb: true, echojs: true, hn: true
     };
     const titleText = data.titleMarkdown || ``;
@@ -416,7 +416,7 @@ function initialize (viewModel, container, route) {
 
     email.value(data.email);
     tweet.value(data.tweet);
-    fb.value(data);
+    fb.value(data.fb);
     echojs.value(data.echojs);
     hn.value(data.hn);
 
@@ -485,8 +485,10 @@ function initialize (viewModel, container, route) {
   }
 
   function send (data) {
+    if (progressblock.block(allButtons)) {
+      return;
+    }
     let req;
-
     if (editing) {
       req = viewModel.measly.patch(`/api/articles/` + route.params.slug, data);
     } else {
@@ -496,6 +498,9 @@ function initialize (viewModel, container, route) {
   }
 
   function discard () {
+    if (progressblock.block(allButtons)) {
+      return;
+    }
     const name = route.params.slug ? `/articles/` + route.params.slug : `draft`;
     const confirmation = confirm(`About to discard ` + name + `, are you sure?`);
     if (!confirmation) {
@@ -509,6 +514,7 @@ function initialize (viewModel, container, route) {
   }
 
   function leave () {
+    progressblock.release(allButtons);
     clear();
     taunus.navigate(`/articles/review`);
   }
