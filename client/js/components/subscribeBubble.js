@@ -15,14 +15,14 @@ const initialState = {
 };
 
 function subscribeBubble () {
-  const user = userService.getUser();
-  const state = readState();
-  if (user || state.action) {
-    return;
-  }
-  let destroy;
-
   taunus.on(`change`, container => {
+    const user = userService.getUser();
+    const state = readState();
+    if (user || state.action) {
+      return;
+    }
+    let destroy;
+
     if (destroy) {
       destroy();
       destroy = null;
