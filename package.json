@@ -133,7 +133,7 @@
     "mkdirp": "0.5.1",
     "moment": "2.14.1",
     "mongodb-uri": "0.9.7",
-    "mongoose": "4.5.8",
+    "mongoose": "4.5.10",
     "morgan": "1.6.1",
     "multer": "1.1.0",
     "nconf": "0.7.1",
