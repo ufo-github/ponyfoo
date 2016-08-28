@@ -4,15 +4,6 @@ rainbow(v-direction = right)
 rainbow-simple(v-direction = right)
   background linear-gradient(to v-direction, c-white 0, c-yellow-highlight 33%, c-pink 100%)
 
-@keyframes bg-rainbow
-  0%
-    background-color c-pink
-  50%
-    background-color c-yellow
-  90%
-    opacity 0.6
-    background-color c-green
-
 rainbow-pseudo()
   &:before
     position absolute

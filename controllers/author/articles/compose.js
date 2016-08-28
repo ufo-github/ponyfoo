@@ -1,8 +1,10 @@
 'use strict';
 
+const moment = require(`moment`);
 const Article = require(`../../../models/Article`);
 const articleService = require(`../../../services/article`);
 const userService = require(`../../../services/user`);
+const datetimeService = require(`../../../services/datetime`);
 
 module.exports = function (req, res, next) {
   const slug = req.params.slug;
@@ -52,7 +54,11 @@ module.exports = function (req, res, next) {
           slug: req.userObject.slug,
           displayName: req.userObject.displayName,
           avatar: req.userObject.avatar
-        }
+        },
+        status: `draft`,
+        created: datetimeService.field(moment()),
+        updated: datetimeService.field(moment()),
+        publication: null
       },
       editing: false,
       originalAuthor: true

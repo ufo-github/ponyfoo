@@ -15,14 +15,13 @@ const initialState = {
 };
 
 function subscribeBubble () {
+  let destroy;
   taunus.on(`change`, container => {
     const user = userService.getUser();
     const state = readState();
     if (user || state.action) {
       return;
     }
-    let destroy;
-
     if (destroy) {
       destroy();
       destroy = null;
@@ -51,13 +50,18 @@ function renderBubble () {
     .addClass(`sb-container`)
     .appendTo(main);
 
-  const opener = $(`<button>`)
-    .addClass(`sb-opener sb-bubble fa fa-heart`)
+  const openerContainer = $(`<div>`)
+    .addClass(`sb-opener-container`)
     .appendTo(container);
 
-  setTimeout(showOpener, 0);
+  const opener = $(`<button>`)
+    .addClass(`sb-opener sb-bubble fa fa-heart`)
+    .appendTo(openerContainer);
+
+  setTimeout(showOpener, 500);
 
   function showOpener () {
+    openerContainer.addClass(`sb-pulsating`);
     opener
       .addClass(`sb-opener-show`)
       .once(`click`, renderControls);
@@ -69,8 +73,12 @@ function renderBubble () {
       .prependTo(container);
 
     $(`<div>`)
-      .addClass(`sb-label md-markdown`)
-      .html(markdownService.compile(`Get all the awesome in your inbox! <br> No spam. 💌`))
+      .addClass(`sb-label md-markdown md-markdown-inline`)
+      .html(markdownService.compile(`
+## Want more like this?
+
+Get all the awesome in your inbox! <br> No spam. 💌
+`))
       .appendTo(expansion);
 
     const input = $(`<input>`)
@@ -83,9 +91,11 @@ function renderBubble () {
     const closer = $(`<button>`)
       .addClass(`sb-closer sb-bubble fa fa-remove`)
       .once(`click`, closerClick)
-      .appendTo(container);
+      .appendTo(expansion);
 
+    openerContainer.removeClass(`sb-pulsating`);
     opener.on(`click`, openerClick);
+
     setTimeout(showControls, 0);
 
     function showControls () {
@@ -95,7 +105,6 @@ function renderBubble () {
       opener
         .removeClass(`fa-heart`)
         .addClass(`fa-envelope`);
-      closer.addClass(`sb-closer-show`);
       input.focus();
 
       setTimeout(showLabel, 500);
@@ -113,7 +122,6 @@ function renderBubble () {
       opener
         .removeClass(`fa-envelope`)
         .addClass(`fa-heart`);
-      closer.removeClass(`sb-closer-show`);
     }
 
     function onKeyDown (e) {

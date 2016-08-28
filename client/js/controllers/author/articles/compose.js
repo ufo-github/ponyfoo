@@ -420,8 +420,8 @@ function initialize (viewModel, container, route) {
     echojs.value(data.echojs);
     hn.value(data.hn);
 
-    if (data.status !== `published`) {
-      statusRadio[data.status || `publish`].value(true);
+    if (data.status && data.status !== `published`) {
+      statusRadio[data.status].value(true);
 
       if (`publication` in data) {
         schedule.value(true);

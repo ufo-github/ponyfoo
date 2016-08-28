@@ -23,13 +23,11 @@ sb-opener-size(unit)
   z-index z-bubble
 
 .sb-bubble
-  position absolute
   cursor pointer
   opacity 0
   border-radius 30px
   box-shadow 2px 2px 20px c-black
   color c-white
-  transition all 1s ease-in-out
 
   &:before
     position absolute
@@ -38,15 +36,20 @@ sb-opener-size(unit)
     right 0
     text-align center
 
-.sb-opener
+.sb-opener-container
+  position absolute
   right 0
   bottom 0
+  border-radius 100px
+
+.sb-opener
   border-style solid
   border-color rgba(c-black, 0.02)
   background-color c-pink
   background linear-gradient(to bottom right, c-pink 0, darken(c-pink, 5%) 100%)
   text-shadow 2px 2px c-pink-light
   transform rotateZ(45deg)
+  transition all 1s ease-in-out
 
   &:hover
     background linear-gradient(to bottom right, lighten(c-pink, 5%) 0, c-pink 100%)
@@ -57,19 +60,21 @@ sb-opener-size(unit)
   border-width 5px
   transform none
 
+.sb-pulsating
+  animation sb-pulse 2s infinite
+
 .sb-closer
+  position absolute
+  top 0
   right 0
-  bottom 120px
+  margin-top -25px
+  margin-right -25px
   background-color c-black-text
   text-shadow 2px 2px c-black-light
   sb-bubble-size(sb-bubble-small)
 
   &:hover
     background-color c-black-light
-
-.sb-closer-show
-  opacity 1
-  border-radius 100px
 
 .sb-expansion
   position absolute
@@ -91,6 +96,10 @@ sb-opener-size(unit)
   opacity 0
   margin-bottom 15px
   font-size 14px
+
+  h2
+    margin 0 0 10px 0
+    padding 0
 
 .sb-input
   height 50px
@@ -118,6 +127,11 @@ sb-opener-size(unit)
     transition opacity 1s ease-in
     opacity 1
 
+  .sb-closer
+    transition opacity 1s ease-in
+    opacity 1
+    border-radius 100px
+
 .sb-expansion-hide
   pointer-events none
   width 0
@@ -138,9 +152,6 @@ sb-opener-size(sb-bubble-small)
     bottom 0
     right 50px
     padding 20px
-
-  .sb-closer
-    right 25px
 
   .sb-input
     height 60px
