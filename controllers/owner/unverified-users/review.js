@@ -1,11 +1,10 @@
 'use strict';
 
-const UnverifiedUser = require(`../../../models/UnverifiedUser`);
 const datetimeService = require(`../../../services/datetime`);
 const userService = require(`../../../services/user`);
 
 module.exports = function (req, res, next) {
-  UnverifiedUser.find({}).exec(respond);
+  userService.findUnverified(respond);
 
   function respond (err, users) {
     if (err) {

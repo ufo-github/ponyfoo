@@ -88,7 +88,7 @@ Get all the awesome in your inbox! <br> No spam. 💌
       .on(`keydown`, onKeyDown)
       .appendTo(expansion);
 
-    const closer = $(`<button>`)
+    $(`<button>`)
       .addClass(`sb-closer sb-bubble fa fa-remove`)
       .once(`click`, closerClick)
       .appendTo(expansion);

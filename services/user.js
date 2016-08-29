@@ -1,9 +1,12 @@
 'use strict';
 
+const _ = require(`lodash`);
 const contra = require(`contra`);
 const winston = require(`winston`);
 const assign = require(`assignment`);
 const User = require(`../models/User`);
+const UnverifiedUser = require(`../models/UnverifiedUser`);
+const UserVerificationToken = require(`../models/UserVerificationToken`);
 const Article = require(`../models/Article`);
 const gravatarService = require(`./gravatar`);
 const defaultRoles = [`articles`];
@@ -18,6 +21,25 @@ function findUsers (query, done) {
     .sort(`created`)
     .lean()
     .exec(done);
+}
+
+function findUnverified (done) {
+  contra.waterfall([
+    findTokens,
+    findUnusedUnverified
+  ], done);
+
+  function findTokens (next) {
+    UserVerificationToken.find({ used: null }, next);
+  }
+
+  function findUnusedUnverified (tokens, next) {
+    const $in = _.map(tokens, `targetId`);
+    const query = {
+      _id: { $in }
+    };
+    UnverifiedUser.find(query).exec(next);
+  }
 }
 
 function findAllUsersInRole (roles, done) {
@@ -210,6 +232,7 @@ module.exports = {
   findUserWithRole,
   findById,
   findOne,
+  findUnverified,
   findContributors,
   create: createUser({ bypassEncryption: false }),
   createUsingEncryptedPassword: createUser({ bypassEncryption: true }),
