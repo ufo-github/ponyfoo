@@ -1,31 +1,12 @@
-.otoc-container
-  [data-type='chapter'] li
-    list-style-type none
+.otoc-main,
+.otoc-list
+  list-style-type none
 
-  // these two declarations need to be separated because stylus
-  a
-    lk-link()
-  a
-    lk-color(c-black-text)
+.otoc-list
+  display none
 
-.otoc-depth-none
-  [data-type='sect1'],
-  [data-type='sect2']
-    display none
+.otoc-show
+  display block
 
-.otoc-depth-single
-  [data-type='sect2']
-    display none
-
-.otoc-depths
-  background-color c-purple-005
-  padding 15px 10px
-  margin 40px 0
-
-  .ck-radio
-    margin-right 10px
-
-.otoc-depths-title
-  font-weight bold
-  margin-right 20px
-  f-use-subheading()
+.otoc-toggle
+  margin-left 5px

@@ -14,19 +14,7 @@ article.de-host
 
     div.bok-toc
       h2.bok-toc-header.bok-header#toc Table of Contents
-
-      div.otoc-depths
-        span.otoc-depths-title='Detail '
-        input.ck-input.otoc-depth#otoc-depth-none(type='radio', name='otoc-depth', value='none' checked)
-        label.ck-radio(for='otoc-depth-none') Chapters
-        span=' '
-        input.ck-input.otoc-depth#otoc-depth-single(type='radio', name='otoc-depth', value='single')
-        label.ck-radio(for='otoc-depth-single') Sections
-        span=' '
-        input.ck-input.otoc-depth#otoc-depth-double(type='radio', name='otoc-depth', value='double')
-        label.ck-radio(for='otoc-depth-double') Sub-sections
-
-      div.otoc-container.otoc-depth-none!=tableOfContentsHtml
+      div.otoc-container!=tableOfContentsHtml
 
     if firstChapter
       footer.tk-presentations-link

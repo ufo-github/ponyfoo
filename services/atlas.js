@@ -175,23 +175,63 @@ function getFirstChapterLink (bookSlug, done) {
 }
 
 function fixChapterLinks ($, bookSlug, isToc) {
-  $(`a[href]`, `body`).each((i, el) => {
-    const $el = $(el);
+  const rchapter = /^ch(\d+)\.html/i;
+
+  if (isToc) {
+    fixTableOfContents();
+  }
+  $(`a[href]`, `body`).each((i, el) => fixChapterLink(el));
+
+  function getChapterId (text) {
+    if (!rchapter.test(text)) {
+      return null;
+    }
+    const [, chapterId] = text.match(rchapter);
+    return parseInt(chapterId, 10);
+  }
+
+  function fixTableOfContents () {
+    $(`ol`, `body`)
+      .eq(0)
+      .addClass(`otoc-main`)
+      .find(`ol`)
+      .addClass(`otoc-list`);
+
+    $(`.otoc-main > li`).each((i, el) => fixTableItem(el));
+  }
+
+  function fixTableItem (el) {
+    const $el = $(el).find(`a`).eq(0);
     const href = $el.attr(`href`);
-    const rchapter = /^ch(\d+)\.html/i;
-    if (!rchapter.test(href)) {
+    const chapterId = getChapterId(href);
+    if (!chapterId) {
       return;
     }
-    $el.attr(`href`, href.replace(rchapter, (all, chapterId) => {
-      const id = parseInt(chapterId, 10);
-      const chapter = `/books/${bookSlug}/chapters/${id}`;
-      const rhtml = /\.html$/i;
-      if (rhtml.test(href) && isToc) {
-        return chapter + `#read`;
-      }
-      return chapter;
-    }));
-  });
+    $el.text(`${ chapterId } ${ $el.text() }`);
+  }
+
+  function fixChapterLink (el) {
+    const $el = $(el);
+    const href = $el.attr(`href`);
+    if (!getChapterId(href)) {
+      return;
+    }
+    if (isToc) {
+      $el.addClass(`lk-link lk-black`);
+    }
+    const update = (all, chapterId) => updateHref(href, chapterId);
+    $el.attr(`href`, href.replace(rchapter, update));
+  }
+
+  function updateHref (href, chapterId) {
+    const id = parseInt(chapterId, 10);
+    const chapter = `/books/${bookSlug}/chapters/${id}`;
+    const rhtml = /\.html$/i;
+    if (rhtml.test(href) && isToc) {
+      return chapter + `#read`;
+    }
+    return chapter;
+  }
 }
 
 function fixImageLinks ($, bookSlug) {
