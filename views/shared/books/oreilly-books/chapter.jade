@@ -1,0 +1,39 @@
+include partials/header
+include partials/navigation
+
+article.de-host
+  section.de-column.bok-container.ocha-print
+    include partials/cover
+
+    div.bok-description
+      include partials/trivia
+
+      div.md-markdown
+        | !{data.summaryHtml}
+        | !{data.linksHtml}
+
+    article.ocha-container
+      mixin pager
+        section.an-siblings.uv-clearfix
+          if links.prev
+            a.lk-rainbows.an-anchor.an-prev(href=links.prev.href + '#read', rel='prev', aria-label='Go to the previous chapter') « #{links.prev.title}
+          if links.next
+            a.lk-rainbows.an-anchor.an-next(href=links.next.href + '#read', rel='next', aria-label='Go to the next chapter') #{links.next.title} »
+
+      header.ocha-actions
+        +pager
+
+      section#read
+        h3.ocha-id Chapter #{chapterId}
+        div.ocha-contents.md-markdown!=chapter.html
+
+      footer.ocha-actions
+        +pager
+
+    div.tk-presentations-link
+      a.tk-presentations-anchor(href='/books/#{slug}/chapters') Back to Table of Contents
+
+  include ../../partials/aside
+
+div.sp-line-wrapper.uv-hidden
+  div.sp-line

@@ -1,0 +1,3 @@
+Ideal for professional software developers with a basic understanding of JavaScript, this practical book shows you how to build small, interconnected ES6 JavaScript modules that emphasize reusability. You'll learn how to face a project with a modular mindset, and how to organize your applications into simple pieces that work well in isolation and can be combined to create a large, robust application.
+
+This book focuses on two aspects of JavaScript development: modularity and ES6 features. You’ll learn how to tackle application development by following a scale-out approach. As pieces of your codebase grow too big, you can break them up into smaller modules.

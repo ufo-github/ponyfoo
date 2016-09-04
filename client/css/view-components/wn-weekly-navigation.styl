@@ -11,10 +11,17 @@
 
 .wn-item
   display inline-block
-  margin 10px
+
+  &:after
+    opacity 0.1
+    content '|'
+
+  &:last-child:after
+    content none
 
 .wn-link
-  display block
+  display inline-block
+  margin 10px
 
 .wl-top
   margin-top 0

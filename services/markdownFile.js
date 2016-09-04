@@ -25,6 +25,4 @@ function read (file, done) {
   }
 }
 
-module.exports = {
-  read: read
-};
+module.exports = { read };

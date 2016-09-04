@@ -6,7 +6,9 @@
 .job.scheduler
 npm-debug.log*
 Thumbs.db
+todo
 backups/
+dat/oreilly-books/*/html/
 deploy/env/
 deploy/keys/
 deploy/log/

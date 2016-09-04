@@ -1,0 +1,10 @@
+nav.obn-navigation
+  ul.obn-list
+    li.obn-item
+      a.obn-link.lk-link.lk-white.lk-clean(href='/books/#{slug}', aria-label='Go back to the home for #{data.title}.') Home
+    li.obn-item
+      a.obn-link.lk-link.lk-white.lk-clean(href='/books/#{slug}/chapters', aria-label='Check out the table of contents.') Table of Contents
+    li.obn-item
+      a.obn-link.lk-link.lk-white.lk-clean(href=firstChapter.href + '#read', aria-label='Check out the latest Pony Foo Weekly issue.', data-taunus-ignore) Read Online
+    li.obn-item
+      a.obn-link.lk-link.lk-white.lk-clean(href=data.github, aria-label='Contribute to the #{data.title} GitHub repository!', target='_blank') Collaborate

@@ -67,7 +67,7 @@ function toJSON (source, options) {
 
   article.created = datetimeService.field(article.created);
   article.updated = datetimeService.field(article.updated);
-  article.publication = datetimeService.field(article.publication);
+  article.publication = article.publication ? datetimeService.field(article.publication) : null;
   article.readingTime = estimate.text(text);
   article.gitHref = getGitHref(source);
 

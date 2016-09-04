@@ -15,6 +15,15 @@ function findContributors (done) {
   contra.waterfall([next => findUsers({}, next), countArticles], done);
 }
 
+function findActiveContributors (done) {
+  findContributors((err, contributors) => {
+    if (err) {
+      done(err); return;
+    }
+    done(null, contributors.filter(isActive));
+  });
+}
+
 function findUsers (query, done) {
   User
     .find(query)
@@ -234,6 +243,7 @@ module.exports = {
   findOne,
   findUnverified,
   findContributors,
+  findActiveContributors,
   create: createUser({ bypassEncryption: false }),
   createUsingEncryptedPassword: createUser({ bypassEncryption: true }),
   setPassword,

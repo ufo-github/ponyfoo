@@ -1,0 +1,9 @@
+div.bok-trivia
+  div.bok-factoids
+    span.bok-factoid
+      span=data.publication
+      if !data.released
+        em=' (estimated)'
+    span.bok-factoid #{data.pages} Pages
+    span.bok-factoid ISBN #{data.isbn}
+    span.bok-factoid=data.publisher

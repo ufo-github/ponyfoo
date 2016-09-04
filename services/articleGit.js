@@ -5,6 +5,7 @@ const but = require(`but`);
 const path = require(`path`);
 const mkdirp = require(`mkdirp`);
 const contra = require(`contra`);
+const cheerio = require(`cheerio`);
 const moment = require(`moment`);
 const winston = require(`winston`);
 const simpleGit = require(`simple-git`);
@@ -82,17 +83,17 @@ function updateSyncRoot (article, done) {
         tag(article.heroImage ? `<img src='${article.heroImage}' alt='${article.title}' />` : ``),
         `${authority}/articles/${article.slug}`
       ),
-      tag(article.titleHtml, `h1`),
+      tag(strip(article.titleHtml), `h1`),
       tag(article.tags.map(tagText => tag(tagText, `kbd`)).join(` `), `p`),
-      tag(article.summaryHtml, `blockquote`),
-      tag(article.teaserHtml),
+      tag(strip(article.summaryHtml), `blockquote`),
+      tag(strip(article.teaserHtml)),
       tag(article.editorNoteHtml
-        ? article.editorNoteHtml
+        ? strip(article.editorNoteHtml)
         + tag(tag(tag(`— Editor’s note.`, `em`), `sub`), `p`, `align='right'`)
         : article.editorNoteHtml,
       `blockquote`),
-      tag(article.introductionHtml),
-      tag(article.bodyHtml)
+      tag(strip(article.introductionHtml)),
+      tag(strip(article.bodyHtml))
     ].join(`\n\n`)))
   };
   const filenames = Object.keys(files);
@@ -115,6 +116,13 @@ function updateSyncRoot (article, done) {
   function write (filename, data, done) {
     fs.writeFile(filename, trimRight(data) + `\n`, `utf8`, done);
   }
+
+}
+
+function strip (html) {
+  const $ = cheerio.load(html);
+  $(`figcaption`).remove();
+  return $.html();
 }
 
 function pushToGit (options, done) {

@@ -311,7 +311,7 @@ function initialize (viewModel, container, route) {
     taunus.partial(previewBody, `articles/article/main`, {
       articleComposer: true,
       article: {
-        publication: datetimeService.field(getPreviewPublication()),
+        publication: getPublicationDate(),
         permalink: article.permalink,
         created: article.created || fieldNow,
         updated: article.updated || fieldNow,
@@ -363,7 +363,7 @@ function initialize (viewModel, container, route) {
     });
     const parts = [teaserHtml, editorNoteHtml || ``, introductionHtml, bodyHtml];
     const readingTime = estimate.text(parts.join(` `));
-    const publication = datetimeService.field(getPreviewPublication());
+    const publication = getPublicationDate();
     const article = {
       publication,
       commentCount: 0,
@@ -423,7 +423,7 @@ function initialize (viewModel, container, route) {
     if (data.status && data.status !== `published`) {
       statusRadio[data.status].value(true);
 
-      if (`publication` in data) {
+      if (data.publication) {
         schedule.value(true);
       }
     }
@@ -467,6 +467,13 @@ function initialize (viewModel, container, route) {
 
   function getScheduledPublication () {
     return moment(publication.value(), publicationFormat);
+  }
+
+  function getPublicationDate () {
+    if (published || (schedule.value() && !published)) {
+      return datetimeService.field(getPreviewPublication());
+    }
+    return null;
   }
 
   function getPreviewPublication () {

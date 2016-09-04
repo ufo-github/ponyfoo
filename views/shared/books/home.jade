@@ -6,13 +6,28 @@ article.de-host
   section.de-column
     article.bk-history.md-markdown
       p
-        span='I started blogging '
-        a(href='/articles/pony-foo-begins', aria-label='Pony Foo Begins') around early 2013
-        span='. Over half a year later I became increasingly interested in writing a book, and that interest eventually materialized as my first book: '
+        span='After I started blogging '
+        a(href='/articles/pony-foo-begins', aria-label='Pony Foo Begins') early in 2013
+        span='. I became increasingly interested in writing a book, and that interest led me to start writing a book. My first book, '
         a(href='/books/javascript-application-design', aria-label='JavaScript Application Design: a build-first approach') JavaScript Application Design
-        span . You can find out more about the book by clicking on its cover. As new book projects are announced they’ll be added to this page so that you can learn more about them.
+        span , materialized.
+        if oreilly.length
+          span=' These days I’m working on the Modular JavaScript book series, starting with '
+          a(href='/books/practical-es6', aria-label='Practical ES6: A Practical Dive into ES6 and Maintainable JavaScript Modules — Modular JavaScript Book Series') Practical ES6
+          span .
+      p You can find out more about the books by clicking on their cover. New book projects will be added to this page, so that you can learn more about them, as they are announced.
 
     article.bk-books
+      each book in oreilly
+        a.bk-book.dc-colored(href='/books/' + book.slug)
+          img.bk-cover-image(src=book.coverHref, alt='')
+          sub.bk-cover-footnote
+            strong (#{book.publicationYear})
+            span=' '
+            span=book.oneline
+            span=' '
+            span.bk-link-tease Learn more!
+
       a.bk-book.dc-colored(href='/books/javascript-application-design')
         img.bk-cover-image(src='/img/javascript-application-design.jpg', alt='')
         sub.bk-cover-footnote
@@ -29,4 +44,3 @@ article.de-host
         span . You will find some very interesting reads there! My interests are not purely limited to programming books. Instead, you’ll find a good mixture of books about art, design, product development, marketing, startups, life stories, and &mdash; yes, technical books &mdash; about programming languages, databases, performance, web development, and AI. If you have any recommendations, I’d love for you to share them on the GitHub repository linked above.
 
   include ../partials/aside
-

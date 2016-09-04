@@ -15,17 +15,15 @@ const env = require(`../lib/env`);
 const authority = env(`AUTHORITY`);
 const contact = `Nicolás Bevacqua <feed@ponyfoo.com>`;
 const feedService = {
-  from: from,
-  feeds: {}
+  from, feeds: {}
 };
 
 function from (options) {
-  const api = assign(options, contra.emitter({
-    built: false,
-    rebuild: rebuild,
-    location: path.resolve(`.bin/static/` + options.id + `.xml`)
+  const location = path.resolve(`.bin/static/${options.id}.xml`);
+  const api = assign({}, options, contra.emitter({
+    built: false, rebuild, location
   }));
-  feedService.feeds[options.id] = api;
+  feedService.feeds[api.id] = api;
   return api;
 
   function generate (items, done) {
@@ -37,9 +35,9 @@ function from (options) {
       .value();
     const feed = new RSS({
       generator: `ponyfoo/ponyfoo`,
-      title: options.title,
-      description: options.description,
-      feed_url: authority + options.href,
+      title: api.title,
+      description: api.description,
+      feed_url: authority + api.href,
       site_url: authority,
       image_url: authority + staticService.unroll(`/img/banners/branded.png`),
       author: contact,
@@ -60,21 +58,25 @@ function from (options) {
     }
   }
   function persist (xml, done) {
-    mkdirp.sync(path.dirname(options.location));
-    fs.writeFile(options.location, xml, done);
+    mkdirp.sync(path.dirname(api.location));
+    fs.writeFile(api.location, xml, done);
   }
 
   function rebuild () {
-    contra.waterfall([options.getFeed, generate, persist], done);
-
-    function done (err) {
-      if (err) {
-        winston.warn(`Error trying to regenerate RSS feed (%s)`, options.id, err); return;
-      }
-      winston.debug(`Regenerated RSS feed (%s)`, options.id);
-      options.built = true;
-      options.emit(`built`);
+    if (api.built && moment(api.built).add(30, `minutes`).isBefore(moment())) {
+      end(); return;
     }
+
+    contra.waterfall([api.getFeed, generate, persist], end);
+  }
+
+  function end (err) {
+    if (err) {
+      winston.warn(`Error trying to regenerate RSS feed (%s)`, api.id, err); return;
+    }
+    winston.debug(`Regenerated RSS feed (%s)`, api.id);
+    api.built = moment();
+    api.emit(`built`);
   }
 }
 

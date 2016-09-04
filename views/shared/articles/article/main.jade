@@ -39,7 +39,8 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
   if !articleComposer
     meta(itemprop='dateCreated', content=article.created.datetime)
     meta(itemprop='dateModified', content=article.updated.datetime)
-    meta(itemprop='datePublished', content=article.publication.datetime)
+    if article.publication
+      meta(itemprop='datePublished', content=article.publication.datetime)
     meta(itemprop='keywords', content=article.tags.join(','))
     meta(itemprop='discussionUrl', content=authority + article.permalink + '#comments')
 

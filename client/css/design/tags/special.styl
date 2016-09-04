@@ -15,3 +15,20 @@ kbd
 iframe
   display inline-block
   border none
+
+summary
+  margin -10px -20px
+  padding 10px
+  background-color c-lighter-gray
+  cursor pointer
+  border-bottom 2px solid c-light-gray
+
+  &:hover
+    opacity 0.8
+
+details
+  padding 10px 20px
+  background-color c-browser-gray
+
+  &[open] summary
+    margin-bottom 20px

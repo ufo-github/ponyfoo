@@ -9,8 +9,9 @@ ol.aa-articles
         div.md-markdown.md-markdown-summary!=article.summaryHtml
         a.aa-continue.lk-visitor(href='/articles/' + article.slug) Read full article
       section.aa-trivia
-        div.aa-trivia-item
-          time(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text.toLowerCase()
+        if pub
+          div.aa-trivia-item
+            time(datetime=pub.datetime, aria-label=pub.title)='on ' + pub.text.toLowerCase()
         div.aa-trivia-item
           span=moment && moment.duration(article.readingTime, 'seconds').humanize().replace(/s$/, '')
           span=' read'

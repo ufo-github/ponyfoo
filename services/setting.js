@@ -3,12 +3,39 @@
 const contra = require(`contra`);
 const Setting = require(`../models/Setting`);
 const api = contra.emitter({
-  get: get,
-  getKey: getKey,
-  setKey: setKey,
-  save: save,
-  toModel: toModel
+  tracker,
+  get,
+  getKey,
+  setKey,
+  save,
+  toModel
 });
+
+function tracker () {
+  let cached = null;
+  return (key, done) => {
+    if (!done) {
+      done = key;
+      key = null;
+    }
+    if (cached) {
+      done(null, select(cached)); return;
+    }
+    get((err, items) => {
+      if (err) {
+        done(err); return;
+      }
+      done(null, select(items));
+      cached = items;
+      api.on(`save`, items => {
+        cached = items;
+      });
+    });
+    function select (items) {
+      return typeof key === `string` ? items[key] : items;
+    }
+  };
+}
 
 function get (done) {
   Setting.findOne({}).sort(`-created`).lean().exec(found);

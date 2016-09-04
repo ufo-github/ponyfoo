@@ -8,11 +8,16 @@ const env = require(`../lib/env`);
 const boot = require(`../lib/boot`);
 const Article = require(`../models/Article`);
 const markupService = require(`../services/markup`);
+const [slug] = process.argv.slice(2);
 
 boot(booted);
 
 function booted () {
-  Article.find({ status: `published` }).exec(found);
+  const query = {};
+  if (slug) {
+    query.slug = slug;
+  }
+  Article.find(query).exec(found);
 
   function found (err, articles) {
     if (err) {

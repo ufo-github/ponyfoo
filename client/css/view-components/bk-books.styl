@@ -7,8 +7,9 @@
   text-align center
 
 .bk-book
-  display inline-block
-  padding-bottom 20px
+  display block
+  padding 20px 0
+  margin-bottom 40px
   lk-link-rare('.bk-link-tease')
 
 .bk-cover-image
@@ -23,3 +24,12 @@
   margin-top 10px
   font-style italic
   color c-black-text
+
+@media only screen and (min-width: 768px)
+  .bk-book
+    display inline-block
+    vertical-align top
+    width calc(50% - 40px)
+
+    &:nth-child(odd)
+      margin-right 40px

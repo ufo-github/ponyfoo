@@ -21,9 +21,21 @@ function render (container) {
 
   function wrapInline (el) {
     const $el = $(el);
-    const id = $el.attr(`id`);
+    const id = readId($el);
+    if (!id) {
+      return $el;
+    }
     return $el.html(`<a href="#${ id }" class="md-heading">${ $el.html() }</a>`);
   }
+}
+
+function readId ($el) {
+  let id;
+  do {
+    id = $el.attr(`id`);
+    $el = $el.parent();
+  } while (!id && $el.length);
+  return id;
 }
 
 module.exports = linkifyHeadings;

@@ -121,12 +121,12 @@ function deferImages (html, startIndex) {
 
   function defer (i) {
     const start = startIndex || 0;
-    let elem, fallback;
+    const elem = $(this);
     if (i < start) {
+      elem.parents(`figure`).addClass(`figure-has-loaded`);
       return;
     }
-    elem = $(this);
-    fallback = util.format(`<noscript>%s</noscript>`, $.html(elem));
+    const fallback = util.format(`<noscript>%s</noscript>`, $.html(elem));
     elem.attr(`data-src`, elem.attr(`src`));
     elem.addClass(`js-only`);
     elem.removeAttr(`src`);

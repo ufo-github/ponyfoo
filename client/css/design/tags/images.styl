@@ -1,3 +1,54 @@
+aspect-ratio(v-width, v-height)
+  v-push = (v-height / v-width) * 100%
+  position relative
+  padding-bottom "calc(%s + 40px)" % v-push
+
+  > img,
+  > a > img
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    margin 0 auto
+
+figure
+  aspect-ratio(1600, 900)
+  background-color c-browser-gray
+  overflow hidden
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 50%
+    margin-top -140px
+    font-awesome()
+    font-size 240px
+    text-align center
+    color c-lighter-gray
+    content '\f03e'
+
+  [aria-label]
+    position static
+
+.figure-has-loaded
+  background linear-gradient(to bottom, c-transparent 0, c-yellow-highlight-01 100%)
+
+  &:before
+    content none
+
+figcaption
+  position absolute
+  left 0
+  right 0
+  bottom 0
+  padding 10px
+  font-style italic
+  font-size 14px
+  background linear-gradient(to right, c-yellow-highlight-02 33%, c-yellow-highlight-01 100%)
+  color c-black-light
+
 img
   max-width 100%
   border none

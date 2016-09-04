@@ -3,6 +3,8 @@
 const omnibox = require(`omnibox`);
 const domador = require(`domador`);
 const megamark = require(`megamark`);
+const implicitFigures = require(`markdown-it-implicit-figures`);
+const implicitFiguresForTweets = require(`../lib/implicitFiguresForTweets`);
 const insane = require(`insane`);
 const textService = require(`./text`);
 const emojiService = require(`./emoji`);
@@ -15,6 +17,8 @@ const domains = [
 const rlang = /md-lang-((?:[^\s]|$)+)/;
 
 megamark.parser.renderer.rules.link_open = link;
+megamark.parser.use(implicitFigures, { figcaption: true });
+megamark.parser.use(implicitFiguresForTweets);
 
 module.exports = {
   compile: compile,
@@ -89,7 +93,7 @@ function compile (text) {
   const mdOpts = {
     sanitizer: {
       filter: filter,
-      allowedTags: insane.defaults.allowedTags.concat(`iframe`, `script`),
+      allowedTags: insane.defaults.allowedTags.concat(`iframe`, `script`, `figure`, `figcaption`),
       allowedAttributes: {
         script: [`src`, `async`],
         p: [`data-height`, `data-theme-id`, `data-slug-hash`, `data-default-tab`, `data-user`]
@@ -97,6 +101,7 @@ function compile (text) {
       allowedClasses: {
         p: [`codepen`],
         blockquote: [`twitter-tweet`],
+        figure: [`twitter-tweet-figure`],
         img: [`tj-emoji`]
       }
     }

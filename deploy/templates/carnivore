@@ -104,6 +104,9 @@ git branch -u origin/noindex
 echo "packer: pre-filling elasticsearch with articles"
 node $HOME/app/server/scripts/articles-elasticsearch
 
+echo "packer: downloading latest book html builds"
+node $HOME/app/server/scripts/atlas-download
+
 echo "packer: booting appserver daemon..."
 sudo service $NAME start
 

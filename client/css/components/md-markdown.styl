@@ -99,7 +99,8 @@
     display inline
     line-height initial
 
-.md-code-block
+.md-code-block,
+[data-highlighted]
   padding 10px 40px
   margin 0 -20px
 
@@ -125,7 +126,8 @@
       margin-left -40px
       margin-right -40px
 
-  .md-code-block
+  .md-code-block,
+  [data-highlighted]
     margin 0 -40px
 
   .md-markdown:not(.mm-content-html) .md-code-block + blockquote
@@ -151,7 +153,8 @@
     code
       max-width 1000px
 
-  .md-code-block
+  .md-code-block,
+  [data-highlighted]
     margin 0 -400px 0 -40px // account for 360px in sidebar
 
   .md-markdown:not(.mm-content-html) .md-code-block + blockquote

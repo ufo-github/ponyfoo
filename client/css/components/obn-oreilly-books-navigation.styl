@@ -1,0 +1,24 @@
+.obn-navigation
+  display block
+  text-align center
+  background-color c-oreilly-teal
+  margin-bottom 60px
+
+.obn-list
+  line-height inherit
+  list-style-type none
+  f-use-subheading()
+
+.obn-item
+  display inline-block
+
+  &:after
+    opacity 0.1
+    content '|'
+
+  &:last-child:after
+    content none
+
+.obn-link
+  display inline-block
+  margin 10px

@@ -120,45 +120,48 @@ lk-visitor(selector)
     border-bottom-color c-dark-green
 
 lk-color(c-color)
+  color c-color
+
+  if c-color != inherit
+    &:visited
+      background-color rgba(c-color, o-visited)
+    &:visited .md-code-inline:before
+      background-color c-color
+
+  &:active
+    outline-color c-color
+
+  &:hover
+    border-bottom-color c-color
+
+lk-color-select(c-color)
   /a&,
   .lk-link
-    color c-color
-
-    if c-color != inherit
-      &:visited
-        background-color rgba(c-color, o-visited)
-      &:visited .md-code-inline:before
-        background-color c-color
-
-    &:active
-      outline-color c-color
-
-    &:hover
-      border-bottom-color c-color
+    lk-color(c-color)
 
 .lk-green
-  lk-color(c-dark-green)
+  lk-color-select(c-dark-green)
 
 .lk-black
-  lk-color(c-black-text)
+  lk-color-select(c-black-text)
 
 .lk-white
-  lk-color(c-white)
+  lk-color-select(c-white)
 
 .lk-orange
-  lk-color(c-dark-orange)
+  lk-color-select(c-dark-orange)
 
 .lk-blue
-  lk-color(c-blue)
+  lk-color-select(c-blue)
 
 .lk-inherited
-  lk-color(inherit)
+  lk-color-select(inherit)
 
 .lk-twitter
-  lk-color(c-twitter-blue)
+  lk-color-select(c-twitter-blue)
 
 .lk-facebook
-  lk-color(c-facebook-blue)
+  lk-color-select(c-facebook-blue)
 
 .lk-clean
   background-color transparent

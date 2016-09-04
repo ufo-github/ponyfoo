@@ -64,6 +64,7 @@ const secretScheduler = require(`./api/secret/scheduler`);
 const secretWeeklies = require(`./api/secret/weeklies`);
 const secretRemodel = require(`./api/secret/remodel`);
 const secretTwitterLeads = require(`./api/secret/twitter-leads`);
+const oreillyBookPingback = require(`./api/oreilly-books/pingback`);
 const apiErrorNotFound = require(`./api/error/notFound`);
 const lastSentEmail = require(`./development/lastSentEmail`);
 const mediaKit = require(`./development/pdf/mediakit`);
@@ -96,6 +97,8 @@ module.exports = function (app) {
   app.get(`/api/:secret(\\d+)/weeklies`, secretOnly, secretWeeklies);
   app.get(`/api/:secret(\\d+)/remodel`, secretOnly, secretRemodel);
   app.get(`/api/:secret(\\d+)/twitter-leads`, secretOnly, secretTwitterLeads);
+
+  app.post(`/api/oreilly-books/:slug/pingback`, oreillyBookPingback);
 
   app.get(`/:id(articles|weekly|all)/feed`, rssFeed);
   app.get(`/sitemap.xml`, sitemap);
