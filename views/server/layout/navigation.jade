@@ -66,6 +66,9 @@ if model.user
 
       li.nv-item.nv-open
         span.nv-opener
+      if model.userImpersonator
+        li.nv-item
+          a.lk-icon.fa.fa-user-secret(href='/api/impersonation/stop', aria-label='Back to your old self')
       li.nv-item
         a.lk-icon.fa.fa-sign-out(href='/account/logout')
       li.nv-item.nv-open

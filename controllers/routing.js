@@ -18,6 +18,9 @@ const authorOpenSourceProjectRemove = require(`./api/author/oss-remove`);
 const userCreate = require(`./api/users/create`);
 const userUpdate = require(`./api/users/update`);
 const userRemove = require(`./api/users/remove`);
+const stopImpersonation = require(`./api/impersonation/stop`);
+const impersonateUser = require(`./api/impersonation/impersonate`);
+const ignoreImpersonation = require(`./api/impersonation/ignore`);
 const invoiceNew = require(`./api/invoices/create`);
 const invoiceUpdate = require(`./api/invoices/update`);
 const invoiceRemove = require(`./api/invoices/remove`);
@@ -88,6 +91,8 @@ const production = env(`NODE_ENV`) === `production`;
 const upload = multer({ dest: `.bin/uploads` });
 
 module.exports = function (app) {
+  app.get(`/api/impersonation/stop`, ignoreImpersonation);
+
   app.all(`/*`, hydrateUserObject);
 
   app.get(`/api/csp-report`, cspReport);
@@ -164,6 +169,9 @@ module.exports = function (app) {
   app.put(`/api/users`, ownerOnly, userCreate);
   app.patch(`/api/users/:id`, ownerOnly, userUpdate);
   app.delete(`/api/users/:id`, ownerOnly, userRemove);
+
+  app.get(`/api/impersonation/stop`, ownerOnly, stopImpersonation);
+  app.get(`/api/impersonation/:id/impersonate`, ownerOnly, impersonateUser);
 
   app.patch(`/api/account/profile`, authOnly, updateProfile);
   app.post(`/api/twitter-lead`, twitterLead);

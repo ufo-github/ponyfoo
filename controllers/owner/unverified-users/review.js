@@ -1,5 +1,6 @@
 'use strict';
 
+const { sortBy } = require(`lodash`);
 const datetimeService = require(`../../../services/datetime`);
 const userService = require(`../../../services/user`);
 
@@ -16,12 +17,16 @@ module.exports = function (req, res, next) {
         meta: {
           canonical: `/users/unverified/review`
         },
-        users: users.map(toUnverifiedUserModel)
+        users: sortBy(users, byCreation).map(toUnverifiedUserModel)
       }
     };
     next();
   }
 };
+
+function byCreation ({ created = new Date(0) }) {
+  return Date.now() - created;
+}
 
 function toUnverifiedUserModel (user) {
   return {

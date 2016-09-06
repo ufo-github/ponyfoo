@@ -3,6 +3,7 @@
 const contra = require(`contra`);
 const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
 const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
+const urlService = require(`../../../services/url`);
 const datetimeService = require(`../../../services/datetime`);
 const markupService = require(`../../../services/markup`);
 const userService = require(`../../../services/user`);
@@ -40,6 +41,8 @@ function getModel (req, res, next) {
         created: datetimeService.field(submission.created),
         slug: submission.slug,
         title: submission.section.title,
+        href: model.item.href,
+        target: urlService.getLinkTarget(model.item.href),
         titleHtml: model.item.titleHtml,
         accepted: submission.accepted,
         status: submission.status,

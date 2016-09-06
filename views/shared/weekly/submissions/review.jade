@@ -22,7 +22,7 @@ article.ly-section.vw-maintainer.de-host
             td(data-label='Created')
               time(datetime=submission.created.datetime, aria-label=submission.created.title)='On ' + submission.created.text
             td(data-label='Title')
-              div.md-markdown.md-markdown-inline!=submission.titleHtml
+              a.f-subheading.lk-rainbows.md-markdown.md-markdown-inline(href=submission.href, target=submission.target)!=submission.titleHtml
             td.wur-status(data-label='Status')=submission.status
             td(data-label='Type')=submission.type
             td(data-label='Submitter')

@@ -1,11 +1,35 @@
 'use strict';
 
-const util = require(`util`);
+const { sortBy } = require(`lodash`);
 const datetimeService = require(`../../../services/datetime`);
 const emojiService = require(`../../../services/emoji`);
 const userService = require(`../../../services/user`);
+const roleInfo = new Map([
+  [`owner`, {
+    emoji: `👑`,
+    title: `Founder`
+  }],
+  [`editor`, {
+    emoji: `📑`,
+    title: `Contributing Editor`
+  }],
+  [`articles`, {
+    emoji: `✍`,
+    title: `Contributing Author`
+  }],
+  [`weeklies`, {
+    emoji: `💌`,
+    title: `Newsletter Contributor`
+  }],
+  [`moderator`, {
+    emoji: `🏥`,
+    title: `Moderator`
+  }]
+]);
 
-module.exports = function (req, res, next) {
+module.exports = userReview;
+
+function userReview (req, res, next) {
   userService.findContributors(respond);
   function respond (err, contributors) {
     if (err) {
@@ -17,12 +41,17 @@ module.exports = function (req, res, next) {
         meta: {
           canonical: `/users/review`
         },
-        users: contributors.map(toUserModel)
+        users: sortBy(contributors, byCreation).map(toUserModel),
+        currentUser: req.user.toString()
       }
     };
     next();
   }
-};
+}
+
+function byCreation ({ created }) {
+  return Date.now() - created;
+}
 
 function toUserModel (contributor) {
   const user = contributor.user;
@@ -39,23 +68,8 @@ function toUserModel (contributor) {
 }
 
 function roleAsEmoji (role) {
-  if (role === `owner`) {
-    return icon(`👑`, `Founder`);
-  }
-  if (role === `editor`) {
-    return icon(`📑`, `Contributing Editor`);
-  }
-  if (role === `articles`) {
-    return icon(`✍`, `Contributing Author`);
-  }
-  if (role === `weeklies`) {
-    return icon(`💌`, `Newsletter Contributor`);
-  }
-  if (role === `moderator`) {
-    return icon(`🏥`, `Moderator`);
-  }
-  return icon(`❓`, util.format(`Unknown (“%s”)`, role));
-  function icon (emoji, alt) {
-    return util.format(`<span aria-label="%s">%s</span>`, alt, emojiService.compile(emoji));
-  }
+  const defaultRoleInfo = { emoji: `❓`, title: `Unknown (“${ role }”)` };
+  const { emoji, title } = roleInfo.get(role) || defaultRoleInfo;
+  const compiledEmoji = emojiService.compile(emoji);
+  return `<span aria-label="${ title }">${ compiledEmoji }</span>`;
 }

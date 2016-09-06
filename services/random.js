@@ -24,20 +24,11 @@ function find (Model, query, count, done) {
 
   function many () {
     contra.waterfall([
-      function (next) {
-        Model.find(query, `_id`).lean().exec(next);
-      },
-      function (documents, next) {
-        const random = _(documents).map(`_id`).sample(count);
-        const byIds = {
-          _id: { $in: random }
-        };
-        Model.find(byIds, next);
-      }
+      next => Model.find(query).select(`_id`).lean().exec(next),
+      (documents, next) => next(null, _(documents).map(`_id`).sampleSize(count).value()),
+      ($in, next) => Model.find({ _id: { $in } }, next)
     ], done);
   }
 }
 
-module.exports = {
-  find: find
-};
+module.exports = { find };

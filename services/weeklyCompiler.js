@@ -40,33 +40,25 @@ function toHeaderSectionHtml (section, options, done) {
     section.size,
     section.foreground,
     section.background,
-    options.markdown.compile(section.text, {
-      linkThrough: linkThrough
-    }),
+    options.markdown.compile(section.text, { linkThrough }),
     section.size
   ));
 }
 
 function toMarkdownSectionHtml (section, options, done) {
   const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
-  const html = options.markdown.compile(section.text, {
-    linkThrough: linkThrough
-  });
+  const html = options.markdown.compile(section.text, { linkThrough });
   done(null, textService.format(`<div class="wy-section-markdown md-markdown">%s</div>`, html));
 }
 
 function toLinkSectionModel (section, options, done) {
   const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(options.slug);
-  const descriptionHtml = options.markdown.compile(section.description, {
-    linkThrough: linkThrough
-  });
+  const descriptionHtml = options.markdown.compile(section.description, { linkThrough });
   const base = {
     descriptionHtml: descriptionHtml
   };
   const extended = assign(base, section, {
-    titleHtml: options.markdown.compile(section.title, {
-      linkThrough: linkThrough
-    }),
+    titleHtml: options.markdown.compile(section.title, { linkThrough }),
     href: linkThrough(section.href),
     source: beautifyText(section.source),
     sourceHref: linkThrough(section.sourceHref)

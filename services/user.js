@@ -201,9 +201,12 @@ function setPassword (userId, password, done) {
   });
 }
 
-function hasRole (user, roles) {
+function hasRole (user, ...roles) {
   return roles.some(userHasRole);
   function userHasRole (role) {
+    if (Array.isArray(role)) {
+      return role.some(userHasRole);
+    }
     return user.roles.indexOf(role) !== -1;
   }
 }

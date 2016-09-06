@@ -77,15 +77,14 @@ function flashCopy (req, data) {
   }
 }
 
-function redirect (req, res, url, options) {
+function redirect (req, res, url, options = {}) {
   const href = url || referer(req);
-  const o = options || {};
-  if (o.flash) {
-    flashCopy(req, o.flash);
+  if (options.flash) {
+    flashCopy(req, options.flash);
   }
   taunus.redirect(req, res, href, {
-    hard: o.hard,
-    force: o.force
+    hard: options.hard,
+    force: options.force
   });
 }
 
@@ -106,11 +105,11 @@ function classic (req, res, next, fn) {
 }
 
 module.exports = {
-  userAgent: userAgent,
-  validationError: validationError,
-  response: response,
-  redirect: redirect,
-  referer: referer,
-  classic: classic,
-  isJsonAsText: isJsonAsText
+  userAgent,
+  validationError,
+  response,
+  redirect,
+  referer,
+  classic,
+  isJsonAsText
 };

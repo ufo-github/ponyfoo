@@ -18,6 +18,7 @@ function render (container) {
     const input = $(`.ss-input`, place);
     const topicChecks = $(`.ss-topic`, place);
     const button = $(`.ss-button`, place);
+
     button.on(`click`, submit);
 
     function submit (e) {
@@ -27,7 +28,7 @@ function render (container) {
       }
       const email = input.value().trim();
       if (!email) {
-        return;
+        release(); return;
       }
       const json = {
         subscriber: email,
@@ -36,7 +37,11 @@ function render (container) {
       };
       ajax
         .put(`/api/subscribers`, { json })
-        .on(`data`, () => progressblock.release(button));
+        .on(`data`, release);
+    }
+
+    function release () {
+      progressblock.release(button);
     }
   }
 

@@ -14,26 +14,28 @@ article.ly-section.vw-maintainer.de-host
             th Roles
             th Actions
         tbody
-          each user in users
+          each u in users
             tr
               td.usr-avatar(data-label='Profile')
-                if user.active && user.slug
-                  a.av-website(href='/contributors/' + user.slug, aria-label='Visit their profile')
-                    img.av-avatar(src=user.avatar, alt='')
+                if u.active && u.slug
+                  a.av-website(href='/contributors/' + u.slug, aria-label='Visit their profile')
+                    img.av-avatar(src=u.avatar, alt='')
                 else
-                  img.av-avatar(src=user.avatar, alt='')
+                  img.av-avatar(src=u.avatar, alt='')
               td.usr-date(data-label='Created')
-                time(datetime=user.created.datetime, aria-label='Created ' + user.created.title)=user.created.text
+                time(datetime=u.created.datetime, aria-label='Created ' + u.created.title)=u.created.text
               td(data-label='Name')
-                if user.active && user.slug
-                  a.lk-rainbows(href='/contributors/' + user.slug, aria-label='Check out their contributor profile')=user.displayName
+                if u.active && u.slug
+                  a.lk-rainbows(href='/contributors/' + u.slug, aria-label='Check out their contributor profile')=u.displayName
                 else
-                  span=user.displayName
+                  span=u.displayName
               td(data-label='Email')
-                a.lk-rainbows(data-email='mailto:' + user.email, aria-label='Send them an email.')=user.email
-              td.usr-roles(data-label='Roles')!=user.roles
+                a.lk-rainbows(data-email='mailto:' + u.email, aria-label='Send them an email.')=u.email
+              td.usr-roles(data-label='Roles')!=u.roles
               td.usr-buttons(data-label='Actions')
-                a.ar-button.lk-icon.fa.fa-pencil(href='/users/' + user.id + '/edit', aria-label='Edit this user')
-                a.ar-button.lk-icon.fa.fa-remove.lk-icon.fa.fa-remove.usr-remove(aria-label='Delete this user', type='submit', data-id=user.id)
+                if currentUser !== u.id
+                  a.usr-button.lk-icon.fa.fa-user-secret(href='/api/impersonation/' + u.id + '/impersonate', aria-label='Impersonate this user')
+                a.usr-button.lk-icon.fa.fa-pencil(href='/users/' + u.id + '/edit', aria-label='Edit this user')
+                a.usr-button.lk-icon.fa.fa-remove.lk-icon.fa.fa-remove.usr-remove(aria-label='Delete this user', type='submit', data-id=u.id)
 
   include ../../partials/aside
