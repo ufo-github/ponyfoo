@@ -5,13 +5,8 @@ const create = require(`./lib/create`);
 const httpService = require(`../../../services/http`);
 
 function insert (req, res, next) {
-  const model = {
-    name: req.body.name,
-    email: req.body.email,
-    site: req.body.site,
-    content: req.body.content,
-    parent: req.body.parent
-  };
+  const { name, email, website, content, parent } = req.body;
+  const model = { name, email, site: website, content, parent };
   const options = {
     type: req.params.type,
     slug: req.params.slug,
