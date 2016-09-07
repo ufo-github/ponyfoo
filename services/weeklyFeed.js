@@ -4,6 +4,7 @@ const fs = require(`fs`);
 const util = require(`util`);
 const contra = require(`contra`);
 const cheerio = require(`cheerio`);
+const assign = require(`assignment`);
 const feedService = require(`./feed`);
 const markupService = require(`./markup`);
 const weeklyService = require(`./weekly`);
@@ -78,10 +79,10 @@ function replaceWith ($, tagName) {
   }
 }
 
-module.exports = feedService.from({
+module.exports = assign({ getFeed }, feedService.from({
   id: `weekly`,
   href: `/weekly/feed`,
   title: `Pony Foo Weekly`,
   description: `Latest Pony Foo Weekly issues`,
-  getFeed: getFeed
-});
+  getFeed
+}));

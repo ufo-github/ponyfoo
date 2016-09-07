@@ -36,7 +36,7 @@ article.ly-section.vw-maintainer
             td(data-label='Created')
               time(datetime=s.created.datetime, aria-label=s.created.title)='On ' + s.created.text
             td(data-label='Source')
-              span(class='as-source as-source-' + s.source)=s.source
+              span(class='bg-badge as-source as-source-' + s.source)=s.source
             td(data-label='Email')
               a.lk-link.lk-black(data-email='mailto:' + s.email, target='_blank')=s.email
             td.as-verified(data-label='Verified')

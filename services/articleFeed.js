@@ -3,6 +3,7 @@
 const fs = require(`fs`);
 const util = require(`util`);
 const contra = require(`contra`);
+const assign = require(`assignment`);
 const feedService = require(`./feed`);
 const markupService = require(`./markup`);
 const Article = require(`../models/Article`);
@@ -58,10 +59,10 @@ function getFeed (done) {
   }
 }
 
-module.exports = feedService.from({
+module.exports = assign({ getFeed }, feedService.from({
   id: `articles`,
   href: `/articles/feed`,
   title: `Pony Foo`,
   description: `Latest articles published on Pony Foo`,
-  getFeed: getFeed
-});
+  getFeed
+}));

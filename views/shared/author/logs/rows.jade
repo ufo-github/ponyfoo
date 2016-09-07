@@ -1,7 +1,7 @@
 each entry in logs
   tr(class='lg-' + entry.level)
     td(data-label='Level')
-      span.lg-level=entry.level
+      span.bg-badge.lg-level=entry.level
     td(data-label='When')
       time.lg-created(datetime=entry.created.datetime, aria-label=entry.created.title)=entry.created.text
     td(data-label='Message')

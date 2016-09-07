@@ -111,7 +111,7 @@ function minify (html) {
   return minifyHtml(html, minifierOptions);
 }
 
-function deferImages (html, startIndex) {
+function deferImages (html, startIndex = 0) {
   if (!html) {
     return html;
   }
@@ -120,9 +120,8 @@ function deferImages (html, startIndex) {
   return $.html();
 
   function defer (i) {
-    const start = startIndex || 0;
     const elem = $(this);
-    if (i < start) {
+    if (i < startIndex) {
       elem.parents(`figure`).addClass(`figure-has-loaded`);
       return;
     }

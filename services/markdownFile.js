@@ -18,7 +18,7 @@ function read (file, done) {
     if (err) {
       done(err); return;
     }
-    const html = markupService.compile(md);
+    const html = markupService.compile(md, { deferImages: true });
     const unrolled = staticService.unrollAll(html);
     cached[file] = unrolled;
     done(null, unrolled);

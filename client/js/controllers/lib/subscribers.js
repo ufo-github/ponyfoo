@@ -73,6 +73,7 @@ module.exports = function (viewModel, container) {
       const wowMode = $(`#sg-wow-mode`, container).value();
 
       $(`.sg-chart`, container).remove();
+      $(`.sg-tip`).remove();
 
       const rect = parent.getBoundingClientRect();
       const margin = {
@@ -249,7 +250,7 @@ module.exports = function (viewModel, container) {
               const c = color(name);
               const tipClass = isLightColor(c) ? `sg-tip-light` : `sg-tip-dark`;
               return `
-<div class="sg-tip-content ${ tipClass }" }; style="background-color: ${ c };">
+<div class="sg-tip-content ${ tipClass }" style="background-color: ${ c };">
   <div class="sg-tip-date">${ full.dateText }</div>
   <div>
     <span class="sg-tip-label">${ name }: </span>

@@ -1,12 +1,8 @@
 'use strict';
 
 const _ = require(`lodash`);
-const fs = require(`fs`);
-const path = require(`path`);
-const mkdirp = require(`mkdirp`);
 const sitemap = require(`sitemap`);
 const contra = require(`contra`);
-const winston = require(`winston`);
 const moment = require(`moment`);
 const Article = require(`../models/Article`);
 const WeeklyIssue = require(`../models/WeeklyIssue`);
@@ -14,9 +10,13 @@ const userService = require(`./user`);
 const oreillyService = require(`./oreilly`);
 const env = require(`../lib/env`);
 const authority = env(`AUTHORITY`);
-const location = path.resolve(`.bin/static/sitemap.xml`);
-const api = contra.emitter({
-  built: false, rebuild, location
+const syndicationService = require(`./syndication`);
+const location = `.bin/static/sitemap.xml`;
+const quarterHour = 1000 * 60 * 15;
+const syn = syndicationService.create({
+  name: `sitemap`,
+  location,
+  build
 });
 
 function getArticleUrls (articles) {
@@ -113,21 +113,28 @@ function dateTransformer (accumulator, date) {
   return accumulator;
 }
 
-function rebuild () {
-  if (api.built && moment(api.built).add(30, `minutes`).isBefore(moment())) {
-    end(); return;
-  }
+function fetchArticles (next) {
+  Article.find({ status: `published` }).sort(`-publication`).lean().exec(next);
+}
+
+function fetchWeeklies (next) {
+  WeeklyIssue.find({ status: `released`, statusReach: `everyone` }).lean().sort(`-publication`).exec(next);
+}
+
+function build (done) {
   contra.concurrent({
     articles: fetchArticles,
     weeklies: fetchWeeklies,
     oreillySlugs: oreillyService.findSlugs,
     users: userService.findActiveContributors
-  }, models);
-
-  function models (err, { articles, weeklies, oreillySlugs, users } = {}) {
+  }, (err, result) => {
     if (err) {
-      end(err); return;
+      done(err); return;
     }
+    computeRebuild(result);
+  });
+
+  function computeRebuild ({ articles, weeklies, oreillySlugs, users }) {
     const modified = toLastMod(articles[0] ? articles[0].updated : Date.now());
     const urls = [
       ...getArticleUrls(articles),
@@ -138,34 +145,12 @@ function rebuild () {
     ];
     const map = sitemap.createSitemap({
       hostname: authority,
-      cacheTime: 15 * 60 * 1000, // 15 minutes
-      urls: urls
+      cacheTime: quarterHour,
+      urls
     });
     const xml = map.toXML();
-    persist(xml, end);
+    done(null, xml);
   }
 }
 
-function fetchArticles (next) {
-  Article.find({ status: `published` }).sort(`-publication`).lean().exec(next);
-}
-
-function fetchWeeklies (next) {
-  WeeklyIssue.find({ status: `released`, statusReach: `everyone` }).lean().sort(`-publication`).exec(next);
-}
-
-function persist (xml, next) {
-  mkdirp.sync(path.dirname(location));
-  fs.writeFile(location, xml, next);
-}
-
-function end (err) {
-  if (err) {
-    winston.warn(`Error trying to regenerate sitemap`, err); return;
-  }
-  winston.debug(`Regenerated sitemap`);
-  api.built = moment();
-  api.emit(`built`);
-}
-
-module.exports = api;
+module.exports = syn;

@@ -1,21 +1,20 @@
 'use strict';
 
 const feedService = require(`../../services/feed`);
-const maxAge = 15 * 60 * 1000; // 15 minutes
+const maxAge = 1000 * 60 * 15; // 15 minutes
 
 module.exports = function (req, res) {
   const id = req.params.id;
-  if (!(id in feedService.feeds)) {
+  const feed = feedService.feeds.get(id);
+  if (!feed) {
     res.end(``); return;
   }
-  if (feedService.feeds[id].built) {
+  if (feed.built) {
     send();
   } else {
-    feedService.feeds[id].once(`built`, send);
+    feed.once(`built`, send);
   }
   function send () {
-    res.sendFile(feedService.feeds[id].location, {
-      maxAge: maxAge
-    });
+    res.sendFile(feed.location, { maxAge });
   }
 };

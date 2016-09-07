@@ -20,10 +20,7 @@ megamark.parser.renderer.rules.link_open = link;
 megamark.parser.use(implicitFigures, { figcaption: true });
 megamark.parser.use(implicitFiguresForTweets);
 
-module.exports = {
-  compile: compile,
-  decompile: decompile
-};
+module.exports = { compile, decompile };
 
 function attr (token, name) {
   if (token[name]) {
