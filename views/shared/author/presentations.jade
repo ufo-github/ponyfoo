@@ -7,13 +7,13 @@ article.ly-section.vw-maintainer.de-host
       table
         thead
           tr
-            th Presented
+            th.tm-time-cell Presented
             th Title
             th Actions
         tbody
           each p in presentations
             tr
-              td(data-label='Presented')
+              td.tm-time-cell(data-label='Presented')
                 time(datetime=p.presented.datetime, aria-label=p.presented.title)='On ' + p.presented.text
               td(data-label='Title')=p.title
               td.ae-buttons(data-label='Actions')

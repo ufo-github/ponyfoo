@@ -8,7 +8,7 @@ article.ly-section.vw-maintainer.de-host
         thead
           tr
             th
-            th Created
+            th.tm-time-cell Created
             th Name
             th Email
             th Roles
@@ -22,7 +22,7 @@ article.ly-section.vw-maintainer.de-host
                     img.av-avatar(src=u.avatar, alt='')
                 else
                   img.av-avatar(src=u.avatar, alt='')
-              td.usr-date(data-label='Created')
+              td.tm-time-cell(data-label='Created')
                 time(datetime=u.created.datetime, aria-label='Created ' + u.created.title)=u.created.text
               td(data-label='Name')
                 if u.active && u.slug

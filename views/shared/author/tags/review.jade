@@ -7,14 +7,14 @@ article.ly-section.vw-maintainer.de-host
       table
         thead
           tr
-            th Created
+            th.tm-time-cell Created
             th Tag
             th Title
             th Actions
         tbody
           each tag in tags
             tr
-              td(data-label='Created')
+              td.tm-time-cell(data-label='Created')
                 time(datetime=tag.created.datetime, aria-label='Created ' + tag.created.title)=tag.created.text
               td(data-label='Tag')
                 a.tg-tag.tg-tag-inline.lk-link(href='/articles/tagged/' + tag.slug, aria-label='Find articles tagged "' + tag.slug + '"')=tag.slug

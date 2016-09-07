@@ -9,7 +9,7 @@ article.ly-section.vw-maintainer.de-host
         thead
           tr
             th ID
-            th Date Filed
+            th.tm-time-cell Date Filed
             th Customer
             th Billed
             th Paid
@@ -18,7 +18,7 @@ article.ly-section.vw-maintainer.de-host
           each invoice in invoices
             tr
               td(data-label='ID')=invoice.slug
-              td(data-label='Date Filed')
+              td.tm-time-cell(data-label='Date Filed')
                 time(datetime=invoice.date.datetime, aria-label='Filed for ' + invoice.date.title)=invoice.date.text
               td(data-label='Customer')=invoice.customer.name
               td(data-label='Billed')=invoice.totalMoney

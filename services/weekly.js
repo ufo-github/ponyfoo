@@ -118,7 +118,6 @@ function toMetadata (doc) {
   const permalink = getPermalink();
   return {
     created: datetimeService.field(doc.created),
-    updated: datetimeService.field(doc.updated),
     publication: datetimeService.field(doc.publication),
     author: {
       slug: doc.author.slug,

@@ -19,8 +19,8 @@ article.ly-section.vw-maintainer
       thead
         tr
           th
-          th Created
-          th Source
+          th.tm-time-cell Created
+          th.as-source-cell Source
           th Email
           th.as-verified V.
           th Topics
@@ -33,9 +33,9 @@ article.ly-section.vw-maintainer
             td.usr-avatar(data-label='Avatar')
               a.av-website(data-email='mailto:' + s.email, target='_blank')
                 img.av-avatar(src=s.avatar, alt='')
-            td(data-label='Created')
+            td.tm-time-cell(data-label='Created')
               time(datetime=s.created.datetime, aria-label=s.created.title)='On ' + s.created.text
-            td(data-label='Source')
+            td.as-source-cell(data-label='Source')
               span(class='bg-badge as-source as-source-' + s.source)=s.source
             td(data-label='Email')
               a.lk-link.lk-black(data-email='mailto:' + s.email, target='_blank')=s.email

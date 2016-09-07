@@ -7,11 +7,10 @@ article.ly-section.vw-maintainer.de-host
       thead
         tr
           th
-          th Created
+          th.tm-time-cell Created
+          th.bg-badge-cell Type
           th Title
           th Status
-          th Type
-          th Submitter
           th Actions
       tbody
         each submission in submissions
@@ -19,15 +18,13 @@ article.ly-section.vw-maintainer.de-host
             td.usr-avatar(data-label='Avatar')
               a.av-website(data-email='mailto:' + submission.email, target='_blank')
                 img.av-avatar(src=submission.avatar, alt='')
-            td(data-label='Created')
+            td.tm-time-cell(data-label='Created')
               time(datetime=submission.created.datetime, aria-label=submission.created.title)='On ' + submission.created.text
+            td.bg-badge-cell(data-label='Type')
+              span(class='bg-badge wur-type-' + submission.type)=submission.type
             td(data-label='Title')
               a.f-subheading.lk-rainbows.md-markdown.md-markdown-inline(href=submission.href, target=submission.target)!=submission.titleHtml
             td.wur-status(data-label='Status')=submission.status
-            td(data-label='Type')=submission.type
-            td(data-label='Submitter')
-              a.lk-link.lk-black(data-email='mailto:' + submission.email, target='_blank')=submission.submitter || submission.email
-
             td.wur-buttons(data-label='Actions')
               if submission.status !== 'accepted'
                 if submission.accepted

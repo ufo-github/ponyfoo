@@ -17,8 +17,7 @@ article.ly-section.vw-maintainer.de-host
       thead
         tr
           th
-          th Created
-          th Last Update
+          th.tm-time-cell Created
           th Title
           th Condition
           th Sharing
@@ -32,10 +31,8 @@ article.ly-section.vw-maintainer.de-host
                   img.av-avatar(src=issue.author.avatar, alt='')
               else
                 img.av-avatar(src=issue.author.avatar, alt='')
-            td(data-label='Created')
+            td.tm-time-cell(data-label='Created')
               time(datetime=issue.created.datetime, aria-label=issue.created.title)='On ' + issue.created.text
-            td(data-label='Last Update')
-              time(datetime=issue.updated.datetime, aria-label=issue.updated.title)='On ' + issue.updated.text
             td(data-label='Title')
               a.ar-title.lk-rainbows(href=issue.permalink, aria-label='Navigate to newsletter issue')
                 if issue.titleHtml

@@ -7,12 +7,6 @@ const urlService = require(`../../../services/url`);
 const datetimeService = require(`../../../services/datetime`);
 const markupService = require(`../../../services/markup`);
 const userService = require(`../../../services/user`);
-const subtypeMap = {
-  suggestion: `Suggestion`,
-  primary: `Primary Sponsorship`,
-  secondary: `Sponsored Link`,
-  job: `Job Listing`
-};
 
 module.exports = getModel;
 
@@ -46,7 +40,7 @@ function getModel (req, res, next) {
         titleHtml: model.item.titleHtml,
         accepted: submission.accepted,
         status: submission.status,
-        type: subtypeMap[submission.subtype],
+        type: submission.subtype,
         submitter: submission.submitter,
         email: submission.email,
         avatar: userService.getAvatar(submission)

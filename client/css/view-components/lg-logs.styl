@@ -5,24 +5,6 @@
 .lg-table
   margin 10px 0
 
-.lg-level
-  color c-white
-
-.lg-debug .lg-level
-  background-color darken(c-orange, 25%)
-
-.lg-info .lg-level
-  background-color c-purple
-
-.lg-warn .lg-level
-  background-color darken(c-pink, 40%)
-
-.lg-error .lg-level
-  background-color c-pink
-
-.lg-created
-  font-style italic
-
 .lg-stack
   margin 0
   white-space pre-wrap
@@ -37,6 +19,20 @@
 .lg-actions .an-siblings
   margin 0
 
+.lg-debug .lg-level
+  background-color c-dark-turquoise
+.lg-info .lg-level
+  background-color c-purple
+.lg-warn .lg-level
+  background-color darken(c-orange, 25%)
+.lg-error .lg-level
+  background-color c-red
+
 @media only screen and (max-width: 600px)
   .lg-stack
     white-space nowrap
+
+@media only screen and (min-width: 950px)
+  .lg-level-cell
+    text-align right
+    width 85px
