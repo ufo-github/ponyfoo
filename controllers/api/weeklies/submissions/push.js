@@ -29,7 +29,7 @@ function push (req, res, next) {
       next(err); return;
     }
     if (!issue) {
-      res.status(404).json({ messages: [`No drafts were found! Please create one.`] }); return;
+      res.status(404).json({ messages: [`No Pony Foo Weekly drafts were found! Please create one.`] }); return;
     }
     const { section } = req.body;
     weeklyService.addSection({ issue, section }, added);
