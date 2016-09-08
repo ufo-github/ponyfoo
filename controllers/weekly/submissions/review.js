@@ -40,7 +40,6 @@ function getModel (req, res, next) {
         href: model.item.href,
         target: urlService.getLinkTarget(model.item.href),
         titleHtml: model.item.titleHtml,
-        accepted: weeklySubmissionService.isAccepted(submission),
         status: submission.status,
         type: submission.subtype,
         submitter: submission.submitter,

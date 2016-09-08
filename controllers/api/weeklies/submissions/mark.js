@@ -25,7 +25,7 @@ function remove (req, res, next) {
     }
     const action = req.params.action;
     const status = actions[action];
-    const accepting = status === `accepted` && !weeklySubmissionService.isAccepted(submission);
+    const accepting = status === `accepted` && !weeklySubmissionService.wasEverAccepted(submission);
     if (accepting) {
       submission.accepted = true;
     }

@@ -317,7 +317,7 @@ function getRandomCode () {
   return Math.random().toString(18).substr(2);
 }
 
-function isAccepted (submission) {
+function wasEverAccepted (submission) {
   const { status } = submission;
   return submission.accepted || status === `accepted` || status === `used`;
 }
@@ -332,7 +332,7 @@ function toSubmissionModel (submission) {
 
 module.exports = {
   isEditable,
-  isAccepted,
+  wasEverAccepted,
   getToken,
   notifyReceived,
   notifyAccepted,

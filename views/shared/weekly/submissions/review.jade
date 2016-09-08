@@ -35,7 +35,7 @@ article.ly-section.vw-maintainer.de-host
                 data-slug=submission.slug
               )
 
-              if submission.accepted
+              if submission.status === 'accepted'
                 a.ar-button.lk-icon.fa.fa-heartbeat(
                   href='/api/weeklies/submissions/' + submission.slug + '/use',
                   aria-label='Mark this link submission as used',
