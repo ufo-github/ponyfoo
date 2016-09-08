@@ -25,15 +25,16 @@ function remove (req, res, next) {
     }
     const action = req.params.action;
     const status = actions[action];
-    submission.accepted = true;
+    const accepting = status === `accepted` && !weeklySubmissionService.isAccepted(submission);
+    if (accepting) {
+      submission.accepted = true;
+    }
     submission.status = status;
     submission.save(saved);
     function saved (err) {
       if (err) {
         next(err); return;
       }
-      const alreadyAccepted = weeklySubmissionService.isAccepted(submission);
-      const accepting = status === `accepted` && !alreadyAccepted;
       if (accepting) {
         weeklySubmissionService.notifyAccepted(submission);
       }

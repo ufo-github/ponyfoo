@@ -134,8 +134,8 @@ module.exports = function (app) {
   app.delete(`/api/:type(articles|weeklies)/:slug/comments/:id`, moderatorOnly, commentRemoveJson);
   app.get(`/api/:type(articles|weeklies)/:slug/comments/:id/remove`, moderatorOnly, commentRemoveRedirect);
 
-  app.get(`/api/weeklies/submissions/:slug`, weekliesOnly, weeklySubmissionModel);
-  app.post(`/api/weeklies/submissions/:slug/push`, weekliesOnly, weeklySubmissionPush);
+  app.get(`/api/weeklies/submissions/:slug`, ownerOnly, weeklySubmissionModel);
+  app.post(`/api/weeklies/submissions/:slug/push`, ownerOnly, weeklySubmissionPush);
 
   app.post(`/api/weeklies/submissions`, weeklySubmission);
   app.post(`/api/weeklies/submissions/:slug`, weeklySubmission);

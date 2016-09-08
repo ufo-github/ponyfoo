@@ -38,10 +38,10 @@ function push (req, res, next) {
       if (err) {
         next(err); return;
       }
-      if (submission.status !== `incoming`) {
-        respond(null); return;
+      if (submission.status === `incoming`) {
+        submission.status = `used`;
       }
-      submission.status = `used`;
+      submission.accepted = true;
       submission.save(but(respond));
     }
 
