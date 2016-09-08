@@ -434,7 +434,6 @@ function ready (viewModel, container, route) {
     const $el = $(el);
     scrapeCompletionService.scrape({
       source: el,
-      url: $el.value(),
       container: $el.parents(`.wa-section-contents`),
       updatePreview: updatePreview
     });

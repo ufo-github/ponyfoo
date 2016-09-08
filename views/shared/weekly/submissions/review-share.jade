@@ -1,0 +1,16 @@
+mixin actions
+  a.lk-rainbows.wurs-cancel Cancel
+  button.bt-button.bt-pink.wurs-submit
+    span.bt-text Add
+
+article.wurs-container
+  include ../../author/weeklies/tool-link
+
+  section.wurs-actions
+    +actions()
+
+  h2 Preview
+  section.wurs-preview
+
+  footer.wurs-actions
+    +actions()

@@ -7,6 +7,7 @@ const path = require(`path`);
 const contra = require(`contra`);
 const moment = require(`moment`);
 const winston = require(`winston`);
+const assign = require(`assignment`);
 const sluggish = require(`sluggish`);
 const User = require(`../models/User`);
 const gravatarService = require(`./gravatar`);
@@ -316,9 +317,24 @@ function getRandomCode () {
   return Math.random().toString(18).substr(2);
 }
 
+function isAccepted (submission) {
+  const { status } = submission;
+  return submission.accepted || status === `accepted` || status === `used`;
+}
+
+function toSubmissionModel (submission) {
+  const id = submission._id.toString();
+  const section = assign({}, submission.section, {
+    titleHtml: markupService.compile(submission.section.title)
+  });
+  return { id, section };
+}
+
 module.exports = {
-  isEditable: isEditable,
-  getToken: getToken,
-  notifyReceived: notifyReceived,
-  notifyAccepted: notifyAccepted
+  isEditable,
+  isAccepted,
+  getToken,
+  notifyReceived,
+  notifyAccepted,
+  toSubmissionModel
 };

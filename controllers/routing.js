@@ -56,6 +56,8 @@ const weeklyShare = require(`./api/weeklies/share`);
 const weeklySubmission = require(`./api/weeklies/submissions`);
 const weeklySubmissionRemove = require(`./api/weeklies/submissions/remove`);
 const weeklySubmissionMark = require(`./api/weeklies/submissions/mark`);
+const weeklySubmissionModel = require(`./api/weeklies/submissions/model`);
+const weeklySubmissionPush = require(`./api/weeklies/submissions/push`);
 const weeklyMediakit = require(`./weekly/mediakit`);
 const subscriberInsert = require(`./api/subscribers/insert`);
 const subscriberConfirm = require(`./api/subscribers/confirm`);
@@ -132,10 +134,13 @@ module.exports = function (app) {
   app.delete(`/api/:type(articles|weeklies)/:slug/comments/:id`, moderatorOnly, commentRemoveJson);
   app.get(`/api/:type(articles|weeklies)/:slug/comments/:id/remove`, moderatorOnly, commentRemoveRedirect);
 
+  app.get(`/api/weeklies/submissions/:slug`, weekliesOnly, weeklySubmissionModel);
+  app.post(`/api/weeklies/submissions/:slug/push`, weekliesOnly, weeklySubmissionPush);
+
   app.post(`/api/weeklies/submissions`, weeklySubmission);
   app.post(`/api/weeklies/submissions/:slug`, weeklySubmission);
   app.delete(`/api/weeklies/submissions/:slug`, ownerOnly, weeklySubmissionRemove);
-  app.get(`/api/weeklies/submissions/:slug/:action(accept|use)`, ownerOnly, weeklySubmissionMark);
+  app.get(`/api/weeklies/submissions/:slug/:action(reject|accept|use)`, ownerOnly, weeklySubmissionMark);
 
   app.put(`/api/weeklies`, weekliesOnly, weeklyInsert);
   app.patch(`/api/weeklies/:slug`, weekliesOnly, weeklyUpdate);

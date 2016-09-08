@@ -14,19 +14,34 @@ const htmlService = require(`./html`);
 const cryptoService = require(`./crypto`);
 const rdigits = /^\d+$/;
 
-function compile (model, done) {
-  const slug = rdigits.test(model.slug) ? `issue-` + model.slug : model.slug;
+function compileSections (model, done) {
+  const json = model.toJSON ? model.toJSON() : model;
+  const { slug, sections } = json;
   const options = {
     markdown: markupService,
-    slug: slug
+    slug: friendlySlug(slug)
   };
-  var json = model.toJSON ? model.toJSON() : model;
-  weeklyCompilerService.compile(json.sections, options, compiled);
+  weeklyCompilerService.compile(sections, options, compiled);
   function compiled (err, html) {
     if (err) {
       done(err); return;
     }
-    const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(slug);
+    const absolutized = htmlService.absolutize(html);
+    done(null, absolutized);
+  }
+}
+
+function friendlySlug (slug) {
+  return rdigits.test(slug) ? `issue-` + slug : slug;
+}
+
+function compile (model, done) {
+  compileSections(model, compiled);
+  function compiled (err, html) {
+    if (err) {
+      done(err); return;
+    }
+    const linkThrough = weeklyCompilerLinkService.linkThroughForSlug(friendlySlug(model.slug));
     model.titleHtml = markupService.compile(model.title, {
       absolutize: true,
       linkThrough: linkThrough
@@ -37,7 +52,7 @@ function compile (model, done) {
       linkThrough: linkThrough
     });
     model.summaryText = summaryService.summarize(model.summaryHtml).text;
-    model.contentHtml = htmlService.absolutize(html);
+    model.contentHtml = html;
     done(null, model);
   }
 }
@@ -50,6 +65,20 @@ function insert (model, done) {
     }
     const doc = new WeeklyIssue(model);
     doc.save(but(done));
+  }
+}
+
+function addSection ({ issue, section }, done) {
+  issue.updated = Date.now();
+  issue.sections.push(section);
+  compileSections(issue, save);
+
+  function save (err, html) {
+    if (err) {
+      done(err); return;
+    }
+    issue.contentHtml = html;
+    issue.save(but(done));
   }
 }
 
@@ -171,11 +200,13 @@ function toHistory (doc) {
 }
 
 module.exports = {
-  compile: compile,
-  insert: insert,
-  update: update,
-  toMetadata: toMetadata,
-  toView: toView,
-  toHistory: toHistory,
-  getAllTags: getAllTags
+  compile,
+  compileSections,
+  insert,
+  update,
+  addSection,
+  toMetadata,
+  toView,
+  toHistory,
+  getAllTags
 };

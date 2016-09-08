@@ -48,5 +48,5 @@ function emojify (input) {
 }
 
 module.exports = {
-  compile: compile
+  compile
 };

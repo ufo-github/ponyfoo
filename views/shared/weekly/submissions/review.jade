@@ -8,9 +8,9 @@ article.ly-section.vw-maintainer.de-host
         tr
           th
           th.tm-time-cell Created
-          th.bg-badge-cell Type
           th Title
-          th Status
+          th.bg-badge-cell Type
+          th.bg-badge-cell Status
           th Actions
       tbody
         each submission in submissions
@@ -20,20 +20,50 @@ article.ly-section.vw-maintainer.de-host
                 img.av-avatar(src=submission.avatar, alt='')
             td.tm-time-cell(data-label='Created')
               time(datetime=submission.created.datetime, aria-label=submission.created.title)='On ' + submission.created.text
-            td.bg-badge-cell(data-label='Type')
-              span(class='bg-badge wur-type-' + submission.type)=submission.type
             td(data-label='Title')
               a.f-subheading.lk-rainbows.md-markdown.md-markdown-inline(href=submission.href, target=submission.target)!=submission.titleHtml
-            td.wur-status(data-label='Status')=submission.status
+            td.bg-badge-cell(data-label='Type')
+              span(class='bg-badge wur-type-' + submission.type)=submission.type
+            td.bg-badge-cell(data-label='Status')
+              span(class='bg-badge wur-status-' + submission.status)=submission.status
             td.wur-buttons(data-label='Actions')
-              if submission.status !== 'accepted'
-                if submission.accepted
-                  a.ar-button.lk-icon.fa.fa-check-square(href='/api/weeklies/submissions/' + submission.slug + '/accept', aria-label='Mark this link submission as accepted once again', data-taunus-ignore)
-                else
-                  a.ar-button.lk-icon.fa.fa-check-square-o(href='/api/weeklies/submissions/' + submission.slug + '/accept', aria-label='Mark this link submission as accepted', data-taunus-ignore)
+              - rejection = (submission.status === 'rejected' ? ' wur-disabled-action' : '')
+
+              span(
+                class='wur-share ar-button lk-icon fa fa-share' + rejection,
+                aria-label='Add this submission to the last updated draft',
+                data-slug=submission.slug
+              )
+
+              if submission.accepted
+                a.ar-button.lk-icon.fa.fa-heartbeat(
+                  href='/api/weeklies/submissions/' + submission.slug + '/use',
+                  aria-label='Mark this link submission as used',
+                  data-taunus-ignore
+                )
               else
-                a.ar-button.lk-icon.fa.fa-square(href='/api/weeklies/submissions/' + submission.slug + '/use', aria-label='Mark this link submission as used', data-taunus-ignore)
-              a.ar-button.lk-icon.fa.fa-pencil(href='/weekly/submissions/' + submission.slug + '/edit', aria-label='Edit this link submission')
-              a.ar-button.lk-icon.fa.fa-remove.wur-remove(aria-label='Delete this link submission', data-slug=submission.slug)
+                a(
+                  class='ar-button lk-icon fa ' + (submission.status === 'used' ? 'fa-heart' : 'fa-heart-o'),
+                  href='/api/weeklies/submissions/' + submission.slug + '/accept',
+                  aria-label='Mark this link submission as accepted',
+                  data-taunus-ignore
+                )
+
+              a(
+                class='ar-button lk-icon fa fa-deaf' + rejection,
+                href='/api/weeklies/submissions/' + submission.slug + '/reject',
+                aria-label='Mark this link submission as rejected',
+                data-taunus-ignore
+              )
+
+              a.ar-button.lk-icon.fa.fa-pencil(
+                href='/weekly/submissions/' + submission.slug + '/edit',
+                aria-label='Edit this link submission'
+              )
+
+              a.ar-button.lk-icon.fa.fa-remove.wur-remove(
+                aria-label='Delete this link submission',
+                data-slug=submission.slug
+              )
 
   include ../../partials/aside

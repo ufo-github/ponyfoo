@@ -1,13 +1,12 @@
 'use strict';
 
 const contra = require(`contra`);
-const assign = require(`assignment`);
 const correcthorse = require(`correcthorse`);
 const WeeklyIssue = require(`../../../models/WeeklyIssue`);
 const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
+const weeklySubmissionService = require(`../../../services/weeklySubmission`);
 const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
 const datetimeService = require(`../../../services/datetime`);
-const markupService = require(`../../../services/markup`);
 const env = require(`../../../lib/env`);
 const authority = env(`AUTHORITY`);
 
@@ -57,7 +56,7 @@ module.exports = function (req, res, next) {
       model: {
         title: `Weekly Assembler \u2014 Pony Foo`,
         issue: issueModel,
-        submissions: result.submissions.map(toSubmissionModel),
+        submissions: result.submissions.map(weeklySubmissionService.toSubmissionModel),
         editing: !!slug,
         knownTags: weeklyCompilerService.knownTags
       }
@@ -65,14 +64,6 @@ module.exports = function (req, res, next) {
     next();
   }
 };
-
-function toSubmissionModel (submission) {
-  const id = submission._id.toString();
-  const section = assign({}, submission.section, {
-    titleHtml: markupService.compile(submission.section.title)
-  });
-  return { id: id, section: section };
-}
 
 function getDefaultIssueModel () {
   return {

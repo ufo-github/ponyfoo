@@ -1,9 +1,13 @@
-.wur-status
-  text-transform capitalize
-
 .wur-buttons
-  width 120px
+  width 180px
   text-align right
+
+.wur-share
+  cursor pointer
+
+.wur-disabled-action
+  color c-gray
+  pointer-events none
 
 .wur-type-suggestion
   background-color c-dark-orange
@@ -13,6 +17,19 @@
   background-color c-purple
 .wur-type-job
   background-color c-dark-turquoise
+
+.wur-status-incoming
+  background-color c-yellow-highlight
+  color c-black-text
+.wur-status-rejected
+  background-color c-black-light
+.wur-status-accepted
+  background-color darken(c-dark-green, 25%)
+.wur-status-used
+  background-color c-dark-green
+
+.wur-container .wa-section-header
+  display none
 
 @media only screen and (max-width: 950px)
   .wur-buttons

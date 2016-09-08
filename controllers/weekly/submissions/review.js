@@ -1,12 +1,14 @@
 'use strict';
 
+const _ = require(`lodash`);
 const contra = require(`contra`);
 const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
+const weeklySubmissionService = require(`../../../services/weeklySubmission`);
 const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
-const urlService = require(`../../../services/url`);
 const datetimeService = require(`../../../services/datetime`);
 const markupService = require(`../../../services/markup`);
 const userService = require(`../../../services/user`);
+const urlService = require(`../../../services/url`);
 
 module.exports = getModel;
 
@@ -38,7 +40,7 @@ function getModel (req, res, next) {
         href: model.item.href,
         target: urlService.getLinkTarget(model.item.href),
         titleHtml: model.item.titleHtml,
-        accepted: submission.accepted,
+        accepted: weeklySubmissionService.isAccepted(submission),
         status: submission.status,
         type: submission.subtype,
         submitter: submission.submitter,
@@ -48,19 +50,25 @@ function getModel (req, res, next) {
     }
   }
 
-  function respond (err, submissionModels) {
+  function respond (err, models) {
     if (err) {
       next(err); return;
     }
+    const submissions = _.sortBy(models, sortByStatus);
     res.viewModel = {
       model: {
         title: `Submission Review`,
         meta: {
           canonical: `/weekly/submissions/review`
         },
-        submissions: submissionModels
+        submissions,
+        knownTags: weeklyCompilerService.knownTags
       }
     };
     next();
   }
+}
+
+function sortByStatus (model) {
+  return { incoming: 0, accepted: 1, used: 2, rejected: 3 }[model.status];
 }

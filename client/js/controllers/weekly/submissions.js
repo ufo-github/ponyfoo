@@ -10,8 +10,7 @@ const debounce = require(`lodash/debounce`);
 const ls = require(`local-storage`);
 const loadScript = require(`../../lib/loadScript`);
 const scrapeCompletionService = require(`../../services/scrapeCompletion`);
-const markdownService = require(`../../../../services/markdown`);
-const textService = require(`../../../../services/text`);
+const weeklySubmissionPreviewService = require(`../../services/weeklySubmissionPreview`);
 const dateFormat = `YYYY-MM-DD`;
 
 module.exports = controller;
@@ -27,8 +26,6 @@ function controller (...params) {
 }
 
 function ready (viewModel, container, route) {
-  const rome = global.rome;
-  const weeklyCompilerService = global.weeklyCompiler;
   const subtypeInputs = $(`.wu-type`, container);
   const linkInput = $(`.wu-link`, container);
   const linkData = $(`.wu-data`, container);
@@ -37,7 +34,6 @@ function ready (viewModel, container, route) {
   const sponsorSection = $(`.wu-sponsor`, container);
   const previewHtml = $(`.wu-preview-link`, container);
   const colored = $(`.wu-colored`, container);
-  const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
   const picker = $.findOne(`.wu-sponsor-date-picker`, container);
   const dates = $(`.wu-dates`, container);
   const submitButton = $(`.wu-submit`, container);
@@ -46,10 +42,21 @@ function ready (viewModel, container, route) {
   const submissionNameStorageKey = `submission.name`;
   const submissionEmailStorageKey = `submission.email`;
   const editing = viewModel.editing;
+
+  const rome = global.rome;
+  const weeklyCompilerService = global.weeklyCompiler;
+
+  const updatePreview = weeklySubmissionPreviewService.getUpdatePreview(previewHtml, {
+    weeklyCompilerService,
+    inputContainer: linkData,
+    getSectionModelInfo
+  });
+  const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 100));
+
   let blockDate;
   const romeOpts = {
     time: false,
-    dateFormat: dateFormat,
+    dateFormat,
     dateValidator: isValidSponsorDate,
     initialValue: nextThursday()
   };
@@ -107,12 +114,10 @@ function ready (viewModel, container, route) {
   }
 
   function revealLinkDataAfterScraping () {
-    const url = linkInput.value();
     scrapeCompletionService.scrape({
       source: linkInput[0],
-      url: url,
       container: linkData,
-      updatePreview: updatePreview
+      updatePreview
     }, scraped);
     function scraped () {
       linkData.removeClass(`uv-opaque`);
@@ -205,29 +210,26 @@ function ready (viewModel, container, route) {
     return sponsor;
   }
 
-  function getModel () {
+  function getSectionModelInfo () {
     const subtype = getSubtype();
     const sponsor = isSponsor();
+    return {
+      subtype: subtype || null,
+      href: linkInput.value(),
+      sponsored: sponsor && subtype !== `job`
+    };
+  }
+
+  function getModel () {
+    const sponsor = isSponsor();
+    const section = weeklySubmissionPreviewService.getSectionModel(linkData, getSectionModelInfo());
     const model = {
       submitter: {
         name: contactName.value(),
         email: contactEmail.value(),
         comment: $(`.wu-comment`, linkData).value()
       },
-      section: {
-        type: `link`,
-        subtype: subtype || null,
-        title: $(`.wa-link-title`, linkData).value(),
-        href: linkInput.value(),
-        foreground: `#1bc211`,
-        background: `transparent`,
-        source: $(`.wa-link-source`, linkData).value(),
-        sourceHref: $(`.wa-link-source-href`, linkData).value(),
-        image: linkImageContainer.but(`.uv-hidden`).find(`.wa-link-image`).value(),
-        sponsored: sponsor && subtype !== `job`,
-        tags: [],
-        description: $(`.wa-link-description`, linkData).value()
-      }
+      section
     };
     if (sponsor) {
       model.sponsor = {
@@ -237,21 +239,6 @@ function ready (viewModel, container, route) {
       };
     }
     return model;
-  }
-
-  function updatePreview () {
-    const model = getModel();
-    const options = {
-      markdown: markdownService,
-      slug: `submission-preview`
-    };
-    weeklyCompilerService.compile([model.section], options, compiled);
-    function compiled (err, html) {
-      if (err) {
-        html = textService.format(`<pre class="wa-error">%s</pre>`, err);
-      }
-      previewHtml.html(html);
-    }
   }
 
   function submit () {
