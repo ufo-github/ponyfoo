@@ -3,6 +3,7 @@
 const $ = require(`dominus`);
 const taunus = require(`taunus`);
 const env = require(`../lib/env`);
+const clickySnippet = require(`./clickySnippet`);
 const main = $.findOne(`.ly-main`);
 const property = env(`CLICKY_PROPERTY`);
 
@@ -11,7 +12,7 @@ module.exports = function clicky () {
     return;
   }
 
-  require(`./clicky-snippet`)();
+  clickySnippet();
 
   global.clicky_site_ids = [property];
   global.clicky_custom = { timer: 0 };

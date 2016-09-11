@@ -3,7 +3,6 @@
 const _ = require(`lodash`);
 const contra = require(`contra`);
 const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
-const weeklySubmissionService = require(`../../../services/weeklySubmission`);
 const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
 const datetimeService = require(`../../../services/datetime`);
 const markupService = require(`../../../services/markup`);

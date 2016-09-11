@@ -1,5 +1,7 @@
 'use strict';
 
+const loadScript = require(`../lib/loadScript`);
+
 module.exports = function codepen () {
-  require(`../lib/loadScript`)(`//assets.codepen.io/assets/embed/ei.js`);
+  loadScript(`https://assets.codepen.io/assets/embed/ei.js`);
 };

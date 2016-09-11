@@ -1,15 +1,16 @@
 'use strict';
 
-const w = global;
+const loadScript = require(`../lib/loadScript`);
 
 module.exports = function gaSnippet () {
-  require(`../lib/loadScript`)(`//www.google-analytics.com/analytics.js`);
+  loadScript(`https://www.google-analytics.com/analytics.js`);
 
-  w.GoogleAnalyticsObject = `ga`;
-  w.ga = ga;
-  w.ga.l = 1 * new Date();
+  global.GoogleAnalyticsObject = `ga`;
+  global.ga = ga;
+  global.ga.l = 1 * new Date();
 
-  function ga () {
-    (w.ga.q = w.ga.q || []).push(arguments);
+  function ga (...params) {
+    global.ga.q = global.ga.q || [];
+    global.ga.q.push(params);
   }
 };

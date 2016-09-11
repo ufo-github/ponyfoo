@@ -19,7 +19,7 @@ function load (pattern, accumulator) {
 }
 
 function unwrap (file) {
-  return require(path.join(__dirname, file));
+  return require(path.join(__dirname, file)); // eslint-disable-line global-require
 }
 
 module.exports = function api () {

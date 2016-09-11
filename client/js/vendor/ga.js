@@ -2,8 +2,9 @@
 
 const $ = require(`dominus`);
 const taunus = require(`taunus`);
-const main = $.findOne(`.ly-main`);
 const env = require(`../lib/env`);
+const gaSnippet = require(`./ga-snippet`);
+const main = $.findOne(`.ly-main`);
 const property = env(`GA_PROPERTY`);
 
 module.exports = function ga () {
@@ -11,7 +12,7 @@ module.exports = function ga () {
     return;
   }
 
-  require(`./ga-snippet`)();
+  gaSnippet();
 
   global.ga(`create`, property, `auto`);
   taunus.on(`render`, render);

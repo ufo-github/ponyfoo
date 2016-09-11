@@ -123,7 +123,7 @@ function logger (err) {
 }
 
 function renderTemplate (file, model, done) {
-  done(null, require(file)(model));
+  done(null, require(file)(model)); // eslint-disable-line global-require
 }
 
 function renderTemplateString (template, model, done) {

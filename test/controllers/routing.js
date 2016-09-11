@@ -3,6 +3,7 @@
 const test = require(`tape`);
 const sinon = require(`sinon`);
 const mockery = require(`mockery`);
+const routing = require(`../../controllers/routing`);
 
 test(`routes should match expectation`, function (t) {
   const stubs = {};
@@ -85,8 +86,6 @@ test(`routes should match expectation`, function (t) {
       use: sinon.spy(),
       all: sinon.spy()
     };
-
-    const routing = require(`../../controllers/routing`);
 
     // act
     routing(app);

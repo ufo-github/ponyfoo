@@ -1,9 +1,7 @@
 'use strict';
 
-if (!module.parent) {
-  require(`../preconfigure`);
-  require(`../chdir`);
-}
+require(`../preconfigure`);
+require(`../chdir`);
 
 const mongoUri = require(`mongodb-uri`);
 const env = require(`../lib/env`);

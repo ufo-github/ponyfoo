@@ -24,7 +24,7 @@ function render (action, model, done) {
   function tryRequire () {
     try {
       const compiledViewFile = path.resolve(`.bin/views/shared/`, action);
-      return require(compiledViewFile);
+      return require(compiledViewFile); // eslint-disable-line global-require
     } catch (err) {
       done(err);
     }

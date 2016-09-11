@@ -40,6 +40,4 @@ function searchTerms (req, res) {
   }
 }
 
-module.exports = {
-  setup: setup
-};
+module.exports = { setup };

@@ -30,7 +30,7 @@ function getMetadata ({ bookSlug, includeNonLive }, done) {
     const homeFile = `${dat}/${bookSlug}/home.md`;
 
     contra.concurrent({
-      meta: next => next(null, require(metaModule)),
+      meta: next => next(null, require(metaModule)), // eslint-disable-line global-require
       files: next => contra.concurrent({
         summaryHtml: next => markdownFileService.read(summaryFile, next),
         linksHtml: next => markdownFileService.read(linksFile, next),
