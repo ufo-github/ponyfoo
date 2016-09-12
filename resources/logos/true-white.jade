@@ -1,0 +1,10 @@
+extends _template
+block template_vars
+  -
+    fallbackImage = fallbackImage || '/img/logos/true-white.png'
+    options = {
+      getFill: function (x, y, defaultColor, group) {
+        if (group) { return 'transparent'; }
+        return '#ffffff';
+      }
+    }
