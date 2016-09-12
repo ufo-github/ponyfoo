@@ -104,8 +104,9 @@ article.ly-section
               h2 Make sure that the rendered preview is awesome!
               div.wu-section-note This is exactly how the link would be displayed in our email newsletters if we were to include it unmodified. The better it looks, the better a chance you have of getting the link accepted without any modifications.
 
-            div.wu-preview-link-container
-              div.table-unobtrusive.wu-preview-link
+            div.wu-preview-link-wrapper
+              div.wu-preview-link-container
+                div.table-unobtrusive.wu-preview-link
 
           - sponsored = submission.type === 'sponsor'
           section(class='wu-sponsor' + (sponsored ? '' : ' uv-hidden'))

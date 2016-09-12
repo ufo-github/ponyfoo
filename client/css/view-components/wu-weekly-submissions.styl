@@ -92,10 +92,26 @@ wu-color-scheme(c-background, c-border, c-dot)
 .wu-section-note
   font-style italic
 
+.wu-preview-link-wrapper
+  position relative
+
 .wu-preview-link-container
-  background-color c-dark-turquoise-005
-  max-width 800px
   padding 20px
+  max-width 800px
+  margin 0 auto
+  border 4px dashed c-slightly-lighter-gray
+  background-color c-white
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 50%
+    height 0px
+    margin-top -2px
+    border-top 4px dashed c-slightly-lighter-gray
+    z-index z-bury
+    content ''
 
 .wu-preview-link .wy-section-link
   padding-top 0

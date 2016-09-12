@@ -3,7 +3,7 @@
 const $ = require(`dominus`);
 const taunus = require(`taunus`);
 const env = require(`../lib/env`);
-const clickySnippet = require(`./clickySnippet`);
+const clickySnippet = require(`./clicky-snippet`);
 const main = $.findOne(`.ly-main`);
 const property = env(`CLICKY_PROPERTY`);
 

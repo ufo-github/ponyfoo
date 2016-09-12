@@ -1,6 +1,6 @@
 'use strict';
 
-const version = `v37::`;
+const version = `v38::`;
 const swivel = require(`swivel`);
 const parse = require(`omnibox/querystring`).parse;
 const env = require(`../../lib/env`);
