@@ -54,9 +54,7 @@ pglob(`resources/${resOpen + resourceTypes + resClose}/**/*.jade`)
       filename: source,
       cache: true
     });
-    console.log('rendered', markup)
     const destination = getDestination(raw);
-    console.log('dest', destination)
     const dest_optim = getDestination(optimized);
     return { source, destination, dest_optim, markup };
     function getDestination (file) {
