@@ -5,7 +5,6 @@ const contra = require(`contra`);
 const unzip = require(`unzip`);
 const request = require(`request`);
 const env = require(`../lib/env`);
-const atlasService = require(`./atlas`);
 const oreillyService = require(`./oreilly`);
 const auth_token = env(`ATLAS_API_TOKEN`);
 const baseUrl = `https://atlas.oreilly.com`;
@@ -50,6 +49,9 @@ function download ({ bookSlug, formats = `html` }, done) {
   ], done);
 
   function findCompletedBuild (res, builds, next) {
+    if (!Array.isArray(builds)) {
+      next(new Error(`Couldn't download builds for ${bookSlug}.`)); return;
+    }
     const completed = builds.filter(isCompletedBuild);
     if (!completed.length) {
       winston.warn(`No completed ${bookSlug} builds found. Enqueueing a new build.`);
@@ -104,12 +106,11 @@ function downloadBuild ({ bookSlug, buildStatus }, next) {
     const extractor = unzip
       .Extract({ path })
       .on(`error`, next)
-      .on(`close`, invalidate);
+      .on(`close`, closed);
 
     request(download_url).pipe(extractor);
 
-    function invalidate () {
-      atlasService.invalidateCache(bookSlug);
+    function closed () {
       next(null);
     }
   }

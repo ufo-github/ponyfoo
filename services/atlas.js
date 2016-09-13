@@ -2,14 +2,43 @@
 
 const contra = require(`contra`);
 const glob = require(`glob`);
+const chokidar = require(`chokidar`);
 const cheerio = require(`cheerio`);
 const winston = require(`winston`);
+const path = require(`path`);
 const fs = require(`fs`);
 const env = require(`../lib/env`);
 const htmlService = require(`../services/html`);
 const nodeEnv = env(`NODE_ENV`);
 const dev = nodeEnv === `development`;
 const bookCache = new Map();
+const bookSlugs = new Set();
+const dataDir = `./dat/oreilly-books`;
+let htmlBookWatcher = null;
+
+function createHtmlBookWatcher () {
+  const htmlBookWatcher = chokidar.watch([]);
+
+  htmlBookWatcher
+    .on(`error`, err => winston.warn(`Error watching ${dataDir}!`, err))
+    .on(`all`, (event, filepath) => {
+      const [,, bookSlug] = filepath.split(path.sep);
+      invalidateCache(bookSlug);
+    });
+
+  return htmlBookWatcher;
+}
+
+function watchBookHtml (bookSlug) {
+  if (!htmlBookWatcher) {
+    htmlBookWatcher = createHtmlBookWatcher();
+  }
+  htmlBookWatcher.add(`${dataDir}/${bookSlug}/html`);
+}
+
+function invalidateCache (bookSlug) {
+  bookCache.delete(bookSlug);
+}
 
 function getCache (bookSlug) {
   if (!bookCache.has(bookSlug)) {
@@ -17,16 +46,16 @@ function getCache (bookSlug) {
       sectionCache: new Map(),
       chapterTitleCache: new Map()
     });
+    if (!bookSlugs.has(bookSlug)) {
+      bookSlugs.add(bookSlug);
+      watchBookHtml(bookSlug);
+    }
   }
   return bookCache.get(bookSlug);
 }
 
-function invalidateCache (bookSlug) {
-  bookCache.delete(bookSlug);
-}
-
 function getFilename ({ bookSlug, sectionId }) {
-  return `./dat/oreilly-books/${bookSlug}/html/${sectionId}.html`;
+  return `${dataDir}/${bookSlug}/html/${sectionId}.html`;
 }
 
 function read ({ bookSlug, sectionId, isChapter, isToc }, done) {
@@ -148,7 +177,7 @@ function getChapterId (file) {
 }
 
 function findAllChapters ({ bookSlug }, done) {
-  glob(`./dat/oreilly-books/${bookSlug}/html/ch*.html`, done);
+  glob(`${dataDir}/${bookSlug}/html/ch*.html`, done);
 }
 
 function findChapters ({ bookSlug, chapterId }, done) {
@@ -247,7 +276,6 @@ function fixImageLinks ($, bookSlug) {
 }
 
 module.exports = {
-  invalidateCache,
   getTableOfContents,
   getFirstChapterLink,
   getChapter,
