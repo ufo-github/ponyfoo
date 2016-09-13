@@ -16,25 +16,32 @@ block template_vars
   viewbox = viewbox.split(' ').map(function (x) {
     return parseInt(x, 10)
   })
-  classes = options.classes ? options.classes : {
-    svg: 'go-logo',
-    fallback: 'go-logo-image'
-  }
+  classes = options.classes || {}
+  classes.svg = classes.svg || 'go-logo'
+  classes.fallback = classes.fallback || 'go-logo-image'
+  classes.text = classes.text || 'go-logo-text go-logo-text-small'
+  classes.largeText = classes.largeText || 'go-logo-text go-logo-text-large'
 
   now = new Date()
   hat = options.hat ? options.hat : now.getMonth() === 11 || (now.getMonth() === 0 && now.getDate() < 16)
   hatScale = 0.4
 
   textColor = options.textColor ? options.textColor : '#ffffff'
+  largeTextColor = options.largeTextColor ? options.largeTextColor : textColor
 
   paddingColor = options.paddingColor ? options.paddingColor : false
   hasText = options.hasText ? options.hasText : false
   hasLink = options.hasLink ? options.hasLink : true
   textOnColor = options.textOnColor || false
+  hasLargeText = options.hasLargeText ? options.hasLargeText : false
 
   if (hasText) {
     viewbox[viewbox.length - 1] += 3
     height += unit * 2
+  }
+
+  if (hasLargeText) {
+    viewbox[viewbox.length - 2] += 90
   }
 
   if (paddingColor) {
@@ -132,22 +139,27 @@ block template_vars
 svg(
   xmlns='http://www.w3.org/2000/svg',
   xmlns:xlink='http://www.w3.org/1999/xlink',
-  class=classes && classes.svg || false,
+  class=classes.svg || false,
   width=width,
   height=height,
   viewBox=viewbox,
   shape-rendering='crispEdges',
   aria-hidden='true'
 )
-  if hasText
+  if hasText || hasLargeText
     defs(xmlns='http://www.w3.org/2000/svg')
       style(type='text/css').
         @import url('https://fonts.googleapis.com/css?family=Merriweather');
-        text {
+        .go-logo-text {
           font-family: "Merriweather";
           font-variant: small-caps;
           font-weight: bold;
+        }
+        .go-logo-text-small {
           font-size: 2px;
+        }
+        .go-logo-text-large {
+          font-size: 16px;
         }
   each pixel in pixels
     -
@@ -161,12 +173,17 @@ svg(
   if hasText
     - y = paddingColor ? 16 : 15
     if textOnColor
-      text(y=y, stroke=textOnColor, stroke-width='2px') ponyfoo.com
-    text(y=y, fill=textColor) ponyfoo.com
+      text(y=y, stroke=textOnColor, stroke-width='2px', class=classes.text || false) ponyfoo.com
+    text(y=y, fill=textColor, class=classes.text || false) ponyfoo.com
 
   if hasLink
     a(xlink:href='/', aria-hidden='false', role='link', title='Pony Foo')
       rect(width=unit, height=unit, opacity='0', role='img')
 
   if fallbackImage
-    image(class=classes && classes.fallback || false, src=fallbackImage, alt='Pony Foo')
+    image(class=classes.fallback || false, src=fallbackImage, alt='Pony Foo')
+
+  if hasLargeText
+    - x = 16
+    - y = 11.5
+    text(x=x y=y, fill=largeTextColor, class=classes.largeText || false) ponyfoo.com

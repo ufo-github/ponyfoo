@@ -22,7 +22,8 @@ const argv = minimist(process.argv.slice(2), {
     debug: [`d`]
   },
   default: {
-    debug: true
+    debug: true,
+    match: null
   }
 });
 const rtouch = /touch-icon/i;
@@ -37,6 +38,7 @@ const resClose = resourceTypes.indexOf(`,`) !== -1 ? `}` : ``;
 
 pglob(`resources/${resOpen + resourceTypes + resClose}/**/*.jade`)
   .then(files => files.filter(file => path.basename(file)[0] !== `_`))
+  .then(files => files.filter(file => argv.match === null || file.indexOf(argv.match) !== -1))
   .then(files => Promise.all(files.map(source => preadFile(source, `utf8`).then(data => ({ source, data })))))
   .then(files => maybeSkip(files))
   .then(files => files.map(fd => {
@@ -52,7 +54,9 @@ pglob(`resources/${resOpen + resourceTypes + resClose}/**/*.jade`)
       filename: source,
       cache: true
     });
+    console.log('rendered', markup)
     const destination = getDestination(raw);
+    console.log('dest', destination)
     const dest_optim = getDestination(optimized);
     return { source, destination, dest_optim, markup };
     function getDestination (file) {
