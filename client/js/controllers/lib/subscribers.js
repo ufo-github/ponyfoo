@@ -24,13 +24,13 @@ module.exports = function (viewModel, container) {
     const dimensions = {
       migration: { color: `#e0e0e0`, enabled: true },
       unverified: { color: `#cbc5c0`, enabled: true },
-      twitter: { color: `#55acee`, enabled: true },
-      bubble: { color: `#1a4d7f`, enabled: true },
-      weekly: { color: `#1bc211`, enabled: true },
       sidebar: { color: `#900070`, enabled: true },
       comment: { color: `#e92c6c`, enabled: true },
       article: { color: `#f3720d`, enabled: true },
-      landed: { color: `#ffe270`, enabled: true }
+      landed: { color: `#ffe270`, enabled: true },
+      twitter: { color: `#55acee`, enabled: true },
+      weekly: { color: `#1bc211`, enabled: true },
+      bubble: { color: `#1a4d7f`, enabled: true }
     };
     const legends = {
       landed: `landing`
