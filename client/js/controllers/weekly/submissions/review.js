@@ -68,7 +68,7 @@ function ready (viewModel, container) {
   }
 
   function initializeShare ({ $target, $inputRow, data }) {
-    const container = $(`.wurs-container`, container);
+    const container = $(`.wurs-container`, $inputRow);
     const previewHtml = $(`.wurs-preview`, container);
     const updatePreview = weeklySubmissionPreviewService.getUpdatePreview(previewHtml, {
       weeklyCompilerService,
@@ -85,7 +85,7 @@ function ready (viewModel, container) {
     $(`.wurs-submit`, $inputRow).on(`click`, enqueueInWeekly);
 
     container
-      .on(`click`, `.wa-link-toggle-tags`, weeklySubmissionPreviewService.toggleTags)
+      .on(`click`, `.wa-link-toggle-tags`, toggleTags)
       .on(`change keypress keydown paste input bureaucrat`, `.wa-link-image`, updateThumbnailImage)
       .on(`change keypress keydown paste input`, `input,textarea,select`, updatePreviewSlowly);
 
@@ -93,6 +93,9 @@ function ready (viewModel, container) {
 
     function remove () {
       $inputRow.remove();
+    }
+    function toggleTags (e) {
+      weeklySubmissionPreviewService.toggleTags(e);
     }
     function updateThumbnailImage (e) {
       const $container = $(e.target).parents(`.wa-section-contents`);
