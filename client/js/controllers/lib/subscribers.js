@@ -29,7 +29,8 @@ module.exports = function (viewModel, container) {
       bubble: { enabled: true }
     };
     const legends = {
-      landed: `landing`
+      landed: `landing`,
+      migration: `legacy`
     };
     const legendsReverse = Object.keys(legends).reduce(reverseLegendReducer, {});
 
@@ -314,7 +315,7 @@ module.exports = function (viewModel, container) {
             const diff = diffText(prev, value);
             return `
   <div class='sg-tip-row'>
-    <span class='sg-tip-label'>${ label ? source : `` }</span>
+    <span class='sg-tip-label'>${ label ? legends[source] || source : `` }</span>
     <span class='sg-tip-vector sg-tip-vector-${ vectors }'></span>
     <span class='sg-tip-numbers'>${ value } ${ diff }</span>
   </div>`;
