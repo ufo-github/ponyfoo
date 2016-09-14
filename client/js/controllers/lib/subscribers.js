@@ -52,6 +52,12 @@ module.exports = function (viewModel, container) {
         .filter(dimension => dimensions[dimension].enabled);
     }
 
+    function getSourceDimensions () {
+      return Object
+        .keys(dimensions)
+        .filter(dimension => dimension !== `unverified`);
+    }
+
     function getEnabledColors () {
       return getEnabledDimensions().map(dimension => dimensions[dimension].color);
     }
@@ -121,26 +127,48 @@ module.exports = function (viewModel, container) {
 
         data
           .sort((a, b) => moment(a.date).isAfter(b.date) ? 1 : -1)
-          .forEach((d, i) => {
-            const types = Object.keys(dimensions);
-            if (!(wowMode || i === 0)) {
-              types.forEach(type => d[type] += data[i - 1][type]);
-            }
-            let currentHeight = 0;
-            d.date = new Date(d.date);
-            d.fragments = color.domain().map(name => {
-              const y0 = currentHeight;
-              const y1 = currentHeight += +d[name];
-              return { name, y0, y1, d };
-            });
-            d.total = getEnabledDimensions().reduce((total, type) => total + d[type], 0);
+          .forEach((datum, i) => {
+            datum.fragments = computeFragments();
+            datum.total = {};
+            computeTotals(`v`);
+            computeTotals(`u`);
+
             if (!dimensions.unverified.enabled) {
-              d.unverified = 0;
+              console.log(`aaaaaa reset unverified!`)
+            }
+
+            function computeFragments () {
+              const fragments = [];
+              const sources = getSourceDimensions();
+              if (!(wowMode || i === 0)) {
+                sources.forEach(source => {
+                  datum[source].v += data[i - 1][source].v;
+                  datum[source].u += data[i - 1][source].u;
+                });
+              }
+              let currentHeight = 0;
+              datum.date = new Date(datum.date);
+              getSourceDimensions().forEach(source => {
+                const y0 = currentHeight;
+                const y1 = currentHeight += datum[source].v;
+                const y2 = currentHeight += datum[source].u;
+                fragments.push(
+                  { source, datum, state: `v`, y0, y1 },
+                  { source, datum, state: `u`, y0: y1, y1: y2 }
+                );
+              });
+              return fragments;
+            }
+
+            function computeTotals (state) {
+              datum.total[state] = getEnabledDimensions()
+                .filter(dimension => dimension !== `unverified`)
+                .reduce((total, source) => total + datum[source][state], 0);
             }
           });
 
-        x.domain(data.map(d => d.dateText));
-        y.domain([0, d3.max(data, d => d.total)]);
+        x.domain(data.map(datum => datum.dateText));
+        y.domain([0, d3.max(data, ({ total }) => total.u + total.v)]);
       }
 
       function addTimeAxis () {
@@ -177,16 +205,16 @@ module.exports = function (viewModel, container) {
             .data(data)
             .enter().append(`g`)
             .attr(`class`, `sg-g`)
-            .attr(`transform`, d => `translate(${ x(d.dateText) },0)`);
+            .attr(`transform`, datum => `translate(${ x(datum.dateText) },0)`);
 
           date.selectAll(`.sg-bar`)
-            .data(d => d.fragments)
+            .data(datum => datum.fragments)
             .enter().append(`rect`)
-            .attr(`class`, `sg-bar`)
+            .attr(`class`, datum => `sg-bar sg-bar-${datum.state}`)
             .attr(`width`, x.rangeBand() + (wowMode ? 0 : 1))
-            .attr(`y`, d => y(d.y1))
-            .attr(`height`, d => y(d.y0) - y(d.y1))
-            .style(`fill`, d => color(d.name));
+            .attr(`y`, datum => y(datum.y1))
+            .attr(`height`, datum => y(datum.y0) - y(datum.y1))
+            .style(`fill`, datum => color(datum.source));
         }
 
         function addSubscribersAxis () {
@@ -218,7 +246,7 @@ module.exports = function (viewModel, container) {
               const { enabled } = dimensions[dimension];
               return `sg-legend${ enabled ? `` : ` sg-legend-disabled` }`;
             })
-            .attr(`transform`, (d, i) => `translate(-${ width - 160 },${ i * 20 })`);
+            .attr(`transform`, (datum, i) => `translate(-${ width - 160 },${ i * 20 })`);
 
           legend.append(`rect`)
             .attr(`x`, width - 18)
@@ -231,7 +259,7 @@ module.exports = function (viewModel, container) {
             .attr(`y`, 9)
             .attr(`dy`, `.35em`)
             .style(`text-anchor`, `end`)
-            .text(d => legends[d] || d);
+            .text(datum => legends[datum] || datum);
         }
 
         function addTips () {
@@ -239,22 +267,21 @@ module.exports = function (viewModel, container) {
             .attr(`class`, `sg-tip`)
             .direction(`e`)
             .offset([-10, 0])
-            .html(d => {
-              const full = d.d;
-              const i = data.indexOf(full);
+            .html(({ datum, source }) => {
+              const state = `v`;
+              const i = data.indexOf(datum);
               const oldIndex = i - 1;
-              const old = oldIndex < 0 ? 0 : data[oldIndex].total - data[oldIndex].unverified;
-              const now = full.total;
-              const verified = now - full.unverified;
-              const { name } = d;
-              const c = color(name);
+              const old = oldIndex < 0 ? 0 : data[oldIndex].total[state] - data[oldIndex].total.u;
+              const now = datum.total[state];
+              const verified = now - datum.total.u;
+              const c = color(source);
               const tipClass = isLightColor(c) ? `sg-tip-light` : `sg-tip-dark`;
               return `
 <div class="sg-tip-content ${ tipClass }" style="background-color: ${ c };">
-  <div class="sg-tip-date">${ full.dateText }</div>
+  <div class="sg-tip-date">${ datum.dateText }</div>
   <div>
-    <span class="sg-tip-label">${ name }: </span>
-    <span class="sg-tip-numbers">${ full[name] } ${ diffText(data[oldIndex][name], full[name]) }</span>
+    <span class="sg-tip-label">${ source }: </span>
+    <span class="sg-tip-numbers">${ datum[source].v } ${ diffText(data[oldIndex][source][state], datum[source][state]) }</span>
   </div>
   <div>
     <span class="sg-tip-label">Verified: </span>
@@ -270,8 +297,10 @@ module.exports = function (viewModel, container) {
           svg.call(tip);
           svg
             .selectAll(`rect`)
-            .on(`mouseover`, d => {
-              if (d.y1 - d.y0 > 0) { tip.show(d); }
+            .on(`mouseover`, datum => {
+              if (datum.y1 - datum.y0 > 0) {
+                tip.show(datum);
+              }
             });
 
           $(parent).on(`mouseleave`, tip.hide);
@@ -298,11 +327,11 @@ module.exports = function (viewModel, container) {
         const y = d3.scale.linear().rangeRound([height - 150, 0]);
 
         const line = d3.svg.line()
-          .x(d => x(d.date))
-          .y(d => y(d.views));
+          .x(datum => x(datum.date))
+          .y(datum => y(datum.views));
 
-        x.domain(d3.extent(pv, d => d.date));
-        y.domain(d3.extent(pv, d => d.views));
+        x.domain(d3.extent(pv, datum => datum.date));
+        y.domain(d3.extent(pv, datum => datum.views));
 
         addPageViewsAxis();
         addLinearGradient();
@@ -340,8 +369,8 @@ module.exports = function (viewModel, container) {
               { offset: `100%`, color: `#e92c6c` }
             ])
             .enter().append(`stop`)
-            .attr(`offset`, d => d.offset)
-            .attr(`stop-color`, d => d.color);
+            .attr(`offset`, datum => datum.offset)
+            .attr(`stop-color`, datum => datum.color);
         }
 
         function addPageViewsShadow () {
