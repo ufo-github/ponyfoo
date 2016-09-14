@@ -3,16 +3,19 @@ sg-source(v-color)
   background-color v-color
 
   &.sg-bar-u
-    fill darken(v-color, 15%)
+    fill darken(v-color, 25%)
 
 sg-source-light(v-color)
   sg-source(v-color)
   color c-browser-gray
 
+sg-source-dark(v-color)
+  sg-source(v-color)
+
 .sg-source-migration
-  sg-source(c-lighter-gray)
+  sg-source-dark(c-lighter-gray)
 .sg-source-unverified
-  sg-source(c-gray)
+  sg-source-dark(c-gray)
 .sg-source-sidebar
   sg-source-light(c-purple)
 .sg-source-comment
@@ -20,7 +23,9 @@ sg-source-light(v-color)
 .sg-source-article
   sg-source-light(c-dark-orange)
 .sg-source-landed
-  sg-source(c-yellow-highlight)
+  sg-source-dark(c-yellow-highlight)
+  &.sg-bar-u
+    fill darken(c-yellow-highlight, 40%)
 .sg-source-twitter
   sg-source-light(c-twitter-blue)
 .sg-source-weekly

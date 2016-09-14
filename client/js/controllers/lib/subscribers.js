@@ -128,25 +128,25 @@ module.exports = function (viewModel, container) {
                   }
                 });
               }
-              let currentHeight = 0;
               datum.date = new Date(datum.date);
               getEnabledDimensions().forEach(source => {
                 if (discriminated) {
-                  const y0 = currentHeight;
-                  const yU = currentHeight += datum[source].u;
-                  fragments.push({ source, datum, state: `u`, y0, y1: yU });
+                  fragments.push({ source, datum, vector: `u` });
                 }
-                const y0 = currentHeight;
-                const yV = currentHeight += datum[source].v;
-                fragments.push({ source, datum, state: `v`, y0, y1: yV });
+                fragments.push({ source, datum, vector: `v` });
               });
-              return fragments;
+              let currentHeight = 0;
+              return fragments.map(({ source, datum, vector }) => {
+                const y0 = currentHeight;
+                const y1 = currentHeight += datum[source][vector];
+                return { source, datum, vector, y0, y1 };
+              });
             }
 
-            function computeTotals (state) {
-              datum.total[state] = getEnabledDimensions()
+            function computeTotals (vector) {
+              datum.total[vector] = getEnabledDimensions()
                 .filter(source => source !== `unverified`)
-                .reduce((total, source) => total + datum[source][state], 0);
+                .reduce((total, source) => total + datum[source][vector], 0);
             }
           });
 
@@ -209,7 +209,7 @@ module.exports = function (viewModel, container) {
           date.selectAll(`.sg-bar`)
             .data(datum => datum.fragments)
             .enter().append(`rect`)
-            .attr(`class`, datum => `sg-bar sg-bar-${datum.state} sg-source-${datum.source}`)
+            .attr(`class`, datum => `sg-bar sg-bar-${datum.vector} sg-source-${datum.source}`)
             .attr(`width`, x.rangeBand() + (wowMode ? 0 : 1))
             .attr(`y`, datum => y(datum.y1))
             .attr(`height`, datum => y(datum.y0) - y(datum.y1));
