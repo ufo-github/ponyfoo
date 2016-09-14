@@ -6,6 +6,7 @@ const env = require(`../../lib/env`);
 const email = env(`GA_EMAIL`);
 const privateKey = env(`GA_PRIVATE_KEY`);
 const profile = env(`GA_PROFILE`);
+const dev = env(`NODE_ENV`) === `development`;
 const analyticsScope = `https://www.googleapis.com/auth/analytics.readonly`;
 
 function pullPageViews (done) {
@@ -22,7 +23,7 @@ function pullPageViews (done) {
   jwt.authorize(authorized);
   function authorized (err) {
     if (err) {
-      done(err); return;
+      done(dev ? null : err, []); return;
     }
     const query = {
       auth: jwt,
@@ -38,7 +39,7 @@ function pullPageViews (done) {
   }
   function got (err, result) {
     if (err) {
-      done(err); return;
+      done(dev ? null : err, []); return;
     }
     done(null, result.rows.map(toDailyPageView));
   }

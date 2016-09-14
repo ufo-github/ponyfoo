@@ -6,10 +6,6 @@ const moment = require(`moment`);
 const debounce = require(`lodash/debounce`);
 const loadScript = require(`../../lib/loadScript`);
 
-function isLightColor (color) {
-  return color === `#e0e0e0` || color === `#cbc5c0` || color === `#ffe270`;
-}
-
 module.exports = function (viewModel, container) {
   const graphData = viewModel.subscriberGraph;
 
@@ -22,15 +18,15 @@ module.exports = function (viewModel, container) {
     const d3tip = global.d3Tip;
     const renderTimely = debounce(render, 300);
     const dimensions = {
-      migration: { color: `#e0e0e0`, enabled: true },
-      unverified: { color: `#cbc5c0`, enabled: true },
-      sidebar: { color: `#900070`, enabled: true },
-      comment: { color: `#e92c6c`, enabled: true },
-      article: { color: `#f3720d`, enabled: true },
-      landed: { color: `#ffe270`, enabled: true },
-      twitter: { color: `#55acee`, enabled: true },
-      weekly: { color: `#1bc211`, enabled: true },
-      bubble: { color: `#1a4d7f`, enabled: true }
+      migration: { enabled: true },
+      unverified: { enabled: true },
+      sidebar: { enabled: true },
+      comment: { enabled: true },
+      article: { enabled: true },
+      landed: { enabled: true },
+      twitter: { enabled: true },
+      weekly: { enabled: true },
+      bubble: { enabled: true }
     };
     const legends = {
       landed: `landing`
@@ -41,26 +37,8 @@ module.exports = function (viewModel, container) {
     render();
 
     $(window).on(`resize`, renderTimely);
-    $(`#sg-show-subscribers`).on(`change`, render);
-    $(`#sg-show-pageviews`).on(`change`, render);
-    $(`#sg-wow-mode`).on(`change`, render);
+    $(`.sg-options`).on(`change`, `input`, render);
     $(`.sg-container`).on(`click`, `.sg-legend`, toggleDimension);
-
-    function getEnabledDimensions () {
-      return Object
-        .keys(dimensions)
-        .filter(dimension => dimensions[dimension].enabled);
-    }
-
-    function getSourceDimensions () {
-      return Object
-        .keys(dimensions)
-        .filter(dimension => dimension !== `unverified`);
-    }
-
-    function getEnabledColors () {
-      return getEnabledDimensions().map(dimension => dimensions[dimension].color);
-    }
 
     function toggleDimension (e) {
       const $el = $(e.target).parents(`.sg-legend`).and(e.target).where(`.sg-legend`);
@@ -76,6 +54,7 @@ module.exports = function (viewModel, container) {
       const parent = $.findOne(`.sg-container`, container);
       const showSubscribers = $(`#sg-show-subscribers`, container).value();
       const showPageViews = $(`#sg-show-pageviews`, container).value();
+      const discriminated = $(`#sg-discriminate-subscribers`, container).value();
       const wowMode = $(`#sg-wow-mode`, container).value();
 
       $(`.sg-chart`, container).remove();
@@ -108,9 +87,6 @@ module.exports = function (viewModel, container) {
         .rangeRound([height - 150, 0]);
 
       const data = cloneDeep(graphData.subscribers);
-      const color = d3.scale
-        .ordinal()
-        .range(getEnabledColors());
 
       prepareDomain();
       addTimeAxis();
@@ -123,52 +99,75 @@ module.exports = function (viewModel, container) {
       }
 
       function prepareDomain () {
-        color.domain(getEnabledDimensions());
-
         data
           .sort((a, b) => moment(a.date).isAfter(b.date) ? 1 : -1)
           .forEach((datum, i) => {
+            const computeUnverified = dimensions.unverified.enabled;
+
+            if (!computeUnverified) {
+              datum.unverified.v = 0;
+            } else if (!discriminated) {
+              getDisabledDimensions().forEach(source => datum.unverified.v -= datum[source].u);
+            }
+
             datum.fragments = computeFragments();
             datum.total = {};
             computeTotals(`v`);
             computeTotals(`u`);
 
-            if (!dimensions.unverified.enabled) {
-              console.log(`aaaaaa reset unverified!`)
-            }
-
             function computeFragments () {
               const fragments = [];
-              const sources = getSourceDimensions();
               if (!(wowMode || i === 0)) {
+                const sources = getEnabledDimensions().filter(notDiscriminateUnverified);
                 sources.forEach(source => {
                   datum[source].v += data[i - 1][source].v;
-                  datum[source].u += data[i - 1][source].u;
+                  if (computeUnverified) {
+                    datum[source].u += data[i - 1][source].u;
+                  } else {
+                    datum[source].u = 0;
+                  }
                 });
               }
               let currentHeight = 0;
               datum.date = new Date(datum.date);
-              getSourceDimensions().forEach(source => {
+              getEnabledDimensions().forEach(source => {
+                if (discriminated) {
+                  const y0 = currentHeight;
+                  const yU = currentHeight += datum[source].u;
+                  fragments.push({ source, datum, state: `u`, y0, y1: yU });
+                }
                 const y0 = currentHeight;
-                const y1 = currentHeight += datum[source].v;
-                const y2 = currentHeight += datum[source].u;
-                fragments.push(
-                  { source, datum, state: `v`, y0, y1 },
-                  { source, datum, state: `u`, y0: y1, y1: y2 }
-                );
+                const yV = currentHeight += datum[source].v;
+                fragments.push({ source, datum, state: `v`, y0, y1: yV });
               });
               return fragments;
             }
 
             function computeTotals (state) {
               datum.total[state] = getEnabledDimensions()
-                .filter(dimension => dimension !== `unverified`)
+                .filter(source => source !== `unverified`)
                 .reduce((total, source) => total + datum[source][state], 0);
             }
           });
 
         x.domain(data.map(datum => datum.dateText));
         y.domain([0, d3.max(data, ({ total }) => total.u + total.v)]);
+      }
+
+      function getSourceDimensions () {
+        return Object.keys(dimensions).filter(notDiscriminateUnverified);
+      }
+
+      function getEnabledDimensions () {
+        return getSourceDimensions().filter(source => dimensions[source].enabled);
+      }
+
+      function getDisabledDimensions () {
+        return getSourceDimensions().filter(source => !dimensions[source].enabled);
+      }
+
+      function notDiscriminateUnverified (source) {
+        return !discriminated || source !== `unverified`;
       }
 
       function addTimeAxis () {
@@ -210,11 +209,10 @@ module.exports = function (viewModel, container) {
           date.selectAll(`.sg-bar`)
             .data(datum => datum.fragments)
             .enter().append(`rect`)
-            .attr(`class`, datum => `sg-bar sg-bar-${datum.state}`)
+            .attr(`class`, datum => `sg-bar sg-bar-${datum.state} sg-source-${datum.source}`)
             .attr(`width`, x.rangeBand() + (wowMode ? 0 : 1))
             .attr(`y`, datum => y(datum.y1))
-            .attr(`height`, datum => y(datum.y0) - y(datum.y1))
-            .style(`fill`, datum => color(datum.source));
+            .attr(`height`, datum => y(datum.y0) - y(datum.y1));
         }
 
         function addSubscribersAxis () {
@@ -252,7 +250,7 @@ module.exports = function (viewModel, container) {
             .attr(`x`, width - 18)
             .attr(`width`, 18)
             .attr(`height`, 18)
-            .style(`fill`, dimension => dimensions[dimension].color);
+            .attr(`class`, dimension => `sg-source-${dimension}`);
 
           legend.append(`text`)
             .attr(`x`, width - 24)
@@ -267,32 +265,7 @@ module.exports = function (viewModel, container) {
             .attr(`class`, `sg-tip`)
             .direction(`e`)
             .offset([-10, 0])
-            .html(({ datum, source }) => {
-              const state = `v`;
-              const i = data.indexOf(datum);
-              const oldIndex = i - 1;
-              const old = oldIndex < 0 ? 0 : data[oldIndex].total[state] - data[oldIndex].total.u;
-              const now = datum.total[state];
-              const verified = now - datum.total.u;
-              const c = color(source);
-              const tipClass = isLightColor(c) ? `sg-tip-light` : `sg-tip-dark`;
-              return `
-<div class="sg-tip-content ${ tipClass }" style="background-color: ${ c };">
-  <div class="sg-tip-date">${ datum.dateText }</div>
-  <div>
-    <span class="sg-tip-label">${ source }: </span>
-    <span class="sg-tip-numbers">${ datum[source].v } ${ diffText(data[oldIndex][source][state], datum[source][state]) }</span>
-  </div>
-  <div>
-    <span class="sg-tip-label">Verified: </span>
-    <span class="sg-tip-numbers">${ verified } ${ diffText(old, verified) }</span>
-  </div>
-  <div>
-    <span class="sg-tip-label">Total: </span>
-    <span class="sg-tip-numbers">${ now } ${ diffText(old, now) }</span>
-  </div>
-</div>`;
-            });
+            .html(computeTipHtml);
 
           svg.call(tip);
           svg
@@ -304,6 +277,48 @@ module.exports = function (viewModel, container) {
             });
 
           $(parent).on(`mouseleave`, tip.hide);
+        }
+
+        function computeTipHtml ({ datum, source }) {
+          const oldIndex = data.indexOf(datum) - 1;
+          const stats = [
+            { source, vectors: `v` },
+            { source, vectors: `u`, label: false },
+            { source, vectors: `vu`, label: false },
+            { source: `total`, vectors: `v` },
+            { source: `total`, vectors: `u`, label: false },
+            { source: `total`, vectors: `vu`, label: false }
+          ]
+            .filter(isRelevantStat)
+            .map(renderStat);
+
+          return `
+<div class='sg-tip-content sg-source-${source}'>
+  <div class='sg-tip-date'>${ datum.dateText }</div>
+  ${ stats.join(``) }
+</div>`;
+
+          function isRelevantStat (stat) {
+            if (stat.source === `unverified`) {
+              return false;
+            }
+            if (!dimensions.unverified.enabled) {
+              return stat.vectors.indexOf(`u`) === -1;
+            }
+            return true;
+          }
+
+          function renderStat ({ source, vectors, label = true }) {
+            const prev = oldIndex < 0 ? 0 : vectorSum(data[oldIndex][source], vectors);
+            const value = vectorSum(datum[source], vectors);
+            const diff = diffText(prev, value);
+            return `
+  <div class='sg-tip-row'>
+    <span class='sg-tip-label'>${ label ? source : `` }</span>
+    <span class='sg-tip-vector sg-tip-vector-${ vectors }'></span>
+    <span class='sg-tip-numbers'>${ value } ${ diff }</span>
+  </div>`;
+          }
         }
       }
 
@@ -398,6 +413,10 @@ module.exports = function (viewModel, container) {
     }
   }
 };
+
+function vectorSum (data, [ ...vectors ]) {
+  return vectors.reduce((result, v) => result + data[v], 0);
+}
 
 function diffText (old, now) {
   const diff = old === 0 ? 100 : (now === 0 ? -100 : (now - old) / Math.abs(old) * 100);

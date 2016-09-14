@@ -53,7 +53,17 @@ function getBuckets (all) {
 
 function initBucket (seedSubscriber) {
   const week = moment.utc(seedSubscriber.created).subtract(7, `days`);
-  const sources = [`migration`, `twitter`, `bubble`, `weekly`, `sidebar`, `comment`, `article`, `landed`];
+  const sources = [
+    `migration`,
+    `twitter`,
+    `bubble`,
+    `weekly`,
+    `sidebar`,
+    `comment`,
+    `article`,
+    `landed`,
+    `unverified`
+  ];
   const bucket = {
     date: week.toDate(),
     dateText: week.format(`Do MMMM ’YY`)
@@ -69,6 +79,9 @@ function addToBucket (bucket, subscriber) {
   const source = findSource(subscriber);
   const state = subscriber.verified ? `v` : `u`;
   bucket[source][state]++;
+  if (state === `u`) {
+    bucket.unverified.v++;
+  }
 }
 
 function findSource (subscriber) {
