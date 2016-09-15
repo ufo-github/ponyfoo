@@ -11,8 +11,10 @@ const emojiService = require(`./emoji`);
 const env = require(`../lib/env`);
 const authority = env(`AUTHORITY`);
 const domains = [
-  /^(https?:)?\/\/codepen.io\//i,
-  /^(https?:)?\/\/assets.codepen.io\//i
+  /^(https?:)?\/\/codepen\.io\//i,
+  /^(https?:)?\/\/assets\.codepen\.io\//i,
+  /^https:\/\/www\.youtube\.com\//i,
+  /^https:\/\/player\.vimeo\.com\//i
 ];
 const rlang = /md-lang-((?:[^\s]|$)+)/;
 
@@ -93,7 +95,8 @@ function compile (text) {
       allowedTags: insane.defaults.allowedTags.concat(`iframe`, `script`, `figure`, `figcaption`),
       allowedAttributes: {
         script: [`src`, `async`],
-        p: [`data-height`, `data-theme-id`, `data-slug-hash`, `data-default-tab`, `data-user`]
+        p: [`data-height`, `data-theme-id`, `data-slug-hash`, `data-default-tab`, `data-user`],
+        iframe: [`src`, `width`, `height`, `webkitallowfullscreen`, `mozallowfullscreen`, `allowfullscreen`]
       },
       allowedClasses: {
         p: [`codepen`],
