@@ -13,6 +13,18 @@ section.sg-options
   input.ck-input#sg-show-pageviews(type='checkbox')
   label.ck-checkbox(for='sg-show-pageviews') Page Views
   span=' '
+  select.sg-pageview-daypicker
+    option(value='', selected) Daily
+    option(value='1,2,3,4,5') Weekdays
+    option(value='6,0') Weekends
+    option(value='1') Mondays
+    option(value='2') Tuesdays
+    option(value='3') Wednesdays
+    option(value='4') Thursdays
+    option(value='5') Fridays
+    option(value='6') Saturdays
+    option(value='0') Sundays
+  span=' '
   input.ck-input#sg-wow-mode(type='checkbox')
   label.ck-checkbox(for='sg-wow-mode') Week Over Week
 section.sg-container

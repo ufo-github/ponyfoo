@@ -38,7 +38,7 @@ module.exports = function (viewModel, container) {
     render();
 
     $(window).on(`resize`, renderTimely);
-    $(`.sg-options`).on(`change`, `input`, render);
+    $(`.sg-options`).on(`change`, `input, select`, render);
     $(`.sg-container`).on(`click`, `.sg-legend`, toggleDimension);
 
     function toggleDimension (e) {
@@ -56,6 +56,8 @@ module.exports = function (viewModel, container) {
       const showSubscribers = $(`#sg-show-subscribers`, container).value();
       const showPageViews = $(`#sg-show-pageviews`, container).value();
       const discriminated = $(`#sg-discriminate-subscribers`, container).value();
+      const pageviewDaysValue = $(`.sg-pageview-daypicker`).value();
+      const pageviewDays = pageviewDaysValue && pageviewDaysValue.split(`,`).map(v => parseInt(v, 10));
       const wowMode = $(`#sg-wow-mode`, container).value();
 
       $(`.sg-chart`, container).remove();
@@ -330,12 +332,23 @@ module.exports = function (viewModel, container) {
           return;
         }
         pv.forEach((cpv, i) => {
+          const prevCount = i === 0 ? 0 : pv[i - 1].views;
           cpv.date = new Date(cpv.date);
-          if (!(wowMode || i === 0)) {
-            cpv.views += pv[i - 1].views;
+          if (!wowMode) {
+            cpv.views += prevCount;
           }
           if (peak < cpv.views) {
             peak = cpv.views;
+          }
+          if (pageviewDays) {
+            const day = moment(cpv.date).day();
+            const notToday = pageviewDays.indexOf(day) === -1;
+            if (notToday) {
+              cpv.views = prevCount;
+            } else {
+
+              console.log(moment(cpv.date).format('dddd Do MM'))
+            }
           }
         });
 

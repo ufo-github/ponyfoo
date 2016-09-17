@@ -133,7 +133,19 @@ sg-source-dark(v-color)
   stroke-width 1.3px
   fill transparent
 
-.sg-options .ck-checkbox
+.sg-pageview-daypicker
+  display inline-block
+  vertical-align middle
+  width 140px
+  background-color c-purple
+  color c-white
+
+  &:focus
+    background-color lighten(c-purple, 5%)
+    col-outline(c-white)
+
+.sg-options .ck-checkbox,
+.sg-pageview-daypicker
   margin-right 15px
   margin-bottom 15px
 
