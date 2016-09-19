@@ -53,11 +53,9 @@
     content ''
     background linear-gradient(to right, c-transparent 0, c-lighter-gray 100%)
 
-  .at-title
-    text-shadow 2px 2px c-black-text
-    code
-      color inherit
-      background-color transparent
+  .at-title code
+    color inherit
+    background-color transparent
 
   .at-teaser
     color c-yellow-highlight-04
@@ -94,13 +92,16 @@ at-header-colors(c-primary)
     .at-header-gradient
       background-image linear-gradient(c-transparent 0%, rgba(c-primary, 0.9))
 
+    .at-title
+      text-shadow 2px 2px c-primary
+
   .at-header-button
     background linear-gradient(to right, lighten(c-primary, 8%) 33%, c-primary 100%)
     color c-white
     &:hover
       background c-primary
 
-at-header-colors(c-purple)
+at-header-colors(c-dark-turquoise)
 
 .at-trivia
   margin-bottom 20px
