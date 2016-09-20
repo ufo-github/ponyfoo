@@ -20,13 +20,14 @@ div(class='wy-section-link' + (item.subtype ? ' wy-section-link-' + item.subtype
             td(class='wy-td ' + (item.image ? 'wy-link-cell-before-image' : ''))
               div.wy-link-description-section
                 div.wy-link-description.md-markdown!=item.descriptionHtml
-              div.wy-link-source-section
-                if item.sourceHref
-                  a.wy-link-source(href=item.sourceHref, target='_blank')=item.source
-                else
-                  span.wy-link-source.wy-link-source-plain=item.source
-                if item.sponsored
-                  span.wy-link-tag.wy-link-sponsor Sponsored
+              if item.source
+                div.wy-link-source-section
+                  if item.sourceHref
+                    a.wy-link-source(href=item.sourceHref, target='_blank')=item.source
+                  else
+                    span.wy-link-source.wy-link-source-plain=item.source
+                  if item.sponsored
+                    span.wy-link-tag.wy-link-sponsor Sponsored
             if item.image
               td.wy-td.wy-link-cell-image
                 a.wy-link-image-anchor(href=item.href, target='_blank')
