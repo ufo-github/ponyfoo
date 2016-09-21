@@ -12,4 +12,4 @@
 [clap]: https://www.thunderclap.it/projects/202020 "Back the Thunderclap campaign!"
 [tweet]: http://goo.gl/J5izu2 "Send out a tweet promoting the Modular JavaScript launch"
 [campaign]: https://www.indiegogo.com/projects/modular-javascript-a-pragmatic-js-book-series "Indiegogo campaign for Modular JavaScript: A Pragmatic JS Book Series"
-[er]: /not-found
+[er]: http://shop.oreilly.com/product/0636920047124.do "Modular JavaScript: Practical ES6"

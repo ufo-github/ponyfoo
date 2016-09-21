@@ -55,4 +55,4 @@ _**Purchase** the [Early Release][er] from O'Reilly! 📓_
 [toc]: https://ponyfoo.com/books/practical-es6/chapters "Practical ES6: A Practical Dive into ES6 and Maintainable JavaScript Modules"
 [contrib]: https://github.com/modular-javascript/practical-es6/blob/master/contributing.md "modular-javascript/practical-es6 on GitHub"
 [campaign]: https://www.indiegogo.com/projects/modular-javascript-a-pragmatic-js-book-series "Indiegogo campaign for Modular JavaScript: A Pragmatic JS Book Series"
-[er]: /not-found
+[er]: http://shop.oreilly.com/product/0636920047124.do "Modular JavaScript: Practical ES6"

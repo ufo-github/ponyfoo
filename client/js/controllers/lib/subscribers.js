@@ -347,7 +347,7 @@ module.exports = function (viewModel, container) {
               cpv.views = prevCount;
             } else {
 
-              console.log(moment(cpv.date).format('dddd Do MM'))
+              console.log(moment(cpv.date).format(`dddd Do MM`));
             }
           }
         });

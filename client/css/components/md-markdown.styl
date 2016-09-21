@@ -1,3 +1,9 @@
+md-quote-styles()
+  font-family f-georgia
+  color c-dark-turquoise
+  font-size 65px
+  font-weight 700
+
 .md-markdown
   p,
   ul,
@@ -7,23 +13,23 @@
   code
     max-width 800px
 
+  md-quote-s = 12px
+  md-quote-l = 52px
+
   blockquote
     position relative
     margin 0
-    padding 12px 12px 12px 48px
+    padding md-quote-s md-quote-l md-quote-s md-quote-s
     background-color rgba(c-light, 0.55)
 
     &:before
-      content '\201c'
-      font-family Georgia, serif
-      color c-purple
+      md-quote-styles()
+      content '\201d'
       position absolute
       top 20px
-      left 8px
-      font-size 65px
-      font-weight 700
+      right 8px
+      margin-right 2px
       line-height 40px
-      margin-right 10px
 
     h1,
     h2,
@@ -31,15 +37,14 @@
     h4,
     h5,
     h6
-      margin-top 0
-      padding-top 0
-      padding-bottom 0
+      margin (md-quote-s * -1) (md-quote-l * -1) (md-quote-s * -1) (md-quote-s * -1)
+      padding md-quote-s md-quote-l md-quote-s md-quote-s
 
     .md-code-block
-      margin 0 -12px 0 -48px
+      margin 0 (md-quote-l * -1) 0 (md-quote-s * -1)
 
       &:last-child
-        margin-bottom -12px
+        margin-bottom (md-quote-s * -1)
 
   img
     &:first-child
@@ -119,9 +124,8 @@
 .md-code-block .md-code
   display block
 
-.md-markdown-summary
-  p
-    margin 10px 0
+.md-markdown-summary p
+  margin 10px 0
 
 @media only screen and (min-width: 768px)
   .md-markdown
