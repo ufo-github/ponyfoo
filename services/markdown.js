@@ -4,10 +4,11 @@ const omnibox = require(`omnibox`);
 const domador = require(`domador`);
 const megamark = require(`megamark`);
 const implicitFigures = require(`markdown-it-implicit-figures`);
-const implicitFiguresForTweets = require(`../lib/implicitFiguresForTweets`);
 const insane = require(`insane`);
 const textService = require(`./text`);
 const emojiService = require(`./emoji`);
+const implicitFiguresForTweets = require(`../lib/implicitFiguresForTweets`);
+const customMarkdownContainers = require(`../lib/customMarkdownContainers`);
 const env = require(`../lib/env`);
 const authority = env(`AUTHORITY`);
 const domains = [
@@ -21,6 +22,7 @@ const rlang = /md-lang-((?:[^\s]|$)+)/;
 megamark.parser.renderer.rules.link_open = link;
 megamark.parser.use(implicitFigures, { figcaption: true });
 megamark.parser.use(implicitFiguresForTweets);
+megamark.parser.use(...customMarkdownContainers);
 
 module.exports = { compile, decompile };
 
