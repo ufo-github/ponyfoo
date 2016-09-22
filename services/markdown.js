@@ -103,6 +103,7 @@ function compile (text) {
           `mde-text-left`,
           `mde-text-center`,
           `mde-text-right`,
+          `mde-clearfix`,
           `mde-quote`,
           `mde-core`,
           `mde-mono`,

@@ -59,3 +59,12 @@ f-use-heading()
 f-use-subheading()
   /.ly-custom-subheading &
     font-family f-subheading
+
+clearfix()
+  &:after
+    content ' '
+    display block
+    visibility hidden
+    clear both
+    font-size 0
+    height 0
