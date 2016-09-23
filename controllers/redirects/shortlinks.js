@@ -1,18 +1,36 @@
 'use strict';
 
 const links = require(`../../dat/shortlinks.json`);
+const settingService = require(`../../services/setting`);
+const getSetting = settingService.tracker();
 
 function setup (app) {
-  app.get(`/bf/:shortlink?`, expander);
-  app.get(`/s/:shortlink?`, expander);
+  app.get(`/bf/:shortlink?`, expandFromData);
+  app.get(`/s/:shortlink`, expandFromData);
+  app.get(`/s/:shortlink`, expandFromSettings);
 }
 
-function expander (req, res, next) {
-  const path = req.path;
-  if (!Object.prototype.hasOwnProperty.call(links, path)) {
+function expandFromData (req, res, next) {
+  const { path } = req;
+  go({ res, next, links, path });
+}
+
+function expandFromSettings (req, res, next) {
+  getSetting(`SHORTLINKS`, (err, links = {}) => {
+    if (err) {
+      next(err); return;
+    }
+    const { path } = req;
+    go({ res, next, links, path });
+  });
+}
+
+function go ({ res, next, links, path }) {
+  const url = path.toLowerCase();
+  if (!Object.prototype.hasOwnProperty.call(links, url)) {
     next(); return;
   }
-  const link = links[path];
+  const link = links[url];
   res.status(302).redirect(link);
 }
 

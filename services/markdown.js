@@ -18,6 +18,7 @@ const domains = [
   /^https:\/\/player\.vimeo\.com\//i
 ];
 const rlang = /md-lang-((?:[^\s]|$)+)/;
+const rshortlink = /^\/(s|bf)(\/|$)/i;
 
 megamark.parser.renderer.rules.link_open = link;
 megamark.parser.use(implicitFigures, { figcaption: true });
@@ -55,10 +56,22 @@ function setLabel (attrs, title) {
 
 function blankTarget (attrs, href) {
   const parts = omnibox.parse(href);
-  const difforigin = parts.host && parts.host !== authority;
-  if (difforigin) {
+  const mightBeExternal = mayBeExternal(parts);
+  if (mightBeExternal) {
     attrs.target = `_blank`;
   }
+}
+
+function mayBeExternal (parts) {
+  const difforigin = parts.host && parts.host !== authority;
+  if (difforigin) {
+    return true;
+  }
+  const shortlinked = rshortlink.test(parts.path);
+  if (shortlinked) {
+    return true;
+  }
+  return false;
 }
 
 function stringifyLink (attrs) {
