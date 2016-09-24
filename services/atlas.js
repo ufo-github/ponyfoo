@@ -92,6 +92,7 @@ function read ({ bookSlug, sectionId, isChapter, isToc }, done) {
     const $ = cheerio.load(html);
     fixChapterLinks($, bookSlug, isToc);
     fixImageLinks($, bookSlug);
+    fixFootnotes($);
     const body = $(`body`).html();
     const deferred = htmlService.deferImages(body);
     sectionCache.set(sectionId, deferred);
@@ -273,6 +274,27 @@ function fixImageLinks ($, bookSlug) {
     }
     $el.attr(`src`, src.replace(rimage, `/books/${bookSlug}/img/`));
   });
+}
+
+function fixFootnotes ($) {
+  $(`[data-type='footnotes']`)
+    .addClass(`ocha-footnotes`)
+    .find(`[data-type='footnote']`)
+    .each((i, el) => {
+      const $el = $(el);
+      const $sup = $el.find(`sup`);
+      const id = $el.attr(`id`);
+      const anchor = $sup.find(`a`).addClass(`ocha-footnote-anchor`);
+      const content = $(`<div>`).addClass(`ocha-footnote-content`);
+      const footnote = $(`<div>`).addClass(`ocha-footnote`).attr(`id`, id);
+      footnote.append(anchor);
+      $sup.remove();
+      content.append($el.contents());
+      footnote.append(anchor);
+      footnote.append(content);
+      $el.parent().append(footnote);
+      $el.remove();
+    });
 }
 
 module.exports = {

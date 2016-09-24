@@ -1,3 +1,11 @@
+ocha-supplement(c-color)
+  font-variant small-caps
+  font-weight bold
+  font-size 20px
+  padding 5px 10px
+  background-color c-color
+  color c-white
+
 .ocha-id
   float right
   margin-top 10px
@@ -36,14 +44,6 @@
     h6
       margin 0 -20px
 
-  ocha-supplement(c-color)
-    font-variant small-caps
-    font-weight bold
-    font-size 20px
-    padding 5px 10px
-    background-color c-color
-    color c-white
-
   [data-type='warning']
     border-bottom 3px dashed lighten(c-red, 50%)
     background-color lighten(c-red, 95%)
@@ -65,3 +65,33 @@
     > :first-child
       margin 0 -20px
       padding 20px
+
+.ocha-footnotes
+  margin-top 80px
+  padding 20px 0
+  border-top 1px dashed c-gray
+
+.ocha-footnote
+  margin 0
+  padding 8px 0
+  font-size 14px
+
+.ocha-footnote-anchor,
+.ocha-footnote-content
+  display inline-block
+  vertical-align middle
+
+.ocha-footnote-anchor
+  padding 2px 6px
+  margin-right 10px
+  text-align center
+  font-weight bold
+  color c-pink
+  f-use-subheading()
+
+.ocha-footnotes .ocha-footnote .ocha-footnote-anchor // purposeful specificity
+  border 1px solid c-pink
+
+.ocha-footnote .ocha-footnote-anchor:hover // purposeful specificity
+  background-color c-pink
+  color c-white
