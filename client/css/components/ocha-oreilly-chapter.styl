@@ -20,51 +20,50 @@ ocha-supplement(c-color)
   .an-siblings
     padding 0
 
-.ocha-contents
-  [data-highlighted]
-    pygments()
+.ocha-highlighted
+  pygments()
 
-  [data-type='warning'],
-  [data-type='sidebar']
-    margin 40px 0
-    padding 20px
+.ocha-warning,
+.ocha-sidebar
+  margin 40px 0
+  padding 20px
 
-    > :first-child
-      margin-top 0
-      padding-top 0
-
-    [data-highlighted]
-      margin 0 -20px
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6
-      margin 0 -20px
-
-  [data-type='warning']
-    border-bottom 3px dashed lighten(c-red, 50%)
-    background-color lighten(c-red, 95%)
+  > :first-child
+    margin-top 0
     padding-top 0
-    h6:first-child
-      ocha-supplement(c-red)
 
-  [data-type='sidebar']
-    border-bottom 3px dashed lighten(c-dark-green, 50%)
-    background-color lighten(c-dark-green, 95%)
+  .ocha-highlighted
+    margin 0 -20px
 
-    &:before
-      display block
-      margin -20px -20px 0
-      content 'Sidebar'
-      f-use-subheading()
-      ocha-supplement(c-dark-green)
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6
+    margin 0 -20px
 
-    > :first-child
-      margin 0 -20px
-      padding 20px
+.ocha-warning
+  border-bottom 3px dashed lighten(c-red, 50%)
+  background-color lighten(c-red, 95%)
+  padding-top 0
+  h6:first-child
+    ocha-supplement(c-red)
+
+.ocha-sidebar
+  border-bottom 3px dashed lighten(c-dark-green, 50%)
+  background-color lighten(c-dark-green, 95%)
+
+  &:before
+    display block
+    margin -20px -20px 0
+    content 'Sidebar'
+    f-use-subheading()
+    ocha-supplement(c-dark-green)
+
+  > :first-child
+    margin 0 -20px
+    padding 20px
 
 .ocha-footnotes
   margin-top 80px
@@ -95,3 +94,10 @@ ocha-supplement(c-color)
 .ocha-footnote .ocha-footnote-anchor:hover // purposeful specificity
   background-color c-pink
   color c-white
+
+.ocha-footnote-ref
+  margin-left 1px
+  margin-right 3px
+
+.ocha-container .ocha-contents .ocha-footnote-ref // purposeful specificity
+  border-bottom 1px dotted

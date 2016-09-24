@@ -277,6 +277,10 @@ function fixImageLinks ($, bookSlug) {
 }
 
 function fixFootnotes ($) {
+  $(`[data-highlighted]`).addClass(`ocha-highlighted`);
+  $(`[data-type='sidebar']`).addClass(`ocha-sidebar`);
+  $(`[data-type='warning']`).addClass(`ocha-warning`);
+  $(`[data-type='noteref']`).addClass(`ocha-footnote-ref`);
   $(`[data-type='footnotes']`)
     .addClass(`ocha-footnotes`)
     .find(`[data-type='footnote']`)
