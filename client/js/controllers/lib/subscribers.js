@@ -345,9 +345,6 @@ module.exports = function (viewModel, container) {
             const notToday = pageviewDays.indexOf(day) === -1;
             if (notToday) {
               cpv.views = prevCount;
-            } else {
-
-              console.log(moment(cpv.date).format(`dddd Do MM`));
             }
           }
         });

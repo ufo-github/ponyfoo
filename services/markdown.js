@@ -23,7 +23,7 @@ const rshortlink = /^\/(s|bf)(\/|$)/i;
 megamark.parser.renderer.rules.link_open = link;
 megamark.parser.use(implicitFigures, { figcaption: true });
 megamark.parser.use(implicitFiguresForTweets);
-megamark.parser.use(...customMarkdownContainers);
+customMarkdownContainers.setup(megamark.parser);
 
 module.exports = { compile, decompile };
 
