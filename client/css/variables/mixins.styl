@@ -16,6 +16,18 @@ rainbow-pseudo()
     transition all 0.1s ease-in-out
     animation bg-rainbow 0.5s infinite
 
+rainbow-goes-after()
+  position relative
+
+  &:after
+    position absolute
+    left 0
+    right 0
+    bottom 0
+    height 4px
+    content ''
+    rainbow()
+
 font-awesome()
   display inline-block
   font normal normal normal 14px/1 FontAwesome

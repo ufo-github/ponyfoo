@@ -1,10 +1,15 @@
 ocha-supplement(c-color)
-  font-variant small-caps
-  font-weight bold
-  font-size 20px
-  padding 5px 10px
-  background-color c-color
-  color c-white
+  border 1px dotted rgba(c-color, 0.2)
+
+  &:after
+    content ''
+    display block
+    padding-bottom 20px
+    border-bottom 3px dashed lighten(c-color, 50%)
+
+  .ocha-s-title
+    background-color rgba(c-color, 0.05)
+    color c-color
 
 .ocha-id
   float right
@@ -23,47 +28,34 @@ ocha-supplement(c-color)
 .ocha-highlighted
   pygments()
 
-.ocha-warning,
-.ocha-sidebar
-  margin 40px 0
+.ocha-s
+  background-color c-white
   padding 20px
-
-  > :first-child
-    margin-top 0
-    padding-top 0
-
-  .ocha-highlighted
-    margin 0 -20px
+  margin 40px 0
+  overflow hidden // overlapping sections properly render their boxes
 
   h1,
   h2,
   h3,
   h4,
   h5,
-  h6
-    margin 0 -20px
+  h6,
+  .ocha-highlighted
+    margin 0
+    padding 10px
 
-.ocha-warning
-  border-bottom 3px dashed lighten(c-red, 50%)
-  background-color lighten(c-red, 95%)
-  padding-top 0
-  h6:first-child
-    ocha-supplement(c-red)
+  .ocha-s-title
+    padding 6px 12px
 
-.ocha-sidebar
-  border-bottom 3px dashed lighten(c-dark-green, 50%)
-  background-color lighten(c-dark-green, 95%)
+.ocha-s-title
+  font-variant small-caps
+  font-weight bold
+  font-size 20px
 
-  &:before
-    display block
-    margin -20px -20px 0
-    content 'Sidebar'
-    f-use-subheading()
-    ocha-supplement(c-dark-green)
-
-  > :first-child
-    margin 0 -20px
-    padding 20px
+.ocha-s-sidebar
+  ocha-supplement(c-dark-turquoise)
+.ocha-s-warning
+  ocha-supplement(c-red)
 
 .ocha-footnotes
   margin-top 80px
@@ -101,3 +93,15 @@ ocha-supplement(c-color)
 
 .ocha-container .ocha-contents .ocha-footnote-ref // purposeful specificity
   border-bottom 1px dotted
+
+@media only screen and (min-width: 900px)
+  .ocha-s-sidebar
+    width 40%
+
+  .ocha-s-sidebar-odd
+    float right
+    margin-left 20px
+
+  .ocha-s-sidebar-even
+    float left
+    margin-right 20px

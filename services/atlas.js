@@ -9,6 +9,7 @@ const path = require(`path`);
 const fs = require(`fs`);
 const env = require(`../lib/env`);
 const htmlService = require(`../services/html`);
+const semojiService = require(`../services/semoji`);
 const nodeEnv = env(`NODE_ENV`);
 const dev = nodeEnv === `development`;
 const bookCache = new Map();
@@ -89,9 +90,11 @@ function read ({ bookSlug, sectionId, isChapter, isToc }, done) {
       done(null, null);
       return;
     }
-    const $ = cheerio.load(html);
+    const emojified = semojiService.compile(html);
+    const $ = cheerio.load(emojified);
     fixChapterLinks($, bookSlug, isToc);
     fixImageLinks($, bookSlug);
+    fixAsides($);
     fixFootnotes($);
     const body = $(`body`).html();
     const deferred = htmlService.deferImages(body);
@@ -276,10 +279,46 @@ function fixImageLinks ($, bookSlug) {
   });
 }
 
-function fixFootnotes ($) {
+function fixAsides ($) {
   $(`[data-highlighted]`).addClass(`ocha-highlighted`);
-  $(`[data-type='sidebar']`).addClass(`ocha-sidebar`);
-  $(`[data-type='warning']`).addClass(`ocha-warning`);
+
+  $(`[data-type='sidebar']`).each((i, el) => {
+    const even = (i + 1) % 2 === 0;
+    const evenClass = even ? `even` : `odd`;
+    $(el).addClass(`ocha-s-sidebar-${ evenClass }`);
+
+    // sidebars use <h5> instead of <h1>, don't have a title. we normalize
+    fixSectionHeader($, el, `Sidebar`);
+  });
+
+  $(`[data-type='sidebar'], [data-type='warning']`).each((i, el) => {
+    const $el = $(el);
+    const type = $el.data(`type`);
+    $el
+      .addClass(`ocha-s ocha-s-${type}`)
+      .find(`> h6:first-child`)
+      .addClass(`ocha-s-title ocha-s-${type}-title`);
+  });
+}
+
+function fixSectionHeader ($, el, text) {
+  const $el = $(el);
+
+  const legacyHeading = $el.find(`> h5:first-child`);
+  const heading = $(`<h1>`).append(legacyHeading.contents());
+  legacyHeading.replaceWith(heading);
+
+  const id = $el.attr(`id`);
+  const title = $(`<h6>`);
+  const anchor = $(`<a>`)
+    .attr(`href`, `#${id}`)
+    .addClass(`md-heading`)
+    .text(text);
+  title.append(anchor);
+  $el.prepend(title);
+}
+
+function fixFootnotes ($) {
   $(`[data-type='noteref']`).addClass(`ocha-footnote-ref`);
   $(`[data-type='footnotes']`)
     .addClass(`ocha-footnotes`)

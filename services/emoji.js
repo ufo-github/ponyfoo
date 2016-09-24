@@ -1,12 +1,12 @@
 'use strict';
 
-var twemoji = require(`twemoji`);
-var emojiOpts = {
+const twemoji = require(`twemoji`);
+const emojiOpts = {
   base: `https://twemoji.maxcdn.com/2/`,
   className: `tj-emoji`,
   size: 72
 };
-var funEmoji = [
+const funEmoji = [
   `🐺`, `🐸`, `🐯`, `🐗`, `🐴`, `🦄`, `🐑`, `🐘`, `🐼`, `🐦`, `🐣`,
   `🐍`, `🐢`, `🐙`, `🐠`, `🐟`, `🐬`, `🐳`, `🐋`, `🐏`, `🐇`, `🐉`, `🐐`, `🐓`, `🐲`, `🐊`,
   `🍩`, `🍮`, `🍯`, `🍎`, `🍏`, `🍊`, `🍋`, `🍒`, `🍇`, `🍉`, `🍓`,
@@ -21,7 +21,7 @@ var funEmoji = [
   `🍕`, `🍟`, `🍝`, `🍛`, `🍤`, `🍣`, `🍥`,
   `🍻`, `🍸`, `🍹`, `🍷`
 ];
-var mailEmoji = [
+const mailEmoji = [
   `✉️️`, `💌`, `📥`, `📤`, `📬`, `📩`, `📮`, `📪`, `📫`, `📬`, `📭`
 ];
 
@@ -42,7 +42,7 @@ function compile (text) {
 }
 
 module.exports = {
-  compile: compile,
-  randomFun: randomFun,
-  randomMailEmoji: randomMailEmoji
+  compile,
+  randomFun,
+  randomMailEmoji
 };

@@ -1,14 +1,14 @@
 'use strict';
 
-const gemoji = require(`gemoji`);
 const htmlService = require(`./html`);
 const markdownService = require(`./markdown`);
+const semojiService = require(`./semoji`);
 
 function compile (md, options) {
   const methods = [];
   const o = options || {};
 
-  add(o.markdown !== false, emojify);
+  add(o.markdown !== false, semojiService.compile);
   add(o.markdown !== false, markdownService.compile);
   add(o.externalize, htmlService.externalizeLinks);
   add(o.deferImages, deferImages);
@@ -32,18 +32,6 @@ function compile (md, options) {
 
   function linkThrough (html) {
     return htmlService.linkThrough(html, o.linkThrough);
-  }
-}
-
-function emojify (input) {
-  const remoji = /:([a-z_-]+):/ig;
-  return input.replace(remoji, emojifyInput);
-  function emojifyInput (all, name) {
-    const data = gemoji.name[name];
-    if (data) {
-      return data.emoji;
-    }
-    return all;
   }
 }
 
