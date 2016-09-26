@@ -99,9 +99,9 @@ function build ({ bookSlug, formats = `html` }, done) {
 }
 
 function downloadBuild ({ bookSlug, buildStatus }, next) {
-  contra.each.series(buildStatus, extract, next);
+  contra.map.series(buildStatus, extract, next);
 
-  function extract ({ download_url, format }, next) {
+  function extract ({ id, download_url, format }, next) {
     const path = getDownloadPath(bookSlug, format);
     const extractor = unzip
       .Extract({ path })
@@ -111,7 +111,11 @@ function downloadBuild ({ bookSlug, buildStatus }, next) {
     request(download_url).pipe(extractor);
 
     function closed () {
-      next(null);
+      const rhash = /([a-f0-9]+)\.zip$/;
+      const [, hash] = download_url.match(rhash);
+      next(null, {
+        hash: `${ id }_${ hash }`
+      });
     }
   }
 }

@@ -271,7 +271,7 @@ function fixImageLinks ($, bookSlug) {
   $(`img[src]`, `body`).each((i, el) => {
     const $el = $(el);
     const src = $el.attr(`src`);
-    const rimage = /^chapters\/images\//i;
+    const rimage = /^images\//i;
     if (!rimage.test(src)) {
       return;
     }

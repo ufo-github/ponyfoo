@@ -17,7 +17,7 @@ function booted () {
     if (err) {
       downloaded(err); return;
     }
-    contra.each.series(slugs, downloadTask, downloaded);
+    contra.map.series(slugs, downloadTask, downloaded);
   });
 }
 
@@ -26,13 +26,17 @@ function downloadTask (bookSlug, done) {
   atlasBuildService.download({ bookSlug }, done);
 }
 
-function downloaded (err) {
+function downloaded (err, builds) {
   if (err) {
     winston.error(err);
     end();
     return;
   }
-  winston.info(`Downloaded HTML builds.`);
+  const hashes = builds
+    .reduce((all, build) => all.concat(build), [])
+    .map(build => build.hash)
+    .join(`,`);
+  winston.info(`Downloaded [${ hashes }] HTML builds.`);
   end();
 }
 
