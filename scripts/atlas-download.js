@@ -3,6 +3,7 @@
 require(`../preconfigure`);
 require(`../chdir`);
 
+const values = require(`lodash/values`);
 const contra = require(`contra`);
 const winston = require(`winston`);
 const db = require(`../lib/db`);
@@ -32,10 +33,12 @@ function downloaded (err, builds) {
     end();
     return;
   }
+
   const hashes = builds
-    .reduce((all, build) => all.concat(build), [])
+    .reduce((all, build) => all.concat(values(build)), [])
     .map(build => build.hash)
     .join(`,`);
+
   winston.info(`Downloaded [${ hashes }] HTML builds.`);
   end();
 }
