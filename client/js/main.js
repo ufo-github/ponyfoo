@@ -35,7 +35,7 @@ require(`./conventions/carbon`)();
 require(`./conventions/scroll`)();
 
 require(`./components/subscribeBubble`)();
-require(`./components/addToHome`)();
+require(`./components/addToHome`).setup();
 
 taunus.mount(main, wiring, {
   version: env(`APP_VERSION`),

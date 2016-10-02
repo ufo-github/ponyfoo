@@ -1,29 +1,24 @@
 'use strict';
 
-const scroll = require(`../lib/scroll`);
 const interval = 1000;
+let ready = false;
 
-function addToHome () {
-  let ready = false;
-  const destroy = scroll.track(readyAfterScroll);
-
+function setup () {
   window.addEventListener(`beforeinstallprompt`, controlledAddToHome);
-
-  function controlledAddToHome (e) {
-    if (ready) {
-      return;
-    }
-    e.preventDefault();
-    setTimeout(() => e.prompt(), interval);
-  }
-
-  function readyAfterScroll ({ scrolled }) {
-    if (scrolled < 60) {
-      return;
-    }
-    ready = true;
-    destroy();
-  }
 }
 
-module.exports = addToHome;
+function controlledAddToHome (e) {
+  if (ready) {
+    return;
+  }
+  e.preventDefault();
+  setTimeout(() => e.prompt(), interval);
+}
+
+function enable () {
+  ready = true;
+}
+
+module.exports = {
+  setup, enable
+};

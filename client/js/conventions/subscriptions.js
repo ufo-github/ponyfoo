@@ -4,6 +4,7 @@ const $ = require(`dominus`);
 const taunus = require(`taunus`);
 const measly = require(`measly`);
 const progressblock = require(`../lib/progressblock`);
+const addToHome = require(`../components/addToHome`);
 
 function subscriptions () {
   taunus.on(`render`, render);
@@ -42,6 +43,7 @@ function render (container) {
 
     function release () {
       progressblock.release(button);
+      addToHome.enable();
     }
   }
 

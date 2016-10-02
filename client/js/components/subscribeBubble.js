@@ -5,6 +5,7 @@ const measly = require(`measly`);
 const taunus = require(`taunus`);
 const ls = require(`local-storage`);
 const progressblock = require(`../lib/progressblock`);
+const addToHome = require(`./addToHome`);
 const scroll = require(`../lib/scroll`);
 const userService = require(`../services/user`);
 const markdownService = require(`../../../services/markdown`);
@@ -39,6 +40,7 @@ function subscribeBubble () {
         }
         destroy();
         renderBubble();
+        addToHome.enable();
       });
     }
   });

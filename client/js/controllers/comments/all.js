@@ -5,6 +5,7 @@ const raf = require(`raf`);
 const taunus = require(`taunus`);
 const debounce = require(`lodash/debounce`);
 const ls = require(`local-storage`);
+const addToHome = require(`../../components/addToHome`);
 const progressblock = require(`../../lib/progressblock`);
 const userService = require(`../../services/user`);
 const key = `comment-draft`;
@@ -96,6 +97,7 @@ module.exports = function (viewModel, $container) {
       serialize();
       raf(deserialize);
       appendResult(data);
+      addToHome.enable();
     }
 
     function appendResult (data) {
