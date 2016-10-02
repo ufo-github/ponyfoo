@@ -37,10 +37,10 @@ function getFeed (done) {
         }
         next(null, {
           title: article.title,
-          description: description,
+          description,
           url: authority + `/articles/` + article.slug,
           categories: article.tags,
-          author: util.format(`%s <%s>`, article.author.displayName, article.author.email),
+          author: util.format(`%s (%s)`, article.author.email, article.author.displayName),
           date: article.publication
         });
       }

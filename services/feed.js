@@ -8,7 +8,9 @@ const staticService = require(`./static`);
 const syndicationService = require(`./syndication`);
 const env = require(`../lib/env`);
 const authority = env(`AUTHORITY`);
-const contact = `Nicolás Bevacqua <feed@ponyfoo.com>`;
+const contactEmail = `feed@ponyfoo.com`;
+const contactName = `Nicolás Bevacqua`;
+const feedContact = `${ contactEmail } (${ contactName })`;
 const feedService = {
   from,
   feeds: new Map()
@@ -35,16 +37,15 @@ function from (options) {
       .value();
 
     const feed = new RSS({
-      generator: `ponyfoo/ponyfoo`,
       title: options.title,
       description: options.description,
+      generator: `ponyfoo/ponyfoo`,
       feed_url: authority + options.href,
       site_url: authority,
       image_url: authority + staticService.unroll(`/img/banners/branded.png`),
-      author: contact,
-      managingEditor: contact,
-      webMaster: contact,
-      copyright: `${contact}, ${now.format(`YYYY`)}`,
+      managingEditor: feedContact,
+      webMaster: feedContact,
+      copyright: `${ contactName }, ${ now.format(`YYYY`) }`,
       language: `en`,
       categories: tags,
       pubDate: now.clone().toDate(),

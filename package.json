@@ -156,7 +156,7 @@
     "redis": "2.2.5",
     "request": "2.65.0",
     "rome": "2.1.22",
-    "rss": "0.3.2",
+    "rss": "1.2.1",
     "safeson": "1.0.0",
     "serve-favicon": "2.3.0",
     "serve-static": "1.11.1",

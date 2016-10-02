@@ -35,10 +35,10 @@ function getFeed (done) {
         }
         next(null, {
           title: issue.computedTitle + ` \u2014 Pony Foo Weekly`,
+          description,
           url: authority + `/weekly/` + issue.slug,
-          description: description,
           categories: weeklyService.getAllTags(issue),
-          author: util.format(`%s <%s>`, issue.author.displayName, issue.author.email),
+          author: util.format(`%s (%s)`, issue.author.email, issue.author.displayName),
           date: issue.publication
         });
       }
