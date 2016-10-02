@@ -47,7 +47,7 @@ article.at-article.ly-section(itemscope, itemtype='http://schema.org/BlogPosting
     if commentCount
       meta(itemprop='interactionCount', content=commentCount + ' UserComments')
 
-  section.at-corpus(itemprop='articleBody')
+  section.at-corpus.sp-item(itemprop='articleBody')
     if article.editorNoteHtml
       section.md-markdown.at-editor-note!=article.editorNoteHtml
     section.md-markdown.at-introduction(itemprop='about')!=article.introductionHtml

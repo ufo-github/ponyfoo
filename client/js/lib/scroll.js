@@ -5,7 +5,7 @@ const raf = require(`raf`);
 const { emitter } = require(`contra`);
 const debounce = require(`lodash/debounce`);
 const refreshScrollSlowly = raf.bind(null, debounce(refreshScroll, 10));
-const body = document.body;
+const body = $(document.body);
 const html = document.documentElement;
 const api = emitter({ track });
 
@@ -17,19 +17,16 @@ function init () {
 }
 
 function refreshScroll () {
-  const position = (window.pageYOffset || html.scrollTop) - (html.clientTop || 0);
-  const documentHeight = Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight
-  );
   const viewportHeight = Math.max(html.clientHeight, window.innerHeight || 0);
-  const scrolled = position / (documentHeight - viewportHeight) * 100;
-  const state = {
-    scrolled
-  };
+  const distances = $(`.sp-item`).and(body).map((el) => {
+    const rect = el.getBoundingClientRect();
+    const top = rect.top * -1;
+    const total = rect.height - viewportHeight;
+    const scrolledRaw = top / total * 100;
+    const scrolled = Math.max(0, Math.min(100, scrolledRaw));
+    return { element: el, scrolled, scrolledRaw };
+  });
+  const state = { distances, scrolled: distances[0].scrolled };
   api.state = state;
   api.emit(`scroll`, state);
 }
