@@ -105,64 +105,88 @@ module.exports = function (viewModel, container) {
       function prepareDomain () {
         data
           .sort((a, b) => moment(a.date).isAfter(b.date) ? 1 : -1)
-          .forEach((datum, i) => {
-            const computeUnverified = dimensions.unverified.enabled;
+          .forEach(massageDatum);
 
-            if (!computeUnverified) {
-              datum.unverified.v = 0;
-            } else if (!unverifiedBuckets) {
-              getDisabledDimensions().forEach(source => datum.unverified.v -= datum[source].u);
-            }
-
-            datum.fragments = computeFragments();
-            datum.total = {};
-            computeTotals(`v`);
-            computeTotals(`u`);
-
-            function computeFragments () {
-              const fragments = [];
-              if (!(wowMode || i === 0)) {
-                const sources = getEnabledDimensions().filter(notUnverifiedBucket);
-                sources.forEach(source => {
-                  const { v, u } = data[i - 1][source];
-                  const d = datum[source];
-                  d.v += v;
-                  if (computeUnverified) {
-                    d.u += u;
-                  } else {
-                    d.u = 0;
-                  }
-                });
-              }
-              datum.date = new Date(datum.date);
-              getEnabledDimensions().forEach(source => {
-                if (unverifiedBuckets) {
-                  fragments.push({ source, datum, vector: `u` });
-                }
-                fragments.push({ source, datum, vector: `v` });
-              });
-              let currentHeight = 0;
-              return fragments.map(({ source, datum, vector }) => {
-                const height = datum[source][vector];
-                const y0 = overlayed ? 0 : currentHeight;
-                const y1 = overlayed ? height : currentHeight += height;
-                return { source, datum, vector, y0, y1 };
-              });
-            }
-
-            function computeTotals (vector) {
-              datum.total[vector] = getEnabledDimensions()
-                .filter(source => source !== `unverified`)
-                .reduce((total, source) => total + datum[source][vector], 0);
-            }
-          });
+        const yMax = d3.max(data, datum => {
+          if (!overlayed) {
+            const { total } = datum;
+            const { u, v } = total;
+            return u + v;
+          }
+          const dimensions = getEnabledDimensions().map(source => datum[source]);
+          const sumAll = ({ u, v }) => u + v;
+          return d3.max(dimensions, sumAll);
+        });
 
         x.domain(data.map(datum => datum.dateText));
-        y.domain([0, d3.max(data, ({ total }) => total.u + total.v)]);
+        y.domain([0, yMax]);
+
+        function massageDatum (datum, i) {
+          const computeUnverified = dimensions.unverified.enabled;
+
+          if (!computeUnverified) {
+            datum.unverified.v = 0;
+          } else if (!unverifiedBuckets) {
+            getDisabledDimensions().forEach(source => datum.unverified.v -= datum[source].u);
+          }
+
+          datum.fragments = computeFragments();
+          datum.total = {};
+          computeTotals(`v`);
+          computeTotals(`u`);
+
+          function computeFragments () {
+            const fragments = [];
+            if (!(wowMode || i === 0)) {
+              getEnabledDimensions()
+                .filter(notUnverifiedBucket)
+                .forEach(splashFragments);
+            }
+
+            datum.date = new Date(datum.date);
+            getEnabledDimensions()
+              .filter(source => source !== `unverified`)
+              .forEach(pushFragments);
+
+            let currentHeight = 0;
+            return fragments.map(fragmentToDataPoint);
+
+            function splashFragments (source) {
+              const { v, u } = data[i - 1][source];
+              const d = datum[source];
+              d.v += v;
+              if (computeUnverified) {
+                d.u += u;
+              } else {
+                d.u = 0;
+              }
+            }
+
+            function pushFragments (source) {
+              if (unverifiedBuckets) {
+                fragments.push({ source, datum, vector: `u` });
+              }
+              fragments.push({ source, datum, vector: `v` });
+            }
+
+            function fragmentToDataPoint ({ source, datum, vector }) {
+              const height = datum[source][vector];
+              const y0 = overlayed ? 0 : currentHeight;
+              const y1 = overlayed ? height : currentHeight += height;
+              return { source, datum, vector, y0, y1 };
+            }
+          }
+
+          function computeTotals (vector) {
+            datum.total[vector] = getEnabledDimensions()
+              .filter(source => source !== `unverified`)
+              .reduce((total, source) => total + datum[source][vector], 0);
+          }
+        }
       }
 
       function getSourceDimensions () {
-        return Object.keys(dimensions).filter(notUnverifiedBucket);
+        return Object.keys(dimensions);
       }
 
       function getEnabledDimensions () {
