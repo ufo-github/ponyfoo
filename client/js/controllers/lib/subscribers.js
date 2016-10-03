@@ -145,7 +145,6 @@ module.exports = function (viewModel, container) {
 
             datum.date = new Date(datum.date);
             getEnabledDimensions()
-              .filter(source => source !== `unverified`)
               .forEach(pushFragments);
 
             let currentHeight = 0;
@@ -186,7 +185,7 @@ module.exports = function (viewModel, container) {
       }
 
       function getSourceDimensions () {
-        return Object.keys(dimensions);
+        return Object.keys(dimensions).filter(notUnverifiedBucket);
       }
 
       function getEnabledDimensions () {
@@ -317,7 +316,7 @@ module.exports = function (viewModel, container) {
             { source, vectors: `u`, label: false },
             { source, vectors: `vu`, label: false },
             { source, vectors: `v`, total: true },
-            { source, vectors: `u`, label: false, total: true },
+            { source, vectors: `u`, label: source === `unverified`, total: true },
             { source, vectors: `vu`, label: false, total: true },
           ]
             .filter(isRelevantStat)
@@ -330,8 +329,11 @@ module.exports = function (viewModel, container) {
 </div>`;
 
           function isRelevantStat ({ source, vectors, total }) {
-            if (source === `unverified` && !total) {
-              return false;
+            if (source === `unverified`) {
+              if (!total) {
+                return false;
+              }
+              return vectors === `u`;
             }
             if (!dimensions.unverified.enabled) {
               return vectors.indexOf(`u`) === -1;
