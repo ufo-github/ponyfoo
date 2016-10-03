@@ -63,20 +63,14 @@
 
     &:first-child
       margin-top -10px
-
     &:last-child
       margin-bottom -10px
 
   blockquote
-    background-color rgba(c-blue, 0.05)
-    max-width inherit !important
-    margin 0 -10px
-
-    &:first-child
-      margin-top -10px
-
-    &:last-child
-      margin-bottom -10px
+    background linear-gradient(to left, rgba(c-light-orange, 0.3) 0%, rgba(lighten(c-orange, 60%), 0.3) 100%)
+    border-color c-orange
+    &:before
+      color c-orange
 
 .mm-thread
   margin-top 40px
