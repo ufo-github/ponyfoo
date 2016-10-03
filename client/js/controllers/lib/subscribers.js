@@ -55,7 +55,8 @@ module.exports = function (viewModel, container) {
       const parent = $.findOne(`.sg-container`, container);
       const showSubscribers = $(`#sg-show-subscribers`, container).value();
       const showPageViews = $(`#sg-show-pageviews`, container).value();
-      const discriminated = $(`#sg-discriminate-subscribers`, container).value();
+      const unverifiedBuckets = $(`#sg-bucket-subscribers`, container).value();
+      const overlayed = $(`#sg-overlay-subscribers`, container).value();
       const pageviewDaysValue = $(`.sg-pageview-daypicker`).value();
       const pageviewDays = pageviewDaysValue && pageviewDaysValue.split(`,`).map(v => parseInt(v, 10));
       const wowMode = $(`#sg-wow-mode`, container).value();
@@ -109,7 +110,7 @@ module.exports = function (viewModel, container) {
 
             if (!computeUnverified) {
               datum.unverified.v = 0;
-            } else if (!discriminated) {
+            } else if (!unverifiedBuckets) {
               getDisabledDimensions().forEach(source => datum.unverified.v -= datum[source].u);
             }
 
@@ -121,27 +122,30 @@ module.exports = function (viewModel, container) {
             function computeFragments () {
               const fragments = [];
               if (!(wowMode || i === 0)) {
-                const sources = getEnabledDimensions().filter(notDiscriminateUnverified);
+                const sources = getEnabledDimensions().filter(notUnverifiedBucket);
                 sources.forEach(source => {
-                  datum[source].v += data[i - 1][source].v;
+                  const { v, u } = data[i - 1][source];
+                  const d = datum[source];
+                  d.v += v;
                   if (computeUnverified) {
-                    datum[source].u += data[i - 1][source].u;
+                    d.u += u;
                   } else {
-                    datum[source].u = 0;
+                    d.u = 0;
                   }
                 });
               }
               datum.date = new Date(datum.date);
               getEnabledDimensions().forEach(source => {
-                if (discriminated) {
+                if (unverifiedBuckets) {
                   fragments.push({ source, datum, vector: `u` });
                 }
                 fragments.push({ source, datum, vector: `v` });
               });
               let currentHeight = 0;
               return fragments.map(({ source, datum, vector }) => {
-                const y0 = currentHeight;
-                const y1 = currentHeight += datum[source][vector];
+                const height = datum[source][vector];
+                const y0 = overlayed ? 0 : currentHeight;
+                const y1 = overlayed ? height : currentHeight += height;
                 return { source, datum, vector, y0, y1 };
               });
             }
@@ -158,7 +162,7 @@ module.exports = function (viewModel, container) {
       }
 
       function getSourceDimensions () {
-        return Object.keys(dimensions).filter(notDiscriminateUnverified);
+        return Object.keys(dimensions).filter(notUnverifiedBucket);
       }
 
       function getEnabledDimensions () {
@@ -169,8 +173,8 @@ module.exports = function (viewModel, container) {
         return getSourceDimensions().filter(source => !dimensions[source].enabled);
       }
 
-      function notDiscriminateUnverified (source) {
-        return !discriminated || source !== `unverified`;
+      function notUnverifiedBucket (source) {
+        return !unverifiedBuckets || source !== `unverified`;
       }
 
       function addTimeAxis () {
@@ -206,7 +210,7 @@ module.exports = function (viewModel, container) {
           const date = svg.selectAll(`.date`)
             .data(data)
             .enter().append(`g`)
-            .attr(`class`, `sg-g`)
+            .attr(`class`, `sg-g${ overlayed ? ` sg-overlay-subscribers` : `` }`)
             .attr(`transform`, datum => `translate(${ x(datum.dateText) },0)`);
 
           date.selectAll(`.sg-bar`)
@@ -288,9 +292,9 @@ module.exports = function (viewModel, container) {
             { source, vectors: `v` },
             { source, vectors: `u`, label: false },
             { source, vectors: `vu`, label: false },
-            { source: `total`, vectors: `v` },
-            { source: `total`, vectors: `u`, label: false },
-            { source: `total`, vectors: `vu`, label: false }
+            { source, vectors: `v`, total: true },
+            { source, vectors: `u`, label: false, total: true },
+            { source, vectors: `vu`, label: false, total: true },
           ]
             .filter(isRelevantStat)
             .map(renderStat);
@@ -301,28 +305,38 @@ module.exports = function (viewModel, container) {
   ${ stats.join(``) }
 </div>`;
 
-          function isRelevantStat (stat) {
-            if (stat.source === `unverified`) {
+          function isRelevantStat ({ source, vectors, total }) {
+            if (source === `unverified` && !total) {
               return false;
             }
             if (!dimensions.unverified.enabled) {
-              return stat.vectors.indexOf(`u`) === -1;
+              return vectors.indexOf(`u`) === -1;
             }
             return true;
           }
 
-          function renderStat ({ source, vectors, label = true }) {
-            const prev = oldIndex < 0 ? 0 : vectorSum(data[oldIndex][source], vectors);
-            const value = vectorSum(datum[source], vectors);
+          function renderStat ({ source, vectors, label = true, total }) {
+            const unverifiedTotal = source === `unverified` && total;
+            const type = total ? `total` : source;
+            const prev = oldIndex < 0 ? 0 : vectorSum(data[oldIndex][type], vectors);
+            const value = vectorSum(datum[type], vectors);
             const diff = diffText(prev, value);
+            const labelText = label ? getLabelText(type, unverifiedTotal) : ``;
             return `
   <div class='sg-tip-row'>
-    <span class='sg-tip-label'>${ label ? legends[source] || source : `` }</span>
+    <span class='sg-tip-label'>${ labelText }</span>
     <span class='sg-tip-vector sg-tip-vector-${ vectors }'></span>
     <span class='sg-tip-numbers'>${ value } ${ diff }</span>
   </div>`;
           }
         }
+      }
+
+      function getLabelText (type, unverifiedTotal) {
+        if (unverifiedTotal) {
+          return `Unverified`;
+        }
+        return legends[type] || type || ``;
       }
 
       function addPageViews (x1, x2) {
