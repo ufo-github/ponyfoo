@@ -5,18 +5,27 @@
 .mde-text-right
   text-align right
 
+.mde-size-small
+  font-size 12px
+  &,
+  p
+    line-height 12px
+.mde-size-large
+  font-size 36px
+  &,
+  p
+    line-height 36px
+.mde-size-giant
+  font-size 72px
+  &,
+  p
+    line-height 72px
+
 .mde-clearfix
   clearfix()
 
 .mde-quote
-  font-family f-georgia
-  font-size 36px
-  padding 15px
-  &:before
-    md-quote-styles()
-    content '\201d'
-    float right
-    height 65px
+  md-quote-styles()
 
 .mde-core
   font-family f-core

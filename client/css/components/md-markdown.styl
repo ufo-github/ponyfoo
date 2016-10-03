@@ -1,8 +1,23 @@
+md-quote-s = 20px
+md-quote-l = 60px
+
 md-quote-styles()
-  font-family f-georgia
-  color c-dark-turquoise
-  font-size 65px
-  font-weight 700
+  position relative
+  margin 0
+  padding md-quote-s md-quote-l md-quote-s md-quote-s
+  border-top 3px double c-dark-turquoise-015
+  border-bottom 3px double c-dark-turquoise-015
+  &:before
+    font-family f-georgia
+    color c-dark-turquoise-015
+    font-size 65px
+    font-weight 700
+    content '\201d'
+    position absolute
+    top 20px
+    right 8px
+    margin-right 2px
+    line-height 40px
 
 .md-markdown
   p,
@@ -13,23 +28,8 @@ md-quote-styles()
   code
     max-width 800px
 
-  md-quote-s = 12px
-  md-quote-l = 52px
-
   blockquote
-    position relative
-    margin 0
-    padding md-quote-s md-quote-l md-quote-s md-quote-s
-    background-color rgba(c-light, 0.55)
-
-    &:before
-      md-quote-styles()
-      content '\201d'
-      position absolute
-      top 20px
-      right 8px
-      margin-right 2px
-      line-height 40px
+    md-quote-styles()
 
     h1,
     h2,
