@@ -20,7 +20,8 @@ const sitemapService = require(`./services/sitemap`);
 const shouldRebuild = !env(`APP_REBUILD`);
 const port = env(`PORT`);
 
-require(`./services/fullFeed`); // listens for events and auto-rebuilds.
+require(`./services/fullFeed`); // listens for events and auto-rebuilds
+require(`./services/tweetToUnlock`).setup(); // listens for events and tweets
 
 function listen () {
   const app = express();

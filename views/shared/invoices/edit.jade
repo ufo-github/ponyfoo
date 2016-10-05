@@ -45,8 +45,7 @@ article.ly-section.vw-maintainer
       footer.ive-footer.ive-actions
         a.ive-cancel.lk-link(href='/invoices', aria-label='Back to list of invoices') Cancel
         span(aria-label='Save this invoice')
-          button.bt-button.bt-pink.ive-save(type='submit')
-            span.bt-text=editing ? 'Save' : 'Create'
+          button.bt-button.bt-pink.ive-save(type='submit')=editing ? 'Save' : 'Create'
 
   section.ive-container
     include invoice

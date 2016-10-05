@@ -1,6 +1,6 @@
 'use strict';
 
-const version = `v38::`;
+const version = `v41::`;
 const swivel = require(`swivel`);
 const parse = require(`omnibox/querystring`).parse;
 const env = require(`../../lib/env`);
@@ -16,14 +16,15 @@ const offlineFundamentals = [
   rainbows
 ];
 const ignoreprefixes = [
+  `account`,
   `api`,
   `bf`,
   `s`
 ];
 const fetchfirstprefixes = [
+  `books`,
   `owner`,
   `invoices`,
-  `account`,
   `users`,
   `subscribe`,
   `subscribed`,

@@ -5,6 +5,7 @@ const glob = require(`glob`);
 const chokidar = require(`chokidar`);
 const cheerio = require(`cheerio`);
 const winston = require(`winston`);
+const beautifyText = require(`beautify-text`);
 const path = require(`path`);
 const fs = require(`fs`);
 const env = require(`../lib/env`);
@@ -96,9 +97,12 @@ function read ({ bookSlug, sectionId, isChapter, isToc }, done) {
     fixImageLinks($, bookSlug);
     fixAsides($);
     fixFootnotes($);
-    const body = $(`body`).html();
+    fixCodeBlocks($);
+    fixText($);
+    const body = $(`body`).html().trim();
     const deferred = htmlService.deferImages(body);
-    sectionCache.set(sectionId, deferred);
+    const minified = htmlService.minify(deferred);
+    sectionCache.set(sectionId, minified);
     done(null, sectionCache.get(sectionId));
   }
 }
@@ -280,8 +284,6 @@ function fixImageLinks ($, bookSlug) {
 }
 
 function fixAsides ($) {
-  $(`[data-highlighted]`).addClass(`ocha-highlighted`);
-
   $(`[data-type='sidebar']`).each((i, el) => {
     const even = (i + 1) % 2 === 0;
     const evenClass = even ? `even` : `odd`;
@@ -338,6 +340,23 @@ function fixFootnotes ($) {
       $el.parent().append(footnote);
       $el.remove();
     });
+}
+
+function fixText ($) {
+  const rbeautiable = /\S/;
+  $(`body`)
+    .find(`:not(iframe,pre,code,:empty)`)
+    .contents()
+    .filter((i, el) => el.nodeType === 3 && rbeautiable.test(el.nodeValue))
+    .each((i, el) => {
+      el.nodeValue = beautifyText(el.nodeValue);
+    });
+}
+
+function fixCodeBlocks ($) {
+  $(`[data-highlighted]`).addClass(`ocha-highlighted`);
+  $(`[data-type="programlisting"]`).addClass(`ocha-code-block md-code-block`);
+  $(`code`).not(`pre code`).addClass(`md-code md-code-inline`);
 }
 
 module.exports = {

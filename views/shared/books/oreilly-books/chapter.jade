@@ -25,15 +25,35 @@ article.de-host
 
       section#read
         h3.ocha-id Chapter #{chapterId}
-        div.ocha-contents.md-markdown!=chapter.html
 
-      footer.ocha-actions
-        +pager
+        if !unlocked
+          div.ocha-unlock-wrapper
+            a.ocha-unlock.bt-button.bt-teal(href='/books/#{slug}/unlock?chapter=#{chapterId}', data-taunus-ignore)
+              span.fa.fa-twitter
+              span=' '
+              span Unlock
+              span.ocha-unlock-longer=' with a Single Tweet'
+              span !
+
+            div
+              sub
+                em
+                  span='Grants you full online access to '
+                  strong #{data.title}
+                  span !
+
+        if unlocked
+          div.ocha-contents.md-markdown!=chapter.html
+
+      if unlocked
+        footer.ocha-actions
+          +pager
 
     div.tk-presentations-link
-      a.tk-presentations-anchor(href='/books/#{slug}/chapters') Back to Table of Contents
+      a.tk-presentations-anchor(href='/books/#{slug}/chapters#toc') Back to Table of Contents
 
   include ../../partials/aside
 
-div.sp-line-wrapper.uv-hidden
-  div.sp-line
+if unlocked
+  div.sp-line-wrapper.uv-hidden
+    div.sp-line

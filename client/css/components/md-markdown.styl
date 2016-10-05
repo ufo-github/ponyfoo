@@ -114,8 +114,12 @@ md-quote-styles()
 
 .md-code-block,
 .ocha-highlighted
-  padding 10px 40px
   margin 0 -20px
+
+.md-code-block
+  padding 10px 40px
+.ocha-code-block
+  padding 18px 50px // base plus <code> padding, because of highlighting differences
 
 .md-markdown:not(.mm-content-html) .md-code-block + blockquote
   max-width inherit !important

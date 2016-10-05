@@ -13,13 +13,13 @@ article.de-host
       div.bok-read-tease
         h3
           span='This book is '
-          a.lk-rainbows.c-oreilly-teal(href='/books/#{slug}/chapters', aria-label='Read the HTML version online for free!') completely free to read online!
+          a.lk-rainbows.c-oreilly-teal(href='/books/#{slug}/chapters#toc', aria-label='Read the HTML version online for free!') completely free to read online!
 
-    div.md-markdown
-      | !{data.linksHtml}
-      | !{home}
+      div.md-markdown!=data.linksHtml
+
+    div.md-markdown!=home
 
     footer.tk-presentations-link
-      a.tk-presentations-anchor(href='/books/#{slug}/chapters', aria-label='Read the HTML version online for free!') Check out the Table of Contents!
+      a.tk-presentations-anchor(href='/books/#{slug}/chapters#toc', aria-label='Read the HTML version online for free!') Check out the Table of Contents!
 
   include ../../partials/aside

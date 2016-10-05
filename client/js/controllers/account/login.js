@@ -4,7 +4,7 @@ const $ = require(`dominus`);
 
 module.exports = function (viewModel, container) {
   const registerCheck = $(`.al-register`, container);
-  const submitText = $(`.al-submit-text`, container);
+  const submitText = $(`.al-submit`, container);
 
   registerCheck.on(`change`, registerChanged);
   registerChanged();

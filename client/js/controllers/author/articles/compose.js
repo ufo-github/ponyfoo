@@ -218,7 +218,7 @@ function initialize (viewModel, container, route) {
     serializeSlowly();
 
     if (published) {
-      saveButton.find(`.bt-text`).text(`Save Changes`);
+      saveButton.text(`Save Changes`);
       saveButton.parent().attr(`aria-label`, `Make your modifications immediately accessible!`);
       discardButton.text(`Delete Article`);
       discardButton.attr(`aria-label`, `Permanently delete this article`);
@@ -226,18 +226,18 @@ function initialize (viewModel, container, route) {
     }
     const state = getCurrentState();
     if (state === `draft`) {
-      saveButton.find(`.bt-text`).text(`Save Draft`);
+      saveButton.text(`Save Draft`);
       saveButton.parent().attr(`aria-label`, `You can access your drafts at any time`);
       return;
     }
     const scheduled = schedule.value();
     if (scheduled) {
-      saveButton.find(`.bt-text`).text(`Schedule`);
+      saveButton.text(`Schedule`);
       saveButton.parent().attr(`aria-label`, `Schedule this article for publication`);
       return;
     }
     if (state === `publish`) {
-      saveButton.find(`.bt-text`).text(`Publish`);
+      saveButton.text(`Publish`);
       saveButton.parent().attr(`aria-label`, `Make the content immediately accessible!`);
     }
   }

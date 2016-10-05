@@ -1,5 +1,6 @@
 'use strict';
 
+const sluggish = require(`sluggish`);
 const env = require(`../../lib/env`);
 const data = require(`../../lib/authentication/data`);
 const inliningService = require(`../../services/inlining`);
@@ -12,7 +13,8 @@ function enabled (key) {
 
 function toProviderModel (key) {
   const { name, link, css } = data.providers[key];
-  return { name, link, css };
+  const slug = sluggish(key);
+  return { name, link, css, slug };
 }
 
 module.exports = function (req, res, next) {

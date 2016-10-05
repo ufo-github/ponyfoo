@@ -1,5 +1,6 @@
 'use strict';
 
+const omit = require(`lodash/omit`);
 const contra = require(`contra`);
 const assign = require(`assignment`);
 const atlasService = require(`../../../services/atlas`);
@@ -12,7 +13,6 @@ module.exports = function (req, res, next) {
   if (Number.isNaN(chapterId)) {
     next(`route`); return;
   }
-
   const options = { bookSlug, chapterId };
 
   contra.concurrent({
@@ -35,11 +35,14 @@ module.exports = function (req, res, next) {
       canonical: `/chapters/${chapterId}`,
       section: chapter.title
     });
+    const unlocked = req.userObject && req.userObject.unlockCodes.indexOf(`/books/${bookSlug}`) !== -1;
+    const chapterFields = unlocked ? chapter : omit(chapter, `html`);
     res.viewModel = {
       model: assign(base, {
         firstChapter,
         chapterId,
-        chapter,
+        chapter: chapterFields,
+        unlocked,
         links
       })
     };

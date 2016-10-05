@@ -1,7 +1,7 @@
 bt-button()
   cursor pointer
   position relative
-  padding 0
+  padding 0 20px
   margin 0
   border none
   background-color transparent
@@ -11,25 +11,21 @@ bt-button()
     col-outline(c-black-text)
 
 bt-text()
-  display block
+  display inline-block
   text-align center
   line-height 48px
   font-size 24px
-  padding 0 20px
   color c-white
 
 bt-color(c-color)
+  background-color c-color
   &:active
     outline-color c-color
-  .bt-text
-    background-color c-color
-  &:hover .bt-text
+  &:hover
     background-color lighten(c-color, 10%)
 
 .bt-button
   bt-button()
-
-.bt-text
   bt-text()
 
 .bt-purple
@@ -38,3 +34,5 @@ bt-color(c-color)
   bt-color(c-pink)
 .bt-red
   bt-color(c-red)
+.bt-teal
+  bt-color(c-oreilly-teal)

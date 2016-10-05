@@ -4,7 +4,7 @@ const $ = require(`dominus`);
 
 module.exports = function (viewModel, container) {
   const toc = $(`.otoc-container`, container);
-  const sections = $(`ol ol`, toc);
+  const sections = $(`ol ol`, toc).filter(ol => $(ol).children().length);
 
   $(`<a>`)
     .addClass(`lk-icon fa fa-plus otoc-toggle`)

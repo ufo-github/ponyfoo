@@ -70,6 +70,7 @@ const secretWeeklies = require(`./api/secret/weeklies`);
 const secretRemodel = require(`./api/secret/remodel`);
 const secretTwitterLeads = require(`./api/secret/twitter-leads`);
 const oreillyBookPingback = require(`./api/oreilly-books/pingback`);
+const unlockBookChapters = require(`./api/oreilly-books/unlock`);
 const apiErrorNotFound = require(`./api/error/notFound`);
 const lastSentEmail = require(`./development/lastSentEmail`);
 const mediaKit = require(`./development/pdf/mediakit`);
@@ -183,6 +184,8 @@ module.exports = function (app) {
   app.all(`/api/*`, apiErrorNotFound);
 
   app.get(`/account/verify-email/:token([a-f0-9]{24})`, verifyAccountEmail);
+
+  app.get(`/books/:slug(practical-es6)/unlock`, unlockBookChapters);
 
   if (!production) {
     app.get(`/dev/mediakit`, mediaKit);

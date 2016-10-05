@@ -17,7 +17,6 @@ module.exports = function (viewModel, $container) {
   const $website = $(`.mc-website`, $container);
   const $content = $(`.mc-content`, $container);
   const $send = $(`.mc-send`, $container);
-  const $sendText = $(`.bt-text`, $send);
   const $comments = $(`.mm-comments`, $container);
   const $cancelReply = $(`.mc-cancel-reply`, $container);
   const $footer = $(`.mm-footer`, $container);
@@ -60,7 +59,7 @@ module.exports = function (viewModel, $container) {
     const $replies = $(`.mm-thread-reply`).but($reply);
     $replies.removeClass(`uv-hidden`);
     $reply.addClass(`uv-hidden`).parent().before($composer);
-    $sendText.text(`Add Reply`);
+    $send.text(`Add Reply`);
     $cancelReply.removeClass(`uv-hidden`);
     $composer.find(`.vw-conventional`).remove();
   }
@@ -70,7 +69,7 @@ module.exports = function (viewModel, $container) {
     $footer.append($composer);
     $replies.removeClass(`uv-hidden`);
     $cancelReply.addClass(`uv-hidden`);
-    $sendText.text(`Add Comment`);
+    $send.text(`Add Comment`);
     $composer.find(`.vw-conventional`).remove();
   }
 

@@ -13,6 +13,9 @@ const schema = new mongoose.Schema({
   slug: String,
   displayName: String,
   facebookId: String,
+  twitterId: String,
+  twitterToken: String,
+  twitterTokenSecret: String,
   githubId: String,
   googleId: String,
   linkedinId: String,
@@ -22,6 +25,7 @@ const schema = new mongoose.Schema({
   twitter: String,
   website: String,
   avatar: String,
+  unlockCodes: [String],
   roles: [String] // ['owner', 'editor', 'articles', 'weeklies', 'moderator']
 }, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
 

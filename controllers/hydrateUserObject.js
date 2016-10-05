@@ -7,7 +7,7 @@ module.exports = function hydrateUserObject (req, res, next) {
   if (!req.user) {
     next(); return;
   }
-  const userFields = `roles displayName slug email avatar`;
+  const userFields = `roles displayName slug email avatar unlockCodes`;
   User
     .findOne({ _id: req.user })
     .select(`${ userFields } impersonated`)
@@ -37,7 +37,8 @@ module.exports = function hydrateUserObject (req, res, next) {
       slug: user.slug,
       roles: user.roles,
       displayName: user.displayName,
-      avatar: userService.getAvatar(user)
+      avatar: userService.getAvatar(user),
+      unlockCodes: user.unlockCodes
     };
     next(null);
   }

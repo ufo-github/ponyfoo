@@ -113,7 +113,7 @@ function ready (viewModel, container, route) {
 
   function updatePublication () {
     if (released) {
-      saveButton.find(`.bt-text`).text(`Save Changes`);
+      saveButton.text(`Save Changes`);
       saveButton.parent().attr(`aria-label`, `Make your modifications immediately accessible!`);
       discardButton.text(`Delete Issue`);
       discardButton.attr(`aria-label`, `Permanently delete this weekly issue`);
@@ -121,12 +121,12 @@ function ready (viewModel, container, route) {
     }
     const state = status.where(`:checked`).text();
     if (state === `draft`) {
-      saveButton.find(`.bt-text`).text(`Save Draft`);
+      saveButton.text(`Save Draft`);
       saveButton.parent().attr(`aria-label`, `You can access your drafts at any time`);
       return;
     }
     if (state === `ready`) {
-      saveButton.find(`.bt-text`).text(`Save & Mark Ready`);
+      saveButton.text(`Save & Mark Ready`);
       saveButton.parent().attr(`aria-label`, `Schedule this weekly issue for publication next thursday!`);
     }
   }

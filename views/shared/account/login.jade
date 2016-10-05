@@ -6,9 +6,15 @@ article.ly-section.al-container.de-host
       if providers.length
         section.al-providers
           each p in providers
-            a.lk-link.al-provider(href=p.link, aria-label='Authenticate with ' + p.name)
-              span(class=p.css || '')
-              span=(p.css ? ' ' : '') + 'Authenticate with ' + p.name
+            a(
+              href=p.link,
+              aria-label='Authenticate with ' + p.name,
+              class='bt-button al-provider al-provider-#{p.slug}'
+            )
+              if p.css
+                span(class=p.css)
+              else
+                span=p.name
 
         p.al-separator
          span='- or the '
@@ -31,7 +37,6 @@ article.ly-section.al-container.de-host
 
         p
           span.de-button
-            button.bt-button.bt-pink(type='submit')
-              span.bt-text.al-submit-text Login
+            button.bt-button.bt-pink.al-submit(type='submit') Login
 
   include ../partials/aside
