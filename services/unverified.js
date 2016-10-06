@@ -71,5 +71,5 @@ function register (input, done) {
 }
 
 module.exports = {
-  register: register
+  register
 };

@@ -14,6 +14,7 @@ function getBaseModel ({ meta, bookSlug, canonical, section }) {
     meta: {
       canonical: `/books/${bookSlug}${canonical}`,
       images: [
+        authority + staticService.unroll(`/img/mjavascript/cover-with-text.png`),
         authority + meta.coverHref,
         authority + staticService.unroll(`/img/banners/branded.png`)
       ],

@@ -19,11 +19,13 @@ ocha-supplement(c-color)
 .ocha-actions
   margin-top 60px
   padding 10px
-  background linear-gradient(to bottom, c-yellow-highlight-01 66%, c-transparent 100%)
+  background rgba(c-oreilly-teal, 0.05)
   f-use-subheading()
 
   .an-siblings
     padding 0
+  .an-anchor
+    margin-bottom 0
 
 .ocha-highlighted
   pygments()
@@ -94,11 +96,32 @@ ocha-supplement(c-color)
 .ocha-container .ocha-contents .ocha-footnote-ref // purposeful specificity
   border-bottom 1px dotted
 
+.ocha-read
+  position relative
+
+.ocha-contents-locked
+  pointer-events none
+  overflow hidden
+  height 500px
+
 .ocha-unlock-wrapper
-  padding 200px 0
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
   text-align center
-.ocha-unlock
+  background linear-gradient(to bottom, rgba(c-white, 0.5) 0, c-white 100%)
+.ocha-unlock-container
   display inline-block
+  margin-top 200px
+  padding 40px
+  background-color rgba(c-yellow-highlight, 0.2)
+  box-shadow 0 0 20px rgba(c-yellow-highlight, 0.5)
+.ocha-unlock
+  display block
+.ocha-unlock-note
+  background-color c-yellow-highlight
 .ocha-unlock-longer
   display none
 

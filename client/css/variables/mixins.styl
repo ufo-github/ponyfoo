@@ -16,7 +16,20 @@ rainbow-pseudo()
     transition all 0.1s ease-in-out
     animation bg-rainbow 0.5s infinite
 
-rainbow-goes-after()
+rainbow-goes-before(c-included = true)
+  position relative
+
+  &:before
+    position absolute
+    left 0
+    right 0
+    top 0
+    height 4px
+    content ''
+    if c-included
+      rainbow()
+
+rainbow-goes-after(c-included = true)
   position relative
 
   &:after
@@ -26,7 +39,8 @@ rainbow-goes-after()
     bottom 0
     height 4px
     content ''
-    rainbow()
+    if c-included
+      rainbow()
 
 font-awesome()
   display inline-block

@@ -143,7 +143,17 @@ function getChapter ({ bookSlug, chapterId }, done) {
   contra.concurrent({
     html: next => getChapterHtml({ bookSlug, chapterId }, next),
     title: next => getChapterTitle({ bookSlug, chapterId }, next)
-  }, done);
+  }, got);
+  function got (err, result) {
+    if (err) {
+      done(err); return;
+    }
+    const $ = cheerio.load(result.html);
+    $(`[data-type='sect1']`).slice(1).remove();
+    $(`[data-type='sect2']`).slice(2).remove();
+    result.teaserHtml = $.html();
+    done(null, result);
+  }
 }
 
 function getChapterLinks ({ bookSlug, chapterId }, done) {

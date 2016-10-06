@@ -26,7 +26,9 @@ module.exports = function (viewModel, container) {
       landed: { enabled: true },
       twitter: { enabled: true },
       weekly: { enabled: true },
-      bubble: { enabled: true }
+      bubble: { enabled: true },
+      registration: { enabled: true },
+      promo: { enabled: true }
     };
     const legends = {
       landed: `landing`,

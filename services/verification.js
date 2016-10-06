@@ -5,6 +5,7 @@ const moment = require(`moment`);
 const mongoose = require(`mongoose`);
 const emailService = require(`./email`);
 const userService = require(`./user`);
+const subscriberUserService = require(`./subscriberUser`);
 const env = require(`../lib/env`);
 const UnverifiedUser = require(`../models/UnverifiedUser`);
 const UserVerificationToken = require(`../models/UserVerificationToken`);
@@ -118,14 +119,15 @@ function verifyToken (tokenId, done) {
       userService.createUsingEncryptedPassword(unverified.email, unverified.password, next);
     },
     function created (user, next) {
+      subscriberUserService.add({ user });
       next(null, {
         status: `success`,
         message: `Thanks for validating your email address!`,
-        user: user
+        user
       });
     }
   ], function respond (err, user) {
-    if(err === result) {
+    if (err === result) {
       return done(null, result);
     }
     done(err, user);
@@ -140,7 +142,4 @@ function verifyToken (tokenId, done) {
   }
 }
 
-module.exports = {
-  emitToken: emitToken,
-  verifyToken: verifyToken
-};
+module.exports = { emitToken, verifyToken };

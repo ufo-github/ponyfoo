@@ -26,7 +26,7 @@ function add (model, done) {
   addTopics(model, undefined, done);
 }
 
-function addTopics (model, topics, done) {
+function addTopics (model, topics, done = noop) {
   const valid = validateTopics(topics || allTopics.slice());
   contra.waterfall([
     function findExisting (next) {
@@ -82,7 +82,7 @@ function addTopics (model, topics, done) {
         }
       }
     }
-  ], done || noop);
+  ], done);
 }
 
 function invitationConfirmation (subscriber, topics, done) {

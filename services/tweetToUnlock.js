@@ -1,17 +1,25 @@
 'use strict';
 
+const fs = require(`fs`);
+const contra = require(`contra`);
+const assign = require(`assignment`);
 const Twit = require(`twit`);
 const winston = require(`winston`);
 const unlockCodeService = require(`./unlockCode`);
 const env = require(`../lib/env`);
 const enabled = env(`USER_TWEETS`);
-const submit = enabled ? tweet : fake;
-const statuses = {
-  '/books/practical-es6': [
-    `a bcd`,
-    `e fgh`,
-    `i jkl`
-  ].join(`\n`)
+const submit = enabled ? postTweet : logTweet;
+const tweets = {
+  '/books/practical-es6': {
+    media: `./client/img/mjavascript/cover-with-text.png`,
+    mediaAlt: `The Modular JavaScript book series glowing over the desktop of an eager learner.`,
+    status: [
+      `📢 Check out @mjavascript!`,
+      `📚 5 books on #ModularJavaScript`,
+      `👏 ES6, module thinking, modular design, testing, deploys`,
+      `💳 https://mjavascript.com`
+    ].join(`\n`)
+  }
 };
 
 function create ({ twitterToken, twitterTokenSecret }) {
@@ -23,14 +31,47 @@ function create ({ twitterToken, twitterTokenSecret }) {
   });
 }
 
-function tweet ({ status, twitterToken, twitterTokenSecret }) {
+function postTweet ({ tweet, twitterToken, twitterTokenSecret }) {
   const client = create({ twitterToken, twitterTokenSecret });
-  const payload = { status };
-  client.post(`statuses/update`, payload, log);
+
+  if (tweet.media) {
+    contra.waterfall([
+      readMedia,
+      uploadMedia,
+      postMetadata,
+      postStatus
+    ], log);
+    return;
+  }
+
+  postStatus({}, log);
+
+  function readMedia (next) {
+    fs.readFile(tweet.media, { encoding: `base64` }, next);
+  }
+
+  function uploadMedia (media_data, next) {
+    client.post(`media/upload`, { media_data }, next);
+  }
+
+  function postMetadata (data, response, next) {
+    const media_id = data.media_id_string;
+    const media_ids = [media_id];
+    const alt_text = { text: tweet.mediaAlt };
+    const meta = { media_id, alt_text };
+    const forwarder = err => next(err, { media_ids });
+    client.post(`media/metadata/create`, meta, forwarder);
+  }
+
+  function postStatus (options, next) {
+    const { status } = tweet;
+    const payload = assign({ status }, options);
+    client.post(`statuses/update`, payload, next);
+  }
 }
 
-function fake ({ status }) {
-  winston.info(`Tweet: ` + status);
+function logTweet ({ tweet }) {
+  winston.info(`Tweet: ` + tweet.status);
 }
 
 function log (err) {
@@ -45,9 +86,9 @@ function setup () {
 
 function added ({ user, code }) {
   const { twitterToken, twitterTokenSecret } = user;
-  const status = statuses[code];
-  if (status) {
-    submit({ status, twitterToken, twitterTokenSecret });
+  const tweet = tweets[code];
+  if (tweet) {
+    submit({ tweet, twitterToken, twitterTokenSecret });
   }
 }
 

@@ -62,7 +62,9 @@ function initBucket (seedSubscriber) {
     `comment`,
     `article`,
     `landed`,
-    `unverified`
+    `unverified`,
+    `registration`,
+    `promo`
   ];
   const bucket = {
     date: week.toDate(),

@@ -1,3 +1,10 @@
+mixin pager
+  section.an-siblings.uv-clearfix
+    if links.prev
+      a.lk-link.lk-teal.an-anchor.an-prev(href=links.prev.href + '#read', rel='prev', aria-label='Go to the previous chapter') « #{links.prev.title}
+    if links.next
+      a.lk-link.lk-teal.an-anchor.an-next(href=links.next.href + '#read', rel='next', aria-label='Go to the next chapter') #{links.next.title} »
+
 include partials/header
 include partials/navigation
 
@@ -13,44 +20,37 @@ article.de-host
         | !{data.linksHtml}
 
     article.ocha-container
-      mixin pager
-        section.an-siblings.uv-clearfix
-          if links.prev
-            a.lk-rainbows.an-anchor.an-prev(href=links.prev.href + '#read', rel='prev', aria-label='Go to the previous chapter') « #{links.prev.title}
-          if links.next
-            a.lk-rainbows.an-anchor.an-next(href=links.next.href + '#read', rel='next', aria-label='Go to the next chapter') #{links.next.title} »
-
       header.ocha-actions
         +pager
 
-      section#read
+      section#read(class='ocha-read' + (unlocked ? '' : ' ocha-read-locked'))
         h3.ocha-id Chapter #{chapterId}
+        div(class='md-markdown ocha-contents' + (unlocked ? '' : ' ocha-contents-locked'))!=chapter.html
 
         if !unlocked
           div.ocha-unlock-wrapper
-            a.ocha-unlock.bt-button.bt-teal(href='/books/#{slug}/unlock?chapter=#{chapterId}', data-taunus-ignore)
-              span.fa.fa-twitter
-              span=' '
-              span Unlock
-              span.ocha-unlock-longer=' with a Single Tweet'
-              span !
+            div.ocha-unlock-container
+              a.ocha-unlock.bt-button.bt-teal(href='/books/#{slug}/unlock?chapter=#{chapterId}', data-taunus-ignore)
+                span.fa.fa-twitter
+                span=' '
+                span Unlock
+                span.ocha-unlock-longer=' with a Single Tweet'
+                span !
 
-            div
-              sub
-                em
-                  span='Grants you full online access to '
-                  strong #{data.title}
-                  span !
-
-        if unlocked
-          div.ocha-contents.md-markdown!=chapter.html
+              div.ocha-unlock-note
+                sub
+                  em
+                    span='Grants you full online access to '
+                    strong #{data.title}
+                    span !
 
       if unlocked
         footer.ocha-actions
           +pager
 
-    div.tk-presentations-link
-      a.tk-presentations-anchor(href='/books/#{slug}/chapters#toc') Back to Table of Contents
+    if unlocked
+      div.tk-presentations-link
+        a.tk-presentations-anchor(href='/books/#{slug}/chapters#toc') Back to Table of Contents
 
   include ../../partials/aside
 

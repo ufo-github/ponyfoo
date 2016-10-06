@@ -38,8 +38,8 @@ fi
 
 echo "deploy: getting vpc and subnet ids..."
 aws ec2 describe-subnets --filters Name=tag:Name,Values=subnet-$NAME > deploy/log/subnet.log
-VPC_ID=$(jq -r .Subnets[0].VpcId < deploy/log/subnet.log)
-SUBNET_ID=$(jq -r .Subnets[0].SubnetId < deploy/log/subnet.log)
+VPC_ID=$(jq -r '.Subnets[0].VpcId' < deploy/log/subnet.log)
+SUBNET_ID=$(jq -r '.Subnets[0].SubnetId' < deploy/log/subnet.log)
 
 # build images using packer
 if [ -z ${RAW_AMI+x} ]
@@ -165,7 +165,7 @@ else
 fi
 
 echo "deploy: querying security group about their id..."
-SG_ID=$(aws ec2 describe-security-groups --filters Name=tag:Name,Values=$SG_NAME | jq -r .SecurityGroups[0].GroupId)
+SG_ID=$(aws ec2 describe-security-groups --filters Name=tag:Name,Values=$SG_NAME | jq -r '.SecurityGroups[0].GroupId')
 
 echo "deploy: creating $LC_NAME using the latest image..."
 aws autoscaling create-launch-configuration \
@@ -292,7 +292,7 @@ if [ "$CLEANUP" != "no" ]
 then
   SNAPSHOT_ID=$(aws ec2 describe-images \
     --image-ids $CARNIVORE_AMI \
-    | jq -r .Images[0].BlockDeviceMappings[0].Ebs.SnapshotId)
+    | jq -r '.Images[0].BlockDeviceMappings[0].Ebs.SnapshotId')
 
   echo "deploy: deregistering deployment image $CARNIVORE_AMI"
   aws ec2 deregister-image --image-id "$CARNIVORE_AMI"

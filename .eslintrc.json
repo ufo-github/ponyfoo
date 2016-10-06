@@ -23,6 +23,7 @@
     "no-constant-condition": 0,
     "no-else-return": "error",
     "no-prototype-builtins": "error",
-    "no-unsafe-negation": "error"
+    "no-unsafe-negation": "error",
+    "no-shadow-restricted-names": "error"
   }
 }

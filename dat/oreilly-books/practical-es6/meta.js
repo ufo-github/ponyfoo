@@ -16,6 +16,6 @@ module.exports = {
   teaser: `A Practical Dive into ES6 and Maintainable JavaScript Modules \u2014 Modular JavaScript Book Series`,
   oneline: `Features and practical application of ES6 in your production applications.`,
   pages: `~200`,
-  coverHref: `/img/practical-es6.png`,
+  coverHref: `/img/mjavascript/practical-es6.png`,
   description
 };

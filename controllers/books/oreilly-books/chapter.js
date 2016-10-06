@@ -1,6 +1,5 @@
 'use strict';
 
-const omit = require(`lodash/omit`);
 const contra = require(`contra`);
 const assign = require(`assignment`);
 const atlasService = require(`../../../services/atlas`);
@@ -35,8 +34,11 @@ module.exports = function (req, res, next) {
       canonical: `/chapters/${chapterId}`,
       section: chapter.title
     });
-    const unlocked = req.userObject && req.userObject.unlockCodes.indexOf(`/books/${bookSlug}`) !== -1;
-    const chapterFields = unlocked ? chapter : omit(chapter, `html`);
+    const unlocked = isUnlocked({ user: req.userObject, bookSlug });
+    const chapterFields = {
+      title: chapter.title,
+      html: unlocked ? chapter.html : chapter.teaserHtml
+    };
     res.viewModel = {
       model: assign(base, {
         firstChapter,
@@ -49,3 +51,7 @@ module.exports = function (req, res, next) {
     next();
   }
 };
+
+function isUnlocked ({ user, bookSlug }) {
+  return user && user.unlockCodes.indexOf(`/books/${bookSlug}`) !== -1;
+}
