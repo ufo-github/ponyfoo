@@ -2,7 +2,7 @@
 
 const subscriberService = require(`./subscriber`);
 
-function autoAdd ({ user, codes = [] }, done) {
+function add ({ user, codes = [] }, done) {
   const source = getSource(codes);
 
   subscriberService.add({
@@ -22,5 +22,5 @@ function getSource (codes) {
 }
 
 module.exports = {
-  autoAdd
+  add
 };
