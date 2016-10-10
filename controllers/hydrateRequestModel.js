@@ -1,8 +1,13 @@
 'use strict';
 
 const contra = require(`contra`);
+const winston = require(`winston`);
 const useragent = require(`useragent`);
 const User = require(`../models/User`);
+const settingService = require(`../services/setting`);
+const markdownService = require(`../services/markdown`);
+const getSetting = settingService.tracker();
+let headerHtml = null;
 
 module.exports = function hydrateRequestModel (vm, meta, done) {
   const rnonalpha = /[^a-z]/ig;
@@ -12,18 +17,37 @@ module.exports = function hydrateRequestModel (vm, meta, done) {
   const ua = useragent.parse(header);
 
   vm.ua = ua.family.toLowerCase().replace(rnonalpha, ``);
+  vm.headerHtml = headerHtml;
 
-  if (!user) {
-    hydrate([`anon`]); return;
+  getSetting(`HEADER_MARKDOWN`, headerWatcher);
+
+  function headerWatcher (err, headerMarkdown, fresh) {
+    if (err) {
+      winston.warn(`Error while fetching HEADER_MARKDOWN`, err); return;
+    }
+    if (fresh) {
+      if (headerMarkdown) {
+        headerHtml = markdownService.compile(headerMarkdown);
+      } else {
+        headerHtml = null;
+      }
+    }
+    hydrateUser();
   }
 
-  const tasks = {
-    user: findUser(user)
-  };
-  if (userImpersonator) {
-    tasks.userImpersonator = findUser(userImpersonator);
+  function hydrateUser () {
+    if (!user) {
+      hydrateRoles([`anon`]); return;
+    }
+
+    const tasks = {
+      user: findUser(user)
+    };
+    if (userImpersonator) {
+      tasks.userImpersonator = findUser(userImpersonator);
+    }
+    contra.concurrent(tasks, found);
   }
-  contra.concurrent(tasks, found);
 
   function found (err, { user, userImpersonator } = {}) {
     if (err) {
@@ -35,10 +59,10 @@ module.exports = function hydrateRequestModel (vm, meta, done) {
     if (userImpersonator) {
       vm.model.userImpersonator = userImpersonator._id;
     }
-    hydrate(user.roles);
+    hydrateRoles(user.roles);
   }
 
-  function hydrate (roles) {
+  function hydrateRoles (roles) {
     vm.model.roles = roles.reduce(toRoleHash, {});
     done(null, vm);
   }

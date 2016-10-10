@@ -53,6 +53,6 @@ _**Purchase** the [Early Release][er] from O'Reilly! 📓_
 [license]: /license "Licensing Terms on Pony Foo"
 [announcement]: /s/modular-javascript-launch "Announcing Practical ES6 and the Modular JavaScript Book Series"
 [toc]: /s/practical-es6-read "Practical ES6: A Practical Dive into ES6 and Maintainable JavaScript Modules"
-[contrib]: /s/practical-es6-repo-contrib "modular-javascript/practical-es6 on GitHub"
+[contrib]: /s/practical-es6-repo-contrib "mjavascript/practical-es6 on GitHub"
 [campaign]: /s/modular-javascript-indiegogo "Indiegogo campaign for Modular JavaScript: A Pragmatic JS Book Series"
 [er]: /s/practical-es6-early-release "Modular JavaScript: Practical ES6"

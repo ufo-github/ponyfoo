@@ -11,7 +11,7 @@ module.exports = {
     url: `oreillymedia/modular-es6`,
     branch: `master`
   },
-  github: `https://github.com/modular-javascript/practical-es6`,
+  github: `https://github.com/mjavascript/practical-es6`,
   title: `Practical ES6`,
   teaser: `A Practical Dive into ES6 and Maintainable JavaScript Modules \u2014 Modular JavaScript Book Series`,
   oneline: `Features and practical application of ES6 in your production applications.`,

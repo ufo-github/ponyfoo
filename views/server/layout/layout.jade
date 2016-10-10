@@ -40,6 +40,9 @@ html(lang='en', itemscope, itemtype='http://schema.org/Blog', class=htmlClasses.
 
   body#top
     if !leanLayout
+      if headerHtml
+        div.md-markdown.md-markdown-large!=headerHtml
+
       header.ly-header.vw-title
         include header-logo
         include header-navigation

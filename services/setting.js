@@ -12,6 +12,7 @@ const api = contra.emitter({
 });
 
 function tracker () {
+  let isFresh = false;
   let cached = null;
   return (key, done) => {
     if (!done) {
@@ -19,20 +20,26 @@ function tracker () {
       key = null;
     }
     if (cached) {
-      done(null, select(cached)); return;
+      respond(null, select(cached), isFresh); return;
     }
     get((err, items) => {
       if (err) {
-        done(err); return;
+        respond(err); return;
       }
-      done(null, select(items));
-      cached = items;
-      api.on(`save`, items => {
-        cached = items;
-      });
+      updated(items);
+      respond(null, select(items), isFresh);
+      api.on(`save`, updated);
     });
+    function updated (items) {
+      cached = items;
+      isFresh = true;
+    }
     function select (items) {
       return typeof key === `string` ? items[key] : items;
+    }
+    function respond (...args) {
+      isFresh = false;
+      done(...args);
     }
   };
 }
