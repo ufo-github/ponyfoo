@@ -26,13 +26,15 @@ const hostTypes = {
     name: `Article`,
     schema: Article,
     query: {},
-    topic: `articles`
+    topic: `articles`,
+    section: `articles`
   },
   weeklies: {
     name: `Weekly issue`,
     schema: WeeklyIssue,
     query: { status: `released` },
-    topic: `newsletter`
+    topic: `newsletter`,
+    section: `weekly`
   }
 };
 
@@ -189,7 +191,8 @@ module.exports = function (options, done) {
   }
 
   function sendEmailNotifications (data) {
-    const permalinkToHost =  util.format(`/%s/%s`, options.type, data.host.slug);
+    const hostType = hostTypes[options.type];
+    const permalinkToHost =  util.format(`/%s/%s`, hostType.section, data.host.slug);
     const permalinkToComment = util.format(`%s#comment-%s`, permalinkToHost, comment._id);
     const email = {
       subject: util.format(`Fresh comments on "%s"!`, data.host.title),
