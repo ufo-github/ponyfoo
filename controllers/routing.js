@@ -83,7 +83,7 @@ const invoiceOnly = require(`./author/roleOnly`)([`owner`]);
 const articlesOnly = require(`./author/roleOnly`)([`owner`, `editor`, `articles`]);
 const articlesEditorOnly = require(`./author/roleOnly`)([`owner`, `editor`]);
 const moderatorOnly = require(`./author/roleOnly`)([`owner`, `editor`, `moderator`]);
-const weekliesOnly = require(`./author/roleOnly`)([`owner`, `weeklies`]);
+const weeklyOnly = require(`./author/roleOnly`)([`owner`, `weeklies`]);
 const env = require(`../lib/env`);
 const redirects = require(`./redirects`);
 const getDefaultViewModel = require(`./getDefaultViewModel`);
@@ -135,18 +135,18 @@ module.exports = function (app) {
   app.delete(`/api/:type(articles|weeklies)/:slug/comments/:id`, moderatorOnly, commentRemoveJson);
   app.get(`/api/:type(articles|weeklies)/:slug/comments/:id/remove`, moderatorOnly, commentRemoveRedirect);
 
-  app.get(`/api/weeklies/submissions/:slug`, ownerOnly, weeklySubmissionModel);
-  app.post(`/api/weeklies/submissions/:slug/push`, ownerOnly, weeklySubmissionPush);
+  app.get(`/api/weeklies/submissions/:slug`, weeklyOnly, weeklySubmissionModel);
+  app.post(`/api/weeklies/submissions/:slug/push`, weeklyOnly, weeklySubmissionPush);
 
   app.post(`/api/weeklies/submissions`, weeklySubmission);
   app.post(`/api/weeklies/submissions/:slug`, weeklySubmission);
-  app.delete(`/api/weeklies/submissions/:slug`, ownerOnly, weeklySubmissionRemove);
-  app.get(`/api/weeklies/submissions/:slug/:action(reject|accept|use)`, ownerOnly, weeklySubmissionMark);
+  app.delete(`/api/weeklies/submissions/:slug`, weeklyOnly, weeklySubmissionRemove);
+  app.get(`/api/weeklies/submissions/:slug/:action(reject|accept|use)`, weeklyOnly, weeklySubmissionMark);
 
-  app.put(`/api/weeklies`, weekliesOnly, weeklyInsert);
-  app.patch(`/api/weeklies/:slug`, weekliesOnly, weeklyUpdate);
-  app.delete(`/api/weeklies/:slug`, weekliesOnly, weeklyRemove);
-  app.post(`/api/weeklies/:slug/share/:medium`, weekliesOnly, weeklyShare);
+  app.put(`/api/weeklies`, weeklyOnly, weeklyInsert);
+  app.patch(`/api/weeklies/:slug`, weeklyOnly, weeklyUpdate);
+  app.delete(`/api/weeklies/:slug`, weeklyOnly, weeklyRemove);
+  app.post(`/api/weeklies/:slug/share/:medium`, weeklyOnly, weeklyShare);
 
   app.put(`/api/subscribers`, subscriberInsert);
   app.post(`/api/subscribers`, verifyForm, subscriberInsert);

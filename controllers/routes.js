@@ -38,7 +38,7 @@ module.exports = [
   { route: `/weekly/random`, action: `weekly/random` },
   { route: `/weekly/review`, action: `author/weeklies/review`, middleware: weekliesOnly },
   { route: `/weekly/submissions`, action: `weekly/submissions` },
-  { route: `/weekly/submissions/review`, action: `weekly/submissions/review`, middleware: ownerOnly },
+  { route: `/weekly/submissions/review`, action: `weekly/submissions/review`, middleware: weekliesOnly },
   { route: `/weekly/submissions/:slug/edit`, action: `weekly/submissions` },
   { route: `/weekly/new`, action: `author/weeklies/assemble`, middleware: weekliesOnly },
   { route: `/weekly/:slug/edit`, action: `author/weeklies/assemble`, middleware: weekliesOnly },
