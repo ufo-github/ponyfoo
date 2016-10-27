@@ -6,7 +6,12 @@ mixin pager
       a.lk-rainbows.an-anchor.an-next(href=taunus.resolve('author/subscribers', { page: page + 1 }), rel='next', aria-label='Go to the next page') Older »
 
 article.ly-section.vw-maintainer
-  h1.vw-title Subscriber Management
+  h1.vw-title
+    span Subscribers
+
+    if subscriberGraph.verified
+      span=' '
+      span='(' + subscriberGraph.verified + ')'
 
   div.as-commands
     a.lk-icon.fa.fa-refresh(href='/api/subscribers/poll-twitter-cards', aria-label='Refresh subscribers using Twitter card data')=' Pull from Twitter cards'

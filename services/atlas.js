@@ -125,6 +125,9 @@ function getChapterTitle ({ bookSlug, chapterId }, done) {
     if (err) {
       done(err); return;
     }
+    if (html === null) {
+      done(null, null); return;
+    }
     const title = cheerio
       .load(html)(`h1`)
       .eq(0)
@@ -147,6 +150,9 @@ function getChapter ({ bookSlug, chapterId }, done) {
   function got (err, result) {
     if (err) {
       done(err); return;
+    }
+    if (result.html === null) {
+      done(null, null); return;
     }
     const $ = cheerio.load(result.html);
     $(`[data-type='sect1']`).slice(1).remove();

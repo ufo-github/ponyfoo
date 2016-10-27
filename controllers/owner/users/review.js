@@ -49,8 +49,8 @@ function userReview (req, res, next) {
   }
 }
 
-function byCreation ({ created }) {
-  return Date.now() - created;
+function byCreation ({ user }) {
+  return Date.now() - user.created;
 }
 
 function toUserModel (contributor) {

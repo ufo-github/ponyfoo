@@ -1,6 +1,12 @@
 article.ly-section.vw-maintainer.de-host
   section.vw-maintainer-content.de-column
-    h1.vw-title Users
+    h1.vw-title
+      span Users
+
+      if users.length
+        span=' '
+        span='(' + users.length + ')'
+
     section.usr-container
       div.usr-actions
         a.usr-action.lk-icon.fa.fa-pencil-square-o(href='/users/new', aria-label='Generate a new user')
