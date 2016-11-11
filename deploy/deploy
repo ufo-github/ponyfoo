@@ -7,7 +7,7 @@ set -e
 : "${PRIMAL_AMI:="ami-42e67855"}"
 # : "${CARNIVORE_AMI:="ami-xxxxxxxx"}"
 # : "${DEPLOYMENT:="no"}"
-# : "${CLEANUP:="no"}"
+: "${CLEANUP:="no"}"
 # : "${REBUILD_APP:="no"}"
 
 # configurable variables
