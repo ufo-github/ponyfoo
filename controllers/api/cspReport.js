@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const winston = require(`winston`);
+const winston = require(`winston`)
 
 function cspReport (req, res) {
   if (req.body) {
-    winston.warn(`CSP header violation`, req.body);
+    winston.warn(`CSP header violation`, req.body)
   }
-  res.status(204).end();
+  res.status(204).end()
 }
 
-module.exports = cspReport;
+module.exports = cspReport

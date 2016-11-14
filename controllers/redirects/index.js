@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-const legacy = require(`./legacy`);
-const shortlinks = require(`./shortlinks`);
+const legacy = require(`./legacy`)
+const shortlinks = require(`./shortlinks`)
 
 function setup (app) {
-  legacy.setup(app);
-  shortlinks.setup(app);
+  legacy.setup(app)
+  shortlinks.setup(app)
 }
 
-module.exports = { setup };
+module.exports = { setup }

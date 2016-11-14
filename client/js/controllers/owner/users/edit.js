@@ -1,49 +1,49 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
-const raf = require(`raf`);
-const taunus = require(`taunus`);
-const sluggish = require(`sluggish`);
-const debounce = require(`lodash/debounce`);
-const markdownService = require(`../../../../../services/markdown`);
+const $ = require(`dominus`)
+const raf = require(`raf`)
+const taunus = require(`taunus`)
+const sluggish = require(`sluggish`)
+const debounce = require(`lodash/debounce`)
+const markdownService = require(`../../../../../services/markdown`)
 
 module.exports = function (viewModel, container) {
-  const email = $(`.cb-email`, container);
-  const oldPassword = $(`.cb-old-password`, container);
-  const password = $(`.cb-password`, container);
-  const displayName = $(`.cb-name`, container);
-  const slug = $(`.cb-slug`, container);
-  const bio = $(`.cb-bio`, container);
-  const twitter = $(`.cb-twitter`, container);
-  const website = $(`.cb-website`, container);
-  const preview = $(`.cb-preview`, container);
-  const avatar = $(`.cb-avatar`, container);
-  const roles = $(`.cb-role-input`, container);
-  const saveButton = $(`.cb-save`, container);
-  const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 200));
-  const updateSlugSlowly = raf.bind(null, debounce(updateSlug, 200));
+  const email = $(`.cb-email`, container)
+  const oldPassword = $(`.cb-old-password`, container)
+  const password = $(`.cb-password`, container)
+  const displayName = $(`.cb-name`, container)
+  const slug = $(`.cb-slug`, container)
+  const bio = $(`.cb-bio`, container)
+  const twitter = $(`.cb-twitter`, container)
+  const website = $(`.cb-website`, container)
+  const preview = $(`.cb-preview`, container)
+  const avatar = $(`.cb-avatar`, container)
+  const roles = $(`.cb-role-input`, container)
+  const saveButton = $(`.cb-save`, container)
+  const updatePreviewSlowly = raf.bind(null, debounce(updatePreview, 200))
+  const updateSlugSlowly = raf.bind(null, debounce(updateSlug, 200))
 
-  displayName.on(`keypress keydown paste input`, updateSlugSlowly);
-  slug.once(`keypress keydown paste input`, unbindSlug);
-  bio.on(`keypress keydown paste input`, updatePreviewSlowly);
-  saveButton.on(`click`, save);
-  updatePreview();
+  displayName.on(`keypress keydown paste input`, updateSlugSlowly)
+  slug.once(`keypress keydown paste input`, unbindSlug)
+  bio.on(`keypress keydown paste input`, updatePreviewSlowly)
+  saveButton.on(`click`, save)
+  updatePreview()
 
   function unbindSlug () {
-    displayName.off(`keypress keydown paste input`, updateSlugSlowly);
+    displayName.off(`keypress keydown paste input`, updateSlugSlowly)
   }
 
   function updateSlug () {
-    slug.value(sluggish(displayName.value()));
+    slug.value(sluggish(displayName.value()))
   }
 
   function updatePreview () {
-    const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
-    preview.html(getHtml(bio).trim().replace(rstrip, ``) || `Main body of your bio`);
+    const rstrip = /^\s*<p>\s*<\/p>\s*$/i
+    preview.html(getHtml(bio).trim().replace(rstrip, ``) || `Main body of your bio`)
   }
 
   function getHtml (el) {
-    return markdownService.compile(el.value());
+    return markdownService.compile(el.value())
   }
 
   function save () {
@@ -56,27 +56,27 @@ module.exports = function (viewModel, container) {
       website: website.value(),
       avatar: avatar.value(),
       roles: roles.filter(isChecked).map(intoRoleValue)
-    };
-    const pwd = password.value();
+    }
+    const pwd = password.value()
     if (pwd.length) {
-      model.password = pwd;
+      model.password = pwd
       if (viewModel.editing) {
-        model.oldPassword = oldPassword.value();
+        model.oldPassword = oldPassword.value()
       }
     }
-    const data = { json: model };
-    const id = saveButton.attr(`data-id`);
+    const data = { json: model }
+    const id = saveButton.attr(`data-id`)
     if (viewModel.editing) {
-      viewModel.measly.patch(`/api/users/` + id, data).on(`data`, leave);
+      viewModel.measly.patch(`/api/users/` + id, data).on(`data`, leave)
     } else {
-      viewModel.measly.put(`/api/users`, data).on(`data`, leave);
+      viewModel.measly.put(`/api/users`, data).on(`data`, leave)
     }
 
     function leave () {
-      taunus.navigate(`/users/review`);
+      taunus.navigate(`/users/review`)
     }
 
-    function isChecked (el) { return $(el).value(); }
-    function intoRoleValue (el) { return $(el).text(); }
+    function isChecked (el) { return $(el).value() }
+    function intoRoleValue (el) { return $(el).text() }
   }
-};
+}

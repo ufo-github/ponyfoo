@@ -1,25 +1,25 @@
-'use strict';
+'use strict'
 
-const sluggish = require(`sluggish`);
-const env = require(`../../lib/env`);
-const data = require(`../../lib/authentication/data`);
-const inliningService = require(`../../services/inlining`);
-const registration = env(`REGISTRATION_OPEN`);
-const providers = Object.keys(data.providers).filter(enabled).map(toProviderModel);
+const sluggish = require(`sluggish`)
+const env = require(`../../lib/env`)
+const data = require(`../../lib/authentication/data`)
+const inliningService = require(`../../services/inlining`)
+const registration = env(`REGISTRATION_OPEN`)
+const providers = Object.keys(data.providers).filter(enabled).map(toProviderModel)
 
 function enabled (key) {
-  return data.providers[key].enabled;
+  return data.providers[key].enabled
 }
 
 function toProviderModel (key) {
-  const { name, link, css } = data.providers[key];
-  const slug = sluggish(key);
-  return { name, link, css, slug };
+  const { name, link, css } = data.providers[key]
+  const slug = sluggish(key)
+  return { name, link, css, slug }
 }
 
 module.exports = function (req, res, next) {
   if (req.user) {
-    return; // case handled by transports package
+    return // case handled by transports package
   }
   res.viewModel = {
     model: {
@@ -30,7 +30,7 @@ module.exports = function (req, res, next) {
       registration,
       providers
     }
-  };
-  inliningService.addStyles(res.viewModel.model, `login`);
-  next();
-};
+  }
+  inliningService.addStyles(res.viewModel.model, `login`)
+  next()
+}

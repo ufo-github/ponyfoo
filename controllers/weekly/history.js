@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const staticService = require(`../../services/static`);
-const WeeklyIssue = require(`../../models/WeeklyIssue`);
-const weeklyService = require(`../../services/weekly`);
-const authority = env(`AUTHORITY`);
+const env = require(`../../lib/env`)
+const staticService = require(`../../services/static`)
+const WeeklyIssue = require(`../../models/WeeklyIssue`)
+const weeklyService = require(`../../services/weekly`)
+const authority = env(`AUTHORITY`)
 
 module.exports = function (req, res, next) {
-  const query = { status: `released`, statusReach: `everyone` };
+  const query = { status: `released`, statusReach: `everyone` }
 
-  WeeklyIssue.find(query).sort(`-publication`).exec(found);
+  WeeklyIssue.find(query).sort(`-publication`).exec(found)
 
   function found (err, issues) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    const models = issues.map(weeklyService.toHistory);
+    const models = issues.map(weeklyService.toHistory)
     res.viewModel = {
       model: {
         meta: {
@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
         issues: models,
         any: issues.length > 0
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

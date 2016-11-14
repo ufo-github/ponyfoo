@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const offline = `/offline`;
-const inliningService = require(`../../services/inlining`);
+const offline = `/offline`
+const inliningService = require(`../../services/inlining`)
 
 module.exports = function (req, res, next) {
-  res.status(200);
+  res.status(200)
   res.viewModel = {
     model: {
       title: `Application Offline`,
@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
         canonical: offline
       }
     }
-  };
-  inliningService.addStyles(res.viewModel.model, `errors`);
-  next();
-};
+  }
+  inliningService.addStyles(res.viewModel.model, `errors`)
+  next()
+}

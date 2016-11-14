@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-const moment = require(`moment`);
-const staticService = require(`../../../../services/static`);
-const env = require(`../../../../lib/env`);
-const authority = env(`AUTHORITY`);
+const moment = require(`moment`)
+const staticService = require(`../../../../services/static`)
+const env = require(`../../../../lib/env`)
+const authority = env(`AUTHORITY`)
 
 function getBaseModel ({ meta, bookSlug, canonical, section }) {
-  const publication = moment(meta.publication);
-  const released = publication.isBefore(moment());
-  const publicationFormatted = publication.format(`MMM, YYYY`);
+  const publication = moment(meta.publication)
+  const released = publication.isBefore(moment())
+  const publicationFormatted = publication.format(`MMM, YYYY`)
   return {
     title: getTitle(meta, section),
     meta: {
@@ -34,14 +34,14 @@ function getBaseModel ({ meta, bookSlug, canonical, section }) {
       summaryHtml: meta.summaryHtml,
       linksHtml: meta.linksHtml
     }
-  };
+  }
 }
 
 function getTitle (meta, section) {
   if (section) {
-    return `${section} \u2014 ${meta.title}`;
+    return `${section} \u2014 ${meta.title}`
   }
-  return `${meta.title} (${meta.publicationYear}) \u2014 Pony Foo`;
+  return `${meta.title} (${meta.publicationYear}) \u2014 Pony Foo`
 }
 
-module.exports = { getBaseModel };
+module.exports = { getBaseModel }

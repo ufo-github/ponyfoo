@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-const { sortBy } = require(`lodash`);
-const datetimeService = require(`../../../services/datetime`);
-const userService = require(`../../../services/user`);
+const { sortBy } = require(`lodash`)
+const datetimeService = require(`../../../services/datetime`)
+const userService = require(`../../../services/user`)
 
 module.exports = function (req, res, next) {
-  userService.findUnverified(respond);
+  userService.findUnverified(respond)
 
   function respond (err, users) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -19,13 +19,13 @@ module.exports = function (req, res, next) {
         },
         users: sortBy(users, byCreation).map(toUnverifiedUserModel)
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}
 
 function byCreation ({ created = new Date(0) }) {
-  return Date.now() - created;
+  return Date.now() - created
 }
 
 function toUnverifiedUserModel (user) {
@@ -33,5 +33,5 @@ function toUnverifiedUserModel (user) {
     created: user.created ? datetimeService.field(user.created) : null,
     email: user.email,
     avatar: userService.getAvatar(user)
-  };
+  }
 }

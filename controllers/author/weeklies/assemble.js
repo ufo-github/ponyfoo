@@ -1,40 +1,40 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const correcthorse = require(`correcthorse`);
-const WeeklyIssue = require(`../../../models/WeeklyIssue`);
-const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`);
-const weeklySubmissionService = require(`../../../services/weeklySubmission`);
-const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
-const datetimeService = require(`../../../services/datetime`);
-const env = require(`../../../lib/env`);
-const authority = env(`AUTHORITY`);
+const contra = require(`contra`)
+const correcthorse = require(`correcthorse`)
+const WeeklyIssue = require(`../../../models/WeeklyIssue`)
+const WeeklyIssueSubmission = require(`../../../models/WeeklyIssueSubmission`)
+const weeklySubmissionService = require(`../../../services/weeklySubmission`)
+const weeklyCompilerService = require(`../../../services/weeklyCompiler`)
+const datetimeService = require(`../../../services/datetime`)
+const env = require(`../../../lib/env`)
+const authority = env(`AUTHORITY`)
 
 module.exports = function (req, res, next) {
-  const slug = req.params.slug;
+  const slug = req.params.slug
   const tasks = {
     issue: findWeeklyIssue,
     submissions: findAcceptedSubmissions
-  };
-  contra.concurrent(tasks, respond);
+  }
+  contra.concurrent(tasks, respond)
 
   function findWeeklyIssue (next) {
     if (!slug) {
-      next(null); return;
+      next(null); return
     }
     WeeklyIssue
       .findOne({ slug: slug })
       .lean()
-      .exec(find);
+      .exec(find)
 
     function find (err, issue) {
       if (err) {
-        next(err); return;
+        next(err); return
       }
       if (!issue) {
-        res.status(404).json({ messages: [`Weekly issue not found`] }); return;
+        res.status(404).json({ messages: [`Weekly issue not found`] }); return
       }
-      next(null, issue);
+      next(null, issue)
     }
   }
 
@@ -42,16 +42,16 @@ module.exports = function (req, res, next) {
     WeeklyIssueSubmission
       .find({ status: `accepted` })
       .lean()
-      .exec(next);
+      .exec(next)
   }
 
   function respond (err, result) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    const issueModel = result.issue || getDefaultIssueModel();
-    const publication = issueModel.publication || new Date();
-    issueModel.publication = datetimeService.field(publication);
+    const issueModel = result.issue || getDefaultIssueModel()
+    const publication = issueModel.publication || new Date()
+    issueModel.publication = datetimeService.field(publication)
     res.viewModel = {
       model: {
         title: `Weekly Assembler \u2014 Pony Foo`,
@@ -60,10 +60,10 @@ module.exports = function (req, res, next) {
         editing: !!slug,
         knownTags: weeklyCompilerService.knownTags
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}
 
 function getDefaultIssueModel () {
   return {
@@ -80,5 +80,5 @@ function getDefaultIssueModel () {
       type: `header`,
       text: `Oh, hai! 🎉`
     }]
-  };
+  }
 }

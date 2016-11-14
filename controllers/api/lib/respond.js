@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
 function respond (err, res, next, validation, valid) {
   if (err) {
     if (validation && validation.length) {
-      invalid(res, validation);
+      invalid(res, validation)
     } else {
-      next(err);
+      next(err)
     }
   } else {
-    res.json(valid || {});
+    res.json(valid || {})
   }
 }
 
 function invalid (res, validation) {
-  res.status(400).json({ messages: validation });
+  res.status(400).json({ messages: validation })
 }
 
-module.exports = respond;
+module.exports = respond
 
-respond.invalid = invalid;
+respond.invalid = invalid

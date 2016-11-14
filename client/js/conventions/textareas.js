@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
-const taunus = require(`taunus`);
-const woofmark = require(`woofmark`);
-const markdownService = require(`../../../services/markdown`);
+const $ = require(`dominus`)
+const taunus = require(`taunus`)
+const woofmark = require(`woofmark`)
+const markdownService = require(`../../../services/markdown`)
 
 function textareas () {
-  taunus.gradual.transform(before);
-  taunus.on(`render`, activate);
+  taunus.gradual.transform(before)
+  taunus.on(`render`, activate)
 }
 
 function activate (container) {
-  $(`.wk-textarea`, container).forEach(convert);
+  $(`.wk-textarea`, container).forEach(convert)
 
   function convert (el) {
-    const wel = $(el);
-    const hasHtml = wel.hasClass(`wk-html`);
-    const hasWysiwyg = wel.hasClass(`wk-wysiwyg`);
+    const wel = $(el)
+    const hasHtml = wel.hasClass(`wk-html`)
+    const hasWysiwyg = wel.hasClass(`wk-wysiwyg`)
     const editor = woofmark(el, {
       parseMarkdown: markdownService.compile,
       classes: {
@@ -36,17 +36,17 @@ function activate (container) {
       },
       html: hasHtml,
       wysiwyg: hasWysiwyg
-    });
+    })
 
-    taunus.track(el, editor);
+    taunus.track(el, editor)
 
     function renderModes (el, id) {
       const icons = {
         markdown: `file-text-o`,
         html: `file-code-o`,
         wysiwyg: `eye`
-      };
-      renderIcon(el, icons[id] || id);
+      }
+      renderIcon(el, icons[id] || id)
     }
 
     function renderCommands (el, id) {
@@ -57,36 +57,36 @@ function activate (container) {
         heading: `header`,
         image: `picture-o`,
         attachment: `paperclip`
-      };
-      renderIcon(el, icons[id] || id);
+      }
+      renderIcon(el, icons[id] || id)
     }
 
     function renderIcon (el, icon) {
-      $(el).addClass(`wk-command-${ icon }`);
-      $(`<i>`).addClass(`fa fa-${ icon }`).appendTo(el);
+      $(el).addClass(`wk-command-${ icon }`)
+      $(`<i>`).addClass(`fa fa-${ icon }`).appendTo(el)
     }
   }
 }
 
 function before (form) {
-  const areas = $(`textarea`, form);
-  const store = [];
+  const areas = $(`textarea`, form)
+  const store = []
 
-  areas.forEach(replace);
-  return after;
+  areas.forEach(replace)
+  return after
 
   function replace (el) {
-    const input = $(el);
-    store.push(input.value());
-    input.value(woofmark(el).value());
+    const input = $(el)
+    store.push(input.value())
+    input.value(woofmark(el).value())
   }
   function after () {
-    areas.forEach(restore);
+    areas.forEach(restore)
   }
   function restore (el, i) {
-    $(el).value(store[i]);
+    $(el).value(store[i])
   }
 }
 
-module.exports = textareas;
-textareas.activate = activate;
+module.exports = textareas
+textareas.activate = activate

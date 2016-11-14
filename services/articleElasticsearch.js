@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const es = require(`../lib/elasticsearch`);
-const indexService = require(`./articleElasticsearchIndex`);
-const indexName = `ponyfoo`;
-const typeName = `article`;
-const relatedArticlesLimit = 6;
+const es = require(`../lib/elasticsearch`)
+const indexService = require(`./articleElasticsearchIndex`)
+const indexName = `ponyfoo`
+const typeName = `article`
+const relatedArticlesLimit = 6
 
 function update (article, done) {
   es.client.update({
@@ -15,13 +15,13 @@ function update (article, done) {
       doc: indexService.toIndex(article),
       doc_as_upsert: true
     }
-  }, done);
+  }, done)
 }
 
 function query (input, options, done) {
   if (done === void 0) {
-    done = options;
-    options = {};
+    done = options
+    options = {}
   }
   es.client.search({
     index: indexName,
@@ -39,13 +39,13 @@ function query (input, options, done) {
         }
       }
     }
-  }, found(done));
+  }, found(done))
 }
 
 function related (article, options, done) {
   if (done === void 0) {
-    done = options;
-    options = {};
+    done = options
+    options = {}
   }
   es.client.search({
     index: indexName,
@@ -61,33 +61,33 @@ function related (article, options, done) {
       },
       size: relatedArticlesLimit
     }
-  }, found(done));
+  }, found(done))
 }
 
 function found (done) {
   return function through (err, result) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    done(null, result.hits.hits.map(searchHitToResult));
-  };
+    done(null, result.hits.hits.map(searchHitToResult))
+  }
 }
 function filters (options) {
-  const tags = Array.isArray(options.tags) ? options.tags : [];
-  const clauses = [status(`published`)].concat(tags.map(tagToFilter));
+  const tags = Array.isArray(options.tags) ? options.tags : []
+  const clauses = [status(`published`)].concat(tags.map(tagToFilter))
   if (options.since) {
-    clauses.unshift(since(options.since));
+    clauses.unshift(since(options.since))
   }
-  return all(clauses);
+  return all(clauses)
 }
 function all (clauses) {
-  return { bool: { must: clauses } };
+  return { bool: { must: clauses } }
 }
 function status (value) {
-  return { term: { status: value } };
+  return { term: { status: value } }
 }
 function since (date) {
-  return { range: { timestamp: { gte: date } } };
+  return { range: { timestamp: { gte: date } } }
 }
 
 function searchHitToResult (hit) {
@@ -96,11 +96,11 @@ function searchHitToResult (hit) {
     _id: hit._id,
     title: hit._source.title,
     slug: hit._source.slug
-  };
+  }
 }
 
 function tagToFilter (tag) {
-  return { term: { tags: tag } };
+  return { term: { tags: tag } }
 }
 
 module.exports = {
@@ -108,4 +108,4 @@ module.exports = {
   query: indexService.ensureIndexThen(query),
   update: indexService.ensureIndexThen(update),
   related: indexService.ensureIndexThen(related)
-};
+}

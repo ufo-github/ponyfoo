@@ -1,25 +1,25 @@
-'use strict';
+'use strict'
 
-const _ = require(`lodash`);
-const contra = require(`contra`);
+const _ = require(`lodash`)
+const contra = require(`contra`)
 
 function find (Model, query, count, done) {
   if (count === 1) {
-    single();
+    single()
   } else {
-    many();
+    many()
   }
 
   function single () {
     contra.waterfall([
       function (next) {
-        Model.find(query).count(next);
+        Model.find(query).count(next)
       },
       function (count, next) {
-        const skips = Math.floor(Math.random() * count);
-        Model.find(query).skip(skips).limit(1).exec(next);
+        const skips = Math.floor(Math.random() * count)
+        Model.find(query).skip(skips).limit(1).exec(next)
       }
-    ], done);
+    ], done)
   }
 
   function many () {
@@ -27,8 +27,8 @@ function find (Model, query, count, done) {
       next => Model.find(query).select(`_id`).lean().exec(next),
       (documents, next) => next(null, _(documents).map(`_id`).sampleSize(count).value()),
       ($in, next) => Model.find({ _id: { $in } }, next)
-    ], done);
+    ], done)
   }
 }
 
-module.exports = { find };
+module.exports = { find }

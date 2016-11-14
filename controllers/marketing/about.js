@@ -1,17 +1,17 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const staticService = require(`../../services/static`);
-const markdownFileService = require(`../../services/markdownFile`);
-const authority = env(`AUTHORITY`);
-const aboutFile = `./dat/about.md`;
+const env = require(`../../lib/env`)
+const staticService = require(`../../services/static`)
+const markdownFileService = require(`../../services/markdownFile`)
+const authority = env(`AUTHORITY`)
+const aboutFile = `./dat/about.md`
 
 module.exports = function (req, res, next) {
-  markdownFileService.read(aboutFile, respond);
+  markdownFileService.read(aboutFile, respond)
 
   function respond (err, aboutHtml) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -23,7 +23,7 @@ module.exports = function (req, res, next) {
         },
         aboutHtml: aboutHtml
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

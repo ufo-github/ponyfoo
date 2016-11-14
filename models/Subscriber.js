@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const mongoose = require(`mongoose`);
+const mongoose = require(`mongoose`)
 const schema = new mongoose.Schema({
   name: String,
   source: String,
@@ -9,8 +9,8 @@ const schema = new mongoose.Schema({
   verified: { type: Boolean, 'default': false },
   patron: { type: Boolean, 'default': false },
   created: { type: Date, require: true, 'default': Date.now }
-}, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
+}, { id: false, toObject: { getters: true }, toJSON: { getters: true } })
 
-schema.index({ topics: 1 });
+schema.index({ topics: 1 })
 
-module.exports = mongoose.model(`Subscriber`, schema);
+module.exports = mongoose.model(`Subscriber`, schema)

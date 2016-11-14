@@ -1,44 +1,44 @@
-'use strict';
+'use strict'
 
-const datauri = new Image();
-let deferred = [];
-let result;
+const datauri = new Image()
+let deferred = []
+let result
 
-datauri.onload = load;
-datauri.onerror = error;
-datauri.src = `data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==`;
+datauri.onload = load
+datauri.onerror = error
+datauri.src = `data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==`
 
 function load () {
-  set(datauri.width === 1 && datauri.height === 1);
+  set(datauri.width === 1 && datauri.height === 1)
 }
 
 function error () {
-  set(false);
+  set(false)
 }
 
 function set (value) {
   if (result) {
-    return;
+    return
   }
-  result = value;
-  resulted();
+  result = value
+  resulted()
 }
 
 function resulted () {
   deferred.forEach(function (d) {
-    test(d[0], d[1]);
-  });
-  deferred = [];
+    test(d[0], d[1])
+  })
+  deferred = []
 }
 
 function test (success, failure) {
   if (result) {
-    success();
+    success()
   } else if (result === false) {
-    failure();
+    failure()
   } else {
-    deferred.push([success, failure]);
+    deferred.push([success, failure])
   }
 }
 
-module.exports = test;
+module.exports = test

@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-const subscriberService = require(`./subscriber`);
+const subscriberService = require(`./subscriber`)
 
 function add ({ user, codes = [] }, done) {
-  const source = getSource(codes);
+  const source = getSource(codes)
 
   subscriberService.add({
     created: user.created,
@@ -11,16 +11,16 @@ function add ({ user, codes = [] }, done) {
     name: user.displayName,
     source,
     verified: true
-  }, done);
+  }, done)
 }
 
 function getSource (codes) {
   if (codes.length === 0) {
-    return `registration`;
+    return `registration`
   }
-  return `promo+${ codes.join(`,`) }`;
+  return `promo+${ codes.join(`,`) }`
 }
 
 module.exports = {
   add
-};
+}

@@ -1,17 +1,17 @@
-'use strict';
+'use strict'
 
-const sampleIssue = require(`./lib/sampleIssue.json`);
-const colorService = require(`../../../services/color`);
-const weeklyService = require(`../../../services/weekly`);
-const weeklyCompilerService = require(`../../../services/weeklyCompiler`);
+const sampleIssue = require(`./lib/sampleIssue.json`)
+const colorService = require(`../../../services/color`)
+const weeklyService = require(`../../../services/weekly`)
+const weeklyCompilerService = require(`../../../services/weeklyCompiler`)
 
 module.exports = function (req, res, next) {
-  weeklyService.compile(sampleIssue, compiled);
+  weeklyService.compile(sampleIssue, compiled)
   function compiled (err, sampleIssue) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    res.ignoreNotFound = true;
+    res.ignoreNotFound = true
     res.viewModel = {
       leanLayout: true,
       model: {
@@ -50,7 +50,7 @@ module.exports = function (req, res, next) {
           tags: []
         }
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

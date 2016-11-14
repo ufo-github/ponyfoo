@@ -1,27 +1,27 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
-const taunus = require(`taunus`);
-const env = require(`../lib/env`);
-const clickySnippet = require(`./clicky-snippet`);
-const main = $.findOne(`.ly-main`);
-const property = env(`CLICKY_PROPERTY`);
+const $ = require(`dominus`)
+const taunus = require(`taunus`)
+const env = require(`../lib/env`)
+const clickySnippet = require(`./clicky-snippet`)
+const main = $.findOne(`.ly-main`)
+const property = env(`CLICKY_PROPERTY`)
 
 module.exports = function clicky () {
   if (!property) {
-    return;
+    return
   }
 
-  clickySnippet();
+  clickySnippet()
 
-  global.clicky_site_ids = [property];
-  global.clicky_custom = { timer: 0 };
+  global.clicky_site_ids = [property]
+  global.clicky_custom = { timer: 0 }
 
-  taunus.on(`render`, render);
+  taunus.on(`render`, render)
 
   function render (container) {
     if (container === main && global.clicky) {
-      global.clicky.log(global.location.href);
+      global.clicky.log(global.location.href)
     }
   }
-};
+}

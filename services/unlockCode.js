@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-const emitter = require(`contra/emitter`);
+const emitter = require(`contra/emitter`)
 
-module.exports = emitter();
+module.exports = emitter()

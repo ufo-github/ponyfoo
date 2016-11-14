@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const datetimeService = require(`../../services/datetime`);
-const Presentation = require(`../../models/Presentation`);
+const datetimeService = require(`../../services/datetime`)
+const Presentation = require(`../../models/Presentation`)
 
 module.exports = function (req, res, next) {
   Presentation.find({}).sort(`-presented`).lean().exec(function (err, presentations) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -16,10 +16,10 @@ module.exports = function (req, res, next) {
             id: presentation._id.toString(),
             presented: datetimeService.field(presentation.presented),
             title: presentation.title
-          };
+          }
         })
       }
-    };
-    next();
-  });
-};
+    }
+    next()
+  })
+}

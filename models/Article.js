@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-const mongoose = require(`mongoose`);
-const commentSchema = require(`./schemas/comment`);
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const mongoose = require(`mongoose`)
+const commentSchema = require(`./schemas/comment`)
+const ObjectId = mongoose.Schema.Types.ObjectId
 const schema = new mongoose.Schema({
   author: { type: ObjectId, index: { unique: false }, require: true, ref: `User` },
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
@@ -17,8 +17,8 @@ const schema = new mongoose.Schema({
     index: { unique: true },
     require: true,
     set (value) {
-      this._oldSlug = this.slug;
-      return value;
+      this._oldSlug = this.slug
+      return value
     }
   },
   sign: String,
@@ -45,9 +45,9 @@ const schema = new mongoose.Schema({
   echojs: { type: Boolean, 'default': true },
   hn: { type: Boolean, 'default': true },
   hnDiscuss: String
-}, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
+}, { id: false, toObject: { getters: true }, toJSON: { getters: true } })
 
-const api = mongoose.model(`Article`, schema);
+const api = mongoose.model(`Article`, schema)
 
 schema.index({
   tags: `text`,
@@ -55,8 +55,8 @@ schema.index({
   title: `text`,
   teaser: `text`,
   introduction: `text`
-});
-api.validStatuses = [`draft`, `publish`, `published`, `deleted`];
-api.schema = schema;
+})
+api.validStatuses = [`draft`, `publish`, `published`, `deleted`]
+api.schema = schema
 
-module.exports = api;
+module.exports = api

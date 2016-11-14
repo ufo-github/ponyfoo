@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-const sitemapService = require(`../../services/sitemap`);
+const sitemapService = require(`../../services/sitemap`)
 
 module.exports = function (req, res) {
   if (sitemapService.built) {
-    send();
+    send()
   } else {
-    sitemapService.once(`built`, send);
+    sitemapService.once(`built`, send)
   }
   function send () {
-    res.sendFile(sitemapService.location);
+    res.sendFile(sitemapService.location)
   }
-};
+}

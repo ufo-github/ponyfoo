@@ -1,28 +1,28 @@
-'use strict';
+'use strict'
 
-require(`../preconfigure`);
-require(`../chdir`);
+require(`../preconfigure`)
+require(`../chdir`)
 
-const mongoUri = require(`mongodb-uri`);
-const env = require(`../lib/env`);
-const uri = env(`MONGO_URI`);
-const parts = mongoUri.parse(uri);
+const mongoUri = require(`mongodb-uri`)
+const env = require(`../lib/env`)
+const uri = env(`MONGO_URI`)
+const parts = mongoUri.parse(uri)
 
 parts.hosts.forEach(host => {
-  const port = host.port ? `:${host.port}` : ``;
-  host.hostname = host.host + port;
-});
+  const port = host.port ? `:${host.port}` : ``
+  host.hostname = host.host + port
+})
 
-if (!parts.username) { parts.username = ``; }
-if (!parts.password) { parts.password = ``; }
+if (!parts.username) { parts.username = `` }
+if (!parts.password) { parts.password = `` }
 
 if (module.parent) {
-  module.exports = parts;
+  module.exports = parts
 } else {
-  print();
+  print()
 }
 
 function print () {
-  const json = JSON.stringify(parts, null, 2);
-  console.log(json);
+  const json = JSON.stringify(parts, null, 2)
+  console.log(json)
 }

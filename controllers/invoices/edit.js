@@ -1,48 +1,48 @@
-'use strict';
+'use strict'
 
-const moment = require(`moment`);
-const Invoice = require(`../../models/Invoice`);
-const InvoiceParty = require(`../../models/InvoiceParty`);
+const moment = require(`moment`)
+const Invoice = require(`../../models/Invoice`)
+const InvoiceParty = require(`../../models/InvoiceParty`)
 
 module.exports = function (req, res, next) {
-  InvoiceParty.find({}).lean().exec(foundParties);
+  InvoiceParty.find({}).lean().exec(foundParties)
 
   function foundParties (err, allParties) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     const parties = allParties.reduce(partiesIntoBuckets, {
       customer: [], payment: []
-    });
-    const slug = req.params.slug;
+    })
+    const slug = req.params.slug
     if (slug) {
-      Invoice.findOne({ slug: slug }).populate(`customerParty paymentParty`).lean().exec(found);
+      Invoice.findOne({ slug: slug }).populate(`customerParty paymentParty`).lean().exec(found)
     } else {
-      respond(defaultInvoice());
+      respond(defaultInvoice())
     }
 
     function partiesIntoBuckets (buckets, party) {
       if (buckets[party.type]) {
-        buckets[party.type].push(party);
+        buckets[party.type].push(party)
       } else {
-        buckets[party.type] = [party];
+        buckets[party.type] = [party]
       }
-      return buckets;
+      return buckets
     }
 
     function found (err, invoice) {
       if (err) {
-        next(err); return;
+        next(err); return
       }
       if (!invoice) {
-        next(`route`); return;
+        next(`route`); return
       }
-      respond(invoice);
+      respond(invoice)
     }
 
     function respond (invoice) {
-      const title = slug ? `Invoice #` + slug : `New Invoice`;
-      const canonical = slug ? `/` + slug + `/edit` : `/new`;
+      const title = slug ? `Invoice #` + slug : `New Invoice`
+      const canonical = slug ? `/` + slug + `/edit` : `/new`
       res.viewModel = {
         model: {
           title: title + ` \u2014 Pony Foo`,
@@ -53,8 +53,8 @@ module.exports = function (req, res, next) {
           editing: !!slug,
           parties: parties
         }
-      };
-      next();
+      }
+      next()
     }
 
     function defaultInvoice () {
@@ -63,7 +63,7 @@ module.exports = function (req, res, next) {
         customer: parties.customer[0],
         payment: parties.payment[0],
         items: []
-      };
+      }
     }
   }
-};
+}

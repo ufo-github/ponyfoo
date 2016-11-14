@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-const fs = require(`fs`);
-const path = require(`path`);
-const mkdirp = require(`mkdirp`);
-const color = require(`color`);
-const hashSum = require(`hash-sum`);
-const assign = require(`assignment`);
-const cd = require(`color-difference`);
-const nearest = require(`nearest-color`);
-const PNG = require(`pngjs`).PNG;
-const pixels = [];
+const fs = require(`fs`)
+const path = require(`path`)
+const mkdirp = require(`mkdirp`)
+const color = require(`color`)
+const hashSum = require(`hash-sum`)
+const assign = require(`assignment`)
+const cd = require(`color-difference`)
+const nearest = require(`nearest-color`)
+const PNG = require(`pngjs`).PNG
+const pixels = []
 const baseColors = {
   'c-black': `#000000`,
   'c-black-text': `#333333`,
@@ -51,38 +51,38 @@ const baseColors = {
   'c-yellow-highlight': `#ffe270`,
   'c-yellow-highlight-08': `#fee68b`,
   'c-yellow-highlight-04': `#fef2c5`
-};
+}
 
-build();
+build()
 
 function build () {
   if (maybeSkip()) {
-    return;
+    return
   }
 
   fs.createReadStream(`resources/banners/_template-source.png`)
     .pipe(new PNG({ filterType: 4 }))
     .on(`parsed`, function () {
-      const brandColors = augmentColors(assign({}, baseColors));
-      const nearestFromBrand = nearest.from(brandColors);
+      const brandColors = augmentColors(assign({}, baseColors))
+      const nearestFromBrand = nearest.from(brandColors)
 
       for (let y = 5; y < this.height; y += 10) {
         for (let x = 5; x < this.width; x += 10) {
-          const idx = (this.width * y + x) << 2;
+          const idx = (this.width * y + x) << 2
           const original = color({
             r: this.data[idx],
             g: this.data[idx + 1],
             b: this.data[idx + 2]
-          }).hexString();
-          const brand = nearestFromBrand(original).value;
-          const diff = cd.compare(original, brand);
+          }).hexString()
+          const brand = nearestFromBrand(original).value
+          const diff = cd.compare(original, brand)
           pixels.push({
             y: (y - 5) / 10,
             x: (x - 5) / 10,
             original,
             brand,
             diff: parseFloat(diff.toFixed(2))
-          });
+          })
         }
       }
 
@@ -149,58 +149,58 @@ svg(
       if (flipX) { x = unitsX - x - 1 }
     if x >= 0 && y >= 0
       rect(width=1, height=1, x=x || false, y=y || false, fill=getFill(pixel))
-`;
+`
 
-      fs.writeFile(`resources/banners/_template.jade`, template.trim() + `\n`, `utf8`);
-    });
+      fs.writeFile(`resources/banners/_template.jade`, template.trim() + `\n`, `utf8`)
+    })
 }
 
 function augmentColors (colors) {
   Object.keys(colors).forEach(name => {
-    many(-65, 60, i => addColor(name, `greyscale`, i));
-    many(-25, 60, i => addColor(name, `lighten`, i));
-    many(-30, 60, i => addColor(name, `clearer`, i));
-  });
+    many(-65, 60, i => addColor(name, `greyscale`, i))
+    many(-25, 60, i => addColor(name, `lighten`, i))
+    many(-30, 60, i => addColor(name, `clearer`, i))
+  })
   Object.keys(colors).forEach(name => { // true black is a bad color
-    if (colors[name] === `#000000`) { delete colors[name]; }
-  });
-  return colors;
+    if (colors[name] === `#000000`) { delete colors[name] }
+  })
+  return colors
   function addColor(name, fn, i) {
-    const hex = color(colors[name])[fn](i * 0.01).hexString();
-    let key;
+    const hex = color(colors[name])[fn](i * 0.01).hexString()
+    let key
     while (true) {
-      key = `${name}-${getCode()}`;
+      key = `${name}-${getCode()}`
       if (!(key in colors)) {
-        colors[key] = hex; break;
+        colors[key] = hex; break
       }
     }
   }
 }
 
 function getCode () {
-  return Math.random().toString(18).substr(2);
+  return Math.random().toString(18).substr(2)
 }
 
 function many (start, end, fn) {
   for (let i = start; i < end - start; i++) {
     if (i === 0) {
-      continue;
+      continue
     }
-    fn(i);
+    fn(i)
   }
 }
 
 function maybeSkip () {
-  const hash = hashSum(baseColors);
-  const hashfile = `resources/banners/generated/hash`;
-  const oldHash = fs.existsSync(hashfile) && fs.readFileSync(hashfile, `utf8`);
-  const forceRebuild = !!process.env.REBUILD;
+  const hash = hashSum(baseColors)
+  const hashfile = `resources/banners/generated/hash`
+  const oldHash = fs.existsSync(hashfile) && fs.readFileSync(hashfile, `utf8`)
+  const forceRebuild = !!process.env.REBUILD
 
   if (oldHash === hash && !forceRebuild) {
-    console.log(`Skipping banner builder task: "%s".`, hash);
-    return true;
+    console.log(`Skipping banner builder task: "%s".`, hash)
+    return true
   }
-  console.log(`Running banner builder task: "%s".`, hash);
-  mkdirp.sync(path.dirname(hashfile));
-  fs.writeFileSync(hashfile, hash);
+  console.log(`Running banner builder task: "%s".`, hash)
+  mkdirp.sync(path.dirname(hashfile))
+  fs.writeFileSync(hashfile, hash)
 }

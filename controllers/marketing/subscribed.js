@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-const subscriberService = require(`../../services/subscriber`);
+const subscriberService = require(`../../services/subscriber`)
 
 module.exports = function (req, res, next) {
-  const allTopics = subscriberService.getTopics();
-  let queryTopics = req.query.topic;
-  if (typeof queryTopics === `string`) { queryTopics = [queryTopics]; }
-  if (!Array.isArray(queryTopics)) { queryTopics = allTopics.slice(); }
-  queryTopics.push(`announcements`);
+  const allTopics = subscriberService.getTopics()
+  let queryTopics = req.query.topic
+  if (typeof queryTopics === `string`) { queryTopics = [queryTopics] }
+  if (!Array.isArray(queryTopics)) { queryTopics = allTopics.slice() }
+  queryTopics.push(`announcements`)
 
   res.viewModel = {
     model: {
@@ -17,16 +17,16 @@ module.exports = function (req, res, next) {
         canonical: `/subscribed`
       }
     }
-  };
-  next();
+  }
+  next()
 
   function byQuery (topic) {
     if (queryTopics) {
       if (Array.isArray(queryTopics)) {
-        return queryTopics.indexOf(topic) !== -1;
+        return queryTopics.indexOf(topic) !== -1
       }
-      return queryTopics === topic || queryTopics;
+      return queryTopics === topic || queryTopics
     }
-    return true;
+    return true
   }
-};
+}

@@ -1,31 +1,31 @@
-'use strict';
+'use strict'
 
-const _ = require(`lodash`);
-const articleService = require(`../../../services/article`);
-const userService = require(`../../../services/user`);
-const editorRoles = [`owner`, `editor`];
+const _ = require(`lodash`)
+const articleService = require(`../../../services/article`)
+const userService = require(`../../../services/user`)
+const editorRoles = [`owner`, `editor`]
 
-module.exports = getModel;
+module.exports = getModel
 
 function getModel (req, res, next) {
-  const editor = userService.hasRole(req.userObject, editorRoles);
-  const query = {};
+  const editor = userService.hasRole(req.userObject, editorRoles)
+  const query = {}
   if (!editor) {
-    query.author = req.user;
+    query.author = req.user
   }
   const opts = {
     populate: [[`author`, `twitter website displayName slug email avatar`]]
-  };
-  articleService.find(query, opts, respond);
+  }
+  articleService.find(query, opts, respond)
 
   function respond (err, articles) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     const models = articles.map(article => articleService.toJSON(article, {
       meta: true
-    }));
-    const sorted = _.sortBy(models, sortByStatus);
+    }))
+    const sorted = _.sortBy(models, sortByStatus)
     res.viewModel = {
       model: {
         title: `Article Review`,
@@ -35,11 +35,11 @@ function getModel (req, res, next) {
         articles: sorted,
         userIsEditor: editor
       }
-    };
-    next();
+    }
+    next()
   }
 }
 
 function sortByStatus (article) {
-  return { draft: 0, publish: 1, published: 2 }[article.status];
+  return { draft: 0, publish: 1, published: 2 }[article.status]
 }

@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-const mongoose = require(`mongoose`);
-const cryptoService = require(`../services/crypto`);
-const gravatarService = require(`../services/gravatar`);
-const { ObjectId } = mongoose.Schema.Types;
+const mongoose = require(`mongoose`)
+const cryptoService = require(`../services/crypto`)
+const gravatarService = require(`../services/gravatar`)
+const { ObjectId } = mongoose.Schema.Types
 const schema = new mongoose.Schema({
   email: { type: String, require: true, index: { unique: true }, trim: true },
   password: { type: String, require: true },
@@ -27,40 +27,40 @@ const schema = new mongoose.Schema({
   avatar: String,
   unlockCodes: [String],
   roles: [String] // ['owner', 'editor', 'articles', 'weeklies', 'moderator']
-}, { id: false, toObject: { getters: true }, toJSON: { getters: true } });
+}, { id: false, toObject: { getters: true }, toJSON: { getters: true } })
 
-schema.virtual(`gravatar`).get(computeGravatar);
-schema.pre(`save`, beforeSave);
-schema.methods.validatePassword = validatePassword;
+schema.virtual(`gravatar`).get(computeGravatar)
+schema.pre(`save`, beforeSave)
+schema.methods.validatePassword = validatePassword
 
 function computeGravatar () {
-  return gravatarService.format(this.email);
+  return gravatarService.format(this.email)
 }
 
 function beforeSave (done) {
-  const user = this;
+  const user = this
   if (user.bypassEncryption) { // password already encrypted, we shouldn't re-encrypt it
-    user.bypassEncryption = false;
-    done(); return;
+    user.bypassEncryption = false
+    done(); return
   }
   if (!user.isModified(`password`)) {
-    done(); return;
+    done(); return
   }
-  encryptPassword(user, done);
+  encryptPassword(user, done)
 }
 
 function encryptPassword (user, done) {
   cryptoService.encrypt(user.password, function encrypted (err, hash) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    user.password = hash;
-    done();
-  });
+    user.password = hash
+    done()
+  })
 }
 
 function validatePassword (input, cb) {
-  cryptoService.test(this.password, input, cb);
+  cryptoService.test(this.password, input, cb)
 }
 
-module.exports = mongoose.model(`User`, schema);
+module.exports = mongoose.model(`User`, schema)

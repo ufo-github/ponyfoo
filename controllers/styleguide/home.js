@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const colorService = require(`../../services/color`);
+const colorService = require(`../../services/color`)
 
 module.exports = function (req, res, next) {
   res.viewModel = {
@@ -8,6 +8,6 @@ module.exports = function (req, res, next) {
       title: `Style Guide \u2014 Pony Foo`,
       colors: colorService.colorSections
     }
-  };
-  next();
-};
+  }
+  next()
+}

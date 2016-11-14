@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const authOnly = require(`./account/only`);
-const ownerOnly = require(`./author/roleOnly`)([`owner`]);
-const invoiceOnly = require(`./author/roleOnly`)([`owner`]);
-const articlesOnly = require(`./author/roleOnly`)([`owner`, `editor`, `articles`]);
-const weekliesOnly = require(`./author/roleOnly`)([`owner`, `weeklies`]);
+const authOnly = require(`./account/only`)
+const ownerOnly = require(`./author/roleOnly`)([`owner`])
+const invoiceOnly = require(`./author/roleOnly`)([`owner`])
+const articlesOnly = require(`./author/roleOnly`)([`owner`, `editor`, `articles`])
+const weekliesOnly = require(`./author/roleOnly`)([`owner`, `weeklies`])
 
 module.exports = [
   { route: `/`, action: `articles/home` },
@@ -91,4 +91,4 @@ module.exports = [
   { route: `/s/:shortlink?`, ignore: true },
   { route: `/offline`, action: `error/offline` },
   { route: `/*`, action: `error/not-found` }
-];
+]

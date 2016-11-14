@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-const articleListHandler = require(`./lib/articleListHandler`);
-const searchResults = require(`./lib/searchResults`);
-const articleSearchService = require(`../../services/articleSearch`);
+const articleListHandler = require(`./lib/articleListHandler`)
+const searchResults = require(`./lib/searchResults`)
+const articleSearchService = require(`../../services/articleSearch`)
 
 module.exports = function (req, res, next) {
-  const rtagSeparator = /[+/,_: ]+/ig;
-  const rtermSeparator = /[+/,_: -]+/ig;
-  const input = req.params.terms;
-  const tags = req.params.tags.split(rtagSeparator);
-  const terms = input.split(rtermSeparator);
+  const rtagSeparator = /[+/,_: ]+/ig
+  const rtermSeparator = /[+/,_: -]+/ig
+  const input = req.params.terms
+  const tags = req.params.tags.split(rtagSeparator)
+  const terms = input.split(rtermSeparator)
   const handlerOpts = {
     search: true,
     queryTerms: terms,
     queryTags: tags
-  };
-  const handle = articleListHandler(res, handlerOpts, searchResults(res, next));
+  }
+  const handle = articleListHandler(res, handlerOpts, searchResults(res, next))
 
   res.viewModel = {
     model: {
@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
       action: `articles/search-results`,
       query: articleSearchService.format(terms, tags)
     }
-  };
+  }
 
-  articleSearchService.query(input, { tags: tags, populate: `author` }, handle);
-};
+  articleSearchService.query(input, { tags: tags, populate: `author` }, handle)
+}

@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const taunus = require(`taunus`);
+const taunus = require(`taunus`)
 
 function remodel (req, res) {
-  taunus.rebuildDefaultViewModel(rebuilt);
+  taunus.rebuildDefaultViewModel(rebuilt)
   function rebuilt () {
-    res.json({});
+    res.json({})
   }
 }
 
-module.exports = remodel;
+module.exports = remodel

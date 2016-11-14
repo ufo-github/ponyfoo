@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-const token = require(`./lib/token`);
+const token = require(`./lib/token`)
 
-module.exports = token.model(`UserVerificationToken`);
+module.exports = token.model(`UserVerificationToken`)

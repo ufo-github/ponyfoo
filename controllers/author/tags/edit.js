@@ -1,27 +1,27 @@
-'use strict';
+'use strict'
 
-const KnownTag = require(`../../../models/KnownTag`);
+const KnownTag = require(`../../../models/KnownTag`)
 
 module.exports = function (req, res, next) {
-  const slug = req.params.slug;
-  const editing = !!slug;
+  const slug = req.params.slug
+  const editing = !!slug
   if (slug) {
     KnownTag
       .findOne({ slug: slug })
       .lean()
-      .exec(found);
+      .exec(found)
   } else {
-    respond({});
+    respond({})
   }
 
   function found (err, tag) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     if (!tag) {
-      next(`route`); return;
+      next(`route`); return
     }
-    respond(tag);
+    respond(tag)
   }
 
   function respond (tag) {
@@ -31,7 +31,7 @@ module.exports = function (req, res, next) {
         tag: tag,
         editing: editing
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

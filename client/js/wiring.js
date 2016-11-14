@@ -1,3 +1,3 @@
-'use strict';
+'use strict'
 
-module.exports = require(`../../.bin/lib/wiring`);
+module.exports = require(`../../.bin/lib/wiring`)

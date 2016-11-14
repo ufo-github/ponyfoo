@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
-const comments = require(`../comments/all`);
+const $ = require(`dominus`)
+const comments = require(`../comments/all`)
 
 module.exports = function (viewModel, container) {
-  const composer = $(`.mc-composer`, container);
+  const composer = $(`.mc-composer`, container)
   if (!composer.length) {
-    return;
+    return
   }
   const commentsModel = {
     user: viewModel.user,
@@ -15,6 +15,6 @@ module.exports = function (viewModel, container) {
     measly: viewModel.measly.layer({
       context: composer[0]
     })
-  };
-  comments(commentsModel, container);
-};
+  }
+  comments(commentsModel, container)
+}

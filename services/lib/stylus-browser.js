@@ -1,1 +1,1 @@
-module.exports = global.stylus;
+module.exports = global.stylus

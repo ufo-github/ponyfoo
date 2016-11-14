@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-const fs = require(`fs`);
-const contra = require(`contra`);
-const assign = require(`assignment`);
-const Twit = require(`twit`);
-const winston = require(`winston`);
-const unlockCodeService = require(`./unlockCode`);
-const env = require(`../lib/env`);
-const enabled = env(`USER_TWEETS`);
-const submit = enabled ? postTweet : logTweet;
+const fs = require(`fs`)
+const contra = require(`contra`)
+const assign = require(`assignment`)
+const Twit = require(`twit`)
+const winston = require(`winston`)
+const unlockCodeService = require(`./unlockCode`)
+const env = require(`../lib/env`)
+const enabled = env(`USER_TWEETS`)
+const submit = enabled ? postTweet : logTweet
 const tweets = {
   '/books/practical-es6': {
     media: `./client/img/mjavascript/cover-with-text.png`,
@@ -20,7 +20,7 @@ const tweets = {
       `💳 https://mjavascript.com`
     ].join(`\n`)
   }
-};
+}
 
 function create ({ twitterToken, twitterTokenSecret }) {
   return enabled && new Twit({
@@ -28,11 +28,11 @@ function create ({ twitterToken, twitterTokenSecret }) {
     consumer_secret: env(`USER_TWITTER_CONSUMER_SECRET`),
     access_token: twitterToken,
     access_token_secret: twitterTokenSecret,
-  });
+  })
 }
 
 function postTweet ({ tweet, twitterToken, twitterTokenSecret }) {
-  const client = create({ twitterToken, twitterTokenSecret });
+  const client = create({ twitterToken, twitterTokenSecret })
 
   if (tweet.media) {
     contra.waterfall([
@@ -40,58 +40,58 @@ function postTweet ({ tweet, twitterToken, twitterTokenSecret }) {
       uploadMedia,
       postMetadata,
       postStatus
-    ], log);
-    return;
+    ], log)
+    return
   }
 
-  postStatus({}, log);
+  postStatus({}, log)
 
   function readMedia (next) {
-    fs.readFile(tweet.media, { encoding: `base64` }, next);
+    fs.readFile(tweet.media, { encoding: `base64` }, next)
   }
 
   function uploadMedia (media_data, next) {
-    client.post(`media/upload`, { media_data }, next);
+    client.post(`media/upload`, { media_data }, next)
   }
 
   function postMetadata (data, response, next) {
-    const media_id = data.media_id_string;
-    const media_ids = [media_id];
-    const alt_text = { text: tweet.mediaAlt };
-    const meta = { media_id, alt_text };
-    const forwarder = err => next(err, { media_ids });
-    client.post(`media/metadata/create`, meta, forwarder);
+    const media_id = data.media_id_string
+    const media_ids = [media_id]
+    const alt_text = { text: tweet.mediaAlt }
+    const meta = { media_id, alt_text }
+    const forwarder = err => next(err, { media_ids })
+    client.post(`media/metadata/create`, meta, forwarder)
   }
 
   function postStatus (options, next) {
-    const { status } = tweet;
-    const payload = assign({ status }, options);
-    client.post(`statuses/update`, payload, next);
+    const { status } = tweet
+    const payload = assign({ status }, options)
+    client.post(`statuses/update`, payload, next)
   }
 }
 
 function logTweet ({ tweet }) {
-  winston.info(`Tweet: ` + tweet.status);
+  winston.info(`Tweet: ` + tweet.status)
 }
 
 function log (err) {
   if (err) {
-    winston.warn(`Error while tweeting.`, err);
+    winston.warn(`Error while tweeting.`, err)
   }
 }
 
 function setup () {
-  unlockCodeService.on(`added`, added);
+  unlockCodeService.on(`added`, added)
 }
 
 function added ({ user, code }) {
-  const { twitterToken, twitterTokenSecret } = user;
-  const tweet = tweets[code];
+  const { twitterToken, twitterTokenSecret } = user
+  const tweet = tweets[code]
   if (tweet) {
-    submit({ tweet, twitterToken, twitterTokenSecret });
+    submit({ tweet, twitterToken, twitterTokenSecret })
   }
 }
 
 module.exports = {
   setup
-};
+}

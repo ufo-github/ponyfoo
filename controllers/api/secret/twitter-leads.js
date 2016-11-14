@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-const subscriberTwitterService = require(`../../../services/subscriberTwitter`);
+const subscriberTwitterService = require(`../../../services/subscriberTwitter`)
 
 function poll (req, res, next) {
-  subscriberTwitterService.pollCards(polled);
+  subscriberTwitterService.pollCards(polled)
   function polled (err) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    res.json({});
+    res.json({})
   }
 }
 
-module.exports = poll;
+module.exports = poll

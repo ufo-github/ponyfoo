@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const userService = require(`../../../services/user`);
+const userService = require(`../../../services/user`)
 
 function getAllAuthors (req, res, next) {
-  findUsers(respond);
+  findUsers(respond)
 
   function findUsers (done) {
-    userService.findAllUsersInRole([`owner`, `articles`], done);
+    userService.findAllUsersInRole([`owner`, `articles`], done)
   }
 
   function respond (err, users) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.json([{
       id: `Authors`,
       list: toUserModels(users)
-    }]);
+    }])
   }
 }
 
@@ -25,7 +25,7 @@ function toUserModels (users) {
     slug: user.slug,
     displayName: user.displayName,
     avatar: userService.getAvatar(user)
-  }));
+  }))
 }
 
-module.exports = getAllAuthors;
+module.exports = getAllAuthors

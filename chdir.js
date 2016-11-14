@@ -1,3 +1,3 @@
-'use strict';
+'use strict'
 
-process.chdir(__dirname);
+process.chdir(__dirname)

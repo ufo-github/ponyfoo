@@ -1,24 +1,24 @@
-'use strict';
+'use strict'
 
-const interval = 1000;
-let ready = false;
+const interval = 1000
+let ready = false
 
 function setup () {
-  window.addEventListener(`beforeinstallprompt`, controlledAddToHome);
+  window.addEventListener(`beforeinstallprompt`, controlledAddToHome)
 }
 
 function controlledAddToHome (e) {
   if (ready) {
-    return;
+    return
   }
-  e.preventDefault();
-  setTimeout(() => e.prompt(), interval);
+  e.preventDefault()
+  setTimeout(() => e.prompt(), interval)
 }
 
 function enable () {
-  ready = true;
+  ready = true
 }
 
 module.exports = {
   setup, enable
-};
+}

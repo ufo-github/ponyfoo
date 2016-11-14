@@ -1,25 +1,25 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
+const $ = require(`dominus`)
 
 function unwrapImages (container) {
-  $(container).find(`img[data-src]`).forEach(unwrap);
+  $(container).find(`img[data-src]`).forEach(unwrap)
 }
 
 function unwrap (img) {
-  const $img = $(img);
+  const $img = $(img)
   if (!$img.attr(`data-src`)) {
-    return;
+    return
   }
-  $img.attr(`src`, $img.attr(`data-src`));
-  $img.attr(`data-src`, null);
-  $img.on(`load`, loaded($img));
+  $img.attr(`src`, $img.attr(`data-src`))
+  $img.attr(`data-src`, null)
+  $img.on(`load`, loaded($img))
 }
 
 function loaded ($img) {
   $img
     .parents(`figure`)
-    .addClass(`figure-has-loaded`);
+    .addClass(`figure-has-loaded`)
 }
 
-module.exports = unwrapImages;
+module.exports = unwrapImages

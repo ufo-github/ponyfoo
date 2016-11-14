@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const pullData = require(`../lib/pullData`);
-const subscriberService = require(`../../services/subscriber`);
+const pullData = require(`../lib/pullData`)
+const subscriberService = require(`../../services/subscriber`)
 
 module.exports = function (req, res, next) {
   pullData(function render (err, result) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
 
     res.viewModel = {
@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
           canonical: `/subscribe`
         }
       }
-    };
-    next();
-  });
-};
+    }
+    next()
+  })
+}

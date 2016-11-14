@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const truncText = require(`trunc-text`);
-const Presentation = require(`../../models/Presentation`);
-const presentationService = require(`../../services/presentation`);
-const htmlService = require(`../../services/html`);
+const truncText = require(`trunc-text`)
+const Presentation = require(`../../models/Presentation`)
+const presentationService = require(`../../services/presentation`)
+const htmlService = require(`../../services/html`)
 
 module.exports = function (req, res, next) {
   Presentation.findOne({ slug: req.params.slug }, function (err, presentation) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     if (!presentation) {
-      res.viewModel = { skip: true };
-      next(); return;
+      res.viewModel = { skip: true }
+      next(); return
     }
-    const descriptionText = htmlService.getText(presentation.descriptionHtml);
-    const description = truncText(descriptionText, 170);
-    const model = presentationService.toModel(presentation);
+    const descriptionText = htmlService.getText(presentation.descriptionHtml)
+    const description = truncText(descriptionText, 170)
+    const model = presentationService.toModel(presentation)
     res.viewModel = {
       model: {
         title: presentation.title,
@@ -27,7 +27,7 @@ module.exports = function (req, res, next) {
           images: presentationService.toCovers(presentation)
         }
       }
-    };
-    next();
-  });
-};
+    }
+    next()
+  })
+}

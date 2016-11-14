@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const assign = require(`assignment`);
-const Article = require(`../../../../models/Article`);
-const WeeklyIssue = require(`../../../../models/WeeklyIssue`);
+const contra = require(`contra`)
+const assign = require(`assignment`)
+const Article = require(`../../../../models/Article`)
+const WeeklyIssue = require(`../../../../models/WeeklyIssue`)
 const hostTypes = {
   articles: {
     name: `Article`,
@@ -17,53 +17,53 @@ const hostTypes = {
     query: { status: `released` },
     topic: `newsletter`
   }
-};
+}
 
 function removeAction (req, res, next, done) {
-  const hostType = hostTypes[req.params.type];
-  const id = req.params.id;
+  const hostType = hostTypes[req.params.type]
+  const id = req.params.id
 
-  contra.waterfall([lookup, found, removal], handle);
+  contra.waterfall([lookup, found, removal], handle)
 
   function lookup (next) {
     hostType.schema
       .findOne(assign({ slug: req.params.slug }, hostType.query))
       .populate(`comments`)
-      .exec(next);
+      .exec(next)
   }
 
   function found (host, next) {
-    const comment = host.comments.id(id);
+    const comment = host.comments.id(id)
     if (!comment) {
-      done(`not found`); return;
+      done(`not found`); return
     }
-    next(null, host);
+    next(null, host)
   }
 
   function removal (host, next) {
-    const comment = host.comments.id(id);
+    const comment = host.comments.id(id)
     const children = host.comments.filter(sameThread);
 
-    [comment].concat(children).forEach(removeAll);
-    host.save(saved);
+    [comment].concat(children).forEach(removeAll)
+    host.save(saved)
 
     function sameThread (comment) {
-      return comment.parent && comment.parent.equals(id);
+      return comment.parent && comment.parent.equals(id)
     }
     function removeAll (comment) {
-      comment.remove();
+      comment.remove()
     }
     function saved (err) {
-      next(err);
+      next(err)
     }
   }
 
   function handle (err) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    done(`success`);
+    done(`success`)
   }
 }
 
-module.exports = removeAction;
+module.exports = removeAction

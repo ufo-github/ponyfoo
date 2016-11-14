@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-const OpenSourceProject = require(`../../models/OpenSourceProject`);
+const OpenSourceProject = require(`../../models/OpenSourceProject`)
 
 module.exports = function (req, res, next) {
   OpenSourceProject.find({}).sort(`-added`).lean().exec(function (err, projects) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -14,10 +14,10 @@ module.exports = function (req, res, next) {
           return {
             id: project._id.toString(),
             name: project.name
-          };
+          }
         })
       }
-    };
-    next();
-  });
-};
+    }
+    next()
+  })
+}

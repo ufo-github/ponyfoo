@@ -1,27 +1,27 @@
-'use strict';
+'use strict'
 
-const _ = require(`lodash`);
-const contra = require(`contra`);
-const winston = require(`winston`);
-const assign = require(`assignment`);
-const User = require(`../models/User`);
-const UnverifiedUser = require(`../models/UnverifiedUser`);
-const UserVerificationToken = require(`../models/UserVerificationToken`);
-const Article = require(`../models/Article`);
-const gravatarService = require(`./gravatar`);
-const defaultRoles = [`articles`];
+const _ = require(`lodash`)
+const contra = require(`contra`)
+const winston = require(`winston`)
+const assign = require(`assignment`)
+const User = require(`../models/User`)
+const UnverifiedUser = require(`../models/UnverifiedUser`)
+const UserVerificationToken = require(`../models/UserVerificationToken`)
+const Article = require(`../models/Article`)
+const gravatarService = require(`./gravatar`)
+const defaultRoles = [`articles`]
 
 function findContributors (done) {
-  contra.waterfall([next => findUsers({}, next), countArticles], done);
+  contra.waterfall([next => findUsers({}, next), countArticles], done)
 }
 
 function findActiveContributors (done) {
   findContributors((err, contributors) => {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    done(null, contributors.filter(isActive));
-  });
+    done(null, contributors.filter(isActive))
+  })
 }
 
 function findUsers (query, done) {
@@ -29,30 +29,30 @@ function findUsers (query, done) {
     .find(query)
     .sort(`created`)
     .lean()
-    .exec(done);
+    .exec(done)
 }
 
 function findUnverified (done) {
   contra.waterfall([
     findTokens,
     findUnusedUnverified
-  ], done);
+  ], done)
 
   function findTokens (next) {
-    UserVerificationToken.find({ used: null }, next);
+    UserVerificationToken.find({ used: null }, next)
   }
 
   function findUnusedUnverified (tokens, next) {
-    const $in = _.map(tokens, `targetId`);
+    const $in = _.map(tokens, `targetId`)
     const query = {
       _id: { $in }
-    };
-    UnverifiedUser.find(query).exec(next);
+    }
+    UnverifiedUser.find(query).exec(next)
   }
 }
 
 function findAllUsersInRole (roles, done) {
-  findUsersWithRole({}, roles, done);
+  findUsersWithRole({}, roles, done)
 }
 
 function findUsersWithRole (query, roles, done) {
@@ -60,56 +60,56 @@ function findUsersWithRole (query, roles, done) {
     roles: {
       $in: roles
     }
-  };
-  const fullQuery = assign(roleQuery, query);
-  findUsers(fullQuery, done);
+  }
+  const fullQuery = assign(roleQuery, query)
+  findUsers(fullQuery, done)
 }
 
 function findUserWithRole (query, roles, done) {
   findUsersWithRole(query, roles, (err, users) => {
     if (err) {
-      done(err);
+      done(err)
     } else {
-      const [ user ] = users;
-      done(null, user);
+      const [ user ] = users
+      done(null, user)
     }
-  });
+  })
 }
 
 function countArticles (users, done) {
-  contra.map(users, hydrateWithArticleCount, done);
+  contra.map(users, hydrateWithArticleCount, done)
 
   function hydrateWithArticleCount (user, next) {
     Article
       .count({ author: user._id, status: `published` })
-      .exec(counted);
+      .exec(counted)
 
     function counted (err, count) {
       if (err) {
-        next(err); return;
+        next(err); return
       }
       next(null, {
         user: user,
         articleCount: count
-      });
+      })
     }
   }
 }
 
 function getModel (email, password, bypassEncryption) {
-  const displayName = email.split(`@`)[0];
+  const displayName = email.split(`@`)[0]
   return {
     email,
     password,
     bypassEncryption,
     displayName,
     roles: defaultRoles
-  };
+  }
 }
 
 function getProfile (contributor, options) {
-  const rstrip = /^\s*<p>\s*<\/p>\s*$/i;
-  const user = contributor.user;
+  const rstrip = /^\s*<p>\s*<\/p>\s*$/i
+  const user = contributor.user
   const profile = {
     avatar: getAvatar(user),
     displayName: user.displayName,
@@ -117,116 +117,116 @@ function getProfile (contributor, options) {
     role: humanReadableRole(user.roles, contributor.articleCount !== 0),
     twitter: user.twitter,
     website: user.website
-  };
-  if (options.withBio) {
-    profile.bioHtml = user.bioHtml.replace(rstrip, ``);
   }
-  return profile;
+  if (options.withBio) {
+    profile.bioHtml = user.bioHtml.replace(rstrip, ``)
+  }
+  return profile
 }
 
 function getAvatar (user) {
   if (user.avatar) {
-    return user.avatar;
+    return user.avatar
   }
   if (user.email) {
-    return gravatarService.format(user.email) + `&s=24`;
+    return gravatarService.format(user.email) + `&s=24`
   }
-  return `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=24`;
+  return `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&f=y&s=24`
 }
 
 function humanReadableRole (roles, hasPublishedArticles) {
-  const terms = [];
+  const terms = []
   if (roles.indexOf(`articles`) !== -1 && hasPublishedArticles) {
-    terms.push(`Contributing Author`);
+    terms.push(`Contributing Author`)
   }
   if (roles.indexOf(`moderator`) !== -1) {
-    terms.push(`Contributing Editor`);
+    terms.push(`Contributing Editor`)
   }
   if (roles.indexOf(`moderator`) !== -1) {
-    terms.push(`Moderator`);
+    terms.push(`Moderator`)
   }
   if (roles.indexOf(`weeklies`) !== -1) {
-    terms.push(`Pony Foo Weekly`);
+    terms.push(`Pony Foo Weekly`)
   }
   if (roles.indexOf(`owner`) !== -1) {
-    return `Founder`;
+    return `Founder`
   }
   if (terms.length) {
-    return concatenate();
+    return concatenate()
   }
-  return `Collaborator`;
+  return `Collaborator`
   function concatenate () {
-    const firstTerm = terms.shift();
-    return terms.reduce(termReducer, firstTerm);
+    const firstTerm = terms.shift()
+    return terms.reduce(termReducer, firstTerm)
   }
 }
 
 function termReducer (all, term, i, terms) {
-  const len = terms.length;
-  const separator = len > 1 ? `, ` : ` `;
-  const joiner = len === i + 1 ? `and ` : ``;
-  return all + separator + joiner + term;
+  const len = terms.length
+  const separator = len > 1 ? `, ` : ` `
+  const joiner = len === i + 1 ? `and ` : ``
+  return all + separator + joiner + term
 }
 
 function createUser ({ bypassEncryption }) {
   return function creation (email, password, done) {
-    const model = getModel(email, password, bypassEncryption);
-    const user = new User(model);
+    const model = getModel(email, password, bypassEncryption)
+    const user = new User(model)
 
     user.save(function saved (err) {
       if (!err) {
-        winston.info(`Created an account for ${ email }`);
+        winston.info(`Created an account for ${ email }`)
       }
-      done(err, user);
-    });
-  };
+      done(err, user)
+    })
+  }
 }
 
 function findById (id, done) {
-  User.findOne({ _id: id }, done);
+  User.findOne({ _id: id }, done)
 }
 
 function findOne (query, done) {
-  User.findOne(query, done);
+  User.findOne(query, done)
 }
 
 function setPassword (userId, password, done) {
   User.findOne({ _id: userId }, function found (err, user) {
     if(err || !user){
-      return done(err, false);
+      return done(err, false)
     }
 
-    user.password = password;
-    user.save(done);
-  });
+    user.password = password
+    user.save(done)
+  })
 }
 
 function hasRole (user, ...roles) {
-  return roles.some(userHasRole);
+  return roles.some(userHasRole)
   function userHasRole (role) {
     if (Array.isArray(role)) {
-      return role.some(userHasRole);
+      return role.some(userHasRole)
     }
-    return user.roles.indexOf(role) !== -1;
+    return user.roles.indexOf(role) !== -1
   }
 }
 
 function isActive (contributor) {
-  const roles = contributor.user.roles;
-  const singleRole = roles.length === 1;
-  const articleUser = singleRole && roles[0] === `articles`;
+  const roles = contributor.user.roles
+  const singleRole = roles.length === 1
+  const articleUser = singleRole && roles[0] === `articles`
   if (articleUser && contributor.articleCount === 0) {
-    return false;
+    return false
   }
-  return true;
+  return true
 }
 
 function canEditArticle (options) {
   if (!options.userId || !options.userRoles) {
-    return false;
+    return false
   }
   if (options.articleStatus === `deleted`) {
-    return false;
+    return false
   }
   return ( // owners. editors. authors working on drafts.
     options.userRoles.indexOf(`owner`) !== -1 ||
@@ -235,7 +235,7 @@ function canEditArticle (options) {
       options.authorId.equals(options.userId) &&
       options.articleStatus === `draft`
     )
-  );
+  )
 }
 
 module.exports = {
@@ -256,4 +256,4 @@ module.exports = {
   isActive,
   canEditArticle,
   defaultRoles
-};
+}

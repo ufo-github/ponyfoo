@@ -1,33 +1,33 @@
-'use strict';
+'use strict'
 
-const tag = `script`;
+const tag = `script`
 
 function loadScript (url, options, done) {
   if (typeof options === `function`) {
-    done = options;
-    options = {};
+    done = options
+    options = {}
   } else if (!options) {
-    options = {};
+    options = {}
   }
-  let first;
-  const script = document.createElement(tag);
-  script.async = true;
-  script.src = url;
-  if (done) { script.onload = success; script.onerror = error; }
-  if (options.id) { script.id = options.id; }
+  let first
+  const script = document.createElement(tag)
+  script.async = true
+  script.src = url
+  if (done) { script.onload = success; script.onerror = error }
+  if (options.id) { script.id = options.id }
   if (options.container) {
-    options.container.insertBefore(script, options.container.firstChild);
+    options.container.insertBefore(script, options.container.firstChild)
   } else {
-    first = document.getElementsByTagName(`link`)[0];
-    first.parentNode.insertBefore(script, first);
+    first = document.getElementsByTagName(`link`)[0]
+    first.parentNode.insertBefore(script, first)
   }
-  return script;
+  return script
   function success () {
-    done();
+    done()
   }
   function error () {
-    done(new Error(`Error loading script: ` + url));
+    done(new Error(`Error loading script: ` + url))
   }
 }
 
-module.exports = loadScript;
+module.exports = loadScript

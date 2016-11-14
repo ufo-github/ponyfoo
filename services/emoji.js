@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-const twemoji = require(`twemoji`);
+const twemoji = require(`twemoji`)
 const emojiOpts = {
   base: `https://twemoji.maxcdn.com/2/`,
   className: `tj-emoji`,
   size: 72
-};
+}
 const funEmoji = [
   `🐺`, `🐸`, `🐯`, `🐗`, `🐴`, `🦄`, `🐑`, `🐘`, `🐼`, `🐦`, `🐣`,
   `🐍`, `🐢`, `🐙`, `🐠`, `🐟`, `🐬`, `🐳`, `🐋`, `🐏`, `🐇`, `🐉`, `🐐`, `🐓`, `🐲`, `🐊`,
@@ -20,29 +20,29 @@ const funEmoji = [
   `🍦`, `🍨`, `🍧`, `🎂`, `🍰`, `🍪`, `🍫`, `🍬`, `🍭`,
   `🍕`, `🍟`, `🍝`, `🍛`, `🍤`, `🍣`, `🍥`,
   `🍻`, `🍸`, `🍹`, `🍷`
-];
+]
 const mailEmoji = [
   `✉️️`, `💌`, `📥`, `📤`, `📬`, `📩`, `📮`, `📪`, `📫`, `📬`, `📭`
-];
+]
 
 function random (list) {
-  return list[Math.floor(Math.random() * list.length)];
+  return list[Math.floor(Math.random() * list.length)]
 }
 
 function randomFun () {
-  return random(funEmoji);
+  return random(funEmoji)
 }
 
 function randomMailEmoji () {
-  return random(mailEmoji);
+  return random(mailEmoji)
 }
 
 function compile (text) {
-  return twemoji.parse(text, emojiOpts);
+  return twemoji.parse(text, emojiOpts)
 }
 
 module.exports = {
   compile,
   randomFun,
   randomMailEmoji
-};
+}

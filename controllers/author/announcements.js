@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = function (req, res, next) {
   res.viewModel = {
@@ -8,6 +8,6 @@ module.exports = function (req, res, next) {
         canonical: `/owner/announcements`
       }
     }
-  };
-  next();
-};
+  }
+  next()
+}

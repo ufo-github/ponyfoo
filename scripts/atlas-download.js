@@ -1,48 +1,48 @@
-'use strict';
+'use strict'
 
-require(`../preconfigure`);
-require(`../chdir`);
+require(`../preconfigure`)
+require(`../chdir`)
 
-const values = require(`lodash/values`);
-const contra = require(`contra`);
-const winston = require(`winston`);
-const db = require(`../lib/db`);
-const boot = require(`../lib/boot`);
-const oreillyService = require(`../services/oreilly`);
-const atlasBuildService = require(`../services/atlasBuild`);
+const values = require(`lodash/values`)
+const contra = require(`contra`)
+const winston = require(`winston`)
+const db = require(`../lib/db`)
+const boot = require(`../lib/boot`)
+const oreillyService = require(`../services/oreilly`)
+const atlasBuildService = require(`../services/atlasBuild`)
 
-boot(booted);
+boot(booted)
 
 function booted () {
   oreillyService.findSlugs(true, (err, slugs) => {
     if (err) {
-      downloaded(err); return;
+      downloaded(err); return
     }
-    contra.map.series(slugs, downloadTask, downloaded);
-  });
+    contra.map.series(slugs, downloadTask, downloaded)
+  })
 }
 
 function downloadTask (bookSlug, done) {
-  winston.info(`Downloading HTML build for ${bookSlug}.`);
-  atlasBuildService.download({ bookSlug }, done);
+  winston.info(`Downloading HTML build for ${bookSlug}.`)
+  atlasBuildService.download({ bookSlug }, done)
 }
 
 function downloaded (err, builds) {
   if (err) {
-    winston.error(err);
-    end();
-    return;
+    winston.error(err)
+    end()
+    return
   }
 
   const hashes = builds
     .reduce((all, build) => all.concat(values(build)), [])
     .map(build => build.hash)
-    .join(`,`);
+    .join(`,`)
 
-  winston.info(`Downloaded [${ hashes }] HTML builds.`);
-  end();
+  winston.info(`Downloaded [${ hashes }] HTML builds.`)
+  end()
 }
 
 function end () {
-  db.disconnect(() => process.exit(0));
+  db.disconnect(() => process.exit(0))
 }

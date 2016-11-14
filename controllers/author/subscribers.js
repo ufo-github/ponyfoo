@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const pullData = require(`../lib/pullData`);
-const Subscriber = require(`../../models/Subscriber`);
-const subscriberService = require(`../../services/subscriber`);
-const datetimeService = require(`../../services/datetime`);
-const userService = require(`../../services/user`);
+const contra = require(`contra`)
+const pullData = require(`../lib/pullData`)
+const Subscriber = require(`../../models/Subscriber`)
+const subscriberService = require(`../../services/subscriber`)
+const datetimeService = require(`../../services/datetime`)
+const userService = require(`../../services/user`)
 
 module.exports = function (req, res, next) {
-  const max = 100;
-  const page = parseInt(req.params.page, 10) || 1;
-  const p = page - 1;
-  const start = max * p;
+  const max = 100
+  const page = parseInt(req.params.page, 10) || 1
+  const p = page - 1
+  const start = max * p
 
   contra.concurrent({
     subscriberGraph: pullData,
     subscribers: pullSubscribers
-  }, ready);
+  }, ready)
 
   function pullSubscribers (next) {
     Subscriber
@@ -25,12 +25,12 @@ module.exports = function (req, res, next) {
       .skip(start)
       .limit(max)
       .lean()
-      .exec(found);
+      .exec(found)
     function found (err, subscribers) {
       if (err) {
-        next(err); return;
+        next(err); return
       }
-      next(null, subscribers.map(toModel));
+      next(null, subscribers.map(toModel))
     }
   }
 
@@ -43,12 +43,12 @@ module.exports = function (req, res, next) {
       source: subscriber.source.split(`+`)[0],
       verified: subscriber.verified,
       hash: subscriberService.getHash(subscriber)
-    };
+    }
   }
 
   function ready (err, result) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
 
     res.viewModel = {
@@ -60,7 +60,7 @@ module.exports = function (req, res, next) {
         more: result.subscribers.length >= max,
         page: page
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

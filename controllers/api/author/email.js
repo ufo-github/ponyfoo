@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-const validator = require(`validator`);
-const subscriberService = require(`../../../services/subscriber`);
-const markupService = require(`../../../services/markup`);
+const validator = require(`validator`)
+const subscriberService = require(`../../../services/subscriber`)
+const markupService = require(`../../../services/markup`)
 
 module.exports = function (req, res) {
-  const { topic, subject, body } = req.body;
-  let { teaser } = req.body;
+  const { topic, subject, body } = req.body
+  let { teaser } = req.body
 
   if (invalid()) {
-    return;
+    return
   }
 
-  const rawBody = markupService.compile(body, { absolutize: true });
+  const rawBody = markupService.compile(body, { absolutize: true })
 
   subscriberService.send({
     topic,
@@ -22,23 +22,23 @@ module.exports = function (req, res) {
       teaser,
       rawBody
     }
-  });
-  res.json({});
+  })
+  res.json({})
 
   function invalid () {
-    const messages = [];
+    const messages = []
     if (!validator.isLength(subject, 4)) {
-      messages.push(`The email subject is way too short!`);
+      messages.push(`The email subject is way too short!`)
     }
     if (!validator.isLength(teaser, 4)) {
-      teaser = subject;
+      teaser = subject
     }
     if (!validator.isLength(body, 10)) {
-      messages.push(`The email body should have some substance, don’t you think?`);
+      messages.push(`The email body should have some substance, don’t you think?`)
     }
     if (messages.length) {
-      res.status(400).json({ messages });
-      return true;
+      res.status(400).json({ messages })
+      return true
     }
   }
-};
+}

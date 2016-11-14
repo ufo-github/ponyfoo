@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const mongoose = require(`mongoose`);
-const Mixed = mongoose.Schema.Types.Mixed;
+const mongoose = require(`mongoose`)
+const Mixed = mongoose.Schema.Types.Mixed
 const schema = new mongoose.Schema({
   created: { type: Date, index: { unique: false }, require: true, 'default': Date.now },
   status: { type: String, index: { unique: false }, require: true }, // ['incoming', 'rejected', 'accepted', 'used']
@@ -17,6 +17,6 @@ const schema = new mongoose.Schema({
   accepted: Boolean,
   dates: [Date],
   section: Mixed
-});
+})
 
-module.exports = mongoose.model(`WeeklyIssueSubmission`, schema);
+module.exports = mongoose.model(`WeeklyIssueSubmission`, schema)

@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const pullSubscribers = require(`../lib/pullSubscribers`);
-const pullPageViews = require(`../lib/pullPageViews`);
+const contra = require(`contra`)
+const pullSubscribers = require(`../lib/pullSubscribers`)
+const pullPageViews = require(`../lib/pullPageViews`)
 
 module.exports = function (done) {
   contra.concurrent({
     subscribers: contra.curry(pullSubscribers),
     pageviews: contra.curry(pullPageViews)
-  }, render);
+  }, render)
   function render (err, result) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
     done(null, {
       subscribers: result.subscribers.buckets,
       verified: result.subscribers.verified,
       pageviews: result.pageviews
-    });
+    })
   }
-};
+}

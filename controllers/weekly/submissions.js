@@ -1,37 +1,37 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const WeeklyIssueSubmission = require(`../../models/WeeklyIssueSubmission`);
-const staticService = require(`../../services/static`);
-const weeklySubmissionService = require(`../../services/weeklySubmission`);
-const authority = env(`AUTHORITY`);
+const env = require(`../../lib/env`)
+const WeeklyIssueSubmission = require(`../../models/WeeklyIssueSubmission`)
+const staticService = require(`../../services/static`)
+const weeklySubmissionService = require(`../../services/weeklySubmission`)
+const authority = env(`AUTHORITY`)
 
 module.exports = function (req, res, next) {
-  const slug = req.params.slug;
+  const slug = req.params.slug
   if (slug) {
-    WeeklyIssueSubmission.findOne({ slug: slug }, found);
+    WeeklyIssueSubmission.findOne({ slug: slug }, found)
   } else {
-    respond();
+    respond()
   }
 
   function found (err, submission) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     if (!submission) {
-      next(`route`); return;
+      next(`route`); return
     }
     const options = {
       submission: submission,
       userId: req.user,
       verify: req.query.verify
-    };
-    weeklySubmissionService.isEditable(options, respond);
+    }
+    weeklySubmissionService.isEditable(options, respond)
   }
 
   function respond (err, submission) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -44,14 +44,14 @@ module.exports = function (req, res, next) {
         editing: !!slug,
         submission: toEditModel(submission)
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}
 
 function toEditModel (submission) {
   if (!submission) {
-    return { section: {}, dates: [] };
+    return { section: {}, dates: [] }
   }
   return {
     type: submission.type,
@@ -70,5 +70,5 @@ function toEditModel (submission) {
     submitter: submission.submitter,
     email: submission.email,
     comment: submission.comment
-  };
+  }
 }

@@ -1,29 +1,29 @@
-'use strict';
+'use strict'
 
-const blockers = [];
+const blockers = []
 
 function has ($el) {
-  return blockers.indexOf($el) !== -1;
+  return blockers.indexOf($el) !== -1
 }
 
 function add ($el) {
   if (has($el)) {
-    return;
+    return
   }
-  blockers.push($el);
-  $el.addClass(`pb-block`);
+  blockers.push($el)
+  $el.addClass(`pb-block`)
 }
 
 function release ($el) {
-  blockers.splice(blockers.indexOf($el), 1);
-  $el.removeClass(`pb-block`);
+  blockers.splice(blockers.indexOf($el), 1)
+  $el.removeClass(`pb-block`)
 }
 
 function block ($el) {
   if (has($el)) {
-    return true;
+    return true
   }
-  add($el);
+  add($el)
 }
 
-module.exports = { has, add, release, block };
+module.exports = { has, add, release, block }

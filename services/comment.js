@@ -1,7 +1,10 @@
-'use strict';
+'use strict'
 
-const _ = require(`lodash`);
-const datetimeService = require(`./datetime`);
+const _ = require(`lodash`)
+const moment = require(`moment`)
+const datetimeService = require(`./datetime`)
+const env = require(`../lib/env`)
+const autoclose = env(`AUTOCLOSE_COMMENTS`)
 
 function toJSON (comment) {
   return {
@@ -12,36 +15,44 @@ function toJSON (comment) {
     contentHtml: comment.contentHtml,
     site: comment.site,
     parent: (comment.parent || ``).toString(),
-    gravatar: comment.gravatar,
-  };
+    gravatar: comment.gravatar
+  }
 }
 
 function hydrate (target, doc) {
   if (doc.populated && doc.populated(`comments`)) {
-    target.commentThreads = doc.comments.sort(byPublication).reduce(threads, []);
+    target.commentThreads = doc.comments.sort(byPublication).reduce(threads, [])
   }
-  target.commentCount = doc.comments ? doc.comments.length : 0;
-  return target;
+  target.commentCount = doc.comments ? doc.comments.length : 0
+  target.commentOpen = !isClosed(doc)
+  return target
 }
 
 function threads (accumulator, comment) {
-  let thread;
-  const commentModel = toJSON(comment);
+  let thread
+  const commentModel = toJSON(comment)
   if (commentModel.parent) {
-    thread = _.find(accumulator, { id: commentModel.parent.toString() });
-    thread.comments.push(commentModel);
+    thread = _.find(accumulator, { id: commentModel.parent.toString() })
+    thread.comments.push(commentModel)
   } else {
-    thread = { id: commentModel._id.toString(), comments: [commentModel] };
-    accumulator.push(thread);
+    thread = { id: commentModel._id.toString(), comments: [commentModel] }
+    accumulator.push(thread)
   }
-  return accumulator;
+  return accumulator
 }
 
 function byPublication (a, b) {
-  return a.created - b.created;
+  return a.created - b.created
+}
+
+function isClosed (host) {
+  const autoclosing = moment(host.created).add(autoclose, `days`)
+  const now = moment()
+  return now.isAfter(autoclosing)
 }
 
 module.exports = {
-  toJSON: toJSON,
-  hydrate: hydrate
-};
+  toJSON,
+  hydrate,
+  isClosed
+}

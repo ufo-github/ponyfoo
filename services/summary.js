@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const he = require(`he`);
-const truncHtml = require(`trunc-html`);
+const he = require(`he`)
+const truncHtml = require(`trunc-html`)
 
 function summarize (html, limit) {
   const options = {
@@ -15,19 +15,19 @@ function summarize (html, limit) {
       },
       filter: function (token) {
         if (token.tag !== `img`) {
-          return true;
+          return true
         }
-        const hasEmojiClass = (token.attrs.class || ``).indexOf(`tj-emoji`) !== -1;
-        return hasEmojiClass;
+        const hasEmojiClass = (token.attrs.class || ``).indexOf(`tj-emoji`) !== -1
+        return hasEmojiClass
       }
     },
     imageAltText: true
-  };
-  const result = truncHtml(html, limit || Infinity, options);
-  result.text = he.decode(result.text);
-  return result;
+  }
+  const result = truncHtml(html, limit || Infinity, options)
+  result.text = he.decode(result.text)
+  return result
 }
 
 module.exports = {
   summarize: summarize
-};
+}

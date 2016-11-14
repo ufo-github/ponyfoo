@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-const articleService = require(`../../services/article`);
-const articleListHandler = require(`./lib/articleListHandler`);
+const articleService = require(`../../services/article`)
+const articleListHandler = require(`./lib/articleListHandler`)
 
 module.exports = function (req, res, next) {
-  const limit = 40;
-  const page = parseInt(req.params.page, 10) || 1;
-  const query = { status: `published` };
-  const options = { limit: limit, skip: page * limit - limit, populate: `author` };
-  const handle = articleListHandler(res, { skip: false }, next);
+  const limit = 40
+  const page = parseInt(req.params.page, 10) || 1
+  const query = { status: `published` }
+  const options = { limit: limit, skip: page * limit - limit, populate: `author` }
+  const handle = articleListHandler(res, { skip: false }, next)
 
   res.viewModel = {
     model: {
@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
       page: page,
       limit: limit
     }
-  };
+  }
 
-  articleService.find(query, options, handle);
-};
+  articleService.find(query, options, handle)
+}

@@ -1,16 +1,16 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const staticService = require(`../../services/static`);
-const authority = env(`AUTHORITY`);
-const WeeklyIssue = require(`../../models/WeeklyIssue`);
+const env = require(`../../lib/env`)
+const staticService = require(`../../services/static`)
+const authority = env(`AUTHORITY`)
+const WeeklyIssue = require(`../../models/WeeklyIssue`)
 
 module.exports = function (req, res, next) {
-  const query = { status: `released`, statusReach: `everyone` };
-  WeeklyIssue.count(query, counted);
+  const query = { status: `released`, statusReach: `everyone` }
+  WeeklyIssue.count(query, counted)
   function counted (err, count) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
         },
         any: count > 0
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

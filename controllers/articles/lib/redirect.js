@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
 function redirect (res, next) {
   return function (err, documents) {
     if (err) {
-      next(err);
+      next(err)
     } else if (!documents || !documents.length) {
-      next(`route`);
+      next(`route`)
     } else {
-      res.redirect(`/articles/` + documents[0].slug);
+      res.redirect(`/articles/` + documents[0].slug)
     }
-  };
+  }
 }
 
-module.exports = redirect;
+module.exports = redirect

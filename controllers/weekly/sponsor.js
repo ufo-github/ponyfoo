@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const staticService = require(`../../services/static`);
-const authority = env(`AUTHORITY`);
+const env = require(`../../lib/env`)
+const staticService = require(`../../services/static`)
+const authority = env(`AUTHORITY`)
 
 module.exports = function (req, res, next) {
   res.viewModel = {
@@ -14,6 +14,6 @@ module.exports = function (req, res, next) {
       },
       title: `Sponsorship \u2014 Pony Foo Weekly`
     }
-  };
-  next();
-};
+  }
+  next()
+}

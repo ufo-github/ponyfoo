@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const staticService = require(`../../services/static`);
-const oreillyService = require(`../../services/oreilly`);
-const authority = env(`AUTHORITY`);
+const env = require(`../../lib/env`)
+const staticService = require(`../../services/static`)
+const oreillyService = require(`../../services/oreilly`)
+const authority = env(`AUTHORITY`)
 
 module.exports = function (req, res, next) {
   oreillyService.getAllMetadata((err, oreilly) => {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -29,7 +29,7 @@ module.exports = function (req, res, next) {
           publicationYear: book.publicationYear
         }))
       }
-    };
-    next();
-  });
-};
+    }
+    next()
+  })
+}

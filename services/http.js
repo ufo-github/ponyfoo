@@ -1,107 +1,107 @@
-'use strict';
+'use strict'
 
-const _ = require(`lodash`);
-const util = require(`util`);
-const safeson = require(`safeson`);
-const taunus = require(`taunus`);
-const accepts = require(`accepts`);
-const pkg = require(`../package.json`);
-const env = require(`../lib/env`);
-const authority = env(`AUTHORITY`);
-const environment = env(`NODE_ENV`);
-const userAgent = util.format(`%s@%s/%s`, pkg.name, pkg.version, environment);
-const dev = environment === `development`;
-const textSpaces = dev ? 2 : 0;
+const _ = require(`lodash`)
+const util = require(`util`)
+const safeson = require(`safeson`)
+const taunus = require(`taunus`)
+const accepts = require(`accepts`)
+const pkg = require(`../package.json`)
+const env = require(`../lib/env`)
+const authority = env(`AUTHORITY`)
+const environment = env(`NODE_ENV`)
+const userAgent = util.format(`%s@%s/%s`, pkg.name, pkg.version, environment)
+const dev = environment === `development`
+const textSpaces = dev ? 2 : 0
 
 function referer (req) {
-  const r = req.headers.referer || ``;
-  return r.indexOf(authority) === 0 ? r : `/`;
+  const r = req.headers.referer || ``
+  return r.indexOf(authority) === 0 ? r : `/`
 }
 
 function validationError (req, res, result) {
-  response(req, res, 400, result, sane(req.body));
+  response(req, res, 400, result, sane(req.body))
 }
 
 function isJson (req) {
-  const accept = accepts(req).types(`html`, `json`);
-  const json = accept === `json` || `json` in req.query;
-  return json;
+  const accept = accepts(req).types(`html`, `json`)
+  const json = accept === `json` || `json` in req.query
+  return json
 }
 
 function asText (req) {
-  return `as-text` in req.query;
+  return `as-text` in req.query
 }
 
 function isJsonAsText (req) {
-  return isJson(req) && asText(req);
+  return isJson(req) && asText(req)
 }
 
 function response (req, res, statusCode, data, flashOnly) {
   if (isJson(req)) {
-    data.version = taunus.state.version;
-    res.status(statusCode);
+    data.version = taunus.state.version
+    res.status(statusCode)
     if (asText(req)) {
-      text();
+      text()
     } else {
-      json();
+      json()
     }
   } else {
-    flash();
+    flash()
   }
   function text () {
-    const encoded = safeson(data, textSpaces);
-    res.set(`Content-Type`, `text/html; charset=utf-8`);
-    res.send(encoded);
+    const encoded = safeson(data, textSpaces)
+    res.set(`Content-Type`, `text/html; charset=utf-8`)
+    res.send(encoded)
   }
   function json () {
-    res.json(data);
+    res.json(data)
   }
   function flash () {
-    flashCopy(req, data);
+    flashCopy(req, data)
     if (flashOnly) {
-      req.flash(`model`, flashOnly);
+      req.flash(`model`, flashOnly)
     }
-    res.redirect(referer(req));
+    res.redirect(referer(req))
   }
 }
 
 function flashCopy (req, data) {
-  Object.keys(data).forEach(flash); // copy data onto flash
+  Object.keys(data).forEach(flash) // copy data onto flash
   function flash (key) {
-    const store = data[key];
-    const collection = Array.isArray(store) ? store : [store];
-    collection.forEach(copy);
+    const store = data[key]
+    const collection = Array.isArray(store) ? store : [store]
+    collection.forEach(copy)
     function copy (value) {
-      req.flash(key, value);
+      req.flash(key, value)
     }
   }
 }
 
 function redirect (req, res, url, options = {}) {
-  const href = url || referer(req);
+  const href = url || referer(req)
   if (options.flash) {
-    flashCopy(req, options.flash);
+    flashCopy(req, options.flash)
   }
   taunus.redirect(req, res, href, {
     hard: options.hard,
     force: options.force
-  });
+  })
 }
 
 function sane (body) {
-  return _.omit(body, `password`);
+  return _.omit(body, `password`)
 }
 
 function classic (req, res, next, fn) {
   return function clasicHandler (err, result) {
     if (err) {
-      next(err);
+      next(err)
     } else if (result && result.validation && result.validation.length) {
-      validationError(req, res, result);
+      validationError(req, res, result)
     } else {
-      fn.apply(null, Array.prototype.slice.call(arguments, 1));
+      fn.apply(null, Array.prototype.slice.call(arguments, 1))
     }
-  };
+  }
 }
 
 module.exports = {
@@ -112,4 +112,4 @@ module.exports = {
   referer,
   classic,
   isJsonAsText
-};
+}

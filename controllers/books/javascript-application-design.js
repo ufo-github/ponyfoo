@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-const env = require(`../../lib/env`);
-const staticService = require(`../../services/static`);
-const authority = env(`AUTHORITY`);
+const env = require(`../../lib/env`)
+const staticService = require(`../../services/static`)
+const authority = env(`AUTHORITY`)
 
 module.exports = function (req, res, next) {
   res.viewModel = {
@@ -17,6 +17,6 @@ module.exports = function (req, res, next) {
         description: `The fate of most applications is often sealed before a single line of code has been written. How is that possible? Simply, bad design assures bad results. Good design and effective processes are the foundation on which maintainable applications are built, scaled, and improved. For JavaScript developers, this means discovering the tooling, modern libraries, and architectural patterns that enable those improvements.`
       }
     }
-  };
-  next();
-};
+  }
+  next()
+}

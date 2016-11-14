@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const insane = require(`insane`);
+const insane = require(`insane`)
 const domains = [
   /^(https?:)?\/\/codepen\.io\//i,
   /^(https?:)?\/\/assets\.codepen\.io\//i,
   /^https:\/\/www\.youtube\.com\//i,
   /^https:\/\/player\.vimeo\.com\//i
-];
+]
 
 const customizationClasses = [
   `mde-text-left`,
@@ -64,7 +64,7 @@ const customizationClasses = [
   `c-bg-dark-turquoise`,
   `c-bg-dark-green`,
   `c-bg-white`
-];
+]
 
 const options = {
   filter: filter,
@@ -81,42 +81,42 @@ const options = {
     figure: [`twitter-tweet-figure`],
     img: [`tj-emoji`]
   }
-};
+}
 
 function attr (token, name) {
   if (token[name]) {
-    return token[name];
+    return token[name]
   }
   if (!token.attrs) {
-    return null;
+    return null
   }
   if (token.attrs[name]) {
-    return token.attrs[name];
+    return token.attrs[name]
   }
-  let i = 0;
-  const len = token.attrs.length;
+  let i = 0
+  const len = token.attrs.length
   for (; i < len; i++) {
     if (token.attrs[i][0] === name) {
-      return token.attrs[i][1];
+      return token.attrs[i][1]
     }
   }
-  return null;
+  return null
 }
 
 function startsWithValidDomain (href) {
-  return domains.some(starts);
+  return domains.some(starts)
   function starts (reg) {
-    return href && reg.test(href);
+    return href && reg.test(href)
   }
 }
 
 function filter (token) {
-  const unsourced = token.tag !== `iframe` && token.tag !== `script`;
-  return unsourced || startsWithValidDomain(attr(token, `src`));
+  const unsourced = token.tag !== `iframe` && token.tag !== `script`
+  return unsourced || startsWithValidDomain(attr(token, `src`))
 }
 
 module.exports = {
   options,
   startsWithValidDomain,
   attr
-};
+}

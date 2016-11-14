@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-const datetimeService = require(`../../services/datetime`);
-const Engagement = require(`../../models/Engagement`);
+const datetimeService = require(`../../services/datetime`)
+const Engagement = require(`../../models/Engagement`)
 
 module.exports = function (req, res, next) {
   Engagement.find({}).sort(`-end`).lean().exec(function (err, engagements) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -16,10 +16,10 @@ module.exports = function (req, res, next) {
             id: engagement._id.toString(),
             conference: engagement.conference,
             range: datetimeService.range(engagement.start, engagement.end)
-          };
+          }
         })
       }
-    };
-    next();
-  });
-};
+    }
+    next()
+  })
+}

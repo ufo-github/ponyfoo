@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 function welcome (version) {
   const message = [
@@ -32,17 +32,17 @@ function welcome (version) {
     ``,
     `%cWelcome, adventurer! Pony Foo is running on version %s.`,
     `Feel free to play around with our globals: $, md, and moment!`
-  ].join(`\n`);
+  ].join(`\n`)
 
-  const logoFont = `font-family: Arial; font-size: 11px;`;
-  const green = `color: #26ef00; ` + logoFont;
-  const greenIris = `color: #26e400; ` + logoFont;
-  const oneas = `color: #1a1a1a; ` + logoFont;
-  const threes = `color: #333333; ` + logoFont;
-  const fourds = `color: #4d4d4d; ` + logoFont;
-  const black = `color: #000000; ` + logoFont;
-  const transparent = `color: transparent; ` + logoFont;
-  const css = `color: #e92c6c; font-size: 1.4em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;`;
+  const logoFont = `font-family: Arial; font-size: 11px;`
+  const green = `color: #26ef00; ` + logoFont
+  const greenIris = `color: #26e400; ` + logoFont
+  const oneas = `color: #1a1a1a; ` + logoFont
+  const threes = `color: #333333; ` + logoFont
+  const fourds = `color: #4d4d4d; ` + logoFont
+  const black = `color: #000000; ` + logoFont
+  const transparent = `color: transparent; ` + logoFont
+  const css = `color: #e92c6c; font-size: 1.4em; font-family: "Neuton" "Helvetica Neue", HelveticaNeue, TeXGyreHeros, FreeSans, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;`
 
   console.log(
     message,
@@ -81,7 +81,7 @@ function welcome (version) {
     threes,
 
     css, version
-  );
+  )
 }
 
-module.exports = welcome;
+module.exports = welcome

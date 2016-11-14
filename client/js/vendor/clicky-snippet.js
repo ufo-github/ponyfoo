@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const loadScript = require(`../lib/loadScript`);
+const loadScript = require(`../lib/loadScript`)
 
 module.exports = function clickySnippet () {
-  loadScript(`https://static.getclicky.com/js`);
-};
+  loadScript(`https://static.getclicky.com/js`)
+}

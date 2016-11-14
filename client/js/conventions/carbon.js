@@ -1,36 +1,36 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
-const taunus = require(`taunus`);
-const loadScript = require(`../lib/loadScript`);
-const placement = `https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom`;
+const $ = require(`dominus`)
+const taunus = require(`taunus`)
+const loadScript = require(`../lib/loadScript`)
+const placement = `https://cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=ponyfoocom`
 const options = {
   container: $.findOne(`.ca-content`),
   id: `_carbonads_js`
-};
-const script = loadScript(placement, options, loaded);
-let timer;
-let originalGo;
+}
+const script = loadScript(placement, options, loaded)
+let timer
+let originalGo
 
 function loaded () {
-  timer = setTimeout(helpMePay, 5000);
-  originalGo = global._carbonads_go;
-  global._carbonads_go = go;
+  timer = setTimeout(helpMePay, 5000)
+  originalGo = global._carbonads_go
+  global._carbonads_go = go
 }
 
 function go (data) {
-  patch(data);
-  originalGo(data);
-  $(`#_carbonads_js ~ [id^=carbonads_]`).remove(); // remove extra ads if carbon is being weird
+  patch(data)
+  originalGo(data)
+  $(`#_carbonads_js ~ [id^=carbonads_]`).remove() // remove extra ads if carbon is being weird
 }
 
 function patch (data) {
   if (data.ads) {
-    data.ads.forEach(patchAd);
+    data.ads.forEach(patchAd)
   }
   function patchAd (ad) { // fix unsafe image loading for hosts known to support https
     try {
-      ad.image = patchUnsafeImageHost(ad.image);
+      ad.image = patchUnsafeImageHost(ad.image)
     } catch (e) {
       // suppress
     }
@@ -39,46 +39,46 @@ function patch (data) {
 
 function patchUnsafeImageHost (image) {
   if (image.indexOf(`//`) === 0) {
-    return `https:` + image;
+    return `https:` + image
   }
-  const url = new URL(image);
+  const url = new URL(image)
   if (url.host === `assets.servedby-buysellads.com` && url.protocol === `http:`) {
-    return url.href.replace(/^http:/, `https:`);
+    return url.href.replace(/^http:/, `https:`)
   }
-  return image;
+  return image
 }
 
 function carbon () {
-  taunus.once(`change`, track);
+  taunus.once(`change`, track)
 }
 
 function track () {
-  taunus.on(`change`, changed);
+  taunus.on(`change`, changed)
 }
 
 function changed () {
-  options.container = $.findOne(`.ca-content`, taunus.state.container);
+  options.container = $.findOne(`.ca-content`, taunus.state.container)
   if (timer) {
-    clearTimeout(timer);
+    clearTimeout(timer)
   }
   if (!options.container) {
-    return;
+    return
   }
   if (global._carbonads) {
-    options.container.appendChild(script);
-    global._carbonads.reload();
+    options.container.appendChild(script)
+    global._carbonads.reload()
   }
-  timer = setTimeout(helpMePay, 5000);
+  timer = setTimeout(helpMePay, 5000)
 }
 
 function helpMePay () {
-  const blocked = $(`#carbonads`).length === 0;
+  const blocked = $(`#carbonads`).length === 0
   if (blocked) {
-    $(`.ca-blocked`).removeClass(`uv-hidden`);
+    $(`.ca-blocked`).removeClass(`uv-hidden`)
   } else {
-    $(`.ca-blocked`).addClass(`uv-hidden`);
+    $(`.ca-blocked`).addClass(`uv-hidden`)
   }
-  timer = false;
+  timer = false
 }
 
-module.exports = carbon;
+module.exports = carbon

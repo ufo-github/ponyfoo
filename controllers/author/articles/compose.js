@@ -1,49 +1,49 @@
-'use strict';
+'use strict'
 
-const moment = require(`moment`);
-const Article = require(`../../../models/Article`);
-const articleService = require(`../../../services/article`);
-const userService = require(`../../../services/user`);
-const datetimeService = require(`../../../services/datetime`);
+const moment = require(`moment`)
+const Article = require(`../../../models/Article`)
+const articleService = require(`../../../services/article`)
+const userService = require(`../../../services/user`)
+const datetimeService = require(`../../../services/datetime`)
 
 module.exports = function (req, res, next) {
-  const slug = req.params.slug;
+  const slug = req.params.slug
   if (slug) {
-    findArticle(respondUsingArticle);
+    findArticle(respondUsingArticle)
   } else {
-    respondWithEmptyComposer();
+    respondWithEmptyComposer()
   }
 
   function findArticle (done) {
     Article
       .findOne({ slug: slug })
       .populate(`author`, `displayName slug avatar email twitter website`)
-      .exec(done);
+      .exec(done)
   }
 
   function respondUsingArticle (err, article) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     if (!article) {
-      res.status(404).json({ messages: [`Article not found`] }); return;
+      res.status(404).json({ messages: [`Article not found`] }); return
     }
     const canEdit = userService.canEditArticle({
       userId: req.user,
       userRoles: req.userObject.roles,
       authorId: article.author._id,
       articleStatus: article.status
-    });
+    })
     if (!canEdit) {
-      res.status(404).json({ messages: [`Article not found`] }); return;
+      res.status(404).json({ messages: [`Article not found`] }); return
     }
-    const originalAuthor = article.author._id.equals(req.user);
-    const articleModel = articleService.toJSON(article, { editing: true });
+    const originalAuthor = article.author._id.equals(req.user)
+    const articleModel = articleService.toJSON(article, { editing: true })
     respondWithArticle({
       article: articleModel,
       editing: true,
       originalAuthor
-    });
+    })
   }
 
   function respondWithEmptyComposer () {
@@ -62,7 +62,7 @@ module.exports = function (req, res, next) {
       },
       editing: false,
       originalAuthor: true
-    });
+    })
   }
 
   function respondWithArticle({ article, editing, originalAuthor }) {
@@ -74,7 +74,7 @@ module.exports = function (req, res, next) {
         originalAuthor,
         article
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

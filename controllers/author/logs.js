@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
-const Log = require(`../../models/Log`);
-const errorService = require(`../../services/error`);
-const datetimeService = require(`../../services/datetime`);
+const Log = require(`../../models/Log`)
+const errorService = require(`../../services/error`)
+const datetimeService = require(`../../services/datetime`)
 
 module.exports = function (req, res, next) {
-  const max = 100;
-  const page = parseInt(req.params.page, 10) || 1;
-  const p = page - 1;
-  const start = max * p;
+  const max = 100
+  const page = parseInt(req.params.page, 10) || 1
+  const p = page - 1
+  const start = max * p
 
-  Log.find({}).sort(`-timestamp`).skip(start).limit(max).exec(render);
+  Log.find({}).sort(`-timestamp`).skip(start).limit(max).exec(render)
 
   function render (err, logs) {
     if (err) {
-      next(`route`); return;
+      next(`route`); return
     }
 
     res.viewModel = {
@@ -24,10 +24,10 @@ module.exports = function (req, res, next) {
         more: logs.length >= max,
         page: page
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}
 
 function cast (log) {
   return {
@@ -35,7 +35,7 @@ function cast (log) {
     message: log.message,
     level: log.level,
     meta: metaToModel(log.meta)
-  };
+  }
 }
 
 function metaToModel (meta) {
@@ -44,5 +44,5 @@ function metaToModel (meta) {
     hostname: meta.hostname,
     error: meta.stack ? errorService.toHtmlModel(meta.stack) : null,
     errorText: meta.stack ? errorService.toTextModel(meta.stack) : null
-  };
+  }
 }

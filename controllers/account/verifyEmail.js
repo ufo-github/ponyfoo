@@ -1,30 +1,30 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const verificationService = require(`../../services/verification`);
+const contra = require(`contra`)
+const verificationService = require(`../../services/verification`)
 
 module.exports = function (req, res, next) {
-  const verify = contra.curry(verificationService.verifyToken, req.params.token);
+  const verify = contra.curry(verificationService.verifyToken, req.params.token)
 
-  contra.waterfall([verify, flashResult, userLogin], respond);
+  contra.waterfall([verify, flashResult, userLogin], respond)
 
   function flashResult (result, done) {
-    req.flash(result.status, result.message);
-    done(null, result.user);
+    req.flash(result.status, result.message)
+    done(null, result.user)
   }
 
   function userLogin (user, done) {
     if (user) {
-      req.login(user, done);
+      req.login(user, done)
     } else {
-      done();
+      done()
     }
   }
 
   function respond (err) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    res.redirect(`/`);
+    res.redirect(`/`)
   }
-};
+}

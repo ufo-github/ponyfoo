@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
-const taunus = require(`taunus`);
+const $ = require(`dominus`)
+const taunus = require(`taunus`)
 
 function linkifyHeadings () {
-  taunus.on(`render`, render);
+  taunus.on(`render`, render)
 }
 
 function render (container) {
@@ -13,29 +13,29 @@ function render (container) {
     .map(wrapInline)
     .find(`.md-heading`)
     .on(`mouseenter`, function (e) {
-      $(e.target).parent().addClass(`md-heading-hover`);
+      $(e.target).parent().addClass(`md-heading-hover`)
     })
     .on(`mouseleave`, function (e) {
-      $(e.target).parent().removeClass(`md-heading-hover`);
-    });
+      $(e.target).parent().removeClass(`md-heading-hover`)
+    })
 
   function wrapInline (el) {
-    const $el = $(el);
-    const id = readId($el);
+    const $el = $(el)
+    const id = readId($el)
     if (!id) {
-      return $el;
+      return $el
     }
-    return $el.html(`<a href="#${ id }" class="md-heading">${ $el.html() }</a>`);
+    return $el.html(`<a href="#${ id }" class="md-heading">${ $el.html() }</a>`)
   }
 }
 
 function readId ($el) {
-  let id;
+  let id
   do {
-    id = $el.attr(`id`);
-    $el = $el.parent();
-  } while (!id && $el.length);
-  return id;
+    id = $el.attr(`id`)
+    $el = $el.parent()
+  } while (!id && $el.length)
+  return id
 }
 
-module.exports = linkifyHeadings;
+module.exports = linkifyHeadings

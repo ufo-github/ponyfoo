@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-const InvoiceParty = require(`../../../models/InvoiceParty`);
-const datetimeService = require(`../../../services/datetime`);
+const InvoiceParty = require(`../../../models/InvoiceParty`)
+const datetimeService = require(`../../../services/datetime`)
 
 module.exports = function (req, res, next) {
-  InvoiceParty.find({}).sort(`-created`).lean().exec(found);
+  InvoiceParty.find({}).sort(`-created`).lean().exec(found)
   function found (err, invoiceParties) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -17,12 +17,12 @@ module.exports = function (req, res, next) {
         },
         invoiceParties: invoiceParties.map(augmentParty)
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}
 
 function augmentParty (party) {
-  party.created = datetimeService.field(party.created);
-  return party;
+  party.created = datetimeService.field(party.created)
+  return party
 }

@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-const fs = require(`fs`);
-const contra = require(`contra`);
-const pkg = require(`../package.json`);
-const env = require(`../lib/env`);
-const nodeEnv = env(`NODE_ENV`);
-const authority = env(`AUTHORITY`);
-const staticService = require(`../services/static`);
-const popularityService = require(`../services/popularity`);
+const fs = require(`fs`)
+const contra = require(`contra`)
+const pkg = require(`../package.json`)
+const env = require(`../lib/env`)
+const nodeEnv = env(`NODE_ENV`)
+const authority = env(`AUTHORITY`)
+const staticService = require(`../services/static`)
+const popularityService = require(`../services/popularity`)
 
 function read (file) {
   return function (next) {
-    fs.readFile(file, { encoding: `utf8` }, next);
-  };
+    fs.readFile(file, { encoding: `utf8` }, next)
+  }
 }
 
 function getDefaultViewModel (done) {
@@ -21,11 +21,11 @@ function getDefaultViewModel (done) {
     javascriptLoader: read(`.bin/inline/javascript.js`),
     styleLoader: read(`.bin/inline/styles.js`),
     fontLoader: read(`.bin/inline/fonts.js`)
-  }, forward);
+  }, forward)
 
   function forward (err, data) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
 
     done(null, {
@@ -52,8 +52,8 @@ function getDefaultViewModel (done) {
       javascriptLoader: data.javascriptLoader,
       styleLoader: data.styleLoader,
       fontLoader: data.fontLoader
-    });
+    })
   }
 }
 
-module.exports = getDefaultViewModel;
+module.exports = getDefaultViewModel

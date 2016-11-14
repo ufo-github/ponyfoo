@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-const fs = require(`fs`);
-const util = require(`util`);
-const contra = require(`contra`);
-const assign = require(`assignment`);
-const feedService = require(`./feed`);
-const markupService = require(`./markup`);
-const Article = require(`../models/Article`);
-const env = require(`../lib/env`);
-const authority = env(`AUTHORITY`);
-const css = fs.readFileSync(`.bin/static/article.css`, `utf8`);
+const fs = require(`fs`)
+const util = require(`util`)
+const contra = require(`contra`)
+const assign = require(`assignment`)
+const feedService = require(`./feed`)
+const markupService = require(`./markup`)
+const Article = require(`../models/Article`)
+const env = require(`../lib/env`)
+const authority = env(`AUTHORITY`)
+const css = fs.readFileSync(`.bin/static/article.css`, `utf8`)
 
 function getFeed (done) {
   Article
@@ -17,23 +17,23 @@ function getFeed (done) {
     .populate(`author`, `displayName email`)
     .sort(`-publication`)
     .limit(10)
-    .exec(found);
+    .exec(found)
 
   function found (err, articles) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    contra.map(articles, toFeedItem, done);
+    contra.map(articles, toFeedItem, done)
     function toFeedItem (article, next) {
       formatContent((
         article.teaserHtml +
        (article.editorNoteHtml || ``) +
         article.introductionHtml +
         article.bodyHtml
-      ), formatted);
+      ), formatted)
       function formatted (err, description) {
         if (err) {
-          next(err); return;
+          next(err); return
         }
         next(null, {
           title: article.title,
@@ -42,7 +42,7 @@ function getFeed (done) {
           categories: article.tags,
           author: util.format(`%s (%s)`, article.author.email, article.author.displayName),
           date: article.publication
-        });
+        })
       }
     }
     function formatContent (contentHtml, done) {
@@ -50,11 +50,11 @@ function getFeed (done) {
         markdown: false,
         absolutize: true,
         removeEmoji: true
-      };
-      const contents = `<style>${ css }</style><div class="f-core md-markdown">${ contentHtml }</div>`;
-      const html = markupService.compile(contents, compilerOpts);
+      }
+      const contents = `<style>${ css }</style><div class="f-core md-markdown">${ contentHtml }</div>`
+      const html = markupService.compile(contents, compilerOpts)
 
-      done(null, html);
+      done(null, html)
     }
   }
 }
@@ -65,4 +65,4 @@ module.exports = assign({ getFeed }, feedService.from({
   title: `Pony Foo`,
   description: `Latest articles published on Pony Foo`,
   getFeed
-}));
+}))

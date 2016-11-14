@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
-const KnownTag = require(`../../../models/KnownTag`);
-const datetimeService = require(`../../../services/datetime`);
+const KnownTag = require(`../../../models/KnownTag`)
+const datetimeService = require(`../../../services/datetime`)
 
 module.exports = function (req, res, next) {
   KnownTag
     .find({})
     .sort(`-created`)
     .lean()
-    .exec(found);
+    .exec(found)
 
   function found (err, tags) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -22,8 +22,8 @@ module.exports = function (req, res, next) {
         },
         tags: tags.map(toTagReviewModel)
       }
-    };
-    next();
+    }
+    next()
   }
 
   function toTagReviewModel (tag) {
@@ -31,6 +31,6 @@ module.exports = function (req, res, next) {
       created: datetimeService.field(tag.created),
       slug: tag.slug,
       titleHtml: tag.titleHtml
-    };
+    }
   }
-};
+}

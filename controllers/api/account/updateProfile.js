@@ -1,108 +1,108 @@
-'use strict';
+'use strict'
 
-const sluggish = require(`sluggish`);
-const validator = require(`validator`);
-const markupService = require(`../../../services/markup`);
-const summaryService = require(`../../../services/summary`);
-const bioService = require(`../../../services/bio`);
-const User = require(`../../../models/User`);
-const rprotocol = /^https?:\/\//i;
-const rtwitter = /^https?:\/\/twitter\.com\//i;
-const rtwitter_legacy = /[@#!]+/i;
+const sluggish = require(`sluggish`)
+const validator = require(`validator`)
+const markupService = require(`../../../services/markup`)
+const summaryService = require(`../../../services/summary`)
+const bioService = require(`../../../services/bio`)
+const User = require(`../../../models/User`)
+const rprotocol = /^https?:\/\//i
+const rtwitter = /^https?:\/\/twitter\.com\//i
+const rtwitter_legacy = /[@#!]+/i
 
 module.exports = function (req, res, next) {
-  const body = req.body;
-  const bio = validator.toString(body.bio);
-  const bioHtml = markupService.compile(bio, { deferImages: true });
-  const bioText = summaryService.summarize(bioHtml, 200).text;
+  const body = req.body
+  const bio = validator.toString(body.bio)
+  const bioHtml = markupService.compile(bio, { deferImages: true })
+  const bioText = summaryService.summarize(bioHtml, 200).text
 
-  User.findOne({ _id: req.user }, update);
+  User.findOne({ _id: req.user }, update)
 
   function update (err, user) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     if (!user) {
-      res.status(404).json({ messages: [`Account not found!`] }); return;
+      res.status(404).json({ messages: [`Account not found!`] }); return
     }
-    const displayName = body.displayName;
+    const displayName = body.displayName
     if (displayName.length < 4) {
-      res.status(400).json({ messages: [`Your name must be at least 4 characters long.`] }); return;
+      res.status(400).json({ messages: [`Your name must be at least 4 characters long.`] }); return
     }
-    const slug = sluggish(body.slug);
+    const slug = sluggish(body.slug)
     if (slug.length < 4) {
-      res.status(400).json({ messages: [`Your username must be at least 4 characters long.`] }); return;
+      res.status(400).json({ messages: [`Your username must be at least 4 characters long.`] }); return
     }
-    const validEmail = validator.isEmail(body.email);
+    const validEmail = validator.isEmail(body.email)
     if (!validEmail) {
-      res.status(400).json({ messages: [`Use a valid email address.`] }); return;
+      res.status(400).json({ messages: [`Use a valid email address.`] }); return
     }
-    user.email = body.email;
-    user.displayName = displayName;
-    user.slug = slug;
-    user.twitter = parseTwitter(body.twitter);
-    user.website = parseLink(body.website);
-    user.avatar = parseLink(body.avatar);
-    user.bio = bio;
-    user.bioHtml = bioHtml;
-    user.bioText = bioText;
+    user.email = body.email
+    user.displayName = displayName
+    user.slug = slug
+    user.twitter = parseTwitter(body.twitter)
+    user.website = parseLink(body.website)
+    user.avatar = parseLink(body.avatar)
+    user.bio = bio
+    user.bioHtml = bioHtml
+    user.bioText = bioText
 
-    const password = validator.toString(body.password);
+    const password = validator.toString(body.password)
     if (`password` in body && `oldPassword` in body) {
       if (password.length < 4) {
-        short(); return;
+        short(); return
       }
-      user.validatePassword(body.oldPassword, validatedPassword);
+      user.validatePassword(body.oldPassword, validatedPassword)
     } else {
-      save();
+      save()
     }
     function validatedPassword (err, valid) {
       if (err) {
-        next(err); return;
+        next(err); return
       }
       if (!valid) {
-        mismatch(); return;
+        mismatch(); return
       }
-      user.password = password;
-      save();
+      user.password = password
+      save()
     }
     function save () {
-      user.save(saved);
+      user.save(saved)
     }
   }
 
   function short () {
-    res.status(400).json({ messages: [`The password must be at least 4 characters long.`] });
+    res.status(400).json({ messages: [`The password must be at least 4 characters long.`] })
   }
 
   function mismatch () {
-    res.status(400).json({ messages: [`You seem to have mistyped your old password.`] });
+    res.status(400).json({ messages: [`You seem to have mistyped your old password.`] })
   }
 
   function parseTwitter (value) {
     if (!value) {
-      return null;
+      return null
     }
     return value
       .replace(rtwitter, ``)
-      .replace(rtwitter_legacy, ``);
+      .replace(rtwitter_legacy, ``)
   }
 
   function parseLink (value) {
     if (!value) {
-      return null;
+      return null
     }
     if (!rprotocol.test(value)) {
-      return `http://` + value;
+      return `http://` + value
     }
-    return value;
+    return value
   }
 
   function saved (err, user) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
-    bioService.update(user.email, bio, bioHtml, bioText);
-    res.json({});
+    bioService.update(user.email, bio, bioHtml, bioText)
+    res.json({})
   }
-};
+}

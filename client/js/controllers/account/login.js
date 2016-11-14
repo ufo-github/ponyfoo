@@ -1,20 +1,20 @@
-'use strict';
+'use strict'
 
-const $ = require(`dominus`);
+const $ = require(`dominus`)
 
 module.exports = function (viewModel, container) {
-  const registerCheck = $(`.al-register`, container);
-  const submitText = $(`.al-submit`, container);
+  const registerCheck = $(`.al-register`, container)
+  const submitText = $(`.al-submit`, container)
 
-  registerCheck.on(`change`, registerChanged);
-  registerChanged();
+  registerCheck.on(`change`, registerChanged)
+  registerChanged()
 
   function registerChanged () {
-    const create = registerCheck.value();
+    const create = registerCheck.value()
     if (create) {
-      submitText.text(`Create`);
+      submitText.text(`Create`)
     } else {
-      submitText.text(`Login`);
+      submitText.text(`Login`)
     }
   }
-};
+}

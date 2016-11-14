@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const bioService = require(`../../services/bio`);
-const User = require(`../../models/User`);
+const contra = require(`contra`)
+const bioService = require(`../../services/bio`)
+const User = require(`../../models/User`)
 
 module.exports = function (req, res, next) {
-  contra.waterfall([getUser, getBio], respond);
+  contra.waterfall([getUser, getBio], respond)
 
   function getUser (next) {
-    User.findOne({ _id: req.user }).exec(next);
+    User.findOne({ _id: req.user }).exec(next)
   }
 
   function getBio (user, next) {
     if (!user) {
-      next(new Error(`Please log out and authenticate again!`)); return;
+      next(new Error(`Please log out and authenticate again!`)); return
     }
-    bioService.getMarkdown(user.email, got);
+    bioService.getMarkdown(user.email, got)
     function got (err, bio) {
       next(err, {
         email: user.email,
@@ -25,13 +25,13 @@ module.exports = function (req, res, next) {
         website: user.website,
         avatar: user.avatar,
         bio: bio
-      });
+      })
     }
   }
 
   function respond (err, profile) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -41,7 +41,7 @@ module.exports = function (req, res, next) {
         },
         profile: profile
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}

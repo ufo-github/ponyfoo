@@ -4,6 +4,7 @@ each thread in parent.commentThreads
       each comment in thread.comments
         include comment
 
-    footer.mm-thread-footer
-      span(aria-label='Click here to add a reply to this thread')
-        button.bt-button.bt-purple.mm-thread-reply.uv-hidden Reply
+    if parent.commentOpen
+      footer.mm-thread-footer
+        span(aria-label='Click here to add a reply to this thread')
+          button.bt-button.bt-purple.mm-thread-reply.uv-hidden Reply

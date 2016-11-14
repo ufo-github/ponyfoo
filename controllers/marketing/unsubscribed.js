@@ -1,18 +1,18 @@
-'use strict';
+'use strict'
 
 const topicTexts = {
   articles: `emails about articles and comments`,
   newsletter: `our newsletter`
-};
+}
 const listNames = {
   articles: `articles & comments mailing list`
-};
+}
 
 module.exports = function (req, res, next) {
-  const topic = req.query.topic;
-  const topicText = topic ? topicTexts[topic] || topic : `our mailing list`;
-  const description = `You’ve successfully unsubscribed from ` + topicText + `!`;
-  const listName = listNames[topic] || topic;
+  const topic = req.query.topic
+  const topicText = topic ? topicTexts[topic] || topic : `our mailing list`
+  const description = `You’ve successfully unsubscribed from ` + topicText + `!`
+  const listName = listNames[topic] || topic
 
   res.viewModel = {
     model: {
@@ -25,6 +25,6 @@ module.exports = function (req, res, next) {
         canonical: `/unsubscribed`
       }
     }
-  };
-  next();
-};
+  }
+  next()
+}

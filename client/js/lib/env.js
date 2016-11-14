@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
-const env = require(`../../../.env.browser.json`);
+const env = require(`../../../.env.browser.json`)
 
 function accessor (key) {
-  return env[key] || null;
+  return env[key] || null
 }
 
-accessor.raw = env;
-module.exports = accessor;
+accessor.raw = env
+module.exports = accessor

@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const winston = require(`winston`);
-const db = require(`../lib/db`);
-const boot = require(`../lib/boot`);
-const Article = require(`../models/Article`);
-const articleGitService = require(`../services/articleGit`);
+const contra = require(`contra`)
+const winston = require(`winston`)
+const db = require(`../lib/db`)
+const boot = require(`../lib/boot`)
+const Article = require(`../models/Article`)
+const articleGitService = require(`../services/articleGit`)
 
 contra.waterfall([
   next => boot(next),
@@ -13,11 +13,11 @@ contra.waterfall([
   (articles, next) => contra.each(articles, 3, migrate, next)
 ], err => {
   if (err) {
-    winston.error(err.stack || err);
+    winston.error(err.stack || err)
   }
-  db.disconnect(() => process.exit(0));
-});
+  db.disconnect(() => process.exit(0))
+})
 
 function migrate (article, done) {
-  articleGitService.updateSyncRoot(article, done);
+  articleGitService.updateSyncRoot(article, done)
 }

@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-const but = require(`but`);
-const winston = require(`winston`);
-const Article = require(`../models/Article`);
-const es = require(`../lib/elasticsearch`);
-const indexName = `ponyfoo`;
-const typeName = `article`;
+const but = require(`but`)
+const winston = require(`winston`)
+const Article = require(`../models/Article`)
+const es = require(`../lib/elasticsearch`)
+const indexName = `ponyfoo`
+const typeName = `article`
 const mapping = {
   properties: {
     timestamp: { type: `date` },
@@ -17,10 +17,10 @@ const mapping = {
     tags: { type: `string`, index: `not_analyzed` },
     status: { type: `string`, index: `not_analyzed` }
   }
-};
-const ensureQueue = [];
-let ensuring = false;
-let ensured = false;
+}
+const ensureQueue = []
+let ensuring = false
+let ensured = false
 
 function toIndex (article) {
   return {
@@ -32,114 +32,114 @@ function toIndex (article) {
     body: article.body,
     tags: article.tags,
     status: article.status
-  };
+  }
 }
 
 function initialize (done) {
-  es.client.indices.exists({ index: indexName }, existed);
+  es.client.indices.exists({ index: indexName }, existed)
 
   function existed (err, exists) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
     if (exists) {
-      winston.debug(`Elasticsearch index already existed.`);
-      done(null);
-      return;
+      winston.debug(`Elasticsearch index already existed.`)
+      done(null)
+      return
     }
-    winston.debug(`Creating elasticsearch index.`);
-    es.client.indices.create({ index: indexName }, createdIndex);
+    winston.debug(`Creating elasticsearch index.`)
+    es.client.indices.create({ index: indexName }, createdIndex)
   }
 
   function createdIndex (err) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    winston.debug(`Creating elasticsearch mapping for articles.`);
+    winston.debug(`Creating elasticsearch mapping for articles.`)
     const op = {
       index: indexName,
       type: typeName,
       body: mapping
-    };
-    es.client.indices.putMapping(op, createdMapping);
+    }
+    es.client.indices.putMapping(op, createdMapping)
   }
 
   function createdMapping (err) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    bulkIndexAllArticles(insertedArticles);
+    bulkIndexAllArticles(insertedArticles)
   }
 
   function insertedArticles (err) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    winston.info(`Ensured elasticsearch index exists.`);
-    done(null);
+    winston.info(`Ensured elasticsearch index exists.`)
+    done(null)
   }
 }
 
 function bulkIndexAllArticles (done) {
-  winston.debug(`Looking up articles on MongoDB database.`);
-  Article.find({}).exec(found);
+  winston.debug(`Looking up articles on MongoDB database.`)
+  Article.find({}).exec(found)
   function found (err, articles) {
     if (err) {
-      done(err); return;
+      done(err); return
     }
-    winston.debug(`Bulk inserting articles into elasticsearch.`);
+    winston.debug(`Bulk inserting articles into elasticsearch.`)
     const op = {
       body: articles.reduce(toBulk, [])
-    };
-    es.client.bulk(op, done);
+    }
+    es.client.bulk(op, done)
   }
 }
 
 function ensureIndexThen (next) {
   return function wrapper (...args) {
-    const last = args[args.length - 1];
-    const done = typeof last === `function` ? last : warn;
+    const last = args[args.length - 1]
+    const done = typeof last === `function` ? last : warn
 
     if (ensured) {
-      initialized(null); return;
+      initialized(null); return
     }
     if (ensuring) {
-      enqueue(); return;
+      enqueue(); return
     }
-    ensuring = true;
+    ensuring = true
 
-    initialize(initialized);
+    initialize(initialized)
 
     function initialized (err) {
-      enqueue();
-      deplete(err);
+      enqueue()
+      deplete(err)
     }
 
     function deplete (err) {
       if (!err) {
-        ensured = true;
+        ensured = true
       }
       while (ensureQueue.length) {
-        dequeue(err, ensureQueue.shift());
+        dequeue(err, ensureQueue.shift())
       }
-      ensuring = false;
+      ensuring = false
     }
 
     function enqueue () {
-      ensureQueue.push({ process: next, args, done });
+      ensureQueue.push({ process: next, args, done })
     }
 
     function dequeue (err, item) {
       if (err) {
-        item.done.call(null, err); return;
+        item.done.call(null, err); return
       }
-      item.process.apply(null, item.args);
+      item.process.apply(null, item.args)
     }
-  };
+  }
 }
 
 function warn (err) {
-  if (err) { winston.warn(err); }
+  if (err) { winston.warn(err) }
 }
 
 function toBulk (body, article) { // bulk follows [command,document] pattern
@@ -149,20 +149,20 @@ function toBulk (body, article) { // bulk follows [command,document] pattern
       _type: typeName,
       _id: article._id
     }
-  });
+  })
   body.push({
     doc: toIndex(article),
     doc_as_upsert: true
-  });
-  return body;
+  })
+  return body
 }
 
 function ensureIndex (done) {
-  ensureIndexThen(done)(null, but(done));
+  ensureIndexThen(done)(null, but(done))
 }
 
 module.exports = {
   toIndex: toIndex,
   ensureIndex: ensureIndex,
   ensureIndexThen: ensureIndexThen
-};
+}

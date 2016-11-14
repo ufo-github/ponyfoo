@@ -1,75 +1,75 @@
-'use strict';
+'use strict'
 
-const url = require(`url`);
-const contra = require(`contra`);
-const moment = require(`moment`);
-const estimate = require(`estimate`);
-const env = require(`../lib/env`);
-const Article = require(`../models/Article`);
-const cryptoService = require(`./crypto`);
-const commentService = require(`./comment`);
-const datetimeService = require(`./datetime`);
-const metadataService = require(`./metadata`);
-const userService = require(`./user`);
-const gitWeb = env(`GIT_ARTICLES_WEB`);
+const url = require(`url`)
+const contra = require(`contra`)
+const moment = require(`moment`)
+const estimate = require(`estimate`)
+const env = require(`../lib/env`)
+const Article = require(`../models/Article`)
+const cryptoService = require(`./crypto`)
+const commentService = require(`./comment`)
+const datetimeService = require(`./datetime`)
+const metadataService = require(`./metadata`)
+const userService = require(`./user`)
+const gitWeb = env(`GIT_ARTICLES_WEB`)
 
 function findInternal (method, query, options, done) {
   if (done === void 0) {
-    done = options; options = {};
+    done = options; options = {}
   }
   if (options.sort === void 0) {
-    options.sort = { publication: -1, updated: -1 };
+    options.sort = { publication: -1, updated: -1 }
   }
 
-  let cursor = Article[method](query);
-  const populations = options.populate;
-  let populationSteps;
+  let cursor = Article[method](query)
+  const populations = options.populate
+  let populationSteps
   if (populations) {
-    populationSteps = Array.isArray(populations) ? populations : [[populations]];
-    cursor = populationSteps.reduce(populateCursor, cursor);
+    populationSteps = Array.isArray(populations) ? populations : [[populations]]
+    cursor = populationSteps.reduce(populateCursor, cursor)
   }
   if (options.sort) {
-    cursor = cursor.sort(options.sort);
+    cursor = cursor.sort(options.sort)
   }
   if (options.skip) {
-    cursor = cursor.skip(options.skip);
+    cursor = cursor.skip(options.skip)
   }
   if (options.limit) {
-    cursor = cursor.limit(options.limit);
+    cursor = cursor.limit(options.limit)
   }
-  cursor.exec(done);
+  cursor.exec(done)
   function populateCursor (cursor, options) {
-    return cursor.populate.apply(cursor, options);
+    return cursor.populate.apply(cursor, options)
   }
 }
 
-const find = findInternal.bind(null, `find`);
-const findOne = findInternal.bind(null, `findOne`);
+const find = findInternal.bind(null, `find`)
+const findOne = findInternal.bind(null, `findOne`)
 
 function getGitHref (article) {
-  return url.resolve(gitWeb, `${moment.utc(article.created).format(`YYYY/MM-DD`)}--${article.slug}`);
+  return url.resolve(gitWeb, `${moment.utc(article.created).format(`YYYY/MM-DD`)}--${article.slug}`)
 }
 
 function getHash (article) {
-  return cryptoService.md5(article._id + article.created);
+  return cryptoService.md5(article._id + article.created)
 }
 
 function toJSON (source, options) {
-  const o = options || {};
-  const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(` `);
-  const article = source.toJSON();
+  const o = options || {}
+  const text = [source.teaserHtml, source.introductionHtml, source.bodyHtml].join(` `)
+  const article = source.toJSON()
 
-  article.permalink = `/articles/` + article.slug;
+  article.permalink = `/articles/` + article.slug
 
   if (article.status !== `published`) {
-    article.permalink += `?verify=` + getHash(source);
+    article.permalink += `?verify=` + getHash(source)
   }
 
-  article.created = datetimeService.field(article.created);
-  article.updated = datetimeService.field(article.updated);
-  article.publication = article.publication ? datetimeService.field(article.publication) : null;
-  article.readingTime = estimate.text(text);
-  article.gitHref = getGitHref(source);
+  article.created = datetimeService.field(article.created)
+  article.updated = datetimeService.field(article.updated)
+  article.publication = article.publication ? datetimeService.field(article.publication) : null
+  article.readingTime = estimate.text(text)
+  article.gitHref = getGitHref(source)
 
   if (source.populated(`author`)) {
     article.author = {
@@ -77,83 +77,83 @@ function toJSON (source, options) {
       slug: article.author.slug,
       twitter: article.author.twitter,
       website: article.author.website
-    };
+    }
     if (source.author.email) {
-      article.author.avatar = userService.getAvatar(source.author);
+      article.author.avatar = userService.getAvatar(source.author)
     }
   } else {
-    delete article.author;
+    delete article.author
   }
 
-  commentService.hydrate(article, source);
+  commentService.hydrate(article, source)
 
   if (source.populated(`prev`)) {
-    article.prev = relevant(article.prev);
+    article.prev = relevant(article.prev)
   } else {
-    delete article.prev;
+    delete article.prev
   }
   if (source.populated(`next`)) {
-    article.next = relevant(article.next);
+    article.next = relevant(article.next)
   } else {
-    delete article.next;
+    delete article.next
   }
   if (source.populated(`related`)) {
-    article.related = article.related.map(relevant);
+    article.related = article.related.map(relevant)
   } else {
-    delete article.related;
+    delete article.related
   }
 
   if (o.id === false) {
-    delete article._id;
+    delete article._id
   }
   if (o.summary !== true) {
-    delete article.summaryHtml;
+    delete article.summaryHtml
   }
   if (o.meta) {
-    delete article.teaserHtml;
-    delete article.editorNoteHtml;
-    delete article.introductionHtml;
-    delete article.bodyHtml;
+    delete article.teaserHtml
+    delete article.editorNoteHtml
+    delete article.introductionHtml
+    delete article.bodyHtml
   }
   if (o.editing !== true) {
-    delete article.teaser;
-    delete article.introduction;
-    delete article.body;
-    delete article.titleMarkdown;
-    delete article.summary;
+    delete article.teaser
+    delete article.introduction
+    delete article.body
+    delete article.titleMarkdown
+    delete article.summary
 
-    delete article.email;
-    delete article.tweet;
-    delete article.fb;
-    delete article.echojs;
-    delete article.hn;
+    delete article.email
+    delete article.tweet
+    delete article.fb
+    delete article.echojs
+    delete article.hn
   }
-  delete article.__v;
-  delete article.sign;
-  delete article.summaryText;
-  delete article.comments;
-  return article;
+  delete article.__v
+  delete article.sign
+  delete article.summaryText
+  delete article.comments
+  return article
 }
 
 function relevant (article) {
-  return { slug: article.slug, titleHtml: article.titleHtml };
+  return { slug: article.slug, titleHtml: article.titleHtml }
 }
 
 function expandForListView (articles) {
-  const extracted = metadataService.extractImages(articles);
-  const expanded = articles.map(expand);
+  const extracted = metadataService.extractImages(articles)
+  const expanded = articles.map(expand)
   return {
     articles: expanded,
     extracted: extracted
-  };
+  }
   function expand (article) {
-    const config = {meta: true, summary: true, id: false };
-    const model = toJSON(article, config);
-    const images = extracted.map[article._id];
+    const config = {meta: true, summary: true, id: false }
+    const model = toJSON(article, config)
+    const images = extracted.map[article._id]
     if (images && images.length) {
-      model.cover = images[0];
+      model.cover = images[0]
     }
-    return model;
+    return model
   }
 }
 
@@ -168,15 +168,15 @@ function computeSignature (article) {
     article.editorNote || ``,
     article.introduction,
     article.body
-  ];
-  const partsWithTags = parts.concat(article.tags).join(` `);
-  const sign = cryptoService.md5(partsWithTags);
-  return sign;
+  ]
+  const partsWithTags = parts.concat(article.tags).join(` `)
+  const sign = cryptoService.md5(partsWithTags)
+  return sign
 }
 
 function remove (article, done) {
   if (!article) {
-    done(null); return;
+    done(null); return
   }
 
   contra.series([
@@ -184,31 +184,31 @@ function remove (article, done) {
     removal,
     unlinkLeft,
     unlinkRight
-  ], done);
+  ], done)
 
   function populate (next) {
-    article.populate(`prev next`, next);
+    article.populate(`prev next`, next)
   }
 
   function removal (next) {
-    article.status = `deleted`;
-    article.save(next);
+    article.status = `deleted`
+    article.save(next)
   }
 
   function unlinkLeft (next) {
     if (!article.prev) {
-      next(); return;
+      next(); return
     }
-    article.prev.next = article.next;
-    article.prev.save(next);
+    article.prev.next = article.next
+    article.prev.save(next)
   }
 
   function unlinkRight (next) {
     if (!article.next) {
-      next(); return;
+      next(); return
     }
-    article.next.prev = article.prev;
-    article.next.save(next);
+    article.next.prev = article.prev
+    article.next.save(next)
   }
 }
 
@@ -221,4 +221,4 @@ module.exports = {
   expandForListView,
   computeSignature,
   remove
-};
+}

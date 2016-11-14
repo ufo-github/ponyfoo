@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-const winston = require(`winston`);
-const InvoiceParty = require(`../../../../models/InvoiceParty`);
+const winston = require(`winston`)
+const InvoiceParty = require(`../../../../models/InvoiceParty`)
 
 module.exports = function (req, res) {
-  InvoiceParty.remove({ slug: req.params.slug }, saved);
+  InvoiceParty.remove({ slug: req.params.slug }, saved)
   function saved (err) {
     if (err) {
-      winston.error(err);
+      winston.error(err)
     }
-    res.redirect(`/invoices/parties`);
+    res.redirect(`/invoices/parties`)
   }
-};
+}

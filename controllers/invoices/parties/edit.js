@@ -1,28 +1,28 @@
-'use strict';
+'use strict'
 
-const InvoiceParty = require(`../../../models/InvoiceParty`);
+const InvoiceParty = require(`../../../models/InvoiceParty`)
 
 module.exports = function (req, res, next) {
-  const slug = req.params.slug;
+  const slug = req.params.slug
   if (slug) {
-    InvoiceParty.findOne({ slug: slug }).lean().exec(found);
+    InvoiceParty.findOne({ slug: slug }).lean().exec(found)
   } else {
-    respond(defaultInvoiceParty());
+    respond(defaultInvoiceParty())
   }
 
   function found (err, invoiceParty) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     if (!invoiceParty) {
-      next(`route`); return;
+      next(`route`); return
     }
-    respond(invoiceParty);
+    respond(invoiceParty)
   }
 
   function respond (invoiceParty) {
-    const title = slug ? `Invoice Party #` + slug : `New Invoice Party`;
-    const canonical = slug ? `/` + slug + `/edit` : `/new`;
+    const title = slug ? `Invoice Party #` + slug : `New Invoice Party`
+    const canonical = slug ? `/` + slug + `/edit` : `/new`
     res.viewModel = {
       model: {
         title: title + ` \u2014 Pony Foo`,
@@ -32,8 +32,8 @@ module.exports = function (req, res, next) {
         invoiceParty: invoiceParty,
         editing: !!slug
       }
-    };
-    next();
+    }
+    next()
   }
 
   function defaultInvoiceParty () {
@@ -43,6 +43,6 @@ module.exports = function (req, res, next) {
       slug: ``,
       name: ``,
       details: []
-    };
+    }
   }
-};
+}

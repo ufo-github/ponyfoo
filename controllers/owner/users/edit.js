@@ -1,25 +1,25 @@
-'use strict';
+'use strict'
 
-const contra = require(`contra`);
-const bioService = require(`../../../services/bio`);
-const User = require(`../../../models/User`);
+const contra = require(`contra`)
+const bioService = require(`../../../services/bio`)
+const User = require(`../../../models/User`)
 
 module.exports = function (req, res, next) {
-  const id = req.params.id;
+  const id = req.params.id
 
-  contra.waterfall([getUser, getBio, select], respond);
+  contra.waterfall([getUser, getBio, select], respond)
 
   function getUser (next) {
-    User.findOne({ _id: id }).lean().exec(next);
+    User.findOne({ _id: id }).lean().exec(next)
   }
 
   function getBio (user, next) {
     if (!user) {
-      next(null, {}, ``); return;
+      next(null, {}, ``); return
     }
-    bioService.getMarkdown(user.email, got);
+    bioService.getMarkdown(user.email, got)
     function got (err, bio) {
-      next(err, user, bio);
+      next(err, user, bio)
     }
   }
 
@@ -34,12 +34,12 @@ module.exports = function (req, res, next) {
       avatar: user.avatar,
       roles: user.roles || [`articles`],
       bio: user.bio
-    });
+    })
   }
 
   function respond (err, profile) {
     if (err) {
-      next(err); return;
+      next(err); return
     }
     res.viewModel = {
       model: {
@@ -51,7 +51,7 @@ module.exports = function (req, res, next) {
         profile: profile,
         action: `owner/users/edit`
       }
-    };
-    next();
+    }
+    next()
   }
-};
+}
