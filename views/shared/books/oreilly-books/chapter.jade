@@ -25,7 +25,7 @@ article.de-host
 
       section#read(class='ocha-read' + (unlocked ? '' : ' ocha-read-locked'))
         h3.ocha-id Chapter #{chapterId}
-        div(class='md-markdown ocha-contents' + (unlocked ? '' : ' ocha-contents-locked'))!=chapter.html
+        div(class='md-markdown ocha-contents' + (unlocked ? ' sp-item' : ' ocha-contents-locked'))!=chapter.html
 
         if !unlocked
           div.ocha-unlock-wrapper
